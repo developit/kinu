@@ -72,6 +72,8 @@ npm install
 npm run dev
 ```
 
+The demo is automatically deployed to **GitHub Pages** on every push to `main`.
+
 ## Philosophy
 
 **Constraints drive creativity.** This toolkit:

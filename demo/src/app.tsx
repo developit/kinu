@@ -1,7 +1,7 @@
-import { Badge, Button, Card, Input, Dialog } from '../src';
+import { Badge, Button, Card, Input, Dialog } from '@pui/index.ts';
 import { useState } from 'preact/hooks';
-import '../src/variables.css';
-import '../src/base.css';
+import '@pui/variables.css';
+import '@pui/base.css';
 
 export function App() {
   const [email, setEmail] = useState('');
