@@ -1,0 +1,9 @@
+/* Basic reset for components to ensure consistent behavior */
+[p] {
+  box-sizing: border-box;
+}
+
+[p]:before,
+[p]:after {
+  box-sizing: border-box;
+}
