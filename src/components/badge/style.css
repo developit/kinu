@@ -1,0 +1,46 @@
+@import '../../variables.css';
+
+[p="badge"] {
+  display: inline-flex;
+  align-items: center;
+  border-radius: calc(var(--p-radius) - 2px);
+  padding: 0.125rem 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  
+  /* Default variant */
+  border: 1px solid var(--p-border);
+  background-color: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+}
+
+/* Variant: secondary */
+[p="badge"][variant="secondary"] {
+  border: 1px solid transparent;
+  background-color: hsl(var(--p-secondary));
+  color: hsl(var(--p-secondary-foreground));
+}
+
+[p="badge"][variant="secondary"]:hover {
+  background-color: hsl(var(--p-secondary-hover));
+}
+
+/* Variant: destructive */
+[p="badge"][variant="destructive"] {
+  border: 1px solid transparent;
+  background-color: hsl(var(--p-destructive));
+  color: hsl(var(--p-destructive-foreground));
+}
+
+[p="badge"][variant="destructive"]:hover {
+  background-color: hsl(var(--p-destructive-hover));
+}
+
+/* Variant: outline */
+[p="badge"][variant="outline"] {
+  color: hsl(var(--p-foreground));
+}
