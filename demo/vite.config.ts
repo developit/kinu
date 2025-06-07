@@ -1,4 +1,4 @@
-import { defineConfig, defaultConditions } from 'vite'
+import { defineConfig, defaultClientConditions } from 'vite'
 import preact from '@preact/preset-vite'
 import { resolve } from 'path'
 
@@ -10,7 +10,7 @@ export default defineConfig({
     alias: {
       pui: resolve(__dirname, '..'),
     },
-    conditions: ['source', ...defaultConditions],
+    conditions: ['source', ...defaultClientConditions],
   },
   server: {
     fs: {
