@@ -10,15 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
-      - run: corepack enable
       - run: pnpm install
-      - run: pnpm install
-        working-directory: demo
       - run: pnpm run build
         working-directory: demo
       - name: Deploy to GitHub Pages
