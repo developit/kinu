@@ -9,8 +9,9 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "import": "./dist/index.js"
     }
   },
   "scripts": {
@@ -21,12 +22,19 @@
     "preact": "^10.15.1"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.5.0",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "preact": "^10.15.1"
+    "@biomejs/biome": "^1.9.4",
+    "@preact/preset-vite": "^2.10.1",
+    "preact": "^10.26.8",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
   },
-  "keywords": ["preact", "ui", "components", "performance", "minimal"],
+  "keywords": [
+    "preact",
+    "ui",
+    "components",
+    "performance",
+    "minimal"
+  ],
   "author": "",
   "license": "MIT"
 }
