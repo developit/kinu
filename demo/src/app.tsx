@@ -1,4 +1,4 @@
-import {Badge, Button, Card, Input, Dialog} from 'pui';
+import {Badge, Button, Card, Input, Dialog, Checkbox, Radio, RadioGroup} from 'pui';
 import {useState} from 'preact/hooks';
 
 export function App() {
@@ -83,6 +83,25 @@ export function App() {
           <Input placeholder="Large input" size="lg" />
           <Input placeholder="Disabled input" disabled />
         </div>
+      </Card>
+
+      {/* Checkbox & Radio Examples */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Checkbox and Radio</h2>
+        <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
+          <label>
+            <Checkbox /> Accept
+          </label>
+        </div>
+
+        <RadioGroup style={{marginTop: '1rem', display: 'flex', gap: '1rem'}}>
+          <label>
+            <Radio name="choice" value="a" /> Option A
+          </label>
+          <label>
+            <Radio name="choice" value="b" /> Option B
+          </label>
+        </RadioGroup>
       </Card>
 
       {/* Dialog Example */}

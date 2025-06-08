@@ -1,0 +1,6 @@
+@import '../../variables.css';
+
+[p="radio-group"] {
+  display: flex;
+  gap: 0.5rem;
+}

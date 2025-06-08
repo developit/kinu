@@ -63,6 +63,8 @@ export const Button = createSimpleComponent('button', 'button');
 - **Input**: Form fields with validation
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
+- **Checkbox**: Styled checkbox inputs
+- **Radio**: Single-choice inputs with optional `RadioGroup`
 
 ## Quick Start
 

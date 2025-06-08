@@ -1,0 +1,41 @@
+@import '../../variables.css';
+
+[p="checkbox"] {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid hsl(var(--p-border));
+  border-radius: calc(var(--p-radius) - 2px);
+  background-color: hsl(var(--p-background));
+  display: inline-grid;
+  place-content: center;
+  vertical-align: middle;
+}
+
+[p="checkbox"]:checked {
+  background-color: hsl(var(--p-primary));
+  border-color: hsl(var(--p-primary));
+  color: hsl(var(--p-primary-foreground));
+}
+
+[p="checkbox"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+}
+
+[p="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[p="checkbox"]::after {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  transform: scale(0);
+  background-color: currentColor;
+}
+
+[p="checkbox"]:checked::after {
+  transform: scale(1);
+}
