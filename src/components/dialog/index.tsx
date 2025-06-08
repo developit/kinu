@@ -4,52 +4,14 @@ import './style.css';
 
 const DialogContext = createContext<{
   dialogRef: { current: HTMLDialogElement | null };
-  open: () => void;
-  close: () => void;
 } | null>(null);
 
-interface DialogProps extends Omit<JSX.IntrinsicElements['dialog'], 'p'> {
-  defaultOpen?: boolean;
-}
-
-export function Dialog({ defaultOpen = false, children, ...props }: DialogProps) {
+export function Dialog({ children }: { children: JSX.Element | JSX.Element[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  
-  const open = () => {
-    dialogRef.current?.showModal();
-  };
-  
-  const close = () => {
-    dialogRef.current?.close();
-  };
-  
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    
-    if (defaultOpen) {
-      dialog.showModal();
-    }
-    
-    // Close on backdrop click
-    const handleClick = (e: MouseEvent) => {
-      if (e.target === dialog) {
-        dialog.close();
-      }
-    };
-    
-    dialog.addEventListener('click', handleClick);
-    
-    return () => {
-      dialog.removeEventListener('click', handleClick);
-    };
-  }, [defaultOpen]);
-  
+
   return (
-    <DialogContext.Provider value={{ dialogRef, open, close }}>
-      <dialog ref={dialogRef} p="dialog" {...props}>
-        {children}
-      </dialog>
+    <DialogContext.Provider value={{ dialogRef }}>
+      {children}
     </DialogContext.Provider>
   );
 }
@@ -59,19 +21,51 @@ export function DialogTrigger({ children, ...props }: JSX.IntrinsicElements['but
   if (!context) {
     throw new Error('DialogTrigger must be used within Dialog');
   }
-  
+
   return (
-    <button {...props} onClick={context.open}>
+    <button
+      {...props}
+      onClick={() => context.dialogRef.current?.showModal()}
+    >
       {children}
     </button>
   );
 }
 
-export function DialogContent({ children, ...props }: JSX.IntrinsicElements['div']) {
+export function DialogContent({
+  defaultOpen = false,
+  children,
+  ...props
+}: JSX.IntrinsicElements['dialog'] & { defaultOpen?: boolean }) {
+  const context = useContext(DialogContext);
+  if (!context) {
+    throw new Error('DialogContent must be used within Dialog');
+  }
+
+  const { dialogRef } = context;
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (defaultOpen) {
+      dialog.showModal();
+    }
+
+    const handleClick = (e: MouseEvent) => {
+      if (e.target === dialog) {
+        dialog.close();
+      }
+    };
+
+    dialog.addEventListener('click', handleClick);
+    return () => dialog.removeEventListener('click', handleClick);
+  }, [defaultOpen]);
+
   return (
-    <div p="dialog-content" {...props}>
-      {children}
-    </div>
+    <dialog ref={dialogRef} p="dialog" {...props}>
+      <div p="dialog-content">{children}</div>
+    </dialog>
   );
 }
 
@@ -80,9 +74,12 @@ export function DialogClose({ children, ...props }: JSX.IntrinsicElements['butto
   if (!context) {
     throw new Error('DialogClose must be used within Dialog');
   }
-  
+
   return (
-    <button {...props} onClick={context.close}>
+    <button
+      {...props}
+      onClick={() => context.dialogRef.current?.close()}
+    >
       {children}
     </button>
   );
