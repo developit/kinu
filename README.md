@@ -27,6 +27,7 @@ demo/               # Demo application
 - **Pattern-Driven**: 80% of components use a simple factory function
 
 ## Architecture
+See [Architecture Overview](docs/architecture.md) for the full technical breakdown.
 
 ### Simple Components (Factory Pattern)
 ```tsx
