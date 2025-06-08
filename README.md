@@ -56,6 +56,23 @@ export const Button = createSimpleComponent('button', 'button');
 </Dialog>
 ```
 
+```tsx
+// Simple accordion built on <details>
+<Accordion open>
+  <summary>Title</summary>
+  <p>More info</p>
+</Accordion>
+```
+
+```tsx
+// Basic tabs composed from lightweight wrappers
+<TabList>
+  <Tab aria-selected="true">First</Tab>
+  <Tab>Second</Tab>
+</TabList>
+<TabPanel>Panel content</TabPanel>
+```
+
 ## Components
 
 - **Badge**: Inline status indicators
@@ -63,6 +80,8 @@ export const Button = createSimpleComponent('button', 'button');
 - **Input**: Form fields with validation
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
+- **Accordion**: Native `<details>` wrapper
+- **Tabs**: TabList, Tab, TabPanel wrappers
 
 ## Quick Start
 

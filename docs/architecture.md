@@ -64,6 +64,8 @@ Implemented components:
 - **Input** – text inputs with validation styling
 - **Card** – layout container with padding variants
 - **Dialog** – native `<dialog>` element with compound subcomponents
+- **Accordion** – native `<details>` wrapper
+- **Tabs** – TabList, Tab, and TabPanel wrappers
 
 All simple components are located in `src/components/` and import their own `style.css`.
 

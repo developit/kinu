@@ -1,0 +1,5 @@
+@import "../../variables.css";
+
+[p="accordion"] > summary {
+  cursor: pointer;
+}

@@ -1,0 +1,24 @@
+@import "../../variables.css";
+
+[p="tablist"] {
+  display: flex;
+  border-bottom: 1px solid hsl(var(--p-border));
+}
+
+[p="tab"] {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+[p="tab"][aria-selected="true"] {
+  border-bottom: 2px solid hsl(var(--p-primary));
+  color: hsl(var(--p-primary));
+}
+
+[p="tab-panel"] {
+  padding: 1rem 0;
+}
