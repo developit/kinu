@@ -1,6 +1,6 @@
-import { defineConfig, defaultClientConditions } from 'vite'
-import preact from '@preact/preset-vite'
-import { resolve } from 'path'
+import {defineConfig, defaultClientConditions} from 'vite';
+import preact from '@preact/preset-vite';
+import {resolve} from 'node:path';
 
 export default defineConfig({
   plugins: [preact()],
@@ -17,4 +17,4 @@ export default defineConfig({
       allow: ['..'],
     },
   },
-})
+});

@@ -1,91 +1,109 @@
-import { h, JSX, createContext } from 'preact';
-import { useContext, useRef, useEffect } from 'preact/hooks';
+// import type {JSX} from 'preact';
+import {createContext, createRef, type RefObject} from 'preact';
+import {useRef, useEffect, useContext} from 'preact/hooks';
+// import {createSimpleComponent} from '../../lib/create-simple-component';
+import {applyPropsToChildren} from '../../lib/children';
 import './style.css';
-
-const DialogContext = createContext<{
-  dialogRef: { current: HTMLDialogElement | null };
-  open: () => void;
-  close: () => void;
-} | null>(null);
 
 interface DialogProps extends Omit<JSX.IntrinsicElements['dialog'], 'p'> {
   defaultOpen?: boolean;
 }
 
-export function Dialog({ defaultOpen = false, children, ...props }: DialogProps) {
+const DialogCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
+
+export function Dialog({defaultOpen, children}: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  
-  const open = () => {
+  useEffect(() => {
+    if (defaultOpen) dialogRef.current?.showModal();
+  }, [defaultOpen]);
+  return <DialogCtx.Provider value={dialogRef}>{children}</DialogCtx.Provider>;
+}
+
+// export function Dialog({defaultOpen, ...props}: DialogProps) {
+//   const dialogRef = useRef<HTMLDialogElement>(null);
+//   useEffect(() => {
+//     if (defaultOpen) dialogRef.current?.showModal();
+//   }, [defaultOpen]);
+//   return (
+//     <dialog
+//       ref={dialogRef}
+//       p="dialog"
+//       onClick={dialogBackdropClick}
+//       {...props}
+//     />
+//   );
+// }
+
+// export const Dialog = createSimpleComponent(
+//   'Dialog',
+//   'dialog',
+//   {
+//     onClick: dialogBackdropClick,
+//   },
+//   (el) => {
+//     if (el.hasAttribute('defaultopen')) {
+//       el.showModal();
+//     }
+//   },
+// );
+
+export function DialogTrigger({children}: JSX.ElementChildrenAttribute) {
+  const dialogRef = useContext(DialogCtx);
+  const handleClick = () => {
     dialogRef.current?.showModal();
   };
-  
-  const close = () => {
-    dialogRef.current?.close();
-  };
-  
+  return applyPropsToChildren(children, {onClick: handleClick});
+  // const kids = [children]
+  //   .flat(2)
+  //   .map((child) => cloneElement(child, {onClick: handleClick}));
+  // return kids.length > 1 ? kids : kids[0];
+}
+
+// export const DialogTrigger = createSimpleComponent('DialogTrigger', 'button', {
+//   onClick(e) {
+//     const dialog = (e.currentTarget as HTMLButtonElement).closest('dialog');
+//     dialog?.showModal();
+//   },
+// });
+
+function dialogBackdropClick(this: HTMLDialogElement, e: MouseEvent) {
+  if (e.target === this) this.close();
+}
+
+export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
+  const dialogRef = useContext(DialogCtx);
   useEffect(() => {
     const dialog = dialogRef.current;
-    if (!dialog) return;
-    
-    if (defaultOpen) {
+    if (props.defaultOpen && dialog) {
       dialog.showModal();
     }
-    
-    // Close on backdrop click
-    const handleClick = (e: MouseEvent) => {
-      if (e.target === dialog) {
-        dialog.close();
-      }
-    };
-    
-    dialog.addEventListener('click', handleClick);
-    
+    dialog?.addEventListener('click', dialogBackdropClick);
     return () => {
-      dialog.removeEventListener('click', handleClick);
+      dialog?.removeEventListener('click', dialogBackdropClick);
     };
-  }, [defaultOpen]);
-  
-  return (
-    <DialogContext.Provider value={{ dialogRef, open, close }}>
-      <dialog ref={dialogRef} p="dialog" {...props}>
-        {children}
-      </dialog>
-    </DialogContext.Provider>
-  );
+  }, []);
+  return <dialog p="dialog-content" {...props} ref={dialogRef} />;
 }
 
-export function DialogTrigger({ children, ...props }: JSX.IntrinsicElements['button']) {
-  const context = useContext(DialogContext);
-  if (!context) {
-    throw new Error('DialogTrigger must be used within Dialog');
-  }
-  
-  return (
-    <button {...props} onClick={context.open}>
-      {children}
-    </button>
-  );
+// export const DialogContent = createSimpleComponent(
+//   'dialog-content',
+//   'dialog',
+//   {
+//     onClick: dialogBackdropClick,
+//   },
+//   (el) => {
+//     if (el.hasAttribute('defaultopen')) {
+//       el.showModal();
+//     }
+//   },
+// );
+
+function dialogCloseClick(this: HTMLButtonElement) {
+  this.closest('dialog')?.close();
 }
 
-export function DialogContent({ children, ...props }: JSX.IntrinsicElements['div']) {
-  return (
-    <div p="dialog-content" {...props}>
-      {children}
-    </div>
-  );
-}
-
-export function DialogClose({ children, ...props }: JSX.IntrinsicElements['button']) {
-  const context = useContext(DialogContext);
-  if (!context) {
-    throw new Error('DialogClose must be used within Dialog');
-  }
-  
-  return (
-    <button {...props} onClick={context.close}>
-      {children}
-    </button>
-  );
+export function DialogClose({children}: JSX.ElementChildrenAttribute) {
+  return applyPropsToChildren(children, {onClick: dialogCloseClick});
 }
 
 // Attach compound components

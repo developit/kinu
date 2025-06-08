@@ -1,4 +1,4 @@
-@import '../../variables.css';
+@import "../../variables.css";
 
 [p="button"] {
   display: inline-flex;
@@ -11,14 +11,18 @@
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-  focus-visible:outline-none;
-  focus-visible:ring-2;
-  focus-visible:ring-ring;
-  focus-visible:ring-offset-2;
   cursor: pointer;
   border: 1px solid transparent;
-  
+
   /* Default variant styles (primary) */
+  background-color: hsl(var(--p-primary));
+  color: hsl(var(--p-primary-foreground));
+}
+
+[p="button"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--p-ring)), inset 0 0 0 1px hsl(var(--p-ring-inset));
+  border-color: hsl(var(--p-ring));
   background-color: hsl(var(--p-primary));
   color: hsl(var(--p-primary-foreground));
 }
