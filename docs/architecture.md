@@ -62,6 +62,7 @@ Implemented components:
 - **Badge** – status indicators
 - **Button** – variants and sizes
 - **Input** – text inputs with validation styling
+- **Select** – styled native `<select>` element
 - **Card** – layout container with padding variants
 - **Dialog** – native `<dialog>` element with compound subcomponents
 

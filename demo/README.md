@@ -20,6 +20,7 @@ npm run build
 - **Badge**: All variants (default, secondary, destructive, outline)
 - **Button**: All variants and sizes, loading/disabled states
 - **Input**: Controlled inputs, different sizes, validation states
+- **Select**: Styled native select dropdown
 - **Card**: Layout container with flexible padding
 - **Dialog**: Native `<dialog>` element with compound API
 
@@ -33,7 +34,7 @@ npm run build
 ## Usage
 
 ```tsx
-import { Button, Card, Dialog, Input, Badge } from '../src';
+import { Button, Card, Dialog, Input, Badge, Select } from '../src';
 
 // Pure prop forwarding - no abstractions
 <Input type="email" required value={email} onInput={handleInput} />

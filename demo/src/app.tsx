@@ -1,9 +1,10 @@
-import {Badge, Button, Card, Input, Dialog} from 'pui';
+import {Badge, Button, Card, Input, Dialog, Select} from 'pui';
 import {useState} from 'preact/hooks';
 
 export function App() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [choice, setChoice] = useState('apple');
 
   return (
     <div
@@ -83,6 +84,19 @@ export function App() {
           <Input placeholder="Large input" size="lg" />
           <Input placeholder="Disabled input" disabled />
         </div>
+      </Card>
+
+      {/* Select Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Select</h2>
+        <Select
+          value={choice}
+          onInput={(e) => setChoice((e.target as HTMLSelectElement).value)}
+        >
+          <option value="apple">Apple</option>
+          <option value="orange">Orange</option>
+          <option value="grape">Grape</option>
+        </Select>
       </Card>
 
       {/* Dialog Example */}

@@ -61,6 +61,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Badge**: Inline status indicators
 - **Button**: All variants, sizes, states
 - **Input**: Form fields with validation
+- **Select**: Styled native select dropdowns
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
 
