@@ -1,4 +1,4 @@
-import {Badge, Button, Card, Input, Dialog} from 'pui';
+import {Badge, Button, Card, Input, Dialog, Tooltip} from 'pui';
 import {useState} from 'preact/hooks';
 
 export function App() {
@@ -82,6 +82,20 @@ export function App() {
           <Input placeholder="Small input" size="sm" />
           <Input placeholder="Large input" size="lg" />
           <Input placeholder="Disabled input" disabled />
+        </div>
+      </Card>
+
+      {/* Tooltip Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Tooltip</h2>
+        <p>Hover over the buttons to see tooltips.</p>
+        <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap'}}>
+          <Tooltip title="Save">
+            <Button size="icon">💾</Button>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Button size="icon" variant="destructive">🗑</Button>
+          </Tooltip>
         </div>
       </Card>
 

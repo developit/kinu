@@ -63,6 +63,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Input**: Form fields with validation
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
+- **Tooltip**: Hover text overlay
 
 ## Quick Start
 
