@@ -32,7 +32,7 @@
 }
 
 [p="switch"]:checked::before {
-  transform: translateX(1.25rem);
+  transform: translateX(1.2rem);
 }
 
 [p="switch"]:focus-visible {
