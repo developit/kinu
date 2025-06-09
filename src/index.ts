@@ -5,3 +5,4 @@ export { Input } from './components/input';
 export { Card } from './components/card';
 export { Dialog } from './components/dialog';
 export { Tooltip } from './components/tooltip';
+export { Switch } from './components/switch';
