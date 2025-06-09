@@ -10,6 +10,8 @@
   display: inline-grid;
   place-content: center;
   vertical-align: middle;
+  transition: background-color 0.2s, border-color 0.2s;
+  position: relative;
 }
 
 [p="checkbox"]:checked {
@@ -30,12 +32,16 @@
 
 [p="checkbox"]::after {
   content: '';
-  width: 0.5rem;
-  height: 0.5rem;
-  transform: scale(0);
+  position: absolute;
+  inset: 2px;
   background-color: currentColor;
+  border-radius: 2px;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
 }
 
 [p="checkbox"]:checked::after {
   transform: scale(1);
+  opacity: 1;
 }

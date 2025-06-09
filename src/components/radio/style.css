@@ -10,6 +10,8 @@
   display: inline-grid;
   place-content: center;
   vertical-align: middle;
+  transition: background-color 0.2s, border-color 0.2s;
+  position: relative;
 }
 
 [p="radio"]:checked {
@@ -30,13 +32,16 @@
 
 [p="radio"]::after {
   content: '';
-  width: 0.5rem;
-  height: 0.5rem;
+  position: absolute;
+  inset: 3px;
   border-radius: 50%;
-  transform: scale(0);
   background-color: currentColor;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
 }
 
 [p="radio"]:checked::after {
   transform: scale(1);
+  opacity: 1;
 }

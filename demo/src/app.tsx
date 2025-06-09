@@ -92,11 +92,14 @@ export function App() {
           <label>
             <Checkbox /> Accept
           </label>
+          <label>
+            <Checkbox checked /> Checked
+          </label>
         </div>
 
         <RadioGroup style={{marginTop: '1rem', display: 'flex', gap: '1rem'}}>
           <label>
-            <Radio name="choice" value="a" /> Option A
+            <Radio name="choice" value="a" defaultChecked /> Option A
           </label>
           <label>
             <Radio name="choice" value="b" /> Option B
