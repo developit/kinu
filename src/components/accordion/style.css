@@ -50,3 +50,18 @@
   padding-bottom: 1rem;
   padding-top: 0;
 }
+
+[p="accordion"][open] > *:not(summary) {
+  animation: accordion-open 0.2s ease-out;
+}
+
+@keyframes accordion-open {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
