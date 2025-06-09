@@ -7,3 +7,4 @@ export { Dialog } from './components/dialog';
 export { Checkbox } from './components/checkbox';
 export { Radio } from './components/radio';
 export { RadioGroup } from './components/radio-group';
+export { Tooltip } from './components/tooltip';

@@ -65,6 +65,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Dialog**: Native modal dialogs
 - **Checkbox**: Styled checkbox inputs with subtle transitions
 - **Radio**: Single-choice inputs with optional `RadioGroup` and animations
+- **Tooltip**: Hover text overlay
 
 ## Quick Start
 

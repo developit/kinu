@@ -66,6 +66,7 @@ Implemented components:
 - **Dialog** – native `<dialog>` element with compound subcomponents
 - **Checkbox** – styled checkbox inputs with transitions
 - **Radio** – single-choice inputs with optional RadioGroup and animations
+- **Tooltip** – hover overlay for any element
 
 All simple components are located in `src/components/` and import their own `style.css`.
 

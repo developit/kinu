@@ -1,4 +1,4 @@
-import {Badge, Button, Card, Input, Dialog, Checkbox, Radio, RadioGroup} from 'pui';
+import {Badge, Button, Card, Input, Dialog, Checkbox, Radio, RadioGroup, Tooltip} from 'pui';
 import {useState} from 'preact/hooks';
 
 export function App() {
@@ -105,6 +105,20 @@ export function App() {
             <Radio name="choice" value="b" /> Option B
           </label>
         </RadioGroup>
+      </Card>
+
+      {/* Tooltip Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Tooltip</h2>
+        <p>Hover over the buttons to see tooltips.</p>
+        <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap'}}>
+          <Tooltip title="Save">
+            <Button size="icon">💾</Button>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Button size="icon" variant="destructive">🗑</Button>
+          </Tooltip>
+        </div>
       </Card>
 
       {/* Dialog Example */}
