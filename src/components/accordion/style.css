@@ -1,5 +1,52 @@
 @import "../../variables.css";
 
+[p="accordion"] {
+  border-bottom: 1px solid hsl(var(--p-border));
+}
+
+[p="accordion"]:last-of-type {
+  border-bottom: none;
+}
+
 [p="accordion"] > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+[p="accordion"] > summary::-webkit-details-marker {
+  display: none;
+}
+
+[p="accordion"] > summary:hover {
+  text-decoration: underline;
+}
+
+[p="accordion"] > summary::after {
+  content: '';
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: 0.5rem;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease-out;
+}
+
+[p="accordion"][open] > summary::after {
+  transform: rotate(-135deg);
+}
+
+[p="accordion"] > *:not(summary) {
+  font-size: 0.875rem;
+  padding-bottom: 1rem;
+  padding-top: 0;
 }

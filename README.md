@@ -80,7 +80,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Input**: Form fields with validation
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
-- **Accordion**: Native `<details>` wrapper
+- **Accordion**: Native `<details>` wrapper styled like shadcn/ui
 - **Tabs**: TabList, Tab, TabPanel wrappers
 
 ## Quick Start

@@ -22,7 +22,7 @@ npm run build
 - **Input**: Controlled inputs, different sizes, validation states
 - **Card**: Layout container with flexible padding
 - **Dialog**: Native `<dialog>` element with compound API
-- **Accordion**: Simple `<details>` wrapper
+- **Accordion**: Styled `<details>` wrapper matching shadcn/ui
 - **Tabs**: TabList, Tab and TabPanel wrappers
 
 ## Architecture Highlights
