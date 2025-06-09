@@ -1,4 +1,3 @@
-// Components
 export {Badge} from './components/badge';
 export {Button} from './components/button';
 export {Input} from './components/input';
@@ -10,3 +9,4 @@ export {Tooltip} from './components/tooltip';
 export {Progress} from './components/progress';
 export {Skeleton} from './components/skeleton';
 export {Switch} from './components/switch';
+export {ToastContainer, toast} from './lib/toast';

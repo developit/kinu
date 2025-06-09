@@ -6,7 +6,7 @@ export function createSimpleComponent<T extends keyof JSX.IntrinsicElements>(
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
   ref?: (
     el: JSX.IntrinsicElements[T],
-  ) => ((el: JSX.IntrinsicElements[T]) => void) | void,
+  ) => ((el: JSX.IntrinsicElements[T]) => void) | undefined,
 ) {
   type Props = JSX.IntrinsicElements[T] & {
     p?: never; // Don't allow overriding the p attribute
