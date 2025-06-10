@@ -34,13 +34,14 @@ export function ToastContainer() {
         duration: detail.duration,
       };
       setToasts((t) => [...t, item]);
-      setTimeout(() => startRemove(item.id), item.duration);
+      setTimeout(startRemove, item.duration, item.id);
     };
     addEventListener(EVENT_NAME, handler);
 
     const onAnimEnd = (e: AnimationEvent) => {
-      const id = (e.target as HTMLElement).dataset.toast;
-      if (id) {
+      const el = e.target as HTMLElement;
+      const id = el.dataset.toast;
+      if (id && el.dataset.closing) {
         setToasts((t) => t.filter((i) => String(i.id) !== id));
       }
     };

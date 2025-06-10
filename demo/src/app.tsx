@@ -107,17 +107,21 @@ export function App() {
             placeholder="Enter your email"
             type="email"
             value={email}
-            onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
+            onInput={(e: Event) =>
+              setEmail((e.target as HTMLInputElement).value)
+            }
           />
 
           <Input
             placeholder="Your name"
             value={name}
-            onInput={(e) => setName((e.target as HTMLInputElement).value)}
+            onInput={(e: Event) =>
+              setName((e.target as HTMLInputElement).value)
+            }
           />
 
-          <Input placeholder="Small input" size="sm" />
-          <Input placeholder="Large input" size="lg" />
+          <Input placeholder="Small input" size={'sm' as any} />
+          <Input placeholder="Large input" size={'lg' as any} />
           <Input placeholder="Disabled input" disabled />
         </div>
       </Card>

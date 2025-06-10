@@ -6,7 +6,7 @@ export function applyPropsToChildren(
 ): ComponentChildren {
   if (!children || typeof children !== 'object') return children;
   if (!Array.isArray(children)) {
-    return cloneElement(children, props);
+    return cloneElement(children as any, props);
   }
   // return children.flat(2).map((child) => cloneElement(child, props));
   const out = [];
