@@ -65,6 +65,8 @@ Implemented components:
 - **Card** – layout container with padding variants
 - **Dialog** – native `<dialog>` element with compound subcomponents
 - **Tooltip** – hover overlay for any element
+- **Progress** – styled `<progress>` element
+- **Skeleton** – animated placeholder for loading content
 
 All simple components are located in `src/components/` and import their own `style.css`.
 
