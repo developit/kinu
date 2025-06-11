@@ -14,14 +14,14 @@
   left: 0;
   --scale: 1;
   --offset: 0;
-  bottom: var(--offset);
+  bottom: 0;
   background: #fff;
   color: hsl(var(--p-foreground));
   border-radius: var(--p-radius);
   padding: 0.75rem 1rem;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   opacity: 0;
-  transform: translateY(100%) scale(var(--scale));
+  transform: translateY(calc(100% + var(--offset))) scale(var(--scale));
   transition: transform 0.4s ease, opacity 0.4s ease;
   pointer-events: auto;
 }
@@ -52,10 +52,10 @@
 
 [p="toast"][data-mounted] {
   opacity: 1;
-  transform: translateY(0) scale(var(--scale));
+  transform: translateY(calc(-1 * var(--offset))) scale(var(--scale));
 }
 
 [p="toast"][data-closing] {
   opacity: 0;
-  transform: translateY(110%) scale(var(--scale));
+  transform: translateY(calc(110% + var(--offset))) scale(var(--scale));
 }
