@@ -82,6 +82,9 @@ export const Button = createSimpleComponent('button', 'button');
 - **Dialog**: Native modal dialogs
 - **Accordion**: Collapsible content styled like shadcn/ui with slide animation
 - **Tabs**: TabList, Tab, TabPanel wrappers
+- **Tooltip**: Hover text overlay
+- **Progress**: Styled `<progress>` bar
+- **Skeleton**: Animated loading placeholder
 
 ## Quick Start
 

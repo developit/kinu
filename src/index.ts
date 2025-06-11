@@ -6,3 +6,7 @@ export {Card} from './components/card';
 export {Dialog} from './components/dialog';
 export {Accordion} from './components/accordion';
 export {TabList, Tab, TabPanel} from './components/tabs';
+export {Tooltip} from './components/tooltip';
+export {Progress} from './components/progress';
+export {Skeleton} from './components/skeleton';
+export {Switch} from './components/switch';

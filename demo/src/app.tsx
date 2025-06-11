@@ -8,6 +8,10 @@ import {
   TabList,
   Tab,
   TabPanel,
+  Tooltip,
+  Progress,
+  Skeleton,
+  Switch,
 } from 'pui';
 import {useState} from 'preact/hooks';
 
@@ -15,6 +19,7 @@ export function App() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [tab, setTab] = useState<'first' | 'second'>('first');
+  const [enabled, setEnabled] = useState(false);
 
   return (
     <div
@@ -38,6 +43,24 @@ export function App() {
           <Badge variant="secondary">Secondary</Badge>
           <Badge variant="destructive">Destructive</Badge>
           <Badge variant="outline">Outline</Badge>
+        </div>
+      </Card>
+
+      {/* Progress Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Progress</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+          <Progress value={25} max={100} />
+          <Progress value={75} max={100} />
+        </div>
+      </Card>
+
+      {/* Skeleton Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Skeleton</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+          <Skeleton style={{height: '1.5rem'}} />
+          <Skeleton style={{height: '1.5rem', width: '60%'}} />
         </div>
       </Card>
 
@@ -120,6 +143,36 @@ export function App() {
         </TabList>
         {tab === 'first' && <TabPanel>Content for first tab.</TabPanel>}
         {tab === 'second' && <TabPanel>Second tab panel.</TabPanel>}
+      </Card>
+
+      {/* Switch Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Switch</h2>
+        <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+          <Switch
+            checked={enabled}
+            onInput={(e) =>
+              setEnabled((e.target as HTMLInputElement).checked)
+            }
+          />
+          <span>{enabled ? 'On' : 'Off'}</span>
+        </div>
+      </Card>
+
+      {/* Tooltip Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Tooltip</h2>
+        <p>Hover over the buttons to see tooltips.</p>
+        <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap'}}>
+          <Tooltip title="Save">
+            <Button size="icon">💾</Button>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Button size="icon" variant="destructive">
+              🗑
+            </Button>
+          </Tooltip>
+        </div>
       </Card>
 
       {/* Dialog Example */}

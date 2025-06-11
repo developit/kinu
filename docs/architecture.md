@@ -66,6 +66,9 @@ Implemented components:
 - **Dialog** – native `<dialog>` element with compound subcomponents
 - **Accordion** – collapsible content styled like shadcn/ui with slide animation
 - **Tabs** – TabList, Tab, and TabPanel wrappers
+- **Tooltip** – hover overlay for any element
+- **Progress** – styled `<progress>` element
+- **Skeleton** – animated placeholder for loading content
 
 All simple components are located in `src/components/` and import their own `style.css`.
 

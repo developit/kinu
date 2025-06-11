@@ -1,0 +1,23 @@
+@import "../../variables.css";
+
+[p="progress"] {
+  width: 100%;
+  height: 0.5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  overflow: hidden;
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-secondary));
+}
+
+[p="progress"]::-webkit-progress-bar {
+  background-color: transparent;
+}
+
+[p="progress"]::-webkit-progress-value {
+  background-color: hsl(var(--p-primary));
+}
+
+[p="progress"]::-moz-progress-bar {
+  background-color: hsl(var(--p-primary));
+}
