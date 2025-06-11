@@ -55,22 +55,21 @@ Styling is handled with attribute selectors. Component props are forwarded to at
 
 Design tokens live in `src/variables.css` with both light and dark definitions.
 
-## Component Inventory
-
-Implemented components:
-
-- **Badge** – status indicators
-- **Button** – variants and sizes
-- **Input** – text inputs with validation styling
-- **Card** – layout container with padding variants
-- **Dialog** – native `<dialog>` element with compound subcomponents
-- **Accordion** – collapsible content styled like shadcn/ui with slide animation
-- **Tabs** – TabList, Tab, and TabPanel wrappers
-- **Tooltip** – hover overlay for any element
-- **Progress** – styled `<progress>` element
-- **Skeleton** – animated placeholder for loading content
-
 All simple components are located in `src/components/` and import their own `style.css`.
+
+#### How to use CSS to implement defaults/fallbacks/overrides
+
+We never use JavaScript to express basic logic when the same outcome can be achieved in CSS. For example, rather than destructuring props to add a fallback value of "default" for "variant", we simply include the empty case in our CSS selector:
+
+```css
+[p="button"][variant="default"],
+[p="button"]:not([variant]) {
+  background-color: hsl(var(--p-background));
+  border: 1px solid hsl(var(--p-border));
+}
+```
+
+Alternatively, for a enum/boolean prop that has a default value like the above, it's often the case that the set of CSS properties applied dependent on the prop value are always the same. When this is true, you can omit the entire `[p="button"][variant="default"], [p="button"]:not([variant])` selector entirely and simply apply the default CSS properties in the element's base selector (`[p="button"]`).
 
 ## Repository Structure
 
