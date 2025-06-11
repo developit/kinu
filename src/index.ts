@@ -7,3 +7,4 @@ export {Dialog} from './components/dialog';
 export {Tooltip} from './components/tooltip';
 export {Progress} from './components/progress';
 export {Skeleton} from './components/skeleton';
+export { Switch } from './components/switch';

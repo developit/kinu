@@ -7,12 +7,14 @@ import {
   Tooltip,
   Progress,
   Skeleton,
+  Switch,
 } from 'pui';
 import {useState} from 'preact/hooks';
 
 export function App() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [enabled, setEnabled] = useState(false);
 
   return (
     <div
@@ -109,6 +111,20 @@ export function App() {
           <Input placeholder="Small input" size="sm" />
           <Input placeholder="Large input" size="lg" />
           <Input placeholder="Disabled input" disabled />
+        </div>
+      </Card>
+
+      {/* Switch Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Switch</h2>
+        <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+          <Switch
+            checked={enabled}
+            onInput={(e) =>
+              setEnabled((e.target as HTMLInputElement).checked)
+            }
+          />
+          <span>{enabled ? 'On' : 'Off'}</span>
         </div>
       </Card>
 
