@@ -1,4 +1,14 @@
-import {Badge, Button, Card, Input, Dialog, Tooltip, Switch} from 'pui';
+import {
+  Badge,
+  Button,
+  Card,
+  Input,
+  Dialog,
+  Tooltip,
+  Progress,
+  Skeleton,
+  Switch,
+} from 'pui';
 import {useState} from 'preact/hooks';
 
 export function App() {
@@ -28,6 +38,24 @@ export function App() {
           <Badge variant="secondary">Secondary</Badge>
           <Badge variant="destructive">Destructive</Badge>
           <Badge variant="outline">Outline</Badge>
+        </div>
+      </Card>
+
+      {/* Progress Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Progress</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+          <Progress value={25} max={100} />
+          <Progress value={75} max={100} />
+        </div>
+      </Card>
+
+      {/* Skeleton Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Skeleton</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+          <Skeleton style={{height: '1.5rem'}} />
+          <Skeleton style={{height: '1.5rem', width: '60%'}} />
         </div>
       </Card>
 
@@ -109,7 +137,9 @@ export function App() {
             <Button size="icon">💾</Button>
           </Tooltip>
           <Tooltip title="Delete">
-            <Button size="icon" variant="destructive">🗑</Button>
+            <Button size="icon" variant="destructive">
+              🗑
+            </Button>
           </Tooltip>
         </div>
       </Card>

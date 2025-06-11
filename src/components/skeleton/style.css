@@ -1,0 +1,26 @@
+@import "../../variables.css";
+
+[p="skeleton"] {
+  position: relative;
+  overflow: hidden;
+  background-color: hsl(var(--p-muted));
+  border-radius: var(--p-radius);
+}
+
+[p="skeleton"]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: p-skeleton 1.5s infinite;
+}
+
+@keyframes p-skeleton {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
