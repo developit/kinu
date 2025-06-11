@@ -34,7 +34,7 @@ export function ToastContainer() {
         content: detail.content,
         duration: detail.duration,
       };
-      setToasts((t) => [item, ...t.slice(0, 3)]);
+      setToasts((t) => [...t.slice(-3), item]);
       // allow CSS transitions to apply
       requestAnimationFrame(() => {
         setToasts((t) =>
