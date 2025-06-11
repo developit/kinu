@@ -53,18 +53,11 @@
 [p="toast"][data-mounted] {
   opacity: 1;
   transform: translateY(calc(-1 * var(--offset))) scale(var(--scale));
-  animation: toast-enter 0.4s ease forwards;
 }
 
-@keyframes toast-enter {
-  from {
-    opacity: 0;
-    transform: translateY(calc(100% + var(--offset))) scale(var(--scale));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(calc(-1 * var(--offset))) scale(var(--scale));
-  }
+[p="toast"]:nth-last-child(1):not([data-mounted]) {
+  transform: translateY(calc(100% + var(--offset) + 0.25rem))
+    scale(var(--scale));
 }
 
 [p="toast"][data-closing] {
