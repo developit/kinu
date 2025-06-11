@@ -57,7 +57,7 @@ export function ToastContainer() {
       if (!item || item.closing) return t;
       setTimeout(() => {
         setToasts((t2) => t2.filter((p) => p.id !== id));
-      }, 300);
+      }, 400);
       return t.map((i) => (i.id === id ? {...i, closing: true} : i));
     });
   }
