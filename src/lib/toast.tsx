@@ -37,9 +37,11 @@ export function ToastContainer() {
       setToasts((t) => [...t.slice(-3), item]);
       // allow CSS transitions to apply
       requestAnimationFrame(() => {
-        setToasts((t) =>
-          t.map((i) => (i.id === item.id ? {...i, mounted: true} : i)),
-        );
+        requestAnimationFrame(() => {
+          setToasts((t) =>
+            t.map((i) => (i.id === item.id ? {...i, mounted: true} : i)),
+          );
+        });
       });
       setTimeout(startRemove, item.duration, item.id);
     };
