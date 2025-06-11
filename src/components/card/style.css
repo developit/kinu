@@ -1,4 +1,4 @@
-@import '../../variables.css';
+@import "../../variables.css";
 
 [p="card"] {
   border-radius: var(--p-radius);

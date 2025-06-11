@@ -70,7 +70,12 @@ function dialogBackdropClick(this: HTMLDialogElement, e: MouseEvent) {
   if (e.target === this) this.close();
 }
 
-export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
+interface DialogContentProps
+  extends Omit<JSX.IntrinsicElements['dialog'], 'p'> {
+  defaultOpen?: boolean;
+}
+
+export function DialogContent(props: DialogContentProps) {
   const dialogRef = useContext(DialogCtx);
   useEffect(() => {
     const dialog = dialogRef.current;

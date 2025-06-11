@@ -1,0 +1,66 @@
+[p="toast-container"] {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 20rem;
+  pointer-events: none;
+  --gap: 0.5rem;
+  z-index: 1000;
+}
+
+[p="toast"] {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  --scale: 1;
+  --offset: 0;
+  background: #fff;
+  color: hsl(var(--p-foreground));
+  border-radius: var(--p-radius);
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  opacity: 0;
+  transform: translateY(calc(100% + var(--offset))) scale(var(--scale));
+  pointer-events: auto;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[p="toast"]:nth-last-child(4) {
+  --offset: calc(3 * var(--gap));
+  --scale: 0.85;
+  z-index: 0;
+}
+
+[p="toast"]:nth-last-child(3) {
+  --offset: calc(2 * var(--gap));
+  --scale: 0.9;
+  z-index: 1;
+}
+
+[p="toast"]:nth-last-child(2) {
+  --offset: var(--gap);
+  --scale: 0.95;
+  z-index: 2;
+}
+
+[p="toast"]:nth-last-child(1) {
+  --offset: 0;
+  --scale: 1;
+  z-index: 3;
+}
+
+[p="toast"][data-mounted] {
+  opacity: 1;
+  transform: translateY(calc(-1 * var(--offset))) scale(var(--scale));
+}
+
+[p="toast"]:nth-last-child(1):not([data-mounted]) {
+  transform: translateY(calc(100% + 0.25rem)) scale(var(--scale));
+}
+
+[p="toast"][data-closing] {
+  opacity: 0;
+  transform: translateY(calc(110% + var(--offset))) scale(var(--scale));
+}

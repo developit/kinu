@@ -12,6 +12,8 @@ import {
   Progress,
   Skeleton,
   Switch,
+  ToastContainer,
+  toast,
 } from 'pui';
 import {useState} from 'preact/hooks';
 
@@ -33,6 +35,7 @@ export function App() {
         minHeight: '100vh',
       }}
     >
+      <ToastContainer />
       <h1>UI Toolkit Demo</h1>
 
       {/* Badge Examples */}
@@ -104,17 +107,21 @@ export function App() {
             placeholder="Enter your email"
             type="email"
             value={email}
-            onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
+            onInput={(e: Event) =>
+              setEmail((e.target as HTMLInputElement).value)
+            }
           />
 
           <Input
             placeholder="Your name"
             value={name}
-            onInput={(e) => setName((e.target as HTMLInputElement).value)}
+            onInput={(e: Event) =>
+              setName((e.target as HTMLInputElement).value)
+            }
           />
 
-          <Input placeholder="Small input" size="sm" />
-          <Input placeholder="Large input" size="lg" />
+          <Input placeholder="Small input" size={'sm' as any} />
+          <Input placeholder="Large input" size={'lg' as any} />
           <Input placeholder="Disabled input" disabled />
         </div>
       </Card>
@@ -137,7 +144,10 @@ export function App() {
           <Tab aria-selected={tab === 'first'} onClick={() => setTab('first')}>
             First
           </Tab>
-          <Tab aria-selected={tab === 'second'} onClick={() => setTab('second')}>
+          <Tab
+            aria-selected={tab === 'second'}
+            onClick={() => setTab('second')}
+          >
             Second
           </Tab>
         </TabList>
@@ -151,9 +161,7 @@ export function App() {
         <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
           <Switch
             checked={enabled}
-            onInput={(e) =>
-              setEnabled((e.target as HTMLInputElement).checked)
-            }
+            onInput={(e) => setEnabled((e.target as HTMLInputElement).checked)}
           />
           <span>{enabled ? 'On' : 'Off'}</span>
         </div>
@@ -173,6 +181,14 @@ export function App() {
             </Button>
           </Tooltip>
         </div>
+      </Card>
+
+      {/* Toast Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Toast</h2>
+        <Button onClick={() => toast.show('Hello from toast!')}>
+          Show Toast
+        </Button>
       </Card>
 
       {/* Dialog Example */}

@@ -25,6 +25,7 @@ demo/               # Demo application
 - **Tree-Shakeable**: Import only what you use
 - **Type-Safe**: Full TypeScript support
 - **Pattern-Driven**: 80% of components use a simple factory function
+- **Event-Driven Toasts**: Lightweight global notifications
 
 ## Architecture
 See [Architecture Overview](docs/architecture.md) for the full technical breakdown.
@@ -85,6 +86,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Tooltip**: Hover text overlay
 - **Progress**: Styled `<progress>` bar
 - **Skeleton**: Animated loading placeholder
+- **Toast**: Event-driven notifications
 
 ## Quick Start
 

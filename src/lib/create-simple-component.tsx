@@ -1,15 +1,18 @@
 import {h, type JSX} from 'preact';
 
-export function createSimpleComponent<T extends keyof JSX.IntrinsicElements>(
+export function createSimpleComponent<
+  T extends keyof HTMLElementTagNameMap & keyof JSX.IntrinsicElements,
+>(
   name: string,
   tag: T = 'div' as T,
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
   ref?: (
-    el: JSX.IntrinsicElements[T],
-  ) => ((el: JSX.IntrinsicElements[T]) => void) | void,
+    el: HTMLElementTagNameMap[T],
+  ) => ((el: HTMLElementTagNameMap[T]) => void) | undefined,
 ) {
   type Props = JSX.IntrinsicElements[T] & {
     p?: never; // Don't allow overriding the p attribute
+    [key: string]: any; // allow custom attributes for styling
   };
 
   function proxyRef(this: any, el: HTMLElementTagNameMap[T]) {
@@ -31,7 +34,7 @@ export function createSimpleComponent<T extends keyof JSX.IntrinsicElements>(
     let normalizedProps = props;
     if (defaultProps || ref) {
       normalizedProps = Object.assign({}, defaultProps || {}, props);
-      normalizedProps.ref = proxyRef;
+      normalizedProps.ref = proxyRef as any;
     }
     (normalizedProps as any).p = name;
     return h(tag, normalizedProps);

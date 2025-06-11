@@ -22,10 +22,7 @@ npm run build
 - **Input**: Controlled inputs, different sizes, validation states
 - **Card**: Layout container with flexible padding
 - **Dialog**: Native `<dialog>` element with compound API
-- **Accordion**: Collapsible content styled like shadcn/ui with slide animation
-- **Tabs**: TabList, Tab and TabPanel wrappers
-- **Progress**: Styled progress indicators
-- **Skeleton**: Animated loading placeholders
+- **Toast**: Global notifications via event API
 
 ## Architecture Highlights
 
