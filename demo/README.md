@@ -22,6 +22,8 @@ npm run build
 - **Input**: Controlled inputs, different sizes, validation states
 - **Card**: Layout container with flexible padding
 - **Dialog**: Native `<dialog>` element with compound API
+- **Progress**: Styled progress indicators
+- **Skeleton**: Animated loading placeholders
 
 ## Architecture Highlights
 

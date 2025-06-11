@@ -64,6 +64,8 @@ export const Button = createSimpleComponent('button', 'button');
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
 - **Tooltip**: Hover text overlay
+- **Progress**: Styled `<progress>` bar
+- **Skeleton**: Animated loading placeholder
 
 ## Quick Start
 
