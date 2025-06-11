@@ -22,6 +22,8 @@ npm run build
 - **Input**: Controlled inputs, different sizes, validation states
 - **Card**: Layout container with flexible padding
 - **Dialog**: Native `<dialog>` element with compound API
+- **Accordion**: Collapsible content styled like shadcn/ui with slide animation
+- **Tabs**: TabList, Tab and TabPanel wrappers
 - **Progress**: Styled progress indicators
 - **Skeleton**: Animated loading placeholders
 
@@ -35,7 +37,17 @@ npm run build
 ## Usage
 
 ```tsx
-import { Button, Card, Dialog, Input, Badge } from '../src';
+import {
+  Button,
+  Card,
+  Dialog,
+  Input,
+  Badge,
+  Accordion,
+  TabList,
+  Tab,
+  TabPanel,
+} from '../src';
 
 // Pure prop forwarding - no abstractions
 <Input type="email" required value={email} onInput={handleInput} />

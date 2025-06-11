@@ -4,6 +4,10 @@ import {
   Card,
   Input,
   Dialog,
+  Accordion,
+  TabList,
+  Tab,
+  TabPanel,
   Tooltip,
   Progress,
   Skeleton,
@@ -14,6 +18,7 @@ import {useState} from 'preact/hooks';
 export function App() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [tab, setTab] = useState<'first' | 'second'>('first');
   const [enabled, setEnabled] = useState(false);
 
   return (
@@ -112,6 +117,32 @@ export function App() {
           <Input placeholder="Large input" size="lg" />
           <Input placeholder="Disabled input" disabled />
         </div>
+      </Card>
+
+      {/* Accordion Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Accordion</h2>
+        <Accordion>
+          <summary>More Info</summary>
+          <p style={{margin: '0.5rem 0 0 0'}}>
+            Hidden content that becomes visible when the summary is clicked.
+          </p>
+        </Accordion>
+      </Card>
+
+      {/* Tabs Example */}
+      <Card style={{marginBottom: '2rem'}}>
+        <h2>Tabs</h2>
+        <TabList>
+          <Tab aria-selected={tab === 'first'} onClick={() => setTab('first')}>
+            First
+          </Tab>
+          <Tab aria-selected={tab === 'second'} onClick={() => setTab('second')}>
+            Second
+          </Tab>
+        </TabList>
+        {tab === 'first' && <TabPanel>Content for first tab.</TabPanel>}
+        {tab === 'second' && <TabPanel>Second tab panel.</TabPanel>}
       </Card>
 
       {/* Switch Example */}

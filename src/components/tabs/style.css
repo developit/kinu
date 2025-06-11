@@ -1,0 +1,55 @@
+@import "../../variables.css";
+
+[p="tablist"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  width: fit-content;
+  background: hsl(var(--p-muted));
+  color: hsl(var(--p-muted-foreground));
+  padding: 3px;
+  border-radius: var(--p-radius);
+  gap: 2px;
+}
+
+[p="tab"] {
+  appearance: none;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: calc(var(--p-radius) - 2px);
+  height: calc(100% - 1px);
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: hsl(var(--p-foreground));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  transition: color 0.15s, box-shadow 0.15s;
+}
+
+[p="tab"][aria-selected="true"] {
+  background: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  border-color: transparent;
+  box-shadow:
+    0 1px 3px 0 var(--p-shadow-color, rgba(0, 0, 0, 0.1)),
+    0 1px 2px -1px var(--p-shadow-color, rgba(0, 0, 0, 0.1));
+}
+
+[p="tab"]:focus-visible {
+  outline: 1px solid hsl(var(--p-ring));
+  box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.5);
+}
+
+[p="tab"][disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+[p="tab-panel"] {
+  padding-top: 0.5rem;
+}

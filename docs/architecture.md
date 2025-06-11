@@ -64,6 +64,8 @@ Implemented components:
 - **Input** – text inputs with validation styling
 - **Card** – layout container with padding variants
 - **Dialog** – native `<dialog>` element with compound subcomponents
+- **Accordion** – collapsible content styled like shadcn/ui with slide animation
+- **Tabs** – TabList, Tab, and TabPanel wrappers
 - **Tooltip** – hover overlay for any element
 - **Progress** – styled `<progress>` element
 - **Skeleton** – animated placeholder for loading content
