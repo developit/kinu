@@ -34,7 +34,7 @@ export function ToastContainer() {
         content: detail.content,
         duration: detail.duration,
       };
-      setToasts((t) => [...t, item]);
+      setToasts((t) => [item, ...t.slice(0, 3)]);
       // allow CSS transitions to apply
       requestAnimationFrame(() => {
         setToasts((t) =>
@@ -62,13 +62,14 @@ export function ToastContainer() {
 
   return (
     <div p="toast-container">
-      {toasts.map((t) => (
+      {toasts.map((t, i) => (
         <div
           key={t.id}
           p="toast"
           data-toast={t.id}
           data-mounted={t.mounted || undefined}
           data-closing={t.closing || undefined}
+          style={`--index:${i}`}
         >
           {t.content}
         </div>
