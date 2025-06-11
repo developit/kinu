@@ -57,8 +57,7 @@
 }
 
 [p="toast"]:nth-last-child(1):not([data-mounted]) {
-  transform: translateY(calc(100% + var(--offset) + 0.25rem))
-    scale(var(--scale));
+  transform: translateY(calc(100% + 0.25rem)) scale(var(--scale));
 }
 
 [p="toast"][data-closing] {
