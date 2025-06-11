@@ -9,6 +9,7 @@ interface ToastOptions {
 interface ToastInternal extends ToastOptions {
   id: number;
   content: ComponentChild;
+  mounted?: boolean;
   closing?: boolean;
 }
 
@@ -34,21 +35,17 @@ export function ToastContainer() {
         duration: detail.duration,
       };
       setToasts((t) => [...t, item]);
+      // allow CSS transitions to apply
+      requestAnimationFrame(() => {
+        setToasts((t) =>
+          t.map((i) => (i.id === item.id ? {...i, mounted: true} : i)),
+        );
+      });
       setTimeout(startRemove, item.duration, item.id);
     };
     addEventListener(EVENT_NAME, handler);
-
-    const onAnimEnd = (e: AnimationEvent) => {
-      const el = e.target as HTMLElement;
-      const id = el.dataset.toast;
-      if (id && el.dataset.closing) {
-        setToasts((t) => t.filter((i) => String(i.id) !== id));
-      }
-    };
-    addEventListener('animationend', onAnimEnd);
     return () => {
       removeEventListener(EVENT_NAME, handler);
-      removeEventListener('animationend', onAnimEnd);
     };
   }, []);
 
@@ -58,7 +55,7 @@ export function ToastContainer() {
       if (!item || item.closing) return t;
       setTimeout(() => {
         setToasts((t2) => t2.filter((p) => p.id !== id));
-      }, 150);
+      }, 300);
       return t.map((i) => (i.id === id ? {...i, closing: true} : i));
     });
   }
@@ -70,6 +67,7 @@ export function ToastContainer() {
           key={t.id}
           p="toast"
           data-toast={t.id}
+          data-mounted={t.mounted || undefined}
           data-closing={t.closing || undefined}
         >
           {t.content}
