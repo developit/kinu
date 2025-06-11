@@ -12,16 +12,33 @@
   position: absolute;
   right: 0;
   left: 0;
-  bottom: calc(var(--index) * var(--gap));
+  bottom: 0;
+  --scale: 1;
+  --offset: 0;
   background: hsl(var(--p-foreground));
   color: hsl(var(--p-background));
   border-radius: var(--p-radius);
   padding: 0.75rem 1rem;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
   opacity: 0;
-  transform: scale(calc(1 - var(--index) * 0.05));
+  transform: translateY(var(--offset)) scale(var(--scale));
   transition: transform 0.4s ease, opacity 0.4s ease;
   pointer-events: auto;
+}
+
+[p="toast"]:nth-child(2) {
+  --offset: var(--gap);
+  --scale: 0.95;
+}
+
+[p="toast"]:nth-child(3) {
+  --offset: calc(2 * var(--gap));
+  --scale: 0.9;
+}
+
+[p="toast"]:nth-child(4) {
+  --offset: calc(3 * var(--gap));
+  --scale: 0.85;
 }
 
 [p="toast"][data-mounted] {
@@ -30,5 +47,5 @@
 
 [p="toast"][data-closing] {
   opacity: 0;
-  transform: translateY(-20%) scale(calc(1 - var(--index) * 0.05));
+  transform: translateY(calc(-20% + var(--offset))) scale(var(--scale));
 }

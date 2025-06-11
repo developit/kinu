@@ -62,14 +62,13 @@ export function ToastContainer() {
 
   return (
     <div p="toast-container">
-      {toasts.map((t, i) => (
+      {toasts.map((t) => (
         <div
           key={t.id}
           p="toast"
           data-toast={t.id}
           data-mounted={t.mounted || undefined}
           data-closing={t.closing || undefined}
-          style={`--index:${i}`}
         >
           {t.content}
         </div>
