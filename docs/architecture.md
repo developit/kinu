@@ -64,7 +64,7 @@ Implemented components:
 - **Input** – text inputs with validation styling
 - **Card** – layout container with padding variants
 - **Dialog** – native `<dialog>` element with compound subcomponents
-- **Accordion** – native `<details>` wrapper styled like shadcn/ui with open animation
+- **Accordion** – collapsible content styled like shadcn/ui with slide animation
 - **Tabs** – TabList, Tab, and TabPanel wrappers
 
 All simple components are located in `src/components/` and import their own `style.css`.

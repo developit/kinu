@@ -47,21 +47,16 @@
 
 [p="accordion"] > *:not(summary) {
   font-size: 0.875rem;
-  padding-bottom: 1rem;
-  padding-top: 0;
+  padding: 0 0 1rem 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.25s ease-out,
+    opacity 0.25s ease-out;
 }
 
 [p="accordion"][open] > *:not(summary) {
-  animation: accordion-open 0.2s ease-out;
-}
-
-@keyframes accordion-open {
-  from {
-    opacity: 0;
-    transform: translateY(-0.25rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  max-height: 40rem;
+  opacity: 1;
 }

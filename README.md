@@ -57,7 +57,7 @@ export const Button = createSimpleComponent('button', 'button');
 ```
 
 ```tsx
-// Simple accordion built on <details>
+// Simple accordion with slide animation
 <Accordion open>
   <summary>Title</summary>
   <p>More info</p>
@@ -80,7 +80,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Input**: Form fields with validation
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
-- **Accordion**: Native `<details>` wrapper styled like shadcn/ui with open animation
+- **Accordion**: Collapsible content styled like shadcn/ui with slide animation
 - **Tabs**: TabList, Tab, TabPanel wrappers
 
 ## Quick Start
