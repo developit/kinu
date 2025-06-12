@@ -1,0 +1,18 @@
+@import "../../variables.css";
+
+[p="table"] {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+[p="table"] th,
+[p="table"] td {
+  border: 1px solid hsl(var(--p-border));
+  padding: 0.5rem;
+}
+
+[p="table"] th {
+  background-color: hsl(var(--p-muted));
+  text-align: left;
+}

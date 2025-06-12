@@ -1,0 +1,10 @@
+@import "../../variables.css";
+
+[p="avatar"] {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  background-color: hsl(var(--p-muted));
+}

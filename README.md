@@ -87,6 +87,22 @@ export const Button = createSimpleComponent('button', 'button');
 - **Progress**: Styled `<progress>` bar
 - **Skeleton**: Animated loading placeholder
 - **Toast**: Event-driven notifications
+- **Textarea**: Styled `<textarea>` element
+- **Label**: Form label text
+- **Checkbox**: Custom checkbox inputs
+- **RadioGroup**: Grouped radio buttons
+- **Select**: Styled native `<select>`
+- **Slider**: Range input slider
+- **Separator**: Horizontal rule element
+- **Avatar**: Circular user images
+- **Toggle**: Pressable toggle button
+- **ToggleGroup**: Group of toggles
+- **AspectRatio**: Maintain responsive ratios
+- **ScrollArea**: Scrollable container
+- **Popover**: Small overlay menu
+- **Alert**: Inline messages
+- **AlertDialog**: Modal alert dialog
+- **Table**: Basic styled table
 
 ## Quick Start
 
