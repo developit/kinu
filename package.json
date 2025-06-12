@@ -25,11 +25,16 @@
     "@biomejs/biome": "^1.9.4",
     "@preact/preset-vite": "^2.10.1",
     "@types/node": "^22.15.30",
-    "preact": "^10.26.8",
+    "preact": "^10.26.9",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   },
-  "keywords": ["preact", "ui", "ui-toolkit", "pui"],
+  "keywords": [
+    "preact",
+    "ui",
+    "ui-toolkit",
+    "pui"
+  ],
   "author": "",
   "license": "MIT"
 }

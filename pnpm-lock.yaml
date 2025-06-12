@@ -13,13 +13,13 @@ importers:
         version: 1.9.4
       '@preact/preset-vite':
         specifier: ^2.10.1
-        version: 2.10.1(@babel/core@7.27.4)(preact@10.26.8)(vite@6.3.5(@types/node@22.15.30))
+        version: 2.10.1(@babel/core@7.27.4)(preact@10.26.9)(vite@6.3.5(@types/node@22.15.30))
       '@types/node':
         specifier: ^22.15.30
         version: 22.15.30
       preact:
-        specifier: ^10.26.8
-        version: 10.26.8
+        specifier: ^10.26.9
+        version: 10.26.9
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -641,6 +641,9 @@ packages:
   preact@10.26.8:
     resolution: {integrity: sha512-1nMfdFjucm5hKvq0IClqZwK4FJkGXhRrQstOQ3P4vp8HxKrJEMFcY6RdBRVTdfQS/UlnX6gfbPuTvaqx/bDoeQ==}
 
+  preact@10.26.9:
+    resolution: {integrity: sha512-SSjF9vcnF27mJK1XyFMNJzFd5u3pQiATFqoaDy03XuN00u4ziveVVEGt5RKJrDR8MHE/wJo9Nnad56RLzS2RMA==}
+
   rollup@4.42.0:
     resolution: {integrity: sha512-LW+Vse3BJPyGJGAJt1j8pWDKPd73QM8cRXYK1IxOBgL2AGLu7Xd2YOW0M2sLUBCkF5MshXXtMApyEAEzMVMsnw==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -1008,11 +1011,31 @@ snapshots:
       - preact
       - supports-color
 
+  '@preact/preset-vite@2.10.1(@babel/core@7.27.4)(preact@10.26.9)(vite@6.3.5(@types/node@22.15.30))':
+    dependencies:
+      '@babel/core': 7.27.4
+      '@babel/plugin-transform-react-jsx': 7.27.1(@babel/core@7.27.4)
+      '@babel/plugin-transform-react-jsx-development': 7.27.1(@babel/core@7.27.4)
+      '@prefresh/vite': 2.4.7(preact@10.26.9)(vite@6.3.5(@types/node@22.15.30))
+      '@rollup/pluginutils': 4.2.1
+      babel-plugin-transform-hook-names: 1.0.2(@babel/core@7.27.4)
+      debug: 4.4.1
+      kolorist: 1.8.0
+      vite: 6.3.5(@types/node@22.15.30)
+      vite-prerender-plugin: 0.5.10(vite@6.3.5(@types/node@22.15.30))
+    transitivePeerDependencies:
+      - preact
+      - supports-color
+
   '@prefresh/babel-plugin@0.5.1': {}
 
   '@prefresh/core@1.5.3(preact@10.26.8)':
     dependencies:
       preact: 10.26.8
+
+  '@prefresh/core@1.5.3(preact@10.26.9)':
+    dependencies:
+      preact: 10.26.9
 
   '@prefresh/utils@1.2.0': {}
 
@@ -1024,6 +1047,18 @@ snapshots:
       '@prefresh/utils': 1.2.0
       '@rollup/pluginutils': 4.2.1
       preact: 10.26.8
+      vite: 6.3.5(@types/node@22.15.30)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@prefresh/vite@2.4.7(preact@10.26.9)(vite@6.3.5(@types/node@22.15.30))':
+    dependencies:
+      '@babel/core': 7.27.4
+      '@prefresh/babel-plugin': 0.5.1
+      '@prefresh/core': 1.5.3(preact@10.26.9)
+      '@prefresh/utils': 1.2.0
+      '@rollup/pluginutils': 4.2.1
+      preact: 10.26.9
       vite: 6.3.5(@types/node@22.15.30)
     transitivePeerDependencies:
       - supports-color
@@ -1241,6 +1276,8 @@ snapshots:
       source-map-js: 1.2.1
 
   preact@10.26.8: {}
+
+  preact@10.26.9: {}
 
   rollup@4.42.0:
     dependencies:

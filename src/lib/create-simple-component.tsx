@@ -1,4 +1,7 @@
-import {h, type JSX} from 'preact';
+import {h, type JSX, type RefObject} from 'preact';
+
+type RefCallback<T> = ((el: T | null) => void) | ((el: T) => () => void);
+type Ref<T> = RefObject<T> | RefCallback<T>;
 
 export function createSimpleComponent<
   T extends keyof HTMLElementTagNameMap & keyof JSX.IntrinsicElements,
@@ -6,27 +9,28 @@ export function createSimpleComponent<
   name: string,
   tag: T = 'div' as T,
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
-  ref?: (
-    el: HTMLElementTagNameMap[T],
-  ) => ((el: HTMLElementTagNameMap[T]) => void) | undefined,
+  ref?: RefCallback<HTMLElementTagNameMap[T]>,
 ) {
   type Props = JSX.IntrinsicElements[T] & {
     p?: never; // Don't allow overriding the p attribute
+    ref?: Ref<T>;
     [key: string]: any; // allow custom attributes for styling
   };
 
-  function proxyRef(this: any, el: HTMLElementTagNameMap[T]) {
-    let ret: ((el: HTMLElementTagNameMap[T]) => void) | undefined;
-    if (this.ref) {
-      if (typeof this.ref === 'function') {
-        ret = this.ref(el);
-      }
+  function proxyRef(
+    this: Ref<HTMLElementTagNameMap[T]>,
+    el: HTMLElementTagNameMap[T],
+  ) {
+    let ret: (() => void) | undefined | void;
+    if (this) {
+      if (typeof this === 'function') ret = this(el);
+      else this.current = el;
     }
     const internalRet = ref?.(el);
     if (!ret && !internalRet) return;
     return () => {
-      if (ret) ret(el);
-      if (internalRet) internalRet(el);
+      if (ret) ret();
+      if (internalRet) internalRet();
     };
   }
 
@@ -34,7 +38,7 @@ export function createSimpleComponent<
     let normalizedProps = props;
     if (defaultProps || ref) {
       normalizedProps = Object.assign({}, defaultProps || {}, props);
-      normalizedProps.ref = proxyRef as any;
+      normalizedProps.ref = proxyRef.bind(props.ref as any) as any;
     }
     (normalizedProps as any).p = name;
     return h(tag, normalizedProps);

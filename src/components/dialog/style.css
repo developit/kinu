@@ -6,7 +6,7 @@
   background-color: hsl(var(--p-background));
   padding: 0;
   max-width: 32rem;
-  position: relative;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
 
   /* Animation for opening */
   animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);

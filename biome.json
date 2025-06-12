@@ -30,7 +30,8 @@
       },
       "suspicious": {
         "noAssignInExpressions": "off",
-        "noExplicitAny": "off"
+        "noExplicitAny": "off",
+        "noConfusingVoidType": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"

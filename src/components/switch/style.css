@@ -17,7 +17,7 @@
 [p="switch"]::before {
   content: "";
   position: absolute;
-  top: 0.15rem;
+  top: 0.125rem;
   left: 0.1875rem;
   width: 1rem;
   height: 1rem;
