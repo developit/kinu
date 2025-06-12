@@ -1,0 +1,10 @@
+@import "../../variables.css";
+
+[p="sidebar"] {
+  width: 16rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid hsl(var(--p-border));
+  padding: 1rem;
+}

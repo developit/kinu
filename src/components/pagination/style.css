@@ -1,0 +1,27 @@
+@import "../../variables.css";
+
+[p="pagination-list"] {
+  list-style: none;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0;
+  margin: 0;
+}
+
+[p="pagination-link"] {
+  background: none;
+  border: 1px solid hsl(var(--p-border));
+  border-radius: var(--p-radius);
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+[p="pagination-link"]:hover {
+  background-color: hsl(var(--p-muted));
+}
+
+[p="pagination-link"][aria-current="page"] {
+  background-color: hsl(var(--p-primary));
+  color: hsl(var(--p-primary-foreground));
+  border-color: hsl(var(--p-primary));
+}

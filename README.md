@@ -103,6 +103,23 @@ export const Button = createSimpleComponent('button', 'button');
 - **Alert**: Inline messages
 - **AlertDialog**: Modal alert dialog
 - **Table**: Basic styled table
+- **Collapsible**: Toggle visibility of content
+- **Resizable**: User-resizable panel
+- **Sheet**: Sliding side panel
+- **Sidebar**: Vertical navigation container
+- **Breadcrumb**: Page hierarchy navigation
+- **Menubar**: Horizontal menu of actions
+- **NavigationMenu**: Complex nav menu
+- **Pagination**: Page controls
+- **Combobox**: Input with suggestions
+- **ContextMenu**: Right-click menu
+- **Drawer**: Bottom sliding panel
+- **DropdownMenu**: Triggered action list
+- **HoverCard**: Card shown on hover
+- **Calendar**: Date selection input
+- **Carousel**: Horizontally scrollable list
+- **DatePicker**: Simple date input
+- **Typography**: Base text styles
 
 ## Quick Start
 

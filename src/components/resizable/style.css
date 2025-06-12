@@ -1,0 +1,11 @@
+@import "../../variables.css";
+
+[p="resizable"] {
+  resize: both;
+  overflow: auto;
+  border: 1px solid hsl(var(--p-border));
+  border-radius: var(--p-radius);
+  padding: 1rem;
+  min-width: 2rem;
+  min-height: 2rem;
+}

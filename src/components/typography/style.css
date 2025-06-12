@@ -1,0 +1,15 @@
+@import "../../variables.css";
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+ul, ol {
+  margin-left: 1.25rem;
+  padding: 0;
+}
