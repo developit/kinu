@@ -1,32 +1,7 @@
 @import "../../variables.css";
 
 [p="collapsible"] > summary {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 0;
-  cursor: pointer;
-}
-
-[p="collapsible"] > summary::-webkit-details-marker {
   display: none;
-}
-
-[p="collapsible"] > summary::after {
-  content: '';
-  border: solid currentColor;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
-  margin-left: 0.5rem;
-  transform: rotate(45deg);
-  transition: transform 0.2s ease-out;
-}
-
-[p="collapsible"][open] > summary::after {
-  transform: rotate(-135deg);
 }
 
 [p="collapsible"]::details-content {

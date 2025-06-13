@@ -1,4 +1,5 @@
-import {createSimpleComponent} from '../../lib/create-simple-component';
 import './style.css';
 
-export const Avatar = createSimpleComponent('avatar', 'img');
+export function Avatar({children, ...props}: JSX.IntrinsicElements['img']) {
+  return <img p="avatar" alt={String(children || '')} {...props} />;
+}
