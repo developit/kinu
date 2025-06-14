@@ -1,0 +1,30 @@
+@import "../../variables.css";
+
+[p="textarea"] {
+  display: block;
+  width: 100%;
+  border-radius: var(--p-radius);
+  border: 1px solid hsl(var(--p-input));
+  background-color: hsl(var(--p-background));
+  font-size: 0.875rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  resize: vertical;
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[p="textarea"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+}
+
+[p="textarea"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+[p="textarea"]::placeholder {
+  color: hsl(var(--p-muted-foreground));
+}

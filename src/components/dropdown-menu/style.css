@@ -1,0 +1,25 @@
+@import "../../variables.css";
+@import "../popover/style.css";
+
+[p="dropdown-content"] {
+  left: 0;
+  --tf-x: 0;
+  padding: 0.5rem 0;
+}
+
+[p="dropdown-menu-item"] {
+  display: flex;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.25rem 1rem;
+  white-space: nowrap;
+  cursor: pointer;
+  font: inherit;
+}
+
+[p="dropdown-menu-item"]:hover,
+[p="dropdown-menu-item"]:focus-visible {
+  background-color: hsl(var(--p-muted));
+  outline: none;
+}

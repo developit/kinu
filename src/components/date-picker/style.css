@@ -1,0 +1,7 @@
+@import "../../variables.css";
+
+[p="date-picker"] {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid hsl(var(--p-input));
+  border-radius: var(--p-radius);
+}

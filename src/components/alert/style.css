@@ -1,0 +1,14 @@
+@import "../../variables.css";
+
+[p="alert"] {
+  border-radius: var(--p-radius);
+  border: 1px solid hsl(var(--p-border));
+  padding: 1rem;
+  background-color: hsl(var(--p-muted));
+  color: hsl(var(--p-foreground));
+}
+
+[p="alert"][variant="destructive"] {
+  background-color: hsl(var(--p-destructive));
+  color: hsl(var(--p-destructive-foreground));
+}

@@ -1,0 +1,13 @@
+@import "../../variables.css";
+
+[p="carousel"] {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1rem;
+}
+
+[p="carousel-item"] {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}

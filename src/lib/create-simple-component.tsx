@@ -1,7 +1,14 @@
-import {h, type JSX, type RefObject} from 'preact';
+import {h, type JSX, type RefObject, type Component} from 'preact';
 
+type RefCallbackWithCleanup<T> = (el: T) => (() => void) | void;
 type RefCallback<T> = ((el: T | null) => void) | ((el: T) => () => void);
 type Ref<T> = RefObject<T> | RefCallback<T>;
+
+declare global {
+  interface ComponentInstance extends Component {
+    $_ref?: RefCallbackWithCleanup<HTMLElement>;
+  }
+}
 
 export function createSimpleComponent<
   T extends keyof HTMLElementTagNameMap & keyof JSX.IntrinsicElements,
@@ -9,7 +16,7 @@ export function createSimpleComponent<
   name: string,
   tag: T = 'div' as T,
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
-  ref?: RefCallback<HTMLElementTagNameMap[T]>,
+  ref?: RefCallbackWithCleanup<HTMLElementTagNameMap[T]>,
 ) {
   type Props = JSX.IntrinsicElements[T] & {
     p?: never; // Don't allow overriding the p attribute
@@ -34,16 +41,17 @@ export function createSimpleComponent<
     };
   }
 
-  function Component(props: Props) {
+  function Wrap(this: ComponentInstance, props: Props) {
     let normalizedProps = props;
     if (defaultProps || ref) {
       normalizedProps = Object.assign({}, defaultProps || {}, props);
-      normalizedProps.ref = proxyRef.bind(props.ref as any) as any;
+      normalizedProps.ref =
+        this.$_ref || (this.$_ref = proxyRef.bind(props.ref as any) as any);
     }
     (normalizedProps as any).p = name;
     return h(tag, normalizedProps);
   }
 
-  Component.displayName = name;
-  return Component;
+  Wrap.displayName = name;
+  return Wrap;
 }

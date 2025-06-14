@@ -1,0 +1,6 @@
+@import "../../variables.css";
+
+[p="toggle-group"] {
+  display: inline-flex;
+  gap: 0.25rem;
+}

@@ -14,6 +14,28 @@ import {
   Switch,
   ToastContainer,
   toast,
+  Textarea,
+  Label,
+  Checkbox,
+  RadioGroup,
+  Radio,
+  Select,
+  Slider,
+  Separator,
+  Avatar,
+  Toggle,
+  ToggleGroup,
+  AspectRatio,
+  Alert,
+  Table,
+  Collapsible,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from 'pui';
 import {useState} from 'preact/hooks';
 
@@ -22,6 +44,14 @@ export function App() {
   const [name, setName] = useState('');
   const [tab, setTab] = useState<'first' | 'second'>('first');
   const [enabled, setEnabled] = useState(false);
+  const [message, setMessage] = useState('');
+  const [checked, setChecked] = useState(false);
+  const [radio, setRadio] = useState('option1');
+  const [select, setSelect] = useState('apple');
+  const [slider, setSlider] = useState(50);
+  const [toggle, setToggle] = useState(false);
+  const [toggleGroup, setToggleGroup] = useState<string[]>([]);
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div
@@ -229,6 +259,295 @@ export function App() {
             </div>
           </Dialog.Content>
         </Dialog>
+      </Card>
+
+      {/* Textarea Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Textarea</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <Label htmlFor="message">Message</Label>
+          <Textarea
+            id="message"
+            placeholder="Enter your message..."
+            value={message}
+            onInput={(e: Event) =>
+              setMessage((e.target as HTMLTextAreaElement).value)
+            }
+          />
+          <Textarea placeholder="Disabled textarea" disabled />
+        </div>
+      </Card>
+
+      {/* Checkbox Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Checkbox</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+            <Checkbox
+              id="agree"
+              checked={checked}
+              onInput={(e) =>
+                setChecked((e.target as HTMLInputElement).checked)
+              }
+            />
+            <Label htmlFor="agree">I agree to the terms and conditions</Label>
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+            <Checkbox id="disabled" disabled />
+            <Label htmlFor="disabled">Disabled checkbox</Label>
+          </div>
+        </div>
+      </Card>
+
+      {/* Radio Group Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Radio Group</h2>
+        <RadioGroup>
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+            <Radio
+              id="option1"
+              name="options"
+              value="option1"
+              checked={radio === 'option1'}
+              onInput={() => setRadio('option1')}
+            />
+            <Label htmlFor="option1">Option 1</Label>
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+            <Radio
+              id="option2"
+              name="options"
+              value="option2"
+              checked={radio === 'option2'}
+              onInput={() => setRadio('option2')}
+            />
+            <Label htmlFor="option2">Option 2</Label>
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+            <Radio
+              id="option3"
+              name="options"
+              value="option3"
+              checked={radio === 'option3'}
+              onInput={() => setRadio('option3')}
+            />
+            <Label htmlFor="option3">Option 3</Label>
+          </div>
+        </RadioGroup>
+      </Card>
+
+      {/* Select Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Select</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <Label htmlFor="fruit">Choose a fruit</Label>
+          <Select
+            id="fruit"
+            value={select}
+            onInput={(e: Event) =>
+              setSelect((e.target as HTMLSelectElement).value)
+            }
+          >
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="orange">Orange</option>
+            <option value="grape">Grape</option>
+          </Select>
+          <Select disabled>
+            <option>Disabled select</option>
+          </Select>
+        </div>
+      </Card>
+
+      {/* Slider Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Slider</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <Label>Value: {slider}</Label>
+          <Slider
+            min={0}
+            max={100}
+            value={slider}
+            onInput={(e: Event) =>
+              setSlider(Number((e.target as HTMLInputElement).value))
+            }
+          />
+          <Slider min={0} max={100} value={25} disabled />
+        </div>
+      </Card>
+
+      {/* Separator Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Separator</h2>
+        <div>
+          <p>Content above separator</p>
+          <Separator />
+          <p>Content below separator</p>
+        </div>
+      </Card>
+
+      {/* Avatar Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Avatar</h2>
+        <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
+          <Avatar src="https://github.com/developit.png" alt="Profile" />
+          <Avatar>JD</Avatar>
+          <Avatar size="sm">SM</Avatar>
+          <Avatar size="lg">LG</Avatar>
+        </div>
+      </Card>
+
+      {/* Toggle Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Toggle</h2>
+        <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+          <Toggle pressed={toggle} onPressedChange={setToggle}>
+            Bold
+          </Toggle>
+          <Toggle disabled>Disabled</Toggle>
+        </div>
+      </Card>
+
+      {/* Toggle Group Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Toggle Group</h2>
+        <ToggleGroup
+          type="multiple"
+          value={toggleGroup}
+          onValueChange={setToggleGroup}
+        >
+          <Toggle value="bold">Bold</Toggle>
+          <Toggle value="italic">Italic</Toggle>
+          <Toggle value="underline">Underline</Toggle>
+        </ToggleGroup>
+      </Card>
+
+      {/* Aspect Ratio Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Aspect Ratio</h2>
+        <AspectRatio
+          ratio={16 / 9}
+          style={{
+            backgroundColor: 'hsl(var(--p-muted))',
+            borderRadius: '0.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <span>16:9 Aspect Ratio</span>
+        </AspectRatio>
+      </Card>
+
+      {/* Alert Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Alert</h2>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <Alert>
+            <strong>Info:</strong> This is an informational alert.
+          </Alert>
+          <Alert variant="destructive">
+            <strong>Error:</strong> Something went wrong.
+          </Alert>
+        </div>
+      </Card>
+
+      {/* Table Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Table</h2>
+        <Table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>john@example.com</td>
+              <td>Admin</td>
+            </tr>
+            <tr>
+              <td>Jane Smith</td>
+              <td>jane@example.com</td>
+              <td>User</td>
+            </tr>
+          </tbody>
+        </Table>
+      </Card>
+
+      {/* Collapsible Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Collapsible</h2>
+        <div>
+          <Button onClick={() => setCollapsed(!collapsed)} variant="outline">
+            {collapsed ? 'Show' : 'Hide'} Details
+          </Button>
+          <Collapsible open={!collapsed}>
+            <div style={{padding: '1rem 0'}}>
+              <p>This content can be collapsed and expanded.</p>
+              <p>It's useful for showing/hiding additional information.</p>
+            </div>
+          </Collapsible>
+        </div>
+      </Card>
+
+      {/* Popover Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Popover</h2>
+        <Popover>
+          <PopoverTrigger>
+            <Button variant="outline">Open Popover</Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div style={{padding: '1rem'}}>
+              <h3 style={{margin: '0 0 0.5rem 0'}}>Popover Content</h3>
+              <p style={{margin: '0'}}>This is content inside a popover.</p>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </Card>
+
+      {/* Dropdown Menu Example */}
+      <Card style={{marginTop: '2rem'}}>
+        <h2>Dropdown Menu</h2>
+        <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outline">Actions ▼</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => alert('Edit clicked')}>
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => alert('Copy clicked')}>
+                Copy
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => alert('Delete clicked')}>
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outline">Settings ▼</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => alert('Profile clicked')}>
+                Profile Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => alert('Privacy clicked')}>
+                Privacy
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => alert('Help clicked')}>
+                Help & Support
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </Card>
 
       {/* Form Example */}
