@@ -6,6 +6,7 @@
   border-radius: var(--p-radius);
   border: 1px solid hsl(var(--p-input));
   background-color: hsl(var(--p-background));
+  font: inherit;
   font-size: 0.875rem;
   min-height: 2.5rem;
   padding: 0.5rem 0.75rem;
