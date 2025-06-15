@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "highlight.js": "^11.11.1",
     "preact": "^10.26.8"
   },
   "devDependencies": {
