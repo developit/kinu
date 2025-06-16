@@ -13,8 +13,9 @@
   cursor: pointer;
   transition: border-color 150ms cubic-bezier(0.4,0,0.2,1);
   appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%23999" ><path d="M5.8 7l4.2 4.2L14.2 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" /></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%23999"><path d="M5.8 7l4.2 4.2L14.2 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" /></svg>');
   background-repeat: no-repeat;
+  background-size: 1.6em;
   background-position: right 0.5rem center;
 }
 

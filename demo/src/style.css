@@ -1,0 +1,64 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  font-family: system-ui, sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+.demo-app {
+  display: flex;
+}
+
+.demo-app > main {
+  flex: 1;
+  padding: 1rem;
+}
+
+.demo-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  gap: 1rem;
+  margin: -1rem -1rem 0;
+  background: hsla(0, 0%, 95%, 0.95);
+  backdrop-filter: blur(2px);
+  padding: 1rem;
+  z-index: 100;
+}
+
+.nav {
+  margin: 0 -1rem;
+  padding: 0;
+}
+.nav a {
+  display: block;
+  padding: .35rem .5rem;
+  color: #000;
+  text-decoration: none;
+}
+.nav a:hover {
+  background: #ddd;
+}
+
+h2 {
+  margin: 0 0 1rem;
+}
+
+pre.code-block {
+  background: #f2f3f6;
+  padding: .75rem 1rem;
+  border-radius: .35rem;
+  overflow-x: auto;
+}
+
+.h-resize {
+  position: relative;
+  overflow: hidden;
+  padding: 0 14px 0 0;
+  resize: horizontal;
+  max-width: 100%;
+}

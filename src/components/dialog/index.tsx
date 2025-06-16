@@ -23,7 +23,12 @@ export function DialogTrigger({children}: JSX.ElementChildrenAttribute) {
 
 function dialogBackdropClick(e: MouseEvent) {
   const dialog = e.currentTarget as HTMLDialogElement;
-  if (e.target === dialog) dialog.close();
+  if (e.target !== dialog) return;
+  const {clientX, clientY} = e;
+  const {left, right, top, bottom} = dialog.getBoundingClientRect();
+  if (clientX < left || clientX > right || clientY < top || clientY > bottom) {
+    dialog.close();
+  }
 }
 
 export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
@@ -33,7 +38,7 @@ export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
       p="dialog-content"
       {...props}
       ref={dialogRef}
-      onClickCapture={dialogBackdropClick}
+      onMouseUpCapture={dialogBackdropClick}
     />
   );
 }

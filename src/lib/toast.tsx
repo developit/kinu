@@ -3,6 +3,9 @@ import type {ComponentChild} from 'preact';
 import './toast.css';
 
 interface ToastOptions {
+  title?: ComponentChild;
+  icon?: ComponentChild;
+  action?: ComponentChild;
   duration?: number;
 }
 
@@ -17,7 +20,7 @@ const EVENT_NAME = 'pui-toast-show';
 let nextId = Date.now();
 
 function dispatchToast(content: ComponentChild, opts: ToastOptions = {}) {
-  const detail = {content, duration: opts.duration ?? 3000};
+  const detail = {content, ...opts};
   dispatchEvent(new CustomEvent(EVENT_NAME, {detail}));
 }
 
@@ -28,12 +31,8 @@ export function ToastContainer() {
 
   useEffect(() => {
     const handler = (e: Event) => {
-      const detail = (e as CustomEvent<ToastInternal>).detail;
-      const item: ToastInternal = {
-        id: nextId++,
-        content: detail.content,
-        duration: detail.duration,
-      };
+      const item = (e as CustomEvent<ToastInternal>).detail;
+      item.id = nextId++;
       setToasts((t) => [...t.slice(-3), item]);
       // allow CSS transitions to apply
       requestAnimationFrame(() => {
@@ -43,7 +42,7 @@ export function ToastContainer() {
           );
         });
       });
-      setTimeout(startRemove, item.duration, item.id);
+      setTimeout(startRemove, item.duration || 3000, item.id);
     };
     addEventListener(EVENT_NAME, handler);
     return () => {
@@ -72,7 +71,10 @@ export function ToastContainer() {
           data-mounted={t.mounted || undefined}
           data-closing={t.closing || undefined}
         >
-          {t.content}
+          {t.title && <h6 p="toast-title">{t.title}</h6>}
+          {t.content && <div p="toast-content">{t.content}</div>}
+          {t.icon && <div p="toast-icon">{t.icon}</div>}
+          {t.action && <div p="toast-action">{t.action}</div>}
         </div>
       ))}
     </div>

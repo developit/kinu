@@ -63,6 +63,8 @@ import {
   ComboboxOption,
   ContextMenu,
   ContextMenuItem,
+  ContextMenuContent,
+  ContextMenuTrigger,
   Drawer,
   DrawerTrigger,
   DrawerContent,
@@ -74,6 +76,7 @@ import {
   Carousel,
   CarouselItem,
   DatePicker,
+  SidebarTrigger,
 } from 'pui';
 import '../../src/components/typography/style.css';
 import {useState} from 'preact/hooks';
@@ -121,7 +124,14 @@ const skeletonCode = `<Skeleton style={{height: '1.5rem'}} />`;
 function ButtonDemo() {
   return (
     <div>
-      <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem'}}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          marginBottom: '1rem',
+        }}
+      >
         <Button>Default</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="outline">Outline</Button>
@@ -145,8 +155,17 @@ function InputDemo() {
   const [name, setName] = useState('');
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-      <Input placeholder="Enter your email" type="email" value={email} onInput={(e: Event) => setEmail((e.target as HTMLInputElement).value)} />
-      <Input placeholder="Your name" value={name} onInput={(e: Event) => setName((e.target as HTMLInputElement).value)} />
+      <Input
+        placeholder="Enter your email"
+        type="email"
+        value={email}
+        onInput={(e: Event) => setEmail((e.target as HTMLInputElement).value)}
+      />
+      <Input
+        placeholder="Your name"
+        value={name}
+        onInput={(e: Event) => setName((e.target as HTMLInputElement).value)}
+      />
       <Input placeholder="Small input" size={'sm' as any} />
       <Input placeholder="Large input" size={'lg' as any} />
       <Input placeholder="Disabled input" disabled />
@@ -159,7 +178,9 @@ function AccordionDemo() {
   return (
     <Accordion>
       <summary>More Info</summary>
-      <p style={{margin: '0.5rem 0 0 0'}}>Hidden content that becomes visible when the summary is clicked.</p>
+      <p style={{margin: '0.5rem 0 0 0'}}>
+        Hidden content that becomes visible when the summary is clicked.
+      </p>
     </Accordion>
   );
 }
@@ -170,8 +191,12 @@ function TabsDemo() {
   return (
     <div>
       <TabList>
-        <Tab aria-selected={tab === 'first'} onClick={() => setTab('first')}>First</Tab>
-        <Tab aria-selected={tab === 'second'} onClick={() => setTab('second')}>Second</Tab>
+        <Tab aria-selected={tab === 'first'} onClick={() => setTab('first')}>
+          First
+        </Tab>
+        <Tab aria-selected={tab === 'second'} onClick={() => setTab('second')}>
+          Second
+        </Tab>
       </TabList>
       {tab === 'first' && <TabPanel>Content for first tab.</TabPanel>}
       {tab === 'second' && <TabPanel>Second tab panel.</TabPanel>}
@@ -184,7 +209,10 @@ function SwitchDemo() {
   const [enabled, setEnabled] = useState(false);
   return (
     <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-      <Switch checked={enabled} onInput={(e) => setEnabled((e.target as HTMLInputElement).checked)} />
+      <Switch
+        checked={enabled}
+        onInput={(e) => setEnabled((e.target as HTMLInputElement).checked)}
+      />
       <span>{enabled ? 'On' : 'Off'}</span>
     </div>
   );
@@ -198,7 +226,9 @@ function TooltipDemo() {
         <Button size="icon">💾</Button>
       </Tooltip>
       <Tooltip title="Delete">
-        <Button size="icon" variant="destructive">🗑</Button>
+        <Button size="icon" variant="destructive">
+          🗑
+        </Button>
       </Tooltip>
     </div>
   );
@@ -206,7 +236,25 @@ function TooltipDemo() {
 const tooltipCode = `<Tooltip title="Save"><Button /></Tooltip>`;
 
 function ToastDemo() {
-  return <Button onClick={() => toast.show('Hello from toast!')}>Show Toast</Button>;
+  return (
+    <Menubar>
+      <Button onClick={() => toast.show('Hello from toast!')}>
+        Basic Toast
+      </Button>
+      <Button
+        onClick={() =>
+          toast.show('Your event has been successfully created!', {
+            title: 'Event created',
+            icon: '🎉',
+            action: <Button>Undo</Button>,
+            duration: 5000,
+          })
+        }
+      >
+        With Title
+      </Button>
+    </Menubar>
+  );
 }
 const toastCode = `<Button onClick={() => toast.show('msg')}>Show Toast</Button>`;
 
@@ -218,10 +266,18 @@ function DialogDemo() {
       </Dialog.Trigger>
       <Dialog.Content>
         <h3 style={{margin: '0 0 1rem 0'}}>Confirm Action</h3>
-        <p style={{margin: '0 0 1rem 0', color: 'hsl(var(--p-muted-foreground))'}}>
-          This is a native HTML5 dialog element with minimal styling and behavior.
+        <p
+          style={{
+            margin: '0 0 1rem 0',
+            color: 'hsl(var(--p-muted-foreground))',
+          }}
+        >
+          This is a native HTML5 dialog element with minimal styling and
+          behavior.
         </p>
-        <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'flex-end'}}>
+        <div
+          style={{display: 'flex', gap: '0.5rem', justifyContent: 'flex-end'}}
+        >
           <Dialog.Close>
             <Button variant="outline">Cancel</Button>
           </Dialog.Close>
@@ -240,7 +296,14 @@ function TextareaDemo() {
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
       <Label htmlFor="message">Message</Label>
-      <Textarea id="message" placeholder="Enter your message..." value={message} onInput={(e: Event) => setMessage((e.target as HTMLTextAreaElement).value)} />
+      <Textarea
+        id="message"
+        placeholder="Enter your message..."
+        value={message}
+        onInput={(e: Event) =>
+          setMessage((e.target as HTMLTextAreaElement).value)
+        }
+      />
       <Textarea placeholder="Disabled textarea" disabled />
     </div>
   );
@@ -252,7 +315,11 @@ function CheckboxDemo() {
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-        <Checkbox id="agree" checked={checked} onInput={(e) => setChecked((e.target as HTMLInputElement).checked)} />
+        <Checkbox
+          id="agree"
+          checked={checked}
+          onInput={(e) => setChecked((e.target as HTMLInputElement).checked)}
+        />
         <Label htmlFor="agree">I agree to the terms and conditions</Label>
       </div>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
@@ -269,15 +336,33 @@ function RadioGroupDemo() {
   return (
     <RadioGroup>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-        <Radio id="option1" name="options" value="option1" checked={radio === 'option1'} onInput={() => setRadio('option1')} />
+        <Radio
+          id="option1"
+          name="options"
+          value="option1"
+          checked={radio === 'option1'}
+          onInput={() => setRadio('option1')}
+        />
         <Label htmlFor="option1">Option 1</Label>
       </div>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-        <Radio id="option2" name="options" value="option2" checked={radio === 'option2'} onInput={() => setRadio('option2')} />
+        <Radio
+          id="option2"
+          name="options"
+          value="option2"
+          checked={radio === 'option2'}
+          onInput={() => setRadio('option2')}
+        />
         <Label htmlFor="option2">Option 2</Label>
       </div>
       <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-        <Radio id="option3" name="options" value="option3" checked={radio === 'option3'} onInput={() => setRadio('option3')} />
+        <Radio
+          id="option3"
+          name="options"
+          value="option3"
+          checked={radio === 'option3'}
+          onInput={() => setRadio('option3')}
+        />
         <Label htmlFor="option3">Option 3</Label>
       </div>
     </RadioGroup>
@@ -290,7 +375,11 @@ function SelectDemo() {
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
       <Label htmlFor="fruit">Choose a fruit</Label>
-      <Select id="fruit" value={select} onInput={(e: Event) => setSelect((e.target as HTMLSelectElement).value)}>
+      <Select
+        id="fruit"
+        value={select}
+        onInput={(e: Event) => setSelect((e.target as HTMLSelectElement).value)}
+      >
         <option value="apple">Apple</option>
         <option value="banana">Banana</option>
         <option value="orange">Orange</option>
@@ -309,7 +398,14 @@ function SliderDemo() {
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
       <Label>Value: {slider}</Label>
-      <Slider min={0} max={100} value={slider} onInput={(e: Event) => setSlider(Number((e.target as HTMLInputElement).value))} />
+      <Slider
+        min={0}
+        max={100}
+        value={slider}
+        onInput={(e: Event) =>
+          setSlider(Number((e.target as HTMLInputElement).value))
+        }
+      />
       <Slider min={0} max={100} value={25} disabled />
     </div>
   );
@@ -343,7 +439,9 @@ function ToggleDemo() {
   const [toggle, setToggle] = useState(false);
   return (
     <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-      <Toggle pressed={toggle} onPressedChange={setToggle}>Bold</Toggle>
+      <Toggle pressed={toggle} onPressedChange={setToggle}>
+        Bold
+      </Toggle>
       <Toggle disabled>Disabled</Toggle>
     </div>
   );
@@ -353,7 +451,11 @@ const toggleCode = `<Toggle>Bold</Toggle>`;
 function ToggleGroupDemo() {
   const [toggleGroup, setToggleGroup] = useState<string[]>([]);
   return (
-    <ToggleGroup type="multiple" value={toggleGroup} onValueChange={setToggleGroup}>
+    <ToggleGroup
+      type="multiple"
+      value={toggleGroup}
+      onValueChange={setToggleGroup}
+    >
       <Toggle value="bold">Bold</Toggle>
       <Toggle value="italic">Italic</Toggle>
       <Toggle value="underline">Underline</Toggle>
@@ -364,7 +466,16 @@ const toggleGroupCode = `<ToggleGroup>...</ToggleGroup>`;
 
 function AspectRatioDemo() {
   return (
-    <AspectRatio ratio={16 / 9} style={{backgroundColor: 'hsl(var(--p-muted))', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <AspectRatio
+      ratio={16 / 9}
+      style={{
+        backgroundColor: 'hsl(var(--p-muted))',
+        borderRadius: '0.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <span>16:9 Aspect Ratio</span>
     </AspectRatio>
   );
@@ -416,7 +527,9 @@ function CollapsibleDemo() {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <div>
-      <Button onClick={() => setCollapsed(!collapsed)} variant="outline">{collapsed ? 'Show' : 'Hide'} Details</Button>
+      <Button onClick={() => setCollapsed(!collapsed)} variant="outline">
+        {collapsed ? 'Show' : 'Hide'} Details
+      </Button>
       <Collapsible open={!collapsed}>
         <div style={{padding: '1rem 0'}}>
           <p>This content can be collapsed and expanded.</p>
@@ -453,9 +566,15 @@ function DropdownMenuDemo() {
           <Button variant="outline">Actions ▼</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => alert('Edit clicked')}>Edit</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => alert('Copy clicked')}>Copy</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => alert('Delete clicked')}>Delete</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => alert('Edit clicked')}>
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => alert('Copy clicked')}>
+            Copy
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => alert('Delete clicked')}>
+            Delete
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
@@ -468,8 +587,17 @@ function FormDemo() {
   const [name, setName] = useState('');
   return (
     <div>
-      <p>Current values: {email && `Email: ${email}`} {name && `Name: ${name}`}</p>
-      <Button onClick={() => { console.log('Form data:', {email, name}); alert(`Email: ${email}\nName: ${name}`); }}>Submit Form</Button>
+      <p>
+        Current values: {email && `Email: ${email}`} {name && `Name: ${name}`}
+      </p>
+      <Button
+        onClick={() => {
+          console.log('Form data:', {email, name});
+          alert(`Email: ${email}\nName: ${name}`);
+        }}
+      >
+        Submit Form
+      </Button>
     </div>
   );
 }
@@ -477,7 +605,13 @@ const formCode = `<Button onClick={submit}>Submit Form</Button>`;
 
 function ScrollAreaDemo() {
   return (
-    <ScrollArea style={{height: '100px', border: '1px solid hsl(var(--p-border))', padding: '0.5rem'}}>
+    <ScrollArea
+      style={{
+        height: '100px',
+        border: '1px solid hsl(var(--p-border))',
+        padding: '0.5rem',
+      }}
+    >
       <p>Scrollable content</p>
       <p>Line 2</p>
       <p>Line 3</p>
@@ -497,7 +631,9 @@ function AlertDialogDemo() {
       </AlertDialog.Trigger>
       <AlertDialog.Content>
         <p style={{margin: '0 0 1rem 0'}}>Are you sure?</p>
-        <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'flex-end'}}>
+        <div
+          style={{display: 'flex', gap: '0.5rem', justifyContent: 'flex-end'}}
+        >
           <AlertDialog.Close>
             <Button variant="outline">Cancel</Button>
           </AlertDialog.Close>
@@ -536,12 +672,7 @@ function SheetDemo() {
 const sheetCode = `<Sheet>...</Sheet>`;
 
 function SidebarDemo() {
-  return (
-    <Sidebar style={{width: '10rem'}}>
-      <a href="#">Item 1</a>
-      <a href="#">Item 2</a>
-    </Sidebar>
-  );
+  return <div>(see docs sidebar)</div>;
 }
 const sidebarCode = `<Sidebar>...</Sidebar>`;
 
@@ -549,8 +680,12 @@ function BreadcrumbDemo() {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem><BreadcrumbLink href="#">Home</BreadcrumbLink></BreadcrumbItem>
-        <BreadcrumbItem><BreadcrumbLink href="#">Docs</BreadcrumbLink></BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Docs</BreadcrumbLink>
+        </BreadcrumbItem>
         <BreadcrumbItem>Current</BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
@@ -561,9 +696,41 @@ const breadcrumbCode = `<Breadcrumb>...</Breadcrumb>`;
 function MenubarDemo() {
   return (
     <Menubar>
-      <MenubarItem>File</MenubarItem>
-      <MenubarItem>Edit</MenubarItem>
-      <MenubarItem>View</MenubarItem>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <MenubarItem>File</MenubarItem>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Open</DropdownMenuItem>
+          <DropdownMenuItem>Save</DropdownMenuItem>
+          <DropdownMenuItem>Save As...</DropdownMenuItem>
+          <Separator />
+          <DropdownMenuItem>Close</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <MenubarItem>Edit</MenubarItem>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Cut</DropdownMenuItem>
+          <DropdownMenuItem>Copy</DropdownMenuItem>
+          <DropdownMenuItem>Paste</DropdownMenuItem>
+          <DropdownMenuItem>Paste without formatting</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <MenubarItem>View</MenubarItem>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Explorer</DropdownMenuItem>
+          <DropdownMenuItem>Search</DropdownMenuItem>
+          <DropdownMenuItem>Source Control</DropdownMenuItem>
+          <DropdownMenuItem>Run</DropdownMenuItem>
+          <DropdownMenuItem>Extensions</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </Menubar>
   );
 }
@@ -573,9 +740,15 @@ function NavigationMenuDemo() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem><NavigationMenuLink href="#">Home</NavigationMenuLink></NavigationMenuItem>
-        <NavigationMenuItem><NavigationMenuLink href="#">Docs</NavigationMenuLink></NavigationMenuItem>
-        <NavigationMenuItem><NavigationMenuLink href="#">Blog</NavigationMenuLink></NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#">Home</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#">Docs</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#">Blog</NavigationMenuLink>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -586,9 +759,15 @@ function PaginationDemo() {
   return (
     <Pagination>
       <PaginationList>
-        <PaginationItem><PaginationLink aria-current="page">1</PaginationLink></PaginationItem>
-        <PaginationItem><PaginationLink>2</PaginationLink></PaginationItem>
-        <PaginationItem><PaginationLink>3</PaginationLink></PaginationItem>
+        <PaginationItem>
+          <PaginationLink aria-current="page">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink>2</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink>3</PaginationLink>
+        </PaginationItem>
       </PaginationList>
     </Pagination>
   );
@@ -611,10 +790,23 @@ const comboboxCode = `<ComboboxInput list="fruits" />`;
 
 function ContextMenuDemo() {
   return (
-    <ContextMenu style={{width: '8rem'}}>
-      <ContextMenuItem onClick={() => alert('Cut')}>Cut</ContextMenuItem>
-      <ContextMenuItem onClick={() => alert('Copy')}>Copy</ContextMenuItem>
-      <ContextMenuItem onClick={() => alert('Paste')}>Paste</ContextMenuItem>
+    <ContextMenu>
+      <ContextMenuTrigger>
+        <div
+          style={{
+            width: '200px',
+            height: '100px',
+            background: 'hsl(var(--p-muted))',
+          }}
+        >
+          Right-click me
+        </div>
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem onClick={() => alert('Cut')}>Cut</ContextMenuItem>
+        <ContextMenuItem onClick={() => alert('Copy')}>Copy</ContextMenuItem>
+        <ContextMenuItem onClick={() => alert('Paste')}>Paste</ContextMenuItem>
+      </ContextMenuContent>
     </ContextMenu>
   );
 }
@@ -640,7 +832,9 @@ const drawerCode = `<Drawer>...</Drawer>`;
 function HoverCardDemo() {
   return (
     <HoverCard>
-      <HoverCardTrigger><Button variant="outline">Hover me</Button></HoverCardTrigger>
+      <HoverCardTrigger>
+        <Button variant="outline">Hover me</Button>
+      </HoverCardTrigger>
       <HoverCardContent>More info</HoverCardContent>
     </HoverCard>
   );
@@ -655,9 +849,21 @@ const calendarCode = `<Calendar />`;
 function CarouselDemo() {
   return (
     <Carousel>
-      <CarouselItem style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}>1</CarouselItem>
-      <CarouselItem style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}>2</CarouselItem>
-      <CarouselItem style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}>3</CarouselItem>
+      <CarouselItem
+        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
+      >
+        1
+      </CarouselItem>
+      <CarouselItem
+        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
+      >
+        2
+      </CarouselItem>
+      <CarouselItem
+        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
+      >
+        3
+      </CarouselItem>
     </Carousel>
   );
 }
@@ -685,7 +891,12 @@ const examples: Example[] = [
   {id: 'skeleton', title: 'Skeleton', Demo: SkeletonDemo, code: skeletonCode},
   {id: 'button', title: 'Button', Demo: ButtonDemo, code: buttonCode},
   {id: 'input', title: 'Input', Demo: InputDemo, code: inputCode},
-  {id: 'accordion', title: 'Accordion', Demo: AccordionDemo, code: accordionCode},
+  {
+    id: 'accordion',
+    title: 'Accordion',
+    Demo: AccordionDemo,
+    code: accordionCode,
+  },
   {id: 'tabs', title: 'Tabs', Demo: TabsDemo, code: tabsCode},
   {id: 'switch', title: 'Switch', Demo: SwitchDemo, code: switchCode},
   {id: 'tooltip', title: 'Tooltip', Demo: TooltipDemo, code: tooltipCode},
@@ -693,51 +904,132 @@ const examples: Example[] = [
   {id: 'dialog', title: 'Dialog', Demo: DialogDemo, code: dialogCode},
   {id: 'textarea', title: 'Textarea', Demo: TextareaDemo, code: textareaCode},
   {id: 'checkbox', title: 'Checkbox', Demo: CheckboxDemo, code: checkboxCode},
-  {id: 'radio-group', title: 'Radio Group', Demo: RadioGroupDemo, code: radioGroupCode},
+  {
+    id: 'radio-group',
+    title: 'Radio Group',
+    Demo: RadioGroupDemo,
+    code: radioGroupCode,
+  },
   {id: 'select', title: 'Select', Demo: SelectDemo, code: selectCode},
   {id: 'slider', title: 'Slider', Demo: SliderDemo, code: sliderCode},
-  {id: 'separator', title: 'Separator', Demo: SeparatorDemo, code: separatorCode},
+  {
+    id: 'separator',
+    title: 'Separator',
+    Demo: SeparatorDemo,
+    code: separatorCode,
+  },
   {id: 'avatar', title: 'Avatar', Demo: AvatarDemo, code: avatarCode},
   {id: 'toggle', title: 'Toggle', Demo: ToggleDemo, code: toggleCode},
-  {id: 'toggle-group', title: 'Toggle Group', Demo: ToggleGroupDemo, code: toggleGroupCode},
-  {id: 'aspect-ratio', title: 'Aspect Ratio', Demo: AspectRatioDemo, code: aspectRatioCode},
+  {
+    id: 'toggle-group',
+    title: 'Toggle Group',
+    Demo: ToggleGroupDemo,
+    code: toggleGroupCode,
+  },
+  {
+    id: 'aspect-ratio',
+    title: 'Aspect Ratio',
+    Demo: AspectRatioDemo,
+    code: aspectRatioCode,
+  },
   {id: 'alert', title: 'Alert', Demo: AlertDemo, code: alertCode},
   {id: 'table', title: 'Table', Demo: TableDemo, code: tableCode},
-  {id: 'collapsible', title: 'Collapsible', Demo: CollapsibleDemo, code: collapsibleCode},
+  {
+    id: 'collapsible',
+    title: 'Collapsible',
+    Demo: CollapsibleDemo,
+    code: collapsibleCode,
+  },
   {id: 'popover', title: 'Popover', Demo: PopoverDemo, code: popoverCode},
-  {id: 'dropdown-menu', title: 'Dropdown Menu', Demo: DropdownMenuDemo, code: dropdownMenuCode},
+  {
+    id: 'dropdown-menu',
+    title: 'Dropdown Menu',
+    Demo: DropdownMenuDemo,
+    code: dropdownMenuCode,
+  },
   {id: 'form', title: 'Form Integration', Demo: FormDemo, code: formCode},
-  {id: 'scroll-area', title: 'ScrollArea', Demo: ScrollAreaDemo, code: scrollAreaCode},
-  {id: 'alert-dialog', title: 'AlertDialog', Demo: AlertDialogDemo, code: alertDialogCode},
-  {id: 'resizable', title: 'Resizable', Demo: ResizableDemo, code: resizableCode},
+  {
+    id: 'scroll-area',
+    title: 'ScrollArea',
+    Demo: ScrollAreaDemo,
+    code: scrollAreaCode,
+  },
+  {
+    id: 'alert-dialog',
+    title: 'AlertDialog',
+    Demo: AlertDialogDemo,
+    code: alertDialogCode,
+  },
+  {
+    id: 'resizable',
+    title: 'Resizable',
+    Demo: ResizableDemo,
+    code: resizableCode,
+  },
   {id: 'sheet', title: 'Sheet', Demo: SheetDemo, code: sheetCode},
   {id: 'sidebar', title: 'Sidebar', Demo: SidebarDemo, code: sidebarCode},
-  {id: 'breadcrumb', title: 'Breadcrumb', Demo: BreadcrumbDemo, code: breadcrumbCode},
+  {
+    id: 'breadcrumb',
+    title: 'Breadcrumb',
+    Demo: BreadcrumbDemo,
+    code: breadcrumbCode,
+  },
   {id: 'menubar', title: 'Menubar', Demo: MenubarDemo, code: menubarCode},
-  {id: 'navigation-menu', title: 'NavigationMenu', Demo: NavigationMenuDemo, code: navigationMenuCode},
-  {id: 'pagination', title: 'Pagination', Demo: PaginationDemo, code: paginationCode},
+  {
+    id: 'navigation-menu',
+    title: 'NavigationMenu',
+    Demo: NavigationMenuDemo,
+    code: navigationMenuCode,
+  },
+  {
+    id: 'pagination',
+    title: 'Pagination',
+    Demo: PaginationDemo,
+    code: paginationCode,
+  },
   {id: 'combobox', title: 'Combobox', Demo: ComboboxDemo, code: comboboxCode},
-  {id: 'context-menu', title: 'ContextMenu', Demo: ContextMenuDemo, code: contextMenuCode},
+  {
+    id: 'context-menu',
+    title: 'ContextMenu',
+    Demo: ContextMenuDemo,
+    code: contextMenuCode,
+  },
   {id: 'drawer', title: 'Drawer', Demo: DrawerDemo, code: drawerCode},
-  {id: 'hover-card', title: 'HoverCard', Demo: HoverCardDemo, code: hoverCardCode},
+  {
+    id: 'hover-card',
+    title: 'HoverCard',
+    Demo: HoverCardDemo,
+    code: hoverCardCode,
+  },
   {id: 'calendar', title: 'Calendar', Demo: CalendarDemo, code: calendarCode},
   {id: 'carousel', title: 'Carousel', Demo: CarouselDemo, code: carouselCode},
-  {id: 'date-picker', title: 'DatePicker', Demo: DatePickerDemo, code: datePickerCode},
-  {id: 'typography', title: 'Typography', Demo: TypographyDemo, code: typographyCode},
+  {
+    id: 'date-picker',
+    title: 'DatePicker',
+    Demo: DatePickerDemo,
+    code: datePickerCode,
+  },
+  {
+    id: 'typography',
+    title: 'Typography',
+    Demo: TypographyDemo,
+    code: typographyCode,
+  },
 ];
 
 export function App() {
   return (
-    <div style={{display: 'flex', background: 'hsl(var(--p-background))', color: 'hsl(var(--p-foreground))', fontFamily: 'system-ui, sans-serif'}}>
-      <Sidebar style={{height: '100vh', position: 'sticky', top: 0}}>
-        <nav style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
+    <div class="demo-app">
+      <Sidebar>
+        <nav class="nav">
           {examples.map((e) => (
             <a href={`#${e.id}`}>{e.title}</a>
           ))}
         </nav>
       </Sidebar>
-      <main style={{flex: 1, padding: '1rem'}}>
-        <header style={{position: 'sticky', top: 0, background: 'hsl(var(--p-background))', padding: '1rem 0', marginBottom: '1rem'}}>
+      <main>
+        <header class="demo-header">
+          <SidebarTrigger>⟼</SidebarTrigger>
           <h1 style={{margin: 0}}>UI Toolkit Demo</h1>
         </header>
         <ToastContainer />

@@ -1,14 +1,23 @@
 @import "../../variables.css";
 
 [p="context-menu"] {
-  padding: 0.25rem 0;
+  position: fixed;
+  position-anchor: --p-context-menu;
+  left: anchor(left);
+  top: anchor(top);
   margin: 0;
+  margin-left: var(--p-context-menu-x);
+  margin-top: var(--p-context-menu-y);
+  flex-direction: column;
+  padding: 0.25rem 0;
   border: 1px solid hsl(var(--p-border));
   background-color: hsl(var(--p-background));
   border-radius: var(--p-radius);
+  outline: none;
 }
 
 [p="context-menu-item"] {
+  display: block;
   padding: 0.25rem 0.75rem;
   cursor: pointer;
 }

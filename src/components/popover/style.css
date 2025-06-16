@@ -23,7 +23,8 @@
   margin-top: 0.25rem;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   pointer-events: none;
-  animation: popover-show 150ms cubic-bezier(0.4,0,0.2,1);
+  /* animation: popover-show 150ms cubic-bezier(0.4,0,0.2,1); */
+  animation: popover-show 200ms var(--p-ease);
   z-index: 10;
 }
 
@@ -37,6 +38,6 @@
 @keyframes popover-show {
   from {
     opacity: 0;
-    transform: translateX(var(--tf-x)) scale(0.95);
+    transform: translateX(var(--tf-x)) scale(0.9);
   }
 }
