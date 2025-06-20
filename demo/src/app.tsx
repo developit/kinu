@@ -86,7 +86,61 @@ interface Example {
   id: string;
   title: string;
   Demo: () => JSX.Element;
-  code: string;
+  code?: string;
+}
+
+function PropDocs() {
+  return (
+    <div class="prop-docs">
+      <p>
+        This page lists key props for common components in the UI toolkit. All
+        components forward standard HTML attributes and custom props for
+        styling.
+      </p>
+      <h3>Button</h3>
+      <ul>
+        <li>
+          <code>variant</code> — <code>primary</code> (default),{' '}
+          <code>secondary</code>, <code>outline</code>, <code>destructive</code>,{' '}
+          <code>ghost</code>, <code>link</code>
+        </li>
+        <li>
+          <code>size</code> — <code>sm</code>, <code>md</code> (default),{' '}
+          <code>lg</code>, <code>icon</code>
+        </li>
+        <li>
+          <code>loading</code> — disables interaction and lowers opacity
+        </li>
+        <li>
+          <code>disabled</code> — native attribute forwarded as-is
+        </li>
+      </ul>
+      <h3>Badge</h3>
+      <ul>
+        <li>
+          <code>variant</code> — <code>secondary</code>, <code>destructive</code>,{' '}
+          <code>outline</code> (default is primary)
+        </li>
+      </ul>
+      <h3>Input</h3>
+      <ul>
+        <li>
+          <code>size</code> — <code>sm</code>, <code>md</code> (default),{' '}
+          <code>lg</code>
+        </li>
+        <li>
+          <code>invalid</code> — forces invalid style
+        </li>
+        <li>
+          <code>disabled</code> — native attribute
+        </li>
+      </ul>
+      <p>
+        All other props are passed directly to the underlying HTML element so
+        you can use standard DOM attributes.
+      </p>
+    </div>
+  );
 }
 
 function BadgeDemo() {
@@ -886,6 +940,7 @@ function TypographyDemo() {
 const typographyCode = `<h1>h1 Heading</h1>`;
 
 const examples: Example[] = [
+  {id: 'props', title: 'Prop Reference', Demo: PropDocs},
   {id: 'badge', title: 'Badge', Demo: BadgeDemo, code: badgeCode},
   {id: 'progress', title: 'Progress', Demo: ProgressDemo, code: progressCode},
   {id: 'skeleton', title: 'Skeleton', Demo: SkeletonDemo, code: skeletonCode},
@@ -1038,7 +1093,7 @@ export function App() {
             <Card>
               <h2>{title}</h2>
               <Demo />
-              <CodeBlock code={code} />
+              {code && <CodeBlock code={code} />}
             </Card>
           </section>
         ))}

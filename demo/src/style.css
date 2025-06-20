@@ -5,8 +5,11 @@ body {
   background: hsl(var(--p-background));
   color: hsl(var(--p-foreground));
   font-family: system-ui, sans-serif;
+  width: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
+  min-height: 100%;
 }
 
 .demo-app {
@@ -16,6 +19,8 @@ body {
 .demo-app > main {
   flex: 1;
   padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .demo-header {
@@ -24,24 +29,38 @@ body {
   display: flex;
   gap: 1rem;
   margin: -1rem -1rem 0;
-  background: hsla(0, 0%, 95%, 0.95);
-  backdrop-filter: blur(2px);
+  background: linear-gradient(90deg, hsl(var(--p-primary)), hsl(var(--p-accent)));
+  color: hsl(var(--p-primary-foreground));
   padding: 1rem;
+  border-bottom: 1px solid hsl(var(--p-border));
+  font-weight: 600;
   z-index: 100;
 }
 
 .nav {
   margin: 0 -1rem;
   padding: 0;
+  min-width: 12rem;
+  border-right: 1px solid hsl(var(--p-border));
+  background: #fff;
+  position: sticky;
+  top: 4rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
 }
 .nav a {
   display: block;
-  padding: .35rem .5rem;
-  color: #000;
+  padding: 0.35rem 0.75rem;
+  color: inherit;
   text-decoration: none;
+  border-left: 3px solid transparent;
 }
 .nav a:hover {
-  background: #ddd;
+  background: hsl(var(--p-muted));
+}
+.nav a:focus {
+  outline: 2px solid hsl(var(--p-primary));
+  outline-offset: -2px;
 }
 
 h2 {
@@ -50,9 +69,16 @@ h2 {
 
 pre.code-block {
   background: #f2f3f6;
-  padding: .75rem 1rem;
-  border-radius: .35rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.35rem;
   overflow-x: auto;
+  font-family: SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+}
+
+.prop-docs ul {
+  margin: 0 0 1rem 0;
+  padding-left: 1.25rem;
+  line-height: 1.4;
 }
 
 .h-resize {
@@ -61,4 +87,8 @@ pre.code-block {
   padding: 0 14px 0 0;
   resize: horizontal;
   max-width: 100%;
+}
+
+.prop-docs h3 {
+  margin: 1rem 0 0.5rem;
 }

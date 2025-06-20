@@ -121,6 +121,10 @@ export const Button = createSimpleComponent('button', 'button');
 - **DatePicker**: Simple date input
 - **Typography**: Base text styles
 
+## Prop Reference
+
+Open the demo (`demo/index.html`) and navigate to **Prop Reference** in the sidebar for a quick lookup of common component attributes.
+
 ## Quick Start
 
 ```bash
