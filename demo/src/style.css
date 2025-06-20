@@ -12,16 +12,14 @@ body {
   min-height: 100%;
 }
 
+
 .demo-app {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .demo-app > main {
   flex: 1;
   padding: 1rem;
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 .demo-header {
