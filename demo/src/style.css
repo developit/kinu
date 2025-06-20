@@ -5,8 +5,6 @@ body {
   background: hsl(var(--p-background));
   color: hsl(var(--p-foreground));
   font-family: system-ui, sans-serif;
-  width: 100%;
-  overflow-x: hidden;
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
   min-height: 100%;
@@ -15,6 +13,7 @@ body {
 
 .demo-app {
   display: flex;
+  overflow-x: hidden;
 }
 
 .demo-app > main {
@@ -28,7 +27,7 @@ body {
   display: flex;
   gap: 1rem;
   margin: 0 0 1rem;
-  background: linear-gradient(90deg, hsl(var(--p-primary)), hsl(var(--p-accent)));
+  background: hsl(var(--p-primary));
   color: hsl(var(--p-primary-foreground));
   padding: 1rem;
   border-bottom: 1px solid hsl(var(--p-border));
