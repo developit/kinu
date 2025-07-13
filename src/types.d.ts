@@ -4,6 +4,7 @@ declare global {
   namespace preact.JSX {
     interface HTMLAttributes {
       p?: string; // Custom attribute for styling or identification
+      pi?: string; // Component instance identifier
     }
   }
 

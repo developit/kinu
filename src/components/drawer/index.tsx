@@ -1,51 +1,59 @@
-import {
-  createContext,
-  createRef,
-  type ComponentChildren,
-  type RefObject,
-} from 'preact';
-import {useRef, useContext} from 'preact/hooks';
+import {type ComponentChildren} from 'preact';
+import {useId} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {closestFromEvent} from '../../lib/dom';
 import './style.css';
 
-const DrawerCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
-
 export function Drawer({children}: {children: ComponentChildren}) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  return <DrawerCtx.Provider value={dialogRef}>{children}</DrawerCtx.Provider>;
-}
-
-export function DrawerTrigger({children}: JSX.ElementChildrenAttribute) {
-  const dialogRef = useContext(DrawerCtx);
-  const handleClick = () => dialogRef.current?.showModal();
-  return applyPropsToChildren(children, {onClick: handleClick});
-}
-
-function drawerBackdropClick(e: MouseEvent) {
-  const dialog = e.currentTarget as HTMLDialogElement;
-  if (e.target === dialog) dialog.close();
-}
-
-export function DrawerContent(props: JSX.IntrinsicElements['dialog']) {
-  const dialogRef = useContext(DrawerCtx);
+  const id = useId();
   return (
-    <dialog
-      p="drawer-content"
-      {...props}
-      ref={dialogRef}
-      onClickCapture={drawerBackdropClick}
-    />
+    <div p="drawer" pi={id}>
+      {children}
+    </div>
   );
 }
 
+export function DrawerTrigger({children}: JSX.ElementChildrenAttribute) {
+  return applyPropsToChildren(children, {"data-drawer-trigger": ''});
+}
+
+export function DrawerContent(props: JSX.IntrinsicElements['dialog']) {
+  return <dialog p="drawer-content" {...props} />;
+}
+
 export function DrawerClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {
-    onClick: (e: Event) => {
-      (e.currentTarget as HTMLButtonElement).closest('dialog')?.close();
-    },
-  });
+  return applyPropsToChildren(children, {"data-drawer-close": ''});
 }
 
 Drawer.Trigger = DrawerTrigger;
 Drawer.Content = DrawerContent;
 Drawer.Close = DrawerClose;
+
+addEventListener('click', (e) => {
+  const trigger = closestFromEvent<HTMLElement>(e, '[data-drawer-trigger]');
+  if (!trigger) return;
+  const root = trigger.closest('[p="drawer"]');
+  const dialog = root?.querySelector('[p="drawer-content"]') as
+    | HTMLDialogElement
+    | null;
+  dialog?.showModal();
+});
+
+addEventListener('click', (e) => {
+  const closeEl = closestFromEvent<HTMLElement>(e, '[data-drawer-close]');
+  if (!closeEl) return;
+  closeEl.closest('dialog')?.close();
+});
+
+addEventListener(
+  'click',
+  (e) => {
+    const dialog = closestFromEvent<HTMLDialogElement>(
+      e,
+      '[p="drawer-content"]',
+    );
+    if (!dialog || e.target !== dialog) return;
+    (dialog as HTMLDialogElement).close();
+  },
+  true,
+);
