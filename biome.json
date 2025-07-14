@@ -26,6 +26,7 @@
       "style": {
         "noParameterAssign": "off",
         "useTemplate": "off",
+        "noUnusedTemplateLiteral": "off",
         "noNonNullAssertion": "off"
       },
       "suspicious": {

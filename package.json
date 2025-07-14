@@ -9,13 +9,15 @@
   "sideEffects": false,
   "exports": {
     ".": {
+      "style": "./dist/index.css",
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "import": "./dist/index.js"
-    }
+      "default": "./dist/index.js"
+    },
+    "./*.css": "./dist/*.css"
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "tsc && microbundle -f modern && vite build",
     "dev": "vite build --watch"
   },
   "peerDependencies": {
@@ -25,16 +27,12 @@
     "@biomejs/biome": "^1.9.4",
     "@preact/preset-vite": "^2.10.1",
     "@types/node": "^22.15.30",
+    "microbundle": "^0.15.1",
     "preact": "^10.26.9",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   },
-  "keywords": [
-    "preact",
-    "ui",
-    "ui-toolkit",
-    "pui"
-  ],
+  "keywords": ["preact", "ui", "ui-toolkit", "pui"],
   "author": "",
   "license": "MIT"
 }

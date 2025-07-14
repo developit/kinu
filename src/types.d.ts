@@ -12,4 +12,10 @@ declare global {
   }
 }
 
+declare global {
+  interface CSSStyleDeclaration {
+    anchorName?: string;
+  }
+}
+
 // export {};
