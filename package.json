@@ -17,7 +17,8 @@
     "./*.css": "./dist/*.css"
   },
   "scripts": {
-    "build": "tsc && microbundle -f modern && vite build",
+    "build": "microbundle -f modern && vite build",
+    "lint": "tsc && biome lint",
     "dev": "vite build --watch"
   },
   "peerDependencies": {

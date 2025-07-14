@@ -18,7 +18,8 @@
     "rules": {
       "correctness": {
         "useJsxKeyInIterable": "off",
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "noUnknownProperty": "off"
       },
       "complexity": {
         "noForEach": "warn"
