@@ -2,7 +2,7 @@ import {type ComponentChildren} from 'preact';
 import {useId} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {createSimpleComponent} from '../../lib/create-simple-component';
-import {closestFromEvent} from '../../lib/dom';
+import {delegate} from '../../lib/dom';
 import './style.css';
 
 export function DropdownMenu({children}: {children: ComponentChildren}) {
@@ -15,7 +15,7 @@ export function DropdownMenu({children}: {children: ComponentChildren}) {
 }
 
 export function DropdownMenuTrigger({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-dropdown-trigger": ''});
+  return applyPropsToChildren(children, {p: 'dropdown-trigger'});
 }
 
 addEventListener(
@@ -43,9 +43,7 @@ export const DropdownMenuItem = createSimpleComponent(
   'button',
 );
 
-addEventListener('click', (e) => {
-  const trigger = closestFromEvent<HTMLElement>(e, '[data-dropdown-trigger]');
-  if (!trigger) return;
+delegate('click', 'dropdown-trigger', (trigger) => {
   const root = trigger.closest('[p="dropdown"]');
   const dialog = root?.querySelector('[p="dropdown-content"]') as
     | HTMLDialogElement

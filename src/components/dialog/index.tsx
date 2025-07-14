@@ -1,7 +1,7 @@
 import {type ComponentChildren} from 'preact';
 import {useId} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {closestFromEvent} from '../../lib/dom';
+import {delegate} from '../../lib/dom';
 import './style.css';
 
 export function Dialog({children}: {children: ComponentChildren}) {
@@ -14,7 +14,7 @@ export function Dialog({children}: {children: ComponentChildren}) {
 }
 
 export function DialogTrigger({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-dialog-trigger": ''});
+  return applyPropsToChildren(children, {p: 'dialog-trigger'});
 }
 
 export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
@@ -22,16 +22,14 @@ export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
 }
 
 export function DialogClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-dialog-close": ''});
+  return applyPropsToChildren(children, {p: 'dialog-close'});
 }
 
 Dialog.Trigger = DialogTrigger;
 Dialog.Content = DialogContent;
 Dialog.Close = DialogClose;
 
-addEventListener('click', (e) => {
-  const trigger = closestFromEvent<HTMLElement>(e, '[data-dialog-trigger]');
-  if (!trigger) return;
+delegate('click', 'dialog-trigger', (trigger) => {
   const root = trigger.closest('[p="dialog"]');
   const dialog = root?.querySelector('[p="dialog-content"]') as
     | HTMLDialogElement
@@ -39,22 +37,21 @@ addEventListener('click', (e) => {
   dialog?.showModal();
 });
 
-addEventListener('click', (e) => {
-  const closeEl = closestFromEvent<HTMLElement>(e, '[data-dialog-close]');
-  if (!closeEl) return;
-  closeEl.closest('dialog')?.close();
+delegate('click', 'dialog-close', (btn) => {
+  btn.closest('dialog')?.close();
 });
 
-addEventListener(
+delegate<HTMLDialogElement>(
   'mouseup',
-  (e) => {
-    const dialog = closestFromEvent<HTMLDialogElement>(e, '[p="dialog-content"]');
-    if (!dialog || e.target !== dialog) return;
+  'dialog-content',
+  (dialog, e) => {
+    if (e.target !== dialog) return;
     const {clientX, clientY} = e as MouseEvent;
     const {left, right, top, bottom} = dialog.getBoundingClientRect();
     if (clientX < left || clientX > right || clientY < top || clientY > bottom) {
-      (dialog as HTMLDialogElement).close();
+      dialog.close();
     }
   },
-  true,
+  undefined,
+  {capture: true},
 );

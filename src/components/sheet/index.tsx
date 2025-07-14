@@ -1,7 +1,7 @@
 import {type ComponentChildren} from 'preact';
 import {useId} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {closestFromEvent} from '../../lib/dom';
+import {delegate} from '../../lib/dom';
 import './style.css';
 
 export function Sheet({children}: {children: ComponentChildren}) {
@@ -14,7 +14,7 @@ export function Sheet({children}: {children: ComponentChildren}) {
 }
 
 export function SheetTrigger({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-sheet-trigger": ''});
+  return applyPropsToChildren(children, {p: 'sheet-trigger'});
 }
 
 export function SheetContent(props: JSX.IntrinsicElements['dialog']) {
@@ -22,16 +22,14 @@ export function SheetContent(props: JSX.IntrinsicElements['dialog']) {
 }
 
 export function SheetClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-sheet-close": ''});
+  return applyPropsToChildren(children, {p: 'sheet-close'});
 }
 
 Sheet.Trigger = SheetTrigger;
 Sheet.Content = SheetContent;
 Sheet.Close = SheetClose;
 
-addEventListener('click', (e) => {
-  const trigger = closestFromEvent<HTMLElement>(e, '[data-sheet-trigger]');
-  if (!trigger) return;
+delegate('click', 'sheet-trigger', (trigger) => {
   const root = trigger.closest('[p="sheet"]');
   const dialog = root?.querySelector('[p="sheet-content"]') as
     | HTMLDialogElement
@@ -39,18 +37,17 @@ addEventListener('click', (e) => {
   dialog?.showModal();
 });
 
-addEventListener('click', (e) => {
-  const closeEl = closestFromEvent<HTMLElement>(e, '[data-sheet-close]');
-  if (!closeEl) return;
-  closeEl.closest('dialog')?.close();
+delegate('click', 'sheet-close', (btn) => {
+  btn.closest('dialog')?.close();
 });
 
-addEventListener(
+delegate<HTMLDialogElement>(
   'click',
-  (e) => {
-    const dialog = closestFromEvent<HTMLDialogElement>(e, '[p="sheet-content"]');
-    if (!dialog || e.target !== dialog) return;
-    (dialog as HTMLDialogElement).close();
+  'sheet-content',
+  (dialog, e) => {
+    if (e.target !== dialog) return;
+    dialog.close();
   },
-  true,
+  undefined,
+  {capture: true},
 );

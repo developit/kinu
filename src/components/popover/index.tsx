@@ -1,7 +1,7 @@
 import {type ComponentChildren} from 'preact';
 import {useId} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {closestFromEvent} from '../../lib/dom';
+import {delegate} from '../../lib/dom';
 import './style.css';
 
 export function Popover({children}: {children: ComponentChildren}) {
@@ -14,7 +14,7 @@ export function Popover({children}: {children: ComponentChildren}) {
 }
 
 export function PopoverTrigger({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-popover-trigger": ''});
+  return applyPropsToChildren(children, {p: 'popover-trigger'});
 }
 
 addEventListener(
@@ -38,12 +38,10 @@ export function PopoverContent(props: JSX.IntrinsicElements['dialog']) {
 }
 
 export function PopoverClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-popover-close": ''});
+  return applyPropsToChildren(children, {p: 'popover-close'});
 }
 
-addEventListener('click', (e) => {
-  const trigger = closestFromEvent<HTMLElement>(e, '[data-popover-trigger]');
-  if (!trigger) return;
+delegate('click', 'popover-trigger', (trigger) => {
   const root = trigger.closest('[p="popover"]');
   const dialog = root?.querySelector('[p="popover-content"]') as
     | HTMLDialogElement
@@ -51,8 +49,6 @@ addEventListener('click', (e) => {
   dialog?.show();
 });
 
-addEventListener('click', (e) => {
-  const closeEl = closestFromEvent<HTMLElement>(e, '[data-popover-close]');
-  if (!closeEl) return;
-  closeEl.closest('dialog')?.close();
+delegate('click', 'popover-close', (btn) => {
+  btn.closest('dialog')?.close();
 });

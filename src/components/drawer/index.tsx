@@ -1,7 +1,7 @@
 import {type ComponentChildren} from 'preact';
 import {useId} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {closestFromEvent} from '../../lib/dom';
+import {delegate} from '../../lib/dom';
 import './style.css';
 
 export function Drawer({children}: {children: ComponentChildren}) {
@@ -14,7 +14,7 @@ export function Drawer({children}: {children: ComponentChildren}) {
 }
 
 export function DrawerTrigger({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-drawer-trigger": ''});
+  return applyPropsToChildren(children, {p: 'drawer-trigger'});
 }
 
 export function DrawerContent(props: JSX.IntrinsicElements['dialog']) {
@@ -22,16 +22,14 @@ export function DrawerContent(props: JSX.IntrinsicElements['dialog']) {
 }
 
 export function DrawerClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {"data-drawer-close": ''});
+  return applyPropsToChildren(children, {p: 'drawer-close'});
 }
 
 Drawer.Trigger = DrawerTrigger;
 Drawer.Content = DrawerContent;
 Drawer.Close = DrawerClose;
 
-addEventListener('click', (e) => {
-  const trigger = closestFromEvent<HTMLElement>(e, '[data-drawer-trigger]');
-  if (!trigger) return;
+delegate('click', 'drawer-trigger', (trigger) => {
   const root = trigger.closest('[p="drawer"]');
   const dialog = root?.querySelector('[p="drawer-content"]') as
     | HTMLDialogElement
@@ -39,21 +37,17 @@ addEventListener('click', (e) => {
   dialog?.showModal();
 });
 
-addEventListener('click', (e) => {
-  const closeEl = closestFromEvent<HTMLElement>(e, '[data-drawer-close]');
-  if (!closeEl) return;
-  closeEl.closest('dialog')?.close();
+delegate('click', 'drawer-close', (btn) => {
+  btn.closest('dialog')?.close();
 });
 
-addEventListener(
+delegate<HTMLDialogElement>(
   'click',
-  (e) => {
-    const dialog = closestFromEvent<HTMLDialogElement>(
-      e,
-      '[p="drawer-content"]',
-    );
-    if (!dialog || e.target !== dialog) return;
-    (dialog as HTMLDialogElement).close();
+  'drawer-content',
+  (dialog, e) => {
+    if (e.target !== dialog) return;
+    dialog.close();
   },
-  true,
+  undefined,
+  {capture: true},
 );
