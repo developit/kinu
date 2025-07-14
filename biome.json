@@ -18,7 +18,8 @@
     "rules": {
       "correctness": {
         "useJsxKeyInIterable": "off",
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "noUnknownProperty": "off"
       },
       "complexity": {
         "noForEach": "warn"
@@ -26,6 +27,7 @@
       "style": {
         "noParameterAssign": "off",
         "useTemplate": "off",
+        "noUnusedTemplateLiteral": "off",
         "noNonNullAssertion": "off"
       },
       "suspicious": {
