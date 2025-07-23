@@ -9,7 +9,7 @@ export function DropdownMenu({children}: {children: ComponentChildren}) {
   const id = useId();
   return (
     <span p="dropdown" pi={id}>
-      {applyPropsToChildren(children, {pi: id})}
+      {children}
     </span>
   );
 }
@@ -44,10 +44,7 @@ export const DropdownMenuItem = createSimpleComponent(
 );
 
 delegate('click', 'dropdown-trigger', (trigger) => {
-  const id = trigger.getAttribute('pi');
-  if (!id) return;
-  const dialog = document.querySelector(
-    `[pi="${id}"][p="dropdown-content"]`,
-  ) as HTMLDialogElement | null;
+  const root = trigger.closest('[pi]');
+  const dialog = root?.querySelector('[p="dropdown-content"]') as HTMLDialogElement | null;
   dialog?.show();
 });

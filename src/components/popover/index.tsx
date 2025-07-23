@@ -8,7 +8,7 @@ export function Popover({children}: {children: ComponentChildren}) {
   const id = useId();
   return (
     <span p="popover" pi={id}>
-      {applyPropsToChildren(children, {pi: id})}
+      {children}
     </span>
   );
 }
@@ -42,11 +42,8 @@ export function PopoverClose({children, ...props}: JSX.ElementChildrenAttribute 
 }
 
 delegate('click', 'popover-trigger', (trigger) => {
-  const id = trigger.getAttribute('pi');
-  if (!id) return;
-  const dialog = document.querySelector(
-    `[pi="${id}"][p="popover-content"]`,
-  ) as HTMLDialogElement | null;
+  const root = trigger.closest('[pi]');
+  const dialog = root?.querySelector('[p="popover-content"]') as HTMLDialogElement | null;
   dialog?.show();
 });
 

@@ -8,7 +8,7 @@ export function Sheet({children}: {children: ComponentChildren}) {
   const id = useId();
   return (
     <div p="sheet" pi={id}>
-      {applyPropsToChildren(children, {pi: id})}
+      {children}
     </div>
   );
 }
@@ -30,11 +30,8 @@ Sheet.Content = SheetContent;
 Sheet.Close = SheetClose;
 
 delegate('click', 'sheet-trigger', (trigger) => {
-  const id = trigger.getAttribute('pi');
-  if (!id) return;
-  const dialog = document.querySelector(
-    `[pi="${id}"][p="sheet-content"]`,
-  ) as HTMLDialogElement | null;
+  const root = trigger.closest('[pi]');
+  const dialog = root?.querySelector('[p="sheet-content"]') as HTMLDialogElement | null;
   dialog?.showModal();
 });
 

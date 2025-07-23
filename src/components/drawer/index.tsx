@@ -8,7 +8,7 @@ export function Drawer({children}: {children: ComponentChildren}) {
   const id = useId();
   return (
     <div p="drawer" pi={id}>
-      {applyPropsToChildren(children, {pi: id})}
+      {children}
     </div>
   );
 }
@@ -30,11 +30,8 @@ Drawer.Content = DrawerContent;
 Drawer.Close = DrawerClose;
 
 delegate('click', 'drawer-trigger', (trigger) => {
-  const id = trigger.getAttribute('pi');
-  if (!id) return;
-  const dialog = document.querySelector(
-    `[pi="${id}"][p="drawer-content"]`,
-  ) as HTMLDialogElement | null;
+  const root = trigger.closest('[pi]');
+  const dialog = root?.querySelector('[p="drawer-content"]') as HTMLDialogElement | null;
   dialog?.showModal();
 });
 

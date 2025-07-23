@@ -2,8 +2,10 @@ export function closestFromEvent<T extends Element>(
   event: Event,
   selector: string,
 ): T | null {
-  const target = event.target as Element | null;
-  return target ? (target.closest(selector) as T | null) : null;
+  const node = event.target as Node | null;
+  const el =
+    node instanceof Element ? node : node?.parentElement ?? null;
+  return el ? (el.closest(selector) as T | null) : null;
 }
 
 export function delegate<T extends Element>(

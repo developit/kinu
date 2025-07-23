@@ -8,7 +8,7 @@ export function Dialog({children}: {children: ComponentChildren}) {
   const id = useId();
   return (
     <div p="dialog" pi={id}>
-      {applyPropsToChildren(children, {pi: id})}
+      {children}
     </div>
   );
 }
@@ -30,11 +30,8 @@ Dialog.Content = DialogContent;
 Dialog.Close = DialogClose;
 
 delegate('click', 'dialog-trigger', (trigger) => {
-  const id = trigger.getAttribute('pi');
-  if (!id) return;
-  const dialog = document.querySelector(
-    `[pi="${id}"][p="dialog-content"]`,
-  ) as HTMLDialogElement | null;
+  const root = trigger.closest('[pi]');
+  const dialog = root?.querySelector('[p="dialog-content"]') as HTMLDialogElement | null;
   dialog?.showModal();
 });
 
