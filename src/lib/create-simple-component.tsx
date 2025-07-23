@@ -48,7 +48,8 @@ export function createSimpleComponent<
       normalizedProps.ref =
         this.$_ref || (this.$_ref = proxyRef.bind(props.ref as any) as any);
     }
-    (normalizedProps as any).p = name;
+    const existing = (normalizedProps as any).p;
+    (normalizedProps as any).p = existing ? `${existing} ${name}` : name;
     return h(tag, normalizedProps);
   }
 
