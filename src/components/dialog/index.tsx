@@ -1,57 +1,55 @@
-import {
-  createContext,
-  createRef,
-  type ComponentChildren,
-  type RefObject,
-} from 'preact';
-import {useRef, useContext} from 'preact/hooks';
+import {type ComponentChildren} from 'preact';
+import {useId} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {delegate} from '../../lib/dom';
 import './style.css';
 
-const DialogCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
-
 export function Dialog({children}: {children: ComponentChildren}) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  return <DialogCtx.Provider value={dialogRef}>{children}</DialogCtx.Provider>;
-}
-
-export function DialogTrigger({children}: JSX.ElementChildrenAttribute) {
-  const dialogRef = useContext(DialogCtx);
-  const handleClick = () => dialogRef.current?.showModal();
-  return applyPropsToChildren(children, {onClick: handleClick});
-}
-
-function dialogBackdropClick(e: MouseEvent) {
-  const dialog = e.currentTarget as HTMLDialogElement;
-  if (e.target !== dialog) return;
-  const {clientX, clientY} = e;
-  const {left, right, top, bottom} = dialog.getBoundingClientRect();
-  if (clientX < left || clientX > right || clientY < top || clientY > bottom) {
-    dialog.close();
-  }
-}
-
-export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
-  const dialogRef = useContext(DialogCtx);
+  const id = useId();
   return (
-    <dialog
-      p="dialog-content"
-      {...props}
-      ref={dialogRef}
-      onMouseUpCapture={dialogBackdropClick}
-    />
+    <div p="dialog" pi={id}>
+      {children}
+    </div>
   );
 }
 
-function dialogCloseClick(e: Event) {
-  (e.currentTarget as HTMLButtonElement).closest('dialog')?.close();
+export function DialogTrigger({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  return applyPropsToChildren(children, {...props, pa: 'dialog-trigger'});
 }
 
-export function DialogClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {onClick: dialogCloseClick});
+export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
+  return <dialog p="dialog-content" {...props} />;
 }
 
-// Attach compound components
+export function DialogClose({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  return applyPropsToChildren(children, {...props, pa: 'dialog-close'});
+}
+
 Dialog.Trigger = DialogTrigger;
 Dialog.Content = DialogContent;
 Dialog.Close = DialogClose;
+
+delegate('click', 'dialog-trigger', (trigger) => {
+  const root = trigger.closest('[pi]');
+  const dialog = root?.querySelector('[p="dialog-content"]') as HTMLDialogElement | null;
+  dialog?.showModal();
+});
+
+delegate('click', 'dialog-close', (btn) => {
+  btn.closest('dialog')?.close();
+});
+
+delegate<HTMLDialogElement>(
+  'mouseup',
+  'dialog-content',
+  (dialog, e) => {
+    if (e.target !== dialog) return;
+    const {clientX, clientY} = e as MouseEvent;
+    const {left, right, top, bottom} = dialog.getBoundingClientRect();
+    if (clientX < left || clientX > right || clientY < top || clientY > bottom) {
+      dialog.close();
+    }
+  },
+  undefined,
+  {capture: true},
+);
