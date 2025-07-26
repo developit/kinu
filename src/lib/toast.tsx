@@ -33,7 +33,7 @@ export function ToastContainer() {
     const handler = (e: Event) => {
       const item = (e as CustomEvent<ToastInternal>).detail;
       item.id = nextId++;
-      setToasts((t) => [...t.slice(-3), item]);
+      setToasts((t) => t.slice(-3).concat(item));
       // allow CSS transitions to apply
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {

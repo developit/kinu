@@ -7,7 +7,7 @@ function handleContextMenu(e: MouseEvent) {
   e.preventDefault();
   const el = e.currentTarget as HTMLElement;
   el.style.anchorName = '--p-context-menu';
-  const parent = el.parentNode;
+  const parent = el.parentNode as HTMLElement;
   const rect = el.getBoundingClientRect();
   parent.style.setProperty('--p-context-menu-x', `${e.clientX - rect.x}px`);
   parent.style.setProperty('--p-context-menu-y', `${e.clientY - rect.y}px`);
@@ -44,5 +44,5 @@ export const ContextMenuContent = createSimpleComponent(
 
 export const ContextMenuItem = createSimpleComponent(
   'context-menu-item',
-  'menuitem',
+  // 'menuitem',
 );

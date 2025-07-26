@@ -583,8 +583,8 @@ function DropdownMenuDemo() {
 const dropdownMenuCode = `<DropdownMenu>...</DropdownMenu>`;
 
 function FormDemo() {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [email, _setEmail] = useState('');
+  const [name, _setName] = useState('');
   return (
     <div>
       <p>

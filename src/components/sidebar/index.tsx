@@ -6,10 +6,10 @@ export const SidebarTrigger = createSimpleComponent(
   'button',
   {},
   (el: HTMLButtonElement) => {
-    function click(e: MouseEvent) {
-      let node = el;
+    function click(_e: MouseEvent) {
+      let node: Node | null = el;
       while (node) {
-        const sidebar = node.querySelector?.('[p="sidebar"]');
+        const sidebar = (node as Element).querySelector?.('[p="sidebar"]');
         if (sidebar) {
           sidebar.setAttribute('open', '');
           return;
