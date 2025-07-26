@@ -1,21 +1,28 @@
-import {type ComponentChildren} from 'preact';
-import {useId} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {createSimpleComponent} from '../../lib/create-simple-component';
-import {delegate} from '../../lib/dom';
 import './style.css';
 
-export function DropdownMenu({children}: {children: ComponentChildren}) {
-  const id = useId();
+const IdCtx = createContext<string | undefined>(undefined);
+
+export function DropdownMenu({id: idProp, children}: {id?: string; children: ComponentChildren}) {
+  const gen = useId();
+  const id = idProp ?? gen;
   return (
-    <span p="dropdown" pi={id}>
-      {children}
-    </span>
+    <IdCtx.Provider value={id}>
+      <span p="dropdown">{children}</span>
+    </IdCtx.Provider>
   );
 }
 
 export function DropdownMenuTrigger({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
-  return applyPropsToChildren(children, {...props, pa: 'dropdown-trigger'});
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'show',
+  });
 }
 
 addEventListener(
@@ -34,17 +41,12 @@ addEventListener(
   true,
 );
 
-export function DropdownMenuContent(props: JSX.IntrinsicElements['dialog']) {
-  return <dialog p="dropdown-content" {...props} />;
+export function DropdownMenuContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return <dialog p="dropdown-content" id={id ?? ctx} {...props} />;
 }
 
 export const DropdownMenuItem = createSimpleComponent(
   'dropdown-menu-item',
   'button',
 );
-
-delegate('click', 'dropdown-trigger', (trigger) => {
-  const root = trigger.closest('[pi]');
-  const dialog = root?.querySelector('[p="dropdown-content"]') as HTMLDialogElement | null;
-  dialog?.show();
-});

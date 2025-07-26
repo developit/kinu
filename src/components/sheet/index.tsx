@@ -1,51 +1,44 @@
-import {type ComponentChildren} from 'preact';
-import {useId} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {delegate} from '../../lib/dom';
 import './style.css';
 
-export function Sheet({children}: {children: ComponentChildren}) {
-  const id = useId();
+const IdCtx = createContext<string | undefined>(undefined);
+
+export function Sheet({id: idProp, children}: {id?: string; children: ComponentChildren}) {
+  const gen = useId();
+  const id = idProp ?? gen;
   return (
-    <div p="sheet" pi={id}>
-      {children}
-    </div>
+    <IdCtx.Provider value={id}>
+      <div p="sheet">{children}</div>
+    </IdCtx.Provider>
   );
 }
 
 export function SheetTrigger({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
-  return applyPropsToChildren(children, {...props, pa: 'sheet-trigger'});
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'show-modal',
+  });
 }
 
-export function SheetContent(props: JSX.IntrinsicElements['dialog']) {
-  return <dialog p="sheet-content" {...props} />;
+export function SheetContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return <dialog p="sheet-content" id={id ?? ctx} {...props} />;
 }
 
 export function SheetClose({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
-  return applyPropsToChildren(children, {...props, pa: 'sheet-close'});
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'close',
+  });
 }
 
 Sheet.Trigger = SheetTrigger;
 Sheet.Content = SheetContent;
 Sheet.Close = SheetClose;
 
-delegate('click', 'sheet-trigger', (trigger) => {
-  const root = trigger.closest('[pi]');
-  const dialog = root?.querySelector('[p="sheet-content"]') as HTMLDialogElement | null;
-  dialog?.showModal();
-});
-
-delegate('click', 'sheet-close', (btn) => {
-  btn.closest('dialog')?.close();
-});
-
-delegate<HTMLDialogElement>(
-  'click',
-  'sheet-content',
-  (dialog, e) => {
-    if (e.target !== dialog) return;
-    dialog.close();
-  },
-  undefined,
-  {capture: true},
-);

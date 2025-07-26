@@ -1,3 +1,4 @@
+import "./lib/commands";
 export {Badge} from './components/badge';
 export {Button} from './components/button';
 export {Input} from './components/input';

@@ -1,20 +1,27 @@
-import {type ComponentChildren} from 'preact';
-import {useId} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {delegate} from '../../lib/dom';
 import './style.css';
 
-export function Popover({children}: {children: ComponentChildren}) {
-  const id = useId();
+const IdCtx = createContext<string | undefined>(undefined);
+
+export function Popover({id: idProp, children}: {id?: string; children: ComponentChildren}) {
+  const gen = useId();
+  const id = idProp ?? gen;
   return (
-    <span p="popover" pi={id}>
-      {children}
-    </span>
+    <IdCtx.Provider value={id}>
+      <span p="popover">{children}</span>
+    </IdCtx.Provider>
   );
 }
 
 export function PopoverTrigger({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
-  return applyPropsToChildren(children, {...props, pa: 'popover-trigger'});
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'show',
+  });
 }
 
 addEventListener(
@@ -33,20 +40,17 @@ addEventListener(
   true,
 );
 
-export function PopoverContent(props: JSX.IntrinsicElements['dialog']) {
-  return <dialog p="popover-content" {...props} />;
+export function PopoverContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return <dialog p="popover-content" id={id ?? ctx} {...props} />;
 }
 
 export function PopoverClose({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
-  return applyPropsToChildren(children, {...props, pa: 'popover-close'});
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'close',
+  });
 }
 
-delegate('click', 'popover-trigger', (trigger) => {
-  const root = trigger.closest('[pi]');
-  const dialog = root?.querySelector('[p="popover-content"]') as HTMLDialogElement | null;
-  dialog?.show();
-});
-
-delegate('click', 'popover-close', (btn) => {
-  btn.closest('dialog')?.close();
-});
