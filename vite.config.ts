@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import {resolve} from 'node:path';
+import pkg from './package.json';
 
 export default defineConfig({
   build: {
@@ -10,7 +11,14 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['preact'],
+      external(id, importer) {
+        const pfx = id.match(/^(@?[^/]+)?[^/]+/g)?.[0];
+        return (
+          pfx &&
+          (pfx in pkg.peerDependencies ||
+            ('dependencies' in pkg && pfx in pkg.dependencies))
+        );
+      },
     },
   },
 });

@@ -8,7 +8,8 @@
 }
 
 [p="popover-content"],
-[p="dropdown-content"] {
+[p="dropdown-content"],
+[p="context-menu"] {
   position: absolute;
   display: none;
   top: 100%;
@@ -29,7 +30,8 @@
 }
 
 [p="popover-content"][open],
-[p="dropdown-content"][open] {
+[p="dropdown-content"][open],
+[p="context-menu"][open] {
   display: inline-block;
   pointer-events: auto;
   transform: translateX(var(--tf-x)) scale(1);

@@ -1,26 +1,27 @@
-export const supportsCommand = 'command' in HTMLButtonElement.prototype;
+export const supportsCommand = 'commandFor' in HTMLButtonElement.prototype;
 
 if (!supportsCommand) {
   addEventListener('click', (e) => {
-    const trigger = (e.target as Element | null)?.closest(
-      '[commandfor]',
-    ) as HTMLElement | null;
-    if (!trigger) return;
-    if (e.defaultPrevented) return;
+    const node = e.target as Node;
+    const el = ('closest' in node ? node : node.parentNode) as Element;
+    const trigger = el.closest<Element>('[command]');
+    if (!trigger || e.defaultPrevented) return;
 
-    const target = document.getElementById(trigger.getAttribute('commandfor')!);
+    const commandFor = trigger.getAttribute('commandfor');
+    const target = commandFor ? document.getElementById(commandFor) : el;
     if (!target) return;
+    e.preventDefault();
 
-    const command = trigger.getAttribute('command');
-    if (!command) return;
-
+    const command = trigger.getAttribute('command') || 'toggle-popover';
     if (command[0] === '-') {
-      const ce = new Event('command', {bubbles: true, cancelable: true});
-      Object.defineProperties(ce, {
-        source: {value: trigger},
-        command: {value: command},
-      });
-      target.dispatchEvent(ce);
+      const event = Object.defineProperties(
+        new Event('command', {bubbles: true, cancelable: true}),
+        {
+          source: {value: trigger},
+          command: {value: command},
+        },
+      );
+      target.dispatchEvent(event);
       return;
     }
 
@@ -28,3 +29,38 @@ if (!supportsCommand) {
     (target as any)[method]?.();
   });
 }
+
+addEventListener(
+  'click',
+  (e) => {
+    const target = e.target as Element;
+
+    // close on backdrop click
+    if (target.localName === 'dialog' && target.getAttribute('p')) {
+      const {clientX, clientY} = e;
+      const {left, right, top, bottom} = target.getBoundingClientRect();
+      if (
+        clientX < left ||
+        clientX > right ||
+        clientY < top ||
+        clientY > bottom
+      ) {
+        (target as HTMLDialogElement).close();
+        e.preventDefault();
+        return;
+      }
+    }
+
+    // close other dropdowns
+    for (const el of Array.from(
+      document.querySelectorAll<HTMLDialogElement>(
+        '[p="dropdown-content"],[p="popover-content"]',
+      ),
+    )) {
+      if (!el.contains(target)) {
+        el.close();
+      }
+    }
+  },
+  true,
+);

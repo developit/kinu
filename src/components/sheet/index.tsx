@@ -5,7 +5,10 @@ import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function Sheet({id: idProp, children}: {id?: string; children: ComponentChildren}) {
+export function Sheet({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
   const gen = useId();
   const id = idProp ?? gen;
   return (
@@ -15,7 +18,10 @@ export function Sheet({id: idProp, children}: {id?: string; children: ComponentC
   );
 }
 
-export function SheetTrigger({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+export function SheetTrigger({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -26,10 +32,13 @@ export function SheetTrigger({children, ...props}: JSX.ElementChildrenAttribute 
 
 export function SheetContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="sheet-content" id={id ?? ctx} {...props} />;
+  return <dialog p="sheet-content" id={id || ctx} {...props} />;
 }
 
-export function SheetClose({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+export function SheetClose({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -41,4 +50,3 @@ export function SheetClose({children, ...props}: JSX.ElementChildrenAttribute & 
 Sheet.Trigger = SheetTrigger;
 Sheet.Content = SheetContent;
 Sheet.Close = SheetClose;
-

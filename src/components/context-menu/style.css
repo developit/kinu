@@ -1,10 +1,12 @@
 @import "../../variables.css";
+@import "../../components/popover/style.css";
 
-[p="context-menu"] {
+body [p="context-menu"] {
   position: fixed;
   position-anchor: --p-context-menu;
   left: anchor(left);
   top: anchor(top);
+  --tf-x: 0;
   margin: 0;
   margin-left: var(--p-context-menu-x);
   margin-top: var(--p-context-menu-y);
@@ -14,6 +16,9 @@
   background-color: hsl(var(--p-background));
   border-radius: var(--p-radius);
   outline: none;
+}
+[p="context-menu"]::backdrop {
+  opacity: 0;
 }
 
 [p="context-menu-item"] {

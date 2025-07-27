@@ -11,7 +11,7 @@ function handleContextMenu(e: MouseEvent) {
   const rect = el.getBoundingClientRect();
   parent.style.setProperty('--p-context-menu-x', `${e.clientX - rect.x}px`);
   parent.style.setProperty('--p-context-menu-y', `${e.clientY - rect.y}px`);
-  parent?.querySelector<HTMLDialogElement>('[p="context-menu"]')?.show();
+  parent?.querySelector<HTMLDialogElement>('[p="context-menu"]')?.showModal();
 }
 
 export function ContextMenuTrigger({children}: JSX.ElementChildrenAttribute) {
@@ -27,17 +27,16 @@ export const ContextMenuContent = createSimpleComponent(
   'dialog',
   {},
   (el: HTMLDialogElement) => {
-    function clickOutside(e: MouseEvent) {
-      if (!el.contains(e.target as Node)) el.close();
-    }
     function click(e: MouseEvent) {
-      if (!e.defaultPrevented) el.close();
+      if (e.defaultPrevented) return;
+      e.preventDefault();
+      el.close();
     }
+    el.addEventListener('contextmenu', click);
     el.addEventListener('click', click);
-    addEventListener('mousedown', clickOutside);
     return () => {
+      el.removeEventListener('contextmenu', click);
       el.removeEventListener('click', click);
-      removeEventListener('mousedown', clickOutside);
     };
   },
 );
