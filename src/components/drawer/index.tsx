@@ -1,11 +1,17 @@
 import {type ComponentChildren, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function Drawer({id: idProp, children}: {id?: string; children: ComponentChildren}) {
+export function Drawer({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
+  installCommands();
+  installDialogsDropdowns();
   const gen = useId();
   const id = idProp ?? gen;
   return (
@@ -15,7 +21,10 @@ export function Drawer({id: idProp, children}: {id?: string; children: Component
   );
 }
 
-export function DrawerTrigger({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+export function DrawerTrigger({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -29,7 +38,10 @@ export function DrawerContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
   return <dialog p="drawer-content" id={id ?? ctx} {...props} />;
 }
 
-export function DrawerClose({children, ...props}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+export function DrawerClose({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -41,4 +53,3 @@ export function DrawerClose({children, ...props}: JSX.ElementChildrenAttribute &
 Drawer.Trigger = DrawerTrigger;
 Drawer.Content = DrawerContent;
 Drawer.Close = DrawerClose;
-

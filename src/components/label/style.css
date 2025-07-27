@@ -6,4 +6,5 @@
   font-weight: 500;
   color: hsl(var(--p-foreground));
   cursor: pointer;
+  user-select: none;
 }
