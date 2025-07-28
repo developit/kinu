@@ -79,7 +79,7 @@ import {
   SidebarTrigger,
 } from 'pui';
 import '../../src/components/typography/style.css';
-import {useState} from 'preact/hooks';
+import {useEffect, useState} from 'preact/hooks';
 import {CodeBlock} from './code-block';
 
 interface Example {
@@ -102,9 +102,14 @@ function BadgeDemo() {
 const badgeCode = `<Badge>Default</Badge>\n<Badge variant="secondary">Secondary</Badge>\n<Badge variant="destructive">Destructive</Badge>\n<Badge variant="outline">Outline</Badge>`;
 
 function ProgressDemo() {
+  const [progress, setProgress] = useState(10);
+  useEffect(() => {
+    setTimeout(setProgress, 500, 50);
+    setTimeout(setProgress, 1000, 90);
+  }, []);
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
-      <Progress value={25} max={100} />
+      <Progress value={progress} max={100} />
       <Progress value={75} max={100} />
     </div>
   );
@@ -176,12 +181,20 @@ const inputCode = `<Input placeholder="Enter your email" />`;
 
 function AccordionDemo() {
   return (
-    <Accordion>
-      <summary>More Info</summary>
-      <p style={{margin: '0.5rem 0 0 0'}}>
-        Hidden content that becomes visible when the summary is clicked.
-      </p>
-    </Accordion>
+    <>
+      <Accordion name="accordion-demo">
+        <summary>More Info</summary>
+        <p style={{margin: '0.5rem 0 0 0'}}>
+          Hidden content that becomes visible when the summary is clicked.
+        </p>
+      </Accordion>
+      <Accordion name="accordion-demo">
+        <summary>Second Item</summary>
+        <p style={{margin: '0.5rem 0 0 0'}}>
+          Other hidden content that becomes visible when the summary is clicked.
+        </p>
+      </Accordion>
+    </>
   );
 }
 const accordionCode = `<Accordion>...</Accordion>`;

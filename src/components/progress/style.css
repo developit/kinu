@@ -16,8 +16,10 @@
 
 [p="progress"]::-webkit-progress-value {
   background-color: hsl(var(--p-primary));
+  transition: all 300ms var(--p-ease);
 }
 
 [p="progress"]::-moz-progress-bar {
   background-color: hsl(var(--p-primary));
+  transition: all 300ms var(--p-ease);
 }
