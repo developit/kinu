@@ -7,6 +7,7 @@ body {
   font-family: system-ui, sans-serif;
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
+  overflow-x: clip;
 }
 
 .demo-app {
@@ -15,15 +16,21 @@ body {
 
 .demo-app > main {
   flex: 1;
-  padding: 1rem;
+  width: 100%;
+  padding-top: 4rem;
+  overflow: hidden;
+}
+
+.demo-app > main > section {
+  margin: 1rem;
 }
 
 .demo-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
   display: flex;
   gap: 1rem;
-  margin: -1rem -1rem 0;
   background: hsla(0, 0%, 95%, 0.95);
   backdrop-filter: blur(2px);
   padding: 1rem;
@@ -31,7 +38,7 @@ body {
 }
 
 .nav {
-  margin: 0 -1rem;
+  margin: 0;
   padding: 0;
 }
 .nav a {

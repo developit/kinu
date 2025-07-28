@@ -1035,7 +1035,7 @@ export function App() {
         </header>
         <ToastContainer />
         {examples.map(({id, title, Demo, code}) => (
-          <section id={id} style={{marginBottom: '2rem'}}>
+          <section id={id}>
             <Card>
               <h2>{title}</h2>
               <Demo />

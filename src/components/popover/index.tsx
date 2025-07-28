@@ -1,6 +1,7 @@
 import {type ComponentChildren, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {installCommands} from '../../lib/commands';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
@@ -9,6 +10,7 @@ export function Popover({
   id: idProp,
   children,
 }: {id?: string; children: ComponentChildren}) {
+  installCommands();
   const gen = useId();
   const id = idProp ?? gen;
   return (
