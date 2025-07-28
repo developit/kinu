@@ -55,11 +55,7 @@ export {
   PaginationItem,
   PaginationLink,
 } from './components/pagination';
-export {
-  ComboboxInput,
-  ComboboxList,
-  ComboboxOption,
-} from './components/combobox';
+export {Combobox} from './components/combobox';
 export {
   ContextMenu,
   ContextMenuTrigger,

@@ -1,7 +1,48 @@
 @import "../../variables.css";
 
+[p="combobox"] {
+  position: relative;
+  display: inline-block;
+}
+
 [p="combobox-input"] {
+  display: block;
+  width: 100%;
   padding: 0.25rem 0.5rem;
   border: 1px solid hsl(var(--p-input));
   border-radius: var(--p-radius);
+  background-color: hsl(var(--p-background));
+}
+
+[p="combobox-list"] {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 12rem;
+  overflow-y: auto;
+  margin: 0.25rem 0 0 0;
+  padding: 0.25rem 0;
+  list-style: none;
+  background-color: hsl(var(--p-popover));
+  color: hsl(var(--p-popover-foreground));
+  border: 1px solid hsl(var(--p-border));
+  border-radius: var(--p-radius);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  z-index: 10;
+}
+
+[p="combobox"][open] [p="combobox-list"] {
+  display: block;
+}
+
+[p="combobox-option"] {
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+[p="combobox-option"][highlighted],
+[p="combobox-option"]:hover {
+  background-color: hsl(var(--p-muted));
 }
