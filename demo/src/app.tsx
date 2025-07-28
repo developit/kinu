@@ -58,6 +58,7 @@ import {
   PaginationList,
   PaginationItem,
   PaginationLink,
+  Combobox,
   ComboboxInput,
   ComboboxList,
   ComboboxOption,
@@ -776,17 +777,17 @@ const paginationCode = `<Pagination>...</Pagination>`;
 
 function ComboboxDemo() {
   return (
-    <div>
-      <ComboboxInput list="fruits" />
-      <ComboboxList id="fruits">
-        <ComboboxOption value="Apple" />
-        <ComboboxOption value="Banana" />
-        <ComboboxOption value="Orange" />
+    <Combobox>
+      <ComboboxInput />
+      <ComboboxList>
+        <ComboboxOption>Apple</ComboboxOption>
+        <ComboboxOption>Banana</ComboboxOption>
+        <ComboboxOption>Orange</ComboboxOption>
       </ComboboxList>
-    </div>
+    </Combobox>
   );
 }
-const comboboxCode = `<ComboboxInput list="fruits" />`;
+const comboboxCode = `<Combobox>...</Combobox>`;
 
 function ContextMenuDemo() {
   return (

@@ -56,6 +56,7 @@ export {
   PaginationLink,
 } from './components/pagination';
 export {
+  Combobox,
   ComboboxInput,
   ComboboxList,
   ComboboxOption,

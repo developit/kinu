@@ -1,7 +1,46 @@
 @import "../../variables.css";
+@import "../popover/style.css";
+
+[p="combobox"] {
+  position: relative;
+  display: inline-block;
+}
 
 [p="combobox-input"] {
-  padding: 0.25rem 0.5rem;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
   border: 1px solid hsl(var(--p-input));
   border-radius: var(--p-radius);
+  background-color: hsl(var(--p-background));
+  font: inherit;
+  font-size: 0.875rem;
+}
+
+[p="combobox-list"] {
+  left: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0.25rem 0 0;
+}
+
+[p="combobox-list"] ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+}
+
+[p="combobox-option"] {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.25rem 0.75rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+[p="combobox-option"]:hover {
+  background-color: hsl(var(--p-muted));
 }
