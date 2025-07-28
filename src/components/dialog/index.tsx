@@ -1,57 +1,51 @@
-import {
-  createContext,
-  createRef,
-  type ComponentChildren,
-  type RefObject,
-} from 'preact';
-import {useRef, useContext} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import './style.css';
 
-const DialogCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
+const IdCtx = createContext<string | undefined>(undefined);
 
-export function Dialog({children}: {children: ComponentChildren}) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  return <DialogCtx.Provider value={dialogRef}>{children}</DialogCtx.Provider>;
+export function Dialog({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
+  const gen = useId();
+  const id = idProp ?? gen;
+  return <IdCtx.Provider value={id}>{children}</IdCtx.Provider>;
 }
 
-export function DialogTrigger({children}: JSX.ElementChildrenAttribute) {
-  const dialogRef = useContext(DialogCtx);
-  const handleClick = () => dialogRef.current?.showModal();
-  return applyPropsToChildren(children, {onClick: handleClick});
+export function DialogTrigger({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  installCommands();
+  installDialogsDropdowns();
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'show-modal',
+  });
 }
 
-function dialogBackdropClick(e: MouseEvent) {
-  const dialog = e.currentTarget as HTMLDialogElement;
-  if (e.target !== dialog) return;
-  const {clientX, clientY} = e;
-  const {left, right, top, bottom} = dialog.getBoundingClientRect();
-  if (clientX < left || clientX > right || clientY < top || clientY > bottom) {
-    dialog.close();
-  }
+export function DialogContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return <dialog p="dialog-content" id={id ?? ctx} {...props} />;
 }
 
-export function DialogContent(props: JSX.IntrinsicElements['dialog']) {
-  const dialogRef = useContext(DialogCtx);
-  return (
-    <dialog
-      p="dialog-content"
-      {...props}
-      ref={dialogRef}
-      onMouseUpCapture={dialogBackdropClick}
-    />
-  );
+export function DialogClose({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'close',
+  });
 }
 
-function dialogCloseClick(e: Event) {
-  (e.currentTarget as HTMLButtonElement).closest('dialog')?.close();
-}
-
-export function DialogClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {onClick: dialogCloseClick});
-}
-
-// Attach compound components
 Dialog.Trigger = DialogTrigger;
 Dialog.Content = DialogContent;
 Dialog.Close = DialogClose;

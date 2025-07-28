@@ -1,52 +1,53 @@
-import {
-  createContext,
-  createRef,
-  type ComponentChildren,
-  type RefObject,
-} from 'preact';
-import {useRef, useContext} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {createSimpleComponent} from '../../lib/create-simple-component';
+import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import './style.css';
 
-const DropdownCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
+const IdCtx = createContext<string | undefined>(undefined);
 
-export function DropdownMenu({children}: {children: ComponentChildren}) {
-  const dropdownRef = useRef<HTMLDialogElement>(null);
+export function DropdownMenu({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
+  installCommands();
+  installDialogsDropdowns();
+  const gen = useId();
+  const id = idProp ?? gen;
   return (
-    <span p="dropdown">
-      <DropdownCtx.Provider value={dropdownRef}>
-        {children}
-      </DropdownCtx.Provider>
-    </span>
+    <IdCtx.Provider value={id}>
+      <span p="dropdown">{children}</span>
+    </IdCtx.Provider>
   );
 }
 
-export function DropdownMenuTrigger({children}: JSX.ElementChildrenAttribute) {
-  const dropdownRef = useContext(DropdownCtx);
-  const handleClick = () => dropdownRef.current?.show();
-  return applyPropsToChildren(children, {onClick: handleClick});
+export function DropdownMenuTrigger({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'show',
+  });
 }
 
-addEventListener(
-  'click',
-  (e: MouseEvent) => {
-    const dialogs = new Set(
-      Array.from(document.querySelectorAll('[p="dropdown-content"]')),
-    );
-    let el = e.target as Node | null;
-    while (el) {
-      if (el instanceof HTMLElement && dialogs.has(el)) dialogs.delete(el);
-      el = el.parentNode;
-    }
-    for (const dialog of dialogs) (dialog as HTMLDialogElement).close();
-  },
-  true,
-);
-
-export function DropdownMenuContent(props: JSX.IntrinsicElements['dialog']) {
-  const dropdownRef = useContext(DropdownCtx);
-  return <dialog p="dropdown-content" {...props} ref={dropdownRef} />;
+export function DropdownMenuContent({
+  id,
+  ...props
+}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return (
+    <dialog
+      p="dropdown-content"
+      id={id ?? ctx}
+      command="close"
+      commandFor={id ?? ctx}
+      {...props}
+    />
+  );
 }
 
 export const DropdownMenuItem = createSimpleComponent(

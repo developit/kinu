@@ -1,48 +1,52 @@
-import {
-  createContext,
-  createRef,
-  type ComponentChildren,
-  type RefObject,
-} from 'preact';
-import {useRef, useContext} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import './style.css';
 
-const DrawerCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
+const IdCtx = createContext<string | undefined>(undefined);
 
-export function Drawer({children}: {children: ComponentChildren}) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  return <DrawerCtx.Provider value={dialogRef}>{children}</DrawerCtx.Provider>;
-}
-
-export function DrawerTrigger({children}: JSX.ElementChildrenAttribute) {
-  const dialogRef = useContext(DrawerCtx);
-  const handleClick = () => dialogRef.current?.showModal();
-  return applyPropsToChildren(children, {onClick: handleClick});
-}
-
-function drawerBackdropClick(e: MouseEvent) {
-  const dialog = e.currentTarget as HTMLDialogElement;
-  if (e.target === dialog) dialog.close();
-}
-
-export function DrawerContent(props: JSX.IntrinsicElements['dialog']) {
-  const dialogRef = useContext(DrawerCtx);
+export function Drawer({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
+  installCommands();
+  installDialogsDropdowns();
+  const gen = useId();
+  const id = idProp ?? gen;
   return (
-    <dialog
-      p="drawer-content"
-      {...props}
-      ref={dialogRef}
-      onClickCapture={drawerBackdropClick}
-    />
+    <IdCtx.Provider value={id}>
+      <div p="drawer">{children}</div>
+    </IdCtx.Provider>
   );
 }
 
-export function DrawerClose({children}: JSX.ElementChildrenAttribute) {
+export function DrawerTrigger({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
-    onClick: (e: Event) => {
-      (e.currentTarget as HTMLButtonElement).closest('dialog')?.close();
-    },
+    ...props,
+    commandfor: id,
+    command: 'show-modal',
+  });
+}
+
+export function DrawerContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return <dialog p="drawer-content" id={id ?? ctx} {...props} />;
+}
+
+export function DrawerClose({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'close',
   });
 }
 

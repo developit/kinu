@@ -25,6 +25,7 @@ demo/               # Demo application
 - **Tree-Shakeable**: Import only what you use
 - **Type-Safe**: Full TypeScript support
 - **Pattern-Driven**: 80% of components use a simple factory function
+- **Declarative Commands**: `command`/`commandfor` attributes with a tiny polyfill
 - **Event-Driven Toasts**: Lightweight global notifications
 
 ## Architecture
@@ -55,6 +56,9 @@ export const Button = createSimpleComponent('button', 'button');
   <Dialog.Trigger><Button>Open</Button></Dialog.Trigger>
   <Dialog.Content>Modal content</Dialog.Content>
 </Dialog>
+// Renders:
+// <button commandfor="auto-id" command="show-modal">Open</button>
+// <dialog id="auto-id">Modal content</dialog>
 ```
 
 ```tsx

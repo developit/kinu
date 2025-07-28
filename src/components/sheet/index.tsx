@@ -1,48 +1,52 @@
-import {
-  createContext,
-  createRef,
-  type ComponentChildren,
-  type RefObject,
-} from 'preact';
-import {useRef, useContext} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import './style.css';
 
-const SheetCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
+const IdCtx = createContext<string | undefined>(undefined);
 
-export function Sheet({children}: {children: ComponentChildren}) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  return <SheetCtx.Provider value={dialogRef}>{children}</SheetCtx.Provider>;
-}
-
-export function SheetTrigger({children}: JSX.ElementChildrenAttribute) {
-  const dialogRef = useContext(SheetCtx);
-  const handleClick = () => dialogRef.current?.showModal();
-  return applyPropsToChildren(children, {onClick: handleClick});
-}
-
-function sheetBackdropClick(e: MouseEvent) {
-  const dialog = e.currentTarget as HTMLDialogElement;
-  if (e.target === dialog) dialog.close();
-}
-
-export function SheetContent(props: JSX.IntrinsicElements['dialog']) {
-  const dialogRef = useContext(SheetCtx);
+export function Sheet({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
+  installCommands();
+  installDialogsDropdowns();
+  const gen = useId();
+  const id = idProp ?? gen;
   return (
-    <dialog
-      p="sheet-content"
-      {...props}
-      ref={dialogRef}
-      onClickCapture={sheetBackdropClick}
-    />
+    <IdCtx.Provider value={id}>
+      <div p="sheet">{children}</div>
+    </IdCtx.Provider>
   );
 }
 
-export function SheetClose({children}: JSX.ElementChildrenAttribute) {
+export function SheetTrigger({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
-    onClick: (e: Event) => {
-      (e.currentTarget as HTMLButtonElement).closest('dialog')?.close();
-    },
+    ...props,
+    commandfor: id,
+    command: 'show-modal',
+  });
+}
+
+export function SheetContent({id, ...props}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return <dialog p="sheet-content" id={id || ctx} {...props} />;
+}
+
+export function SheetClose({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'close',
   });
 }
 

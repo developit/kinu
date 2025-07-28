@@ -1,55 +1,69 @@
-import {
-  createContext,
-  createRef,
-  type ComponentChildren,
-  type RefObject,
-} from 'preact';
-import {useRef, useContext} from 'preact/hooks';
+import {type ComponentChildren, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {installCommands} from '../../lib/commands';
 import './style.css';
 
-const PopoverCtx = createContext<RefObject<HTMLDialogElement>>(createRef());
+const IdCtx = createContext<string | undefined>(undefined);
 
-export function Popover({children}: {children: ComponentChildren}) {
-  const popoverRef = useRef<HTMLDialogElement>(null);
+export function Popover({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
+  installCommands();
+  const gen = useId();
+  const id = idProp ?? gen;
   return (
-    <span p="popover">
-      <PopoverCtx.Provider value={popoverRef}>{children}</PopoverCtx.Provider>
-    </span>
+    <IdCtx.Provider value={id}>
+      <span p="popover">{children}</span>
+    </IdCtx.Provider>
   );
 }
 
-export function PopoverTrigger({children}: JSX.ElementChildrenAttribute) {
-  const popoverRef = useContext(PopoverCtx);
-  const handleClick = () => popoverRef.current?.show();
-  return applyPropsToChildren(children, {onClick: handleClick});
+export function PopoverTrigger({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'show',
+  });
 }
 
-addEventListener(
-  'click',
-  (e: MouseEvent) => {
-    const dialogs = new Set(
-      Array.from(document.querySelectorAll('[p="popover-content"]')),
-    );
-    let el = e.target as Node | null;
-    while (el) {
-      if (el instanceof HTMLElement && dialogs.has(el)) dialogs.delete(el);
-      el = el.parentNode;
-    }
-    for (const dialog of dialogs) (dialog as HTMLDialogElement).close();
-  },
-  true,
-);
+// addEventListener(
+//   'click',
+//   (e: MouseEvent) => {
+//     const dialogs = new Set(
+//       Array.from(document.querySelectorAll('[p="popover-content"]')),
+//     );
+//     let el = e.target as Node | null;
+//     while (el) {
+//       if (el instanceof HTMLElement && dialogs.has(el)) dialogs.delete(el);
+//       el = el.parentNode;
+//     }
+//     for (const dialog of dialogs) (dialog as HTMLDialogElement).close();
+//   },
+//   true,
+// );
 
-export function PopoverContent(props: JSX.IntrinsicElements['dialog']) {
-  const popoverRef = useContext(PopoverCtx);
-  return <dialog p="popover-content" {...props} ref={popoverRef} />;
+export function PopoverContent({
+  id,
+  ...props
+}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return <dialog p="popover-content" id={id ?? ctx} {...props} />;
 }
 
-function popoverCloseClick(e: Event) {
-  (e.currentTarget as HTMLButtonElement).closest('dialog')?.close();
-}
-
-export function PopoverClose({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {onClick: popoverCloseClick});
+export function PopoverClose({
+  children,
+  ...props
+}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    ...props,
+    commandfor: id,
+    command: 'close',
+  });
 }
