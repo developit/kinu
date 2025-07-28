@@ -1,6 +1,7 @@
 /* Basic reset for components to ensure consistent behavior */
 [p] {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 [p]:before,
