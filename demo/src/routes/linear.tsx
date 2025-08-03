@@ -6,7 +6,8 @@ interface Comment {
   text: string;
 }
 
-type Status = 'Backlog' | 'In Progress' | 'Done';
+type Status = 'Backlog' | 'In Progress' | 'Review' | 'Done';
+type Priority = 'Low' | 'Medium' | 'High';
 
 interface Issue {
   id: number;
@@ -14,7 +15,14 @@ interface Issue {
   status: Status;
   description: string;
   comments: Comment[];
+  assignee: string;
+  priority: Priority;
+  labels: string[];
 }
+
+const users = ['Alice', 'Bob', 'Carol'];
+const priorities: Priority[] = ['Low', 'Medium', 'High'];
+const statuses: Status[] = ['Backlog', 'In Progress', 'Review', 'Done'];
 
 const initialIssues: Issue[] = [
   {
@@ -23,6 +31,9 @@ const initialIssues: Issue[] = [
     status: 'Backlog',
     description: 'Allow users to sign in',
     comments: [],
+    assignee: 'Alice',
+    priority: 'High',
+    labels: ['auth'],
   },
   {
     id: 2,
@@ -30,23 +41,28 @@ const initialIssues: Issue[] = [
     status: 'In Progress',
     description: 'Sidebar does not collapse',
     comments: [],
+    assignee: 'Bob',
+    priority: 'Medium',
+    labels: ['bug'],
   },
   {
     id: 3,
     title: 'Dark mode',
-    status: 'Done',
+    status: 'Review',
     description: 'Add theme switcher',
     comments: [],
+    assignee: 'Carol',
+    priority: 'Low',
+    labels: ['feature'],
   },
 ];
-
-const statuses: Status[] = ['Backlog', 'In Progress', 'Done'];
 
 export default function Linear() {
   const [issues, setIssues] = useState<Issue[]>(initialIssues);
   const [selectedId, setSelectedId] = useState(issues[0].id);
   const [title, setTitle] = useState('');
   const [comment, setComment] = useState('');
+  const [query, setQuery] = useState('');
 
   const selected = issues.find(i => i.id === selectedId)!;
 
@@ -59,7 +75,16 @@ export default function Linear() {
     const id = Date.now();
     setIssues([
       ...issues,
-      {id, title, status: 'Backlog', description: '', comments: []},
+      {
+        id,
+        title,
+        status: 'Backlog',
+        description: '',
+        comments: [],
+        assignee: users[0],
+        priority: 'Low',
+        labels: [],
+      },
     ]);
     setTitle('');
     setSelectedId(id);
@@ -73,6 +98,12 @@ export default function Linear() {
     setComment('');
   }
 
+  function deleteComment(id: number) {
+    updateIssue(selectedId, {
+      comments: selected.comments.filter(c => c.id !== id),
+    });
+  }
+
   return (
     <div class="linear-app">
       <aside class="linear-sidebar">
@@ -82,6 +113,11 @@ export default function Linear() {
           <a href="#">My Issues</a>
           <a href="#">Projects</a>
         </nav>
+        <Input
+          value={query}
+          onInput={e => setQuery((e.target as HTMLInputElement).value)}
+          placeholder="Search issues"
+        />
         <div class="linear-add">
           <Input
             value={title}
@@ -96,7 +132,11 @@ export default function Linear() {
           <div class="linear-column">
             <h3>{status}</h3>
             {issues
-              .filter(i => i.status === status)
+              .filter(
+                i =>
+                  i.status === status &&
+                  i.title.toLowerCase().includes(query.toLowerCase())
+              )
               .map(issue => (
                 <Card
                   key={issue.id}
@@ -106,13 +146,33 @@ export default function Linear() {
                   onClick={() => setSelectedId(issue.id)}
                 >
                   <h4>{issue.title}</h4>
+                  <div class="linear-issue-meta">
+                    <span class={'linear-priority ' + issue.priority.toLowerCase()}>
+                      {issue.priority}
+                    </span>
+                    <span class="linear-assignee">{issue.assignee}</span>
+                  </div>
+                  {issue.labels.length ? (
+                    <div class="linear-labels">
+                      {issue.labels.map(l => (
+                        <span>{l}</span>
+                      ))}
+                    </div>
+                  ) : null}
                 </Card>
               ))}
           </div>
         ))}
       </main>
       <section class="linear-details">
-        <h3 style="margin-top:0">{selected.title}</h3>
+        <Input
+          value={selected.title}
+          onInput={e =>
+            updateIssue(selected.id, {
+              title: (e.target as HTMLInputElement).value,
+            })
+          }
+        />
         <Select
           value={selected.status}
           onInput={e =>
@@ -125,6 +185,42 @@ export default function Linear() {
             <option value={s}>{s}</option>
           ))}
         </Select>
+        <Select
+          value={selected.assignee}
+          onInput={e =>
+            updateIssue(selected.id, {
+              assignee: (e.target as HTMLSelectElement).value,
+            })
+          }
+        >
+          {users.map(u => (
+            <option value={u}>{u}</option>
+          ))}
+        </Select>
+        <Select
+          value={selected.priority}
+          onInput={e =>
+            updateIssue(selected.id, {
+              priority: (e.target as HTMLSelectElement).value as Priority,
+            })
+          }
+        >
+          {priorities.map(p => (
+            <option value={p}>{p}</option>
+          ))}
+        </Select>
+        <Input
+          value={selected.labels.join(', ')}
+          placeholder="labels"
+          onInput={e =>
+            updateIssue(selected.id, {
+              labels: (e.target as HTMLInputElement).value
+                .split(',')
+                .map(s => s.trim())
+                .filter(Boolean),
+            })
+          }
+        />
         <Textarea
           value={selected.description}
           placeholder="Describe the issue..."
@@ -136,7 +232,10 @@ export default function Linear() {
         />
         <ul class="linear-comments">
           {selected.comments.map(c => (
-            <li key={c.id}>{c.text}</li>
+            <li key={c.id}>
+              <span>{c.text}</span>
+              <Button onClick={() => deleteComment(c.id)}>×</Button>
+            </li>
           ))}
         </ul>
         <div class="linear-add-comment">
