@@ -69,3 +69,33 @@ pre.code-block {
   resize: horizontal;
   max-width: 100%;
 }
+
+/* Home route styles */
+.home-nav {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero {
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.hero-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.features {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.features h3 {
+  margin-top: 0;
+}

@@ -1,5 +1,18 @@
 import './style.css';
 import {render} from 'preact';
-import {App} from './app.tsx';
+import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
 
-render(<App />, document.getElementById('app')!);
+const Home = lazy(() => import('./routes/home.tsx'));
+const Components = lazy(() => import('./app.tsx'));
+
+render(
+  <LocationProvider>
+    <ErrorBoundary>
+      <Router>
+        <Route path="/" component={Home} />
+        <Route path="/components" component={Components} />
+      </Router>
+    </ErrorBoundary>
+  </LocationProvider>,
+  document.getElementById('app')!
+);
