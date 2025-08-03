@@ -38,7 +38,7 @@ export const Sidebar = createSimpleComponent(
   {
     tabIndex: -1,
   },
-  (el: HTMLElement) => {
+  () => {
     installCommands();
     installDialogsDropdowns();
     // function mousedown(e: MouseEvent) {
