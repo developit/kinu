@@ -1,6 +1,7 @@
 import type {ComponentChildren, JSX} from 'preact';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
+import {installDialogsDropdowns} from '../../lib/commands';
 import './style.css';
 
 function handleContextMenu(e: MouseEvent) {
@@ -19,6 +20,7 @@ export function ContextMenuTrigger({children}: JSX.ElementChildrenAttribute) {
 }
 
 export function ContextMenu({children}: {children: ComponentChildren}) {
+  installDialogsDropdowns();
   return children;
 }
 
