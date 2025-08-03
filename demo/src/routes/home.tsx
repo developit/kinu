@@ -12,6 +12,9 @@ export default function Home() {
           <NavigationMenuItem>
             <NavigationMenuLink href="/components">Components</NavigationMenuLink>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink href="/linear">Linear Demo</NavigationMenuLink>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <section class="hero">
@@ -19,6 +22,9 @@ export default function Home() {
         <p>Accessible components built with Preact and CSS.</p>
         <div class="hero-actions">
           <Button href="/components">Get Started</Button>
+          <Button href="/linear" variant="secondary">
+            Linear Demo
+          </Button>
           <Button variant="outline" href="https://github.com/">GitHub</Button>
         </div>
       </section>
