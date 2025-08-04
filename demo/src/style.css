@@ -77,12 +77,6 @@ pre.code-block {
   justify-content: flex-end;
 }
 
-.mobile-menu {
-  display: none;
-  padding: 1rem;
-  justify-content: flex-end;
-}
-
 .hero {
   padding: 4rem 1rem;
   text-align: center;
@@ -192,7 +186,7 @@ pre.code-block {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .linear-add {
@@ -225,6 +219,28 @@ pre.code-block {
   gap: 0.5rem;
 }
 
+.linear-tag-editor {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.linear-tag-editor [p="badge"] {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.linear-tag-editor input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.linear-mobile-menu {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .linear-app {
     flex-direction: column;
@@ -245,13 +261,12 @@ pre.code-block {
     border-left: none;
     border-top: 1px solid hsl(var(--p-border));
   }
-}
-
-@media (max-width: 600px) {
-  .home-nav {
+  .linear-nav {
     display: none;
   }
-  .mobile-menu {
-    display: flex;
+  .linear-mobile-menu {
+    display: block;
+    margin-left: auto;
   }
 }
+

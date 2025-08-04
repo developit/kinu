@@ -1,4 +1,17 @@
-import {Button, Card, Input, Select, Textarea, RadioGroup, Radio} from 'pui';
+import {
+  Badge,
+  Button,
+  Card,
+  Input,
+  Select,
+  Textarea,
+  RadioGroup,
+  Radio,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from 'pui';
 import {useState} from 'preact/hooks';
 
 interface Comment {
@@ -63,6 +76,7 @@ export default function Linear() {
   const [title, setTitle] = useState('');
   const [comment, setComment] = useState('');
   const [query, setQuery] = useState('');
+  const [label, setLabel] = useState('');
 
   const selected = issues.find(i => i.id === selectedId)!;
 
@@ -104,15 +118,36 @@ export default function Linear() {
     });
   }
 
+  function addLabel(l: string) {
+    if (!l) return;
+    updateIssue(selectedId, {labels: [...selected.labels, l]});
+  }
+
+  function removeLabel(l: string) {
+    updateIssue(selectedId, {labels: selected.labels.filter(x => x !== l)});
+  }
+
   return (
     <div class="linear-app">
       <aside class="linear-sidebar">
         <h2 style="margin:0">Linear</h2>
-        <nav>
+        <nav class="linear-nav">
           <a href="#">Inbox</a>
           <a href="#">My Issues</a>
           <a href="#">Projects</a>
         </nav>
+        <div class="linear-mobile-menu">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outline">Menu</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>Inbox</DropdownMenuItem>
+              <DropdownMenuItem>My Issues</DropdownMenuItem>
+              <DropdownMenuItem>Projects</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         <Input
           value={query}
           onInput={e => setQuery((e.target as HTMLInputElement).value)}
@@ -209,18 +244,27 @@ export default function Linear() {
             </label>
           ))}
         </RadioGroup>
-        <Input
-          value={selected.labels.join(', ')}
-          placeholder="labels"
-          onInput={e =>
-            updateIssue(selected.id, {
-              labels: (e.target as HTMLInputElement).value
-                .split(',')
-                .map(s => s.trim())
-                .filter(Boolean),
-            })
-          }
-        />
+        <div class="linear-tag-editor">
+          {selected.labels.map(l => (
+            <Badge>
+              {l}
+              <Button variant="ghost" size="icon" onClick={() => removeLabel(l)}>
+                ×
+              </Button>
+            </Badge>
+          ))}
+          <Input
+            value={label}
+            placeholder="Add label"
+            onInput={e => setLabel((e.target as HTMLInputElement).value)}
+            onKeyDown={e => {
+              if ((e as KeyboardEvent).key === 'Enter') {
+                addLabel(label.trim());
+                setLabel('');
+              }
+            }}
+          />
+        </div>
         <Textarea
           value={selected.description}
           placeholder="Describe the issue..."
