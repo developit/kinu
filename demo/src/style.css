@@ -18,7 +18,7 @@ body {
   flex: 1;
   width: 100%;
   padding-top: 4rem;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .demo-app > main > section {
@@ -35,6 +35,7 @@ body {
   backdrop-filter: blur(2px);
   padding: 1rem;
   z-index: 100;
+  overflow: visible;
 }
 
 .nav {
@@ -209,8 +210,12 @@ pre.code-block {
   padding: 0.5rem;
   border-radius: 0.25rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 0.25rem;
+}
+
+.linear-comments li span {
+  flex: 1;
 }
 
 
@@ -237,6 +242,17 @@ pre.code-block {
   min-width: 120px;
 }
 
+.linear-add-label {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.linear-comments li [p="button"] {
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .linear-mobile-menu {
   display: none;
 }
@@ -251,7 +267,7 @@ pre.code-block {
     align-items: center;
     border-right: none;
     border-bottom: 1px solid hsl(var(--p-border));
-    overflow-x: auto;
+    overflow: visible;
   }
   .linear-board {
     padding: 1rem 0.5rem;

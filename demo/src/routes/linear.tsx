@@ -248,22 +248,38 @@ export default function Linear() {
           {selected.labels.map(l => (
             <Badge>
               {l}
-              <Button variant="ghost" size="icon" onClick={() => removeLabel(l)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => removeLabel(l)}
+              >
                 ×
               </Button>
             </Badge>
           ))}
-          <Input
-            value={label}
-            placeholder="Add label"
-            onInput={e => setLabel((e.target as HTMLInputElement).value)}
-            onKeyDown={e => {
-              if ((e as KeyboardEvent).key === 'Enter') {
+          <div class="linear-add-label">
+            <Input
+              value={label}
+              placeholder="Add label"
+              onInput={e => setLabel((e.target as HTMLInputElement).value)}
+              onKeyDown={e => {
+                if ((e as KeyboardEvent).key === 'Enter') {
+                  addLabel(label.trim());
+                  setLabel('');
+                }
+              }}
+            />
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => {
                 addLabel(label.trim());
                 setLabel('');
-              }
-            }}
-          />
+              }}
+            >
+              +
+            </Button>
+          </div>
         </div>
         <Textarea
           value={selected.description}
@@ -278,7 +294,13 @@ export default function Linear() {
           {selected.comments.map(c => (
             <li key={c.id}>
               <span>{c.text}</span>
-              <Button onClick={() => deleteComment(c.id)}>×</Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => deleteComment(c.id)}
+              >
+                ×
+              </Button>
             </li>
           ))}
         </ul>
