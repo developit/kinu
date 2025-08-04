@@ -1,4 +1,4 @@
-import {Button, Card, Input, Select, Textarea} from 'pui';
+import {Button, Card, Input, Select, Textarea, RadioGroup, Radio} from 'pui';
 import {useState} from 'preact/hooks';
 
 interface Comment {
@@ -173,18 +173,18 @@ export default function Linear() {
             })
           }
         />
-        <Select
-          value={selected.status}
-          onInput={e =>
-            updateIssue(selected.id, {
-              status: (e.target as HTMLSelectElement).value as Status,
-            })
-          }
-        >
+        <RadioGroup>
           {statuses.map(s => (
-            <option value={s}>{s}</option>
+            <label>
+              <Radio
+                name={`status-${selected.id}`}
+                checked={selected.status === s}
+                onInput={() => updateIssue(selected.id, {status: s})}
+              />
+              {s}
+            </label>
           ))}
-        </Select>
+        </RadioGroup>
         <Select
           value={selected.assignee}
           onInput={e =>
@@ -197,18 +197,18 @@ export default function Linear() {
             <option value={u}>{u}</option>
           ))}
         </Select>
-        <Select
-          value={selected.priority}
-          onInput={e =>
-            updateIssue(selected.id, {
-              priority: (e.target as HTMLSelectElement).value as Priority,
-            })
-          }
-        >
+        <RadioGroup>
           {priorities.map(p => (
-            <option value={p}>{p}</option>
+            <label>
+              <Radio
+                name={`priority-${selected.id}`}
+                checked={selected.priority === p}
+                onInput={() => updateIssue(selected.id, {priority: p})}
+              />
+              {p}
+            </label>
           ))}
-        </Select>
+        </RadioGroup>
         <Input
           value={selected.labels.join(', ')}
           placeholder="labels"

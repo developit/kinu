@@ -77,6 +77,12 @@ pre.code-block {
   justify-content: flex-end;
 }
 
+.mobile-menu {
+  display: none;
+  padding: 1rem;
+  justify-content: flex-end;
+}
+
 .hero {
   padding: 4rem 1rem;
   text-align: center;
@@ -213,6 +219,7 @@ pre.code-block {
   align-items: center;
 }
 
+
 .linear-add-comment {
   display: flex;
   gap: 0.5rem;
@@ -237,5 +244,14 @@ pre.code-block {
     width: 100%;
     border-left: none;
     border-top: 1px solid hsl(var(--p-border));
+  }
+}
+
+@media (max-width: 600px) {
+  .home-nav {
+    display: none;
+  }
+  .mobile-menu {
+    display: flex;
   }
 }
