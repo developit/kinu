@@ -11,6 +11,9 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  Drawer,
+  DrawerContent,
+  DrawerClose,
 } from 'pui';
 import {useState} from 'preact/hooks';
 
@@ -127,79 +130,9 @@ export default function Linear() {
     updateIssue(selectedId, {labels: selected.labels.filter(x => x !== l)});
   }
 
-  return (
-    <div class="linear-app">
-      <aside class="linear-sidebar">
-        <h2 style="margin:0">Linear</h2>
-        <nav class="linear-nav">
-          <a href="#">Inbox</a>
-          <a href="#">My Issues</a>
-          <a href="#">Projects</a>
-        </nav>
-        <div class="linear-mobile-menu">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outline">Menu</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Inbox</DropdownMenuItem>
-              <DropdownMenuItem>My Issues</DropdownMenuItem>
-              <DropdownMenuItem>Projects</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <Input
-          value={query}
-          onInput={e => setQuery((e.target as HTMLInputElement).value)}
-          placeholder="Search issues"
-        />
-        <div class="linear-add">
-          <Input
-            value={title}
-            onInput={e => setTitle((e.target as HTMLInputElement).value)}
-            placeholder="New issue"
-          />
-          <Button onClick={addIssue}>Add</Button>
-        </div>
-      </aside>
-      <main class="linear-board">
-        {statuses.map(status => (
-          <div class="linear-column">
-            <h3>{status}</h3>
-            {issues
-              .filter(
-                i =>
-                  i.status === status &&
-                  i.title.toLowerCase().includes(query.toLowerCase())
-              )
-              .map(issue => (
-                <Card
-                  key={issue.id}
-                  class={
-                    'linear-issue' + (issue.id === selectedId ? ' is-active' : '')
-                  }
-                  onClick={() => setSelectedId(issue.id)}
-                >
-                  <h4>{issue.title}</h4>
-                  <div class="linear-issue-meta">
-                    <span class={'linear-priority ' + issue.priority.toLowerCase()}>
-                      {issue.priority}
-                    </span>
-                    <span class="linear-assignee">{issue.assignee}</span>
-                  </div>
-                  {issue.labels.length ? (
-                    <div class="linear-labels">
-                      {issue.labels.map(l => (
-                        <span>{l}</span>
-                      ))}
-                    </div>
-                  ) : null}
-                </Card>
-              ))}
-          </div>
-        ))}
-      </main>
-      <section class="linear-details">
+  function DetailsEditor() {
+    return (
+      <>
         <Input
           value={selected.title}
           onInput={e =>
@@ -312,7 +245,107 @@ export default function Linear() {
           />
           <Button onClick={addComment}>Send</Button>
         </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div class="linear-app">
+        <aside class="linear-sidebar">
+          <h2 style="margin:0">Linear</h2>
+          <nav class="linear-nav">
+            <a href="#">Inbox</a>
+            <a href="#">My Issues</a>
+          <a href="#">Projects</a>
+        </nav>
+        <div class="linear-mobile-menu">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outline">Menu</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>Inbox</DropdownMenuItem>
+              <DropdownMenuItem>My Issues</DropdownMenuItem>
+              <DropdownMenuItem>Projects</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <Input
+          value={query}
+          onInput={e => setQuery((e.target as HTMLInputElement).value)}
+          placeholder="Search issues"
+        />
+        <div class="linear-add">
+          <Input
+            value={title}
+            onInput={e => setTitle((e.target as HTMLInputElement).value)}
+            placeholder="New issue"
+          />
+          <Button onClick={addIssue}>Add</Button>
+        </div>
+      </aside>
+      <main class="linear-board">
+        {statuses.map(status => (
+          <div class="linear-column">
+            <h3>{status}</h3>
+            {issues
+              .filter(
+                i =>
+                  i.status === status &&
+                  i.title.toLowerCase().includes(query.toLowerCase())
+              )
+              .map(issue => (
+                <Card
+                  key={issue.id}
+                  class={
+                    'linear-issue' + (issue.id === selectedId ? ' is-active' : '')
+                  }
+                  onClick={() => {
+                    setSelectedId(issue.id);
+                    const dialog = document.getElementById(
+                      'linear-mobile-details'
+                    ) as HTMLDialogElement | null;
+                    if (
+                      matchMedia('(max-width: 800px)').matches &&
+                      dialog &&
+                      !dialog.open
+                    ) {
+                      dialog.showModal();
+                    }
+                  }}
+                >
+                  <h4>{issue.title}</h4>
+                  <div class="linear-issue-meta">
+                    <span class={'linear-priority ' + issue.priority.toLowerCase()}>
+                      {issue.priority}
+                    </span>
+                    <span class="linear-assignee">{issue.assignee}</span>
+                  </div>
+                  {issue.labels.length ? (
+                    <div class="linear-labels">
+                      {issue.labels.map(l => (
+                        <span>{l}</span>
+                      ))}
+                    </div>
+                  ) : null}
+                </Card>
+              ))}
+          </div>
+        ))}
+      </main>
+      <section class="linear-details linear-details-desktop">
+        <DetailsEditor />
       </section>
     </div>
+    <Drawer>
+      <DrawerContent id="linear-mobile-details" class="linear-details-drawer">
+        <DetailsEditor />
+        <DrawerClose>
+          <Button variant="outline" style="margin-top:1rem">Close</Button>
+        </DrawerClose>
+      </DrawerContent>
+    </Drawer>
+    </>
   );
 }

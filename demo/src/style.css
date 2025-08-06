@@ -104,7 +104,8 @@ pre.code-block {
 /* Linear demo styles */
 .linear-app {
   display: flex;
-  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
 }
 
 .linear-sidebar {
@@ -190,6 +191,19 @@ pre.code-block {
   gap: 1rem;
 }
 
+[p="drawer-content"].linear-details-drawer {
+  border-top: 1px solid hsl(var(--p-border));
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 80svh;
+  height: 80dvh;
+  overflow-y: auto;
+}
+
+.linear-details-desktop {}
+
 .linear-add {
   display: flex;
   gap: 0.5rem;
@@ -272,10 +286,8 @@ pre.code-block {
   .linear-board {
     padding: 1rem 0.5rem;
   }
-  .linear-details {
-    width: 100%;
-    border-left: none;
-    border-top: 1px solid hsl(var(--p-border));
+  .linear-details-desktop {
+    display: none;
   }
   .linear-nav {
     display: none;
