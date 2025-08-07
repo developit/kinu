@@ -104,8 +104,7 @@ pre.code-block {
 /* Linear demo styles */
 .linear-app {
   display: flex;
-  height: 100svh;
-  height: 100dvh;
+  height: var(--vh, 100vh);
 }
 
 .linear-sidebar {
@@ -197,8 +196,8 @@ pre.code-block {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 80svh;
-  height: 80dvh;
+  height: calc(var(--vh, 100vh) * 0.8);
+  bottom: var(--vh-offset, 0px);
   overflow-y: auto;
 }
 

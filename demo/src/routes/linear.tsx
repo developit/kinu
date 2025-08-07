@@ -338,8 +338,8 @@ export default function Linear() {
         <DetailsEditor />
       </section>
     </div>
-    <Drawer>
-      <DrawerContent id="linear-mobile-details" class="linear-details-drawer">
+    <Drawer id="linear-mobile-details">
+      <DrawerContent class="linear-details-drawer">
         <DetailsEditor />
         <DrawerClose>
           <Button variant="outline" style="margin-top:1rem">Close</Button>
