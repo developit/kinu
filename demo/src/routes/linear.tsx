@@ -13,9 +13,8 @@ import {
   DropdownMenuItem,
   Drawer,
   DrawerContent,
-  DrawerClose,
 } from 'pui';
-import {useState} from 'preact/hooks';
+import {useState, useRef, useEffect} from 'preact/hooks';
 
 interface Comment {
   id: number;
@@ -80,6 +79,15 @@ export default function Linear() {
   const [comment, setComment] = useState('');
   const [query, setQuery] = useState('');
   const [label, setLabel] = useState('');
+  const drawerRef = useRef<HTMLDialogElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const m = matchMedia('(max-width: 800px)');
+    const listener = () => setIsMobile(m.matches);
+    listener();
+    m.addEventListener('change', listener);
+    return () => m.removeEventListener('change', listener);
+  }, []);
 
   const selected = issues.find(i => i.id === selectedId)!;
 
@@ -303,15 +311,8 @@ export default function Linear() {
                   }
                   onClick={() => {
                     setSelectedId(issue.id);
-                    const dialog = document.getElementById(
-                      'linear-mobile-details'
-                    ) as HTMLDialogElement | null;
-                    if (
-                      matchMedia('(max-width: 800px)').matches &&
-                      dialog &&
-                      !dialog.open
-                    ) {
-                      dialog.showModal();
+                    if (isMobile && drawerRef.current && !drawerRef.current.open) {
+                      drawerRef.current.showModal();
                     }
                   }}
                 >
@@ -334,18 +335,26 @@ export default function Linear() {
           </div>
         ))}
       </main>
-      <section class="linear-details linear-details-desktop">
-        <DetailsEditor />
-      </section>
+      {!isMobile && (
+        <section class="linear-details linear-details-desktop">
+          <DetailsEditor />
+        </section>
+      )}
     </div>
-    <Drawer id="linear-mobile-details">
-      <DrawerContent class="linear-details-drawer">
-        <DetailsEditor />
-        <DrawerClose>
-          <Button variant="outline" style="margin-top:1rem">Close</Button>
-        </DrawerClose>
-      </DrawerContent>
-    </Drawer>
+    {isMobile && (
+      <Drawer>
+        <DrawerContent ref={drawerRef} class="linear-details-drawer">
+          <DetailsEditor />
+          <Button
+            variant="outline"
+            style="margin-top:1rem"
+            onClick={() => drawerRef.current?.close()}
+          >
+            Close
+          </Button>
+        </DrawerContent>
+      </Drawer>
+    )}
     </>
   );
 }
