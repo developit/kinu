@@ -72,13 +72,149 @@ const initialIssues: Issue[] = [
   },
 ];
 
+function DetailsEditor({
+  issue,
+  updateIssue,
+  addLabel,
+  removeLabel,
+  addComment,
+  deleteComment,
+}: {
+  issue: Issue;
+  updateIssue: (update: Partial<Issue>) => void;
+  addLabel: (label: string) => void;
+  removeLabel: (label: string) => void;
+  addComment: (text: string) => void;
+  deleteComment: (id: number) => void;
+}) {
+  const [label, setLabel] = useState('');
+  const [comment, setComment] = useState('');
+  return (
+    <>
+      <Input
+        value={issue.title}
+        onInput={e =>
+          updateIssue({title: (e.target as HTMLInputElement).value})
+        }
+      />
+      <RadioGroup>
+        {statuses.map(s => (
+          <label>
+            <Radio
+              name={`status-${issue.id}`}
+              checked={issue.status === s}
+              onInput={() => updateIssue({status: s})}
+            />
+            {s}
+          </label>
+        ))}
+      </RadioGroup>
+      <Select
+        value={issue.assignee}
+        onInput={e =>
+          updateIssue({assignee: (e.target as HTMLSelectElement).value})
+        }
+      >
+        {users.map(u => (
+          <option value={u}>{u}</option>
+        ))}
+      </Select>
+      <RadioGroup>
+        {priorities.map(p => (
+          <label>
+            <Radio
+              name={`priority-${issue.id}`}
+              checked={issue.priority === p}
+              onInput={() => updateIssue({priority: p})}
+            />
+            {p}
+          </label>
+        ))}
+      </RadioGroup>
+      <div class="linear-tag-editor">
+        {issue.labels.map(l => (
+          <Badge>
+            {l}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => removeLabel(l)}
+            >
+              ×
+            </Button>
+          </Badge>
+        ))}
+        <div class="linear-add-label">
+          <Input
+            value={label}
+            placeholder="Add label"
+            onInput={e => setLabel((e.target as HTMLInputElement).value)}
+            onKeyDown={e => {
+              if ((e as KeyboardEvent).key === 'Enter') {
+                addLabel(label.trim());
+                setLabel('');
+              }
+            }}
+          />
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              addLabel(label.trim());
+              setLabel('');
+            }}
+          >
+            +
+          </Button>
+        </div>
+      </div>
+      <Textarea
+        value={issue.description}
+        placeholder="Describe the issue..."
+        onInput={e =>
+          updateIssue({
+            description: (e.target as HTMLTextAreaElement).value,
+          })
+        }
+      />
+      <ul class="linear-comments">
+        {issue.comments.map(c => (
+          <li key={c.id}>
+            <span>{c.text}</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => deleteComment(c.id)}
+            >
+              ×
+            </Button>
+          </li>
+        ))}
+      </ul>
+      <div class="linear-add-comment">
+        <Input
+          value={comment}
+          onInput={e => setComment((e.target as HTMLInputElement).value)}
+          placeholder="Add comment"
+        />
+        <Button
+          onClick={() => {
+            addComment(comment);
+            setComment('');
+          }}
+        >
+          Send
+        </Button>
+      </div>
+    </>
+  );
+}
+
 export default function Linear() {
   const [issues, setIssues] = useState<Issue[]>(initialIssues);
   const [selectedId, setSelectedId] = useState(issues[0].id);
   const [title, setTitle] = useState('');
-  const [comment, setComment] = useState('');
   const [query, setQuery] = useState('');
-  const [label, setLabel] = useState('');
   const drawerRef = useRef<HTMLDialogElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -115,145 +251,41 @@ export default function Linear() {
     setSelectedId(id);
   }
 
-  function addComment() {
-    if (!comment) return;
-    updateIssue(selectedId, {
-      comments: [...selected.comments, {id: Date.now(), text: comment}],
-    });
-    setComment('');
+  function addComment(id: number, text: string) {
+    if (!text) return;
+    setIssues(
+      issues.map(i =>
+        i.id === id
+          ? {...i, comments: [...i.comments, {id: Date.now(), text}]}
+          : i,
+      ),
+    );
   }
 
-  function deleteComment(id: number) {
-    updateIssue(selectedId, {
-      comments: selected.comments.filter(c => c.id !== id),
-    });
+  function deleteComment(issueId: number, commentId: number) {
+    setIssues(
+      issues.map(i =>
+        i.id === issueId
+          ? {...i, comments: i.comments.filter(c => c.id !== commentId)}
+          : i,
+      ),
+    );
   }
 
-  function addLabel(l: string) {
+  function addLabel(id: number, l: string) {
     if (!l) return;
-    updateIssue(selectedId, {labels: [...selected.labels, l]});
+    setIssues(
+      issues.map(i =>
+        i.id === id ? {...i, labels: [...i.labels, l]} : i,
+      ),
+    );
   }
 
-  function removeLabel(l: string) {
-    updateIssue(selectedId, {labels: selected.labels.filter(x => x !== l)});
-  }
-
-  function DetailsEditor() {
-    return (
-      <>
-        <Input
-          value={selected.title}
-          onInput={e =>
-            updateIssue(selected.id, {
-              title: (e.target as HTMLInputElement).value,
-            })
-          }
-        />
-        <RadioGroup>
-          {statuses.map(s => (
-            <label>
-              <Radio
-                name={`status-${selected.id}`}
-                checked={selected.status === s}
-                onInput={() => updateIssue(selected.id, {status: s})}
-              />
-              {s}
-            </label>
-          ))}
-        </RadioGroup>
-        <Select
-          value={selected.assignee}
-          onInput={e =>
-            updateIssue(selected.id, {
-              assignee: (e.target as HTMLSelectElement).value,
-            })
-          }
-        >
-          {users.map(u => (
-            <option value={u}>{u}</option>
-          ))}
-        </Select>
-        <RadioGroup>
-          {priorities.map(p => (
-            <label>
-              <Radio
-                name={`priority-${selected.id}`}
-                checked={selected.priority === p}
-                onInput={() => updateIssue(selected.id, {priority: p})}
-              />
-              {p}
-            </label>
-          ))}
-        </RadioGroup>
-        <div class="linear-tag-editor">
-          {selected.labels.map(l => (
-            <Badge>
-              {l}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => removeLabel(l)}
-              >
-                ×
-              </Button>
-            </Badge>
-          ))}
-          <div class="linear-add-label">
-            <Input
-              value={label}
-              placeholder="Add label"
-              onInput={e => setLabel((e.target as HTMLInputElement).value)}
-              onKeyDown={e => {
-                if ((e as KeyboardEvent).key === 'Enter') {
-                  addLabel(label.trim());
-                  setLabel('');
-                }
-              }}
-            />
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => {
-                addLabel(label.trim());
-                setLabel('');
-              }}
-            >
-              +
-            </Button>
-          </div>
-        </div>
-        <Textarea
-          value={selected.description}
-          placeholder="Describe the issue..."
-          onInput={e =>
-            updateIssue(selected.id, {
-              description: (e.target as HTMLTextAreaElement).value,
-            })
-          }
-        />
-        <ul class="linear-comments">
-          {selected.comments.map(c => (
-            <li key={c.id}>
-              <span>{c.text}</span>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => deleteComment(c.id)}
-              >
-                ×
-              </Button>
-            </li>
-          ))}
-        </ul>
-        <div class="linear-add-comment">
-          <Input
-            value={comment}
-            onInput={e => setComment((e.target as HTMLInputElement).value)}
-            placeholder="Add comment"
-          />
-          <Button onClick={addComment}>Send</Button>
-        </div>
-      </>
+  function removeLabel(id: number, l: string) {
+    setIssues(
+      issues.map(i =>
+        i.id === id ? {...i, labels: i.labels.filter(x => x !== l)} : i,
+      ),
     );
   }
 
@@ -337,14 +369,28 @@ export default function Linear() {
       </main>
       {!isMobile && (
         <section class="linear-details linear-details-desktop">
-          <DetailsEditor />
+          <DetailsEditor
+            issue={selected}
+            updateIssue={u => updateIssue(selected.id, u)}
+            addLabel={l => addLabel(selected.id, l)}
+            removeLabel={l => removeLabel(selected.id, l)}
+            addComment={t => addComment(selected.id, t)}
+            deleteComment={id => deleteComment(selected.id, id)}
+          />
         </section>
       )}
     </div>
     {isMobile && (
       <Drawer>
         <DrawerContent ref={drawerRef} class="linear-details-drawer">
-          <DetailsEditor />
+          <DetailsEditor
+            issue={selected}
+            updateIssue={u => updateIssue(selected.id, u)}
+            addLabel={l => addLabel(selected.id, l)}
+            removeLabel={l => removeLabel(selected.id, l)}
+            addComment={t => addComment(selected.id, t)}
+            deleteComment={id => deleteComment(selected.id, id)}
+          />
           <Button
             variant="outline"
             style="margin-top:1rem"
