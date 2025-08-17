@@ -27,6 +27,12 @@ export default function Home() {
           <NavigationMenuItem>
             <NavigationMenuLink href="/linear">Linear Demo</NavigationMenuLink>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <section class="hero">
@@ -36,6 +42,9 @@ export default function Home() {
           <Button href="/components">Get Started</Button>
           <Button href="/linear" variant="secondary">
             Linear Demo
+          </Button>
+          <Button href="/chat" variant="secondary">
+            Chat Demo
           </Button>
           <Button variant="outline" href="https://github.com/">GitHub</Button>
         </div>

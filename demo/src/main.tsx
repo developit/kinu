@@ -5,6 +5,8 @@ import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
 const Home = lazy(() => import('./routes/home.tsx'));
 const Components = lazy(() => import('./app.tsx'));
 const Linear = lazy(() => import('./routes/linear.tsx'));
+const Chat = lazy(() => import('./routes/chat.tsx'));
+const Player = lazy(() => import('./routes/player.tsx'));
 
 function setViewportVars() {
   const vv = window.visualViewport;
@@ -24,6 +26,8 @@ render(
         <Route path="/" component={Home} />
         <Route path="/components" component={Components} />
         <Route path="/linear" component={Linear} />
+        <Route path="/chat" component={Chat} />
+        <Route path="/player" component={Player} />
       </Router>
     </ErrorBoundary>
   </LocationProvider>,
