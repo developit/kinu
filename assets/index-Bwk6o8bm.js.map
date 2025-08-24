@@ -1,1 +1,0 @@
-{"version":3,"file":"index-Bwk6o8bm.js","sources":["../../../src/components/input/index.tsx"],"sourcesContent":["import {createSimpleComponent} from '../../lib/create-simple-component';\nimport './style.css';\n\nexport const Input = createSimpleComponent('input', 'input');\n"],"names":["Input","createSimpleComponent"],"mappings":"wCAGa,MAAAA,EAAQC,EAAsB,QAAS,OAAO"}

@@ -1,0 +1,2 @@
+import{_ as u}from"./index-L43EUuWj.js";function c(e,a="div",o,n){function f(i){let t;this&&(typeof this=="function"?t=this(i):this.current=i);const s=n==null?void 0:n(i);return()=>{t&&t(),s&&s()}}function r(i){let t=i;return(o||n)&&(t=Object.assign({},o||{},i),t.ref=this.$_ref||(this.$_ref=f.bind(i.ref))),t.p=e,u(a,t)}return r.displayName=e,r}const h=c("button","button"),m=c("card","div");export{h as B,m as C,c};
+//# sourceMappingURL=index-GQL3J8Lk.js.map
