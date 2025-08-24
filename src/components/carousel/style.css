@@ -1,13 +1,79 @@
 @import "../../variables.css";
 
 [p="carousel"] {
+  position: relative;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 1rem;
+  scroll-behavior: smooth;
+  width: 100%;
+  height: 200px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+[p="carousel"]::-webkit-scrollbar {
+  display: none;
 }
 
 [p="carousel-item"] {
-  flex: 0 0 auto;
+  flex: 0 0 100%;
   scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[p="carousel-nav"] {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 0.25rem;
+  z-index: 1;
+}
+
+[p="carousel-nav"]:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+[p="carousel-nav"][direction="prev"] {
+  left: 0.5rem;
+}
+
+[p="carousel-nav"][direction="next"] {
+  right: 0.5rem;
+}
+
+[p="carousel-indicators"] {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+[p="carousel-indicator"] {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+[p="carousel-indicator"].active {
+  background: rgba(255, 255, 255, 1);
+}
+
+[p="carousel-indicator"]:hover {
+  background: rgba(255, 255, 255, 0.8);
 }

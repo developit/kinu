@@ -76,6 +76,9 @@ import {
   Calendar,
   Carousel,
   CarouselItem,
+  CarouselNav,
+  CarouselIndicators,
+  CarouselIndicator,
   DatePicker,
   SidebarTrigger,
 } from 'pui';
@@ -873,26 +876,80 @@ const calendarCode = `<Calendar />`;
 
 function CarouselDemo() {
   return (
-    <Carousel>
+    <Carousel data-autoplay="3000">
       <CarouselItem
-        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
+        style={{
+          padding: '2rem',
+          background: 'linear-gradient(45deg, #ff6b6b, #ffd93d)',
+          color: 'white',
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          textAlign: 'center'
+        }}
       >
-        1
+        Slide 1
       </CarouselItem>
       <CarouselItem
-        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
+        style={{
+          padding: '2rem',
+          background: 'linear-gradient(45deg, #6bcf7f, #4ecdc4)',
+          color: 'white',
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          textAlign: 'center'
+        }}
       >
-        2
+        Slide 2
       </CarouselItem>
       <CarouselItem
-        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
+        style={{
+          padding: '2rem',
+          background: 'linear-gradient(45deg, #45b7d1, #96ceb4)',
+          color: 'white',
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          textAlign: 'center'
+        }}
       >
-        3
+        Slide 3
       </CarouselItem>
+      <CarouselItem
+        style={{
+          padding: '2rem',
+          background: 'linear-gradient(45deg, #a8e6cf, #dcedc1)',
+          color: 'white',
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          textAlign: 'center'
+        }}
+      >
+        Slide 4
+      </CarouselItem>
+      <CarouselNav direction="prev">‹</CarouselNav>
+      <CarouselNav direction="next">›</CarouselNav>
+      <CarouselIndicators>
+        <CarouselIndicator />
+        <CarouselIndicator />
+        <CarouselIndicator />
+        <CarouselIndicator />
+      </CarouselIndicators>
     </Carousel>
   );
 }
-const carouselCode = `<Carousel>...</Carousel>`;
+const carouselCode = `<Carousel data-autoplay="3000">
+  <CarouselItem>Slide 1</CarouselItem>
+  <CarouselItem>Slide 2</CarouselItem>
+  <CarouselItem>Slide 3</CarouselItem>
+  <CarouselItem>Slide 4</CarouselItem>
+  <CarouselNav direction="prev">‹</CarouselNav>
+  <CarouselNav direction="next">›</CarouselNav>
+  <CarouselIndicators>
+    <CarouselIndicator />
+    <CarouselIndicator />
+    <CarouselIndicator />
+    <CarouselIndicator />
+  </CarouselIndicators>
+</Carousel>`;
 
 function DatePickerDemo() {
   return <DatePicker />;
