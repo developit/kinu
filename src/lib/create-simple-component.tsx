@@ -34,7 +34,6 @@ export function createSimpleComponent<
       else this.current = el;
     }
     const internalRet = ref?.(el);
-    if (!ret && !internalRet) return;
     return () => {
       if (ret) ret();
       if (internalRet) internalRet();
