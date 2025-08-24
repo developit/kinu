@@ -45,5 +45,6 @@ export const ContextMenuContent = createSimpleComponent(
 
 export const ContextMenuItem = createSimpleComponent(
   'context-menu-item',
-  // 'menuitem',
+  'button',
+  {tabIndex: 0},
 );

@@ -72,8 +72,8 @@ export function ToastContainer() {
           data-closing={t.closing || undefined}
         >
           {t.title && <h6 p="toast-title">{t.title}</h6>}
-          {t.content && <div p="toast-content">{t.content}</div>}
-          {t.icon && <div p="toast-icon">{t.icon}</div>}
+          <div p="toast-content">{t.content}</div>
+          <div p="toast-icon">{t.icon}</div>
           {t.action && <div p="toast-action">{t.action}</div>}
         </div>
       ))}

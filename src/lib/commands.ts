@@ -7,9 +7,14 @@ export function installCommands() {
   addEventListener('click', commandClickHandler);
 }
 
+function elementTarget(node: EventTarget) {
+  return 'closest' in node
+    ? (node as Element)
+    : ((node as Node).parentNode as Element);
+}
+
 function commandClickHandler(e: MouseEvent) {
-  const node = e.target as Node;
-  const el = ('closest' in node ? node : node.parentNode) as Element;
+  const el = elementTarget(e.target!);
   const trigger = el.closest<Element>('[command]');
   if (!trigger || e.defaultPrevented) return;
 
@@ -71,4 +76,64 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
       el.close();
     }
   }
+}
+
+let menuShortcutsInstalled: boolean;
+export function installMenuShortcuts() {
+  if (menuShortcutsInstalled) return;
+  menuShortcutsInstalled = true;
+  addEventListener('keydown', handleMenuShortcutsKeydown);
+}
+
+function handleMenuShortcutsKeydown(e: KeyboardEvent) {
+  const el = elementTarget(e.target!);
+  let dialog = el.closest('dialog[p]');
+  let useFocus = true;
+  if (!dialog) {
+    dialog = el.parentNode!.querySelector('dialog[p][open]');
+    useFocus = false;
+  }
+  if (!dialog) return;
+  const selected = dialog.querySelector<HTMLElement>(
+    useFocus ? '[p]:focus' : '[p][selected]',
+  );
+  // emulate button enter key behavior for pseudo-focused selection
+  if (e.key === 'Enter' && !useFocus) {
+    e.preventDefault();
+    selected?.click();
+    return;
+  }
+  const dir = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
+  if (!dir) return;
+  e.preventDefault();
+  if (!selected) {
+    const first = dialog.querySelector<HTMLElement>('button[p],[p][tabindex]');
+    if (useFocus) first?.focus();
+    else first?.toggleAttribute('selected', true);
+    return;
+  }
+  const type = selected.getAttribute('p');
+  if (!selected) return;
+  let next = selected;
+  while (
+    (next = next[
+      dir > 0 ? 'nextElementSibling' : 'previousElementSibling'
+    ] as HTMLElement)
+  ) {
+    if (next.getAttribute('p') !== type) continue;
+    if (useFocus) next.focus();
+    else {
+      selected.toggleAttribute('selected', false);
+      next!.toggleAttribute('selected', true);
+    }
+    e.preventDefault();
+    break;
+  }
+  // const siblings = Array.from(selected.parentNode!.querySelectorAll('&>[p]'));
+  // const index = siblings.indexOf(selected);
+  // const next = siblings[index + dir];
+  // const next = dialog.querySelector('[p][selected] + [p]');
+  // selected.toggleAttribute('selected', false);
+  // next!.toggleAttribute('selected', true);
+  // const menu = el.closest<HTMLElement>('[p="menubar"]');
 }

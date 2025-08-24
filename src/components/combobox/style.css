@@ -1,5 +1,6 @@
 @import "../../variables.css";
 @import "../popover/style.css";
+@import "../dropdown-menu/style.css";
 
 [p="combobox"] {
   position: relative;
@@ -18,29 +19,11 @@
 }
 
 [p="combobox-list"] {
-  left: 0;
   width: 100%;
-  padding: 0;
-  margin: 0.25rem 0 0;
 }
 
 [p="combobox-list"] ul {
   list-style: none;
   margin: 0;
   padding: 0.25rem 0;
-}
-
-[p="combobox-option"] {
-  display: block;
-  width: 100%;
-  background: none;
-  border: none;
-  text-align: left;
-  padding: 0.25rem 0.75rem;
-  font: inherit;
-  cursor: pointer;
-}
-
-[p="combobox-option"]:hover {
-  background-color: hsl(var(--p-muted));
 }

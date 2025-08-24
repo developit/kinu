@@ -22,7 +22,8 @@
 
 [p="button"]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--p-ring)), inset 0 0 0 1px hsl(var(--p-ring-inset));
+  /* outline: 1.5px hsl(var(--p-ring)) solid; */
+  box-shadow: 0 0 0 4px hsl(var(--p-ring) / 0.2);
   border-color: hsl(var(--p-ring));
   background-color: hsl(var(--p-primary));
   color: hsl(var(--p-primary-foreground));
