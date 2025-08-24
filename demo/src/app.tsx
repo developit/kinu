@@ -58,6 +58,7 @@ import {
   PaginationList,
   PaginationItem,
   PaginationLink,
+  Combobox,
   ComboboxInput,
   ComboboxList,
   ComboboxOption,
@@ -87,6 +88,13 @@ interface Example {
   title: string;
   Demo: () => JSX.Element;
   code: string;
+}
+
+function logText(e: MouseEvent | string) {
+  const text =
+    e instanceof Event ? (e.currentTarget as HTMLElement).textContent! : e;
+  const title = e instanceof Event ? 'Selected item:' : 'Value:';
+  toast.show(text, {title});
 }
 
 function BadgeDemo() {
@@ -579,13 +587,13 @@ function DropdownMenuDemo() {
           <Button variant="outline">Actions ▼</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => alert('Edit clicked')}>
+          <DropdownMenuItem onClick={() => logText('Edit clicked')}>
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => alert('Copy clicked')}>
+          <DropdownMenuItem onClick={() => logText('Copy clicked')}>
             Copy
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => alert('Delete clicked')}>
+          <DropdownMenuItem onClick={() => logText('Delete clicked')}>
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -606,7 +614,7 @@ function FormDemo() {
       <Button
         onClick={() => {
           console.log('Form data:', {email, name});
-          alert(`Email: ${email}\nName: ${name}`);
+          logText(`Email: ${email}\nName: ${name}`);
         }}
       >
         Submit Form
@@ -714,11 +722,11 @@ function MenubarDemo() {
           <MenubarItem>File</MenubarItem>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Open</DropdownMenuItem>
-          <DropdownMenuItem>Save</DropdownMenuItem>
-          <DropdownMenuItem>Save As...</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Open</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Save</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Save As...</DropdownMenuItem>
           <Separator />
-          <DropdownMenuItem>Close</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Close</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <DropdownMenu>
@@ -726,10 +734,12 @@ function MenubarDemo() {
           <MenubarItem>Edit</MenubarItem>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Cut</DropdownMenuItem>
-          <DropdownMenuItem>Copy</DropdownMenuItem>
-          <DropdownMenuItem>Paste</DropdownMenuItem>
-          <DropdownMenuItem>Paste without formatting</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Cut</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Copy</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Paste</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>
+            Paste without formatting
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <DropdownMenu>
@@ -737,11 +747,11 @@ function MenubarDemo() {
           <MenubarItem>View</MenubarItem>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Explorer</DropdownMenuItem>
-          <DropdownMenuItem>Search</DropdownMenuItem>
-          <DropdownMenuItem>Source Control</DropdownMenuItem>
-          <DropdownMenuItem>Run</DropdownMenuItem>
-          <DropdownMenuItem>Extensions</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Explorer</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Search</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Source Control</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Run</DropdownMenuItem>
+          <DropdownMenuItem onClick={logText}>Extensions</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </Menubar>
@@ -789,17 +799,17 @@ const paginationCode = `<Pagination>...</Pagination>`;
 
 function ComboboxDemo() {
   return (
-    <div>
-      <ComboboxInput list="fruits" />
-      <ComboboxList id="fruits">
-        <ComboboxOption value="Apple" />
-        <ComboboxOption value="Banana" />
-        <ComboboxOption value="Orange" />
+    <Combobox>
+      <ComboboxInput />
+      <ComboboxList>
+        <ComboboxOption>Apple</ComboboxOption>
+        <ComboboxOption>Banana</ComboboxOption>
+        <ComboboxOption>Orange</ComboboxOption>
       </ComboboxList>
-    </div>
+    </Combobox>
   );
 }
-const comboboxCode = `<ComboboxInput list="fruits" />`;
+const comboboxCode = `<Combobox>...</Combobox>`;
 
 function ContextMenuDemo() {
   return (
@@ -816,9 +826,11 @@ function ContextMenuDemo() {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem onClick={() => alert('Cut')}>Cut</ContextMenuItem>
-        <ContextMenuItem onClick={() => alert('Copy')}>Copy</ContextMenuItem>
-        <ContextMenuItem onClick={() => alert('Paste')}>Paste</ContextMenuItem>
+        <ContextMenuItem onClick={() => logText('Cut')}>Cut</ContextMenuItem>
+        <ContextMenuItem onClick={() => logText('Copy')}>Copy</ContextMenuItem>
+        <ContextMenuItem onClick={() => logText('Paste')}>
+          Paste
+        </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
   );

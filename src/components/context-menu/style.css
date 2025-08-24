@@ -1,5 +1,6 @@
 @import "../../variables.css";
 @import "../../components/popover/style.css";
+@import "../dropdown-menu/style.css";
 
 body [p="context-menu"] {
   position: fixed;
@@ -7,26 +8,11 @@ body [p="context-menu"] {
   left: anchor(left);
   top: anchor(top);
   --tf-x: 0;
-  margin: 0;
+  min-width: 6rem;
   margin-left: var(--p-context-menu-x);
   margin-top: var(--p-context-menu-y);
-  flex-direction: column;
   padding: 0.25rem 0;
-  border: 1px solid hsl(var(--p-border));
-  background-color: hsl(var(--p-background));
-  border-radius: var(--p-radius);
-  outline: none;
 }
 [p="context-menu"]::backdrop {
   opacity: 0;
-}
-
-[p="context-menu-item"] {
-  display: block;
-  padding: 0.25rem 0.75rem;
-  cursor: pointer;
-}
-
-[p="context-menu-item"]:hover {
-  background-color: hsl(var(--p-muted));
 }
