@@ -129,11 +129,4 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
     e.preventDefault();
     break;
   }
-  // const siblings = Array.from(selected.parentNode!.querySelectorAll('&>[p]'));
-  // const index = siblings.indexOf(selected);
-  // const next = siblings[index + dir];
-  // const next = dialog.querySelector('[p][selected] + [p]');
-  // selected.toggleAttribute('selected', false);
-  // next!.toggleAttribute('selected', true);
-  // const menu = el.closest<HTMLElement>('[p="menubar"]');
 }
