@@ -1053,10 +1053,30 @@ export function App() {
         </nav>
       </Sidebar>
       <main>
-        <header class="demo-header">
-          <SidebarTrigger>⟼</SidebarTrigger>
-          <h1 style={{margin: 0}}>UI Toolkit Demo</h1>
-        </header>
+        <NavigationMenu class="demo-header home-nav">
+          <SidebarTrigger class="demo-sidebar-trigger">☰</SidebarTrigger>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/">Home</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/components">
+                Components
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/linear">
+                Linear Demo
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
         <ToastContainer />
         {examples.map(({id, title, Demo, code}) => (
           <section id={id}>

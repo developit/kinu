@@ -17,7 +17,7 @@ body {
 .demo-app > main {
   flex: 1;
   width: 100%;
-  padding-top: 4rem;
+  padding-top: 5rem;
   overflow: visible;
 }
 
@@ -28,14 +28,38 @@ body {
 .demo-header {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   display: flex;
   gap: 1rem;
-  background: hsla(0, 0%, 95%, 0.95);
-  backdrop-filter: blur(2px);
-  padding: 1rem;
-  z-index: 100;
+  background-color: hsl(var(--p-background));
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 -1px 0 hsl(var(--p-border)), 0 0 12px rgb(0 0 0 / 0.1);
+  z-index: 500;
   overflow: visible;
+}
+.demo-sidebar-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(var(--p-border));
+  background-color: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  font-size: 1.125rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 150ms ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  margin-right: auto;
+}
+
+#app [p="sidebar"] {
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  max-height: calc(100vh - 4rem);
 }
 
 .nav {
@@ -76,6 +100,8 @@ pre.code-block {
   padding: 1rem;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  height: 4rem;
 }
 
 .hero {
@@ -201,8 +227,6 @@ pre.code-block {
   overflow-y: auto;
 }
 
-.linear-details-desktop {}
-
 .linear-add {
   display: flex;
   gap: 0.5rem;
@@ -230,7 +254,6 @@ pre.code-block {
 .linear-comments li span {
   flex: 1;
 }
-
 
 .linear-add-comment {
   display: flex;
@@ -296,7 +319,6 @@ pre.code-block {
     margin-left: auto;
   }
 }
-
 
 /* Chat demo */
 .chat-app {
