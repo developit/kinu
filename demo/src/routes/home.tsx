@@ -5,10 +5,6 @@ import {
   TabList,
   Tab,
   TabPanel,
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
   Badge,
   Alert,
   Progress,
@@ -142,6 +138,9 @@ export default function Home() {
           </Button>
           <Button href="/player" variant="secondary" size="lg">
             🎵 Music Player
+          </Button>
+          <Button variant="outline" href="https://github.com/">
+            GitHub
           </Button>
         </div>
       </section>

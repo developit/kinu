@@ -1293,6 +1293,9 @@ export function App() {
             <NavigationMenuItem>
               <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/dashboard">Dashboard Demo</NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
         <ToastContainer />
