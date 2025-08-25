@@ -1,0 +1,2 @@
+import{c as s}from"./index-DibY4fkJ.js";const o=s("progress","progress");function r(){const e=`${((+this.min||0)+ +this.value)/(+this.max||100)*100}%`;this.style.setProperty("--progress",e)}const n=s("slider","input",{type:"range"},e=>(e.addEventListener("input",r),r.call(e),()=>e.removeEventListener("input",r))),i=s("scroll-area","div");export{o as P,n as S,i as a};
+//# sourceMappingURL=index-B46YT1K4.js.map
