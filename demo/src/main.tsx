@@ -1,4 +1,5 @@
 import './style.css';
+import './iconify.d.ts';
 import {render} from 'preact';
 import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
 import 'iconify-icon';

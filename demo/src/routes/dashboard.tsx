@@ -129,10 +129,10 @@ function OverviewTab() {
   const netIncome = totalIncome - totalExpenses;
 
   const quickActions = [
-    { id: 'add-income', label: 'Quick Add Income', icon: '💰', action: () => toast.show('Quick income form opened!', { title: 'Feature Demo' }) },
-    { id: 'add-expense', label: 'Quick Add Expense', icon: '💸', action: () => toast.show('Quick expense form opened!', { title: 'Feature Demo' }) },
-    { id: 'set-budget', label: 'Adjust Budget', icon: '🎯', action: () => toast.show('Budget adjustment panel opened!', { title: 'Feature Demo' }) },
-    { id: 'export-data', label: 'Export Data', icon: '📊', action: () => toast.show('Data export initiated!', { title: 'Feature Demo' }) },
+    { id: 'add-income', label: 'Quick Add Income', icon: 'lucide:plus-circle', action: () => toast.show('Quick income form opened!', { title: 'Feature Demo' }) },
+    { id: 'add-expense', label: 'Quick Add Expense', icon: 'lucide:minus-circle', action: () => toast.show('Quick expense form opened!', { title: 'Feature Demo' }) },
+    { id: 'set-budget', label: 'Adjust Budget', icon: 'lucide:target', action: () => toast.show('Budget adjustment panel opened!', { title: 'Feature Demo' }) },
+    { id: 'export-data', label: 'Export Data', icon: 'lucide:download', action: () => toast.show('Data export initiated!', { title: 'Feature Demo' }) },
   ];
 
   return (
@@ -143,24 +143,32 @@ function OverviewTab() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Button variant="outline">⚡ Quick Actions</Button>
+                <Button variant="outline">
+                  <iconify-icon icon="lucide:zap" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Quick Actions
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {quickActions.map(action => (
                   <DropdownMenuItem key={action.id} onClick={action.action}>
-                    {action.icon} {action.label}
+                    <iconify-icon icon={action.icon} width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                    {action.label}
                   </DropdownMenuItem>
                 ))}
                 <Separator />
                 <DropdownMenuItem onClick={() => toast.show('Settings opened!', { title: 'Demo' })}>
-                  ⚙️ Settings
+                  <iconify-icon icon="lucide:settings" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Settings
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Button variant="outline">📅 {selectedTimeframe}</Button>
+                <Button variant="outline">
+                  <iconify-icon icon="lucide:calendar" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  {selectedTimeframe}
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setSelectedTimeframe('week')}>This Week</DropdownMenuItem>
@@ -171,19 +179,26 @@ function OverviewTab() {
             </DropdownMenu>
 
             <Toggle pressed={showAdvancedMetrics} onPressedChange={setShowAdvancedMetrics}>
-              🔬 Advanced Metrics
+              <iconify-icon icon="lucide:microscope" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+              Advanced Metrics
             </Toggle>
           </div>
 
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <Tooltip title="Refresh Data">
-              <Button size="icon" variant="ghost" onClick={() => toast.show('Data refreshed!', { icon: '🔄' })}>🔄</Button>
+              <Button size="icon" variant="ghost" onClick={() => toast.show('Data refreshed!', { icon: 'Refresh' })}>
+                <iconify-icon icon="lucide:refresh-cw" width="16" height="16"></iconify-icon>
+              </Button>
             </Tooltip>
             <Tooltip title="Share Dashboard">
-              <Button size="icon" variant="ghost" onClick={() => toast.show('Share link copied!', { icon: '🔗' })}>🔗</Button>
+              <Button size="icon" variant="ghost" onClick={() => toast.show('Share link copied!', { icon: 'Link' })}>
+                <iconify-icon icon="lucide:share-2" width="16" height="16"></iconify-icon>
+              </Button>
             </Tooltip>
             <Tooltip title="Print Report">
-              <Button size="icon" variant="ghost" onClick={() => toast.show('Report printed!', { icon: '🖨️' })}>🖨️</Button>
+              <Button size="icon" variant="ghost" onClick={() => toast.show('Report printed!', { icon: 'Print' })}>
+                <iconify-icon icon="lucide:printer" width="16" height="16"></iconify-icon>
+              </Button>
             </Tooltip>
           </div>
         </div>
@@ -200,12 +215,23 @@ function OverviewTab() {
                     <h3>Total Income</h3>
                     <DropdownMenu>
                       <DropdownMenuTrigger>
-                        <Button size="icon" variant="ghost">⋯</Button>
+                        <Button size="icon" variant="ghost">
+                          <iconify-icon icon="lucide:more-horizontal" width="16" height="16"></iconify-icon>
+                        </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => toast.show('Income details opened!')}>📋 View Details</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.show('Income forecast opened!')}>📈 Forecast</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.show('Income sources opened!')}>🏦 Sources</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.show('Income details opened!')}>
+                          <iconify-icon icon="lucide:list" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                          View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.show('Income forecast opened!')}>
+                          <iconify-icon icon="lucide:trending-up" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                          Forecast
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.show('Income sources opened!')}>
+                          <iconify-icon icon="lucide:building-2" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                          Sources
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -251,9 +277,18 @@ function OverviewTab() {
                         <Button size="icon" variant="ghost">⋯</Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => toast.show('Expense breakdown opened!')}>📋 Breakdown</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.show('Spending patterns opened!')}>📉 Patterns</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.show('Budget alerts opened!')}>⚠️ Alerts</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.show('Expense breakdown opened!')}>
+                          <iconify-icon icon="lucide:list" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                          Breakdown
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.show('Spending patterns opened!')}>
+                          <iconify-icon icon="lucide:trending-down" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                          Patterns
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.show('Budget alerts opened!')}>
+                          <iconify-icon icon="lucide:alert-triangle" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                          Alerts
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -1842,7 +1877,10 @@ export default function Dashboard() {
       <header className="dashboard-header">
         <div className="header-content">
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <h1>💰 Personal Finance Dashboard</h1>
+            <h1>
+            <iconify-icon icon="lucide:wallet" width="24" height="24" style={{ marginRight: '0.5rem' }}></iconify-icon>
+            Personal Finance Dashboard
+          </h1>
             <Badge variant="outline">PRO</Badge>
           </div>
           
@@ -1860,7 +1898,7 @@ export default function Dashboard() {
                 style={{ position: 'absolute', right: '0.25rem', top: '50%', transform: 'translateY(-50%)', width: '1.5rem', height: '1.5rem' }}
                 onClick={() => setShowCommandPalette(true)}
               >
-                🔍
+                <iconify-icon icon="lucide:search" width="16" height="16"></iconify-icon>
               </Button>
             </div>
 
@@ -1868,7 +1906,7 @@ export default function Dashboard() {
             <Popover>
               <PopoverTrigger>
                 <Button size="icon" variant="outline" style={{ position: 'relative' }}>
-                  🔔
+                  <iconify-icon icon="lucide:bell" width="16" height="16"></iconify-icon>
                   <Badge 
                     variant="destructive" 
                     style={{ 
@@ -1915,7 +1953,11 @@ export default function Dashboard() {
                             </div>
                           </div>
                           <Badge variant={notif.type === 'warning' ? 'destructive' : notif.type === 'success' ? 'default' : 'secondary'}>
-                            {notif.type === 'warning' ? '⚠️' : notif.type === 'success' ? '✅' : 'ℹ️'}
+                            <iconify-icon 
+                              icon={notif.type === 'warning' ? 'lucide:alert-triangle' : notif.type === 'success' ? 'lucide:check-circle' : 'lucide:info'} 
+                              width="12" 
+                              height="12"
+                            ></iconify-icon>
                           </Badge>
                         </div>
                       </div>
@@ -1928,34 +1970,74 @@ export default function Dashboard() {
             {/* Quick Actions Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Button size="icon" variant="outline">⚡</Button>
+                <Button size="icon" variant="outline">
+                  <iconify-icon icon="lucide:zap" width="16" height="16"></iconify-icon>
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => toast.show('Quick add income opened!')}>💰 Quick Add Income</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.show('Quick add expense opened!')}>💸 Quick Add Expense</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.show('Goal progress updated!')}>🎯 Update Goal</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Quick add income opened!')}>
+                  <iconify-icon icon="lucide:plus-circle" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Quick Add Income
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Quick add expense opened!')}>
+                  <iconify-icon icon="lucide:minus-circle" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Quick Add Expense
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Goal progress updated!')}>
+                  <iconify-icon icon="lucide:target" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Update Goal
+                </DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem onClick={() => toast.show('Data exported!')}>📊 Export Data</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.show('Backup created!')}>💾 Backup Data</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Data exported!')}>
+                  <iconify-icon icon="lucide:download" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Export Data
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Backup created!')}>
+                  <iconify-icon icon="lucide:hard-drive" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Backup Data
+                </DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem onClick={() => setShowCommandPalette(true)}>⌘ Command Palette</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setShowCommandPalette(true)}>
+                  <iconify-icon icon="lucide:command" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Command Palette
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             {/* Help Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Button size="icon" variant="outline">❓</Button>
+                <Button size="icon" variant="outline">
+                  <iconify-icon icon="lucide:help-circle" width="16" height="16"></iconify-icon>
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => toast.show('Help center opened!')}>📚 Help Center</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setShowCommandPalette(true)}>⌨️ Keyboard Shortcuts</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.show('Tutorial started!')}>🎓 Interactive Tutorial</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Help center opened!')}>
+                  <iconify-icon icon="lucide:book-open" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Help Center
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setShowCommandPalette(true)}>
+                  <iconify-icon icon="lucide:keyboard" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Keyboard Shortcuts
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Tutorial started!')}>
+                  <iconify-icon icon="lucide:graduation-cap" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Interactive Tutorial
+                </DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem onClick={() => toast.show('Feedback form opened!')}>💬 Send Feedback</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.show('Feature request form opened!')}>💡 Request Feature</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Feedback form opened!')}>
+                  <iconify-icon icon="lucide:message-circle" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Send Feedback
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Feature request form opened!')}>
+                  <iconify-icon icon="lucide:lightbulb" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Request Feature
+                </DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem onClick={() => toast.show('About page opened!')}>ℹ️ About</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('About page opened!')}>
+                  <iconify-icon icon="lucide:info" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  About
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -1965,14 +2047,32 @@ export default function Dashboard() {
                 <Avatar src="https://github.com/developit.png" alt="Profile" style={{ cursor: 'pointer' }} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => toast.show('Profile opened!')}>👤 View Profile</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setActiveTab('settings')}>⚙️ Settings</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.show('Billing opened!')}>💳 Billing</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Profile opened!')}>
+                  <iconify-icon icon="lucide:user" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  View Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setActiveTab('settings')}>
+                  <iconify-icon icon="lucide:settings" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Billing opened!')}>
+                  <iconify-icon icon="lucide:credit-card" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Billing
+                </DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem onClick={() => toast.show('Theme changed!')}>🌙 Dark Mode</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.show('Language changed!')}>🌍 Language</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Theme changed!')}>
+                  <iconify-icon icon="lucide:moon" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Dark Mode
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Language changed!')}>
+                  <iconify-icon icon="lucide:globe" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Language
+                </DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem onClick={() => toast.show('Logged out!')}>🚪 Sign Out</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => toast.show('Logged out!')}>
+                  <iconify-icon icon="lucide:log-out" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Sign Out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -2002,28 +2102,32 @@ export default function Dashboard() {
                 onClick={() => setActiveTab('overview')}
                 className="mobile-tab"
               >
-                📊 Overview
+                <iconify-icon icon="lucide:bar-chart-3" width="16" height="16" style={{ marginRight: '0.25rem' }}></iconify-icon>
+                Overview
               </Tab>
               <Tab 
                 aria-selected={activeTab === 'transactions'} 
                 onClick={() => setActiveTab('transactions')}
                 className="mobile-tab"
               >
-                💳 Transactions
+                <iconify-icon icon="lucide:credit-card" width="16" height="16" style={{ marginRight: '0.25rem' }}></iconify-icon>
+                Transactions
               </Tab>
               <Tab 
                 aria-selected={activeTab === 'goals'} 
                 onClick={() => setActiveTab('goals')}
                 className="mobile-tab"
               >
-                🎯 Goals
+                <iconify-icon icon="lucide:target" width="16" height="16" style={{ marginRight: '0.25rem' }}></iconify-icon>
+                Goals
               </Tab>
               <Tab 
                 aria-selected={activeTab === 'settings'} 
                 onClick={() => setActiveTab('settings')}
                 className="mobile-tab"
               >
-                ⚙️ Settings
+                <iconify-icon icon="lucide:settings" width="16" height="16" style={{ marginRight: '0.25rem' }}></iconify-icon>
+                Settings
               </Tab>
             </TabList>
             <div className="tab-content">
@@ -2039,21 +2143,24 @@ export default function Dashboard() {
                   className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`}
                   onClick={() => setActiveTab('overview')}
                 >
-                  📊 Overview
+                  <iconify-icon icon="lucide:bar-chart-3" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Overview
                   <span style={{ marginLeft: 'auto', fontSize: '0.75rem', opacity: 0.7 }}>⌘1</span>
                 </button>
                 <button 
                   className={`nav-item ${activeTab === 'transactions' ? 'active' : ''}`}
                   onClick={() => setActiveTab('transactions')}
                 >
-                  💳 Transactions
+                  <iconify-icon icon="lucide:credit-card" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Transactions
                   <span style={{ marginLeft: 'auto', fontSize: '0.75rem', opacity: 0.7 }}>⌘2</span>
                 </button>
                 <button 
                   className={`nav-item ${activeTab === 'goals' ? 'active' : ''}`}
                   onClick={() => setActiveTab('goals')}
                 >
-                  🎯 Goals
+                  <iconify-icon icon="lucide:target" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Goals
                   <span style={{ marginLeft: 'auto', fontSize: '0.75rem', opacity: 0.7 }}>⌘3</span>
                 </button>
               </div>
@@ -2063,21 +2170,33 @@ export default function Dashboard() {
                 <ContextMenu>
                   <ContextMenuTrigger>
                     <button className="nav-item" onClick={() => toast.show('Calculator opened!')}>
-                      🧮 Calculator
+                      <iconify-icon icon="lucide:calculator" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                      Calculator
                     </button>
                   </ContextMenuTrigger>
                   <ContextMenuContent>
-                    <ContextMenuItem onClick={() => toast.show('Basic calculator opened!')}>📱 Basic Calculator</ContextMenuItem>
-                    <ContextMenuItem onClick={() => toast.show('Loan calculator opened!')}>🏠 Loan Calculator</ContextMenuItem>
-                    <ContextMenuItem onClick={() => toast.show('Investment calculator opened!')}>📈 Investment Calculator</ContextMenuItem>
+                    <ContextMenuItem onClick={() => toast.show('Basic calculator opened!')}>
+                      <iconify-icon icon="lucide:calculator" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                      Basic Calculator
+                    </ContextMenuItem>
+                    <ContextMenuItem onClick={() => toast.show('Loan calculator opened!')}>
+                      <iconify-icon icon="lucide:home" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                      Loan Calculator
+                    </ContextMenuItem>
+                    <ContextMenuItem onClick={() => toast.show('Investment calculator opened!')}>
+                      <iconify-icon icon="lucide:trending-up" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                      Investment Calculator
+                    </ContextMenuItem>
                   </ContextMenuContent>
                 </ContextMenu>
                 
                 <button className="nav-item" onClick={() => toast.show('Reports opened!')}>
-                  📊 Reports
+                  <iconify-icon icon="lucide:file-text" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Reports
                 </button>
                 <button className="nav-item" onClick={() => toast.show('Insights opened!')}>
-                  🔬 Insights
+                  <iconify-icon icon="lucide:brain" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Insights
                 </button>
               </div>
               
@@ -2087,11 +2206,13 @@ export default function Dashboard() {
                   className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`}
                   onClick={() => setActiveTab('settings')}
                 >
-                  ⚙️ Settings
+                  <iconify-icon icon="lucide:settings" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Settings
                   <span style={{ marginLeft: 'auto', fontSize: '0.75rem', opacity: 0.7 }}>⌘4</span>
                 </button>
                 <button className="nav-item" onClick={() => toast.show('Help opened!')}>
-                  ❓ Help
+                  <iconify-icon icon="lucide:help-circle" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                  Help
                 </button>
               </div>
 
@@ -2099,7 +2220,10 @@ export default function Dashboard() {
               <div style={{ marginTop: 'auto', padding: '1rem', borderTop: '1px solid hsl(var(--p-border))' }}>
                 <Alert style={{ padding: '0.75rem' }}>
                   <div style={{ fontSize: '0.875rem' }}>
-                    <div style={{ fontWeight: 'bold', marginBottom: '0.25rem' }}>💡 Pro Tip</div>
+                    <div style={{ fontWeight: 'bold', marginBottom: '0.25rem', display: 'flex', alignItems: 'center' }}>
+                      <iconify-icon icon="lucide:lightbulb" width="16" height="16" style={{ marginRight: '0.5rem' }}></iconify-icon>
+                      Pro Tip
+                    </div>
                     <div style={{ fontSize: '0.75rem', color: 'hsl(var(--p-muted-foreground))' }}>
                       Press ⌘K to open the command palette and navigate faster!
                     </div>
