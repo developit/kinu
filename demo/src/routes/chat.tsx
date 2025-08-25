@@ -11,7 +11,7 @@ import {useState} from 'preact/hooks';
 
 type Message = {
   id: number;
-  author: 'Sofia Davis' | 'You';
+  author: 'Support Agent' | 'You';
   text: string;
   timestamp: Date;
 };
@@ -20,7 +20,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      author: 'Sofia Davis',
+      author: 'Support Agent',
       text: 'Hi, how can I help you today?',
       timestamp: new Date(Date.now() - 300000), // 5 minutes ago
     },
@@ -32,7 +32,7 @@ export default function Chat() {
     },
     {
       id: 3,
-      author: 'Sofia Davis',
+      author: 'Support Agent',
       text: 'What seems to be the problem?',
       timestamp: new Date(Date.now() - 180000), // 3 minutes ago
     },
@@ -59,15 +59,15 @@ export default function Chat() {
     setMessages([...messages, newMessage]);
     setInput('');
     
-    // Simulate Sofia's response after a short delay
+    // Simulate support agent's response after a short delay
     setTimeout(() => {
-      const sofiaResponse: Message = {
+      const agentResponse: Message = {
         id: Date.now(),
-        author: 'Sofia Davis',
+        author: 'Support Agent',
         text: 'I understand. Let me help you with that. Can you tell me what error message you\'re seeing?',
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, sofiaResponse]);
+      setMessages(prev => [...prev, agentResponse]);
     }, 1000);
   }
 
@@ -107,14 +107,14 @@ export default function Chat() {
       <div class="chat-container">
         <div class="chat-window">
           {/* Chat Header */}
-          <div class="chat-header">
-            <div class="chat-contact">
-              <Avatar class="chat-avatar" fallback="SD" />
-              <div class="contact-info">
-                <h3 class="contact-name">Sofia Davis</h3>
-                <p class="contact-email">m@example.com</p>
+                      <div class="chat-header">
+              <div class="chat-contact">
+                <Avatar class="chat-avatar" fallback="SA" />
+                <div class="contact-info">
+                  <h3 class="contact-name">Support Agent</h3>
+                  <p class="contact-email">support@example.com</p>
+                </div>
               </div>
-            </div>
             <Button class="chat-attachment-btn" variant="outline" size="sm">
               <span class="attachment-icon">+</span>
             </Button>
