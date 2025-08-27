@@ -7,6 +7,7 @@ const Components = lazy(() => import('./app.tsx'));
 const Linear = lazy(() => import('./routes/linear.tsx'));
 const Chat = lazy(() => import('./routes/chat.tsx'));
 const Player = lazy(() => import('./routes/player.tsx'));
+const Shop = lazy(() => import('./routes/shop.tsx'));
 
 function setViewportVars() {
   const vv = window.visualViewport;
@@ -28,6 +29,7 @@ render(
         <Route path="/linear" component={Linear} />
         <Route path="/chat" component={Chat} />
         <Route path="/player" component={Player} />
+        <Route path="/shop" component={Shop} />
       </Router>
     </ErrorBoundary>
   </LocationProvider>,

@@ -552,3 +552,42 @@ pre.code-block {
 .playlist li {
   padding: 0.25rem 0;
 }
+
+/* Shop demo */
+.shop {
+  padding: 2rem;
+}
+
+.shop-nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.shop-products {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .shop-products {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+.shop-product {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.shop-cart {
+  padding: 1rem;
+  min-width: 300px;
+}
+
+.shop-total {
+  font-weight: 600;
+  margin-top: 1rem;
+}

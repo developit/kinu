@@ -33,6 +33,9 @@ export default function Home() {
           <NavigationMenuItem>
             <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink href="/shop">Shop Demo</NavigationMenuLink>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <section class="hero">
@@ -45,6 +48,9 @@ export default function Home() {
           </Button>
           <Button href="/chat" variant="secondary">
             Chat Demo
+          </Button>
+          <Button href="/shop" variant="secondary">
+            Shop Demo
           </Button>
           <Button variant="outline" href="https://github.com/">GitHub</Button>
         </div>
