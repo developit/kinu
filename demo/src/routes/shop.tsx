@@ -2,13 +2,15 @@ import {
   Button,
   Card,
   Drawer,
+  DrawerTrigger,
   DrawerContent,
+  DrawerClose,
   Table,
   Input,
   ToastContainer,
   toast,
 } from 'pui';
-import {useState, useRef} from 'preact/hooks';
+import {useState} from 'preact/hooks';
 
 interface Product {
   id: number;
@@ -29,7 +31,6 @@ interface CartItem {
 
 export default function ShopDemo() {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const drawerRef = useRef<HTMLDialogElement>(null);
 
   function addToCart(id: number) {
     setCart(items => {
@@ -53,24 +54,25 @@ export default function ShopDemo() {
   }, 0);
 
   return (
-    <div class="shop">
-      <ToastContainer />
-      <nav class="shop-nav">
-        <Button onClick={() => drawerRef.current?.showModal()}>
-          Cart ({cart.reduce((s, i) => s + i.qty, 0)})
-        </Button>
-      </nav>
-      <div class="shop-products">
-        {products.map(p => (
-          <Card class="shop-product" key={p.id}>
-            <h3>{p.name}</h3>
-            <p>${p.price}</p>
-            <Button onClick={() => addToCart(p.id)}>Add to Cart</Button>
-          </Card>
-        ))}
+    <Drawer>
+      <div class="shop">
+        <ToastContainer />
+        <nav class="shop-nav">
+          <DrawerTrigger>
+            <Button>Cart ({cart.reduce((s, i) => s + i.qty, 0)})</Button>
+          </DrawerTrigger>
+        </nav>
+        <div class="shop-products">
+          {products.map(p => (
+            <Card class="shop-product" key={p.id}>
+              <h3>{p.name}</h3>
+              <p>${p.price}</p>
+              <Button onClick={() => addToCart(p.id)}>Add to Cart</Button>
+            </Card>
+          ))}
+        </div>
       </div>
-      <Drawer>
-        <DrawerContent ref={drawerRef} class="shop-cart">
+      <DrawerContent class="shop-cart">
           <h2>Cart</h2>
           {cart.length ? (
             <>
@@ -108,13 +110,14 @@ export default function ShopDemo() {
                 </tbody>
               </Table>
               <p class="shop-total">Total: ${total}</p>
-              <Button onClick={() => drawerRef.current?.close()}>Close</Button>
+              <DrawerClose>
+                <Button>Close</Button>
+              </DrawerClose>
             </>
           ) : (
             <p>Your cart is empty.</p>
           )}
-        </DrawerContent>
-      </Drawer>
-    </div>
+      </DrawerContent>
+    </Drawer>
   );
 }
