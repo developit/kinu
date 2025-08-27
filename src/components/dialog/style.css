@@ -14,6 +14,10 @@
   flex-direction: column;
   padding: 1.5rem;
   gap: 1rem;
+  margin-bottom: env(keyboard-inset-bottom, 0);
+  max-height: calc(100vh - env(keyboard-inset-bottom, 0));
+  max-height: calc(100dvh - env(keyboard-inset-bottom, 0));
+  overflow-y: auto;
 }
 [p="dialog-content"][open] {
   display: flex;
