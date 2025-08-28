@@ -3,6 +3,7 @@ import {render} from 'preact';
 import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
 
 const Home = lazy(() => import('./routes/home.tsx'));
+const GettingStarted = lazy(() => import('./routes/getting-started.tsx'));
 const Components = lazy(() => import('./app.tsx'));
 const Linear = lazy(() => import('./routes/linear.tsx'));
 const Chat = lazy(() => import('./routes/chat.tsx'));
@@ -24,6 +25,7 @@ render(
     <ErrorBoundary>
       <Router>
         <Route path="/" component={Home} />
+        <Route path="/getting-started" component={GettingStarted} />
         <Route path="/components" component={Components} />
         <Route path="/linear" component={Linear} />
         <Route path="/chat" component={Chat} />

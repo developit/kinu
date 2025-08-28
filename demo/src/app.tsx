@@ -750,19 +750,19 @@ function SidebarDemo() {
 
         <h3>Navigation</h3>
         <nav>
-          <a href="#" aria-current="page">
+          <a href="/dashboard" aria-current="page">
             🏠 Dashboard
           </a>
-          <a href="#">📊 Analytics</a>
-          <a href="#">👥 Team</a>
-          <a href="#">⚙️ Settings</a>
+          <a href="/analytics">📊 Analytics</a>
+          <a href="/team">👥 Team</a>
+          <a href="/settings">⚙️ Settings</a>
         </nav>
 
         <h3>Resources</h3>
         <nav>
-          <a href="#">📖 Documentation</a>
-          <a href="#">🎨 Design System</a>
-          <a href="#">🔧 Tools</a>
+          <a href="/documentation">📖 Documentation</a>
+          <a href="/design-system">🎨 Design System</a>
+          <a href="/tools">🔧 Tools</a>
         </nav>
 
         <div
@@ -1273,6 +1273,9 @@ export function App() {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink href="/">Home</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/getting-started">Getting Started</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink href="/components">
