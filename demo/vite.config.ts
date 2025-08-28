@@ -9,9 +9,6 @@ export default defineConfig({
   build: {
     modulePreload: false,
     sourcemap: true,
-    rollupOptions: {
-      treeshake: 'smallest',
-    },
   },
   resolve: {
     alias: {
