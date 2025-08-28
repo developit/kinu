@@ -22,12 +22,60 @@ import {
 import {useState, useEffect} from 'preact/hooks';
 
 const tracks = [
-  {id: 1, title: 'Midnight Coffee', artist: 'Lofi Dreams', album: 'Chill Nights', duration: '3:42', cover: '☕', liked: false},
-  {id: 2, title: 'Summer Breeze', artist: 'DJ Sunwave', album: 'Golden Hour', duration: '4:18', cover: '🌅', liked: true},
-  {id: 3, title: 'Neon Lights', artist: 'Synthwave City', album: 'Retro Future', duration: '5:03', cover: '🌃', liked: false},
-  {id: 4, title: 'Ocean Waves', artist: 'Nature Sounds', album: 'Peaceful Mind', duration: '2:57', cover: '🌊', liked: true},
-  {id: 5, title: 'City Rain', artist: 'Ambient Collective', album: 'Urban Calm', duration: '4:35', cover: '🌧️', liked: false},
-  {id: 6, title: 'Forest Path', artist: 'Organic Beats', album: 'Natural Rhythm', duration: '3:28', cover: '🌲', liked: false},
+  {
+    id: 1,
+    title: 'Midnight Coffee',
+    artist: 'Lofi Dreams',
+    album: 'Chill Nights',
+    duration: '3:42',
+    cover: '☕',
+    liked: false,
+  },
+  {
+    id: 2,
+    title: 'Summer Breeze',
+    artist: 'DJ Sunwave',
+    album: 'Golden Hour',
+    duration: '4:18',
+    cover: '🌅',
+    liked: true,
+  },
+  {
+    id: 3,
+    title: 'Neon Lights',
+    artist: 'Synthwave City',
+    album: 'Retro Future',
+    duration: '5:03',
+    cover: '🌃',
+    liked: false,
+  },
+  {
+    id: 4,
+    title: 'Ocean Waves',
+    artist: 'Nature Sounds',
+    album: 'Peaceful Mind',
+    duration: '2:57',
+    cover: '🌊',
+    liked: true,
+  },
+  {
+    id: 5,
+    title: 'City Rain',
+    artist: 'Ambient Collective',
+    album: 'Urban Calm',
+    duration: '4:35',
+    cover: '🌧️',
+    liked: false,
+  },
+  {
+    id: 6,
+    title: 'Forest Path',
+    artist: 'Organic Beats',
+    album: 'Natural Rhythm',
+    duration: '3:28',
+    cover: '🌲',
+    liked: false,
+  },
 ];
 
 export default function Player() {
@@ -45,8 +93,13 @@ export default function Player() {
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
-      setProgress(prev => prev >= 100 ? 0 : prev + 0.5);
-    }, 100);
+      setProgress((prev) => {
+        const trackDurationInSeconds = 222; // 3:42 = 222 seconds
+        const progressPerSecond = 100 / trackDurationInSeconds;
+        const newProgress = prev + progressPerSecond;
+        return newProgress >= 100 ? 0 : newProgress;
+      });
+    }, 1000); // Update every second
     return () => clearInterval(interval);
   }, [isPlaying]);
 
@@ -59,14 +112,38 @@ export default function Player() {
   const currentTime = (progress / 100) * 222; // Assuming 3:42 = 222 seconds
   const totalTime = 222;
 
-  const addToQueue = (track: typeof tracks[0]) => {
-    setQueue(prev => [...prev, track]);
+  const addToQueue = (track: (typeof tracks)[0]) => {
+    setQueue((prev) => [...prev, track]);
   };
 
   const toggleLike = (trackId: number) => {
-    setTrackList(prev => prev.map(track => 
-      track.id === trackId ? { ...track, liked: !track.liked } : track
-    ));
+    setTrackList((prev) =>
+      prev.map((track) =>
+        track.id === trackId ? {...track, liked: !track.liked} : track,
+      ),
+    );
+  };
+
+  const playNext = () => {
+    const currentIndex = trackList.findIndex(
+      (track) => track.id === currentTrack.id,
+    );
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < trackList.length) {
+      setCurrentTrack(trackList[nextIndex]);
+      setProgress(0);
+    }
+  };
+
+  const playPrevious = () => {
+    const currentIndex = trackList.findIndex(
+      (track) => track.id === currentTrack.id,
+    );
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0) {
+      setCurrentTrack(trackList[prevIndex]);
+      setProgress(0);
+    }
   };
 
   return (
@@ -77,10 +154,14 @@ export default function Player() {
             <NavigationMenuLink href="/">Home</NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="/getting-started">Getting Started</NavigationMenuLink>
+            <NavigationMenuLink href="/getting-started">
+              Getting Started
+            </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="/components">Components</NavigationMenuLink>
+            <NavigationMenuLink href="/components">
+              Components
+            </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink href="/linear">Linear Demo</NavigationMenuLink>
@@ -119,34 +200,59 @@ export default function Player() {
             </div>
 
             <div class="main-controls">
-              <Button variant="ghost" size="sm" onClick={() => setShuffle(!shuffle)}>
-                <iconify-icon icon={shuffle ? 'lucide:shuffle' : 'lucide:list'} />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShuffle(!shuffle)}
+              >
+                <iconify-icon
+                  icon={shuffle ? 'lucide:shuffle' : 'lucide:list'}
+                />
               </Button>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" onClick={playPrevious}>
                 <iconify-icon icon="lucide:skip-back" />
               </Button>
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 onClick={() => setIsPlaying(!isPlaying)}
                 class="play-button"
               >
-                <iconify-icon icon={isPlaying ? 'lucide:pause' : 'lucide:play'} />
+                <iconify-icon
+                  icon={isPlaying ? 'lucide:pause' : 'lucide:play'}
+                />
               </Button>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" onClick={playNext}>
                 <iconify-icon icon="lucide:skip-forward" />
               </Button>
-              <Button variant="ghost" size="sm" onClick={() => setRepeat(!repeat)}>
-                <iconify-icon icon={repeat ? 'lucide:repeat-1' : 'lucide:repeat'} />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setRepeat(!repeat)}
+              >
+                <iconify-icon
+                  icon={repeat ? 'lucide:repeat-1' : 'lucide:repeat'}
+                />
               </Button>
             </div>
 
             <div class="volume-control">
-              <iconify-icon icon={volume === 0 ? 'lucide:volume-x' : volume < 50 ? 'lucide:volume-1' : 'lucide:volume-2'} class="volume-icon" />
+              <iconify-icon
+                icon={
+                  volume === 0
+                    ? 'lucide:volume-x'
+                    : volume < 50
+                      ? 'lucide:volume-1'
+                      : 'lucide:volume-2'
+                }
+                class="volume-icon"
+              />
               <Slider
                 value={volume}
                 max={100}
                 min={0}
-                onInput={(e) => setVolume((e.currentTarget as HTMLInputElement).valueAsNumber)}
+                onInput={(e) =>
+                  setVolume((e.currentTarget as HTMLInputElement).valueAsNumber)
+                }
                 class="volume-slider"
               />
               <span class="volume-text">{volume}%</span>
@@ -157,13 +263,22 @@ export default function Player() {
         <div class="playlist-sidebar">
           <Card class="playlist-card">
             <TabList>
-              <Tab aria-selected={tab === 'playlist'} onClick={() => setTab('playlist')}>
+              <Tab
+                aria-selected={tab === 'playlist'}
+                onClick={() => setTab('playlist')}
+              >
                 Playlist
               </Tab>
-              <Tab aria-selected={tab === 'queue'} onClick={() => setTab('queue')}>
+              <Tab
+                aria-selected={tab === 'queue'}
+                onClick={() => setTab('queue')}
+              >
                 Queue
               </Tab>
-              <Tab aria-selected={tab === 'library'} onClick={() => setTab('library')}>
+              <Tab
+                aria-selected={tab === 'library'}
+                onClick={() => setTab('library')}
+              >
                 Library
               </Tab>
             </TabList>
@@ -174,9 +289,12 @@ export default function Player() {
                   {trackList.map((track, index) => (
                     <ContextMenu key={track.id}>
                       <ContextMenuTrigger>
-                        <div 
+                        <div
                           class={`track-item ${track.id === currentTrack.id ? 'active' : ''}`}
-                          onClick={() => setCurrentTrack(track)}
+                          onClick={() => {
+                            setCurrentTrack(track);
+                            setProgress(0);
+                          }}
                         >
                           <Avatar size="sm">{track.cover}</Avatar>
                           <div class="track-details">
@@ -185,9 +303,9 @@ export default function Player() {
                           </div>
                           <div class="track-duration">{track.duration}</div>
                           <div class="track-actions">
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
+                            <Button
+                              variant="ghost"
+                              size="sm"
                               class={`heart-button ${track.liked ? 'liked' : ''}`}
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -196,19 +314,15 @@ export default function Player() {
                             >
                               <iconify-icon icon="lucide:heart" />
                             </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
+                            <Button
+                              variant="ghost"
+                              size="sm"
                               class="context-menu-trigger"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                // Fire a synthetic contextmenu event to trigger the menu
-                                const contextMenuEvent = new MouseEvent('contextmenu', {
-                                  bubbles: true,
-                                  clientX: e.clientX,
-                                  clientY: e.clientY,
-                                });
-                                e.currentTarget.dispatchEvent(contextMenuEvent);
+                                e.currentTarget.dispatchEvent(
+                                  new MouseEvent('contextmenu', e),
+                                );
                               }}
                             >
                               <iconify-icon icon="lucide:more-horizontal" />
@@ -225,7 +339,12 @@ export default function Player() {
                           <iconify-icon icon="lucide:heart" />
                           {track.liked ? 'Unlike' : 'Like'}
                         </ContextMenuItem>
-                        <ContextMenuItem onClick={() => setCurrentTrack(track)}>
+                        <ContextMenuItem
+                          onClick={() => {
+                            setCurrentTrack(track);
+                            setProgress(0);
+                          }}
+                        >
                           <iconify-icon icon="lucide:play" />
                           Play Now
                         </ContextMenuItem>
@@ -242,26 +361,36 @@ export default function Player() {
                   <div class="empty-state">
                     <iconify-icon icon="lucide:music" />
                     <p>Queue is empty</p>
-                    <Button variant="outline" size="sm">Add songs to queue</Button>
+                    <Button variant="outline" size="sm">
+                      Add songs to queue
+                    </Button>
                   </div>
                 ) : (
                   <ScrollArea class="track-list">
                     {queue.map((track, index) => (
-                      <div key={`queue-${track.id}-${index}`} class="track-item">
-                        <div class="track-number">{index + 1}</div>
+                      <div
+                        key={`queue-${track.id}-${index}`}
+                        class="track-item"
+                      >
                         <Avatar size="sm">{track.cover}</Avatar>
                         <div class="track-details">
                           <div class="track-title">{track.title}</div>
                           <div class="track-artist">{track.artist}</div>
                         </div>
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          onClick={() => setQueue(prev => prev.filter((_, i) => i !== index))}
-                        >
-                          <iconify-icon icon="lucide:x" />
-                        </Button>
                         <div class="track-duration">{track.duration}</div>
+                        <div class="track-actions">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              setQueue((prev) =>
+                                prev.filter((_, i) => i !== index),
+                              )
+                            }
+                          >
+                            <iconify-icon icon="lucide:x" />
+                          </Button>
+                        </div>
                       </div>
                     ))}
                   </ScrollArea>
@@ -284,15 +413,18 @@ export default function Player() {
                 </div>
                 <Separator />
                 <div class="library-actions">
-                  <Button variant="outline" size="sm">Import Music</Button>
-                  <Button variant="ghost" size="sm">Create Playlist</Button>
+                  <Button variant="outline" size="sm">
+                    Import Music
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    Create Playlist
+                  </Button>
                 </div>
               </TabPanel>
             )}
           </Card>
         </div>
       </div>
-
     </div>
   );
 }
