@@ -1,6 +1,7 @@
 import './style.css';
 import {render} from 'preact';
 import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
+import 'iconify-icon';
 
 const Home = lazy(() => import('./routes/home.tsx'));
 const GettingStarted = lazy(() => import('./routes/getting-started.tsx'));
@@ -33,5 +34,5 @@ render(
       </Router>
     </ErrorBoundary>
   </LocationProvider>,
-  document.getElementById('app')!
+  document.getElementById('app')!,
 );
