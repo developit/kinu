@@ -1,4 +1,4 @@
-@import '../../src/variables.css';
+@import "../../src/variables.css";
 
 html,
 body {
@@ -58,7 +58,7 @@ body {
   margin-right: auto;
 }
 
-#app [p="sidebar"] {
+.demo-app > [p="sidebar"] {
   top: 4rem;
   height: calc(100vh - 4rem);
   max-height: calc(100vh - 4rem);
@@ -218,15 +218,21 @@ pre.code-block {
   gap: 1rem;
 }
 
-[p="drawer-content"].linear-details-drawer {
+.linear-details-drawer {
   border-top: 1px solid hsl(var(--p-border));
+  margin: -1rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  justify-items: flex-start;
+  /* align-items: start; */
   gap: 1rem;
   height: calc(var(--vh, 100vh) * 0.8);
   bottom: var(--vh-offset, 0px);
   overflow-y: auto;
+}
+.linear-details-drawer > * {
+  flex-shrink: 0;
 }
 
 .linear-add {

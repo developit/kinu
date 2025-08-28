@@ -13,6 +13,8 @@ import {
   DropdownMenuItem,
   Drawer,
   DrawerContent,
+  Sidebar,
+  DrawerClose,
 } from 'pui';
 import {useState, useRef, useEffect} from 'preact/hooks';
 
@@ -93,12 +95,12 @@ function DetailsEditor({
     <>
       <Input
         value={issue.title}
-        onInput={e =>
+        onInput={(e) =>
           updateIssue({title: (e.target as HTMLInputElement).value})
         }
       />
       <RadioGroup>
-        {statuses.map(s => (
+        {statuses.map((s) => (
           <label>
             <Radio
               name={`status-${issue.id}`}
@@ -111,16 +113,16 @@ function DetailsEditor({
       </RadioGroup>
       <Select
         value={issue.assignee}
-        onInput={e =>
+        onInput={(e) =>
           updateIssue({assignee: (e.target as HTMLSelectElement).value})
         }
       >
-        {users.map(u => (
+        {users.map((u) => (
           <option value={u}>{u}</option>
         ))}
       </Select>
       <RadioGroup>
-        {priorities.map(p => (
+        {priorities.map((p) => (
           <label>
             <Radio
               name={`priority-${issue.id}`}
@@ -132,12 +134,13 @@ function DetailsEditor({
         ))}
       </RadioGroup>
       <div class="linear-tag-editor">
-        {issue.labels.map(l => (
+        {issue.labels.map((l) => (
           <Badge>
             {l}
             <Button
+              style="margin:-.25em -.9em -.25em -.5em; padding:0 .75em; color:red; font-size:1.25em;"
               variant="ghost"
-              size="icon"
+              size="sm"
               onClick={() => removeLabel(l)}
             >
               ×
@@ -148,8 +151,8 @@ function DetailsEditor({
           <Input
             value={label}
             placeholder="Add label"
-            onInput={e => setLabel((e.target as HTMLInputElement).value)}
-            onKeyDown={e => {
+            onInput={(e) => setLabel((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => {
               if ((e as KeyboardEvent).key === 'Enter') {
                 addLabel(label.trim());
                 setLabel('');
@@ -171,14 +174,14 @@ function DetailsEditor({
       <Textarea
         value={issue.description}
         placeholder="Describe the issue..."
-        onInput={e =>
+        onInput={(e) =>
           updateIssue({
             description: (e.target as HTMLTextAreaElement).value,
           })
         }
       />
       <ul class="linear-comments">
-        {issue.comments.map(c => (
+        {issue.comments.map((c) => (
           <li key={c.id}>
             <span>{c.text}</span>
             <Button
@@ -194,7 +197,7 @@ function DetailsEditor({
       <div class="linear-add-comment">
         <Input
           value={comment}
-          onInput={e => setComment((e.target as HTMLInputElement).value)}
+          onInput={(e) => setComment((e.target as HTMLInputElement).value)}
           placeholder="Add comment"
         />
         <Button
@@ -212,7 +215,7 @@ function DetailsEditor({
 
 export default function Linear() {
   const [issues, setIssues] = useState<Issue[]>(initialIssues);
-  const [selectedId, setSelectedId] = useState(issues[0].id);
+  const [selectedId, setSelectedId] = useState();
   const [title, setTitle] = useState('');
   const [query, setQuery] = useState('');
   const drawerRef = useRef<HTMLDialogElement>(null);
@@ -225,10 +228,10 @@ export default function Linear() {
     return () => m.removeEventListener('change', listener);
   }, []);
 
-  const selected = issues.find(i => i.id === selectedId)!;
+  const selected = issues.find((i) => i.id === selectedId)!;
 
   function updateIssue(id: number, update: Partial<Issue>) {
-    setIssues(issues.map(i => (i.id === id ? {...i, ...update} : i)));
+    setIssues(issues.map((i) => (i.id === id ? {...i, ...update} : i)));
   }
 
   function addIssue() {
@@ -254,7 +257,7 @@ export default function Linear() {
   function addComment(id: number, text: string) {
     if (!text) return;
     setIssues(
-      issues.map(i =>
+      issues.map((i) =>
         i.id === id
           ? {...i, comments: [...i.comments, {id: Date.now(), text}]}
           : i,
@@ -264,9 +267,9 @@ export default function Linear() {
 
   function deleteComment(issueId: number, commentId: number) {
     setIssues(
-      issues.map(i =>
+      issues.map((i) =>
         i.id === issueId
-          ? {...i, comments: i.comments.filter(c => c.id !== commentId)}
+          ? {...i, comments: i.comments.filter((c) => c.id !== commentId)}
           : i,
       ),
     );
@@ -275,16 +278,14 @@ export default function Linear() {
   function addLabel(id: number, l: string) {
     if (!l) return;
     setIssues(
-      issues.map(i =>
-        i.id === id ? {...i, labels: [...i.labels, l]} : i,
-      ),
+      issues.map((i) => (i.id === id ? {...i, labels: [...i.labels, l]} : i)),
     );
   }
 
   function removeLabel(id: number, l: string) {
     setIssues(
-      issues.map(i =>
-        i.id === id ? {...i, labels: i.labels.filter(x => x !== l)} : i,
+      issues.map((i) =>
+        i.id === id ? {...i, labels: i.labels.filter((x) => x !== l)} : i,
       ),
     );
   }
@@ -292,115 +293,139 @@ export default function Linear() {
   return (
     <>
       <div class="linear-app">
-        <aside class="linear-sidebar">
-          <h2 style="margin:0">Linear</h2>
+        <Sidebar>
+          <h1 style="margin:0;font-size:1.25rem;padding:.5rem;">Linear</h1>
           <nav class="linear-nav">
             <a href="#">Inbox</a>
             <a href="#">My Issues</a>
-          <a href="#">Projects</a>
-        </nav>
-        <div class="linear-mobile-menu">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outline">Menu</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Inbox</DropdownMenuItem>
-              <DropdownMenuItem>My Issues</DropdownMenuItem>
-              <DropdownMenuItem>Projects</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <Input
-          value={query}
-          onInput={e => setQuery((e.target as HTMLInputElement).value)}
-          placeholder="Search issues"
-        />
-        <div class="linear-add">
-          <Input
-            value={title}
-            onInput={e => setTitle((e.target as HTMLInputElement).value)}
-            placeholder="New issue"
-          />
-          <Button onClick={addIssue}>Add</Button>
-        </div>
-      </aside>
-      <main class="linear-board">
-        {statuses.map(status => (
-          <div class="linear-column">
-            <h3>{status}</h3>
-            {issues
-              .filter(
-                i =>
-                  i.status === status &&
-                  i.title.toLowerCase().includes(query.toLowerCase())
-              )
-              .map(issue => (
-                <Card
-                  key={issue.id}
-                  class={
-                    'linear-issue' + (issue.id === selectedId ? ' is-active' : '')
-                  }
-                  onClick={() => {
-                    setSelectedId(issue.id);
-                    if (isMobile && drawerRef.current && !drawerRef.current.open) {
-                      drawerRef.current.showModal();
-                    }
-                  }}
-                >
-                  <h4>{issue.title}</h4>
-                  <div class="linear-issue-meta">
-                    <span class={'linear-priority ' + issue.priority.toLowerCase()}>
-                      {issue.priority}
-                    </span>
-                    <span class="linear-assignee">{issue.assignee}</span>
-                  </div>
-                  {issue.labels.length ? (
-                    <div class="linear-labels">
-                      {issue.labels.map(l => (
-                        <span>{l}</span>
-                      ))}
-                    </div>
-                  ) : null}
-                </Card>
-              ))}
+            <a href="#">Projects</a>
+          </nav>
+          <div class="linear-mobile-menu">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant="outline">Menu</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>Inbox</DropdownMenuItem>
+                <DropdownMenuItem>My Issues</DropdownMenuItem>
+                <DropdownMenuItem>Projects</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-        ))}
-      </main>
-      {!isMobile && (
-        <section class="linear-details linear-details-desktop">
-          <DetailsEditor
-            issue={selected}
-            updateIssue={u => updateIssue(selected.id, u)}
-            addLabel={l => addLabel(selected.id, l)}
-            removeLabel={l => removeLabel(selected.id, l)}
-            addComment={t => addComment(selected.id, t)}
-            deleteComment={id => deleteComment(selected.id, id)}
+          <Input
+            size="sm"
+            value={query}
+            onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
+            placeholder="Search issues"
           />
-        </section>
+          <div class="linear-add">
+            <Input
+              size="sm"
+              value={title}
+              onInput={(e) => setTitle((e.target as HTMLInputElement).value)}
+              placeholder="New issue"
+            />
+            <Button size="sm" onClick={addIssue}>
+              Add
+            </Button>
+          </div>
+        </Sidebar>
+        <main class="linear-board">
+          {statuses.map((status) => (
+            <div class="linear-column">
+              <h3>{status}</h3>
+              {issues
+                .filter(
+                  (i) =>
+                    i.status === status &&
+                    i.title.toLowerCase().includes(query.toLowerCase()),
+                )
+                .map((issue) => (
+                  <Card
+                    key={issue.id}
+                    class={
+                      'linear-issue' +
+                      (issue.id === selectedId ? ' is-active' : '')
+                    }
+                    commandFor="linear-details-drawer"
+                    command="show-modal"
+                    onClick={() => {
+                      setSelectedId(issue.id);
+                      if (
+                        isMobile &&
+                        drawerRef.current &&
+                        !drawerRef.current.open
+                      ) {
+                        // drawerRef.current.showModal();
+                      }
+                    }}
+                  >
+                    <h4>{issue.title}</h4>
+                    <div class="linear-issue-meta">
+                      <span
+                        class={
+                          'linear-priority ' + issue.priority.toLowerCase()
+                        }
+                      >
+                        {issue.priority}
+                      </span>
+                      <span class="linear-assignee">{issue.assignee}</span>
+                    </div>
+                    {issue.labels.length ? (
+                      <div class="linear-labels">
+                        {issue.labels.map((l) => (
+                          <span>{l}</span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </Card>
+                ))}
+            </div>
+          ))}
+        </main>
+        {!isMobile && selected && (
+          <section class="linear-details linear-details-desktop">
+            <header style="margin:-.75rem 0; display:flex; justify-content:end;">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setSelectedId(undefined)}
+              >
+                ✕
+              </Button>
+            </header>
+            <DetailsEditor
+              issue={selected}
+              updateIssue={(u) => updateIssue(selected.id, u)}
+              addLabel={(l) => addLabel(selected.id, l)}
+              removeLabel={(l) => removeLabel(selected.id, l)}
+              addComment={(t) => addComment(selected.id, t)}
+              deleteComment={(id) => deleteComment(selected.id, id)}
+            />
+          </section>
+        )}
+      </div>
+      {isMobile && selected && (
+        <Drawer id="linear-details-drawer">
+          <DrawerContent onClose={() => setSelectedId(undefined)}>
+            <div class="linear-details-drawer">
+              <DetailsEditor
+                issue={selected}
+                updateIssue={(u) => updateIssue(selected.id, u)}
+                addLabel={(l) => addLabel(selected.id, l)}
+                removeLabel={(l) => removeLabel(selected.id, l)}
+                addComment={(t) => addComment(selected.id, t)}
+                deleteComment={(id) => deleteComment(selected.id, id)}
+              />
+              <DrawerClose>
+                <Button variant="outline" style="margin-top:1rem">
+                  Close
+                </Button>
+              </DrawerClose>
+            </div>
+          </DrawerContent>
+        </Drawer>
       )}
-    </div>
-    {isMobile && (
-      <Drawer>
-        <DrawerContent ref={drawerRef} class="linear-details-drawer">
-          <DetailsEditor
-            issue={selected}
-            updateIssue={u => updateIssue(selected.id, u)}
-            addLabel={l => addLabel(selected.id, l)}
-            removeLabel={l => removeLabel(selected.id, l)}
-            addComment={t => addComment(selected.id, t)}
-            deleteComment={id => deleteComment(selected.id, id)}
-          />
-          <Button
-            variant="outline"
-            style="margin-top:1rem"
-            onClick={() => drawerRef.current?.close()}
-          >
-            Close
-          </Button>
-        </DrawerContent>
-      </Drawer>
-    )}
     </>
   );
 }
