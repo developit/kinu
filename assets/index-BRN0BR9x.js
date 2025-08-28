@@ -1,0 +1,2 @@
+import{_ as u}from"./index-BMrcJFSF.js";function a(e,c="div",o,n){function f(i){let t;this&&(typeof this=="function"?t=this(i):this.current=i);const s=n==null?void 0:n(i);return()=>{t&&t(),s&&s()}}function r(i){let t=i;return(o||n)&&(t=Object.assign({},o||{},i),t.ref=this.$_ref||(this.$_ref=f.bind(i.ref))),t.p=e,u(c,t)}return r.displayName=e,r}const m=a("button","button");export{m as B,a as c};
+//# sourceMappingURL=index-BRN0BR9x.js.map
