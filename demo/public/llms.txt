@@ -1,0 +1,735 @@
+# PUI (Preact UI) Component Library Documentation
+
+PUI is a lightweight, modern UI component library built for Preact that provides a comprehensive set of accessible, customizable components with minimal JavaScript and a CSS-based styling system.
+
+## Architecture Overview
+
+PUI is primarily a pass-through from JSX to semantic HTML that attaches `[p="component-name"]` attributes to elements for styling and behavior. The `p` stands for `pui` and contains the PUI component name. CSS uses these attributes to style components without JavaScript, and delegated event handlers use them for features like keyboard navigation.
+
+### Core Philosophy
+- **Minimal JavaScript**: Components use native HTML elements with minimal JavaScript for enhanced functionality
+- **CSS-based Styling**: All styling handled through CSS using `p` attribute selectors
+- **Semantic HTML**: Components render as appropriate semantic HTML elements
+- **Accessibility First**: Built with accessibility and keyboard navigation in mind
+
+## Component Categories & Interfaces
+
+### Form Controls
+
+#### Button
+Renders as: `<button>` or `<a>` (when href provided)
+```tsx
+<Button>Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="link">Link</Button>
+<Button size="sm|md|lg|icon">Sized</Button>
+<Button href="/path">Link Button</Button>
+```
+
+#### Input
+Renders as: `<input>`
+```tsx
+<Input placeholder="Enter text" />
+<Input type="email" value={email} onInput={handler} />
+<Input size="sm|lg" />
+<Input disabled />
+```
+
+#### Checkbox
+Renders as: `<input type="checkbox">`
+```tsx
+<Checkbox id="check" checked={checked} onInput={handler} />
+<Label htmlFor="check">Label text</Label>
+```
+
+#### Radio & RadioGroup
+Renders as: `<div>` (RadioGroup), `<input type="radio">` (Radio)
+```tsx
+<RadioGroup>
+  <Radio id="opt1" name="options" value="1" checked={selected === '1'} onInput={handler} />
+  <Label htmlFor="opt1">Option 1</Label>
+  <Radio id="opt2" name="options" value="2" checked={selected === '2'} onInput={handler} />
+  <Label htmlFor="opt2">Option 2</Label>
+</RadioGroup>
+```
+
+#### Select
+Renders as: `<select>`
+```tsx
+<Select value={value} onInput={handler}>
+  <option value="1">Option 1</option>
+  <option value="2">Option 2</option>
+</Select>
+<Select disabled>
+  <option>Disabled</option>
+</Select>
+```
+
+#### Switch
+Renders as: `<input type="checkbox" role="switch">`
+```tsx
+<Switch checked={enabled} onInput={handler} />
+```
+
+#### Slider
+Renders as: `<input type="range">`
+```tsx
+<Slider min={0} max={100} value={value} onInput={handler} />
+<Slider disabled />
+```
+
+#### Textarea
+Renders as: `<textarea>`
+```tsx
+<Textarea placeholder="Enter message..." value={message} onInput={handler} />
+<Textarea disabled />
+```
+
+#### Label
+Renders as: `<label>`
+```tsx
+<Label htmlFor="input-id">Label Text</Label>
+```
+
+### Layout Components
+
+#### Card
+Renders as: `<div>`
+```tsx
+<Card>
+  <h2>Card Title</h2>
+  <p>Card content</p>
+</Card>
+```
+
+#### Separator
+Renders as: `<hr>`
+```tsx
+<div>
+  <p>Content above</p>
+  <Separator />
+  <p>Content below</p>
+</div>
+```
+
+#### AspectRatio
+Renders as: `<div>`
+```tsx
+<AspectRatio ratio={16/9}>
+  <span>16:9 content</span>
+</AspectRatio>
+```
+
+#### ScrollArea
+Renders as: `<div>`
+```tsx
+<ScrollArea style={{height: '100px'}}>
+  <p>Scrollable content</p>
+  <p>More content...</p>
+</ScrollArea>
+```
+
+### Navigation Components
+
+#### Tabs
+Renders as: `<div>` (TabList), `<button>` (Tab), `<div>` (TabPanel)
+```tsx
+<TabList>
+  <Tab aria-selected={tab === 'first'} onClick={() => setTab('first')}>First</Tab>
+  <Tab aria-selected={tab === 'second'} onClick={() => setTab('second')}>Second</Tab>
+</TabList>
+{tab === 'first' && <TabPanel>First tab content</TabPanel>}
+{tab === 'second' && <TabPanel>Second tab content</TabPanel>}
+```
+
+#### Breadcrumb
+Renders as: `<nav>` (Breadcrumb), `<ol>` (BreadcrumbList), `<li>` (BreadcrumbItem), `<a>` (BreadcrumbLink)
+```tsx
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="#">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="#">Docs</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>Current</BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+#### NavigationMenu
+Renders as: `<nav>` (NavigationMenu), `<ul>` (NavigationMenuList), `<li>` (NavigationMenuItem), `<a>` (NavigationMenuLink)
+```tsx
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="#">Home</NavigationMenuLink>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="#">Docs</NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+#### Pagination
+Renders as: `<nav>` (Pagination), `<ul>` (PaginationList), `<li>` (PaginationItem), `<a>` (PaginationLink)
+```tsx
+<Pagination>
+  <PaginationList>
+    <PaginationItem>
+      <PaginationLink aria-current="page">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink>2</PaginationLink>
+    </PaginationItem>
+  </PaginationList>
+</Pagination>
+```
+
+#### Menubar
+Renders as: `<div>` (Menubar), `<button>` (MenubarItem)
+```tsx
+<Menubar>
+  <DropdownMenu>
+    <DropdownMenuTrigger>
+      <MenubarItem>File</MenubarItem>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem onClick={handler}>Open</DropdownMenuItem>
+      <DropdownMenuItem onClick={handler}>Save</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+</Menubar>
+```
+
+### Overlay Components
+
+#### Dialog
+Renders as: `<dialog>` (Dialog.Content)
+```tsx
+<Dialog id="unique-id">  // Optional ID
+  <Dialog.Trigger>
+    <Button>Open Dialog</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <h3>Dialog Title</h3>
+    <p>Dialog content</p>
+    <Dialog.Close>
+      <Button>Close</Button>
+    </Dialog.Close>
+  </Dialog.Content>
+</Dialog>
+```
+
+#### AlertDialog
+Renders as: `<dialog>` (AlertDialog.Content)
+```tsx
+<AlertDialog>
+  <AlertDialog.Trigger>
+    <Button>Open Alert</Button>
+  </AlertDialog.Trigger>
+  <AlertDialog.Content>
+    <p>Are you sure?</p>
+    <AlertDialog.Close>
+      <Button>Cancel</Button>
+    </AlertDialog.Close>
+    <AlertDialog.Close>
+      <Button>Confirm</Button>
+    </AlertDialog.Close>
+  </AlertDialog.Content>
+</AlertDialog>
+```
+
+#### DropdownMenu
+Renders as: `<span>` (DropdownMenu), `<dialog>` (DropdownMenuContent), `<button>` (DropdownMenuItem)
+```tsx
+<DropdownMenu id="unique-id">  // Optional ID
+  <DropdownMenuTrigger>
+    <Button>Actions ▼</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem onClick={handler}>Edit</DropdownMenuItem>
+    <DropdownMenuItem onClick={handler}>Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+#### ContextMenu
+Renders as: `<dialog>` (ContextMenuContent), `<button>` (ContextMenuItem)
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger>
+    <div>Right-click me</div>
+  </ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem onClick={handler}>Cut</ContextMenuItem>
+    <ContextMenuItem onClick={handler}>Copy</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+#### Popover
+Renders as: `<dialog>` (PopoverContent)
+```tsx
+<Popover>
+  <PopoverTrigger>
+    <Button>Open Popover</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <div>Popover content</div>
+  </PopoverContent>
+</Popover>
+```
+
+#### HoverCard
+Renders as: `<dialog>` (HoverCardContent)
+```tsx
+<HoverCard>
+  <HoverCardTrigger>
+    <Button>Hover me</Button>
+  </HoverCardTrigger>
+  <HoverCardContent>Hover content</HoverCardContent>
+</HoverCard>
+```
+
+#### Tooltip
+Renders as: `<span>`
+```tsx
+<Tooltip title="Tooltip text">
+  <Button>Hover for tooltip</Button>
+</Tooltip>
+```
+
+#### Sheet
+Renders as: `<dialog>` (SheetContent)
+```tsx
+<Sheet>
+  <SheetTrigger>
+    <Button>Open Sheet</Button>
+  </SheetTrigger>
+  <SheetContent>
+    <p>Sheet content</p>
+    <SheetClose>
+      <Button>Close</Button>
+    </SheetClose>
+  </SheetContent>
+</Sheet>
+```
+
+#### Drawer
+Renders as: `<dialog>` (DrawerContent)
+```tsx
+<Drawer>
+  <DrawerTrigger>
+    <Button>Open Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <p>Drawer content</p>
+    <DrawerClose>
+      <Button>Close</Button>
+    </DrawerClose>
+  </DrawerContent>
+</Drawer>
+```
+
+### Data Display Components
+
+#### Table
+Renders as: `<table>`
+```tsx
+<Table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>John Doe</td>
+      <td>john@example.com</td>
+    </tr>
+  </tbody>
+</Table>
+```
+
+#### Badge
+Renders as: `<span>`
+```tsx
+<Badge>Default</Badge>
+<Badge variant="secondary">Secondary</Badge>
+<Badge variant="destructive">Destructive</Badge>
+<Badge variant="outline">Outline</Badge>
+```
+
+#### Avatar
+Renders as: `<div>`
+```tsx
+<Avatar src="https://example.com/avatar.png" alt="Profile" />
+<Avatar>JD</Avatar>  // Fallback initials
+<Avatar size="sm|lg">SM</Avatar>  // Different sizes
+```
+
+#### Alert
+Renders as: `<div>`
+```tsx
+<Alert>
+  <strong>Info:</strong> Informational message
+</Alert>
+<Alert variant="destructive">
+  <strong>Error:</strong> Error message
+</Alert>
+```
+
+#### Progress
+Renders as: `<progress>`
+```tsx
+<Progress value={50} max={100} />
+```
+
+#### Skeleton
+Renders as: `<div>`
+```tsx
+<Skeleton style={{height: '1.5rem'}} />
+<Skeleton style={{height: '1.5rem', width: '60%'}} />
+```
+
+### Interactive Components
+
+#### Accordion
+Renders as: `<details>`
+```tsx
+<Accordion name="accordion-group">  // Radio-style grouping
+  <summary>More Info</summary>
+  <p>Hidden content</p>
+</Accordion>
+<Accordion name="accordion-group">
+  <summary>Another Item</summary>
+  <p>More hidden content</p>
+</Accordion>
+```
+
+#### Collapsible
+Renders as: `<div>`
+```tsx
+<Button onClick={() => setOpen(!open)}>Toggle</Button>
+<Collapsible open={open}>
+  <div>Collapsible content</div>
+</Collapsible>
+```
+
+#### Toggle & ToggleGroup
+Renders as: `<button>` (Toggle), `<div>` (ToggleGroup)
+```tsx
+<Toggle pressed={pressed} onPressedChange={setPPressed}>Bold</Toggle>
+<Toggle disabled>Disabled</Toggle>
+
+<ToggleGroup type="multiple" value={values} onValueChange={setValues}>
+  <Toggle value="bold">Bold</Toggle>
+  <Toggle value="italic">Italic</Toggle>
+  <Toggle value="underline">Underline</Toggle>
+</ToggleGroup>
+```
+
+#### Carousel
+Renders as: `<div>`
+```tsx
+<Carousel id="unique-id">  // Optional ID
+  <CarouselContent>
+    <CarouselItem>Slide 1</CarouselItem>
+    <CarouselItem>Slide 2</CarouselItem>
+    <CarouselItem>Slide 3</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious>‹</CarouselPrevious>
+  <CarouselNext>›</CarouselNext>
+</Carousel>
+```
+
+#### Calendar
+Renders as: `<div>`
+```tsx
+<Calendar />
+```
+
+#### DatePicker
+Renders as: `<div>`
+```tsx
+<DatePicker />
+```
+
+#### Combobox
+Renders as: Various elements
+```tsx
+<Combobox>
+  <ComboboxInput />
+  <ComboboxList>
+    <ComboboxOption>Option 1</ComboboxOption>
+    <ComboboxOption>Option 2</ComboboxOption>
+  </ComboboxList>
+</Combobox>
+```
+
+#### Resizable
+Renders as: `<div>`
+```tsx
+<Resizable style={{width: '150px', height: '80px'}}>
+  Resize me
+</Resizable>
+```
+
+### Layout & Container Components
+
+#### Sidebar
+Renders as: `<dialog>` (Sidebar), `<button>` (SidebarTrigger)
+```tsx
+<Sidebar id="sidebar-id" style={{width: '16rem'}}>
+  <h3>Navigation</h3>
+  <nav>
+    <a href="/dashboard" aria-current="page">Dashboard</a>
+    <a href="/settings">Settings</a>
+  </nav>
+</Sidebar>
+
+<SidebarTrigger commandFor="sidebar-id">
+  ☰
+</SidebarTrigger>
+```
+
+### Toast System
+
+#### Toast API
+```tsx
+// Import toast and ToastContainer
+import { toast, ToastContainer } from 'pui';
+
+// Basic toast
+toast.show('Hello world!');
+
+// Toast with options
+toast.show('Event created successfully!', {
+  title: 'Success',
+  icon: '✓',
+  action: <Button>Undo</Button>,
+  duration: 5000  // Default: 3000ms
+});
+
+// Add container to your app
+<ToastContainer />
+```
+
+Interface for toast options:
+```tsx
+interface ToastOptions {
+  title?: ComponentChild;      // Optional title
+  icon?: ComponentChild;       // Optional icon
+  action?: ComponentChild;     // Optional action button
+  duration?: number;          // Duration in milliseconds
+}
+```
+
+## Styling System
+
+### CSS Attribute Selectors
+All components use a `p` attribute for CSS targeting:
+```css
+[p="button"] { /* Button styles */ }
+[p="button"][variant="secondary"] { /* Secondary button */ }
+[p="input"][disabled] { /* Disabled input */ }
+```
+
+### Variants & States
+Most components support variants through attributes:
+- `variant`: Style variants (e.g., "secondary", "destructive", "outline")
+- `size`: Size variants (e.g., "sm", "md", "lg", "icon")
+- `disabled`: Disabled state
+- `aria-*`: Accessibility states (e.g., `aria-selected`, `aria-pressed`)
+
+### Custom Styling
+Components accept custom attributes and styles:
+```tsx
+<Button className="custom-class" data-testid="btn">Custom Button</Button>
+<Card style={{backgroundColor: 'red'}}>Styled Card</Card>
+```
+
+## HTML Commands Integration
+
+PUI leverages HTML's built-in [commands feature](https://developer.chrome.com/blog/command-and-commandfor) with a lightweight polyfill. Commands enable declarative interactions between elements using `command` and `commandfor` attributes:
+
+```tsx
+// Command triggers
+<Button commandfor="dialog-id" command="show-modal">Open Dialog</Button>
+<SidebarTrigger commandFor="sidebar-id">Toggle Sidebar</SidebarTrigger>
+
+// Command targets  
+<Dialog.Content id="dialog-id" command="close">Dialog content</Dialog.Content>
+```
+
+Standard HTML commands supported:
+- `show`: Show element
+- `show-modal`: Show as modal dialog  
+- `close`: Close element
+- Custom commands: `--prev`, `--next` (Carousel navigation)
+
+## Accessibility Features
+
+### Keyboard Navigation
+- All interactive components support keyboard navigation
+- Focus management for overlays and modals
+- Escape key support for closing overlays
+
+### ARIA Attributes
+- Proper ARIA roles and states
+- Screen reader friendly labels
+- Semantic HTML structure
+
+### Form Integration
+```tsx
+<form>
+  <Label htmlFor="email">Email</Label>
+  <Input id="email" type="email" required />
+  
+  <Label htmlFor="password">Password</Label>
+  <Input id="password" type="password" required />
+  
+  <Button type="submit">Submit</Button>
+</form>
+```
+
+## Usage Patterns
+
+### Event Handling
+```tsx
+// Input events
+<Input onInput={(e) => setValue(e.target.value)} />
+
+// Button clicks
+<Button onClick={(e) => handleClick(e)}>Click me</Button>
+
+// Form submission
+<form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+```
+
+### State Management
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+const [selectedTab, setSelectedTab] = useState('first');
+const [formData, setFormData] = useState({});
+```
+
+### Compound Components
+Many components use compound patterns for flexibility:
+```tsx
+// Dialog compound
+<Dialog>
+  <Dialog.Trigger>Trigger</Dialog.Trigger>
+  <Dialog.Content>Content</Dialog.Content>
+  <Dialog.Close>Close</Dialog.Close>
+</Dialog>
+
+// Navigation compound
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuLink>Link</NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+## Best Practices
+
+- Always provide proper labels for form controls
+- Use semantic HTML structure with proper ARIA attributes
+- Handle loading and error states appropriately
+- Use the toast system for user feedback
+- Style with CSS attribute selectors: `[p="component-name"]`
+- Leverage variant attributes and CSS custom properties for theming
+
+## Integration Examples
+
+### Form with Validation
+```tsx
+function MyForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Validation logic
+    toast.show('Form submitted!', { title: 'Success', icon: '✓' });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Card>
+        <Label htmlFor="email">Email</Label>
+        <Input 
+          id="email"
+          type="email" 
+          value={email}
+          onInput={(e) => setEmail(e.target.value)}
+          required 
+        />
+        
+        <Label htmlFor="password">Password</Label>
+        <Input 
+          id="password"
+          type="password" 
+          value={password}
+          onInput={(e) => setPassword(e.target.value)}
+          required 
+        />
+        
+        <Button type="submit">Sign In</Button>
+      </Card>
+    </form>
+  );
+}
+```
+
+### Dashboard Layout
+```tsx
+function Dashboard() {
+  return (
+    <div className="dashboard">
+      <Sidebar id="main-sidebar">
+        <nav>
+          <a href="/dashboard" aria-current="page">Dashboard</a>
+          <a href="/users">Users</a>
+          <a href="/settings">Settings</a>
+        </nav>
+      </Sidebar>
+      
+      <main>
+        <header>
+          <SidebarTrigger commandFor="main-sidebar">☰</SidebarTrigger>
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink href="/">Home</NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </header>
+        
+        <div className="content">
+          <Card>
+            <h1>Dashboard</h1>
+            <Progress value={75} max={100} />
+          </Card>
+        </div>
+      </main>
+      
+      <ToastContainer />
+    </div>
+  );
+}
+```
+
+This documentation provides a comprehensive overview of the PUI component library, including all component interfaces, usage patterns, and best practices for building modern web applications with Preact.

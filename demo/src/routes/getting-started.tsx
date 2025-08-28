@@ -243,6 +243,7 @@ function MyApp() {
             <ul>
               <li><strong>Component Examples:</strong> See all components in action on the <a href="/components">Components page</a></li>
               <li><strong>Real-world Demos:</strong> Check out our <a href="/linear">Linear</a> and <a href="/chat">Chat</a> demos</li>
+              <li><strong>Complete API Reference:</strong> View comprehensive component documentation in our <a href="/llms.txt">llms.txt reference</a> - perfect for LLMs and developers</li>
               <li><strong>GitHub Repository:</strong> Contribute and report issues on <a href="https://github.com/">GitHub</a></li>
             </ul>
           </div>
