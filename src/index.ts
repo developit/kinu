@@ -85,6 +85,12 @@ export {
   HoverCardContent,
 } from './components/hover-card';
 export {Calendar} from './components/calendar';
-export {Carousel, CarouselItem} from './components/carousel';
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from './components/carousel';
 export {DatePicker} from './components/date-picker';
 export * from './components/typography';
