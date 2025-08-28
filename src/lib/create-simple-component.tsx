@@ -14,7 +14,7 @@ export function createSimpleComponent<
   T extends keyof HTMLElementTagNameMap & keyof JSX.IntrinsicElements,
 >(
   name: string,
-  tag: T = 'div' as T,
+  tag: T | ((props: any) => T) = 'div' as T,
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
   ref?: RefCallbackWithCleanup<HTMLElementTagNameMap[T]>,
 ) {
@@ -48,7 +48,8 @@ export function createSimpleComponent<
         this.$_ref || (this.$_ref = proxyRef.bind(props.ref as any) as any);
     }
     (normalizedProps as any).p = name;
-    return h(tag, normalizedProps);
+    const resolvedTag = typeof tag === 'function' ? tag(props) : tag;
+    return h(resolvedTag, normalizedProps);
   }
 
   Wrap.displayName = name;
