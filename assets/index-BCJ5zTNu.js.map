@@ -1,0 +1,1 @@
+{"version":3,"file":"index-BCJ5zTNu.js","sources":["../../../src/components/card/index.tsx"],"sourcesContent":["import {createSimpleComponent} from '../../lib/create-simple-component';\nimport './style.css';\n\nexport const Card = createSimpleComponent('card', 'div');\n"],"names":["Card","createSimpleComponent"],"mappings":"wCAGa,MAAAA,EAAOC,EAAsB,OAAQ,KAAK"}

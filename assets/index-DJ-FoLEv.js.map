@@ -1,0 +1,1 @@
+{"version":3,"file":"index-DJ-FoLEv.js","sources":["../../../src/components/badge/index.tsx"],"sourcesContent":["import {createSimpleComponent} from '../../lib/create-simple-component';\nimport './style.css';\n\nexport const Badge = createSimpleComponent('badge', 'span');\n"],"names":["Badge","createSimpleComponent"],"mappings":"wCAGa,MAAAA,EAAQC,EAAsB,QAAS,MAAM"}
