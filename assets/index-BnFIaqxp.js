@@ -1,0 +1,2 @@
+import{_ as u}from"./index-s7bvfQZV.js";function a(i,r="div",f,e){function c(t){let n;this&&(typeof this=="function"?n=this(t):this.current=t);const o=e==null?void 0:e(t);return()=>{n&&n(),o&&o()}}function s(t){let n=t;(f||e)&&(n=Object.assign({},f||{},t),n.ref=this.$_ref||(this.$_ref=c.bind(t.ref))),n.p=i;const o=typeof r=="function"?r(t):r;return u(o,n)}return s.displayName=i,s}const l=a("button",i=>i.href?"a":"button");export{l as B,a as c};
+//# sourceMappingURL=index-BnFIaqxp.js.map
