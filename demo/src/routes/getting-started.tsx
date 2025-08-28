@@ -47,9 +47,9 @@ export default function GettingStarted() {
 
       <main class="getting-started-content">
         <header class="getting-started-header">
-          <h1>Getting Started with Preact UI</h1>
+          <h1>Getting Started with PUI</h1>
           <p class="lead">
-            Learn how to set up and use Preact UI components in your project. 
+            Learn how to set up and use PUI components in your project. 
             Build beautiful, accessible interfaces with minimal effort.
           </p>
         </header>
@@ -79,8 +79,8 @@ export default function GettingStarted() {
           {activeTab === 'install' && (
             <TabPanel>
               <Card>
-                <h3>Install Preact UI</h3>
-                <p>Add Preact UI to your project using your preferred package manager:</p>
+                <h3>Install PUI</h3>
+                <p>Add PUI to your project using your preferred package manager:</p>
                 
                 <h4>npm</h4>
                 <CodeBlock code="npm install pui" />
@@ -92,7 +92,7 @@ export default function GettingStarted() {
                 <CodeBlock code="yarn add pui" />
 
                 <Alert>
-                  <strong>Prerequisites:</strong> Preact UI requires Preact 10.5.0 or higher.
+                  <strong>Prerequisites:</strong> PUI requires Preact 10.5.0 or higher.
                 </Alert>
               </Card>
             </TabPanel>
@@ -114,10 +114,10 @@ import 'pui/base.css';`} />
                 <CodeBlock code={`import { Button, Card, Input } from 'pui';`} />
 
                 <h4>TypeScript Support</h4>
-                <p>Preact UI comes with built-in TypeScript definitions. No additional setup required!</p>
+                <p>PUI comes with built-in TypeScript definitions. No additional setup required!</p>
 
                 <Alert variant="default">
-                  <strong>CSS Variables:</strong> Preact UI uses CSS custom properties for theming. 
+                  <strong>CSS Variables:</strong> PUI uses CSS custom properties for theming. 
                   You can customize the design tokens by overriding these variables.
                 </Alert>
               </Card>
@@ -138,7 +138,7 @@ function MyApp() {
 
   return (
     <Card>
-      <h2>Welcome to Preact UI</h2>
+      <h2>Welcome to PUI</h2>
       <Input 
         placeholder="Enter your name"
         value={name}
@@ -164,7 +164,7 @@ function MyApp() {
 
         <section class="features-overview">
           <h2>What's Included</h2>
-          <p>Preact UI provides a comprehensive set of accessible components:</p>
+          <p>PUI provides a comprehensive set of accessible components:</p>
           
           <div class="features-grid">
             <Card>
@@ -224,7 +224,7 @@ function MyApp() {
 
         <section class="next-steps">
           <h2>Next Steps</h2>
-          <p>Now that you're set up, explore what Preact UI has to offer:</p>
+          <p>Now that you're set up, explore what PUI has to offer:</p>
           
           <div class="next-steps-actions">
             <Button href="/components" variant="default">
@@ -257,7 +257,7 @@ function DemoExample() {
 
   return (
     <Card style={{ marginTop: '1rem', padding: '1rem' }}>
-      <h3 style={{ margin: '0 0 1rem 0' }}>Welcome to Preact UI</h3>
+      <h3 style={{ margin: '0 0 1rem 0' }}>Welcome to PUI</h3>
       <Input 
         placeholder="Enter your name"
         value={name}
