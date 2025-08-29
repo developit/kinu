@@ -1,0 +1,1 @@
+{"version":3,"file":"index-B_fWn1MK.js","sources":["../../../src/components/progress/index.tsx"],"sourcesContent":["import {createSimpleComponent} from '../../lib/create-simple-component';\nimport './style.css';\n\nexport const Progress = createSimpleComponent('progress', 'progress');\n"],"names":["Progress","createSimpleComponent"],"mappings":"wCAGa,MAAAA,EAAWC,EAAsB,WAAY,UAAU"}
