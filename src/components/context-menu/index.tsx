@@ -7,9 +7,13 @@ import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
+let lastAnchor: HTMLElement | null = null;
+
 function handleContextMenu(e: MouseEvent) {
   e.preventDefault();
   const el = e.currentTarget as HTMLElement;
+  if (lastAnchor) lastAnchor.style.anchorName = '';
+  lastAnchor = el;
   el.style.anchorName = '--p-context-menu';
   const target = el.ownerDocument.getElementById(
     el.getAttribute('commandfor')!,
