@@ -24,45 +24,29 @@ import {
   Label,
 } from 'pui';
 import {useState, useEffect} from 'preact/hooks';
+import {Nav} from '../nav';
 
 export default function Home() {
   return (
     <div class="home">
       <ToastContainer />
-      <NavigationMenu class="home-nav">
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/">Home</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/getting-started">Getting Started</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/components">Components</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/linear">Linear Demo</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+      <Nav />
 
       <section class="hero">
         <div class="hero-content">
           <div class="hero-text">
-            <h1>Build beautiful UIs with <span class="highlight">PUI</span></h1>
+            <h1>
+              Build beautiful UIs with <span class="highlight">PUI</span>
+            </h1>
             <p class="hero-subtitle">
-              A lightweight 5kB component library that leverages native HTML 
-              commands for interactions. Build accessible, performant interfaces 
-              without the JavaScript bloat.
+              A lightweight <strong>5kB</strong> component library that
+              leverages native HTML commands for interactions. Accessible,
+              performant interfaces without the JS bloat.
             </p>
             <div class="hero-actions">
-              <Button href="/getting-started" size="lg">Get Started</Button>
+              <Button href="/getting-started" size="lg">
+                Get Started
+              </Button>
               <Button href="/components" variant="outline" size="lg">
                 Browse Components
               </Button>
@@ -77,7 +61,10 @@ export default function Home() {
       <section class="showcase">
         <div class="showcase-header">
           <h2>See it in action</h2>
-          <p>Interactive demos showcasing real-world usage—all powered by just 5kB of JavaScript</p>
+          <p>
+            Interactive demos showcasing real-world usage—all powered by just
+            5kB of JavaScript
+          </p>
         </div>
         <div class="showcase-grid">
           <Card class="showcase-demo">
@@ -109,22 +96,34 @@ export default function Home() {
           <div class="benefit">
             <div class="benefit-icon">🪶</div>
             <h3>Incredibly Light</h3>
-            <p>Just 5kB of JavaScript—smaller than most images. Your users will thank you for the fast load times.</p>
+            <p>
+              Just 5kB of JavaScript—smaller than most images. Your users will
+              thank you for the fast load times.
+            </p>
           </div>
           <div class="benefit">
             <div class="benefit-icon">🔧</div>
             <h3>Native HTML Power</h3>
-            <p>Uses HTML commands for interactions instead of heavy JavaScript event handlers. Better performance, better accessibility.</p>
+            <p>
+              Uses HTML commands for interactions instead of manually wired up
+              event handlers. Better performance, better accessibility.
+            </p>
           </div>
           <div class="benefit">
             <div class="benefit-icon">📱</div>
             <h3>Works Everywhere</h3>
-            <p>Responsive by default. Components adapt seamlessly from mobile to desktop without bloating your bundle.</p>
+            <p>
+              Responsive by default. Components adapt seamlessly from mobile to
+              desktop without bloating your bundle.
+            </p>
           </div>
           <div class="benefit">
             <div class="benefit-icon">🚀</div>
             <h3>Ship Faster</h3>
-            <p>Skip the component building phase. Focus on your app logic while we handle the lightweight UI foundations.</p>
+            <p>
+              Skip the component building phase. Focus on your app logic while
+              we handle the lightweight UI foundations.
+            </p>
           </div>
         </div>
       </section>
@@ -150,7 +149,9 @@ export default function Home() {
       <section class="cta">
         <Card class="cta-card">
           <h2>Ready to build?</h2>
-          <p>Join developers who are shipping faster with just 5kB of JavaScript</p>
+          <p>
+            Join developers who are shipping faster with just 5kB of JavaScript
+          </p>
           <div class="cta-actions">
             <Button href="/getting-started" size="lg">
               Start Building →
@@ -167,29 +168,34 @@ export default function Home() {
 
 function HeroDemo() {
   const [tasks, setTasks] = useState([
-    { id: 1, text: 'Design new landing page', completed: true },
-    { id: 2, text: 'Implement user authentication', completed: true },
-    { id: 3, text: 'Add payment processing', completed: false },
-    { id: 4, text: 'Write documentation', completed: false },
+    {id: 1, text: 'Design new landing page', completed: true},
+    {id: 2, text: 'Implement user authentication', completed: true},
+    {id: 3, text: 'Add payment processing', completed: false},
+    {id: 4, text: 'Write documentation', completed: false},
   ]);
   const [newTask, setNewTask] = useState('');
 
-  const completedCount = tasks.filter(t => t.completed).length;
+  const completedCount = tasks.filter((t) => t.completed).length;
   const progress = (completedCount / tasks.length) * 100;
 
   const toggleTask = (id: number) => {
-    setTasks(prev => prev.map(task => 
-      task.id === id ? { ...task, completed: !task.completed } : task
-    ));
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? {...task, completed: !task.completed} : task,
+      ),
+    );
   };
 
   const addTask = () => {
     if (!newTask.trim()) return;
-    setTasks(prev => [...prev, {
-      id: Date.now(),
-      text: newTask,
-      completed: false
-    }]);
+    setTasks((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        text: newTask,
+        completed: false,
+      },
+    ]);
     setNewTask('');
   };
 
@@ -199,12 +205,12 @@ function HeroDemo() {
         <Avatar>JD</Avatar>
         <div>
           <div class="demo-title">Project Dashboard</div>
-          <Badge variant={progress === 100 ? "default" : "secondary"}>
+          <Badge variant={progress === 100 ? 'default' : 'secondary'}>
             {completedCount}/{tasks.length} Complete
           </Badge>
         </div>
       </div>
-      
+
       <div class="progress-section">
         <div class="progress-label">Overall Progress</div>
         <Progress value={progress} max={100} />
@@ -212,30 +218,28 @@ function HeroDemo() {
       </div>
 
       <div class="task-list">
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <div key={task.id} class="task-item">
-            <Checkbox 
+            <Checkbox
               checked={task.completed}
               onInput={() => toggleTask(task.id)}
             />
-            <span class={task.completed ? "task-completed" : ""}>{task.text}</span>
+            <span class={task.completed ? 'task-completed' : ''}>
+              {task.text}
+            </span>
           </div>
         ))}
       </div>
 
       <div class="add-task">
-        <Input 
+        <Input
           placeholder="Add new task..."
           value={newTask}
           onInput={(e) => setNewTask((e.target as HTMLInputElement).value)}
           onKeyPress={(e) => e.key === 'Enter' && addTask()}
         />
         <Tooltip title="Add task">
-          <Button 
-            size="sm" 
-            onClick={addTask}
-            disabled={!newTask.trim()}
-          >
+          <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
             +
           </Button>
         </Tooltip>
@@ -259,7 +263,10 @@ function FormDemo() {
 
   const handleSubmit = () => {
     if (validate()) {
-      toast.show('Form submitted successfully!', { title: 'Success', icon: '✅' });
+      toast.show('Form submitted successfully!', {
+        title: 'Success',
+        icon: '✅',
+      });
     }
   };
 
@@ -312,7 +319,9 @@ function DataDemo() {
           min={0}
           max={100}
           value={value}
-          onInput={(e) => setValue(Number((e.target as HTMLInputElement).value))}
+          onInput={(e) =>
+            setValue(Number((e.target as HTMLInputElement).value))
+          }
         />
       </div>
     </div>
@@ -333,7 +342,9 @@ function SettingsDemo() {
         </div>
         <Switch
           checked={notifications}
-          onInput={(e) => setNotifications((e.target as HTMLInputElement).checked)}
+          onInput={(e) =>
+            setNotifications((e.target as HTMLInputElement).checked)
+          }
         />
       </div>
       <div class="setting-item">
@@ -355,7 +366,9 @@ function SettingsDemo() {
           min={0}
           max={100}
           value={volume}
-          onInput={(e) => setVolume(Number((e.target as HTMLInputElement).value))}
+          onInput={(e) =>
+            setVolume(Number((e.target as HTMLInputElement).value))
+          }
         />
       </div>
     </div>
@@ -366,33 +379,40 @@ function NotificationDemo() {
   return (
     <div class="notification-demo">
       <div class="demo-buttons">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
-          onClick={() => toast.show('Task completed!', { 
-            title: 'Success',
-            icon: '✅'
-          })}
+          onClick={() =>
+            toast.show('Task completed!', {
+              title: 'Success',
+              icon: '✅',
+            })
+          }
         >
           Success Toast
         </Button>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
-          onClick={() => toast.show('Connection lost', { 
-            title: 'Warning',
-            icon: '⚠️'
-          })}
+          onClick={() =>
+            toast.show('Connection lost', {
+              title: 'Warning',
+              icon: '⚠️',
+            })
+          }
         >
           Warning Toast
         </Button>
       </div>
       <Alert>
-        <strong>Tip:</strong> Click the buttons above to see toast notifications in action.
+        <strong>Tip:</strong> Click the buttons above to see toast notifications
+        in action.
       </Alert>
       <Dialog>
         <Dialog.Trigger>
-          <Button variant="outline" size="sm">Open Dialog</Button>
+          <Button variant="outline" size="sm">
+            Open Dialog
+          </Button>
         </Dialog.Trigger>
         <Dialog.Content>
           <h3>Confirm Action</h3>

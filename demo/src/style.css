@@ -107,7 +107,7 @@ pre.code-block {
 }
 
 .hero {
-  padding: 8rem 1rem 4rem 1rem; /* Extra top padding for fixed nav */
+  padding: 4rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -179,7 +179,11 @@ pre.code-block {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: linear-gradient(135deg, hsl(var(--p-background)), hsl(var(--p-muted) / 0.3));
+  background: linear-gradient(
+    135deg,
+    hsl(var(--p-background)),
+    hsl(var(--p-muted) / 0.3)
+  );
   border: 2px solid hsl(var(--p-border));
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
@@ -472,7 +476,11 @@ pre.code-block {
 .cta-card {
   padding: 4rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, hsl(var(--p-background)), hsl(var(--p-muted) / 0.3));
+  background: linear-gradient(
+    135deg,
+    hsl(var(--p-background)),
+    hsl(var(--p-muted) / 0.3)
+  );
   border: 2px solid hsl(var(--p-border));
 }
 
@@ -501,22 +509,22 @@ pre.code-block {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
+
   .hero-text {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
+
   .hero-text h1 {
     font-size: 3rem;
   }
-  
+
   .hero-features {
     justify-content: center;
   }
-  
+
   .hero-actions {
     justify-content: center;
   }
@@ -526,50 +534,50 @@ pre.code-block {
   .hero {
     padding: 6rem 1rem 2rem 1rem; /* Adjusted for mobile nav */
   }
-  
+
   .hero-text h1 {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.125rem;
   }
-  
+
   .hero-actions {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .showcase,
   .why-preact-ui,
   .real-world,
   .cta {
     padding: 3rem 1rem;
   }
-  
+
   .showcase-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .benefits-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .demo-links {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .cta-card {
     padding: 2rem 1rem;
   }
-  
+
   .cta-card h2 {
     font-size: 2rem;
   }
-  
+
   .cta-actions {
     flex-direction: column;
     align-items: center;
@@ -970,11 +978,7 @@ pre.code-block {
 
 /* Music player demo */
 .music-app {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  overflow: hidden;
 }
 .player-card {
   width: 100%;
@@ -983,13 +987,6 @@ pre.code-block {
   flex-direction: column;
   gap: 0.75rem;
 }
-/* Music Player Demo */
-.music-app {
-  padding-top: 5rem;
-  min-height: 100vh;
-  background: linear-gradient(135deg, hsl(var(--p-background)) 0%, hsl(var(--p-muted)) 100%);
-}
-
 .music-player-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -1146,7 +1143,6 @@ pre.code-block {
   border-color: hsl(var(--p-muted-foreground) / 0.2);
 }
 
-
 .track-details {
   min-width: 0;
 }
@@ -1289,29 +1285,29 @@ pre.code-block {
     gap: 1.5rem;
     padding: 1rem;
   }
-  
+
   .playlist-sidebar {
     position: static;
   }
-  
+
   .playlist-card {
     max-height: 500px;
   }
-  
+
   .now-playing-card {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
   }
-  
+
   .track-info h2 {
     font-size: 1.25rem;
   }
-  
+
   .main-controls {
     gap: 0.75rem;
   }
-  
+
   .play-button {
     width: 3rem;
     height: 3rem;
@@ -1340,7 +1336,11 @@ pre.code-block {
   font-size: 3rem;
   font-weight: 700;
   margin: 0 0 1rem 0;
-  background: linear-gradient(135deg, hsl(var(--p-primary)), hsl(var(--p-primary) / 0.8));
+  background: linear-gradient(
+    135deg,
+    hsl(var(--p-primary)),
+    hsl(var(--p-primary) / 0.8)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1496,26 +1496,26 @@ pre.code-block {
     padding: 1rem;
     padding-top: 5rem;
   }
-  
+
   .getting-started-header h1 {
     font-size: 2rem;
   }
-  
+
   .getting-started-header .lead {
     font-size: 1.125rem;
   }
-  
+
   .features-grid,
   .principles-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .next-steps-actions {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .resources {
     padding: 1.5rem;
   }
