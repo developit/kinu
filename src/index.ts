@@ -94,3 +94,4 @@ export {
 } from './components/carousel';
 export {DatePicker} from './components/date-picker';
 export * from './components/typography';
+export {CommandPalette} from './components/command-palette';

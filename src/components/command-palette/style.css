@@ -1,0 +1,48 @@
+@import "../../variables.css";
+
+[p="command-palette-content"] {
+  border: none;
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-background));
+  padding: 0;
+  max-width: 32rem;
+  width: 100%;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+}
+
+[p="command-palette-content"][open] {
+  display: flex;
+  flex-direction: column;
+}
+
+[p="command-palette-content"]::backdrop {
+  background-color: rgb(0 0 0 / 0.8);
+}
+
+[p="command-palette-input"] {
+  border: none;
+  border-bottom: 1px solid hsl(var(--p-border));
+  padding: 0.75rem;
+  font: inherit;
+  outline: none;
+  background: transparent;
+}
+
+[p="command-palette-list"] {
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+[p="command-palette-item"] {
+  border: none;
+  background: none;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+}
+
+[p="command-palette-item"][selected] {
+  background-color: hsl(var(--p-muted));
+  color: hsl(var(--p-muted-foreground));
+}
