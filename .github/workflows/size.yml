@@ -9,26 +9,18 @@ on:
 jobs:
   size:
     runs-on: ubuntu-latest
-    env:
-      CI_JOB_NUMBER: 1
     steps:
       - uses: actions/checkout@v4
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
-          version: latest
-          run_install: false
+          version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm build
-
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
       - uses: preactjs/compressed-size-action@v2
         with:
-          pattern: "./dist/**/*.{js,css}"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: 'dist/**/*.{js,css}'
