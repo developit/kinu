@@ -6,6 +6,7 @@
   --p-card-foreground: 222.2 84% 4.9%;
   --p-popover: 0 0% 100%;
   --p-popover-foreground: 222.2 84% 4.9%;
+  --p-sidebar: 0 0% 98%;
 
   /* Primary colors */
   --p-primary: 222.2 47.4% 11.2%;
@@ -22,7 +23,7 @@
   --p-muted-foreground: 215.4 16.3% 46.9%;
 
   /* Accent colors */
-  --p-accent: 210 40% 96%;
+  --p-accent: 210 40% 95%;
   --p-accent-foreground: 222.2 84% 4.9%;
 
   /* Destructive colors */

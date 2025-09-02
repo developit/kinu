@@ -12,7 +12,9 @@
 [p="context-menu-item"],
 [p="combobox-option"] {
   appearance: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   width: 100%;
   background: none;
   border: none;

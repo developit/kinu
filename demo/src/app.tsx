@@ -75,7 +75,10 @@ import {
   HoverCardContent,
   Calendar,
   Carousel,
+  CarouselContent,
   CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
   DatePicker,
   SidebarTrigger,
 } from 'pui';
@@ -693,9 +696,170 @@ function SheetDemo() {
 const sheetCode = `<Sheet>...</Sheet>`;
 
 function SidebarDemo() {
-  return <div>(see docs sidebar)</div>;
+  return (
+    <div
+      style={{
+        position: 'relative',
+        contain: 'strict',
+        height: '400px',
+        border: '1px solid hsl(var(--p-border))',
+        borderRadius: '0.5rem',
+        overflow: 'hidden',
+      }}
+    >
+      <Sidebar style={{position: 'relative', width: '16rem', height: '100%'}}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '0.5rem',
+            borderBottom: '1px solid hsl(var(--p-border))',
+            marginBottom: '0.5rem',
+          }}
+        >
+          <div
+            style={{
+              width: '2rem',
+              height: '2rem',
+              backgroundColor: 'hsl(var(--p-foreground))',
+              borderRadius: '0.375rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'hsl(var(--p-background))',
+              fontWeight: '600',
+            }}
+          >
+            P
+          </div>
+          <div>
+            <div style={{fontWeight: '600', fontSize: '0.875rem'}}>
+              Project UI
+            </div>
+            <div
+              style={{
+                fontSize: '0.75rem',
+                color: 'hsl(var(--p-muted-foreground))',
+              }}
+            >
+              Component Library
+            </div>
+          </div>
+        </div>
+
+        <h3>Navigation</h3>
+        <nav>
+          <a href="/dashboard" aria-current="page">
+            🏠 Dashboard
+          </a>
+          <a href="/analytics">📊 Analytics</a>
+          <a href="/team">👥 Team</a>
+          <a href="/settings">⚙️ Settings</a>
+        </nav>
+
+        <h3>Resources</h3>
+        <nav>
+          <a href="/documentation">📖 Documentation</a>
+          <a href="/design-system">🎨 Design System</a>
+          <a href="/tools">🔧 Tools</a>
+        </nav>
+
+        <div
+          style={{
+            marginTop: 'auto',
+            padding: '1rem 0',
+            borderTop: '1px solid hsl(var(--p-border))',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '0.5rem',
+              borderRadius: '0.375rem',
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                width: '2rem',
+                height: '2rem',
+                borderRadius: '50%',
+                backgroundColor: 'hsl(var(--p-muted))',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: '600',
+              }}
+            >
+              JD
+            </div>
+            <div style={{flex: 1}}>
+              <div style={{fontSize: '0.875rem', fontWeight: '500'}}>
+                John Doe
+              </div>
+              <div
+                style={{
+                  fontSize: '0.75rem',
+                  color: 'hsl(var(--p-muted-foreground))',
+                }}
+              >
+                john@example.com
+              </div>
+            </div>
+          </div>
+        </div>
+      </Sidebar>
+
+      <div
+        style={{
+          marginLeft: '16rem',
+          padding: '1rem',
+          height: '100%',
+          boxSizing: 'border-box',
+          backgroundColor: 'hsl(var(--p-muted) / 0.1)',
+        }}
+      >
+        <div
+          style={{
+            fontSize: '0.875rem',
+            color: 'hsl(var(--p-muted-foreground))',
+            marginBottom: '0.5rem',
+          }}
+        >
+          Components › Sidebar
+        </div>
+        <div
+          style={{
+            color: 'hsl(var(--p-muted-foreground))',
+            fontSize: '0.875rem',
+          }}
+        >
+          A clean, organized sidebar component with improved styling and
+          navigation.
+        </div>
+      </div>
+    </div>
+  );
 }
-const sidebarCode = `<Sidebar>...</Sidebar>`;
+const sidebarCode = `<Sidebar>
+  <h3>Navigation</h3>
+  <nav>
+    <a href="#" aria-current="page">🏠 Dashboard</a>
+    <a href="#">📊 Analytics</a>
+    <a href="#">👥 Team</a>
+    <a href="#">⚙️ Settings</a>
+  </nav>
+
+  <h3>Resources</h3>
+  <nav>
+    <a href="#">📖 Documentation</a>
+    <a href="#">🎨 Design System</a>
+    <a href="#">🔧 Tools</a>
+  </nav>
+</Sidebar>`;
 
 function BreadcrumbDemo() {
   return (
@@ -874,25 +1038,71 @@ const calendarCode = `<Calendar />`;
 function CarouselDemo() {
   return (
     <Carousel>
-      <CarouselItem
-        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
-      >
-        1
-      </CarouselItem>
-      <CarouselItem
-        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
-      >
-        2
-      </CarouselItem>
-      <CarouselItem
-        style={{padding: '1rem', background: 'hsl(var(--p-muted))'}}
-      >
-        3
-      </CarouselItem>
+      <CarouselContent>
+        <CarouselItem
+          style={{
+            padding: '2rem',
+            background: 'linear-gradient(45deg, #ff6b6b, #ffd93d)',
+            color: 'white',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          Slide 1
+        </CarouselItem>
+        <CarouselItem
+          style={{
+            padding: '2rem',
+            background: 'linear-gradient(45deg, #6bcf7f, #4ecdc4)',
+            color: 'white',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          Slide 2
+        </CarouselItem>
+        <CarouselItem
+          style={{
+            padding: '2rem',
+            background: 'linear-gradient(45deg, #45b7d1, #96ceb4)',
+            color: 'white',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          Slide 3
+        </CarouselItem>
+        <CarouselItem
+          style={{
+            padding: '2rem',
+            background: 'linear-gradient(45deg, #a8e6cf, #dcedc1)',
+            color: 'white',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          Slide 4
+        </CarouselItem>
+      </CarouselContent>
+      <CarouselPrevious>‹</CarouselPrevious>
+      <CarouselNext>›</CarouselNext>
     </Carousel>
   );
 }
-const carouselCode = `<Carousel>...</Carousel>`;
+const carouselCode = `<Carousel>
+  <CarouselContent>
+    <CarouselItem>Slide 1</CarouselItem>
+    <CarouselItem>Slide 2</CarouselItem>
+    <CarouselItem>Slide 3</CarouselItem>
+    <CarouselItem>Slide 4</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious>‹</CarouselPrevious>
+  <CarouselNext>›</CarouselNext>
+</Carousel>`;
 
 function DatePickerDemo() {
   return <DatePicker />;
@@ -1045,7 +1255,7 @@ const examples: Example[] = [
 export function App() {
   return (
     <div class="demo-app">
-      <Sidebar>
+      <Sidebar id="demo-sidebar">
         <nav class="nav">
           {examples.map((e) => (
             <a href={`#${e.id}`}>{e.title}</a>
@@ -1054,10 +1264,18 @@ export function App() {
       </Sidebar>
       <main>
         <NavigationMenu class="demo-header home-nav">
-          <SidebarTrigger class="demo-sidebar-trigger">☰</SidebarTrigger>
+          <SidebarTrigger
+            commandFor="demo-sidebar"
+            class="demo-sidebar-trigger"
+          >
+            ☰
+          </SidebarTrigger>
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink href="/">Home</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/getting-started">Getting Started</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink href="/components">
@@ -1074,6 +1292,9 @@ export function App() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/dashboard">Dashboard Demo</NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink href="/shop">Shop Demo</NavigationMenuLink>

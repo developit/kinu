@@ -32,6 +32,9 @@ importers:
       highlight.js:
         specifier: ^11.11.1
         version: 11.11.1
+      iconify-icon:
+        specifier: ^3.0.0
+        version: 3.0.0
       preact:
         specifier: ^10.26.8
         version: 10.26.9
@@ -347,6 +350,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@iconify/types@2.0.0':
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+
   '@jridgewell/gen-mapping@0.3.12':
     resolution: {integrity: sha512-OuLGC46TjB5BbN1dH8JULVVZY4WTdkF7tV9Ys6wLL1rubZnCMstOhNHueU5bLCrnRuDhKPDM4g6sw4Bel5Gzqg==}
 
@@ -613,6 +619,9 @@ packages:
   highlight.js@11.11.1:
     resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
     engines: {node: '>=12.0.0'}
+
+  iconify-icon@3.0.0:
+    resolution: {integrity: sha512-yPcnpkn8HUEUckrxxJBOer3jbGv3bqozHsLMLBRxhk3As1X76BgV2mS2a1HTNOIagR8nUs30H3qAd9GLe8Mnlg==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -1028,6 +1037,8 @@ snapshots:
   '@esbuild/win32-x64@0.25.5':
     optional: true
 
+  '@iconify/types@2.0.0': {}
+
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -1278,6 +1289,10 @@ snapshots:
   he@1.2.0: {}
 
   highlight.js@11.11.1: {}
+
+  iconify-icon@3.0.0:
+    dependencies:
+      '@iconify/types': 2.0.0
 
   js-tokens@4.0.0: {}
 

@@ -10,8 +10,9 @@ export const SidebarTrigger = createSimpleComponent(
     function click(_e: MouseEvent) {
       let node: Node | null = el;
       while (node) {
+        const commandFor = el.getAttribute('commandfor');
         const sidebar = (node as Element).querySelector?.<HTMLDialogElement>(
-          '[p="sidebar"]',
+          commandFor ? `#${commandFor}` : '[p="sidebar"]',
         );
         if (sidebar) {
           if (getComputedStyle(sidebar).getPropertyValue('--modal')) {

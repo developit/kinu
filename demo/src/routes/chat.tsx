@@ -1,13 +1,6 @@
-import {
-  Avatar,
-  Button,
-  Input,
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-} from 'pui';
+import {Avatar, Button, Input} from 'pui';
 import {useState} from 'preact/hooks';
+import {Nav} from '../nav';
 
 type Message = {
   id: number;
@@ -27,7 +20,7 @@ export default function Chat() {
     {
       id: 2,
       author: 'You',
-      text: 'Hey, I\'m having trouble with my account.',
+      text: "Hey, I'm having trouble with my account.",
       timestamp: new Date(Date.now() - 240000), // 4 minutes ago
     },
     {
@@ -39,7 +32,7 @@ export default function Chat() {
     {
       id: 4,
       author: 'You',
-      text: 'I can\'t log in.',
+      text: "I can't log in.",
       timestamp: new Date(Date.now() - 120000), // 2 minutes ago
     },
   ]);
@@ -48,26 +41,26 @@ export default function Chat() {
   function sendMessage() {
     const text = input.trim();
     if (!text) return;
-    
+
     const newMessage: Message = {
       id: Date.now(),
       author: 'You',
       text,
       timestamp: new Date(),
     };
-    
+
     setMessages([...messages, newMessage]);
     setInput('');
-    
+
     // Simulate support agent's response after a short delay
     setTimeout(() => {
       const agentResponse: Message = {
         id: Date.now(),
         author: 'Support Agent',
-        text: 'I understand. Let me help you with that. Can you tell me what error message you\'re seeing?',
+        text: "I understand. Let me help you with that. Can you tell me what error message you're seeing?",
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, agentResponse]);
+      setMessages((prev) => [...prev, agentResponse]);
     }, 1000);
   }
 
@@ -80,41 +73,20 @@ export default function Chat() {
 
   return (
     <div class="chat-page">
-      {/* Global Header */}
-      <NavigationMenu class="demo-header home-nav">
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/">Home</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/components">
-              Components
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/linear">Linear Demo</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+      <Nav />
 
       {/* Chat Interface */}
       <div class="chat-container">
         <div class="chat-window">
           {/* Chat Header */}
-                      <div class="chat-header">
-              <div class="chat-contact">
-                <Avatar class="chat-avatar" fallback="SA" />
-                <div class="contact-info">
-                  <h3 class="contact-name">Support Agent</h3>
-                  <p class="contact-email">support@example.com</p>
-                </div>
+          <div class="chat-header">
+            <div class="chat-contact">
+              <Avatar class="chat-avatar" fallback="SA" />
+              <div class="contact-info">
+                <h3 class="contact-name">Support Agent</h3>
+                <p class="contact-email">support@example.com</p>
               </div>
+            </div>
             <Button class="chat-attachment-btn" variant="outline" size="sm">
               <span class="attachment-icon">+</span>
             </Button>
@@ -145,7 +117,9 @@ export default function Chat() {
             <Input
               class="chat-input"
               value={input}
-              onInput={(e) => setInput((e.currentTarget as HTMLInputElement).value)}
+              onInput={(e) =>
+                setInput((e.currentTarget as HTMLInputElement).value)
+              }
               onKeyPress={handleKeyPress}
               placeholder="Type your message..."
             />

@@ -1,47 +1,69 @@
-import type {ComponentChildren, JSX} from 'preact';
+import {type ComponentChildren, type JSX, createContext} from 'preact';
+import {useId, useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installDialogsDropdowns} from '../../lib/commands';
 import './style.css';
 
+const IdCtx = createContext<string | undefined>(undefined);
+
+let lastAnchor: HTMLElement | null = null;
+
 function handleContextMenu(e: MouseEvent) {
   e.preventDefault();
   const el = e.currentTarget as HTMLElement;
+  if (lastAnchor) lastAnchor.style.anchorName = '';
+  lastAnchor = el;
   el.style.anchorName = '--p-context-menu';
-  const parent = el.parentNode as HTMLElement;
+  const target = el.ownerDocument.getElementById(
+    el.getAttribute('commandfor')!,
+  ) as HTMLDialogElement;
+  if (!target) return;
   const rect = el.getBoundingClientRect();
-  parent.style.setProperty('--p-context-menu-x', `${e.clientX - rect.x}px`);
-  parent.style.setProperty('--p-context-menu-y', `${e.clientY - rect.y}px`);
-  parent?.querySelector<HTMLDialogElement>('[p="context-menu"]')?.showModal();
+  target.style.setProperty('--p-context-menu-x', `${e.clientX - rect.x}px`);
+  target.style.setProperty('--p-context-menu-y', `${e.clientY - rect.y}px`);
+  target.showModal();
 }
 
 export function ContextMenuTrigger({children}: JSX.ElementChildrenAttribute) {
-  return applyPropsToChildren(children, {onContextMenu: handleContextMenu});
+  const id = useContext(IdCtx);
+  return applyPropsToChildren(children, {
+    commandfor: id,
+    onContextMenu: handleContextMenu,
+  });
 }
 
-export function ContextMenu({children}: {children: ComponentChildren}) {
+export function ContextMenu({
+  id: idProp,
+  children,
+}: {id?: string; children: ComponentChildren}) {
   installDialogsDropdowns();
-  return children;
+  const gen = useId();
+  const id = idProp ?? gen;
+  return <IdCtx.Provider value={id}>{children}</IdCtx.Provider>;
 }
 
-export const ContextMenuContent = createSimpleComponent(
-  'context-menu',
-  'dialog',
-  {},
-  (el: HTMLDialogElement) => {
-    function click(e: MouseEvent) {
-      if (e.defaultPrevented) return;
-      e.preventDefault();
-      el.close();
-    }
-    el.addEventListener('contextmenu', click);
-    el.addEventListener('click', click);
-    return () => {
-      el.removeEventListener('contextmenu', click);
-      el.removeEventListener('click', click);
-    };
-  },
-);
+function click(e: MouseEvent) {
+  if (e.defaultPrevented) return;
+  e.preventDefault();
+  (e.currentTarget as HTMLDialogElement).close();
+}
+
+export function ContextMenuContent({
+  id,
+  ...props
+}: JSX.IntrinsicElements['dialog']) {
+  const ctx = useContext(IdCtx);
+  return (
+    <dialog
+      p="context-menu"
+      id={id ?? ctx}
+      onClickCapture={click}
+      onContextMenuCapture={click}
+      {...props}
+    />
+  );
+}
 
 export const ContextMenuItem = createSimpleComponent(
   'context-menu-item',

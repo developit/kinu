@@ -1,12 +1,16 @@
 import './style.css';
+import './iconify.d.ts';
 import {render} from 'preact';
 import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
+import 'iconify-icon';
 
 const Home = lazy(() => import('./routes/home.tsx'));
+const GettingStarted = lazy(() => import('./routes/getting-started.tsx'));
 const Components = lazy(() => import('./app.tsx'));
 const Linear = lazy(() => import('./routes/linear.tsx'));
 const Chat = lazy(() => import('./routes/chat.tsx'));
 const Player = lazy(() => import('./routes/player.tsx'));
+const Dashboard = lazy(() => import('./routes/dashboard.tsx'));
 const Shop = lazy(() => import('./routes/shop.tsx'));
 
 function setViewportVars() {
@@ -25,13 +29,15 @@ render(
     <ErrorBoundary>
       <Router>
         <Route path="/" component={Home} />
+        <Route path="/getting-started" component={GettingStarted} />
         <Route path="/components" component={Components} />
         <Route path="/linear" component={Linear} />
         <Route path="/chat" component={Chat} />
         <Route path="/player" component={Player} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/shop" component={Shop} />
       </Router>
     </ErrorBoundary>
   </LocationProvider>,
-  document.getElementById('app')!
+  document.getElementById('app')!,
 );
