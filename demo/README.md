@@ -23,7 +23,7 @@ npm run build
 - **Card**: Layout container with flexible padding
 - **Dialog**: Native `<dialog>` element with compound API
 - **Toast**: Global notifications via event API
-- **Shop Demo**: Minimal storefront built entirely with PUI components
+- **Shop Demo**: Image-driven storefront with search, cart drawer, and toast notifications
 
 ## Architecture Highlights
 
