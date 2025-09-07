@@ -6,6 +6,8 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  Button,
+  DropdownMenuItem,
 } from 'pui';
 
 export function Nav() {
@@ -26,23 +28,15 @@ export function Nav() {
         <NavigationMenuItem>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <button p="navigation-menu-link" type="button">
+              <Button variant="ghost" type="button">
                 Demos
-              </button>
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <a p="dropdown-menu-item" href="/linear">
-                Linear
-              </a>
-              <a p="dropdown-menu-item" href="/chat">
-                Chat
-              </a>
-              <a p="dropdown-menu-item" href="/player">
-                Music
-              </a>
-              <a p="dropdown-menu-item" href="/dashboard">
-                Dashboard
-              </a>
+              <DropdownMenuItem href="/linear">Linear</DropdownMenuItem>
+              <DropdownMenuItem href="/chat">Chat</DropdownMenuItem>
+              <DropdownMenuItem href="/player">Music</DropdownMenuItem>
+              <DropdownMenuItem href="/dashboard">Dashboard</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </NavigationMenuItem>

@@ -52,5 +52,5 @@ export function DropdownMenuContent({
 
 export const DropdownMenuItem = createSimpleComponent(
   'dropdown-menu-item',
-  'button',
+  (props: any) => (props.href ? 'a' : 'button'),
 );

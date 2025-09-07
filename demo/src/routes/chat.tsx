@@ -81,7 +81,7 @@ export default function Chat() {
           {/* Chat Header */}
           <div class="chat-header">
             <div class="chat-contact">
-              <Avatar class="chat-avatar" fallback="SA" />
+              <Avatar class="chat-avatar">SA</Avatar>
               <div class="contact-info">
                 <h3 class="contact-name">Support Agent</h3>
                 <p class="contact-email">support@example.com</p>
