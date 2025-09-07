@@ -3,6 +3,10 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from 'pui';
 
 export function Nav() {
@@ -21,18 +25,27 @@ export function Nav() {
           <NavigationMenuLink href="/components">Components</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/linear">Linear Demo</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/dashboard">
-            Dashboard Demo
-          </NavigationMenuLink>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <NavigationMenuLink href="#" onClick={(e) => e.preventDefault()}>
+                Demos
+              </NavigationMenuLink>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {[
+                {href: '/linear', label: 'Linear'},
+                {href: '/chat', label: 'Chat'},
+                {href: '/player', label: 'Music'},
+                {href: '/dashboard', label: 'Dashboard'},
+              ].map((demo) => (
+                <DropdownMenuItem
+                  onClick={() => (location.href = demo.href)}
+                >
+                  {demo.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
