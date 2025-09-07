@@ -107,6 +107,11 @@ pre.code-block {
   height: 4rem;
 }
 
+.home-nav [p="button"] {
+  height: auto;
+  padding: 0.25rem 0.5rem;
+}
+
 .hero {
   padding: 4rem 1rem;
   max-width: 1200px;

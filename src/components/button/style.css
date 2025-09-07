@@ -1,5 +1,6 @@
 @import "../../variables.css";
 
+a[p="button"],
 [p="button"] {
   display: inline-flex;
   align-items: center;

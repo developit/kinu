@@ -28,7 +28,7 @@ export function Nav() {
         <NavigationMenuItem>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button variant="ghost" type="button">
+              <Button variant="ghost" size="sm" type="button">
                 Demos
               </Button>
             </DropdownMenuTrigger>
