@@ -28,9 +28,7 @@ export function Nav() {
         <NavigationMenuItem>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button variant="ghost" size="sm" type="button">
-                Demos
-              </Button>
+              <Button variant="ghost" type="button">Demos</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem href="/linear">Linear</DropdownMenuItem>

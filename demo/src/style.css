@@ -110,6 +110,14 @@ pre.code-block {
 .home-nav [p="button"] {
   height: auto;
   padding: 0.25rem 0.5rem;
+  font: inherit;
+  border: 0;
+  background: none;
+  color: inherit;
+}
+
+.home-nav [p="button"]:hover {
+  background-color: hsl(var(--p-muted));
 }
 
 .hero {

@@ -1,4 +1,4 @@
-import {type ComponentChildren, createContext} from 'preact';
+import {type ComponentChildren, createContext, type JSX} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {createSimpleComponent} from '../../lib/create-simple-component';
@@ -25,7 +25,7 @@ export function DropdownMenu({
 export function DropdownMenuTrigger({
   children,
   ...props
-}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+}: JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -37,15 +37,15 @@ export function DropdownMenuTrigger({
 export function DropdownMenuContent({
   id,
   ...props
-}: JSX.IntrinsicElements['dialog']) {
+}: JSX.HTMLAttributes<HTMLDialogElement> & {id?: string}) {
   const ctx = useContext(IdCtx);
+  const resolved = id ?? ctx;
   return (
     <dialog
       p="dropdown-content"
-      id={id ?? ctx}
-      command="close"
-      commandFor={id ?? ctx}
+      id={resolved}
       {...props}
+      {...({command: 'close', commandfor: resolved} as any)}
     />
   );
 }
