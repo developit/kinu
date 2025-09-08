@@ -6,7 +6,6 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  Button,
   DropdownMenuItem,
 } from 'pui';
 
@@ -28,7 +27,7 @@ export function Nav() {
         <NavigationMenuItem>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button variant="ghost" type="button">Demos</Button>
+              <NavigationMenuLink href="#">Demos</NavigationMenuLink>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem href="/linear">Linear</DropdownMenuItem>
