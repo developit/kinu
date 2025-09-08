@@ -2,10 +2,11 @@
 @import "../popover/style.css";
 
 [p="dropdown-content"] {
-  left: 0;
+  right: 0;
+  left: auto;
   --tf-x: 0;
   padding: 0.5rem 0;
-  min-width: 100%;
+  min-width: max-content;
 }
 
 [p="dropdown-menu-item"],
@@ -24,6 +25,8 @@
   font: inherit;
   cursor: pointer;
   outline: none;
+  color: inherit;
+  text-decoration: none;
 
   &:hover,
   &:focus,
