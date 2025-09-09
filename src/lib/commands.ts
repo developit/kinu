@@ -1,3 +1,5 @@
+import { calculateOptimalPosition, applyPositioning, getTriggerElement } from './positioning';
+
 let commandsInstalled: boolean;
 
 export function installCommands() {
@@ -45,6 +47,57 @@ export function installDialogsDropdowns() {
   if (dialogsDropdownsInstalled) return;
   dialogsDropdownsInstalled = true;
   addEventListener('click', dialogsDropdownsClickHandler, true);
+  
+  // Enhance dialog show methods to include smart positioning
+  enhanceDialogPositioning();
+}
+
+function enhanceDialogPositioning() {
+  // Override the showModal method for dialogs with positioning attributes
+  const originalShowModal = HTMLDialogElement.prototype.showModal;
+  
+  HTMLDialogElement.prototype.showModal = function() {
+    const result = originalShowModal.call(this);
+    
+    // Apply smart positioning for dropdown/popover dialogs
+    const type = this.getAttribute('p');
+    if (type && ['dropdown-content', 'popover-content'].includes(type)) {
+      applySmartPositioning(this);
+    }
+    
+    return result;
+  };
+  
+  // Also override the show method for non-modal dialogs  
+  const originalShow = HTMLDialogElement.prototype.show;
+  
+  HTMLDialogElement.prototype.show = function() {
+    const result = originalShow.call(this);
+    
+    // Apply smart positioning for dropdown/popover dialogs
+    const type = this.getAttribute('p');
+    if (type && ['dropdown-content', 'popover-content'].includes(type)) {
+      applySmartPositioning(this);
+    }
+    
+    return result;
+  };
+}
+
+function applySmartPositioning(dialog: HTMLDialogElement) {
+  const triggerElement = getTriggerElement(dialog);
+  if (!triggerElement) return;
+  
+  // Wait for next tick to ensure dialog is rendered
+  requestAnimationFrame(() => {
+    const position = calculateOptimalPosition(triggerElement, dialog, {
+      placement: 'bottom-start',
+      offset: { x: 0, y: 4 },
+      fallbackPlacements: ['bottom-end', 'bottom', 'top-start', 'top-end', 'top']
+    });
+    
+    applyPositioning(dialog, position);
+  });
 }
 
 function dialogsDropdownsClickHandler(e: MouseEvent) {

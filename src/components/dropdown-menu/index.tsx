@@ -43,8 +43,6 @@ export function DropdownMenuContent({
     <dialog
       p="dropdown-content"
       id={id ?? ctx}
-      command="close"
-      commandFor={id ?? ctx}
       {...props}
     />
   );
