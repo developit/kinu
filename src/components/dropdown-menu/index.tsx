@@ -1,5 +1,5 @@
 import {type ComponentChildren, createContext} from 'preact';
-import {useId, useContext} from 'preact/hooks';
+import {useId, useContext, useLayoutEffect, useRef} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installCommands, installDialogsDropdowns} from '../../lib/commands';
@@ -37,14 +37,34 @@ export function DropdownMenuTrigger({
 export function DropdownMenuContent({
   id,
   ...props
-}: JSX.IntrinsicElements['dialog']) {
+}: preact.JSX.HTMLAttributes<HTMLDialogElement> & {id?: string}) {
   const ctx = useContext(IdCtx);
+  const ref = useRef<HTMLDialogElement>(null);
+  useLayoutEffect(() => {
+    const el = ref.current!;
+    const anchor = el.parentElement as HTMLElement;
+    function update() {
+      const rect = el.getBoundingClientRect();
+      const a = anchor.getBoundingClientRect();
+      const flipX = rect.right > innerWidth && a.right > rect.width;
+      const flipY = rect.bottom > innerHeight && a.top > rect.height;
+      el.toggleAttribute('data-flip-x', flipX);
+      el.toggleAttribute('data-flip-y', flipY);
+    }
+    el.addEventListener('toggle', update);
+    addEventListener('resize', update, {passive: true});
+    update();
+    return () => {
+      el.removeEventListener('toggle', update);
+      removeEventListener('resize', update);
+    };
+  }, []);
   return (
     <dialog
+      ref={ref}
       p="dropdown-content"
       id={id ?? ctx}
-      command="close"
-      commandFor={id ?? ctx}
+      {...({command: 'close', commandFor: id ?? ctx} as any)}
       {...props}
     />
   );

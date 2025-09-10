@@ -23,6 +23,13 @@ function handleContextMenu(e: MouseEvent) {
   target.style.setProperty('--p-context-menu-x', `${e.clientX - rect.x}px`);
   target.style.setProperty('--p-context-menu-y', `${e.clientY - rect.y}px`);
   target.showModal();
+  const menuRect = target.getBoundingClientRect();
+  target.style.setProperty('--p-context-menu-w', `${menuRect.width}px`);
+  target.style.setProperty('--p-context-menu-h', `${menuRect.height}px`);
+  const flipX = e.clientX + menuRect.width > innerWidth;
+  const flipY = e.clientY + menuRect.height > innerHeight;
+  target.toggleAttribute('data-flip-x', flipX);
+  target.toggleAttribute('data-flip-y', flipY);
 }
 
 export function ContextMenuTrigger({children}: JSX.ElementChildrenAttribute) {
