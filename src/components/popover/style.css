@@ -16,6 +16,8 @@
   top: 100%;
   left: 50%;
   --tf-x: -50%;
+  --nudge-x: 0px;
+  --nudge-y: 0px;
   min-width: 100%;
   transform-origin: top center;
   background-color: hsl(var(--p-popover));
@@ -39,12 +41,12 @@
 [p="combobox-list"][open] {
   display: inline-block;
   pointer-events: auto;
-  transform: translateX(var(--tf-x)) scale(1);
+  transform: translateX(calc(var(--tf-x) + var(--nudge-x))) translateY(var(--nudge-y)) scale(1);
 }
 
 @keyframes popover-show {
   from {
     opacity: 0;
-    transform: translateX(var(--tf-x)) scale(0.9);
+    transform: translateX(calc(var(--tf-x) + var(--nudge-x))) translateY(var(--nudge-y)) scale(0.9);
   }
 }
