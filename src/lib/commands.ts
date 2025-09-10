@@ -1,5 +1,3 @@
-import { calculateOptimalPosition, applyPositioning, getTriggerElement } from './positioning';
-
 let commandsInstalled: boolean;
 
 export function installCommands() {
@@ -47,56 +45,45 @@ export function installDialogsDropdowns() {
   if (dialogsDropdownsInstalled) return;
   dialogsDropdownsInstalled = true;
   addEventListener('click', dialogsDropdownsClickHandler, true);
-  
-  // Enhance dialog show methods to include smart positioning
-  enhanceDialogPositioning();
+  addEventListener('toggle', handleDialogToggle);
 }
 
-function enhanceDialogPositioning() {
-  // Override the showModal method for dialogs with positioning attributes
-  const originalShowModal = HTMLDialogElement.prototype.showModal;
+function handleDialogToggle(e: Event) {
+  const dialog = e.target as HTMLDialogElement;
+  if (!dialog.open) return;
   
-  HTMLDialogElement.prototype.showModal = function() {
-    const result = originalShowModal.call(this);
-    
-    // Apply smart positioning for dropdown/popover dialogs
-    const type = this.getAttribute('p');
-    if (type && ['dropdown-content', 'popover-content'].includes(type)) {
-      applySmartPositioning(this);
-    }
-    
-    return result;
-  };
+  const type = dialog.getAttribute('p');
+  if (!type || !['dropdown-content', 'popover-content'].includes(type)) return;
   
-  // Also override the show method for non-modal dialogs  
-  const originalShow = HTMLDialogElement.prototype.show;
-  
-  HTMLDialogElement.prototype.show = function() {
-    const result = originalShow.call(this);
-    
-    // Apply smart positioning for dropdown/popover dialogs
-    const type = this.getAttribute('p');
-    if (type && ['dropdown-content', 'popover-content'].includes(type)) {
-      applySmartPositioning(this);
-    }
-    
-    return result;
-  };
-}
-
-function applySmartPositioning(dialog: HTMLDialogElement) {
-  const triggerElement = getTriggerElement(dialog);
-  if (!triggerElement) return;
-  
-  // Wait for next tick to ensure dialog is rendered
+  // Apply viewport-aware positioning
   requestAnimationFrame(() => {
-    const position = calculateOptimalPosition(triggerElement, dialog, {
-      placement: 'bottom-start',
-      offset: { x: 0, y: 4 },
-      fallbackPlacements: ['bottom-end', 'bottom', 'top-start', 'top-end', 'top']
-    });
+    const rect = dialog.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
     
-    applyPositioning(dialog, position);
+    let nudgeX = 0;
+    let nudgeY = 0;
+    
+    // Check horizontal overflow
+    if (rect.x + rect.width > vw) {
+      nudgeX = vw - (rect.x + rect.width);
+    }
+    if (rect.x < 0) {
+      nudgeX = -rect.x;
+    }
+    
+    // Check vertical overflow  
+    if (rect.y + rect.height > vh) {
+      nudgeY = vh - (rect.y + rect.height);
+    }
+    if (rect.y < 0) {
+      nudgeY = -rect.y;
+    }
+    
+    if (nudgeX !== 0 || nudgeY !== 0) {
+      dialog.style.setProperty('--nudge-x', `${nudgeX}px`);
+      dialog.style.setProperty('--nudge-y', `${nudgeY}px`);
+    }
   });
 }
 
