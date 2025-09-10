@@ -6,6 +6,8 @@ export function installCommands() {
   commandsInstalled = true;
   if ('commandFor' in HTMLButtonElement.prototype) return;
   addEventListener('click', commandClickHandler);
+  addEventListener('toggle', dialogToggleHandler, true);
+  addEventListener('show', dialogToggleHandler, true);
 }
 
 function elementTarget(node: EventTarget) {
@@ -18,17 +20,18 @@ function positionDialog(target: HTMLDialogElement, trigger: Element) {
   const a = trigger.getBoundingClientRect();
   const d = target.getBoundingClientRect();
   target.style.setProperty('--p-anchor-left', `${a.left}px`);
-  target.style.setProperty('--p-anchor-right', `${a.right}px`);
   target.style.setProperty('--p-anchor-top', `${a.top}px`);
-  target.style.setProperty('--p-anchor-bottom', `${a.bottom}px`);
   target.style.setProperty('--p-anchor-width', `${a.width}px`);
   target.style.setProperty('--p-anchor-height', `${a.height}px`);
   target.style.setProperty('--p-content-width', `${d.width}px`);
   target.style.setProperty('--p-content-height', `${d.height}px`);
-  const flipX = a.left + d.width > innerWidth && a.right > d.width;
-  const flipY = a.bottom + d.height > innerHeight && a.top > d.height;
-  target.toggleAttribute('data-flip-x', flipX);
-  target.toggleAttribute('data-flip-y', flipY);
+  const flipX = a.left + d.width > innerWidth && a.left + a.width > d.width;
+  const flipY =
+    a.top + a.height + d.height > innerHeight && a.top > d.height;
+  let flip = '';
+  if (flipX) flip += ' x';
+  if (flipY) flip += ' y';
+  target.setAttribute('data-flip', flip);
 }
 
 let resizeInstalled: boolean;
@@ -73,10 +76,15 @@ function commandClickHandler(e: MouseEvent) {
   }
 
   const method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  if (target instanceof HTMLDialogElement) triggers.set(target, trigger);
   (target as any)[method]?.();
+}
+
+function dialogToggleHandler(e: Event) {
+  const target = e.target as Element;
   if (target instanceof HTMLDialogElement && target.open) {
-    triggers.set(target, trigger);
-    positionDialog(target, trigger);
+    const trig = triggers.get(target);
+    if (trig) positionDialog(target, trig);
     ensureResize();
   }
 }

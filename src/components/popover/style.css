@@ -33,22 +33,24 @@
   --p-gap: 0.25rem;
   transform-origin: top left;
   --p-x: var(--p-anchor-left);
-  --p-y: calc(var(--p-anchor-bottom) + var(--p-gap));
+  --p-y: calc(var(--p-anchor-top) + var(--p-anchor-height) + var(--p-gap));
   transform: translate(
     max(0px, min(calc(100vw - var(--p-content-width, 0px)), var(--p-x))),
     max(0px, min(calc(100vh - var(--p-content-height, 0px)), var(--p-y)))
   );
 }
 
-[p="popover-content"][data-flip-x],
-[p="dropdown-content"][data-flip-x],
-[p="combobox-list"][data-flip-x] {
-  --p-x: calc(var(--p-anchor-right) - var(--p-content-width));
+[p="popover-content"][data-flip~="x"],
+[p="dropdown-content"][data-flip~="x"],
+[p="combobox-list"][data-flip~="x"] {
+  --p-x: calc(
+    var(--p-anchor-left) + var(--p-anchor-width) - var(--p-content-width)
+  );
 }
 
-[p="popover-content"][data-flip-y],
-[p="dropdown-content"][data-flip-y],
-[p="combobox-list"][data-flip-y] {
+[p="popover-content"][data-flip~="y"],
+[p="dropdown-content"][data-flip~="y"],
+[p="combobox-list"][data-flip~="y"] {
   --p-y: calc(var(--p-anchor-top) - var(--p-content-height) - var(--p-gap));
 }
 
