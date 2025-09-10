@@ -13,6 +13,12 @@ body [p="context-menu"] {
   margin-top: var(--p-context-menu-y);
   padding: 0.25rem 0;
 }
+body [p="context-menu"][data-flip-x] {
+  margin-left: calc(var(--p-context-menu-x) - var(--p-context-menu-w));
+}
+body [p="context-menu"][data-flip-y] {
+  margin-top: calc(var(--p-context-menu-y) - var(--p-context-menu-h));
+}
 [p="context-menu"]::backdrop {
   opacity: 0;
 }

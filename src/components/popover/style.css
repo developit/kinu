@@ -33,6 +33,24 @@
   outline: none;
 }
 
+[p="popover-content"][data-flip-y],
+[p="dropdown-content"][data-flip-y],
+[p="combobox-list"][data-flip-y] {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  transform-origin: bottom center;
+}
+
+[p="popover-content"][data-flip-x],
+[p="dropdown-content"][data-flip-x],
+[p="combobox-list"][data-flip-x] {
+  left: auto;
+  right: 0;
+  --tf-x: 0;
+}
+
 [p="popover-content"][open],
 [p="dropdown-content"][open],
 [p="context-menu"][open],
