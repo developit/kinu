@@ -21,6 +21,9 @@
   animation: popover-show 200ms var(--p-ease);
   z-index: 10;
   outline: none;
+  margin: 0;
+  right: auto;
+  bottom: auto;
 }
 
 [p="popover-content"],
@@ -30,6 +33,8 @@
   display: none;
   left: 0;
   top: 0;
+  right: auto;
+  bottom: auto;
   --p-gap: 0.25rem;
   transform-origin: top left;
   --p-x: var(--p-anchor-left);
