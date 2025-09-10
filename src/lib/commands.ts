@@ -1,4 +1,5 @@
 let commandsInstalled: boolean;
+const triggers = new WeakMap<Element, Element>();
 
 export function installCommands() {
   if (commandsInstalled) return;
@@ -11,6 +12,41 @@ function elementTarget(node: EventTarget) {
   return 'closest' in node
     ? (node as Element)
     : ((node as Node).parentNode as Element);
+}
+
+function positionDialog(target: HTMLDialogElement, trigger: Element) {
+  const a = trigger.getBoundingClientRect();
+  const d = target.getBoundingClientRect();
+  target.style.setProperty('--p-anchor-left', `${a.left}px`);
+  target.style.setProperty('--p-anchor-right', `${a.right}px`);
+  target.style.setProperty('--p-anchor-top', `${a.top}px`);
+  target.style.setProperty('--p-anchor-bottom', `${a.bottom}px`);
+  target.style.setProperty('--p-anchor-width', `${a.width}px`);
+  target.style.setProperty('--p-anchor-height', `${a.height}px`);
+  target.style.setProperty('--p-content-width', `${d.width}px`);
+  target.style.setProperty('--p-content-height', `${d.height}px`);
+  const flipX = a.left + d.width > innerWidth && a.right > d.width;
+  const flipY = a.bottom + d.height > innerHeight && a.top > d.height;
+  target.toggleAttribute('data-flip-x', flipX);
+  target.toggleAttribute('data-flip-y', flipY);
+}
+
+let resizeInstalled: boolean;
+function ensureResize() {
+  if (resizeInstalled) return;
+  resizeInstalled = true;
+  addEventListener(
+    'resize',
+    () => {
+      document
+        .querySelectorAll<HTMLDialogElement>('dialog[p][open]')
+        .forEach((el) => {
+          const trig = triggers.get(el);
+          if (trig) positionDialog(el, trig);
+        });
+    },
+    {passive: true},
+  );
 }
 
 function commandClickHandler(e: MouseEvent) {
@@ -38,6 +74,11 @@ function commandClickHandler(e: MouseEvent) {
 
   const method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
   (target as any)[method]?.();
+  if (target instanceof HTMLDialogElement && target.open) {
+    triggers.set(target, trigger);
+    positionDialog(target, trigger);
+    ensureResize();
+  }
 }
 
 let dialogsDropdownsInstalled: boolean;
