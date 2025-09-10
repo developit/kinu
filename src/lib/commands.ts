@@ -18,7 +18,11 @@ function elementTarget(node: EventTarget) {
 
 function positionDialog(target: HTMLDialogElement, trigger: Element) {
   const a = trigger.getBoundingClientRect();
+  const t = target.style.transform;
+  target.style.setProperty('transform', 'none');
   const d = target.getBoundingClientRect();
+  if (t) target.style.setProperty('transform', t);
+  else target.style.removeProperty('transform');
   target.style.setProperty('--p-anchor-left', `${a.left}px`);
   target.style.setProperty('--p-anchor-top', `${a.top}px`);
   target.style.setProperty('--p-anchor-width', `${a.width}px`);
