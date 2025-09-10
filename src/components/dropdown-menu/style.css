@@ -31,3 +31,10 @@
     background-color: hsl(var(--p-muted));
   }
 }
+
+@supports (position-anchor: --p-anchor) and (position-try-fallbacks: flip-block) {
+  [p="dropdown-content"] {
+    left: anchor(start);
+    transform: none;
+  }
+}
