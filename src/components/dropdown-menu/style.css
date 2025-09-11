@@ -2,10 +2,8 @@
 @import "../popover/style.css";
 
 [p="dropdown-content"] {
-  left: 0;
-  --tf-x: 0;
   padding: 0.5rem 0;
-  min-width: 100%;
+  min-width: var(--p-anchor-width);
 }
 
 [p="dropdown-menu-item"],
