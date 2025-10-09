@@ -2,6 +2,7 @@ let commandsInstalled: boolean;
 
 export function installCommands() {
   if (commandsInstalled) return;
+  if (typeof document === 'undefined') return;
   commandsInstalled = true;
   if ('commandFor' in HTMLButtonElement.prototype) return;
   addEventListener('click', commandClickHandler);
@@ -43,6 +44,7 @@ function commandClickHandler(e: MouseEvent) {
 let dialogsDropdownsInstalled: boolean;
 export function installDialogsDropdowns() {
   if (dialogsDropdownsInstalled) return;
+  if (typeof document === 'undefined') return;
   dialogsDropdownsInstalled = true;
   addEventListener('click', dialogsDropdownsClickHandler, true);
 }
@@ -81,6 +83,7 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
 let menuShortcutsInstalled: boolean;
 export function installMenuShortcuts() {
   if (menuShortcutsInstalled) return;
+  if (typeof document === 'undefined') return;
   menuShortcutsInstalled = true;
   addEventListener('keydown', handleMenuShortcutsKeydown);
 }

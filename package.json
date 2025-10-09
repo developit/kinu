@@ -21,7 +21,8 @@
   "scripts": {
     "build": "vite build",
     "lint": "tsc && biome lint",
-    "dev": "vite build --watch"
+    "dev": "vite build --watch",
+    "test": "vitest run"
   },
   "peerDependencies": {
     "preact": "^10.26.8"
@@ -31,8 +32,10 @@
     "@preact/preset-vite": "^2.10.1",
     "@types/node": "^22.15.30",
     "preact": "^10.26.9",
+    "preact-render-to-string": "^6.5.11",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^3.0.6"
   },
   "keywords": [
     "preact",
