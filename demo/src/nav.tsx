@@ -1,13 +1,22 @@
+import type {ComponentChildren} from 'preact';
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from 'pui';
 
-export function Nav() {
+export function Nav({
+  class: className,
+  left,
+}: {class?: string; left?: ComponentChildren}) {
   return (
-    <NavigationMenu class="home-nav">
+    <NavigationMenu class={className ?? 'home-nav'}>
+      {left}
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink href="/">Home</NavigationMenuLink>
@@ -21,18 +30,25 @@ export function Nav() {
           <NavigationMenuLink href="/components">Components</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/linear">Linear Demo</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/dashboard">
-            Dashboard Demo
-          </NavigationMenuLink>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <NavigationMenuLink href="#">Demos</NavigationMenuLink>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent to="left">
+              <DropdownMenuItem as="a" href="/linear">
+                Linear Demo
+              </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/chat">
+                Chat Demo
+              </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/player">
+                Music Demo
+              </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/dashboard">
+                Dashboard Demo
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

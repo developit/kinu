@@ -1,14 +1,12 @@
 {
-  "name": "ui-toolkit",
-  "version": "1.0.0",
+  "name": "pui",
+  "version": "0.1.0",
   "description": "Performance-focused Preact UI toolkit",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "type": "module",
-  "types": "dist/index.d.ts",
-  "sideEffects": [
-    "src/lib/commands.ts"
-  ],
+  "types": "./dist/index.d.ts",
+  "x-sideEffects": ["src/lib/commands.ts"],
   "exports": {
     ".": {
       "style": "./dist/index.css",
@@ -16,8 +14,9 @@
       "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./*.css": "./dist/*.css"
+    "./style.css": "./dist/index.css"
   },
+  "files": ["dist"],
   "scripts": {
     "build": "vite build",
     "lint": "tsc && biome lint",
@@ -37,12 +36,7 @@
     "vite": "^6.3.5",
     "vitest": "^3.0.6"
   },
-  "keywords": [
-    "preact",
-    "ui",
-    "ui-toolkit",
-    "pui"
-  ],
-  "author": "",
+  "keywords": ["preact", "ui", "ui-toolkit", "pui"],
+  "author": "Jason Miller (http://developit.dev)",
   "license": "MIT"
 }
