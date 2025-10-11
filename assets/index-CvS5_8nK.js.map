@@ -1,1 +1,0 @@
-{"version":3,"file":"index-CvS5_8nK.js","sources":["../../../src/components/alert/index.tsx"],"sourcesContent":["import {createSimpleComponent} from '../../lib/create-simple-component';\nimport './style.css';\n\nexport const Alert = createSimpleComponent('alert', 'div');\n"],"names":["Alert","createSimpleComponent"],"mappings":"wCAGa,MAAAA,EAAQC,EAAsB,QAAS,KAAK"}
