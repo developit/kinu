@@ -18,6 +18,9 @@ export function Nav() {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
+          <NavigationMenuLink href="/docs">Documentation</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuLink href="/components">Components</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>

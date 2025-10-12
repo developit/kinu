@@ -36,15 +36,21 @@ export function DropdownMenuTrigger({
 
 export function DropdownMenuContent({
   id,
+  command = 'close',
+  commandfor,
   ...props
-}: JSX.IntrinsicElements['dialog']) {
+}: Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor'> & {
+  command?: string;
+  commandfor?: string;
+}) {
   const ctx = useContext(IdCtx);
+  const resolvedId = id ?? ctx;
   return (
     <dialog
       p="dropdown-content"
-      id={id ?? ctx}
-      command="close"
-      commandFor={id ?? ctx}
+      id={resolvedId}
+      command={command}
+      commandfor={commandfor ?? resolvedId}
       {...props}
     />
   );

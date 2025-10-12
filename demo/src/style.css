@@ -658,6 +658,12 @@ pre.code-block {
   gap: 0.25rem;
   flex-wrap: wrap;
 }
+
+.linear-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 .linear-labels span {
   background: hsl(var(--p-muted));
   padding: 0.1rem 0.25rem;
@@ -2168,5 +2174,198 @@ pre.code-block {
     flex-direction: column;
     align-items: stretch;
     gap: 1rem;
+  }
+}
+
+.docs-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: hsl(var(--p-background));
+}
+
+.docs-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 2.5rem;
+  padding: 2.5rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.docs-sidebar {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.docs-sidebar-section h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: hsl(var(--p-muted-foreground));
+}
+
+.docs-sidebar-category {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.docs-sidebar-category h3 {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: hsl(var(--p-muted-foreground));
+}
+
+.docs-sidebar-category ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.docs-link {
+  display: block;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.55rem;
+  text-decoration: none;
+  color: hsl(var(--p-foreground));
+  background: transparent;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.docs-link:hover {
+  background: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+}
+
+.docs-link.is-active {
+  background: hsl(var(--p-primary) / 0.12);
+  color: hsl(var(--p-primary));
+}
+
+.docs-link-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.docs-link-description {
+  display: block;
+  font-size: 0.75rem;
+  color: hsl(var(--p-muted-foreground));
+  margin-top: 0.15rem;
+}
+
+.docs-content {
+  max-width: 780px;
+  width: 100%;
+  padding-bottom: 4rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: hsl(var(--p-foreground));
+}
+
+.docs-content h1,
+.docs-content h2,
+.docs-content h3,
+.docs-content h4 {
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.docs-content h1 {font-size: 2rem;}
+.docs-content h2 {font-size: 1.45rem;}
+.docs-content h3 {font-size: 1.2rem;}
+.docs-content h4 {font-size: 1rem;}
+
+.docs-content p {
+  margin: 1rem 0;
+}
+
+.docs-content code {
+  font-family: 'Fira Code', 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.9rem;
+  background: hsl(var(--p-muted) / 0.6);
+  border-radius: 0.35rem;
+  padding: 0.1rem 0.35rem;
+}
+
+.docs-content pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: hsl(var(--p-muted));
+  border: 1px solid hsl(var(--p-border));
+  overflow-x: auto;
+}
+
+.docs-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+  font-size: 0.95rem;
+}
+
+.docs-content th,
+.docs-content td {
+  border: 1px solid hsl(var(--p-border));
+  padding: 0.75rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.docs-content th {
+  background: hsl(var(--p-muted) / 0.4);
+  font-weight: 600;
+}
+
+.docs-content hr {
+  margin: 2.5rem 0;
+  border: none;
+  border-top: 1px solid hsl(var(--p-border));
+}
+
+.docs-content ul,
+.docs-content ol {
+  padding-left: 1.5rem;
+}
+
+.docs-content blockquote {
+  border-left: 3px solid hsl(var(--p-border));
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  color: hsl(var(--p-muted-foreground));
+}
+
+@media (max-width: 1024px) {
+  .docs-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-sidebar {
+    position: static;
+    max-height: none;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .docs-layout {
+    padding: 1.75rem 1.25rem 3rem;
+  }
+
+  .docs-link-description {
+    display: none;
   }
 }
