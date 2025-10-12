@@ -26,11 +26,13 @@ export function DropdownMenuTrigger({
   children,
   ...props
 }: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
-  const id = useContext(IdCtx);
+  const id = (useContext(IdCtx) as any) || '';
+  const anchor = `--p-${String(id).replace(/[^a-zA-Z0-9_-]/g, '-')}`;
   return applyPropsToChildren(children, {
-    ...props,
+    ...(props as any),
     commandfor: id,
     command: 'show',
+    style: {...(props.style as any), anchorName: anchor},
   });
 }
 
@@ -38,14 +40,17 @@ export function DropdownMenuContent({
   id,
   ...props
 }: JSX.IntrinsicElements['dialog']) {
-  const ctx = useContext(IdCtx);
+  const ctx = useContext(IdCtx) as any;
+  const anchorId = (id ?? ctx) || '';
+  const anchor = `--p-${String(anchorId).replace(/[^a-zA-Z0-9_-]/g, '-')}`;
   return (
     <dialog
       p="dropdown-content"
       id={id ?? ctx}
       command="close"
       commandFor={id ?? ctx}
-      {...props}
+      {...(props as any)}
+      style={{...(props.style as any), positionAnchor: anchor}}
     />
   );
 }
