@@ -1,7 +1,6 @@
 import {
   Badge,
   Button,
-  Card,
   Input,
   Dialog,
   Accordion,
@@ -12,7 +11,6 @@ import {
   Progress,
   Skeleton,
   Switch,
-  ToastContainer,
   toast,
   Textarea,
   Label,
@@ -80,13 +78,10 @@ import {
   CarouselPrevious,
   CarouselNext,
   DatePicker,
-  SidebarTrigger,
 } from 'pui';
-import '../../src/components/typography/style.css';
 import {useEffect, useState} from 'preact/hooks';
-import {CodeBlock} from './code-block';
 
-interface Example {
+export interface Example {
   id: string;
   title: string;
   Demo: () => JSX.Element;
@@ -1120,7 +1115,7 @@ function TypographyDemo() {
 }
 const typographyCode = `<h1>h1 Heading</h1>`;
 
-const examples: Example[] = [
+export const COMPONENT_EXAMPLES: Example[] = [
   {id: 'badge', title: 'Badge', Demo: BadgeDemo, code: badgeCode},
   {id: 'progress', title: 'Progress', Demo: ProgressDemo, code: progressCode},
   {id: 'skeleton', title: 'Skeleton', Demo: SkeletonDemo, code: skeletonCode},
@@ -1251,66 +1246,3 @@ const examples: Example[] = [
     code: typographyCode,
   },
 ];
-
-export function App() {
-  return (
-    <div class="demo-app">
-      <Sidebar id="demo-sidebar">
-        <nav class="nav">
-          {examples.map((e) => (
-            <a href={`#${e.id}`}>{e.title}</a>
-          ))}
-        </nav>
-      </Sidebar>
-      <main>
-        <NavigationMenu class="demo-header home-nav">
-          <SidebarTrigger
-            commandFor="demo-sidebar"
-            class="demo-sidebar-trigger"
-          >
-            ☰
-          </SidebarTrigger>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/">Home</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/getting-started">Getting Started</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/components">
-                Components
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/linear">
-                Linear Demo
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/dashboard">Dashboard Demo</NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        <ToastContainer />
-        {examples.map(({id, title, Demo, code}) => (
-          <section id={id}>
-            <Card>
-              <h2>{title}</h2>
-              <Demo />
-              <CodeBlock code={code} />
-            </Card>
-          </section>
-        ))}
-      </main>
-    </div>
-  );
-}
-
-export default App;

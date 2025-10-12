@@ -13,19 +13,122 @@ body {
   overflow-x: clip;
 }
 
-.demo-app {
+.components-page {
   display: flex;
+  min-height: 100vh;
 }
 
-.demo-app > main {
+.components-main {
   flex: 1;
   width: 100%;
-  padding-top: 5rem;
-  overflow: visible;
+  padding: 5rem 1.5rem 4rem;
+  box-sizing: border-box;
 }
 
-.demo-app > main > section {
-  margin: 1rem;
+.components-sidebar {
+  top: 4rem;
+  max-height: calc(100vh - 4rem);
+}
+
+.components-page > [p="sidebar"] {
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  max-height: calc(100vh - 4rem);
+}
+
+.components-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+}
+
+.components-nav a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  color: hsl(var(--p-muted-foreground));
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.components-nav a:hover {
+  background: hsl(var(--p-muted) / 0.2);
+  color: hsl(var(--p-foreground));
+}
+
+.component-section {
+  margin: 0 auto 3rem;
+  max-width: 960px;
+  scroll-margin-top: 6rem;
+}
+
+.component-article {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.component-markdown {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.component-markdown h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.component-markdown h2,
+.component-markdown h3 {
+  margin: 2rem 0 0.75rem;
+}
+
+.component-markdown p {
+  margin: 0;
+  color: hsl(var(--p-muted-foreground));
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.component-markdown ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: hsl(var(--p-muted-foreground));
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.component-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.component-examples h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.component-examples-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.component-example-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.component-example-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .demo-header {
@@ -57,26 +160,6 @@ body {
   transition: all 150ms ease;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   margin-right: auto;
-}
-
-.demo-app > [p="sidebar"] {
-  top: 4rem;
-  height: calc(100vh - 4rem);
-  max-height: calc(100vh - 4rem);
-}
-
-.nav {
-  margin: 0;
-  padding: 0;
-}
-.nav a {
-  display: block;
-  padding: .35rem .5rem;
-  color: #000;
-  text-decoration: none;
-}
-.nav a:hover {
-  background: #ddd;
 }
 
 h2 {

@@ -6,7 +6,7 @@ import 'iconify-icon';
 
 const Home = lazy(() => import('./routes/home.tsx'));
 const GettingStarted = lazy(() => import('./routes/getting-started.tsx'));
-const Components = lazy(() => import('./app.tsx'));
+const Components = lazy(() => import('./routes/components/index.tsx'));
 const Linear = lazy(() => import('./routes/linear.tsx'));
 const Chat = lazy(() => import('./routes/chat.tsx'));
 const Player = lazy(() => import('./routes/player.tsx'));
