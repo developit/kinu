@@ -17,7 +17,7 @@ A minimal, constraint-driven UI toolkit that enhances HTML instead of replacing 
 ## Quick Start
 
 ```bash
-npm install pui
+pnpm add pui
 ```
 
 ```tsx
@@ -58,8 +58,8 @@ Check out the [live demo](https://pui-demo.netlify.app) to see all components in
 ```bash
 # Run the demo app locally
 cd demo
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ## License

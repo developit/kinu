@@ -19,6 +19,7 @@
   "files": ["dist"],
   "scripts": {
     "build": "vite build",
+    "build:demo": "cd demo && pnpm build",
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
     "test": "vitest run"
