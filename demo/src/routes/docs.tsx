@@ -3,11 +3,21 @@ import {marked} from 'marked';
 import {Nav} from '../nav';
 import manifestData from 'pui-docs/manifest.json' assert {type: 'json'};
 
-const docsContent = import.meta.glob('pui-docs/**/*.md', {
+const docsModules = import.meta.glob('../../../docs/**/*.md', {
   eager: true,
   import: 'default',
   query: '?raw',
 }) as Record<string, string>;
+
+const docsContent = new Map<string, string>();
+
+for (const [path, value] of Object.entries(docsModules)) {
+  const normalizedPath = path.replace(/\\/g, '/');
+  const relative = normalizedPath.split('/docs/')[1];
+  if (relative) {
+    docsContent.set(relative, value);
+  }
+}
 
 interface ManifestEntry {
   slug: string;
@@ -56,9 +66,8 @@ export default function DocsRoute({params}: RouteProps) {
   const fallback = manifest[0];
   const slug = params?.slug ?? fallback?.slug;
   const entry = manifest.find((item) => item.slug === slug) ?? fallback;
-  const contentKey = entry ? `pui-docs/${entry.file}` : undefined;
   const raw =
-    (contentKey && docsContent[contentKey]) || '# Document missing';
+    (entry && docsContent.get(entry.file)) || '# Document missing';
   const html = useMemo(() => {
     const rendered = marked.parse(raw);
     return typeof rendered === 'string' ? rendered : '';
