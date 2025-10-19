@@ -14,7 +14,7 @@ import {Toggle} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Toggle | <button> | Wraps <button> and sets p="toggle". Defaults props to {
+| Toggle | `<button>` | Wraps `<button>` and sets p="toggle". Defaults props to {
   get 'aria-pressed'() {
     return this.pressed;
   },
@@ -37,7 +37,7 @@ import {Toggle} from 'pui';
 
 ## Notes
 
-- Wraps <button> so keyboard support comes for free.
+- Wraps `<button>` so keyboard support comes for free.
 - Style pressed state using the aria-pressed attribute selectors.
 
 ---

@@ -17,7 +17,7 @@ import {Card} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Card | <div> | Wraps <div> and sets p="card". |
+| Card | `<div>` | Wraps `<div>` and sets p="card". |
 
 ## Attributes
 
@@ -27,7 +27,7 @@ import {Card} from 'pui';
 
 ## Notes
 
-- Wraps a <div> and exposes padding/variant control via attributes.
+- Wraps a `<div>` and exposes padding/variant control via attributes.
 
 ---
 

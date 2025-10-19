@@ -1,6 +1,6 @@
 # Dropdown Menu
 
-Command-driven dropdown built on top of <dialog>.
+Command-driven dropdown built on top of `<dialog>`.
 
 ## Usage
 
@@ -22,15 +22,15 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 | DropdownMenu | p="dropdown" | Renders markup that includes p="dropdown". |
 | DropdownMenuTrigger | — | Custom component implemented in the source file. |
 | DropdownMenuContent | p="dropdown-content" | Renders markup that includes p="dropdown-content". |
-| DropdownMenuItem | <button> | Wraps <button> and sets p="dropdown-menu-item". |
+| DropdownMenuItem | `<button>` | Wraps `<button>` and sets p="dropdown-menu-item". |
 
 ## Attributes
 
-Inherits all native attributes from <button>. No additional styling attributes are required.
+Inherits all native attributes from `<button>`. No additional styling attributes are required.
 
 ## Notes
 
-- Menu items render as <button> elements by default.
+- Menu items render as `<button>` elements by default.
 - Automatically closes when an item dispatches the close command.
 
 ---

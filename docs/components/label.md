@@ -14,15 +14,15 @@ import {Label} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Label | <label> | Wraps <label> and sets p="label". |
+| Label | `<label>` | Wraps `<label>` and sets p="label". |
 
 ## Attributes
 
-Inherits all native attributes from <label>. No additional styling attributes are required.
+Inherits all native attributes from `<label>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps the native <label> element and forwards htmlFor.
+- Wraps the native `<label>` element and forwards htmlFor.
 - Pair with controls to provide accessible names.
 
 ---

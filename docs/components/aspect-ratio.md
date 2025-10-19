@@ -16,15 +16,15 @@ import {AspectRatio} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| AspectRatio | <div> | Wraps <div> and sets p="aspect-ratio". |
+| AspectRatio | `<div>` | Wraps `<div>` and sets p="aspect-ratio". |
 
 ## Attributes
 
-Inherits all native attributes from <div>. No additional styling attributes are required.
+Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps a <div> that defines the ratio using a CSS custom property.
+- Wraps a `<div>` that defines the ratio using a CSS custom property.
 
 ---
 

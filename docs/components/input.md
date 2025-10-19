@@ -14,7 +14,7 @@ import {Input} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Input | <input> | Wraps <input> and sets p="input". |
+| Input | `<input>` | Wraps `<input>` and sets p="input". |
 
 ## Attributes
 
@@ -25,7 +25,7 @@ import {Input} from 'pui';
 
 ## Notes
 
-- Wraps the native <input> element so forms behave as expected.
+- Wraps the native `<input>` element so forms behave as expected.
 - Supports size="sm" and size="lg" for compact or spacious layouts.
 
 ---

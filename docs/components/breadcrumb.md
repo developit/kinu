@@ -18,14 +18,14 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Breadcrumb | <nav> | Wraps <nav> and sets p="breadcrumb". |
-| BreadcrumbList | <ol> | Wraps <ol> and sets p="breadcrumb-list". |
-| BreadcrumbItem | <li> | Wraps <li> and sets p="breadcrumb-item". |
-| BreadcrumbLink | <a> | Wraps <a> and sets p="breadcrumb-link". |
+| Breadcrumb | `<nav>` | Wraps `<nav>` and sets p="breadcrumb". |
+| BreadcrumbList | `<ol>` | Wraps `<ol>` and sets p="breadcrumb-list". |
+| BreadcrumbItem | `<li>` | Wraps `<li>` and sets p="breadcrumb-item". |
+| BreadcrumbLink | `<a>` | Wraps `<a>` and sets p="breadcrumb-link". |
 
 ## Attributes
 
-Inherits all native attributes from <nav>. No additional styling attributes are required.
+Inherits all native attributes from `<nav>`. No additional styling attributes are required.
 
 ## Notes
 

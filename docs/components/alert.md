@@ -14,7 +14,7 @@ import {Alert} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Alert | <div> | Wraps <div> and sets p="alert". |
+| Alert | `<div>` | Wraps `<div>` and sets p="alert". |
 
 ## Attributes
 
@@ -24,7 +24,7 @@ import {Alert} from 'pui';
 
 ## Notes
 
-- Renders a <div> so you can include any markup you need.
+- Renders a `<div>` so you can include any markup you need.
 
 ---
 

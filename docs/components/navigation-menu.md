@@ -20,14 +20,14 @@ import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuLi
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| NavigationMenu | <nav> | Wraps <nav> and sets p="navigation-menu". |
-| NavigationMenuList | <ul> | Wraps <ul> and sets p="navigation-menu-list". |
-| NavigationMenuItem | <li> | Wraps <li> and sets p="navigation-menu-item". |
-| NavigationMenuLink | <a> | Wraps <a> and sets p="navigation-menu-link". |
+| NavigationMenu | `<nav>` | Wraps `<nav>` and sets p="navigation-menu". |
+| NavigationMenuList | `<ul>` | Wraps `<ul>` and sets p="navigation-menu-list". |
+| NavigationMenuItem | `<li>` | Wraps `<li>` and sets p="navigation-menu-item". |
+| NavigationMenuLink | `<a>` | Wraps `<a>` and sets p="navigation-menu-link". |
 
 ## Attributes
 
-Inherits all native attributes from <nav>. No additional styling attributes are required.
+Inherits all native attributes from `<nav>`. No additional styling attributes are required.
 
 ## Notes
 

@@ -17,9 +17,9 @@ import {Tab, TabList, TabPanel} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| TabList | <div> | Wraps <div> and sets p="tablist". |
-| Tab | <button> | Wraps <button> and sets p="tab". |
-| TabPanel | <div> | Wraps <div> and sets p="tab-panel". |
+| TabList | `<div>` | Wraps `<div>` and sets p="tablist". |
+| Tab | `<button>` | Wraps `<button>` and sets p="tab". |
+| TabPanel | `<div>` | Wraps `<div>` and sets p="tab-panel". |
 
 ## Attributes
 

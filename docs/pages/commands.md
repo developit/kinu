@@ -2,7 +2,8 @@
 
 Many interactive components rely on a lightweight command polyfill that mirrors the proposed HTML `command`/`commandfor`
 attributes. When you render `<Dialog.Trigger>` or `<DropdownMenuTrigger>`, PUI adds these attributes so the browser can open the
-corresponding `<dialog>` element without extra wiring.
+corresponding `<dialog>` element without extra wiring. The polyfill follows the [HTML Command API draft on MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCommandElement),
+bridging support until browsers ship the attribute natively.
 
 ## Why Commands?
 
@@ -12,19 +13,16 @@ corresponding `<dialog>` element without extra wiring.
 
 ## Using Commands Manually
 
-If you build your own trigger, apply the attributes yourself and call `installCommands()` once:
+Commands install automatically the first time any dialog, dropdown, or sheet component renders. If you build custom triggers,
+just apply the attributes on your markup and the polyfill will handle the rest:
 
 ```tsx
-import {installCommands} from 'pui/lib/commands';
-
-installCommands();
-
 <button command="show-modal" commandfor="my-dialog">Open</button>
 <dialog id="my-dialog">...</dialog>
 ```
 
-`installDialogsDropdowns()` installs the small focus management helpers used by dropdown-style components. It is automatically
-invoked by Dialog, DropdownMenu, Drawer, Sheet, and friends, so you rarely need to call it yourself.
+Components such as Dialog, DropdownMenu, Drawer, Sheet, and Combobox also install the focus helpers used by dropdown-style
+overlays, so there is no separate setup step.
 
 ## Available Commands
 

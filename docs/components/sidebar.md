@@ -17,8 +17,8 @@ import {Sidebar, SidebarTrigger} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| SidebarTrigger | <button> | Wraps <button> and sets p="sidebar-trigger". Defaults props to {}. Attaches a ref callback for additional behaviour. |
-| Sidebar | <dialog> | Wraps <dialog> and sets p="sidebar". Defaults props to {
+| SidebarTrigger | `<button>` | Wraps `<button>` and sets p="sidebar-trigger". Defaults props to {}. Attaches a ref callback for additional behaviour. |
+| Sidebar | `<dialog>` | Wraps `<dialog>` and sets p="sidebar". Defaults props to {
     tabIndex: -1,
   }. Attaches a ref callback for additional behaviour. |
 
@@ -32,7 +32,7 @@ import {Sidebar, SidebarTrigger} from 'pui';
 
 ## Notes
 
-- Renders a <dialog> so it can slide in as a modal on small screens.
+- Renders a `<dialog>` so it can slide in as a modal on small screens.
 - SidebarTrigger toggles the hidden/open state with the command attribute.
 
 ---

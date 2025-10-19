@@ -1,6 +1,6 @@
 # Avatar
 
-Styled <img> avatar that falls back to initials from the alt text.
+Styled `<img>` avatar that falls back to initials from the alt text.
 
 ## Usage
 

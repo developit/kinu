@@ -14,15 +14,15 @@ import {Textarea} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Textarea | <textarea> | Wraps <textarea> and sets p="textarea". |
+| Textarea | `<textarea>` | Wraps `<textarea>` and sets p="textarea". |
 
 ## Attributes
 
-Inherits all native attributes from <textarea>. No additional styling attributes are required.
+Inherits all native attributes from `<textarea>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps the native <textarea> for full form support.
+- Wraps the native `<textarea>` for full form support.
 - Use the resize attribute to control user resizing.
 
 ---

@@ -1,24 +1,19 @@
 # Base Styles
 
-`pui/base.css` provides the minimal reset and structural utilities every component expects. Import it once near your application
-root; the stylesheet includes:
+`pui/style.css` ships the entire styling surface for the toolkit. Import it once near your application root to get:
 
-- Modern CSS reset based on `@preact/signals` defaults with sensible tweaks.
-- Box-sizing border-box, focus outline normalisation, and typography smoothing.
-- Body-level color tokens wired to `variables.css` so text remains legible before hydration.
-- Utility classes for the demo site (grid, layout) that you can reuse or ignore.
+- A modern reset that normalises box-sizing, typography smoothing, and dialog/backdrop defaults.
+- Design tokens for light and dark themes exposed as `--p-*` custom properties.
+- Every component selector keyed off its `p` attribute so variants render immediately on first paint.
 
-The file intentionally avoids opinionated typography or layout decisions. Customize fonts, spacing, and page chrome in your own
-stylesheets—PUI only ensures components start from a consistent baseline.
+The file intentionally avoids opinionated typography or layout decisions. Layer your own fonts, spacing scale, and page chrome on top—PUI only ensures components start from a consistent baseline.
 
 ## Import Order
 
-Load `base.css` before any component CSS so cascading variables resolve correctly:
+Load `pui/style.css` before any custom overrides so the shared tokens cascade correctly:
 
 ```ts
-import 'pui/base.css';
-import 'pui/variables.css'; // optional if you want direct access to tokens
+import 'pui/style.css';
 ```
 
-If you already have a global reset, audit it against `base.css`. The critical pieces to keep are the custom properties declared on
-`:root` and the dialog/backdrop rules required for overlay components.
+If you already have a global reset, audit it against the defaults in `style.css`. Keep the root-level tokens and dialog/backdrop rules so overlay components remain functional.

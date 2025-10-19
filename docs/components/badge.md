@@ -14,7 +14,7 @@ import {Badge} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Badge | <span> | Wraps <span> and sets p="badge". |
+| Badge | `<span>` | Wraps `<span>` and sets p="badge". |
 
 ## Attributes
 
@@ -24,7 +24,7 @@ import {Badge} from 'pui';
 
 ## Notes
 
-- Renders a <span> and forwards standard inline attributes.
+- Renders a `<span>` and forwards standard inline attributes.
 
 ---
 

@@ -1,6 +1,6 @@
 # Dialog
 
-Composable modal built on the native <dialog> element.
+Composable modal built on the native `<dialog>` element.
 
 ## Usage
 
@@ -38,7 +38,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 ## Notes
 
 - Relies on command attributes instead of portal gymnastics.
-- Dialog.Content forwards all native <dialog> props.
+- Dialog.Content forwards all native `<dialog>` props.
 
 ---
 

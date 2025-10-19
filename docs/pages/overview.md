@@ -24,13 +24,13 @@ PUI declares `preact` as a peer dependency. Make sure your project already depen
 
 ## Minimum Setup
 
-1. Import the base styles once in your application entry point:
+1. Import the toolkit stylesheet once in your application entry point. It bundles the reset, tokens, and every component style so the attributes render correctly everywhere:
 
    ```ts
-   import 'pui/base.css';
+   import 'pui/style.css';
    ```
 
-2. Import components as you need them. Each component pulls in its own CSS using attribute selectors:
+2. Import components as you need them. Each component maps props to attributes that the shared stylesheet reads:
 
    ```tsx
    import {Button, Card, Input} from 'pui';

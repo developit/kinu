@@ -1,6 +1,6 @@
 # Select
 
-Styled native <select> element with size variants.
+Styled native `<select>` element with size variants.
 
 ## Usage
 
@@ -16,11 +16,11 @@ import {Select} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Select | <select> | Wraps <select> and sets p="select". |
+| Select | `<select>` | Wraps `<select>` and sets p="select". |
 
 ## Attributes
 
-Inherits all native attributes from <select>. No additional styling attributes are required.
+Inherits all native attributes from `<select>`. No additional styling attributes are required.
 
 ## Notes
 

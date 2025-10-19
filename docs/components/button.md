@@ -1,6 +1,6 @@
 # Button
 
-Button component that forwards props to <button> or <a> when href is provided.
+Button component that forwards props to `<button>` or `<a>` when href is provided.
 
 ## Usage
 

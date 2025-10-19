@@ -14,15 +14,15 @@ import {Separator} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Separator | <div> | Wraps <div> and sets p="separator". |
+| Separator | `<div>` | Wraps `<div>` and sets p="separator". |
 
 ## Attributes
 
-Inherits all native attributes from <div>. No additional styling attributes are required.
+Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 
-- Rendered as a <div> so you can set orientation via attribute.
+- Rendered as a `<div>` so you can set orientation via attribute.
 - Use decorative when the separator is purely visual.
 
 ---

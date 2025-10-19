@@ -17,15 +17,15 @@ import {Table} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Table | <table> | Wraps <table> and sets p="table". |
+| Table | `<table>` | Wraps `<table>` and sets p="table". |
 
 ## Attributes
 
-Inherits all native attributes from <table>. No additional styling attributes are required.
+Inherits all native attributes from `<table>`. No additional styling attributes are required.
 
 ## Notes
 
-- Uses native <table> markup so semantics stay intact.
+- Uses native `<table>` markup so semantics stay intact.
 - Supports sticky headers via CSS attribute toggles.
 
 ---

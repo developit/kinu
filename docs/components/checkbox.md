@@ -14,15 +14,15 @@ import {Checkbox} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Checkbox | <input> | Wraps <input> and sets p="checkbox". Defaults props to {type: 'checkbox'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>. |
+| Checkbox | `<input>` | Wraps `<input>` and sets p="checkbox". Defaults props to {type: 'checkbox'} as Partial`<JSX.HTMLAttributes<HTMLInputElement>`>. |
 
 ## Attributes
 
-Inherits all native attributes from <input>. No additional styling attributes are required.
+Inherits all native attributes from `<input>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps <input type="checkbox"> so forms just work.
+- Wraps `<input type="checkbox">` so forms just work.
 - Supports data-state="indeterminate" styling for tri-state usage.
 
 ---

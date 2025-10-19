@@ -14,7 +14,7 @@ import {Tooltip} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Tooltip | <span> | Wraps <span> and sets p="tooltip". |
+| Tooltip | `<span>` | Wraps `<span>` and sets p="tooltip". |
 
 ## Attributes
 

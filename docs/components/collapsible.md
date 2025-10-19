@@ -1,6 +1,6 @@
 # Collapsible
 
-Minimal hide/show container built on <details> without default markers.
+Minimal hide/show container built on `<details>` without default markers.
 
 ## Usage
 
@@ -14,7 +14,7 @@ import {Collapsible} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Collapsible | <details> | Wraps <details> and sets p="collapsible". Defaults props to {}. Attaches a ref callback for additional behaviour. |
+| Collapsible | `<details>` | Wraps `<details>` and sets p="collapsible". Defaults props to {}. Attaches a ref callback for additional behaviour. |
 
 ## Attributes
 

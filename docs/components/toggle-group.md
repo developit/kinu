@@ -17,16 +17,16 @@ import {ToggleGroup} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| ToggleGroup | <div> | Wraps <div> and sets p="toggle-group". |
+| ToggleGroup | `<div>` | Wraps `<div>` and sets p="toggle-group". |
 
 ## Attributes
 
-Inherits all native attributes from <div>. No additional styling attributes are required.
+Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 
 - Each Toggle toggles aria-pressed and clears other toggles in the same group.
-- Pass props like disabled or value straight to the underlying <button>.
+- Pass props like disabled or value straight to the underlying `<button>`.
 
 ---
 

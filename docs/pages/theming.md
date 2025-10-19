@@ -1,8 +1,9 @@
 # Theming & Tokens
 
-PUI exposes all visual styling through CSS Custom Properties declared in `src/variables.css`. The defaults define both light and
-dark palettes, radii, spacing, and motion tokens. Because components forward props as attributes, you override the design by
-setting CSS variables or adding new attribute selectors—no JavaScript theme provider required.
+PUI exposes all visual styling through CSS Custom Properties declared in the bundled `pui/style.css` (sourced from
+`src/variables.css`). The defaults define both light and dark palettes, radii, spacing, and motion tokens. Because components
+forward props as attributes, you override the design by setting CSS variables or adding new attribute selectors—no JavaScript
+theme provider required.
 
 ## Changing Tokens
 

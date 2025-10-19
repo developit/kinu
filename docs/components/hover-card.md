@@ -17,13 +17,13 @@ import {HoverCard, HoverCardContent, HoverCardTrigger} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| HoverCard | <div> | Wraps <div> and sets p="hover-card". |
-| HoverCardTrigger | <span> | Wraps <span> and sets p="hover-card-trigger". |
-| HoverCardContent | <div> | Wraps <div> and sets p="hover-card-content". |
+| HoverCard | `<div>` | Wraps `<div>` and sets p="hover-card". |
+| HoverCardTrigger | `<span>` | Wraps `<span>` and sets p="hover-card-trigger". |
+| HoverCardContent | `<div>` | Wraps `<div>` and sets p="hover-card-content". |
 
 ## Attributes
 
-Inherits all native attributes from <div>. No additional styling attributes are required.
+Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 

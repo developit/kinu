@@ -18,10 +18,10 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Pagination | <nav> | Wraps <nav> and sets p="pagination". |
-| PaginationList | <ul> | Wraps <ul> and sets p="pagination-list". |
-| PaginationItem | <li> | Wraps <li> and sets p="pagination-item". |
-| PaginationLink | <button> | Wraps <button> and sets p="pagination-link". |
+| Pagination | `<nav>` | Wraps `<nav>` and sets p="pagination". |
+| PaginationList | `<ul>` | Wraps `<ul>` and sets p="pagination-list". |
+| PaginationItem | `<li>` | Wraps `<li>` and sets p="pagination-item". |
+| PaginationLink | `<button>` | Wraps `<button>` and sets p="pagination-link". |
 
 ## Attributes
 
@@ -31,7 +31,7 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 ## Notes
 
-- Renders <nav> and list markup for accessibility.
+- Renders `<nav>` and list markup for accessibility.
 - Use aria-current on the active page link.
 
 ---

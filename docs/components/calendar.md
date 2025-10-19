@@ -1,6 +1,6 @@
 # Calendar
 
-Styled wrapper around the native <input type="date"> element.
+Styled wrapper around the native `<input type="date">` element.
 
 ## Usage
 
@@ -14,11 +14,11 @@ import {Calendar} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Calendar | <input> | Wraps <input> and sets p="calendar". Defaults props to {type: 'date'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>. |
+| Calendar | `<input>` | Wraps `<input>` and sets p="calendar". Defaults props to {type: 'date'} as Partial`<JSX.HTMLAttributes<HTMLInputElement>`>. |
 
 ## Attributes
 
-Inherits all native attributes from <input>. No additional styling attributes are required.
+Inherits all native attributes from `<input>`. No additional styling attributes are required.
 
 ## Notes
 

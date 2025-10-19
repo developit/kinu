@@ -14,15 +14,15 @@ import {Progress} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Progress | <progress> | Wraps <progress> and sets p="progress". |
+| Progress | `<progress>` | Wraps `<progress>` and sets p="progress". |
 
 ## Attributes
 
-Inherits all native attributes from <progress>. No additional styling attributes are required.
+Inherits all native attributes from `<progress>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps the native <progress> element for semantics.
+- Wraps the native `<progress>` element for semantics.
 - Use the data-state attribute for indeterminate styling.
 
 ---

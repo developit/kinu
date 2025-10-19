@@ -35,31 +35,38 @@ interface RouteProps {
 
 const manifest = manifestData as ManifestEntry[];
 
-interface GroupedEntry {
+const sortEntries = (a: ManifestEntry, b: ManifestEntry) => {
+  if (a.order !== b.order) return a.order - b.order;
+  return a.title.localeCompare(b.title);
+};
+
+const overviewEntries = manifest
+  .filter((entry) => entry.section === 'Foundations')
+  .sort(sortEntries);
+
+interface ComponentGroup {
   name: string;
   entries: ManifestEntry[];
+  order: number;
 }
 
-interface SectionGroup {
-  name: string;
-  categories: GroupedEntry[];
-}
-
-const sections: SectionGroup[] = (() => {
-  const sectionMap = new Map<string, Map<string, ManifestEntry[]>>();
+const componentGroups: ComponentGroup[] = (() => {
+  const categoryMap = new Map<string, ManifestEntry[]>();
   for (const entry of manifest) {
-    if (!sectionMap.has(entry.section)) sectionMap.set(entry.section, new Map());
-    const categoryMap = sectionMap.get(entry.section)!;
+    if (entry.section !== 'Components') continue;
     if (!categoryMap.has(entry.category)) categoryMap.set(entry.category, []);
     categoryMap.get(entry.category)!.push(entry);
   }
-  return Array.from(sectionMap.entries()).map(([name, categories]) => ({
-    name,
-    categories: Array.from(categories.entries()).map(([categoryName, entries]) => ({
-      name: categoryName,
-      entries,
-    })),
-  }));
+  return Array.from(categoryMap.entries())
+    .map(([name, entries]) => ({
+      name,
+      entries: entries.slice().sort(sortEntries),
+      order: Math.min(...entries.map((item) => item.order ?? Number.MAX_SAFE_INTEGER)),
+    }))
+    .sort((a, b) => {
+      if (a.order !== b.order) return a.order - b.order;
+      return a.name.localeCompare(b.name);
+    });
 })();
 
 export default function DocsRoute({params}: RouteProps) {
@@ -78,29 +85,38 @@ export default function DocsRoute({params}: RouteProps) {
       <Nav />
       <div class="docs-layout">
         <aside class="docs-sidebar">
-          {sections.map((section) => (
-            <section key={section.name} class="docs-sidebar-section">
-              <h2>{section.name}</h2>
-              {section.categories.map((category) => (
-                <div key={category.name} class="docs-sidebar-category">
-                  <h3>{category.name}</h3>
-                  <ul>
-                    {category.entries.map((item) => (
-                      <li key={item.slug}>
-                        <a
-                          href={`/docs/${item.slug}`}
-                          class={`docs-link${item.slug === entry?.slug ? ' is-active' : ''}`}
-                        >
-                          <span class="docs-link-title">{item.title}</span>
-                          {item.description && (
-                            <span class="docs-link-description">{item.description}</span>
-                          )}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+          {overviewEntries.length > 0 && (
+            <section class="docs-sidebar-section">
+              <h2>Overview</h2>
+              <ul class="docs-sidebar-list">
+                {overviewEntries.map((item) => (
+                  <li key={item.slug}>
+                    <a
+                      href={`/docs/${item.slug}`}
+                      class={`docs-link${item.slug === entry?.slug ? ' is-active' : ''}`}
+                    >
+                      <span class="docs-link-title">{item.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {componentGroups.map((group) => (
+            <section key={group.name} class="docs-sidebar-section">
+              <h2>{group.name}</h2>
+              <ul class="docs-sidebar-list">
+                {group.entries.map((item) => (
+                  <li key={item.slug}>
+                    <a
+                      href={`/docs/${item.slug}`}
+                      class={`docs-link${item.slug === entry?.slug ? ' is-active' : ''}`}
+                    >
+                      <span class="docs-link-title">{item.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </section>
           ))}
         </aside>

@@ -14,15 +14,15 @@ import {Slider} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Slider | <input> | Wraps <input> and sets p="slider". Defaults props to {type: 'range'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>. Attaches a ref callback for additional behaviour. |
+| Slider | `<input>` | Wraps `<input>` and sets p="slider". Defaults props to {type: 'range'} as Partial`<JSX.HTMLAttributes<HTMLInputElement>`>. Attaches a ref callback for additional behaviour. |
 
 ## Attributes
 
-Inherits all native attributes from <input>. No additional styling attributes are required.
+Inherits all native attributes from `<input>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps <input type="range"> for seamless form integration.
+- Wraps `<input type="range">` for seamless form integration.
 - Supports data-orientation for vertical sliders.
 
 ---

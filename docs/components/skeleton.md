@@ -14,15 +14,15 @@ import {Skeleton} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Skeleton | <div> | Wraps <div> and sets p="skeleton". |
+| Skeleton | `<div>` | Wraps `<div>` and sets p="skeleton". |
 
 ## Attributes
 
-Inherits all native attributes from <div>. No additional styling attributes are required.
+Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps a <div> so you can size it however you want.
+- Wraps a `<div>` so you can size it however you want.
 - Use data-rounded to switch to pill skeletons.
 
 ---

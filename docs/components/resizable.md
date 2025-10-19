@@ -14,15 +14,15 @@ import {Resizable} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Resizable | <div> | Wraps <div> and sets p="resizable". |
+| Resizable | `<div>` | Wraps `<div>` and sets p="resizable". |
 
 ## Attributes
 
-Inherits all native attributes from <div>. No additional styling attributes are required.
+Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 
-- Wraps a <div> with resize: both so the browser handles drag gestures.
+- Wraps a `<div>` with resize: both so the browser handles drag gestures.
 - Perfect for scratchpads, preview panes, or demos where users adjust size.
 
 ---

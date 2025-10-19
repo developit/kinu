@@ -1,6 +1,6 @@
 # Accordion
 
-Disclosure built on the native <details> element with smooth open and close animation.
+Disclosure built on the native `<details>` element with smooth open and close animation.
 
 ## Usage
 
@@ -17,7 +17,7 @@ import {Accordion} from 'pui';
 
 | Name | DOM element | Details |
 | --- | --- | --- |
-| Accordion | <details> | Wraps <details> and sets p="accordion". |
+| Accordion | `<details>` | Wraps `<details>` and sets p="accordion". |
 
 ## Attributes
 
@@ -27,8 +27,8 @@ import {Accordion} from 'pui';
 
 ## Notes
 
-- Forwards every native <details> attribute so you can control open state.
-- Provide your own <summary> element to define the trigger.
+- Forwards every native `<details>` attribute so you can control open state.
+- Provide your own `<summary>` element to define the trigger.
 
 ---
 
