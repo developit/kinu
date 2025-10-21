@@ -85,6 +85,7 @@ import {
 import '../../src/components/typography/style.css';
 import {useEffect, useState} from 'preact/hooks';
 import {CodeBlock} from './code-block';
+import {Nav} from './nav';
 
 interface Example {
   id: string;
@@ -1263,41 +1264,16 @@ export function App() {
         </nav>
       </Sidebar>
       <main>
-        <NavigationMenu class="demo-header home-nav">
-          <SidebarTrigger
-            commandFor="demo-sidebar"
-            class="demo-sidebar-trigger"
-          >
-            ☰
-          </SidebarTrigger>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/">Home</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/getting-started">Getting Started</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/components">
-                Components
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/linear">
-                Linear Demo
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/dashboard">Dashboard Demo</NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <Nav
+          left={
+            <SidebarTrigger
+              commandFor="demo-sidebar"
+              class="demo-sidebar-trigger"
+            >
+              ☰
+            </SidebarTrigger>
+          }
+        />
         <ToastContainer />
         {examples.map(({id, title, Demo, code}) => (
           <section id={id}>
