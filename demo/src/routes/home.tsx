@@ -2,16 +2,12 @@ import {
   Button,
   Card,
   Input,
-  TabList,
-  Tab,
-  TabPanel,
   Badge,
   Alert,
   Progress,
   Switch,
   Tooltip,
   Avatar,
-  Separator,
   Dialog,
   toast,
   ToastContainer,
@@ -19,7 +15,7 @@ import {
   Checkbox,
   Label,
 } from 'pui';
-import {useState, useEffect} from 'preact/hooks';
+import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
 
 export default function Home() {

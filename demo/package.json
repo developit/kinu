@@ -12,7 +12,8 @@
     "highlight.js": "^11.11.1",
     "iconify-icon": "^3.0.0",
     "preact": "^10.26.8",
-    "preact-iso": "^2.9.2"
+    "preact-iso": "^2.9.2",
+    "marked": "^12.0.2"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.1",

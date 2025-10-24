@@ -80,12 +80,19 @@ import {
   CarouselPrevious,
   CarouselNext,
   DatePicker,
-  SidebarTrigger,
 } from 'pui';
 import '../../src/components/typography/style.css';
-import {useEffect, useState} from 'preact/hooks';
-import {CodeBlock} from './code-block';
+import {useEffect, useMemo, useRef, useState} from 'preact/hooks';
+import {marked} from 'marked';
 import {Nav} from './nav';
+import {CodeBlock} from './code-block';
+import {
+  componentGroups,
+  fallbackEntry,
+  getDocContent,
+  getEntryBySlug,
+  overviewEntries,
+} from './docs-data';
 
 interface Example {
   id: string;
@@ -1253,7 +1260,60 @@ const examples: Example[] = [
   },
 ];
 
+const exampleMap = new Map(examples.map((item) => [item.id, item]));
+const fallbackSlug = fallbackEntry?.slug ?? '';
+
+const normalizeSlug = (value?: string | null) => {
+  if (!value) return fallbackSlug;
+  return getEntryBySlug(value)?.slug ?? fallbackSlug;
+};
+
 export function App() {
+  const contentRef = useRef<HTMLElement | null>(null);
+  const [slug, setSlug] = useState<string>(() => {
+    if (typeof window === 'undefined') return fallbackSlug;
+    return normalizeSlug(window.location.hash.replace(/^#/, '') || undefined);
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleHashChange = () => {
+      setSlug(
+        normalizeSlug(window.location.hash.replace(/^#/, '') || undefined),
+      );
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !slug) return;
+    const current = window.location.hash.replace(/^#/, '');
+    if (current !== slug) {
+      window.history.replaceState(null, '', `#${slug}`);
+    }
+  }, [slug]);
+
+  useEffect(() => {
+    if (!contentRef.current) return;
+    contentRef.current.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }, [slug]);
+
+  const entry = getEntryBySlug(slug) ?? fallbackEntry;
+  const raw = entry ? getDocContent(entry.file) : '# Document missing';
+  const html = useMemo(() => {
+    const rendered = marked.parse(raw);
+    return typeof rendered === 'string' ? rendered : '';
+  }, [raw]);
+
+  const example = entry ? exampleMap.get(entry.slug) : undefined;
+
+  const handleNavClick = (nextSlug: string) => () => {
+    if (nextSlug !== slug) {
+      setSlug(nextSlug);
+    }
+  };
+
   return (
     <div class="demo-app">
       <Sidebar id="demo-sidebar">
@@ -1264,16 +1324,45 @@ export function App() {
         </nav>
       </Sidebar>
       <main>
-        <Nav
-          left={
-            <SidebarTrigger
-              commandFor="demo-sidebar"
-              class="demo-sidebar-trigger"
-            >
-              ☰
-            </SidebarTrigger>
-          }
-        />
+        <NavigationMenu class="demo-header home-nav">
+          <SidebarTrigger
+            commandFor="demo-sidebar"
+            class="demo-sidebar-trigger"
+          >
+            ☰
+          </SidebarTrigger>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/">Home</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/getting-started">
+                Getting Started
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/components">
+                Components
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/linear">
+                Linear Demo
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/chat">Chat Demo</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/player">Music Demo</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/dashboard">
+                Dashboard Demo
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
         <ToastContainer />
         {examples.map(({id, title, Demo, code}) => (
           <section id={id}>

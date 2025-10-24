@@ -7,13 +7,10 @@ import {
   Select,
   Textarea,
   Switch,
-  Slider,
   Progress,
   TabList,
   Tab,
-  TabPanel,
   Alert,
-  AlertDialog,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
@@ -23,7 +20,6 @@ import {
   PopoverContent,
   Tooltip,
   Separator,
-  Calendar,
   DatePicker,
   Table,
   ScrollArea,
@@ -42,31 +38,20 @@ import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  Menubar,
-  MenubarItem,
-  AspectRatio,
-  Collapsible,
   Toggle,
   ToggleGroup,
-  Carousel,
-  CarouselItem,
   Checkbox,
   RadioGroup,
   Radio,
   Label,
-  Accordion,
-  Skeleton,
   toast,
 } from 'pui';
-import {useState, useEffect, useRef} from 'preact/hooks';
+import type {JSX} from 'preact';
+import {useEffect, useState} from 'preact/hooks';
 
 interface Transaction {
   id: number;
@@ -93,6 +78,9 @@ interface BudgetCategory {
   spent: number;
   color: string;
 }
+
+type TransactionViewMode = 'table' | 'cards' | 'timeline';
+type GoalsViewMode = 'grid' | 'list' | 'progress';
 
 const initialTransactions: Transaction[] = [
   {
@@ -257,7 +245,7 @@ function OverviewTab() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Quick Actions
                 </Button>
               </DropdownMenuTrigger>
@@ -269,7 +257,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                    ></iconify-icon>
+                     />
                     {action.label}
                   </DropdownMenuItem>
                 ))}
@@ -284,7 +272,7 @@ function OverviewTab() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Settings
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -298,7 +286,7 @@ function OverviewTab() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   {selectedTimeframe}
                 </Button>
               </DropdownMenuTrigger>
@@ -329,7 +317,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-              ></iconify-icon>
+               />
               Advanced Metrics
             </Toggle>
           </div>
@@ -345,7 +333,7 @@ function OverviewTab() {
                   icon="lucide:refresh-cw"
                   width="16"
                   height="16"
-                ></iconify-icon>
+                 />
               </Button>
             </Tooltip>
             <Tooltip title="Share Dashboard">
@@ -358,7 +346,7 @@ function OverviewTab() {
                   icon="lucide:share-2"
                   width="16"
                   height="16"
-                ></iconify-icon>
+                 />
               </Button>
             </Tooltip>
             <Tooltip title="Print Report">
@@ -371,7 +359,7 @@ function OverviewTab() {
                   icon="lucide:printer"
                   width="16"
                   height="16"
-                ></iconify-icon>
+                 />
               </Button>
             </Tooltip>
           </div>
@@ -394,7 +382,7 @@ function OverviewTab() {
                             icon="lucide:more-horizontal"
                             width="16"
                             height="16"
-                          ></iconify-icon>
+                           />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
@@ -428,7 +416,7 @@ function OverviewTab() {
                             width="16"
                             height="16"
                             style={{marginRight: '0.5rem'}}
-                          ></iconify-icon>
+                           />
                           Sources
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -517,7 +505,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-              ></iconify-icon>
+               />
               Set Goal
             </ContextMenuItem>
             <ContextMenuItem
@@ -574,7 +562,7 @@ function OverviewTab() {
                             width="16"
                             height="16"
                             style={{marginRight: '0.5rem'}}
-                          ></iconify-icon>
+                           />
                           Patterns
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -585,7 +573,7 @@ function OverviewTab() {
                             width="16"
                             height="16"
                             style={{marginRight: '0.5rem'}}
-                          ></iconify-icon>
+                           />
                           Alerts
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -634,7 +622,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-              ></iconify-icon>
+               />
               Optimize Spending
             </ContextMenuItem>
             <ContextMenuItem
@@ -673,7 +661,7 @@ function OverviewTab() {
                       icon="lucide:info"
                       width="16"
                       height="16"
-                    ></iconify-icon>
+                     />
                   </Button>
                 </Tooltip>
               </div>
@@ -694,7 +682,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginLeft: '0.25rem', marginRight: '0.25rem'}}
-                    ></iconify-icon>
+                     />
                     Improving
                   </div>
                   <div>6-month avg: ${(netIncome * 0.95).toFixed(0)}</div>
@@ -720,7 +708,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-              ></iconify-icon>
+               />
               Plan Savings
             </ContextMenuItem>
             <ContextMenuItem
@@ -754,7 +742,7 @@ function OverviewTab() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.25rem'}}
-                      ></iconify-icon>
+                       />
                       On Track
                     </>
                   ) : (
@@ -764,7 +752,7 @@ function OverviewTab() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.25rem'}}
-                      ></iconify-icon>
+                       />
                       Below Target
                     </>
                   )}
@@ -804,7 +792,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-              ></iconify-icon>
+               />
               Optimize Savings
             </ContextMenuItem>
             <ContextMenuItem
@@ -901,7 +889,7 @@ function OverviewTab() {
                       icon="lucide:settings"
                       width="16"
                       height="16"
-                    ></iconify-icon>
+                     />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -913,7 +901,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                    ></iconify-icon>
+                     />
                     Budget Settings
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -935,7 +923,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                    ></iconify-icon>
+                     />
                     Templates
                   </DropdownMenuItem>
                   <Separator />
@@ -947,7 +935,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                    ></iconify-icon>
+                     />
                     Export
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -986,7 +974,7 @@ function OverviewTab() {
                                     width="16"
                                     height="16"
                                     style={{marginRight: '0.5rem'}}
-                                  ></iconify-icon>
+                                   />
                                   Budget: ${category.budgeted}
                                 </div>
                                 <div>
@@ -995,7 +983,7 @@ function OverviewTab() {
                                     width="16"
                                     height="16"
                                     style={{marginRight: '0.5rem'}}
-                                  ></iconify-icon>
+                                   />
                                   Spent: ${category.spent}
                                 </div>
                                 <div>
@@ -1004,7 +992,7 @@ function OverviewTab() {
                                     width="16"
                                     height="16"
                                     style={{marginRight: '0.5rem'}}
-                                  ></iconify-icon>
+                                   />
                                   Remaining: $
                                   {category.budgeted - category.spent}
                                 </div>
@@ -1437,9 +1425,7 @@ function TransactionsTab() {
   const [selectedTransactions, setSelectedTransactions] = useState<number[]>(
     [],
   );
-  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'timeline'>(
-    'table',
-  );
+  const [viewMode, setViewMode] = useState<TransactionViewMode>('table');
   const [sortBy, setSortBy] = useState<'date' | 'amount' | 'category'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [searchQuery, setSearchQuery] = useState('');
@@ -1464,7 +1450,7 @@ function TransactionsTab() {
     const transaction: Transaction = {
       id: Date.now(),
       title: newTransaction.title,
-      amount: parseFloat(newTransaction.amount),
+      amount: Number.parseFloat(newTransaction.amount),
       category: newTransaction.category,
       date: new Date().toISOString().split('T')[0],
       type: newTransaction.type,
@@ -1584,13 +1570,13 @@ function TransactionsTab() {
                       marginTop: '1rem',
                     }}
                   >
-                    {quickAddPresets.map((preset, index) => (
+                    {quickAddPresets.map((preset) => (
                       <Card
-                        key={index}
+                        key={preset.title}
                         style={{padding: '1rem', cursor: 'pointer'}}
                         onClick={() => {
                           const transaction: Transaction = {
-                            id: Date.now() + index,
+                            id: Date.now(),
                             title: preset.title,
                             amount: preset.amount,
                             category: preset.category,
@@ -1719,9 +1705,9 @@ function TransactionsTab() {
             }}
           >
             <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-              <label style={{fontSize: '0.875rem', fontWeight: 'bold'}}>
+              <span style={{fontSize: '0.875rem', fontWeight: 'bold'}}>
                 <iconify-icon icon="lucide:search" width="16" height="16" />
-              </label>
+              </span>
               <Input
                 placeholder="Search transactions..."
                 value={searchQuery}
@@ -1897,7 +1883,9 @@ function TransactionsTab() {
             <ToggleGroup
               type="single"
               value={viewMode}
-              onValueChange={(value) => value && setViewMode(value as any)}
+              onValueChange={(next: TransactionViewMode | undefined) => {
+                if (next) setViewMode(next);
+              }}
             >
               <Toggle value="table">
                 <iconify-icon
@@ -2267,7 +2255,7 @@ function TransactionsTab() {
           <Table className="transactions-table">
             <thead>
               <tr>
-                {showBulkActions && <th style={{width: '40px'}}></th>}
+                {showBulkActions && <th style={{width: '40px'}} />}
                 <th>Date</th>
                 <th>Title</th>
                 <th>Category</th>
@@ -2646,8 +2634,10 @@ function TransactionsTab() {
                       <Button
                         size="icon"
                         variant="outline"
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={(
+                          event: JSX.TargetedMouseEvent<HTMLButtonElement>,
+                        ) => {
+                          event.stopPropagation();
                           toast.show('Edit opened!');
                         }}
                       >
@@ -2662,8 +2652,10 @@ function TransactionsTab() {
                       <Button
                         size="icon"
                         variant="outline"
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={(
+                          event: JSX.TargetedMouseEvent<HTMLButtonElement>,
+                        ) => {
+                          event.stopPropagation();
                           duplicateTransaction(transaction);
                         }}
                       >
@@ -2678,8 +2670,10 @@ function TransactionsTab() {
                       <Button
                         size="icon"
                         variant="outline"
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={(
+                          event: JSX.TargetedMouseEvent<HTMLButtonElement>,
+                        ) => {
+                          event.stopPropagation();
                           toast.show('Shared!');
                         }}
                       >
@@ -2696,7 +2690,9 @@ function TransactionsTab() {
                         <Button
                           size="icon"
                           variant="outline"
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(
+                            event: JSX.TargetedMouseEvent<HTMLButtonElement>,
+                          ) => event.stopPropagation()}
                         >
                           ⋯
                         </Button>
@@ -2801,7 +2797,7 @@ function TransactionsTab() {
               marginTop: '1rem',
             }}
           >
-            {filteredTransactions.map((transaction, index) => (
+            {filteredTransactions.map((transaction) => (
               <div
                 key={transaction.id}
                 style={{marginBottom: '2rem', position: 'relative'}}
@@ -2928,10 +2924,7 @@ function TransactionsTab() {
 function GoalsTab() {
   const [goals, setGoals] = useState<Goal[]>(initialGoals);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [selectedGoals, setSelectedGoals] = useState<number[]>([]);
-  const [viewMode, setViewMode] = useState<'grid' | 'list' | 'progress'>(
-    'grid',
-  );
+  const [viewMode, setViewMode] = useState<GoalsViewMode>('grid');
   const [sortBy, setSortBy] = useState<'deadline' | 'progress' | 'amount'>(
     'deadline',
   );
@@ -2954,8 +2947,8 @@ function GoalsTab() {
     const goal: Goal = {
       id: Date.now(),
       title: newGoal.title,
-      target: parseFloat(newGoal.target),
-      current: parseFloat(newGoal.current) || 0,
+      target: Number.parseFloat(newGoal.target),
+      current: Number.parseFloat(newGoal.current) || 0,
       deadline: newGoal.deadline,
       category: newGoal.category,
     };
@@ -3086,13 +3079,13 @@ function GoalsTab() {
                       gap: '1rem',
                     }}
                   >
-                    {goalTemplates.map((template, index) => (
+                    {goalTemplates.map((template) => (
                       <Card
-                        key={index}
+                        key={template.title}
                         style={{padding: '1rem', cursor: 'pointer'}}
                         onClick={() => {
                           const goal: Goal = {
-                            id: Date.now() + index,
+                            id: Date.now(),
                             title: template.title,
                             target: template.target,
                             current: 0,
@@ -3251,7 +3244,9 @@ function GoalsTab() {
             <ToggleGroup
               type="single"
               value={viewMode}
-              onValueChange={(value) => value && setViewMode(value as any)}
+              onValueChange={(next: GoalsViewMode | undefined) => {
+                if (next) setViewMode(next);
+              }}
             >
               <Toggle value="grid">🔲 Grid</Toggle>
               <Toggle value="list">
@@ -4205,6 +4200,10 @@ function SettingsTab() {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [budgetAlerts, setBudgetAlerts] = useState(true);
+  const currencyId = 'settings-currency';
+  const darkModeId = 'settings-dark-mode';
+  const notificationsId = 'settings-notifications';
+  const budgetAlertsId = 'settings-budget-alerts';
 
   return (
     <div className="settings-tab">
@@ -4214,10 +4213,11 @@ function SettingsTab() {
         <h3>Preferences</h3>
         <div className="setting-item">
           <div className="setting-info">
-            <label>Currency</label>
+            <Label htmlFor={currencyId}>Currency</Label>
             <p>Choose your preferred currency for displaying amounts</p>
           </div>
           <Select
+            id={currencyId}
             value={currency}
             onInput={(e) => setCurrency((e.target as HTMLSelectElement).value)}
           >
@@ -4232,10 +4232,11 @@ function SettingsTab() {
 
         <div className="setting-item">
           <div className="setting-info">
-            <label>Dark Mode</label>
+            <Label htmlFor={darkModeId}>Dark Mode</Label>
             <p>Switch between light and dark themes</p>
           </div>
           <Switch
+            id={darkModeId}
             checked={darkMode}
             onInput={(e) => setDarkMode((e.target as HTMLInputElement).checked)}
           />
@@ -4246,10 +4247,11 @@ function SettingsTab() {
         <h3>Notifications</h3>
         <div className="setting-item">
           <div className="setting-info">
-            <label>Enable Notifications</label>
+            <Label htmlFor={notificationsId}>Enable Notifications</Label>
             <p>Receive notifications about your financial activity</p>
           </div>
           <Switch
+            id={notificationsId}
             checked={notifications}
             onInput={(e) =>
               setNotifications((e.target as HTMLInputElement).checked)
@@ -4261,10 +4263,11 @@ function SettingsTab() {
 
         <div className="setting-item">
           <div className="setting-info">
-            <label>Budget Alerts</label>
+            <Label htmlFor={budgetAlertsId}>Budget Alerts</Label>
             <p>Get notified when you exceed budget limits</p>
           </div>
           <Switch
+            id={budgetAlertsId}
             checked={budgetAlerts}
             onInput={(e) =>
               setBudgetAlerts((e.target as HTMLInputElement).checked)
@@ -4473,7 +4476,6 @@ export default function Dashboard() {
   >('overview');
   const [isMobile, setIsMobile] = useState(false);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -4495,7 +4497,7 @@ export default function Dashboard() {
       if ((e.metaKey || e.ctrlKey) && e.key >= '1' && e.key <= '4') {
         e.preventDefault();
         const tabs = ['overview', 'transactions', 'goals', 'settings'] as const;
-        setActiveTab(tabs[parseInt(e.key) - 1]);
+        setActiveTab(tabs[Number.parseInt(e.key, 10) - 1]);
       }
     };
 
@@ -4550,7 +4552,7 @@ export default function Dashboard() {
                 width="24"
                 height="24"
                 style={{marginRight: '0.5rem'}}
-              ></iconify-icon>
+               />
               Personal Finance Dashboard
             </h1>
             <Badge variant="outline">PRO</Badge>
@@ -4581,7 +4583,7 @@ export default function Dashboard() {
                   icon="lucide:search"
                   width="16"
                   height="16"
-                ></iconify-icon>
+                 />
               </Button>
             </div>
 
@@ -4597,7 +4599,7 @@ export default function Dashboard() {
                     icon="lucide:bell"
                     width="16"
                     height="16"
-                  ></iconify-icon>
+                   />
                   <Badge
                     variant="destructive"
                     style={{
@@ -4706,7 +4708,7 @@ export default function Dashboard() {
                               }
                               width="12"
                               height="12"
-                            ></iconify-icon>
+                             />
                           </Badge>
                         </div>
                       </div>
@@ -4724,7 +4726,7 @@ export default function Dashboard() {
                     icon="lucide:zap"
                     width="16"
                     height="16"
-                  ></iconify-icon>
+                   />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -4736,7 +4738,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Quick Add Income
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4747,7 +4749,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Quick Add Expense
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4758,7 +4760,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Update Goal
                 </DropdownMenuItem>
                 <Separator />
@@ -4768,7 +4770,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Export Data
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => toast.show('Backup created!')}>
@@ -4777,7 +4779,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Backup Data
                 </DropdownMenuItem>
                 <Separator />
@@ -4787,7 +4789,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Command Palette
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -4801,7 +4803,7 @@ export default function Dashboard() {
                     icon="lucide:help-circle"
                     width="16"
                     height="16"
-                  ></iconify-icon>
+                   />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -4813,7 +4815,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Help Center
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setShowCommandPalette(true)}>
@@ -4822,7 +4824,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Keyboard Shortcuts
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4833,7 +4835,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Interactive Tutorial
                 </DropdownMenuItem>
                 <Separator />
@@ -4845,7 +4847,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Send Feedback
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4856,7 +4858,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Request Feature
                 </DropdownMenuItem>
                 <Separator />
@@ -4868,7 +4870,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   About
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -4890,7 +4892,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   View Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setActiveTab('settings')}>
@@ -4899,7 +4901,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => toast.show('Billing opened!')}>
@@ -4908,7 +4910,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Billing
                 </DropdownMenuItem>
                 <Separator />
@@ -4918,7 +4920,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Dark Mode
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4929,7 +4931,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Language
                 </DropdownMenuItem>
                 <Separator />
@@ -4939,7 +4941,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -4982,7 +4984,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                ></iconify-icon>
+                 />
                 Overview
               </Tab>
               <Tab
@@ -4995,7 +4997,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                ></iconify-icon>
+                 />
                 Transactions
               </Tab>
               <Tab
@@ -5008,7 +5010,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                ></iconify-icon>
+                 />
                 Goals
               </Tab>
               <Tab
@@ -5021,7 +5023,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                ></iconify-icon>
+                 />
                 Settings
               </Tab>
             </TabList>
@@ -5062,7 +5064,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Transactions
                   <span
                     style={{
@@ -5083,7 +5085,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Goals
                   <span
                     style={{
@@ -5110,7 +5112,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                      ></iconify-icon>
+                       />
                       Calculator
                     </button>
                   </ContextMenuTrigger>
@@ -5123,7 +5125,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                      ></iconify-icon>
+                       />
                       Basic Calculator
                     </ContextMenuItem>
                     <ContextMenuItem
@@ -5134,7 +5136,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                      ></iconify-icon>
+                       />
                       Loan Calculator
                     </ContextMenuItem>
                     <ContextMenuItem
@@ -5162,7 +5164,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Reports
                 </button>
                 <button
@@ -5174,7 +5176,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Insights
                 </button>
               </div>
@@ -5190,7 +5192,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Settings
                   <span
                     style={{
@@ -5211,7 +5213,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                  ></iconify-icon>
+                   />
                   Help
                 </button>
               </div>
@@ -5239,7 +5241,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                      ></iconify-icon>
+                       />
                       Pro Tip
                     </div>
                     <div

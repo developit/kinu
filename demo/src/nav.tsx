@@ -27,7 +27,7 @@ export function Nav({
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/components">Components</NavigationMenuLink>
+          <NavigationMenuLink href="/components">Components & Docs</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <DropdownMenu>
