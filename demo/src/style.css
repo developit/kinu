@@ -2281,6 +2281,11 @@ body .home-nav + * {
   color: hsl(var(--p-foreground));
 }
 
+.docs-content-intro,
+.docs-content-remainder {
+  display: block;
+}
+
 .docs-main {
   max-width: 780px;
   width: 100%;
@@ -2293,6 +2298,7 @@ body .home-nav + * {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin: 2rem 0;
 }
 
 .docs-example-card {

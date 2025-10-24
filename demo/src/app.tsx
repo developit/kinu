@@ -1268,6 +1268,31 @@ const normalizeSlug = (value?: string | null) => {
   return getEntryBySlug(value)?.slug ?? fallbackSlug;
 };
 
+const splitDocSections = (html: string) => {
+  if (!html) {
+    return {intro: '', remainder: ''};
+  }
+
+  const headingEnd = html.indexOf('</h1>');
+  if (headingEnd === -1) {
+    return {intro: html, remainder: ''};
+  }
+
+  const firstParagraphStart = html.indexOf('<p', headingEnd);
+  if (firstParagraphStart === -1) {
+    return {intro: html, remainder: ''};
+  }
+
+  const firstParagraphEnd = html.indexOf('</p>', firstParagraphStart);
+  if (firstParagraphEnd === -1) {
+    return {intro: html, remainder: ''};
+  }
+
+  const intro = html.slice(0, firstParagraphEnd + 4);
+  const remainder = html.slice(firstParagraphEnd + 4).trimStart();
+  return {intro, remainder};
+};
+
 export function App() {
   const contentRef = useRef<HTMLElement | null>(null);
   const [slug, setSlug] = useState<string>(() => {
@@ -1305,6 +1330,7 @@ export function App() {
     const rendered = marked.parse(raw);
     return typeof rendered === 'string' ? rendered : '';
   }, [raw]);
+  const {intro, remainder} = useMemo(() => splitDocSections(html), [html]);
 
   const example = entry ? exampleMap.get(entry.slug) : undefined;
 
