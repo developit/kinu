@@ -13,12 +13,6 @@ import {AlertDialog} from 'pui';
 </AlertDialog>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| AlertDialog | Alias of Dialog | Alias of Dialog. |
-
 ## Attributes
 
 Relies on forwarded native attributes; no additional styling attributes are defined.
@@ -30,4 +24,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-_Source: `src/components/alert-dialog/index.tsx`
+<source-ref src="src/components/alert-dialog/index.tsx"></source-ref>

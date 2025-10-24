@@ -17,12 +17,12 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| DropdownMenu | p="dropdown" | Renders markup that includes p="dropdown". |
-| DropdownMenuTrigger | — | Custom component implemented in the source file. |
-| DropdownMenuContent | p="dropdown-content" | Renders markup that includes p="dropdown-content". |
-| DropdownMenuItem | `<button>` | Wraps `<button>` and sets p="dropdown-menu-item". |
+| DropdownMenu | `<span>` | Context wrapper that wires triggers and menu content. |
+| DropdownMenuTrigger | — | Decorator that opens the menu for its child control. |
+| DropdownMenuContent | `<dialog>` | Dialog element that displays the dropdown menu. |
+| DropdownMenuItem | `<button>` | Button-style command within the menu. |
 
 ## Attributes
 
@@ -35,4 +35,4 @@ Inherits all native attributes from `<button>`. No additional styling attributes
 
 ---
 
-_Source: `src/components/dropdown-menu/index.tsx`
+<source-ref src="src/components/dropdown-menu/index.tsx"></source-ref>

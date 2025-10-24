@@ -15,12 +15,12 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| Popover | p="popover" | Renders markup that includes p="popover". |
-| PopoverTrigger | — | Custom component implemented in the source file. |
-| PopoverContent | p="popover-content" | Renders markup that includes p="popover-content". |
-| PopoverClose | — | Custom component implemented in the source file. |
+| Popover | `<span>` | Context wrapper that wires the trigger and popover content. |
+| PopoverTrigger | — | Decorator that opens the popover when its child is activated. |
+| PopoverContent | `<dialog>` | Dialog element that renders the popover surface. |
+| PopoverClose | — | Decorator that closes the popover for its child control. |
 
 ## Attributes
 
@@ -35,4 +35,4 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 
 ---
 
-_Source: `src/components/popover/index.tsx`
+<source-ref src="src/components/popover/index.tsx"></source-ref>

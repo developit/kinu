@@ -10,12 +10,6 @@ import {Input} from 'pui';
 <Input placeholder="Email" type="email" />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Input | `<input>` | Wraps `<input>` and sets p="input". |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -30,4 +24,4 @@ import {Input} from 'pui';
 
 ---
 
-_Source: `src/components/input/index.tsx`
+<source-ref src="src/components/input/index.tsx"></source-ref>

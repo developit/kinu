@@ -10,12 +10,6 @@ import {Calendar} from 'pui';
 <Calendar />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Calendar | `<input>` | Wraps `<input>` and sets p="calendar". Defaults props to {type: 'date'} as Partial`<JSX.HTMLAttributes<HTMLInputElement>`>. |
-
 ## Attributes
 
 Inherits all native attributes from `<input>`. No additional styling attributes are required.
@@ -27,4 +21,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-_Source: `src/components/calendar/index.tsx`
+<source-ref src="src/components/calendar/index.tsx"></source-ref>

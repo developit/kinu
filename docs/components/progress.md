@@ -10,12 +10,6 @@ import {Progress} from 'pui';
 <Progress value={60} max={100} />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Progress | `<progress>` | Wraps `<progress>` and sets p="progress". |
-
 ## Attributes
 
 Inherits all native attributes from `<progress>`. No additional styling attributes are required.
@@ -27,4 +21,4 @@ Inherits all native attributes from `<progress>`. No additional styling attribut
 
 ---
 
-_Source: `src/components/progress/index.tsx`
+<source-ref src="src/components/progress/index.tsx"></source-ref>

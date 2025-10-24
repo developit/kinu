@@ -10,12 +10,6 @@ import {Alert} from 'pui';
 <Alert variant="default">Heads up!</Alert>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Alert | `<div>` | Wraps `<div>` and sets p="alert". |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -28,4 +22,4 @@ import {Alert} from 'pui';
 
 ---
 
-_Source: `src/components/alert/index.tsx`
+<source-ref src="src/components/alert/index.tsx"></source-ref>

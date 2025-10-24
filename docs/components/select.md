@@ -12,12 +12,6 @@ import {Select} from 'pui';
 </Select>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Select | `<select>` | Wraps `<select>` and sets p="select". |
-
 ## Attributes
 
 Inherits all native attributes from `<select>`. No additional styling attributes are required.
@@ -29,4 +23,4 @@ Inherits all native attributes from `<select>`. No additional styling attributes
 
 ---
 
-_Source: `src/components/select/index.tsx`
+<source-ref src="src/components/select/index.tsx"></source-ref>

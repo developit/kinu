@@ -12,12 +12,6 @@ import {AspectRatio} from 'pui';
 </AspectRatio>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| AspectRatio | `<div>` | Wraps `<div>` and sets p="aspect-ratio". |
-
 ## Attributes
 
 Inherits all native attributes from `<div>`. No additional styling attributes are required.
@@ -28,4 +22,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-_Source: `src/components/aspect-ratio/index.tsx`
+<source-ref src="src/components/aspect-ratio/index.tsx"></source-ref>

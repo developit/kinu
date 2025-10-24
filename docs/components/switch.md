@@ -10,15 +10,6 @@ import {Switch} from 'pui';
 <Switch checked />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Switch | `<input>` | Wraps `<input>` and sets p="switch". Defaults props to {
-    role: 'switch',
-    type: 'checkbox',
-  } as Partial`<JSX.HTMLAttributes<HTMLInputElement>`>. |
-
 ## Attributes
 
 Inherits all native attributes from `<input>`. No additional styling attributes are required.
@@ -30,4 +21,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-_Source: `src/components/switch/index.tsx`
+<source-ref src="src/components/switch/index.tsx"></source-ref>

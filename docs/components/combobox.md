@@ -17,23 +17,12 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| Combobox | `<span>` | Wraps `<span>` and sets p="combobox". Defaults props to {}. Attaches a ref callback for additional behaviour. |
-| ComboboxInput | `<input>` | Wraps `<input>` and sets p="combobox-input". Defaults props to {}. Attaches a ref callback for additional behaviour. |
-| ComboboxList | `<dialog>` | Wraps `<dialog>` and sets p="combobox-list". Defaults props to {
-  onMouseDown: (e) => e.preventDefault(),
-  onClick: (e) => e.currentTarget.close(),
-}. |
-| ComboboxOption | `<button>` | Wraps `<button>` and sets p="combobox-option". Defaults props to {
-    tabIndex: -1,
-  }. Attaches a ref callback for additional behaviour. |
-
-### Static Shortcuts
-
-- `Combobox.Input = ComboboxInput`
-- `Combobox.List = ComboboxList`
-- `Combobox.Option = ComboboxOption`
+| Combobox | `<span>` | Root wrapper that provides context for the input, list, and options. |
+| ComboboxInput | `<input>` | Text field that filters and toggles the option list. |
+| ComboboxList | `<dialog>` | Dialog surface that displays the available options. |
+| ComboboxOption | `<button>` | Button representing a selectable option. |
 
 ## Attributes
 
@@ -46,4 +35,4 @@ Inherits all native attributes from `<span>`. No additional styling attributes a
 
 ---
 
-_Source: `src/components/combobox/index.tsx`
+<source-ref src="src/components/combobox/index.tsx"></source-ref>

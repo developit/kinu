@@ -10,12 +10,6 @@ import {ScrollArea} from 'pui';
 <ScrollArea style={{height: '200px'}}><div>Long content</div></ScrollArea>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| ScrollArea | `<div>` | Wraps `<div>` and sets p="scroll-area". |
-
 ## Attributes
 
 Inherits all native attributes from `<div>`. No additional styling attributes are required.
@@ -27,4 +21,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-_Source: `src/components/scroll-area/index.tsx`
+<source-ref src="src/components/scroll-area/index.tsx"></source-ref>

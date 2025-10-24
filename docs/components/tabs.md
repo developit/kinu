@@ -15,11 +15,11 @@ import {Tab, TabList, TabPanel} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| TabList | `<div>` | Wraps `<div>` and sets p="tablist". |
-| Tab | `<button>` | Wraps `<button>` and sets p="tab". |
-| TabPanel | `<div>` | Wraps `<div>` and sets p="tab-panel". |
+| TabList | `<div>` | Container that groups related tabs. |
+| Tab | `<button>` | Button that selects a tab panel. |
+| TabPanel | `<div>` | Panel that displays the active tab content. |
 
 ## Attributes
 
@@ -35,4 +35,4 @@ import {Tab, TabList, TabPanel} from 'pui';
 
 ---
 
-_Source: `src/components/tabs/index.tsx`
+<source-ref src="src/components/tabs/index.tsx"></source-ref>

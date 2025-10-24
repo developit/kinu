@@ -13,12 +13,6 @@ import {Accordion} from 'pui';
 </Accordion>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Accordion | `<details>` | Wraps `<details>` and sets p="accordion". |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -32,4 +26,4 @@ import {Accordion} from 'pui';
 
 ---
 
-_Source: `src/components/accordion/index.tsx`
+<source-ref src="src/components/accordion/index.tsx"></source-ref>

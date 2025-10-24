@@ -15,12 +15,10 @@ import {Sidebar, SidebarTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| SidebarTrigger | `<button>` | Wraps `<button>` and sets p="sidebar-trigger". Defaults props to {}. Attaches a ref callback for additional behaviour. |
-| Sidebar | `<dialog>` | Wraps `<dialog>` and sets p="sidebar". Defaults props to {
-    tabIndex: -1,
-  }. Attaches a ref callback for additional behaviour. |
+| SidebarTrigger | `<button>` | Button that toggles a sidebar dialog. |
+| Sidebar | `<dialog>` | Dialog element that displays the responsive sidebar. |
 
 ## Attributes
 
@@ -37,4 +35,4 @@ import {Sidebar, SidebarTrigger} from 'pui';
 
 ---
 
-_Source: `src/components/sidebar/index.tsx`
+<source-ref src="src/components/sidebar/index.tsx"></source-ref>

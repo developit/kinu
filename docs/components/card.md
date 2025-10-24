@@ -13,12 +13,6 @@ import {Card} from 'pui';
 </Card>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Card | `<div>` | Wraps `<div>` and sets p="card". |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -31,4 +25,4 @@ import {Card} from 'pui';
 
 ---
 
-_Source: `src/components/card/index.tsx`
+<source-ref src="src/components/card/index.tsx"></source-ref>

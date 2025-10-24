@@ -13,12 +13,6 @@ import {Table} from 'pui';
 </Table>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Table | `<table>` | Wraps `<table>` and sets p="table". |
-
 ## Attributes
 
 Inherits all native attributes from `<table>`. No additional styling attributes are required.
@@ -30,4 +24,4 @@ Inherits all native attributes from `<table>`. No additional styling attributes 
 
 ---
 
-_Source: `src/components/table/index.tsx`
+<source-ref src="src/components/table/index.tsx"></source-ref>

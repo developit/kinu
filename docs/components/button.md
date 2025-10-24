@@ -10,13 +10,6 @@ import {Button} from 'pui';
 <Button variant="outline">Action</Button>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Button | p="button" | Resolves the underlying element at runtime using (props: any) => 
-  props.href ? 'a' : 'button'. |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -32,4 +25,4 @@ import {Button} from 'pui';
 
 ---
 
-_Source: `src/components/button/index.tsx`
+<source-ref src="src/components/button/index.tsx"></source-ref>

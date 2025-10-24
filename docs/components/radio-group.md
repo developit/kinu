@@ -15,10 +15,10 @@ import {Radio, RadioGroup} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| RadioGroup | `<div>` | Wraps `<div>` and sets p="radio-group". |
-| Radio | `<input>` | Wraps `<input>` and sets p="radio". Defaults props to {type: 'radio'} as Partial`<JSX.HTMLAttributes<HTMLInputElement>`>. |
+| RadioGroup | `<div>` | Container that groups related radio inputs. |
+| Radio | `<input>` | Radio input styled to match the group. |
 
 ## Attributes
 
@@ -31,4 +31,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-_Source: `src/components/radio-group/index.tsx`
+<source-ref src="src/components/radio-group/index.tsx"></source-ref>

@@ -10,12 +10,6 @@ import {Tooltip} from 'pui';
 <Tooltip text="Info"><Button>Hover</Button></Tooltip>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Tooltip | `<span>` | Wraps `<span>` and sets p="tooltip". |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -29,4 +23,4 @@ import {Tooltip} from 'pui';
 
 ---
 
-_Source: `src/components/tooltip/index.tsx`
+<source-ref src="src/components/tooltip/index.tsx"></source-ref>

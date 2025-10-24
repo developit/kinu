@@ -10,12 +10,6 @@ import {Skeleton} from 'pui';
 <Skeleton style={{height: "1.5rem"}} />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Skeleton | `<div>` | Wraps `<div>` and sets p="skeleton". |
-
 ## Attributes
 
 Inherits all native attributes from `<div>`. No additional styling attributes are required.
@@ -27,4 +21,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-_Source: `src/components/skeleton/index.tsx`
+<source-ref src="src/components/skeleton/index.tsx"></source-ref>

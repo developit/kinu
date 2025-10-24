@@ -15,18 +15,12 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| Drawer | p="drawer" | Renders markup that includes p="drawer". |
-| DrawerTrigger | — | Custom component implemented in the source file. |
-| DrawerContent | p="drawer-content" | Renders markup that includes p="drawer-content". |
-| DrawerClose | — | Custom component implemented in the source file. |
-
-### Static Shortcuts
-
-- `Drawer.Trigger = DrawerTrigger`
-- `Drawer.Content = DrawerContent`
-- `Drawer.Close = DrawerClose`
+| Drawer | `<div>` | Container that provides drawer context and wraps the trigger and content. |
+| DrawerTrigger | — | Decorator that opens the drawer when its child is activated. |
+| DrawerContent | `<dialog>` | Dialog element that renders the sliding panel. |
+| DrawerClose | — | Decorator that closes the drawer for its child control. |
 
 ## Attributes
 
@@ -39,4 +33,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-_Source: `src/components/drawer/index.tsx`
+<source-ref src="src/components/drawer/index.tsx"></source-ref>

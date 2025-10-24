@@ -16,12 +16,12 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| Breadcrumb | `<nav>` | Wraps `<nav>` and sets p="breadcrumb". |
-| BreadcrumbList | `<ol>` | Wraps `<ol>` and sets p="breadcrumb-list". |
-| BreadcrumbItem | `<li>` | Wraps `<li>` and sets p="breadcrumb-item". |
-| BreadcrumbLink | `<a>` | Wraps `<a>` and sets p="breadcrumb-link". |
+| Breadcrumb | `<nav>` | Navigation landmark that wraps the breadcrumb trail. |
+| BreadcrumbList | `<ol>` | Ordered list container for breadcrumb items. |
+| BreadcrumbItem | `<li>` | List item wrapper for each breadcrumb. |
+| BreadcrumbLink | `<a>` | Link element for navigating to a breadcrumb target. |
 
 ## Attributes
 
@@ -34,4 +34,4 @@ Inherits all native attributes from `<nav>`. No additional styling attributes ar
 
 ---
 
-_Source: `src/components/breadcrumb/index.tsx`
+<source-ref src="src/components/breadcrumb/index.tsx"></source-ref>

@@ -17,12 +17,12 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| ContextMenuTrigger | — | Custom component implemented in the source file. |
-| ContextMenu | — | Custom component implemented in the source file. |
-| ContextMenuContent | p="context-menu" | Renders markup that includes p="context-menu". |
-| ContextMenuItem | `<button>` | Wraps `<button>` and sets p="context-menu-item". Defaults props to {tabIndex: 0}. |
+| ContextMenuTrigger | — | Decorator that equips its child with right-click menu behavior. |
+| ContextMenu | — | Context provider that coordinates trigger and content. |
+| ContextMenuContent | `<dialog>` | Dialog that renders the contextual menu surface. |
+| ContextMenuItem | `<button>` | Button-style command inside the context menu. |
 
 ## Attributes
 
@@ -35,4 +35,4 @@ Inherits all native attributes from `<button>`. No additional styling attributes
 
 ---
 
-_Source: `src/components/context-menu/index.tsx`
+<source-ref src="src/components/context-menu/index.tsx"></source-ref>

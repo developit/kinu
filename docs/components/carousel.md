@@ -18,13 +18,13 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| Carousel | — | Custom component implemented in the source file. |
-| CarouselContent | — | Custom component implemented in the source file. |
-| CarouselItem | `<div>` | Wraps `<div>` and sets p="carousel-item". |
-| CarouselPrevious | p="carousel-previous" | Renders markup that includes p="carousel-previous". |
-| CarouselNext | p="carousel-next" | Renders markup that includes p="carousel-next". |
+| Carousel | `<div>` | Context provider that wires carousel commands and layout. |
+| CarouselContent | `<div>` | Scrollable container that applies snap behavior to slides. |
+| CarouselItem | `<div>` | Individual slide panel inside the carousel. |
+| CarouselPrevious | `<button>` | Button that scrolls to the previous slide. |
+| CarouselNext | `<button>` | Button that scrolls to the next slide. |
 
 ## Attributes
 
@@ -37,4 +37,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-_Source: `src/components/carousel/index.tsx`
+<source-ref src="src/components/carousel/index.tsx"></source-ref>

@@ -10,12 +10,6 @@ import {Collapsible} from 'pui';
 <Collapsible open summary="Trigger">Hidden content</Collapsible>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Collapsible | `<details>` | Wraps `<details>` and sets p="collapsible". Defaults props to {}. Attaches a ref callback for additional behaviour. |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -29,4 +23,4 @@ import {Collapsible} from 'pui';
 
 ---
 
-_Source: `src/components/collapsible/index.tsx`
+<source-ref src="src/components/collapsible/index.tsx"></source-ref>

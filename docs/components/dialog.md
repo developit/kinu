@@ -16,18 +16,12 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| Dialog | — | Custom component implemented in the source file. |
-| DialogTrigger | — | Custom component implemented in the source file. |
-| DialogContent | p="dialog-content" | Renders markup that includes p="dialog-content". |
-| DialogClose | — | Custom component implemented in the source file. |
-
-### Static Shortcuts
-
-- `Dialog.Trigger = DialogTrigger`
-- `Dialog.Content = DialogContent`
-- `Dialog.Close = DialogClose`
+| Dialog | — | Context wrapper that connects trigger, content, and close helpers. |
+| DialogTrigger | — | Decorator that opens the dialog when its child is activated. |
+| DialogContent | `<dialog>` | Dialog element that renders the modal surface. |
+| DialogClose | — | Decorator that closes the dialog when its child is activated. |
 
 ## Attributes
 
@@ -42,4 +36,4 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 
 ---
 
-_Source: `src/components/dialog/index.tsx`
+<source-ref src="src/components/dialog/index.tsx"></source-ref>

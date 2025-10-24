@@ -10,12 +10,6 @@ import {Badge} from 'pui';
 <Badge variant="secondary">New</Badge>
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Badge | `<span>` | Wraps `<span>` and sets p="badge". |
-
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -28,4 +22,4 @@ import {Badge} from 'pui';
 
 ---
 
-_Source: `src/components/badge/index.tsx`
+<source-ref src="src/components/badge/index.tsx"></source-ref>

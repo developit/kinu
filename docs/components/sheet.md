@@ -15,18 +15,12 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | DOM element | Description |
 | --- | --- | --- |
-| Sheet | p="sheet" | Renders markup that includes p="sheet". |
-| SheetTrigger | — | Custom component implemented in the source file. |
-| SheetContent | p="sheet-content" | Renders markup that includes p="sheet-content". |
-| SheetClose | — | Custom component implemented in the source file. |
-
-### Static Shortcuts
-
-- `Sheet.Trigger = SheetTrigger`
-- `Sheet.Content = SheetContent`
-- `Sheet.Close = SheetClose`
+| Sheet | `<div>` | Container that provides sheet context and wraps its children. |
+| SheetTrigger | — | Decorator that opens the sheet when its child is activated. |
+| SheetContent | `<dialog>` | Dialog element that renders the sheet surface. |
+| SheetClose | — | Decorator that closes the sheet for its child control. |
 
 ## Attributes
 
@@ -39,4 +33,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-_Source: `src/components/sheet/index.tsx`
+<source-ref src="src/components/sheet/index.tsx"></source-ref>

@@ -10,12 +10,6 @@ import {Textarea} from 'pui';
 <Textarea rows={4} placeholder="Write here" />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Textarea | `<textarea>` | Wraps `<textarea>` and sets p="textarea". |
-
 ## Attributes
 
 Inherits all native attributes from `<textarea>`. No additional styling attributes are required.
@@ -27,4 +21,4 @@ Inherits all native attributes from `<textarea>`. No additional styling attribut
 
 ---
 
-_Source: `src/components/textarea/index.tsx`
+<source-ref src="src/components/textarea/index.tsx"></source-ref>

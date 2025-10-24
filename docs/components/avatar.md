@@ -10,12 +10,6 @@ import {Avatar} from 'pui';
 <Avatar alt="JM" src="/user.jpg" />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Avatar | p="avatar" | Renders markup that includes p="avatar". |
-
 ## Attributes
 
 Relies on forwarded native attributes; no additional styling attributes are defined.
@@ -27,4 +21,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-_Source: `src/components/avatar/index.tsx`
+<source-ref src="src/components/avatar/index.tsx"></source-ref>

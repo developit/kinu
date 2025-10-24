@@ -10,12 +10,6 @@ import {Slider} from 'pui';
 <Slider min={0} max={100} value={50} />
 ```
 
-## Exports
-
-| Name | DOM element | Details |
-| --- | --- | --- |
-| Slider | `<input>` | Wraps `<input>` and sets p="slider". Defaults props to {type: 'range'} as Partial`<JSX.HTMLAttributes<HTMLInputElement>`>. Attaches a ref callback for additional behaviour. |
-
 ## Attributes
 
 Inherits all native attributes from `<input>`. No additional styling attributes are required.
@@ -27,4 +21,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-_Source: `src/components/slider/index.tsx`
+<source-ref src="src/components/slider/index.tsx"></source-ref>
