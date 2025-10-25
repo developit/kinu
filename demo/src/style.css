@@ -2205,23 +2205,61 @@ body .home-nav + * {
   background: hsl(var(--p-background));
 }
 
+
 .docs-layout {
-  display: grid;
-  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 2.5rem;
-  padding: 2.5rem clamp(1.5rem, 5vw, 3.5rem);
+  padding: 2.5rem clamp(1.5rem, 5vw, 3.5rem) 4rem;
+}
+
+.docs-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.docs-sidebar-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--p-border));
+  background: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
+  transition: background-color 160ms ease, color 160ms ease,
+    border-color 160ms ease;
+}
+
+.docs-sidebar-trigger:hover {
+  background: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+  border-color: transparent;
+}
+
+.docs-sidebar-trigger span[aria-hidden="true"] {
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .docs-sidebar {
-  position: sticky;
-  top: 5.5rem;
-  align-self: start;
+  padding: 2.5rem clamp(1.25rem, 4vw, 2rem);
+  gap: 2rem;
+  width: min(320px, 100%);
+  border-right: 1px solid hsl(var(--p-border));
+  background: hsl(var(--p-background));
+  box-shadow: none;
+}
+
+.docs-sidebar-content {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-height: calc(100vh - 6rem);
-  overflow-y: auto;
-  padding-right: 0.5rem;
 }
 
 .docs-sidebar-section {
@@ -2395,21 +2433,31 @@ body .home-nav + * {
   color: hsl(var(--p-muted-foreground));
 }
 
-@media (max-width: 1024px) {
-  .docs-layout {
-    grid-template-columns: 1fr;
+@media (min-width: 641px) {
+  .docs-toolbar,
+  .docs-sidebar-trigger {
+    display: none;
   }
 
-  .docs-sidebar {
-    position: static;
-    max-height: none;
-    padding-right: 0;
+  .components-docs .docs-sidebar {
+    top: 4.5rem;
+    height: calc(100vh - 4.5rem);
+    max-height: calc(100vh - 4.5rem);
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .docs-layout {
     padding: 1.75rem 1.25rem 3rem;
   }
 
+  .docs-sidebar {
+    width: min(320px, 82vw);
+    padding: 1.75rem 1.5rem 2.5rem;
+    gap: 1.75rem;
+  }
+
+  .docs-sidebar-content {
+    gap: 1.5rem;
+  }
 }

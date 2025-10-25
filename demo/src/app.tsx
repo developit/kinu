@@ -44,6 +44,7 @@ import {
   SheetContent,
   SheetClose,
   Sidebar,
+  SidebarTrigger,
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
@@ -1342,6 +1343,40 @@ export function App() {
     contentRef.current.scrollIntoView({behavior: 'smooth', block: 'start'});
   }, [slug]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const sidebar = document.getElementById(
+      'docs-sidebar',
+    ) as HTMLDialogElement | null;
+    if (!sidebar) return;
+
+    const mql = window.matchMedia('(max-width: 640px)');
+    const syncSidebar = () => {
+      if (mql.matches) {
+        sidebar.setAttribute('hidden', '');
+        if (sidebar.open) sidebar.close();
+      } else {
+        sidebar.removeAttribute('hidden');
+        sidebar.setAttribute('open', '');
+      }
+    };
+
+    syncSidebar();
+    mql.addEventListener('change', syncSidebar);
+    return () => mql.removeEventListener('change', syncSidebar);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.matchMedia('(max-width: 640px)').matches) return;
+    const sidebar = document.getElementById(
+      'docs-sidebar',
+    ) as HTMLDialogElement | null;
+    if (!sidebar) return;
+    sidebar.close();
+    sidebar.setAttribute('hidden', '');
+  }, [slug]);
+
   const entry = getEntryBySlug(slug) ?? fallbackEntry;
   const raw = entry ? getDocContent(entry.file) : '# Document missing';
   const html = useMemo(() => {
@@ -1355,6 +1390,18 @@ export function App() {
   const handleNavClick = (nextSlug: string) => () => {
     if (nextSlug !== slug) {
       setSlug(nextSlug);
+    }
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 640px)').matches
+    ) {
+      const sidebar = document.getElementById(
+        'docs-sidebar',
+      ) as HTMLDialogElement | null;
+      if (sidebar) {
+        sidebar.close();
+        sidebar.setAttribute('hidden', '');
+      }
     }
   };
 
