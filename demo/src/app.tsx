@@ -93,6 +93,24 @@ import {
   getEntryBySlug,
   overviewEntries,
 } from './docs-data';
+import {hljs} from './highlight';
+
+const normalizeLanguage = (lang?: string) => {
+  if (!lang) return undefined;
+  const value = lang.toLowerCase();
+  return hljs.getLanguage(value) ? value : undefined;
+};
+
+marked.setOptions({
+  highlight(code: string, language?: string) {
+    const lang = normalizeLanguage(language);
+    if (lang) {
+      return hljs.highlight(code, {language: lang}).value;
+    }
+    return hljs.highlightAuto(code).value;
+  },
+  langPrefix: 'hljs language-',
+});
 
 interface Example {
   id: string;
