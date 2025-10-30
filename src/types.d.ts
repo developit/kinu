@@ -6,6 +6,8 @@ declare global {
       p?: string; // Custom attribute for styling or identification
       pi?: string; // Component instance identifier
       pa?: string; // Action identifier for delegated events
+      command?: string; // Command attribute for invoker buttons
+      commandfor?: string; // Target element ID for command
     }
   }
 

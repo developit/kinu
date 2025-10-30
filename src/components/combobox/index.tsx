@@ -34,7 +34,7 @@ export const ComboboxInput = createSimpleComponent(
       const items = getList().querySelectorAll<HTMLElement>(
         '[p="combobox-option"]',
       );
-      let hit: boolean;
+      let hit = false;
       for (const item of items) {
         const match = item.textContent!.toLowerCase().includes(value);
         item.removeAttribute('selected');
@@ -85,6 +85,6 @@ export const ComboboxOption = createSimpleComponent(
   },
 );
 
-Combobox.Input = ComboboxInput;
-Combobox.List = ComboboxList;
-Combobox.Option = ComboboxOption;
+(Combobox as any).Input = ComboboxInput;
+(Combobox as any).List = ComboboxList;
+(Combobox as any).Option = ComboboxOption;

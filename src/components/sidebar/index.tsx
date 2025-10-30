@@ -39,12 +39,12 @@ export const Sidebar = createSimpleComponent(
   {
     tabIndex: -1,
   },
-  (el: HTMLElement) => {
+  (_el: HTMLElement) => {
     installCommands();
     installDialogsDropdowns();
     // function mousedown(e: MouseEvent) {
-    //   if (el.contains(e.target as Node)) return;
-    //   el.removeAttribute('open');
+    //   if (_el.contains(e.target as Node)) return;
+    //   _el.removeAttribute('open');
     // }
     // addEventListener('mousedown', mousedown);
     // return () => removeEventListener('mousedown', mousedown);

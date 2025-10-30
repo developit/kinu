@@ -6,7 +6,9 @@
   "module": "./dist/index.js",
   "type": "module",
   "types": "./dist/index.d.ts",
-  "x-sideEffects": ["src/lib/commands.ts"],
+  "x-sideEffects": [
+    "src/lib/commands.ts"
+  ],
   "exports": {
     ".": {
       "style": "./dist/index.css",
@@ -16,7 +18,9 @@
     },
     "./style.css": "./dist/index.css"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build",
     "build:demo": "cd demo && pnpm build",
@@ -35,9 +39,15 @@
     "preact-render-to-string": "^6.5.11",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.0.6"
   },
-  "keywords": ["preact", "ui", "ui-toolkit", "pui"],
+  "keywords": [
+    "preact",
+    "ui",
+    "ui-toolkit",
+    "pui"
+  ],
   "author": "Jason Miller (http://developit.dev)",
   "license": "MIT"
 }

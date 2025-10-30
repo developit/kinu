@@ -44,7 +44,6 @@ export function DropdownMenuContent({
       p="dropdown-content"
       id={id ?? ctx}
       command="close"
-      commandFor={id ?? ctx}
       {...props}
     />
   );
