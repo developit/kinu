@@ -1,20 +1,17 @@
-import manifestJson from 'pui-docs/manifest.json' assert {type: 'json'};
+// import manifestJson from 'pui-docs/manifest.json' assert {type: 'json'};
+import manifestJson from 'pui-docs/manifest.json';
 
-const docsModules = import.meta.glob('../../docs/**/*.md', {
-  eager: true,
+// Lazy-loaded markdown docs
+const docsLoaders = import.meta.glob('../../docs/**/*.md', {
+  eager: false,
   import: 'default',
   query: '?raw',
-}) as Record<string, string>;
+}) as Record<string, () => Promise<string>>;
 
-const docsContent = new Map<string, string>();
-
-for (const [path, value] of Object.entries(docsModules)) {
-  const normalizedPath = path.replace(/\\/g, '/');
-  const relative = normalizedPath.split('/docs/')[1];
-  if (relative) {
-    docsContent.set(relative, value);
-  }
-}
+// Lazy-loaded examples
+const exampleLoaders = import.meta.glob('../../docs/examples/*.tsx', {
+  eager: false,
+}) as Record<string, () => Promise<{Demo: () => JSX.Element; code: string}>>;
 
 export interface ManifestEntry {
   slug: string;
@@ -31,7 +28,9 @@ const sortEntries = (a: ManifestEntry, b: ManifestEntry) => {
   return a.title.localeCompare(b.title);
 };
 
-const manifestList = (manifestJson as ManifestEntry[]).slice().sort(sortEntries);
+const manifestList = (manifestJson as ManifestEntry[])
+  .slice()
+  .sort(sortEntries);
 
 export const manifest = manifestList;
 export const fallbackEntry = manifest[0] ?? null;
@@ -60,7 +59,9 @@ export const componentGroups: ComponentGroup[] = (() => {
       name,
       entries: entries.slice().sort(sortEntries),
       order: Math.min(
-        ...entries.map((item) => (typeof item.order === 'number' ? item.order : Number.MAX_SAFE_INTEGER)),
+        ...entries.map((item) =>
+          typeof item.order === 'number' ? item.order : Number.MAX_SAFE_INTEGER,
+        ),
       ),
     }))
     .sort((a, b) => {
@@ -74,7 +75,49 @@ export function getEntryBySlug(slug: string | undefined | null) {
   return manifestMap.get(slug);
 }
 
-export function getDocContent(file: string | undefined) {
+// Lazy load doc content by file path
+export async function loadDocContent(file: string | undefined): Promise<string> {
   if (!file) return '# Document missing';
-  return docsContent.get(file) ?? '# Document missing';
+
+  const path = `../../docs/${file}`;
+  const loader = docsLoaders[path];
+
+  if (!loader) {
+    console.warn(`Doc not found: ${path}`);
+    return '# Document missing';
+  }
+
+  try {
+    return await loader();
+  } catch (error) {
+    console.error(`Failed to load doc: ${path}`, error);
+    return '# Error loading document';
+  }
+}
+
+// Lazy load example by slug
+export async function loadExample(slug: string | undefined): Promise<{Demo: () => JSX.Element; code: string} | null> {
+  if (!slug) return null;
+
+  const path = `../../docs/examples/${slug}.tsx`;
+  const loader = exampleLoaders[path];
+
+  if (!loader) {
+    // Not all docs have examples, so this is okay
+    return null;
+  }
+
+  try {
+    const module = await loader();
+    return module as {Demo: () => JSX.Element; code: string};
+  } catch (error) {
+    console.error(`Failed to load example: ${path}`, error);
+    return null;
+  }
+}
+
+// Deprecated - for backwards compatibility during migration
+export function getDocContent(file: string | undefined) {
+  console.warn('getDocContent is deprecated, use loadDocContent instead');
+  return '# Use loadDocContent instead';
 }
