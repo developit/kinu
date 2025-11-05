@@ -1,5 +1,5 @@
 import {Card} from 'pui';
-import {CodeBlock} from '../code-block';
+// import {CodeBlock} from '../code-block';
 import {DocsLayout} from '../app';
 import {
   getEntryBySlug,
@@ -10,6 +10,7 @@ import {
 import {useRoute} from 'preact-iso';
 import {lazy} from 'preact-iso';
 import {marked} from 'marked';
+import {markedHighlight} from 'marked-highlight';
 import {hljs} from '../highlight';
 import type {ComponentType, JSX} from 'preact';
 
@@ -27,14 +28,16 @@ function normalizeLanguage(lang?: string) {
   return hljs.getLanguage(value) ? value : undefined;
 }
 
-marked.setOptions({
-  highlight(code: string, language?: string) {
-    const lang = normalizeLanguage(language);
-    if (lang) return hljs.highlight(code, {language: lang}).value;
-    return hljs.highlightAuto(code).value;
-  },
-  langPrefix: 'hljs language-',
-});
+marked.use(
+  markedHighlight({
+    langPrefix: 'hljs language-',
+    highlight(code: string, language?: string) {
+      const lang = normalizeLanguage(language);
+      if (lang) return hljs.highlight(code, {language: lang}).value;
+      return hljs.highlightAuto(code).value;
+    },
+  }),
+);
 
 function splitDocSections(html: string) {
   if (!html) return {intro: '', remainder: ''};
@@ -62,16 +65,14 @@ function splitDocSections(html: string) {
 function ComponentContent({slug, data}: {slug: string; data: Data}) {
   return (
     <section id={slug}>
-      <Card>
-        <div dangerouslySetInnerHTML={{__html: data.intro}} />
-        {data.example && (
-          <div class="example-demo">
-            <data.example.Demo />
-          </div>
-        )}
-        <div dangerouslySetInnerHTML={{__html: data.remainder}} />
-        {data.example && <CodeBlock code={data.example.code} />}
-      </Card>
+      <div dangerouslySetInnerHTML={{__html: data.intro}} />
+      {data.example && (
+        <Card class="example-demo">
+          <data.example.Demo />
+        </Card>
+      )}
+      <div dangerouslySetInnerHTML={{__html: data.remainder}} />
+      {/* {data.example && <CodeBlock code={data.example.code} />} */}
     </section>
   );
 }

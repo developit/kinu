@@ -11,6 +11,7 @@ const docsLoaders = import.meta.glob('../../docs/**/*.md', {
 // Lazy-loaded examples
 const exampleLoaders = import.meta.glob('../../docs/examples/*.tsx', {
   eager: false,
+  // import: 'Demo',
 }) as Record<string, () => Promise<{Demo: () => JSX.Element; code: string}>>;
 
 export interface ManifestEntry {
@@ -76,7 +77,9 @@ export function getEntryBySlug(slug: string | undefined | null) {
 }
 
 // Lazy load doc content by file path
-export async function loadDocContent(file: string | undefined): Promise<string> {
+export async function loadDocContent(
+  file: string | undefined,
+): Promise<string> {
   if (!file) return '# Document missing';
 
   const path = `../../docs/${file}`;
@@ -96,7 +99,9 @@ export async function loadDocContent(file: string | undefined): Promise<string> 
 }
 
 // Lazy load example by slug
-export async function loadExample(slug: string | undefined): Promise<{Demo: () => JSX.Element; code: string} | null> {
+export async function loadExample(
+  slug: string | undefined,
+): Promise<{Demo: () => JSX.Element; code: string} | null> {
   if (!slug) return null;
 
   const path = `../../docs/examples/${slug}.tsx`;

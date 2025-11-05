@@ -91,7 +91,7 @@ export function DocsLayout({children}: {children?: ComponentChildren}) {
           ))}
         </nav>
       </Sidebar>
-      <main>
+      <main class="docs-content">
         <Nav
           left={
             <SidebarTrigger

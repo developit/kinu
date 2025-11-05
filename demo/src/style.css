@@ -1413,11 +1413,21 @@ body .home-nav + * {
   color: hsl(var(--p-muted-foreground));
 }
 
+body .example-demo {
+  margin: 2rem 0;
+  background: hsl(var(--p-muted) / 0.25);
+}
+
+/*
 .example-demo {
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid hsl(var(--p-border));
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid hsl(var(--p-border));
 }
+*/
 
 .example-demo h4 {
   margin: 0 0 1rem 0;
@@ -2205,7 +2215,6 @@ body .home-nav + * {
   background: hsl(var(--p-background));
 }
 
-
 .docs-layout {
   display: flex;
   flex-direction: column;
@@ -2232,8 +2241,8 @@ body .home-nav + * {
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
-  transition: background-color 160ms ease, color 160ms ease,
-    border-color 160ms ease;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms
+    ease;
 }
 
 .docs-sidebar-trigger:hover {
@@ -2369,17 +2378,26 @@ body .home-nav + * {
   margin-bottom: 1rem;
 }
 
-.docs-content h1 {font-size: 2rem;}
-.docs-content h2 {font-size: 1.45rem;}
-.docs-content h3 {font-size: 1.2rem;}
-.docs-content h4 {font-size: 1rem;}
+.docs-content h1 {
+  font-size: 2rem;
+}
+.docs-content h2 {
+  font-size: 1.45rem;
+}
+.docs-content h3 {
+  font-size: 1.2rem;
+}
+.docs-content h4 {
+  font-size: 1rem;
+}
 
 .docs-content p {
   margin: 1rem 0;
 }
 
 .docs-content code {
-  font-family: 'Fira Code', 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
   font-size: 0.9rem;
   background: hsl(var(--p-muted) / 0.6);
   border-radius: 0.35rem;
@@ -2388,11 +2406,16 @@ body .home-nav + * {
 
 .docs-content pre {
   margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
-  border-radius: 0.75rem;
+  padding: .75rem 1rem;
+  border-radius: 0.35rem;
   background: hsl(var(--p-muted));
   border: 1px solid hsl(var(--p-border));
   overflow-x: auto;
+}
+
+body .docs-content pre > code {
+  padding: 0;
+  margin: 0;
 }
 
 .docs-content table {
