@@ -1,12 +1,6 @@
 import {Card} from 'pui';
-// import {CodeBlock} from '../code-block';
 import {DocsLayout} from '../app';
-import {
-  getEntryBySlug,
-  loadDocContent,
-  loadExample,
-  fallbackEntry,
-} from '../docs-data';
+import {getEntryBySlug, loadDocContent, loadExample} from '../docs-data';
 import {useRoute} from 'preact-iso';
 import {lazy} from 'preact-iso';
 import {marked} from 'marked';
@@ -115,7 +109,7 @@ function createLazyComponent(slug: string) {
 
 export default function Component() {
   const route = useRoute();
-  const componentSlug = route.params?.component || fallbackEntry?.slug || '';
+  const componentSlug = route.params?.slug || 'overview';
   const ComponentContent = createLazyComponent(componentSlug);
   return (
     <DocsLayout>

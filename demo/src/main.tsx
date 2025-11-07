@@ -6,7 +6,7 @@ import 'iconify-icon';
 
 const Home = lazy(() => import('./routes/home.tsx'));
 const GettingStarted = lazy(() => import('./routes/getting-started.tsx'));
-const ComponentsIndex = lazy(() => import('./routes/components-index.tsx'));
+// const ComponentsIndex = lazy(() => import('./routes/components-index.tsx'));
 const Component = lazy(() => import('./routes/component.tsx'));
 const Linear = lazy(() => import('./routes/linear.tsx'));
 const Chat = lazy(() => import('./routes/chat.tsx'));
@@ -30,8 +30,9 @@ render(
       <Router>
         <Route path="/" component={Home} />
         <Route path="/getting-started" component={GettingStarted} />
-        <Route path="/components/:component" component={Component} />
-        <Route path="/components" component={ComponentsIndex} />
+        <Route path="/components/:slug?" component={Component} />
+        {/* <Route path="/components" component={Component} slug="overview" /> */}
+        {/* <Route path="/components" component={ComponentsIndex} /> */}
         <Route path="/linear" component={Linear} />
         <Route path="/chat" component={Chat} />
         <Route path="/player" component={Player} />
