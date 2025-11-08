@@ -24,15 +24,21 @@ function setViewportVars() {
 setViewportVars();
 window.visualViewport?.addEventListener('resize', setViewportVars);
 
+function loadStart() {
+  document.body.classList.add('loading');
+}
+
+function loadEnd() {
+  document.body.classList.remove('loading');
+}
+
 render(
   <LocationProvider>
     <ErrorBoundary>
-      <Router>
+      <Router onLoadStart={loadStart} onLoadEnd={loadEnd}>
         <Route path="/" component={Home} />
         <Route path="/getting-started" component={GettingStarted} />
-        <Route path="/docs/:slug?" component={Docs} />
-        {/* <Route path="/components" component={Component} slug="overview" /> */}
-        {/* <Route path="/components" component={ComponentsIndex} /> */}
+        <Route path="/docs/:slug?" component={Docs} remount />
         <Route path="/linear" component={Linear} />
         <Route path="/chat" component={Chat} />
         <Route path="/player" component={Player} />
