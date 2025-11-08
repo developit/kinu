@@ -2327,6 +2327,12 @@ body .example-demo {
   line-height: 1.7;
   color: hsl(var(--p-foreground));
 }
+@media (min-width: 1024px) {
+  .docs-content {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
 
 .docs-content-intro,
 .docs-content-remainder {

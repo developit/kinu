@@ -39,7 +39,7 @@ export default function Home() {
               <Button href="/getting-started" size="lg">
                 Get Started
               </Button>
-              <Button href="/components" variant="outline" size="lg">
+              <Button href="/docs" variant="outline" size="lg">
                 Browse Components
               </Button>
             </div>
@@ -151,7 +151,7 @@ export default function Home() {
             <Button href="/getting-started" size="lg">
               Start Building →
             </Button>
-            <Button variant="ghost" href="/components">
+            <Button variant="ghost" href="/docs">
               Explore Components
             </Button>
           </div>

@@ -52,20 +52,20 @@ export function DocsLayout({children}: {children?: ComponentChildren}) {
       <Sidebar
         id="demo-sidebar"
         class="docs-sidebar"
-        aria-label="Components documentation navigation"
+        aria-label="Documentation navigation"
       >
         <nav class="docs-sidebar-content" aria-label="Documentation sections">
           {overviewEntries.length > 0 && (
             <section class="docs-sidebar-section">
               <h2>Overview</h2>
               <ul class="docs-sidebar-list">
-                {overviewEntries.map((item) => (
-                  <li key={item.slug}>
+                {overviewEntries.map(({slug, title}) => (
+                  <li>
                     <a
-                      href={`/components/${item.slug}`}
-                      class={`docs-link${currentSlug === item.slug ? ' is-active' : ''}`}
+                      href={slug === 'overview' ? '/docs' : `/docs/${slug}`}
+                      class={`docs-link${currentSlug === slug ? ' is-active' : ''}`}
                     >
-                      <span class="docs-link-title">{item.title}</span>
+                      <span class="docs-link-title">{title}</span>
                     </a>
                   </li>
                 ))}
@@ -77,9 +77,9 @@ export function DocsLayout({children}: {children?: ComponentChildren}) {
               <h2>{group.name}</h2>
               <ul class="docs-sidebar-list">
                 {group.entries.map((item) => (
-                  <li key={item.slug}>
+                  <li>
                     <a
-                      href={`/components/${item.slug}`}
+                      href={`/docs/${item.slug}`}
                       class={`docs-link${currentSlug === item.slug ? ' is-active' : ''}`}
                     >
                       <span class="docs-link-title">{item.title}</span>
@@ -97,9 +97,8 @@ export function DocsLayout({children}: {children?: ComponentChildren}) {
             <SidebarTrigger
               commandFor="demo-sidebar"
               class="demo-sidebar-trigger"
-            >
-              ☰
-            </SidebarTrigger>
+              children="☰"
+            />
           }
         />
         <ToastContainer />
