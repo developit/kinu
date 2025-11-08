@@ -107,13 +107,13 @@ function createLazyComponent(slug: string) {
   return LazyComponent;
 }
 
-export default function Component() {
+export default function Docs() {
   const route = useRoute();
-  const componentSlug = route.params?.slug || 'overview';
-  const ComponentContent = createLazyComponent(componentSlug);
+  const slug = route.params?.slug || 'overview';
+  const DocsContent = createLazyComponent(slug);
   return (
     <DocsLayout>
-      <ComponentContent />
+      <DocsContent />
     </DocsLayout>
   );
 }

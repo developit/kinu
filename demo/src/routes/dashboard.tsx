@@ -245,7 +245,7 @@ function OverviewTab() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Quick Actions
                 </Button>
               </DropdownMenuTrigger>
@@ -257,7 +257,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                     />
+                    />
                     {action.label}
                   </DropdownMenuItem>
                 ))}
@@ -272,7 +272,7 @@ function OverviewTab() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Settings
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -286,7 +286,7 @@ function OverviewTab() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   {selectedTimeframe}
                 </Button>
               </DropdownMenuTrigger>
@@ -317,7 +317,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-               />
+              />
               Advanced Metrics
             </Toggle>
           </div>
@@ -329,11 +329,7 @@ function OverviewTab() {
                 variant="ghost"
                 onClick={() => toast.show('Data refreshed!', {icon: 'Refresh'})}
               >
-                <iconify-icon
-                  icon="lucide:refresh-cw"
-                  width="16"
-                  height="16"
-                 />
+                <iconify-icon icon="lucide:refresh-cw" width="16" height="16" />
               </Button>
             </Tooltip>
             <Tooltip title="Share Dashboard">
@@ -342,11 +338,7 @@ function OverviewTab() {
                 variant="ghost"
                 onClick={() => toast.show('Share link copied!', {icon: 'Link'})}
               >
-                <iconify-icon
-                  icon="lucide:share-2"
-                  width="16"
-                  height="16"
-                 />
+                <iconify-icon icon="lucide:share-2" width="16" height="16" />
               </Button>
             </Tooltip>
             <Tooltip title="Print Report">
@@ -355,11 +347,7 @@ function OverviewTab() {
                 variant="ghost"
                 onClick={() => toast.show('Report printed!', {icon: 'Print'})}
               >
-                <iconify-icon
-                  icon="lucide:printer"
-                  width="16"
-                  height="16"
-                 />
+                <iconify-icon icon="lucide:printer" width="16" height="16" />
               </Button>
             </Tooltip>
           </div>
@@ -382,7 +370,7 @@ function OverviewTab() {
                             icon="lucide:more-horizontal"
                             width="16"
                             height="16"
-                           />
+                          />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
@@ -416,7 +404,7 @@ function OverviewTab() {
                             width="16"
                             height="16"
                             style={{marginRight: '0.5rem'}}
-                           />
+                          />
                           Sources
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -505,7 +493,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-               />
+              />
               Set Goal
             </ContextMenuItem>
             <ContextMenuItem
@@ -562,7 +550,7 @@ function OverviewTab() {
                             width="16"
                             height="16"
                             style={{marginRight: '0.5rem'}}
-                           />
+                          />
                           Patterns
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -573,7 +561,7 @@ function OverviewTab() {
                             width="16"
                             height="16"
                             style={{marginRight: '0.5rem'}}
-                           />
+                          />
                           Alerts
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -622,7 +610,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-               />
+              />
               Optimize Spending
             </ContextMenuItem>
             <ContextMenuItem
@@ -657,11 +645,7 @@ function OverviewTab() {
                 <h3>Net Income</h3>
                 <Tooltip title="Net Income = Total Income - Total Expenses">
                   <Button size="icon" variant="ghost">
-                    <iconify-icon
-                      icon="lucide:info"
-                      width="16"
-                      height="16"
-                     />
+                    <iconify-icon icon="lucide:info" width="16" height="16" />
                   </Button>
                 </Tooltip>
               </div>
@@ -682,7 +666,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginLeft: '0.25rem', marginRight: '0.25rem'}}
-                     />
+                    />
                     Improving
                   </div>
                   <div>6-month avg: ${(netIncome * 0.95).toFixed(0)}</div>
@@ -708,7 +692,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-               />
+              />
               Plan Savings
             </ContextMenuItem>
             <ContextMenuItem
@@ -742,7 +726,7 @@ function OverviewTab() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.25rem'}}
-                       />
+                      />
                       On Track
                     </>
                   ) : (
@@ -752,7 +736,7 @@ function OverviewTab() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.25rem'}}
-                       />
+                      />
                       Below Target
                     </>
                   )}
@@ -792,7 +776,7 @@ function OverviewTab() {
                 width="16"
                 height="16"
                 style={{marginRight: '0.5rem'}}
-               />
+              />
               Optimize Savings
             </ContextMenuItem>
             <ContextMenuItem
@@ -889,7 +873,7 @@ function OverviewTab() {
                       icon="lucide:settings"
                       width="16"
                       height="16"
-                     />
+                    />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -901,7 +885,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                     />
+                    />
                     Budget Settings
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -923,7 +907,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                     />
+                    />
                     Templates
                   </DropdownMenuItem>
                   <Separator />
@@ -935,7 +919,7 @@ function OverviewTab() {
                       width="16"
                       height="16"
                       style={{marginRight: '0.5rem'}}
-                     />
+                    />
                     Export
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -974,7 +958,7 @@ function OverviewTab() {
                                     width="16"
                                     height="16"
                                     style={{marginRight: '0.5rem'}}
-                                   />
+                                  />
                                   Budget: ${category.budgeted}
                                 </div>
                                 <div>
@@ -983,7 +967,7 @@ function OverviewTab() {
                                     width="16"
                                     height="16"
                                     style={{marginRight: '0.5rem'}}
-                                   />
+                                  />
                                   Spent: ${category.spent}
                                 </div>
                                 <div>
@@ -992,7 +976,7 @@ function OverviewTab() {
                                     width="16"
                                     height="16"
                                     style={{marginRight: '0.5rem'}}
-                                   />
+                                  />
                                   Remaining: $
                                   {category.budgeted - category.spent}
                                 </div>
@@ -4552,8 +4536,8 @@ export default function Dashboard() {
                 width="24"
                 height="24"
                 style={{marginRight: '0.5rem'}}
-               />
-              Personal Finance Dashboard
+              />
+              Personal Finance
             </h1>
             <Badge variant="outline">PRO</Badge>
           </div>
@@ -4579,11 +4563,7 @@ export default function Dashboard() {
                 }}
                 onClick={() => setShowCommandPalette(true)}
               >
-                <iconify-icon
-                  icon="lucide:search"
-                  width="16"
-                  height="16"
-                 />
+                <iconify-icon icon="lucide:search" width="16" height="16" />
               </Button>
             </div>
 
@@ -4595,11 +4575,7 @@ export default function Dashboard() {
                   variant="outline"
                   style={{position: 'relative'}}
                 >
-                  <iconify-icon
-                    icon="lucide:bell"
-                    width="16"
-                    height="16"
-                   />
+                  <iconify-icon icon="lucide:bell" width="16" height="16" />
                   <Badge
                     variant="destructive"
                     style={{
@@ -4708,7 +4684,7 @@ export default function Dashboard() {
                               }
                               width="12"
                               height="12"
-                             />
+                            />
                           </Badge>
                         </div>
                       </div>
@@ -4722,11 +4698,7 @@ export default function Dashboard() {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button size="icon" variant="outline">
-                  <iconify-icon
-                    icon="lucide:zap"
-                    width="16"
-                    height="16"
-                   />
+                  <iconify-icon icon="lucide:zap" width="16" height="16" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -4738,7 +4710,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Quick Add Income
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4749,7 +4721,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Quick Add Expense
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4760,7 +4732,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Update Goal
                 </DropdownMenuItem>
                 <Separator />
@@ -4770,7 +4742,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Export Data
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => toast.show('Backup created!')}>
@@ -4779,7 +4751,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Backup Data
                 </DropdownMenuItem>
                 <Separator />
@@ -4789,7 +4761,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Command Palette
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -4803,7 +4775,7 @@ export default function Dashboard() {
                     icon="lucide:help-circle"
                     width="16"
                     height="16"
-                   />
+                  />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -4815,7 +4787,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Help Center
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setShowCommandPalette(true)}>
@@ -4824,7 +4796,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Keyboard Shortcuts
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4835,7 +4807,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Interactive Tutorial
                 </DropdownMenuItem>
                 <Separator />
@@ -4847,7 +4819,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Send Feedback
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4858,7 +4830,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Request Feature
                 </DropdownMenuItem>
                 <Separator />
@@ -4870,7 +4842,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   About
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -4892,7 +4864,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   View Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setActiveTab('settings')}>
@@ -4901,7 +4873,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => toast.show('Billing opened!')}>
@@ -4910,7 +4882,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Billing
                 </DropdownMenuItem>
                 <Separator />
@@ -4920,7 +4892,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Dark Mode
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -4931,7 +4903,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Language
                 </DropdownMenuItem>
                 <Separator />
@@ -4941,7 +4913,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -4961,7 +4933,7 @@ export default function Dashboard() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+              <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem>
               <span style={{textTransform: 'capitalize'}}>{activeTab}</span>
@@ -4984,7 +4956,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                 />
+                />
                 Overview
               </Tab>
               <Tab
@@ -4997,7 +4969,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                 />
+                />
                 Transactions
               </Tab>
               <Tab
@@ -5010,7 +4982,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                 />
+                />
                 Goals
               </Tab>
               <Tab
@@ -5023,7 +4995,7 @@ export default function Dashboard() {
                   width="16"
                   height="16"
                   style={{marginRight: '0.25rem'}}
-                 />
+                />
                 Settings
               </Tab>
             </TabList>
@@ -5064,7 +5036,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Transactions
                   <span
                     style={{
@@ -5085,7 +5057,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Goals
                   <span
                     style={{
@@ -5112,7 +5084,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                       />
+                      />
                       Calculator
                     </button>
                   </ContextMenuTrigger>
@@ -5125,7 +5097,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                       />
+                      />
                       Basic Calculator
                     </ContextMenuItem>
                     <ContextMenuItem
@@ -5136,7 +5108,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                       />
+                      />
                       Loan Calculator
                     </ContextMenuItem>
                     <ContextMenuItem
@@ -5164,7 +5136,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Reports
                 </button>
                 <button
@@ -5176,7 +5148,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Insights
                 </button>
               </div>
@@ -5192,7 +5164,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Settings
                   <span
                     style={{
@@ -5213,7 +5185,7 @@ export default function Dashboard() {
                     width="16"
                     height="16"
                     style={{marginRight: '0.5rem'}}
-                   />
+                  />
                   Help
                 </button>
               </div>
@@ -5241,7 +5213,7 @@ export default function Dashboard() {
                         width="16"
                         height="16"
                         style={{marginRight: '0.5rem'}}
-                       />
+                      />
                       Pro Tip
                     </div>
                     <div
