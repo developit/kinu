@@ -1,0 +1,2 @@
+import{d as t,u as e}from"./index-DEuqwjvZ.js";import{Y as o}from"./style-DhP3CgZJ.js";function d(){const[l,s]=t(!1);return e("div",{style:{display:"flex",gap:"0.5rem",alignItems:"center"},children:[e(o,{pressed:l,onPressedChange:s,children:"Bold"}),e(o,{disabled:!0,children:"Disabled"})]})}const g="<Toggle>Bold</Toggle>",i={Demo:d,code:g};export{d as Demo,g as code,i as default};
+//# sourceMappingURL=toggle-4OzhVC1I.js.map

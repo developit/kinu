@@ -1,0 +1,2 @@
+import{u as r}from"./index-DEuqwjvZ.js";import{K as d,M as e,O as c,J as m}from"./style-DhP3CgZJ.js";function n(){return r(m,{children:r(d,{children:[r(e,{children:r(c,{href:"#",children:"Home"})}),r(e,{children:r(c,{href:"#",children:"Docs"})}),r(e,{children:"Current"})]})})}const a="<Breadcrumb>...</Breadcrumb>",u={Demo:n,code:a};export{n as Demo,a as code,u as default};
+//# sourceMappingURL=breadcrumb-RWWEtajH.js.map
