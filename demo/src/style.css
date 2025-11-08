@@ -40,6 +40,12 @@ body {
   overflow: visible;
 }
 
+.demo-app > main,
+.getting-started > main {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
 .demo-app > main > section {
   margin: 1rem;
 }
