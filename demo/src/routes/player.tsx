@@ -15,7 +15,8 @@ import {
   ContextMenuItem,
   Separator,
 } from 'pui';
-import {useState, useEffect} from 'preact/hooks';
+import type {JSX} from 'preact';
+import {useEffect, useState} from 'preact/hooks';
 import {Nav} from '../nav';
 
 const tracks = [
@@ -107,7 +108,6 @@ export default function Player() {
   };
 
   const currentTime = (progress / 100) * 222; // Assuming 3:42 = 222 seconds
-  const totalTime = 222;
 
   const addToQueue = (track: (typeof tracks)[0]) => {
     setQueue((prev) => [...prev, track]);
@@ -258,7 +258,7 @@ export default function Player() {
             {tab === 'playlist' && (
               <TabPanel class="playlist-tab-panel">
                 <ScrollArea class="track-list">
-                  {trackList.map((track, index) => (
+                  {trackList.map((track) => (
                     <ContextMenu key={track.id}>
                       <ContextMenuTrigger>
                         <div
@@ -279,8 +279,10 @@ export default function Player() {
                               variant="ghost"
                               size="sm"
                               class={`heart-button ${track.liked ? 'liked' : ''}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
+                              onClick={(
+                                event: JSX.TargetedMouseEvent<HTMLButtonElement>,
+                              ) => {
+                                event.stopPropagation();
                                 toggleLike(track.id);
                               }}
                             >
@@ -290,10 +292,12 @@ export default function Player() {
                               variant="ghost"
                               size="sm"
                               class="context-menu-trigger"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                e.currentTarget.dispatchEvent(
-                                  new MouseEvent('contextmenu', e),
+                              onClick={(
+                                event: JSX.TargetedMouseEvent<HTMLButtonElement>,
+                              ) => {
+                                event.stopPropagation();
+                                event.currentTarget.dispatchEvent(
+                                  new MouseEvent('contextmenu', event),
                                 );
                               }}
                             >

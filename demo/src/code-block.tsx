@@ -1,12 +1,13 @@
-import 'highlight.js/styles/github.css';
-import hljs from 'highlight.js/lib/core';
-import typescript from 'highlight.js/lib/languages/typescript';
-hljs.registerLanguage('tsx', typescript);
+import {hljs} from './highlight';
 
 export function CodeBlock({code}: {code: string}) {
-  const html = hljs.highlight(code, {language: 'tsx'}).value;
+  const {value} = hljs.highlight(code, {language: 'tsx'});
   return (
-    <pre class="code-block hljs" dangerouslySetInnerHTML={{__html: html}} />
-    // <pre class="code-block">{code}</pre>
+    <pre class="code-block hljs">
+      <code
+        class="hljs language-tsx"
+        dangerouslySetInnerHTML={{__html: value}}
+      />
+    </pre>
   );
 }

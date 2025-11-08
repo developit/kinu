@@ -18,6 +18,7 @@
     "rules": {
       "correctness": {
         "useJsxKeyInIterable": "off",
+        "noChildrenProp": "off",
         "useExhaustiveDependencies": "off",
         "noUnknownProperty": "off"
       },

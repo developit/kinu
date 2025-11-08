@@ -14,7 +14,8 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "paths": {
-      "pui": ["./src"]
+      "pui": ["./src"],
+      "pui-docs/*": ["./docs/*"]
     },
     /* Linting */
     "strict": true,

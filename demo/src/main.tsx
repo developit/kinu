@@ -6,7 +6,8 @@ import 'iconify-icon';
 
 const Home = lazy(() => import('./routes/home.tsx'));
 const GettingStarted = lazy(() => import('./routes/getting-started.tsx'));
-const Components = lazy(() => import('./app.tsx'));
+// const ComponentsIndex = lazy(() => import('./routes/components-index.tsx'));
+const Docs = lazy(() => import('./routes/docs.tsx'));
 const Linear = lazy(() => import('./routes/linear.tsx'));
 const Chat = lazy(() => import('./routes/chat.tsx'));
 const Player = lazy(() => import('./routes/player.tsx'));
@@ -23,13 +24,21 @@ function setViewportVars() {
 setViewportVars();
 window.visualViewport?.addEventListener('resize', setViewportVars);
 
+function loadStart() {
+  document.body.classList.add('loading');
+}
+
+function loadEnd() {
+  document.body.classList.remove('loading');
+}
+
 render(
   <LocationProvider>
     <ErrorBoundary>
-      <Router>
+      <Router onLoadStart={loadStart} onLoadEnd={loadEnd}>
         <Route path="/" component={Home} />
         <Route path="/getting-started" component={GettingStarted} />
-        <Route path="/components" component={Components} />
+        <Route path="/docs/:slug?" component={Docs} remount />
         <Route path="/linear" component={Linear} />
         <Route path="/chat" component={Chat} />
         <Route path="/player" component={Player} />

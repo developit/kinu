@@ -83,15 +83,15 @@ export default function GettingStarted() {
               <Card>
                 <h3>Project Setup</h3>
                 <p>
-                  After installation, import the base styles and start using
+                  After installation, import the PUI styles and start using
                   components:
                 </p>
 
-                <h4>Import Base Styles</h4>
-                <p>Add the base CSS file to your main entry point:</p>
+                <h4>Import Styles</h4>
+                <p>Add the CSS import to your main entry point:</p>
                 <CodeBlock
                   code={`// In your main.tsx or index.tsx
-import 'pui/base.css';`}
+import 'pui/style.css';`}
                 />
 
                 <h4>Import Components</h4>
@@ -99,6 +99,10 @@ import 'pui/base.css';`}
                 <CodeBlock
                   code={`import { Button, Card, Input } from 'pui';`}
                 />
+                <p>
+                  Unused components will be tree-shaken, though frankly at 5kB
+                  who cares.
+                </p>
 
                 <h4>TypeScript Support</h4>
                 <p>
