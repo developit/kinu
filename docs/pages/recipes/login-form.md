@@ -1,24 +1,22 @@
 # Login Form with Validation
 
-A complete login form implementation with client-side validation, error handling, loading states, and accessibility features.
+A minimal login form using native HTML5 validation - no custom validation code required.
 
 ## Overview
 
-This recipe demonstrates how to build a production-ready login form using PUI components with:
+This recipe demonstrates how to build a login form using PUI components with:
 
-- Native HTML5 form validation
-- Custom validation logic
+- Native HTML5 form validation (browser handles it)
 - Loading states during submission
-- Error handling and display
+- Server error handling
 - Accessible form structure
-- Keyboard navigation
 - Password visibility toggle
 - Remember me functionality
 
 ## Complete Example
 
 ```tsx
-import {useState, type JSX} from 'preact/hooks';
+import {useState} from 'preact/hooks';
 import {
   Card,
   CardHeader,
@@ -33,115 +31,28 @@ import {
   Alert,
 } from 'pui';
 
-interface LoginFormData {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
-
-interface ValidationErrors {
-  email?: string;
-  password?: string;
-  form?: string;
-}
-
 export function LoginForm() {
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: '',
-    password: '',
-    rememberMe: false,
-  });
-
-  const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
 
-  // Validate individual field
-  const validateField = (name: keyof LoginFormData, value: string): string | undefined => {
-    switch (name) {
-      case 'email':
-        if (!value) return 'Email is required';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          return 'Please enter a valid email address';
-        }
-        return undefined;
-
-      case 'password':
-        if (!value) return 'Password is required';
-        if (value.length < 8) {
-          return 'Password must be at least 8 characters';
-        }
-        return undefined;
-
-      default:
-        return undefined;
-    }
-  };
-
-  // Validate entire form
-  const validateForm = (): boolean => {
-    const newErrors: ValidationErrors = {};
-
-    newErrors.email = validateField('email', formData.email);
-    newErrors.password = validateField('password', formData.password);
-
-    setErrors(newErrors);
-    return !newErrors.email && !newErrors.password;
-  };
-
-  // Handle input change
-  const handleChange = (e: JSX.TargetedEvent<HTMLInputElement>) => {
-    const {name, value, type, checked} = e.currentTarget;
-    const fieldValue = type === 'checkbox' ? checked : value;
-
-    setFormData(prev => ({
-      ...prev,
-      [name]: fieldValue,
-    }));
-
-    // Clear error when user starts typing
-    if (errors[name as keyof ValidationErrors]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: undefined,
-      }));
-    }
-  };
-
-  // Handle blur for inline validation
-  const handleBlur = (e: JSX.TargetedEvent<HTMLInputElement>) => {
-    const {name, value} = e.currentTarget;
-    const error = validateField(name as keyof LoginFormData, value);
-
-    if (error) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: error,
-      }));
-    }
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e: JSX.TargetedEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: Event) => {
     e.preventDefault();
 
-    // Validate form
-    if (!validateForm()) {
-      return;
-    }
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
 
     setIsSubmitting(true);
-    setErrors({});
+    setError('');
 
     try {
-      // Simulate API call
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          rememberMe: formData.rememberMe,
+          email: formData.get('email'),
+          password: formData.get('password'),
+          rememberMe: formData.get('rememberMe') === 'on',
         }),
       });
 
@@ -150,16 +61,10 @@ export function LoginForm() {
         throw new Error(data.message || 'Login failed');
       }
 
-      const data = await response.json();
-
-      // Handle successful login
-      console.log('Login successful:', data);
+      // Success - redirect
       window.location.href = '/dashboard';
-
-    } catch (error) {
-      setErrors({
-        form: error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.',
-      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }
@@ -174,47 +79,29 @@ export function LoginForm() {
         </CardDescription>
       </CardHeader>
 
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
-          {/* Form-level error */}
-          {errors.form && (
+          {error && (
             <Alert variant="destructive" role="alert">
-              <strong>Error:</strong> {errors.form}
+              <strong>Error:</strong> {error}
             </Alert>
           )}
 
-          {/* Email field */}
           <div className="space-y-2">
-            <Label htmlFor="email">
-              Email Address <span aria-label="required">*</span>
-            </Label>
+            <Label htmlFor="email">Email Address</Label>
             <Input
               id="email"
               name="email"
               type="email"
               autoComplete="email"
               required
-              aria-required="true"
-              aria-invalid={errors.email ? 'true' : 'false'}
-              aria-describedby={errors.email ? 'email-error' : undefined}
-              value={formData.email}
-              onInput={handleChange}
-              onBlur={handleBlur}
               disabled={isSubmitting}
             />
-            {errors.email && (
-              <p id="email-error" className="text-sm text-destructive" role="alert">
-                {errors.email}
-              </p>
-            )}
           </div>
 
-          {/* Password field */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">
-                Password <span aria-label="required">*</span>
-              </Label>
+              <Label htmlFor="password">Password</Label>
               <a
                 href="/forgot-password"
                 className="text-sm text-primary hover:underline"
@@ -229,13 +116,8 @@ export function LoginForm() {
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="current-password"
+                minLength={8}
                 required
-                aria-required="true"
-                aria-invalid={errors.password ? 'true' : 'false'}
-                aria-describedby={errors.password ? 'password-error' : 'password-hint'}
-                value={formData.password}
-                onInput={handleChange}
-                onBlur={handleBlur}
                 disabled={isSubmitting}
               />
               <Button
@@ -246,38 +128,19 @@ export function LoginForm() {
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isSubmitting}
-                tabIndex={isSubmitting ? -1 : 0}
               >
-                {showPassword ? (
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                  </svg>
-                ) : (
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                )}
+                {showPassword ? '👁️‍🗨️' : '👁️'}
               </Button>
             </div>
-            {errors.password ? (
-              <p id="password-error" className="text-sm text-destructive" role="alert">
-                {errors.password}
-              </p>
-            ) : (
-              <p id="password-hint" className="text-sm text-muted-foreground">
-                Must be at least 8 characters
-              </p>
-            )}
+            <p className="text-sm text-muted-foreground">
+              Must be at least 8 characters
+            </p>
           </div>
 
-          {/* Remember me checkbox */}
           <div className="flex items-center space-x-2">
             <Checkbox
               id="rememberMe"
               name="rememberMe"
-              checked={formData.rememberMe}
-              onInput={handleChange}
               disabled={isSubmitting}
             />
             <Label
@@ -296,16 +159,12 @@ export function LoginForm() {
             loading={isSubmitting}
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Signing in...' : 'Sign In'}
+            Sign In
           </Button>
 
           <p className="text-sm text-center text-muted-foreground">
             Don't have an account?{' '}
-            <a
-              href="/signup"
-              className="text-primary hover:underline"
-              tabIndex={isSubmitting ? -1 : 0}
-            >
+            <a href="/signup" className="text-primary hover:underline">
               Sign up
             </a>
           </p>
@@ -318,195 +177,181 @@ export function LoginForm() {
 
 ## Key Features Explained
 
-### 1. Form Validation
+### 1. Native HTML5 Validation
 
-The form implements three levels of validation:
+The browser handles all validation automatically:
 
-**Client-side validation**:
 ```tsx
-const validateField = (name: keyof LoginFormData, value: string) => {
-  // Validate individual fields
-  if (name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-    return 'Please enter a valid email address';
-  }
-  // ... more validation
+<Input
+  type="email"      // Browser validates email format
+  required          // Browser checks if filled
+  minLength={8}     // Browser checks minimum length
+/>
+```
+
+No custom validation code needed! The browser shows native error messages and prevents submission if invalid.
+
+### 2. FormData API
+
+Extract form values without managing state:
+
+```tsx
+const handleSubmit = async (e: Event) => {
+  e.preventDefault();
+  const form = e.target as HTMLFormElement;
+  const formData = new FormData(form);
+
+  // Get values by name attribute
+  const email = formData.get('email');
+  const password = formData.get('password');
+  const rememberMe = formData.get('rememberMe') === 'on';
 };
 ```
 
-**Native HTML5 validation** with `required`, `type="email"`, and `autoComplete` attributes.
+### 3. Minimal State Management
 
-**Inline validation** triggered on blur events to provide immediate feedback.
-
-### 2. Loading States
-
-The submit button shows a loading indicator during form submission:
+Only track what you actually need:
 
 ```tsx
-<Button
-  type="submit"
-  loading={isSubmitting}
-  disabled={isSubmitting}
->
-  {isSubmitting ? 'Signing in...' : 'Sign In'}
-</Button>
+const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
+const [showPassword, setShowPassword] = useState(false); // Toggle visibility
+const [error, setError] = useState('');                 // Server errors only
 ```
 
-All form inputs are disabled during submission to prevent changes.
+No field-level state, no validation state, no change handlers.
 
-### 3. Error Handling
+### 4. Server Error Handling
 
-**Field-level errors** are displayed below each input:
-
-```tsx
-{errors.email && (
-  <p id="email-error" className="text-sm text-destructive" role="alert">
-    {errors.email}
-  </p>
-)}
-```
-
-**Form-level errors** (like authentication failures) are shown at the top:
+Only show errors from the server:
 
 ```tsx
-{errors.form && (
+{error && (
   <Alert variant="destructive" role="alert">
-    <strong>Error:</strong> {errors.form}
+    <strong>Error:</strong> {error}
   </Alert>
 )}
 ```
 
-### 4. Accessibility Features
+### 5. Accessibility
 
-- **ARIA attributes**: `aria-required`, `aria-invalid`, `aria-describedby`, `aria-label`
-- **Semantic HTML**: Proper `<form>`, `<label>`, and `<input>` elements
-- **Focus management**: Logical tab order, disabled state during submission
-- **Screen reader support**: Error messages announced with `role="alert"`
-- **Required field indicators**: Visual and screen-reader accessible markers
+Native form elements provide built-in accessibility:
 
-### 5. Password Visibility Toggle
+- Browser-native validation messages
+- Proper label associations with `htmlFor`
+- ARIA attributes (`role="alert"`)
+- Keyboard navigation works automatically
+- Screen readers announce errors
 
-Allows users to show/hide their password:
+## Customization Options
+
+### Custom Validation Messages
+
+Override browser defaults with `setCustomValidity`:
 
 ```tsx
-<Button
-  type="button"
-  variant="ghost"
-  size="icon"
-  aria-label={showPassword ? 'Hide password' : 'Show password'}
-  onClick={() => setShowPassword(!showPassword)}
->
-  {/* Eye icon */}
-</Button>
+<Input
+  id="email"
+  type="email"
+  required
+  onInput={(e) => {
+    const input = e.currentTarget;
+    if (input.validity.typeMismatch) {
+      input.setCustomValidity('Please enter a valid email address');
+    } else {
+      input.setCustomValidity('');
+    }
+  }}
+/>
 ```
 
-### 6. Remember Me Functionality
+### Additional Client-Side Checks
 
-Checkbox state is captured and sent to the API:
+Add checks beyond HTML5 validation if needed:
 
 ```tsx
-<Checkbox
-  id="rememberMe"
-  name="rememberMe"
-  checked={formData.rememberMe}
-  onInput={handleChange}
-/>
+const handleSubmit = async (e: Event) => {
+  e.preventDefault();
+  const form = e.target as HTMLFormElement;
+
+  // Browser validation happens automatically
+  if (!form.checkValidity()) {
+    return; // Let browser show errors
+  }
+
+  const formData = new FormData(form);
+  const password = formData.get('password') as string;
+
+  // Additional custom check
+  if (password.toLowerCase() === formData.get('email')) {
+    setError('Password cannot be the same as email');
+    return;
+  }
+
+  // Continue with submission...
+};
+```
+
+### Social Login
+
+Add OAuth buttons:
+
+```tsx
+<CardContent className="space-y-4">
+  <div className="grid grid-cols-2 gap-2">
+    <Button variant="outline" type="button">
+      Google
+    </Button>
+    <Button variant="outline" type="button">
+      GitHub
+    </Button>
+  </div>
+
+  <div className="relative">
+    <div className="absolute inset-0 flex items-center">
+      <span className="w-full border-t" />
+    </div>
+    <div className="relative flex justify-center text-xs uppercase">
+      <span className="bg-background px-2 text-muted-foreground">
+        Or continue with email
+      </span>
+    </div>
+  </div>
+
+  {/* Email/password fields... */}
+</CardContent>
 ```
 
 ## Progressive Enhancement
 
-This form works even without JavaScript:
-
-1. Use `action="/api/login"` and `method="POST"` attributes on the form
-2. Server-side validation handles all cases
-3. Native HTML5 validation provides basic client-side checks
-4. JavaScript enhances the experience with inline validation and loading states
-
-## Customization Options
-
-### Email + Password + 2FA
-
-Add a one-time password field after initial submission:
+This form works without JavaScript:
 
 ```tsx
-{showTwoFactor && (
-  <div className="space-y-2">
-    <Label htmlFor="otp">Verification Code</Label>
-    <Input
-      id="otp"
-      name="otp"
-      type="text"
-      inputMode="numeric"
-      pattern="[0-9]{6}"
-      maxLength={6}
-      placeholder="000000"
-      required
-    />
-  </div>
-)}
-```
-
-### Social Login Options
-
-Add OAuth buttons before or after the form:
-
-```tsx
-<div className="space-y-2">
-  <Button variant="outline" className="w-full" type="button">
-    <GoogleIcon className="mr-2" />
-    Continue with Google
-  </Button>
-  <Button variant="outline" className="w-full" type="button">
-    <GitHubIcon className="mr-2" />
-    Continue with GitHub
-  </Button>
-</div>
-
-<div className="relative my-4">
-  <div className="absolute inset-0 flex items-center">
-    <span className="w-full border-t" />
-  </div>
-  <div className="relative flex justify-center text-xs uppercase">
-    <span className="bg-background px-2 text-muted-foreground">
-      Or continue with email
-    </span>
-  </div>
-</div>
-```
-
-### Rate Limiting Feedback
-
-Show a timeout after multiple failed attempts:
-
-```tsx
-{rateLimitSeconds > 0 && (
-  <Alert>
-    Too many attempts. Please try again in {rateLimitSeconds} seconds.
-  </Alert>
-)}
-
-<Button
-  type="submit"
-  disabled={isSubmitting || rateLimitSeconds > 0}
+<form
+  method="POST"
+  action="/api/login"
+  onSubmit={handleSubmit}
 >
-  Sign In
-</Button>
 ```
+
+If JavaScript fails to load:
+- Native HTML5 validation still works
+- Form submits to `/api/login` normally
+- Server handles the submission
 
 ## Testing
 
-### Validation Testing
+### Browser Validation Testing
 
 ```tsx
-test('shows error for invalid email', async () => {
+test('form requires email and password', () => {
   const {container} = render(<LoginForm />);
-
+  const form = container.querySelector('form');
   const emailInput = container.querySelector('#email');
-  fireEvent.input(emailInput, {target: {value: 'invalid-email'}});
-  fireEvent.blur(emailInput);
+  const passwordInput = container.querySelector('#password');
 
-  await waitFor(() => {
-    expect(screen.getByText(/valid email address/i)).toBeInTheDocument();
-  });
+  expect(emailInput.required).toBe(true);
+  expect(passwordInput.required).toBe(true);
+  expect(passwordInput.minLength).toBe(8);
 });
 ```
 
@@ -516,47 +361,51 @@ test('shows error for invalid email', async () => {
 test('submits form with valid data', async () => {
   const {container} = render(<LoginForm />);
 
-  fireEvent.input(container.querySelector('#email'), {
-    target: {value: 'user@example.com'}
-  });
-  fireEvent.input(container.querySelector('#password'), {
-    target: {value: 'password123'}
-  });
+  const emailInput = container.querySelector('#email');
+  const passwordInput = container.querySelector('#password');
+
+  fireEvent.input(emailInput, {target: {value: 'user@example.com'}});
+  fireEvent.input(passwordInput, {target: {value: 'password123'}});
 
   fireEvent.submit(container.querySelector('form'));
 
   await waitFor(() => {
-    expect(mockFetch).toHaveBeenCalledWith('/api/login', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        email: 'user@example.com',
-        password: 'password123',
-        rememberMe: false,
-      }),
-    });
+    expect(mockFetch).toHaveBeenCalledWith('/api/login', expect.any(Object));
   });
 });
 ```
 
+## Comparison: Before vs After
+
+### Before (Custom Validation - ❌ Bloated)
+- ~150 lines of validation code
+- Multiple state variables
+- Custom validation functions
+- Change handlers for every field
+- Blur handlers for inline validation
+- Error state management
+
+### After (Native Validation - ✅ Minimal)
+- ~80 lines total
+- 3 state variables (loading, password visibility, server error)
+- No validation code
+- No change handlers
+- No blur handlers
+- Browser does the work
+
 ## Related Recipes
 
-- [Multi-Step Wizard](./multi-step-wizard.md) - For multi-page registration flows
-- [Settings Panel](./settings-panel.md) - For user profile management
-- Form patterns with server validation
-- Password strength meter
+- [Multi-Step Wizard](./multi-step-wizard.md) - Multi-page forms
+- [Settings Panel](./settings-panel.md) - Complex form management
 
 ## Security Considerations
 
-1. **Always validate on the server**: Client-side validation is for UX, not security
-2. **Use HTTPS**: Never send credentials over unencrypted connections
-3. **Implement rate limiting**: Prevent brute force attacks
-4. **Hash passwords**: Never store plain text passwords
-5. **Use secure session management**: HTTPOnly, Secure, SameSite cookies
-6. **Consider 2FA**: Add multi-factor authentication for sensitive applications
-7. **CSRF protection**: Use CSRF tokens for form submissions
-8. **Content Security Policy**: Prevent XSS attacks
+1. **Always validate on the server** - Client validation is UX, not security
+2. **Use HTTPS** - Never send credentials unencrypted
+3. **Implement rate limiting** - Prevent brute force attacks
+4. **Use CSRF tokens** - Protect against CSRF attacks
+5. **Consider 2FA** - Add multi-factor authentication
 
 ---
 
-This login form provides a solid foundation for authentication in production applications. Customize it to fit your specific requirements while maintaining accessibility and security best practices.
+This login form demonstrates PUI's philosophy: leverage platform features instead of recreating them in JavaScript. The browser is incredibly capable - let it do the work!
