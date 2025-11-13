@@ -117,9 +117,4 @@
   font-weight: 600;
 }
 
-[p="calendar-day"][aria-disabled="true"] {
-  color: hsl(var(--p-muted-foreground));
-  background-color: hsl(var(--p-muted) / 0.5);
-  cursor: not-allowed;
-  pointer-events: none;
-}
+

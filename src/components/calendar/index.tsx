@@ -111,7 +111,6 @@ export function Calendar({defaultValue}: {defaultValue?: Date} = {}) {
               onClick={() => setDate(ds)}
               aria-current={ds === today ? 'date' : undefined}
               aria-selected={ds === date ? 'true' : 'false'}
-              aria-disabled={g.m !== 0 ? 'true' : 'false'}
             >
               {g.d}
             </button>
