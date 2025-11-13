@@ -255,7 +255,7 @@ function createWizardModel() {
 function AccountStep({wizard}) {
   return (
     <div class="space-y-4">
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Email Address *
         <Input
           name="email"
@@ -276,9 +276,9 @@ function AccountStep({wizard}) {
             Enter your email address
           </span>
         )}
-      </label>
+      </Label>
 
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Password *
         <Input
           name="password"
@@ -299,9 +299,9 @@ function AccountStep({wizard}) {
             Must be at least 8 characters
           </span>
         )}
-      </label>
+      </Label>
 
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Confirm Password *
         <Input
           name="confirmPassword"
@@ -318,7 +318,7 @@ function AccountStep({wizard}) {
             {wizard.confirmPasswordError}
           </span>
         )}
-      </label>
+      </Label>
     </div>
   );
 }
@@ -327,7 +327,7 @@ function ProfileStep({wizard}) {
   return (
     <div class="space-y-4">
       <div class="grid grid-cols-2 gap-4">
-        <label class="space-y-2 text-sm font-medium">
+        <Label class="space-y-2 text-sm font-medium">
           First Name *
           <Input
             name="firstName"
@@ -340,9 +340,9 @@ function ProfileStep({wizard}) {
           {wizard.firstNameError && (
             <span class="text-sm text-destructive">{wizard.firstNameError}</span>
           )}
-        </label>
+        </Label>
 
-        <label class="space-y-2 text-sm font-medium">
+        <Label class="space-y-2 text-sm font-medium">
           Last Name *
           <Input
             name="lastName"
@@ -355,10 +355,10 @@ function ProfileStep({wizard}) {
           {wizard.lastNameError && (
             <span class="text-sm text-destructive">{wizard.lastNameError}</span>
           )}
-        </label>
+        </Label>
       </div>
 
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Company
         <Input
           name="company"
@@ -366,9 +366,9 @@ function ProfileStep({wizard}) {
           value={wizard.company}
           onInput={(e) => wizard.company.value = e.currentTarget.value}
         />
-      </label>
+      </Label>
 
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Role *
         <Select
           name="role"
@@ -386,9 +386,9 @@ function ProfileStep({wizard}) {
         {wizard.roleError && (
           <span class="text-sm text-destructive">{wizard.roleError}</span>
         )}
-      </label>
+      </Label>
 
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Bio
         <Textarea
           name="bio"
@@ -400,7 +400,7 @@ function ProfileStep({wizard}) {
         <span class="text-sm text-muted-foreground">
           {wizard.bio.value.length} / 500 characters
         </span>
-      </label>
+      </Label>
     </div>
   );
 }
@@ -411,7 +411,7 @@ function PreferencesStep({wizard}) {
       <div class="space-y-3">
         <span class="text-sm font-medium">Email Notifications</span>
         <div class="space-y-2">
-          <label class="flex items-center space-x-2">
+          <Label class="flex items-center space-x-2">
             <input
               type="radio"
               name="emailNotifications"
@@ -420,8 +420,8 @@ function PreferencesStep({wizard}) {
               onInput={(e) => wizard.emailNotifications.value = e.currentTarget.value}
             />
             <span class="text-sm">All notifications</span>
-          </label>
-          <label class="flex items-center space-x-2">
+          </Label>
+          <Label class="flex items-center space-x-2">
             <input
               type="radio"
               name="emailNotifications"
@@ -430,8 +430,8 @@ function PreferencesStep({wizard}) {
               onInput={(e) => wizard.emailNotifications.value = e.currentTarget.value}
             />
             <span class="text-sm">Important only</span>
-          </label>
-          <label class="flex items-center space-x-2">
+          </Label>
+          <Label class="flex items-center space-x-2">
             <input
               type="radio"
               name="emailNotifications"
@@ -440,11 +440,11 @@ function PreferencesStep({wizard}) {
               onInput={(e) => wizard.emailNotifications.value = e.currentTarget.value}
             />
             <span class="text-sm">None</span>
-          </label>
+          </Label>
         </div>
       </div>
 
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Theme
         <Select
           name="theme"
@@ -455,9 +455,9 @@ function PreferencesStep({wizard}) {
           <option value="light">Light</option>
           <option value="dark">Dark</option>
         </Select>
-      </label>
+      </Label>
 
-      <label class="space-y-2 text-sm font-medium">
+      <Label class="space-y-2 text-sm font-medium">
         Language
         <Select
           name="language"
@@ -469,7 +469,7 @@ function PreferencesStep({wizard}) {
           <option value="fr">Français</option>
           <option value="de">Deutsch</option>
         </Select>
-      </label>
+      </Label>
     </div>
   );
 }
@@ -749,13 +749,13 @@ Each step is its own component and receives the wizard as a prop:
 ```tsx
 function AccountStep({wizard}) {
   return (
-    <label class="space-y-2 text-sm font-medium">
+    <Label class="space-y-2 text-sm font-medium">
       Email Address *
       <Input
         value={wizard.email}
         onInput={(e) => wizard.email.value = e.currentTarget.value}
       />
-    </label>
+    </Label>
   );
 }
 
