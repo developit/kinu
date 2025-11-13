@@ -1,6 +1,6 @@
 import {Sidebar, SidebarTrigger, ToastContainer} from 'pui';
 import {Nav} from './nav';
-import {componentGroups, overviewEntries} from './docs-data';
+import {componentGroups, guidesGroups, overviewEntries} from './docs-data';
 import {useEffect} from 'preact/hooks';
 import {useLocation} from 'preact-iso';
 import type {ComponentChildren} from 'preact';
@@ -72,6 +72,23 @@ export function DocsLayout({children}: {children?: ComponentChildren}) {
               </ul>
             </section>
           )}
+          {guidesGroups.map((group) => (
+            <section key={group.name} class="docs-sidebar-section">
+              <h2>{group.name}</h2>
+              <ul class="docs-sidebar-list">
+                {group.entries.map((item) => (
+                  <li>
+                    <a
+                      href={`/docs/${item.slug}`}
+                      class={`docs-link${currentSlug === item.slug ? ' is-active' : ''}`}
+                    >
+                      <span class="docs-link-title">{item.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
           {componentGroups.map((group) => (
             <section key={group.name} class="docs-sidebar-section">
               <h2>{group.name}</h2>

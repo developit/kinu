@@ -71,6 +71,29 @@ export const componentGroups: ComponentGroup[] = (() => {
     });
 })();
 
+export const guidesGroups: ComponentGroup[] = (() => {
+  const categoryMap = new Map<string, ManifestEntry[]>();
+  for (const entry of manifest) {
+    if (entry.section !== 'Guides') continue;
+    if (!categoryMap.has(entry.category)) categoryMap.set(entry.category, []);
+    categoryMap.get(entry.category)!.push(entry);
+  }
+  return Array.from(categoryMap.entries())
+    .map(([name, entries]) => ({
+      name,
+      entries: entries.slice().sort(sortEntries),
+      order: Math.min(
+        ...entries.map((item) =>
+          typeof item.order === 'number' ? item.order : Number.MAX_SAFE_INTEGER,
+        ),
+      ),
+    }))
+    .sort((a, b) => {
+      if (a.order !== b.order) return a.order - b.order;
+      return a.name.localeCompare(b.name);
+    });
+})();
+
 export function getEntryBySlug(slug: string | undefined | null) {
   if (!slug) return undefined;
   return manifestMap.get(slug);
