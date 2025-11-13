@@ -19,20 +19,29 @@ This recipe demonstrates how to build a comprehensive settings panel using PUI c
 
 ```tsx
 import {useState, useEffect, type JSX} from 'preact/hooks';
-import {Card, CardHeader, CardContent, CardTitle, CardDescription} from 'pui/card';
-import {Tabs, TabList, Tab, TabPanel} from 'pui/tabs';
-import {Input} from 'pui/input';
-import {Label} from 'pui/label';
-import {Button} from 'pui/button';
-import {Select} from 'pui/select';
-import {Textarea} from 'pui/textarea';
-import {Switch} from 'pui/switch';
-import {RadioGroup} from 'pui/radio-group';
-import {Separator} from 'pui/separator';
-import {Avatar} from 'pui/avatar';
-import {Badge} from 'pui/badge';
-import {Alert} from 'pui/alert';
-import {showToast} from 'pui/toast';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardDescription,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+  Input,
+  Label,
+  Button,
+  Select,
+  Textarea,
+  Switch,
+  RadioGroup,
+  Separator,
+  Avatar,
+  Badge,
+  Alert,
+  showToast,
+} from 'pui';
 
 // Settings interface
 interface Settings {

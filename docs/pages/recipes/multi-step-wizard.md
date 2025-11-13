@@ -26,16 +26,16 @@ import {
   CardFooter,
   CardTitle,
   CardDescription,
-} from 'pui/card';
-import {Button} from 'pui/button';
-import {Input} from 'pui/input';
-import {Label} from 'pui/label';
-import {Select} from 'pui/select';
-import {Textarea} from 'pui/textarea';
-import {RadioGroup} from 'pui/radio-group';
-import {Progress} from 'pui/progress';
-import {Badge} from 'pui/badge';
-import {Separator} from 'pui/separator';
+  Button,
+  Input,
+  Label,
+  Select,
+  Textarea,
+  RadioGroup,
+  Progress,
+  Badge,
+  Separator,
+} from 'pui';
 
 // Step definitions
 interface Step {

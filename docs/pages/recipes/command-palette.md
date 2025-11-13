@@ -18,10 +18,7 @@ This recipe demonstrates how to build a command palette (like VS Code's Command 
 
 ```tsx
 import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
-import {Dialog, DialogContent} from 'pui/dialog';
-import {Input} from 'pui/input';
-import {Badge} from 'pui/badge';
-import {Separator} from 'pui/separator';
+import {Dialog, DialogContent, Input, Badge, Separator} from 'pui';
 
 // Command interface
 interface Command {

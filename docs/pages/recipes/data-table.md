@@ -27,21 +27,17 @@ import {
   TableHead,
   TableRow,
   TableCell,
-} from 'pui/table';
-import {Input} from 'pui/input';
-import {Button} from 'pui/button';
-import {Checkbox} from 'pui/checkbox';
-import {Badge} from 'pui/badge';
-import {
+  Input,
+  Button,
+  Checkbox,
+  Badge,
   Select,
-} from 'pui/select';
-import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from 'pui/dropdown-menu';
-import {Skeleton} from 'pui/skeleton';
+  Skeleton,
+} from 'pui';
 
 // Data types
 interface User {

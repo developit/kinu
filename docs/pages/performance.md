@@ -173,18 +173,17 @@ const {Button} = PUI;
 
 ### 2. CSS Optimization
 
-#### Import Only Required CSS
+#### Import CSS Once
 
 ```tsx
-// Option 1: Import all component styles (recommended for most apps)
-import 'pui/style.css'; // ~4KB gzipped
+// Import the complete PUI stylesheet
+import 'pui/style.css'; // ~4KB gzipped, includes all components
 
-// Option 2: Import base + individual component styles
-import 'pui/base.css';
-import 'pui/button/style.css';
-import 'pui/input/style.css';
-// Saves ~1-2KB if you only use a few components
+// Then import only the components you need
+import {Button, Input, Card} from 'pui';
 ```
+
+PUI's CSS is already optimized and tree-shaken by your bundler. Since it's small (~4KB gzipped for everything), there's no need to split it further.
 
 #### Critical CSS
 

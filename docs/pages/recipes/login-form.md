@@ -26,12 +26,12 @@ import {
   CardFooter,
   CardTitle,
   CardDescription,
-} from 'pui/card';
-import {Button} from 'pui/button';
-import {Input} from 'pui/input';
-import {Label} from 'pui/label';
-import {Checkbox} from 'pui/checkbox';
-import {Alert} from 'pui/alert';
+  Button,
+  Input,
+  Label,
+  Checkbox,
+  Alert,
+} from 'pui';
 
 interface LoginFormData {
   email: string;
