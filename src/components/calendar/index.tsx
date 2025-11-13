@@ -24,9 +24,7 @@ export function Calendar({defaultValue}: {defaultValue?: Date} = {}) {
 
   const grid = [];
   for (let i = 0; i < 42; i++) {
-    if (i < first) grid.push({d: prevDays - first + i + 1, m: -1});
-    else if (i < first + days) grid.push({d: i - first + 1, m: 0});
-    else grid.push({d: i - first - days + 1, m: 1});
+    grid.push(i < first ? [prevDays - first + i + 1, -1] : i < first + days ? [i - first + 1, 0] : [i - first - days + 1, 1]);
   }
 
   const nav = (d: number) => {
@@ -38,8 +36,7 @@ export function Calendar({defaultValue}: {defaultValue?: Date} = {}) {
 
   return (
     <CalendarRoot>
-      <input type="hidden" data-month value={month} onChange={(e) => setMonth(e.currentTarget.value)} />
-      <input type="hidden" data-date value={date} onChange={(e) => setDate(e.currentTarget.value)} />
+      <input type="hidden" data-date value={date} />
       <div>
         <button onClick={() => nav(-1)}>←</button>
         <div>{new Date(dy, dm - 1).toLocaleString('default', {month: 'long', year: 'numeric'})}</div>
@@ -49,12 +46,12 @@ export function Calendar({defaultValue}: {defaultValue?: Date} = {}) {
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => <div key={d}>{d}</div>)}
       </div>
       <div>
-        {grid.map((g, i) => {
-          const d = new Date(dy, dm - 1 + g.m, g.d);
+        {grid.map(([gd, m], i) => {
+          const d = new Date(dy, dm - 1 + m, gd);
           const ds = dateStr(d);
           return (
             <button key={i} p="calendar-day" onClick={() => setDate(ds)} aria-current={ds === today ? 'date' : undefined} aria-selected={ds === date ? 'true' : 'false'}>
-              {g.d}
+              {gd}
             </button>
           );
         })}
