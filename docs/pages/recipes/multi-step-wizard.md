@@ -255,8 +255,8 @@ function createWizardModel() {
 function AccountStep({wizard}) {
   return (
     <div class="space-y-4">
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Email Address *</span>
+      <label class="space-y-2 text-sm font-medium">
+        Email Address *
         <Input
           name="email"
           type="email"
@@ -278,8 +278,8 @@ function AccountStep({wizard}) {
         )}
       </label>
 
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Password *</span>
+      <label class="space-y-2 text-sm font-medium">
+        Password *
         <Input
           name="password"
           type="password"
@@ -301,8 +301,8 @@ function AccountStep({wizard}) {
         )}
       </label>
 
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Confirm Password *</span>
+      <label class="space-y-2 text-sm font-medium">
+        Confirm Password *
         <Input
           name="confirmPassword"
           type="password"
@@ -327,8 +327,8 @@ function ProfileStep({wizard}) {
   return (
     <div class="space-y-4">
       <div class="grid grid-cols-2 gap-4">
-        <label class="space-y-2">
-          <span class="text-sm font-medium">First Name *</span>
+        <label class="space-y-2 text-sm font-medium">
+          First Name *
           <Input
             name="firstName"
             autoComplete="given-name"
@@ -342,8 +342,8 @@ function ProfileStep({wizard}) {
           )}
         </label>
 
-        <label class="space-y-2">
-          <span class="text-sm font-medium">Last Name *</span>
+        <label class="space-y-2 text-sm font-medium">
+          Last Name *
           <Input
             name="lastName"
             autoComplete="family-name"
@@ -358,8 +358,8 @@ function ProfileStep({wizard}) {
         </label>
       </div>
 
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Company</span>
+      <label class="space-y-2 text-sm font-medium">
+        Company
         <Input
           name="company"
           autoComplete="organization"
@@ -368,8 +368,8 @@ function ProfileStep({wizard}) {
         />
       </label>
 
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Role *</span>
+      <label class="space-y-2 text-sm font-medium">
+        Role *
         <Select
           name="role"
           required
@@ -388,8 +388,8 @@ function ProfileStep({wizard}) {
         )}
       </label>
 
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Bio</span>
+      <label class="space-y-2 text-sm font-medium">
+        Bio
         <Textarea
           name="bio"
           rows={4}
@@ -444,8 +444,8 @@ function PreferencesStep({wizard}) {
         </div>
       </div>
 
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Theme</span>
+      <label class="space-y-2 text-sm font-medium">
+        Theme
         <Select
           name="theme"
           value={wizard.theme}
@@ -457,8 +457,8 @@ function PreferencesStep({wizard}) {
         </Select>
       </label>
 
-      <label class="space-y-2">
-        <span class="text-sm font-medium">Language</span>
+      <label class="space-y-2 text-sm font-medium">
+        Language
         <Select
           name="language"
           value={wizard.language}
@@ -749,8 +749,8 @@ Each step is its own component and receives the wizard as a prop:
 ```tsx
 function AccountStep({wizard}) {
   return (
-    <label class="space-y-2">
-      <span class="text-sm font-medium">Email Address *</span>
+    <label class="space-y-2 text-sm font-medium">
+      Email Address *
       <Input
         value={wizard.email}
         onInput={(e) => wizard.email.value = e.currentTarget.value}
