@@ -36,6 +36,78 @@
     "description": ""
   },
   {
+    "slug": "accessibility",
+    "title": "Accessibility",
+    "section": "Foundations",
+    "category": "Best Practices",
+    "order": 4,
+    "file": "pages/accessibility.md",
+    "description": "Comprehensive guide to building accessible applications with PUI"
+  },
+  {
+    "slug": "performance",
+    "title": "Performance",
+    "section": "Foundations",
+    "category": "Best Practices",
+    "order": 5,
+    "file": "pages/performance.md",
+    "description": "Performance benchmarks and optimization strategies"
+  },
+  {
+    "slug": "recipes",
+    "title": "Recipes",
+    "section": "Guides",
+    "category": "Examples",
+    "order": 1,
+    "file": "pages/recipes.md",
+    "description": "Production-ready patterns and examples for common UI features"
+  },
+  {
+    "slug": "login-form",
+    "title": "Login Form",
+    "section": "Guides",
+    "category": "Recipes",
+    "order": 2,
+    "file": "pages/recipes/login-form.md",
+    "description": "Complete login form with validation and error handling"
+  },
+  {
+    "slug": "multi-step-wizard",
+    "title": "Multi-Step Wizard",
+    "section": "Guides",
+    "category": "Recipes",
+    "order": 3,
+    "file": "pages/recipes/multi-step-wizard.md",
+    "description": "Multi-step form with progress tracking and validation"
+  },
+  {
+    "slug": "data-table",
+    "title": "Data Table",
+    "section": "Guides",
+    "category": "Recipes",
+    "order": 4,
+    "file": "pages/recipes/data-table.md",
+    "description": "Feature-rich table with sorting, filtering, and pagination"
+  },
+  {
+    "slug": "command-palette",
+    "title": "Command Palette",
+    "section": "Guides",
+    "category": "Recipes",
+    "order": 5,
+    "file": "pages/recipes/command-palette.md",
+    "description": "Keyboard-first command palette with fuzzy search"
+  },
+  {
+    "slug": "settings-panel",
+    "title": "Settings Panel",
+    "section": "Guides",
+    "category": "Recipes",
+    "order": 6,
+    "file": "pages/recipes/settings-panel.md",
+    "description": "Comprehensive settings panel with tabs and validation"
+  },
+  {
     "slug": "typography",
     "title": "Typography",
     "section": "Components",
