@@ -77,11 +77,13 @@ import * from 'pui';
 | Material-UI (MUI) | ~80 KB | ~120 KB | ~300 KB+ |
 | Chakra UI | ~45 KB | ~80 KB | ~150 KB+ |
 | Ant Design | ~60 KB | ~100 KB | ~500 KB+ |
-| shadcn/ui | ~5-10 KB | ~15-25 KB | N/A (copy-paste) |
+| shadcn/ui * | ~5-8 KB | ~20-35 KB | ~60 KB+ |
 | Radix UI | ~3-5 KB | ~10-20 KB | ~40 KB+ |
 | Headless UI | ~2-4 KB | ~8-15 KB | ~25 KB+ |
 
 _Note: Sizes are approximate and include required dependencies. MUI, Chakra, and Ant Design include React (~40KB gzipped). PUI includes Preact (~3KB gzipped)._
+
+_* shadcn/ui is a wrapper around Radix UI primitives + class-variance-authority + additional styling code. Bundle sizes are similar to or larger than Radix UI alone due to the additional layers._
 
 ### Why PUI is Smaller
 
@@ -121,8 +123,9 @@ For a typical landing page:
 | Library | TTI | Notes |
 | --- | --- | --- |
 | **PUI** | **~800ms** | Minimal JS parsing |
-| shadcn/ui | ~1.2s | Similar approach |
+| Headless UI | ~1.2s | Minimal runtime, good perf |
 | Radix UI | ~1.5s | More runtime logic |
+| shadcn/ui | ~1.5-2s | Radix + additional layers |
 | Chakra UI | ~2.5s | Large bundle + runtime |
 | Material-UI | ~3s+ | Very large bundle |
 
