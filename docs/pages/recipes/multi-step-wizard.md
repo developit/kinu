@@ -18,7 +18,8 @@ This recipe demonstrates how to build a multi-step wizard using PUI components w
 ## Complete Example
 
 ```tsx
-import {signal, computed} from '@preact/signals';
+import {signal, computed, effect} from '@preact/signals';
+import {useMemo} from 'preact/hooks';
 import {
   Card,
   CardHeader,
@@ -49,154 +50,208 @@ const STEPS: Step[] = [
   {id: 'review', title: 'Review', description: 'Confirm your information'},
 ];
 
-// Form state using individual signals
-const currentStep = signal(0);
-const isSubmitting = signal(false);
+// Create the wizard model with all state and actions
+function createWizardModel() {
+  // State signals
+  const currentStep = signal(0);
+  const isSubmitting = signal(false);
 
-// Account fields
-const email = signal('');
-const password = signal('');
-const confirmPassword = signal('');
+  // Account fields
+  const email = signal('');
+  const password = signal('');
+  const confirmPassword = signal('');
 
-// Profile fields
-const firstName = signal('');
-const lastName = signal('');
-const company = signal('');
-const role = signal('');
-const bio = signal('');
+  // Profile fields
+  const firstName = signal('');
+  const lastName = signal('');
+  const company = signal('');
+  const role = signal('');
+  const bio = signal('');
 
-// Preference fields
-const emailNotifications = signal('all');
-const theme = signal('system');
-const language = signal('en');
+  // Preference fields
+  const emailNotifications = signal('all');
+  const theme = signal('system');
+  const language = signal('en');
 
-// Error signals
-const emailError = signal('');
-const passwordError = signal('');
-const confirmPasswordError = signal('');
-const firstNameError = signal('');
-const lastNameError = signal('');
-const roleError = signal('');
-const formError = signal('');
+  // Error signals
+  const emailError = signal('');
+  const passwordError = signal('');
+  const confirmPasswordError = signal('');
+  const firstNameError = signal('');
+  const lastNameError = signal('');
+  const roleError = signal('');
+  const formError = signal('');
 
-// Computed progress
-const progress = computed(() => ((currentStep.value + 1) / STEPS.length) * 100);
+  // Computed progress
+  const progress = computed(() => ((currentStep.value + 1) / STEPS.length) * 100);
 
-// Validation functions
-function validateAccountStep(): boolean {
-  let valid = true;
-
-  if (!email.value) {
-    emailError.value = 'Email is required';
-    valid = false;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-    emailError.value = 'Invalid email address';
-    valid = false;
-  } else {
+  // Clear errors when values change
+  effect(() => {
+    email.value;
     emailError.value = '';
-  }
+  });
 
-  if (!password.value) {
-    passwordError.value = 'Password is required';
-    valid = false;
-  } else if (password.value.length < 8) {
-    passwordError.value = 'Password must be at least 8 characters';
-    valid = false;
-  } else {
+  effect(() => {
+    password.value;
     passwordError.value = '';
-  }
+  });
 
-  if (password.value !== confirmPassword.value) {
-    confirmPasswordError.value = 'Passwords do not match';
-    valid = false;
-  } else {
+  effect(() => {
+    confirmPassword.value;
     confirmPasswordError.value = '';
-  }
+  });
 
-  return valid;
-}
-
-function validateProfileStep(): boolean {
-  let valid = true;
-
-  if (!firstName.value) {
-    firstNameError.value = 'First name is required';
-    valid = false;
-  } else {
+  effect(() => {
+    firstName.value;
     firstNameError.value = '';
-  }
+  });
 
-  if (!lastName.value) {
-    lastNameError.value = 'Last name is required';
-    valid = false;
-  } else {
+  effect(() => {
+    lastName.value;
     lastNameError.value = '';
-  }
+  });
 
-  if (!role.value) {
-    roleError.value = 'Role is required';
-    valid = false;
-  } else {
+  effect(() => {
+    role.value;
     roleError.value = '';
-  }
+  });
 
-  return valid;
-}
+  // Validation functions
+  function validateAccountStep(): boolean {
+    let valid = true;
 
-// Navigation
-function handleNext() {
-  const validators = [validateAccountStep, validateProfileStep, () => true, () => true];
-  const validator = validators[currentStep.value];
-
-  if (!validator()) return;
-
-  currentStep.value = Math.min(currentStep.value + 1, STEPS.length - 1);
-}
-
-function handleBack() {
-  currentStep.value = Math.max(currentStep.value - 1, 0);
-}
-
-function goToStep(stepIndex: number) {
-  currentStep.value = stepIndex;
-}
-
-async function handleSubmit() {
-  isSubmitting.value = true;
-  formError.value = '';
-
-  try {
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-        firstName: firstName.value,
-        lastName: lastName.value,
-        company: company.value,
-        role: role.value,
-        bio: bio.value,
-        emailNotifications: emailNotifications.value,
-        theme: theme.value,
-        language: language.value,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Registration failed');
+    if (!email.value) {
+      emailError.value = 'Email is required';
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      emailError.value = 'Invalid email address';
+      valid = false;
     }
 
-    window.location.href = '/welcome';
-  } catch (error) {
-    formError.value = error instanceof Error ? error.message : 'An error occurred';
-  } finally {
-    isSubmitting.value = false;
+    if (!password.value) {
+      passwordError.value = 'Password is required';
+      valid = false;
+    } else if (password.value.length < 8) {
+      passwordError.value = 'Password must be at least 8 characters';
+      valid = false;
+    }
+
+    if (password.value !== confirmPassword.value) {
+      confirmPasswordError.value = 'Passwords do not match';
+      valid = false;
+    }
+
+    return valid;
   }
+
+  function validateProfileStep(): boolean {
+    let valid = true;
+
+    if (!firstName.value) {
+      firstNameError.value = 'First name is required';
+      valid = false;
+    }
+
+    if (!lastName.value) {
+      lastNameError.value = 'Last name is required';
+      valid = false;
+    }
+
+    if (!role.value) {
+      roleError.value = 'Role is required';
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  // Navigation actions
+  function handleNext() {
+    const validators = [validateAccountStep, validateProfileStep, () => true, () => true];
+    const validator = validators[currentStep.value];
+
+    if (!validator()) return;
+
+    currentStep.value = Math.min(currentStep.value + 1, STEPS.length - 1);
+  }
+
+  function handleBack() {
+    currentStep.value = Math.max(currentStep.value - 1, 0);
+  }
+
+  function goToStep(stepIndex: number) {
+    currentStep.value = stepIndex;
+  }
+
+  async function handleSubmit() {
+    isSubmitting.value = true;
+    formError.value = '';
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value,
+          firstName: firstName.value,
+          lastName: lastName.value,
+          company: company.value,
+          role: role.value,
+          bio: bio.value,
+          emailNotifications: emailNotifications.value,
+          theme: theme.value,
+          language: language.value,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      window.location.href = '/welcome';
+    } catch (error) {
+      formError.value = error instanceof Error ? error.message : 'An error occurred';
+    } finally {
+      isSubmitting.value = false;
+    }
+  }
+
+  // Return the complete model
+  return {
+    // State
+    currentStep,
+    isSubmitting,
+    email,
+    password,
+    confirmPassword,
+    firstName,
+    lastName,
+    company,
+    role,
+    bio,
+    emailNotifications,
+    theme,
+    language,
+    progress,
+    // Errors
+    emailError,
+    passwordError,
+    confirmPasswordError,
+    firstNameError,
+    lastNameError,
+    roleError,
+    formError,
+    // Actions
+    handleNext,
+    handleBack,
+    goToStep,
+    handleSubmit,
+  };
 }
 
-// Step Components
-function AccountStep() {
+// Step components receive the model
+function AccountStep({model}) {
   return (
     <div class="space-y-4">
       <div class="space-y-2">
@@ -207,17 +262,14 @@ function AccountStep() {
           type="email"
           autoComplete="email"
           required
-          value={email.value}
-          onInput={(e) => {
-            email.value = e.currentTarget.value;
-            emailError.value = '';
-          }}
-          aria-invalid={emailError.value ? 'true' : 'false'}
-          aria-describedby={emailError.value ? 'email-error' : undefined}
+          value={model.email.value}
+          onInput={(e) => model.email.value = e.currentTarget.value}
+          aria-invalid={model.emailError.value ? 'true' : 'false'}
+          aria-describedby={model.emailError.value ? 'email-error' : undefined}
         />
-        {emailError.value && (
+        {model.emailError.value && (
           <p id="email-error" class="text-sm text-destructive">
-            {emailError.value}
+            {model.emailError.value}
           </p>
         )}
       </div>
@@ -230,17 +282,14 @@ function AccountStep() {
           type="password"
           autoComplete="new-password"
           required
-          value={password.value}
-          onInput={(e) => {
-            password.value = e.currentTarget.value;
-            passwordError.value = '';
-          }}
-          aria-invalid={passwordError.value ? 'true' : 'false'}
-          aria-describedby={passwordError.value ? 'password-error' : 'password-hint'}
+          value={model.password.value}
+          onInput={(e) => model.password.value = e.currentTarget.value}
+          aria-invalid={model.passwordError.value ? 'true' : 'false'}
+          aria-describedby={model.passwordError.value ? 'password-error' : 'password-hint'}
         />
-        {passwordError.value ? (
+        {model.passwordError.value ? (
           <p id="password-error" class="text-sm text-destructive">
-            {passwordError.value}
+            {model.passwordError.value}
           </p>
         ) : (
           <p id="password-hint" class="text-sm text-muted-foreground">
@@ -257,17 +306,14 @@ function AccountStep() {
           type="password"
           autoComplete="new-password"
           required
-          value={confirmPassword.value}
-          onInput={(e) => {
-            confirmPassword.value = e.currentTarget.value;
-            confirmPasswordError.value = '';
-          }}
-          aria-invalid={confirmPasswordError.value ? 'true' : 'false'}
-          aria-describedby={confirmPasswordError.value ? 'confirm-error' : undefined}
+          value={model.confirmPassword.value}
+          onInput={(e) => model.confirmPassword.value = e.currentTarget.value}
+          aria-invalid={model.confirmPasswordError.value ? 'true' : 'false'}
+          aria-describedby={model.confirmPasswordError.value ? 'confirm-error' : undefined}
         />
-        {confirmPasswordError.value && (
+        {model.confirmPasswordError.value && (
           <p id="confirm-error" class="text-sm text-destructive">
-            {confirmPasswordError.value}
+            {model.confirmPasswordError.value}
           </p>
         )}
       </div>
@@ -275,7 +321,7 @@ function AccountStep() {
   );
 }
 
-function ProfileStep() {
+function ProfileStep({model}) {
   return (
     <div class="space-y-4">
       <div class="grid grid-cols-2 gap-4">
@@ -286,15 +332,12 @@ function ProfileStep() {
             name="firstName"
             autoComplete="given-name"
             required
-            value={firstName.value}
-            onInput={(e) => {
-              firstName.value = e.currentTarget.value;
-              firstNameError.value = '';
-            }}
-            aria-invalid={firstNameError.value ? 'true' : 'false'}
+            value={model.firstName.value}
+            onInput={(e) => model.firstName.value = e.currentTarget.value}
+            aria-invalid={model.firstNameError.value ? 'true' : 'false'}
           />
-          {firstNameError.value && (
-            <p class="text-sm text-destructive">{firstNameError.value}</p>
+          {model.firstNameError.value && (
+            <p class="text-sm text-destructive">{model.firstNameError.value}</p>
           )}
         </div>
 
@@ -305,15 +348,12 @@ function ProfileStep() {
             name="lastName"
             autoComplete="family-name"
             required
-            value={lastName.value}
-            onInput={(e) => {
-              lastName.value = e.currentTarget.value;
-              lastNameError.value = '';
-            }}
-            aria-invalid={lastNameError.value ? 'true' : 'false'}
+            value={model.lastName.value}
+            onInput={(e) => model.lastName.value = e.currentTarget.value}
+            aria-invalid={model.lastNameError.value ? 'true' : 'false'}
           />
-          {lastNameError.value && (
-            <p class="text-sm text-destructive">{lastNameError.value}</p>
+          {model.lastNameError.value && (
+            <p class="text-sm text-destructive">{model.lastNameError.value}</p>
           )}
         </div>
       </div>
@@ -324,8 +364,8 @@ function ProfileStep() {
           id="company"
           name="company"
           autoComplete="organization"
-          value={company.value}
-          onInput={(e) => company.value = e.currentTarget.value}
+          value={model.company.value}
+          onInput={(e) => model.company.value = e.currentTarget.value}
         />
       </div>
 
@@ -335,12 +375,9 @@ function ProfileStep() {
           id="role"
           name="role"
           required
-          value={role.value}
-          onInput={(e) => {
-            role.value = e.currentTarget.value;
-            roleError.value = '';
-          }}
-          aria-invalid={roleError.value ? 'true' : 'false'}
+          value={model.role.value}
+          onInput={(e) => model.role.value = e.currentTarget.value}
+          aria-invalid={model.roleError.value ? 'true' : 'false'}
         >
           <option value="">Select a role...</option>
           <option value="developer">Developer</option>
@@ -348,8 +385,8 @@ function ProfileStep() {
           <option value="manager">Manager</option>
           <option value="other">Other</option>
         </Select>
-        {roleError.value && (
-          <p class="text-sm text-destructive">{roleError.value}</p>
+        {model.roleError.value && (
+          <p class="text-sm text-destructive">{model.roleError.value}</p>
         )}
       </div>
 
@@ -360,18 +397,18 @@ function ProfileStep() {
           name="bio"
           rows={4}
           placeholder="Tell us a bit about yourself..."
-          value={bio.value}
-          onInput={(e) => bio.value = e.currentTarget.value}
+          value={model.bio.value}
+          onInput={(e) => model.bio.value = e.currentTarget.value}
         />
         <p class="text-sm text-muted-foreground">
-          {bio.value.length} / 500 characters
+          {model.bio.value.length} / 500 characters
         </p>
       </div>
     </div>
   );
 }
 
-function PreferencesStep() {
+function PreferencesStep({model}) {
   return (
     <div class="space-y-6">
       <div class="space-y-3">
@@ -383,8 +420,8 @@ function PreferencesStep() {
               id="notifications-all"
               name="emailNotifications"
               value="all"
-              checked={emailNotifications.value === 'all'}
-              onInput={(e) => emailNotifications.value = e.currentTarget.value}
+              checked={model.emailNotifications.value === 'all'}
+              onInput={(e) => model.emailNotifications.value = e.currentTarget.value}
             />
             <Label htmlFor="notifications-all" class="font-normal">
               All notifications
@@ -396,8 +433,8 @@ function PreferencesStep() {
               id="notifications-important"
               name="emailNotifications"
               value="important"
-              checked={emailNotifications.value === 'important'}
-              onInput={(e) => emailNotifications.value = e.currentTarget.value}
+              checked={model.emailNotifications.value === 'important'}
+              onInput={(e) => model.emailNotifications.value = e.currentTarget.value}
             />
             <Label htmlFor="notifications-important" class="font-normal">
               Important only
@@ -409,8 +446,8 @@ function PreferencesStep() {
               id="notifications-none"
               name="emailNotifications"
               value="none"
-              checked={emailNotifications.value === 'none'}
-              onInput={(e) => emailNotifications.value = e.currentTarget.value}
+              checked={model.emailNotifications.value === 'none'}
+              onInput={(e) => model.emailNotifications.value = e.currentTarget.value}
             />
             <Label htmlFor="notifications-none" class="font-normal">
               None
@@ -424,8 +461,8 @@ function PreferencesStep() {
         <Select
           id="theme"
           name="theme"
-          value={theme.value}
-          onInput={(e) => theme.value = e.currentTarget.value}
+          value={model.theme.value}
+          onInput={(e) => model.theme.value = e.currentTarget.value}
         >
           <option value="system">System default</option>
           <option value="light">Light</option>
@@ -438,8 +475,8 @@ function PreferencesStep() {
         <Select
           id="language"
           name="language"
-          value={language.value}
-          onInput={(e) => language.value = e.currentTarget.value}
+          value={model.language.value}
+          onInput={(e) => model.language.value = e.currentTarget.value}
         >
           <option value="en">English</option>
           <option value="es">Español</option>
@@ -451,20 +488,20 @@ function PreferencesStep() {
   );
 }
 
-function ReviewStep() {
+function ReviewStep({model}) {
   return (
     <div class="space-y-6">
       <div>
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-semibold">Account Information</h3>
-          <Button variant="ghost" size="sm" onClick={() => goToStep(0)}>
+          <Button variant="ghost" size="sm" onClick={() => model.goToStep(0)}>
             Edit
           </Button>
         </div>
         <dl class="space-y-2 text-sm">
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Email:</dt>
-            <dd class="font-medium">{email.value}</dd>
+            <dd class="font-medium">{model.email.value}</dd>
           </div>
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Password:</dt>
@@ -478,7 +515,7 @@ function ReviewStep() {
       <div>
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-semibold">Profile</h3>
-          <Button variant="ghost" size="sm" onClick={() => goToStep(1)}>
+          <Button variant="ghost" size="sm" onClick={() => model.goToStep(1)}>
             Edit
           </Button>
         </div>
@@ -486,23 +523,23 @@ function ReviewStep() {
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Name:</dt>
             <dd class="font-medium">
-              {firstName.value} {lastName.value}
+              {model.firstName.value} {model.lastName.value}
             </dd>
           </div>
-          {company.value && (
+          {model.company.value && (
             <div class="flex justify-between">
               <dt class="text-muted-foreground">Company:</dt>
-              <dd class="font-medium">{company.value}</dd>
+              <dd class="font-medium">{model.company.value}</dd>
             </div>
           )}
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Role:</dt>
-            <dd class="font-medium capitalize">{role.value}</dd>
+            <dd class="font-medium capitalize">{model.role.value}</dd>
           </div>
-          {bio.value && (
+          {model.bio.value && (
             <div class="flex flex-col space-y-1">
               <dt class="text-muted-foreground">Bio:</dt>
-              <dd class="font-medium">{bio.value}</dd>
+              <dd class="font-medium">{model.bio.value}</dd>
             </div>
           )}
         </dl>
@@ -513,29 +550,29 @@ function ReviewStep() {
       <div>
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-semibold">Preferences</h3>
-          <Button variant="ghost" size="sm" onClick={() => goToStep(2)}>
+          <Button variant="ghost" size="sm" onClick={() => model.goToStep(2)}>
             Edit
           </Button>
         </div>
         <dl class="space-y-2 text-sm">
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Email Notifications:</dt>
-            <dd class="font-medium capitalize">{emailNotifications.value}</dd>
+            <dd class="font-medium capitalize">{model.emailNotifications.value}</dd>
           </div>
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Theme:</dt>
-            <dd class="font-medium capitalize">{theme.value}</dd>
+            <dd class="font-medium capitalize">{model.theme.value}</dd>
           </div>
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Language:</dt>
-            <dd class="font-medium">{language.value}</dd>
+            <dd class="font-medium">{model.language.value}</dd>
           </div>
         </dl>
       </div>
 
-      {formError.value && (
+      {model.formError.value && (
         <div class="p-4 bg-destructive/10 border border-destructive rounded-md">
-          <p class="text-sm text-destructive">{formError.value}</p>
+          <p class="text-sm text-destructive">{model.formError.value}</p>
         </div>
       )}
     </div>
@@ -544,8 +581,15 @@ function ReviewStep() {
 
 // Main component
 export function MultiStepWizard() {
-  const stepComponents = [AccountStep, ProfileStep, PreferencesStep, ReviewStep];
-  const CurrentStepComponent = stepComponents[currentStep.value];
+  const model = useMemo(() => createWizardModel(), []);
+
+  const stepComponents = [
+    (props) => <AccountStep {...props} />,
+    (props) => <ProfileStep {...props} />,
+    (props) => <PreferencesStep {...props} />,
+    (props) => <ReviewStep {...props} />,
+  ];
+  const CurrentStepComponent = stepComponents[model.currentStep.value];
 
   return (
     <div class="w-full max-w-2xl mx-auto space-y-6">
@@ -553,21 +597,21 @@ export function MultiStepWizard() {
       <div class="space-y-2">
         <div class="flex justify-between items-center">
           <span class="text-sm font-medium">
-            Step {currentStep.value + 1} of {STEPS.length}
+            Step {model.currentStep.value + 1} of {STEPS.length}
           </span>
           <span class="text-sm text-muted-foreground">
-            {Math.round(progress.value)}% complete
+            {Math.round(model.progress.value)}% complete
           </span>
         </div>
-        <Progress value={progress.value} max={100} aria-label="Wizard progress" />
+        <Progress value={model.progress.value} max={100} aria-label="Wizard progress" />
       </div>
 
       {/* Step indicators */}
       <nav aria-label="Progress steps">
         <ol class="flex items-center justify-between">
           {STEPS.map((step, index) => {
-            const isComplete = index < currentStep.value;
-            const isCurrent = index === currentStep.value;
+            const isComplete = index < model.currentStep.value;
+            const isCurrent = index === model.currentStep.value;
 
             return (
               <li key={step.id} class="flex flex-col items-center flex-1">
@@ -608,32 +652,32 @@ export function MultiStepWizard() {
       {/* Main card */}
       <Card>
         <CardHeader>
-          <CardTitle>{STEPS[currentStep.value].title}</CardTitle>
-          <CardDescription>{STEPS[currentStep.value].description}</CardDescription>
+          <CardTitle>{STEPS[model.currentStep.value].title}</CardTitle>
+          <CardDescription>{STEPS[model.currentStep.value].description}</CardDescription>
         </CardHeader>
 
         <CardContent>
-          <CurrentStepComponent />
+          <CurrentStepComponent model={model} />
         </CardContent>
 
         <CardFooter class="flex justify-between">
           <Button
             variant="outline"
-            onClick={handleBack}
-            disabled={currentStep.value === 0 || isSubmitting.value}
+            onClick={model.handleBack}
+            disabled={model.currentStep.value === 0 || model.isSubmitting.value}
           >
             Back
           </Button>
 
-          {currentStep.value < STEPS.length - 1 ? (
-            <Button onClick={handleNext} disabled={isSubmitting.value}>
+          {model.currentStep.value < STEPS.length - 1 ? (
+            <Button onClick={model.handleNext} disabled={model.isSubmitting.value}>
               Next
             </Button>
           ) : (
             <Button
-              onClick={handleSubmit}
-              loading={isSubmitting.value}
-              disabled={isSubmitting.value}
+              onClick={model.handleSubmit}
+              loading={model.isSubmitting.value}
+              disabled={model.isSubmitting.value}
             >
               Complete Registration
             </Button>
@@ -647,55 +691,99 @@ export function MultiStepWizard() {
 
 ## Key Features Explained
 
-### 1. Signals for State Management
+### 1. Model-Based Architecture
 
-This example uses Preact Signals instead of `useState` for better performance:
+This example uses a `createWizardModel()` function to encapsulate all state and logic:
 
 ```tsx
-import {signal, computed} from '@preact/signals';
+function createWizardModel() {
+  // Create signals
+  const email = signal('');
+  const emailError = signal('');
 
-// Individual signals - not a big object
-const email = signal('');
-const password = signal('');
-const firstName = signal('');
+  // Effects automatically clear errors when values change
+  effect(() => {
+    email.value;
+    emailError.value = '';
+  });
 
-// Computed values automatically update
-const progress = computed(() => ((currentStep.value + 1) / STEPS.length) * 100);
+  // Actions
+  function handleSubmit() { /* ... */ }
+
+  // Return everything as a cohesive model
+  return {
+    email,
+    emailError,
+    handleSubmit,
+  };
+}
+
+// Use in component
+export function MultiStepWizard() {
+  const model = useMemo(() => createWizardModel(), []);
+
+  return <AccountStep model={model} />;
+}
 ```
 
-**Why Signals?**
-- **Fine-grained reactivity**: Only components using specific signals re-render
-- **No props drilling**: Signals can be imported and used anywhere
-- **Computed values**: Automatically update when dependencies change
-- **Better performance**: Avoids unnecessary re-renders
+**Why This Architecture?**
+- **Encapsulation**: All state and logic in one place
+- **No module-level state**: Each component instance gets its own model
+- **Easy to test**: Just call `createWizardModel()` and test the returned object
+- **Clear data flow**: Model is passed down explicitly, not imported globally
 
-### 2. Component Separation
+### 2. Effect-Based Error Clearing
 
-Each step is its own component for better organization:
+Errors automatically clear when fields change, using effects instead of callbacks:
 
 ```tsx
-function AccountStep() {
+// Clear error whenever email changes
+effect(() => {
+  email.value; // Read the signal to subscribe
+  emailError.value = ''; // Clear the error
+});
+
+// Now inputs don't need to manually clear errors
+<Input
+  value={model.email.value}
+  onInput={(e) => model.email.value = e.currentTarget.value}
+  // No need to clear emailError here!
+/>
+```
+
+**Benefits:**
+- **Separation of concerns**: Error clearing logic is separate from input handlers
+- **Declarative**: Effect describes the relationship between state and errors
+- **DRY**: No need to repeat error clearing in every input handler
+
+### 3. Component Separation
+
+Each step is its own component and receives the model as a prop:
+
+```tsx
+function AccountStep({model}) {
   return (
     <div class="space-y-4">
       <Label htmlFor="email">Email Address *</Label>
       <Input
-        value={email.value}
-        onInput={(e) => {
-          email.value = e.currentTarget.value;
-          emailError.value = '';
-        }}
+        value={model.email.value}
+        onInput={(e) => model.email.value = e.currentTarget.value}
       />
     </div>
   );
 }
 
 // Render the current step
-const stepComponents = [AccountStep, ProfileStep, PreferencesStep, ReviewStep];
-const CurrentStepComponent = stepComponents[currentStep.value];
-<CurrentStepComponent />
+const stepComponents = [
+  (props) => <AccountStep {...props} />,
+  (props) => <ProfileStep {...props} />,
+  // ...
+];
+const CurrentStepComponent = stepComponents[model.currentStep.value];
+<CurrentStepComponent model={model} />
 ```
 
-### 3. Per-Step Validation
+### 4. Per-Step Validation
 
 Each step validates only when moving forward:
 
@@ -721,42 +809,47 @@ function handleNext() {
 }
 ```
 
-### 4. Data Persistence
+### 5. Data Persistence
 
-Signals make localStorage persistence simple:
+Effects make localStorage persistence simple within the model:
 
 ```tsx
-import {effect} from '@preact/signals';
+function createWizardModel() {
+  const email = signal('');
+  const firstName = signal('');
 
-// Save on every change
-effect(() => {
-  localStorage.setItem('wizardData', JSON.stringify({
-    email: email.value,
-    firstName: firstName.value,
-    // ... other fields
-  }));
-});
+  // Save on every change
+  effect(() => {
+    localStorage.setItem('wizardData', JSON.stringify({
+      email: email.value,
+      firstName: firstName.value,
+      // ... other fields
+    }));
+  });
 
-// Load on mount
-const saved = localStorage.getItem('wizardData');
-if (saved) {
-  const data = JSON.parse(saved);
-  email.value = data.email;
-  firstName.value = data.firstName;
+  // Load on initialization
+  const saved = localStorage.getItem('wizardData');
+  if (saved) {
+    const data = JSON.parse(saved);
+    email.value = data.email;
+    firstName.value = data.firstName;
+  }
+
+  return {email, firstName, /* ... */};
 }
 ```
 
-### 5. Progress Tracking
+### 6. Progress Tracking
 
 Computed signal automatically updates progress:
 
 ```tsx
 const progress = computed(() => ((currentStep.value + 1) / STEPS.length) * 100);
 
-<Progress value={progress.value} max={100} aria-label="Wizard progress" />
+<Progress value={model.progress.value} max={100} aria-label="Wizard progress" />
 ```
 
-### 6. Accessibility Features
+### 7. Accessibility Features
 
 - **ARIA landmarks**: `<nav aria-label="Progress steps">`
 - **Current step indicator**: `aria-current="step"`
@@ -768,94 +861,166 @@ const progress = computed(() => ((currentStep.value + 1) / STEPS.length) * 100);
 
 ### Save Draft Functionality
 
-Allow users to save progress and continue later:
+Add a save draft action to the model:
 
 ```tsx
-async function handleSaveDraft() {
-  await fetch('/api/drafts', {
-    method: 'POST',
-    body: JSON.stringify({
-      currentStep: currentStep.value,
-      email: email.value,
-      firstName: firstName.value,
-      // ... other fields
-    }),
-  });
+function createWizardModel() {
+  // ... existing code
 
-  // Show success message
-  showToast({
-    title: 'Draft saved',
-    description: 'You can continue later from where you left off.',
-  });
+  async function handleSaveDraft() {
+    await fetch('/api/drafts', {
+      method: 'POST',
+      body: JSON.stringify({
+        currentStep: currentStep.value,
+        email: email.value,
+        firstName: firstName.value,
+        // ... other fields
+      }),
+    });
+
+    // Show success message
+    showToast({
+      title: 'Draft saved',
+      description: 'You can continue later from where you left off.',
+    });
+  }
+
+  return {
+    // ... other returns
+    handleSaveDraft,
+  };
 }
 
-<Button variant="ghost" onClick={handleSaveDraft}>
+// Use in component
+<Button variant="ghost" onClick={model.handleSaveDraft}>
   Save Draft
 </Button>
 ```
 
 ### Conditional Steps
 
-Use computed signals to show/hide steps dynamically:
+Use computed signals within the model to show/hide steps dynamically:
 
 ```tsx
-const skipProfile = signal(false);
+function createWizardModel() {
+  const skipProfile = signal(false);
 
-const activeSteps = computed(() => {
-  if (skipProfile.value) {
-    return STEPS.filter(s => s.id !== 'profile');
-  }
-  return STEPS;
-});
+  const activeSteps = computed(() => {
+    if (skipProfile.value) {
+      return STEPS.filter(s => s.id !== 'profile');
+    }
+    return STEPS;
+  });
 
-// Use activeSteps.value in your render
-{activeSteps.value.map((step, index) => ...)}
+  return {
+    skipProfile,
+    activeSteps,
+    // ...
+  };
+}
+
+// Use in component
+{model.activeSteps.value.map((step, index) => ...)}
 ```
 
 ### Async Validation
 
-Validate fields against the server:
+Add async validation to the model:
 
 ```tsx
-async function validateEmailAvailability() {
-  const response = await fetch(`/api/check-email?email=${email.value}`);
-  const {available} = await response.json();
+function createWizardModel() {
+  // ... existing code
 
-  if (!available) {
-    emailError.value = 'This email is already registered';
-    return false;
+  async function validateEmailAvailability() {
+    const response = await fetch(`/api/check-email?email=${email.value}`);
+    const {available} = await response.json();
+
+    if (!available) {
+      emailError.value = 'This email is already registered';
+      return false;
+    }
+
+    return true;
   }
 
-  emailError.value = '';
-  return true;
-}
+  async function validateAccountStep(): Promise<boolean> {
+    let valid = true;
 
-// Call in validation function
-async function validateAccountStep(): Promise<boolean> {
-  // ... other validation
+    // Standard validation
+    if (!email.value) {
+      emailError.value = 'Email is required';
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      emailError.value = 'Invalid email address';
+      valid = false;
+    } else {
+      // Async validation
+      valid = await validateEmailAvailability();
+    }
 
-  if (email.value && !await validateEmailAvailability()) {
-    return false;
+    // ... rest of validation
+
+    return valid;
   }
 
-  return true;
+  return {/* ... */};
 }
 ```
 
 ## Testing
 
-### Step Navigation
+### Testing the Model Directly
+
+The model can be tested without mounting components:
 
 ```tsx
-import {currentStep} from './wizard-signals';
+import {createWizardModel} from './wizard';
 
-test('navigates between steps', () => {
-  currentStep.value = 0; // Reset signal
+test('validates email correctly', () => {
+  const model = createWizardModel();
+
+  // Invalid email
+  model.email.value = 'invalid';
+  model.handleNext();
+  expect(model.emailError.value).toBe('Invalid email address');
+  expect(model.currentStep.value).toBe(0);
+
+  // Valid email
+  model.email.value = 'user@example.com';
+  model.password.value = 'password123';
+  model.confirmPassword.value = 'password123';
+  model.handleNext();
+  expect(model.emailError.value).toBe('');
+  expect(model.currentStep.value).toBe(1);
+});
+```
+
+### Testing Error Clearing Effects
+
+```tsx
+test('clears errors when value changes', () => {
+  const model = createWizardModel();
+
+  // Set an error
+  model.emailError.value = 'Email is required';
+  expect(model.emailError.value).toBe('Email is required');
+
+  // Change the email value
+  model.email.value = 'test@example.com';
+
+  // Effect should clear the error
+  expect(model.emailError.value).toBe('');
+});
+```
+
+### Testing Component Integration
+
+```tsx
+test('navigates between steps in UI', () => {
   render(<MultiStepWizard />);
 
   // Should start on first step
   expect(screen.getByText('Account Info')).toBeInTheDocument();
-  expect(currentStep.value).toBe(0);
 
   // Fill required fields
   fireEvent.input(screen.getByLabelText(/email/i), {target: {value: 'test@example.com'}});
@@ -867,55 +1032,6 @@ test('navigates between steps', () => {
 
   // Should move to second step
   expect(screen.getByText('Profile')).toBeInTheDocument();
-  expect(currentStep.value).toBe(1);
-
-  // Click back
-  fireEvent.click(screen.getByText('Back'));
-
-  // Should return to first step
-  expect(screen.getByText('Account Info')).toBeInTheDocument();
-  expect(currentStep.value).toBe(0);
-});
-```
-
-### Validation Prevents Progress
-
-```tsx
-import {emailError, passwordError} from './wizard-signals';
-
-test('validates before allowing next step', () => {
-  currentStep.value = 0;
-  emailError.value = '';
-  passwordError.value = '';
-
-  render(<MultiStepWizard />);
-
-  // Try to proceed without filling required fields
-  fireEvent.click(screen.getByText('Next'));
-
-  // Should show validation errors
-  expect(emailError.value).toBe('Email is required');
-  expect(screen.getByText(/email is required/i)).toBeInTheDocument();
-
-  // Should still be on first step
-  expect(currentStep.value).toBe(0);
-});
-```
-
-### Signal Updates
-
-```tsx
-import {email, firstName} from './wizard-signals';
-
-test('updates signals when typing', () => {
-  email.value = '';
-  render(<MultiStepWizard />);
-
-  const emailInput = screen.getByLabelText(/email/i);
-  fireEvent.input(emailInput, {target: {value: 'user@example.com'}});
-
-  // Signal should update
-  expect(email.value).toBe('user@example.com');
 });
 ```
 
@@ -944,24 +1060,27 @@ test('updates signals when typing', () => {
 
 This refactored wizard demonstrates PUI's philosophy of minimal, performant code:
 
-- **Signals vs useState**: Fine-grained reactivity means only affected components re-render
-- **Component separation**: Each step is isolated, making the code easier to maintain
-- **Individual signals**: Each form field is its own signal, avoiding unnecessary object spreading
-- **No prop drilling**: Signals can be accessed from any component
-- **Computed values**: Progress calculation automatically updates when step changes
-- **Cleaner code**: ~500 lines vs ~700 lines with the old approach
+- **Model-based architecture**: State and logic encapsulated in `createWizardModel()`
+- **No module-level state**: Each component instance gets its own fresh model via `useMemo()`
+- **Effect-based logic**: Error clearing happens declaratively in effects, not in event handlers
+- **Explicit data flow**: Model passed as a prop, not imported globally
+- **Testability**: Just call `createWizardModel()` to test all logic without mounting components
+- **Signals + computed**: Fine-grained reactivity and automatic derived values
 
 **Before (useState + monolithic)**:
 - One large component with all steps inline
 - Huge `formData` object updated on every keystroke
 - All fields re-render on any change
+- Manual error clearing in every input handler
 - Complex state management with `setFormData(prev => ({...prev, [name]: value}))`
 
-**After (Signals + components)**:
+**After (Model + Signals + effects)**:
 - Separate component for each step
 - Individual signals for each field
 - Only changed field re-renders
-- Simple updates: `email.value = newValue`
+- Effects automatically clear errors
+- Simple updates: `model.email.value = newValue`
+- Clear separation: state creation vs. rendering
 
 ---
 
