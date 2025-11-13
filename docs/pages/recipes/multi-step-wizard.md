@@ -255,10 +255,9 @@ function createWizardModel() {
 function AccountStep({wizard}) {
   return (
     <div class="space-y-4">
-      <div class="space-y-2">
-        <Label htmlFor="email">Email Address *</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Email Address *</span>
         <Input
-          id="email"
           name="email"
           type="email"
           autoComplete="email"
@@ -266,19 +265,22 @@ function AccountStep({wizard}) {
           value={wizard.email}
           onInput={(e) => wizard.email.value = e.currentTarget.value}
           aria-invalid={wizard.emailError.value ? 'true' : 'false'}
-          aria-describedby={wizard.emailError.value ? 'email-error' : undefined}
+          aria-describedby="email-hint"
         />
-        {wizard.emailError.value && (
-          <p id="email-error" class="text-sm text-destructive">
-            {wizard.emailError.value}
-          </p>
+        {wizard.emailError.value ? (
+          <span id="email-hint" class="text-sm text-destructive">
+            {wizard.emailError}
+          </span>
+        ) : (
+          <span id="email-hint" class="text-sm text-muted-foreground">
+            Enter your email address
+          </span>
         )}
-      </div>
+      </label>
 
-      <div class="space-y-2">
-        <Label htmlFor="password">Password *</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Password *</span>
         <Input
-          id="password"
           name="password"
           type="password"
           autoComplete="new-password"
@@ -286,23 +288,22 @@ function AccountStep({wizard}) {
           value={wizard.password}
           onInput={(e) => wizard.password.value = e.currentTarget.value}
           aria-invalid={wizard.passwordError.value ? 'true' : 'false'}
-          aria-describedby={wizard.passwordError.value ? 'password-error' : 'password-hint'}
+          aria-describedby="password-hint"
         />
-        {wizard.passwordError.value ? (
-          <p id="password-error" class="text-sm text-destructive">
-            {wizard.passwordError.value}
-          </p>
+        {wizard.passwordError ? (
+          <span id="password-hint" class="text-sm text-destructive">
+            {wizard.passwordError}
+          </span>
         ) : (
-          <p id="password-hint" class="text-sm text-muted-foreground">
+          <span id="password-hint" class="text-sm text-muted-foreground">
             Must be at least 8 characters
-          </p>
+          </span>
         )}
-      </div>
+      </label>
 
-      <div class="space-y-2">
-        <Label htmlFor="confirmPassword">Confirm Password *</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Confirm Password *</span>
         <Input
-          id="confirmPassword"
           name="confirmPassword"
           type="password"
           autoComplete="new-password"
@@ -310,14 +311,14 @@ function AccountStep({wizard}) {
           value={wizard.confirmPassword}
           onInput={(e) => wizard.confirmPassword.value = e.currentTarget.value}
           aria-invalid={wizard.confirmPasswordError.value ? 'true' : 'false'}
-          aria-describedby={wizard.confirmPasswordError.value ? 'confirm-error' : undefined}
+          aria-describedby="confirm-hint"
         />
-        {wizard.confirmPasswordError.value && (
-          <p id="confirm-error" class="text-sm text-destructive">
-            {wizard.confirmPasswordError.value}
-          </p>
+        {wizard.confirmPasswordError && (
+          <span id="confirm-hint" class="text-sm text-destructive">
+            {wizard.confirmPasswordError}
+          </span>
         )}
-      </div>
+      </label>
     </div>
   );
 }
@@ -326,10 +327,9 @@ function ProfileStep({wizard}) {
   return (
     <div class="space-y-4">
       <div class="grid grid-cols-2 gap-4">
-        <div class="space-y-2">
-          <Label htmlFor="firstName">First Name *</Label>
+        <label class="space-y-2">
+          <span class="text-sm font-medium">First Name *</span>
           <Input
-            id="firstName"
             name="firstName"
             autoComplete="given-name"
             required
@@ -337,15 +337,14 @@ function ProfileStep({wizard}) {
             onInput={(e) => wizard.firstName.value = e.currentTarget.value}
             aria-invalid={wizard.firstNameError.value ? 'true' : 'false'}
           />
-          {wizard.firstNameError.value && (
-            <p class="text-sm text-destructive">{wizard.firstNameError.value}</p>
+          {wizard.firstNameError && (
+            <span class="text-sm text-destructive">{wizard.firstNameError}</span>
           )}
-        </div>
+        </label>
 
-        <div class="space-y-2">
-          <Label htmlFor="lastName">Last Name *</Label>
+        <label class="space-y-2">
+          <span class="text-sm font-medium">Last Name *</span>
           <Input
-            id="lastName"
             name="lastName"
             autoComplete="family-name"
             required
@@ -353,27 +352,25 @@ function ProfileStep({wizard}) {
             onInput={(e) => wizard.lastName.value = e.currentTarget.value}
             aria-invalid={wizard.lastNameError.value ? 'true' : 'false'}
           />
-          {wizard.lastNameError.value && (
-            <p class="text-sm text-destructive">{wizard.lastNameError.value}</p>
+          {wizard.lastNameError && (
+            <span class="text-sm text-destructive">{wizard.lastNameError}</span>
           )}
-        </div>
+        </label>
       </div>
 
-      <div class="space-y-2">
-        <Label htmlFor="company">Company</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Company</span>
         <Input
-          id="company"
           name="company"
           autoComplete="organization"
           value={wizard.company}
           onInput={(e) => wizard.company.value = e.currentTarget.value}
         />
-      </div>
+      </label>
 
-      <div class="space-y-2">
-        <Label htmlFor="role">Role *</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Role *</span>
         <Select
-          id="role"
           name="role"
           required
           value={wizard.role}
@@ -386,25 +383,24 @@ function ProfileStep({wizard}) {
           <option value="manager">Manager</option>
           <option value="other">Other</option>
         </Select>
-        {wizard.roleError.value && (
-          <p class="text-sm text-destructive">{wizard.roleError.value}</p>
+        {wizard.roleError && (
+          <span class="text-sm text-destructive">{wizard.roleError}</span>
         )}
-      </div>
+      </label>
 
-      <div class="space-y-2">
-        <Label htmlFor="bio">Bio</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Bio</span>
         <Textarea
-          id="bio"
           name="bio"
           rows={4}
           placeholder="Tell us a bit about yourself..."
           value={wizard.bio}
           onInput={(e) => wizard.bio.value = e.currentTarget.value}
         />
-        <p class="text-sm text-muted-foreground">
+        <span class="text-sm text-muted-foreground">
           {wizard.bio.value.length} / 500 characters
-        </p>
-      </div>
+        </span>
+      </label>
     </div>
   );
 }
@@ -413,54 +409,44 @@ function PreferencesStep({wizard}) {
   return (
     <div class="space-y-6">
       <div class="space-y-3">
-        <Label>Email Notifications</Label>
+        <span class="text-sm font-medium">Email Notifications</span>
         <div class="space-y-2">
-          <div class="flex items-center space-x-2">
+          <label class="flex items-center space-x-2">
             <input
               type="radio"
-              id="notifications-all"
               name="emailNotifications"
               value="all"
               checked={wizard.emailNotifications.value === 'all'}
               onInput={(e) => wizard.emailNotifications.value = e.currentTarget.value}
             />
-            <Label htmlFor="notifications-all" class="font-normal">
-              All notifications
-            </Label>
-          </div>
-          <div class="flex items-center space-x-2">
+            <span class="text-sm">All notifications</span>
+          </label>
+          <label class="flex items-center space-x-2">
             <input
               type="radio"
-              id="notifications-important"
               name="emailNotifications"
               value="important"
               checked={wizard.emailNotifications.value === 'important'}
               onInput={(e) => wizard.emailNotifications.value = e.currentTarget.value}
             />
-            <Label htmlFor="notifications-important" class="font-normal">
-              Important only
-            </Label>
-          </div>
-          <div class="flex items-center space-x-2">
+            <span class="text-sm">Important only</span>
+          </label>
+          <label class="flex items-center space-x-2">
             <input
               type="radio"
-              id="notifications-none"
               name="emailNotifications"
               value="none"
               checked={wizard.emailNotifications.value === 'none'}
               onInput={(e) => wizard.emailNotifications.value = e.currentTarget.value}
             />
-            <Label htmlFor="notifications-none" class="font-normal">
-              None
-            </Label>
-          </div>
+            <span class="text-sm">None</span>
+          </label>
         </div>
       </div>
 
-      <div class="space-y-2">
-        <Label htmlFor="theme">Theme</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Theme</span>
         <Select
-          id="theme"
           name="theme"
           value={wizard.theme}
           onInput={(e) => wizard.theme.value = e.currentTarget.value}
@@ -469,12 +455,11 @@ function PreferencesStep({wizard}) {
           <option value="light">Light</option>
           <option value="dark">Dark</option>
         </Select>
-      </div>
+      </label>
 
-      <div class="space-y-2">
-        <Label htmlFor="language">Language</Label>
+      <label class="space-y-2">
+        <span class="text-sm font-medium">Language</span>
         <Select
-          id="language"
           name="language"
           value={wizard.language}
           onInput={(e) => wizard.language.value = e.currentTarget.value}
@@ -484,7 +469,7 @@ function PreferencesStep({wizard}) {
           <option value="fr">Français</option>
           <option value="de">Deutsch</option>
         </Select>
-      </div>
+      </label>
     </div>
   );
 }
@@ -502,7 +487,7 @@ function ReviewStep({wizard}) {
         <dl class="space-y-2 text-sm">
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Email:</dt>
-            <dd class="font-medium">{wizard.email.value}</dd>
+            <dd class="font-medium">{wizard.email}</dd>
           </div>
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Password:</dt>
@@ -524,23 +509,23 @@ function ReviewStep({wizard}) {
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Name:</dt>
             <dd class="font-medium">
-              {wizard.firstName.value} {wizard.lastName.value}
+              {wizard.firstName} {wizard.lastName}
             </dd>
           </div>
           {wizard.company.value && (
             <div class="flex justify-between">
               <dt class="text-muted-foreground">Company:</dt>
-              <dd class="font-medium">{wizard.company.value}</dd>
+              <dd class="font-medium">{wizard.company}</dd>
             </div>
           )}
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Role:</dt>
-            <dd class="font-medium capitalize">{wizard.role.value}</dd>
+            <dd class="font-medium capitalize">{wizard.role}</dd>
           </div>
           {wizard.bio.value && (
             <div class="flex flex-col space-y-1">
               <dt class="text-muted-foreground">Bio:</dt>
-              <dd class="font-medium">{wizard.bio.value}</dd>
+              <dd class="font-medium">{wizard.bio}</dd>
             </div>
           )}
         </dl>
@@ -558,22 +543,22 @@ function ReviewStep({wizard}) {
         <dl class="space-y-2 text-sm">
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Email Notifications:</dt>
-            <dd class="font-medium capitalize">{wizard.emailNotifications.value}</dd>
+            <dd class="font-medium capitalize">{wizard.emailNotifications}</dd>
           </div>
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Theme:</dt>
-            <dd class="font-medium capitalize">{wizard.theme.value}</dd>
+            <dd class="font-medium capitalize">{wizard.theme}</dd>
           </div>
           <div class="flex justify-between">
             <dt class="text-muted-foreground">Language:</dt>
-            <dd class="font-medium">{wizard.language.value}</dd>
+            <dd class="font-medium">{wizard.language}</dd>
           </div>
         </dl>
       </div>
 
-      {wizard.formError.value && (
+      {wizard.formError && (
         <div class="p-4 bg-destructive/10 border border-destructive rounded-md">
-          <p class="text-sm text-destructive">{wizard.formError.value}</p>
+          <span class="text-sm text-destructive">{wizard.formError}</span>
         </div>
       )}
     </div>
@@ -764,13 +749,13 @@ Each step is its own component and receives the wizard as a prop:
 ```tsx
 function AccountStep({wizard}) {
   return (
-    <div class="space-y-4">
-      <Label htmlFor="email">Email Address *</Label>
+    <label class="space-y-2">
+      <span class="text-sm font-medium">Email Address *</span>
       <Input
         value={wizard.email}
         onInput={(e) => wizard.email.value = e.currentTarget.value}
       />
-    </div>
+    </label>
   );
 }
 
