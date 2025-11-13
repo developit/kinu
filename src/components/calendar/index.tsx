@@ -10,11 +10,11 @@ function dateStr(d: Date) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
-export function Calendar({defaultValue}: {defaultValue?: Date} = {}) {
+export function Calendar({defaultValue = new Date()}: {defaultValue?: Date} = {}) {
   const now = new Date();
   const [y, m] = [now.getFullYear(), now.getMonth()];
   const [month, setMonth] = useState(`${y}-${pad(m + 1)}`);
-  const [date, setDate] = useState(defaultValue ? dateStr(defaultValue) : '');
+  const [date, setDate] = useState(dateStr(defaultValue));
 
   const [dy, dm] = month.split('-').map(Number);
   const today = dateStr(now);
@@ -43,7 +43,7 @@ export function Calendar({defaultValue}: {defaultValue?: Date} = {}) {
         <button onClick={() => nav(1)}>→</button>
       </div>
       <div>
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => <div key={d}>{d}</div>)}
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d) => <div key={d}>{d}</div>)}
       </div>
       <div>
         {grid.map(([gd, m], i) => {
