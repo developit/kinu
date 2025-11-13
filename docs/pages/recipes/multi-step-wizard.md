@@ -263,7 +263,7 @@ function AccountStep({wizard}) {
           type="email"
           autoComplete="email"
           required
-          value={wizard.email.value}
+          value={wizard.email}
           onInput={(e) => wizard.email.value = e.currentTarget.value}
           aria-invalid={wizard.emailError.value ? 'true' : 'false'}
           aria-describedby={wizard.emailError.value ? 'email-error' : undefined}
@@ -283,7 +283,7 @@ function AccountStep({wizard}) {
           type="password"
           autoComplete="new-password"
           required
-          value={wizard.password.value}
+          value={wizard.password}
           onInput={(e) => wizard.password.value = e.currentTarget.value}
           aria-invalid={wizard.passwordError.value ? 'true' : 'false'}
           aria-describedby={wizard.passwordError.value ? 'password-error' : 'password-hint'}
@@ -307,7 +307,7 @@ function AccountStep({wizard}) {
           type="password"
           autoComplete="new-password"
           required
-          value={wizard.confirmPassword.value}
+          value={wizard.confirmPassword}
           onInput={(e) => wizard.confirmPassword.value = e.currentTarget.value}
           aria-invalid={wizard.confirmPasswordError.value ? 'true' : 'false'}
           aria-describedby={wizard.confirmPasswordError.value ? 'confirm-error' : undefined}
@@ -333,7 +333,7 @@ function ProfileStep({wizard}) {
             name="firstName"
             autoComplete="given-name"
             required
-            value={wizard.firstName.value}
+            value={wizard.firstName}
             onInput={(e) => wizard.firstName.value = e.currentTarget.value}
             aria-invalid={wizard.firstNameError.value ? 'true' : 'false'}
           />
@@ -349,7 +349,7 @@ function ProfileStep({wizard}) {
             name="lastName"
             autoComplete="family-name"
             required
-            value={wizard.lastName.value}
+            value={wizard.lastName}
             onInput={(e) => wizard.lastName.value = e.currentTarget.value}
             aria-invalid={wizard.lastNameError.value ? 'true' : 'false'}
           />
@@ -365,7 +365,7 @@ function ProfileStep({wizard}) {
           id="company"
           name="company"
           autoComplete="organization"
-          value={wizard.company.value}
+          value={wizard.company}
           onInput={(e) => wizard.company.value = e.currentTarget.value}
         />
       </div>
@@ -376,7 +376,7 @@ function ProfileStep({wizard}) {
           id="role"
           name="role"
           required
-          value={wizard.role.value}
+          value={wizard.role}
           onInput={(e) => wizard.role.value = e.currentTarget.value}
           aria-invalid={wizard.roleError.value ? 'true' : 'false'}
         >
@@ -398,7 +398,7 @@ function ProfileStep({wizard}) {
           name="bio"
           rows={4}
           placeholder="Tell us a bit about yourself..."
-          value={wizard.bio.value}
+          value={wizard.bio}
           onInput={(e) => wizard.bio.value = e.currentTarget.value}
         />
         <p class="text-sm text-muted-foreground">
@@ -462,7 +462,7 @@ function PreferencesStep({wizard}) {
         <Select
           id="theme"
           name="theme"
-          value={wizard.theme.value}
+          value={wizard.theme}
           onInput={(e) => wizard.theme.value = e.currentTarget.value}
         >
           <option value="system">System default</option>
@@ -476,7 +476,7 @@ function PreferencesStep({wizard}) {
         <Select
           id="language"
           name="language"
-          value={wizard.language.value}
+          value={wizard.language}
           onInput={(e) => wizard.language.value = e.currentTarget.value}
         >
           <option value="en">English</option>
@@ -604,7 +604,7 @@ export function MultiStepWizard() {
             {Math.round(wizard.progress.value)}% complete
           </span>
         </div>
-        <Progress value={wizard.progress.value} max={100} aria-label="Wizard progress" />
+        <Progress value={wizard.progress} max={100} aria-label="Wizard progress" />
       </div>
 
       {/* Step indicators */}
@@ -746,7 +746,7 @@ effect(() => {
 
 // Now inputs don't need to manually clear errors
 <Input
-  value={wizard.email.value}
+  value={wizard.email}
   onInput={(e) => wizard.email.value = e.currentTarget.value}
   // No need to clear emailError here!
 />
@@ -767,7 +767,7 @@ function AccountStep({wizard}) {
     <div class="space-y-4">
       <Label htmlFor="email">Email Address *</Label>
       <Input
-        value={wizard.email.value}
+        value={wizard.email}
         onInput={(e) => wizard.email.value = e.currentTarget.value}
       />
     </div>
@@ -847,7 +847,7 @@ Computed signal automatically updates progress:
 ```tsx
 const progress = computed(() => ((currentStep.value + 1) / STEPS.length) * 100);
 
-<Progress value={wizard.progress.value} max={100} aria-label="Wizard progress" />
+<Progress value={wizard.progress} max={100} aria-label="Wizard progress" />
 ```
 
 ### 7. Accessibility Features
@@ -1068,6 +1068,7 @@ This refactored wizard demonstrates PUI's philosophy of minimal, performant code
 - **Testability**: Just call `createWizardModel()` to test all logic without mounting components
 - **Signals + computed**: Fine-grained reactivity and automatic derived values
 - **Signal.toJSON()**: Signals serialize automatically when passed to `JSON.stringify()`
+- **Direct signal binding**: Pass signals to attributes (`value={wizard.email}`) for in-place DOM updates
 
 **Before (useState + monolithic)**:
 - One large component with all steps inline
