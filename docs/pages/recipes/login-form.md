@@ -71,7 +71,7 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card class="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle>Sign In</CardTitle>
         <CardDescription>
@@ -80,14 +80,14 @@ export function LoginForm() {
       </CardHeader>
 
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
+        <CardContent class="space-y-4">
           {error && (
             <Alert variant="destructive" role="alert">
               <strong>Error:</strong> {error}
             </Alert>
           )}
 
-          <div className="space-y-2">
+          <div class="space-y-2">
             <Label htmlFor="email">Email Address</Label>
             <Input
               id="email"
@@ -99,18 +99,18 @@ export function LoginForm() {
             />
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
               <a
                 href="/forgot-password"
-                className="text-sm text-primary hover:underline"
+                class="text-sm text-primary hover:underline"
                 tabIndex={isSubmitting ? -1 : 0}
               >
                 Forgot password?
               </a>
             </div>
-            <div className="relative">
+            <div class="relative">
               <Input
                 id="password"
                 name="password"
@@ -124,7 +124,7 @@ export function LoginForm() {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="absolute right-0 top-0 h-full px-3"
+                class="absolute right-0 top-0 h-full px-3"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isSubmitting}
@@ -132,12 +132,12 @@ export function LoginForm() {
                 {showPassword ? '👁️‍🗨️' : '👁️'}
               </Button>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p class="text-sm text-muted-foreground">
               Must be at least 8 characters
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div class="flex items-center space-x-2">
             <Checkbox
               id="rememberMe"
               name="rememberMe"
@@ -145,26 +145,26 @@ export function LoginForm() {
             />
             <Label
               htmlFor="rememberMe"
-              className="text-sm font-normal cursor-pointer"
+              class="text-sm font-normal cursor-pointer"
             >
               Remember me for 30 days
             </Label>
           </div>
         </CardContent>
 
-        <CardFooter className="flex flex-col space-y-4">
+        <CardFooter class="flex flex-col space-y-4">
           <Button
             type="submit"
-            className="w-full"
+            class="w-full"
             loading={isSubmitting}
             disabled={isSubmitting}
           >
             Sign In
           </Button>
 
-          <p className="text-sm text-center text-muted-foreground">
+          <p class="text-sm text-center text-muted-foreground">
             Don't have an account?{' '}
-            <a href="/signup" className="text-primary hover:underline">
+            <a href="/signup" class="text-primary hover:underline">
               Sign up
             </a>
           </p>
@@ -296,8 +296,8 @@ const handleSubmit = async (e: Event) => {
 Add OAuth buttons:
 
 ```tsx
-<CardContent className="space-y-4">
-  <div className="grid grid-cols-2 gap-2">
+<CardContent class="space-y-4">
+  <div class="grid grid-cols-2 gap-2">
     <Button variant="outline" type="button">
       Google
     </Button>
@@ -306,12 +306,12 @@ Add OAuth buttons:
     </Button>
   </div>
 
-  <div className="relative">
-    <div className="absolute inset-0 flex items-center">
-      <span className="w-full border-t" />
+  <div class="relative">
+    <div class="absolute inset-0 flex items-center">
+      <span class="w-full border-t" />
     </div>
-    <div className="relative flex justify-center text-xs uppercase">
-      <span className="bg-background px-2 text-muted-foreground">
+    <div class="relative flex justify-center text-xs uppercase">
+      <span class="bg-background px-2 text-muted-foreground">
         Or continue with email
       </span>
     </div>

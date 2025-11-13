@@ -342,11 +342,11 @@ export function CommandPalette() {
       {/* Trigger button (optional) */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent"
+        class="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent"
         aria-label="Open command palette"
       >
-        <span className="text-muted-foreground">Search commands...</span>
-        <kbd className="px-2 py-1 text-xs border rounded bg-muted">
+        <span class="text-muted-foreground">Search commands...</span>
+        <kbd class="px-2 py-1 text-xs border rounded bg-muted">
           {isMac ? '⌘K' : 'Ctrl+K'}
         </kbd>
       </button>
@@ -354,13 +354,13 @@ export function CommandPalette() {
       {/* Dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent
-          className="max-w-2xl p-0 gap-0 overflow-hidden"
+          class="max-w-2xl p-0 gap-0 overflow-hidden"
           aria-label="Command palette"
         >
           {/* Search input */}
-          <div className="flex items-center border-b px-3">
+          <div class="flex items-center border-b px-3">
             <svg
-              className="w-5 h-5 text-muted-foreground"
+              class="w-5 h-5 text-muted-foreground"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -382,7 +382,7 @@ export function CommandPalette() {
                 setSearch(e.currentTarget.value)
               }
               onKeyDown={handleKeyDown}
-              className="border-0 focus:ring-0 flex-1"
+              class="border-0 focus:ring-0 flex-1"
               aria-label="Search commands"
               aria-expanded="true"
               aria-controls="command-list"
@@ -399,10 +399,10 @@ export function CommandPalette() {
             ref={listRef}
             id="command-list"
             role="listbox"
-            className="max-h-96 overflow-y-auto p-2"
+            class="max-h-96 overflow-y-auto p-2"
           >
             {groupedCommands.length === 0 ? (
-              <div className="py-12 text-center text-sm text-muted-foreground">
+              <div class="py-12 text-center text-sm text-muted-foreground">
                 No commands found
               </div>
             ) : (
@@ -415,8 +415,8 @@ export function CommandPalette() {
                 return (
                   <div key={group}>
                     {/* Group label */}
-                    {groupIdx > 0 && <Separator className="my-2" />}
-                    <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                    {groupIdx > 0 && <Separator class="my-2" />}
+                    <div class="px-2 py-1.5 text-xs font-medium text-muted-foreground">
                       {group}
                     </div>
 
@@ -434,23 +434,23 @@ export function CommandPalette() {
                           data-command-index={index}
                           onClick={() => executeCommand(command)}
                           onMouseEnter={() => setSelectedIndex(index)}
-                          className={`
+                          class={`
                             w-full flex items-center gap-3 px-2 py-2 rounded-md text-left
                             ${isSelected ? 'bg-accent' : 'hover:bg-accent/50'}
                           `}
                         >
                           {/* Icon */}
                           {command.icon && (
-                            <span className="text-xl flex-shrink-0" aria-hidden="true">
+                            <span class="text-xl flex-shrink-0" aria-hidden="true">
                               {command.icon}
                             </span>
                           )}
 
                           {/* Label and description */}
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm font-medium">{command.label}</div>
+                          <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium">{command.label}</div>
                             {command.description && (
-                              <div className="text-xs text-muted-foreground truncate">
+                              <div class="text-xs text-muted-foreground truncate">
                                 {command.description}
                               </div>
                             )}
@@ -458,7 +458,7 @@ export function CommandPalette() {
 
                           {/* Shortcut badge */}
                           {command.shortcut && (
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge variant="secondary" class="text-xs">
                               {command.shortcut}
                             </Badge>
                           )}
@@ -466,7 +466,7 @@ export function CommandPalette() {
                           {/* Recent indicator */}
                           {!search && recentCommands.includes(command.id) && (
                             <svg
-                              className="w-4 h-4 text-muted-foreground"
+                              class="w-4 h-4 text-muted-foreground"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -490,16 +490,16 @@ export function CommandPalette() {
           </div>
 
           {/* Footer hints */}
-          <div className="flex items-center justify-between px-3 py-2 border-t text-xs text-muted-foreground">
-            <div className="flex items-center gap-4">
+          <div class="flex items-center justify-between px-3 py-2 border-t text-xs text-muted-foreground">
+            <div class="flex items-center gap-4">
               <span>
-                <kbd className="px-1.5 py-0.5 border rounded bg-muted">↑↓</kbd> Navigate
+                <kbd class="px-1.5 py-0.5 border rounded bg-muted">↑↓</kbd> Navigate
               </span>
               <span>
-                <kbd className="px-1.5 py-0.5 border rounded bg-muted">↵</kbd> Select
+                <kbd class="px-1.5 py-0.5 border rounded bg-muted">↵</kbd> Select
               </span>
               <span>
-                <kbd className="px-1.5 py-0.5 border rounded bg-muted">Esc</kbd> Close
+                <kbd class="px-1.5 py-0.5 border rounded bg-muted">Esc</kbd> Close
               </span>
             </div>
             <div>

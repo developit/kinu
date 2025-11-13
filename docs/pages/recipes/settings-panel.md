@@ -229,11 +229,11 @@ export function SettingsPanel() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div class="max-w-4xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-muted-foreground mt-2">
+        <h1 class="text-3xl font-bold">Settings</h1>
+        <p class="text-muted-foreground mt-2">
           Manage your account settings and preferences
         </p>
       </div>
@@ -242,7 +242,7 @@ export function SettingsPanel() {
       {hasUnsavedChanges && (
         <Alert>
           <strong>Unsaved Changes</strong>
-          <p className="text-sm">You have unsaved changes. Don't forget to save!</p>
+          <p class="text-sm">You have unsaved changes. Don't forget to save!</p>
         </Alert>
       )}
 
@@ -264,23 +264,23 @@ export function SettingsPanel() {
                 Update your personal information and profile details
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent class="space-y-6">
               {/* Avatar */}
-              <div className="flex items-center gap-4">
-                <Avatar className="w-20 h-20">
+              <div class="flex items-center gap-4">
+                <Avatar class="w-20 h-20">
                   {settings.avatar ? (
                     <img src={settings.avatar} alt="Profile picture" />
                   ) : (
-                    <div className="bg-primary text-primary-foreground text-2xl">
+                    <div class="bg-primary text-primary-foreground text-2xl">
                       {settings.displayName?.[0] || '?'}
                     </div>
                   )}
                 </Avatar>
-                <div className="space-y-2">
+                <div class="space-y-2">
                   <Button variant="outline" size="sm">
                     Upload Photo
                   </Button>
-                  <p className="text-xs text-muted-foreground">
+                  <p class="text-xs text-muted-foreground">
                     JPG, PNG or GIF. Max 2MB.
                   </p>
                 </div>
@@ -289,9 +289,9 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Display Name */}
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="displayName">
-                  Display Name <span className="text-destructive">*</span>
+                  Display Name <span class="text-destructive">*</span>
                 </Label>
                 <Input
                   id="displayName"
@@ -303,16 +303,16 @@ export function SettingsPanel() {
                   aria-describedby={errors.displayName ? 'displayName-error' : undefined}
                 />
                 {errors.displayName && (
-                  <p id="displayName-error" className="text-sm text-destructive">
+                  <p id="displayName-error" class="text-sm text-destructive">
                     {errors.displayName}
                   </p>
                 )}
               </div>
 
               {/* Email */}
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="email">
-                  Email Address <span className="text-destructive">*</span>
+                  Email Address <span class="text-destructive">*</span>
                 </Label>
                 <Input
                   id="email"
@@ -325,14 +325,14 @@ export function SettingsPanel() {
                   aria-describedby={errors.email ? 'email-error' : undefined}
                 />
                 {errors.email && (
-                  <p id="email-error" className="text-sm text-destructive">
+                  <p id="email-error" class="text-sm text-destructive">
                     {errors.email}
                   </p>
                 )}
               </div>
 
               {/* Bio */}
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="bio">Bio</Label>
                 <Textarea
                   id="bio"
@@ -344,11 +344,11 @@ export function SettingsPanel() {
                   aria-invalid={errors.bio ? 'true' : 'false'}
                   aria-describedby="bio-hint"
                 />
-                <p id="bio-hint" className="text-sm text-muted-foreground">
+                <p id="bio-hint" class="text-sm text-muted-foreground">
                   {settings.bio.length} / 500 characters
                 </p>
                 {errors.bio && (
-                  <p className="text-sm text-destructive">{errors.bio}</p>
+                  <p class="text-sm text-destructive">{errors.bio}</p>
                 )}
               </div>
             </CardContent>
@@ -364,15 +364,15 @@ export function SettingsPanel() {
                 Customize your application experience
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent class="space-y-6">
               {/* Theme */}
-              <div className="space-y-3">
+              <div class="space-y-3">
                 <Label>Theme</Label>
                 <RadioGroup
                   name="theme"
                   value={settings.theme}
                 >
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="theme-light"
@@ -381,11 +381,11 @@ export function SettingsPanel() {
                       checked={settings.theme === 'light'}
                       onInput={() => handleChange('theme', 'light')}
                     />
-                    <Label htmlFor="theme-light" className="font-normal">
+                    <Label htmlFor="theme-light" class="font-normal">
                       Light
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="theme-dark"
@@ -394,11 +394,11 @@ export function SettingsPanel() {
                       checked={settings.theme === 'dark'}
                       onInput={() => handleChange('theme', 'dark')}
                     />
-                    <Label htmlFor="theme-dark" className="font-normal">
+                    <Label htmlFor="theme-dark" class="font-normal">
                       Dark
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="theme-system"
@@ -407,7 +407,7 @@ export function SettingsPanel() {
                       checked={settings.theme === 'system'}
                       onInput={() => handleChange('theme', 'system')}
                     />
-                    <Label htmlFor="theme-system" className="font-normal">
+                    <Label htmlFor="theme-system" class="font-normal">
                       System default
                     </Label>
                   </div>
@@ -417,7 +417,7 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Language */}
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="language">Language</Label>
                 <Select
                   id="language"
@@ -435,7 +435,7 @@ export function SettingsPanel() {
               </div>
 
               {/* Timezone */}
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="timezone">Timezone</Label>
                 <Select
                   id="timezone"
@@ -456,7 +456,7 @@ export function SettingsPanel() {
               </div>
 
               {/* Date Format */}
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="dateFormat">Date Format</Label>
                 <Select
                   id="dateFormat"
@@ -483,12 +483,12 @@ export function SettingsPanel() {
                 Control how and when you receive notifications
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent class="space-y-6">
               {/* Email Notifications */}
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5">
                   <Label htmlFor="emailNotifications">Email Notifications</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p class="text-sm text-muted-foreground">
                     Receive notifications via email
                   </p>
                 </div>
@@ -504,10 +504,10 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Push Notifications */}
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5">
                   <Label htmlFor="pushNotifications">Push Notifications</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p class="text-sm text-muted-foreground">
                     Receive push notifications in your browser
                   </p>
                 </div>
@@ -523,10 +523,10 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Notification Sound */}
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5">
                   <Label htmlFor="notificationSound">Notification Sound</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p class="text-sm text-muted-foreground">
                     Play sound when receiving notifications
                   </p>
                 </div>
@@ -542,13 +542,13 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Notification Frequency */}
-              <div className="space-y-3">
+              <div class="space-y-3">
                 <Label>Notification Frequency</Label>
                 <RadioGroup
                   name="notificationFrequency"
                   value={settings.notificationFrequency}
                 >
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="freq-realtime"
@@ -557,11 +557,11 @@ export function SettingsPanel() {
                       checked={settings.notificationFrequency === 'realtime'}
                       onInput={() => handleChange('notificationFrequency', 'realtime')}
                     />
-                    <Label htmlFor="freq-realtime" className="font-normal">
+                    <Label htmlFor="freq-realtime" class="font-normal">
                       Real-time
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="freq-hourly"
@@ -570,11 +570,11 @@ export function SettingsPanel() {
                       checked={settings.notificationFrequency === 'hourly'}
                       onInput={() => handleChange('notificationFrequency', 'hourly')}
                     />
-                    <Label htmlFor="freq-hourly" className="font-normal">
+                    <Label htmlFor="freq-hourly" class="font-normal">
                       Hourly digest
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="freq-daily"
@@ -583,7 +583,7 @@ export function SettingsPanel() {
                       checked={settings.notificationFrequency === 'daily'}
                       onInput={() => handleChange('notificationFrequency', 'daily')}
                     />
-                    <Label htmlFor="freq-daily" className="font-normal">
+                    <Label htmlFor="freq-daily" class="font-normal">
                       Daily digest
                     </Label>
                   </div>
@@ -593,10 +593,10 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Newsletter */}
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5">
                   <Label htmlFor="newsletterSubscribed">Newsletter</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p class="text-sm text-muted-foreground">
                     Receive our weekly newsletter
                   </p>
                 </div>
@@ -621,15 +621,15 @@ export function SettingsPanel() {
                 Control your privacy settings and data sharing
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent class="space-y-6">
               {/* Profile Visibility */}
-              <div className="space-y-3">
+              <div class="space-y-3">
                 <Label>Profile Visibility</Label>
                 <RadioGroup
                   name="profileVisibility"
                   value={settings.profileVisibility}
                 >
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="visibility-public"
@@ -638,11 +638,11 @@ export function SettingsPanel() {
                       checked={settings.profileVisibility === 'public'}
                       onInput={() => handleChange('profileVisibility', 'public')}
                     />
-                    <Label htmlFor="visibility-public" className="font-normal">
+                    <Label htmlFor="visibility-public" class="font-normal">
                       Public
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="visibility-friends"
@@ -651,11 +651,11 @@ export function SettingsPanel() {
                       checked={settings.profileVisibility === 'friends'}
                       onInput={() => handleChange('profileVisibility', 'friends')}
                     />
-                    <Label htmlFor="visibility-friends" className="font-normal">
+                    <Label htmlFor="visibility-friends" class="font-normal">
                       Friends only
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="visibility-private"
@@ -664,7 +664,7 @@ export function SettingsPanel() {
                       checked={settings.profileVisibility === 'private'}
                       onInput={() => handleChange('profileVisibility', 'private')}
                     />
-                    <Label htmlFor="visibility-private" className="font-normal">
+                    <Label htmlFor="visibility-private" class="font-normal">
                       Private
                     </Label>
                   </div>
@@ -674,10 +674,10 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Show Email */}
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5">
                   <Label htmlFor="showEmail">Show Email on Profile</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p class="text-sm text-muted-foreground">
                     Make your email address visible to others
                   </p>
                 </div>
@@ -693,10 +693,10 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Show Activity */}
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5">
                   <Label htmlFor="showActivity">Show Activity Status</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p class="text-sm text-muted-foreground">
                     Let others see when you're online
                   </p>
                 </div>
@@ -712,10 +712,10 @@ export function SettingsPanel() {
               <Separator />
 
               {/* Data Sharing */}
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5">
                   <Label htmlFor="dataSharing">Data Sharing</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p class="text-sm text-muted-foreground">
                     Share anonymized usage data to help improve the product
                   </p>
                 </div>
@@ -733,7 +733,7 @@ export function SettingsPanel() {
       </Tabs>
 
       {/* Action buttons */}
-      <div className="flex items-center justify-between pt-4 border-t">
+      <div class="flex items-center justify-between pt-4 border-t">
         <Button
           variant="ghost"
           onClick={handleResetToDefaults}
@@ -741,7 +741,7 @@ export function SettingsPanel() {
           Reset to Defaults
         </Button>
 
-        <div className="flex gap-2">
+        <div class="flex gap-2">
           <Button
             variant="outline"
             onClick={handleReset}

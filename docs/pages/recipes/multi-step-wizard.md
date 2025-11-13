@@ -232,14 +232,14 @@ export function MultiStepWizard() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6">
+    <div class="w-full max-w-2xl mx-auto space-y-6">
       {/* Progress indicator */}
-      <div className="space-y-2">
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium">
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-medium">
             Step {currentStep + 1} of {STEPS.length}
           </span>
-          <span className="text-sm text-muted-foreground">
+          <span class="text-sm text-muted-foreground">
             {Math.round(progress)}% complete
           </span>
         </div>
@@ -248,16 +248,16 @@ export function MultiStepWizard() {
 
       {/* Step indicators */}
       <nav aria-label="Progress steps">
-        <ol className="flex items-center justify-between">
+        <ol class="flex items-center justify-between">
           {STEPS.map((step, index) => {
             const isComplete = index < currentStep;
             const isCurrent = index === currentStep;
 
             return (
-              <li key={step.id} className="flex flex-col items-center flex-1">
-                <div className="flex items-center w-full">
+              <li key={step.id} class="flex flex-col items-center flex-1">
+                <div class="flex items-center w-full">
                   <div
-                    className={`
+                    class={`
                       flex items-center justify-center w-10 h-10 rounded-full border-2 font-medium
                       ${isComplete ? 'bg-primary text-primary-foreground border-primary' : ''}
                       ${isCurrent ? 'border-primary text-primary' : ''}
@@ -266,7 +266,7 @@ export function MultiStepWizard() {
                     aria-current={isCurrent ? 'step' : undefined}
                   >
                     {isComplete ? (
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     ) : (
@@ -275,12 +275,12 @@ export function MultiStepWizard() {
                   </div>
                   {index < STEPS.length - 1 && (
                     <div
-                      className={`flex-1 h-1 ${isComplete ? 'bg-primary' : 'bg-muted'}`}
+                      class={`flex-1 h-1 ${isComplete ? 'bg-primary' : 'bg-muted'}`}
                       aria-hidden="true"
                     />
                   )}
                 </div>
-                <span className={`mt-2 text-xs text-center ${isCurrent ? 'font-medium' : ''}`}>
+                <span class={`mt-2 text-xs text-center ${isCurrent ? 'font-medium' : ''}`}>
                   {step.title}
                 </span>
               </li>
@@ -299,8 +299,8 @@ export function MultiStepWizard() {
         <CardContent>
           {/* Account Step */}
           {currentStep === 0 && (
-            <div className="space-y-4">
-              <div className="space-y-2">
+            <div class="space-y-4">
+              <div class="space-y-2">
                 <Label htmlFor="email">Email Address *</Label>
                 <Input
                   id="email"
@@ -314,13 +314,13 @@ export function MultiStepWizard() {
                   aria-describedby={errors.email ? 'email-error' : undefined}
                 />
                 {errors.email && (
-                  <p id="email-error" className="text-sm text-destructive">
+                  <p id="email-error" class="text-sm text-destructive">
                     {errors.email}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="password">Password *</Label>
                 <Input
                   id="password"
@@ -334,17 +334,17 @@ export function MultiStepWizard() {
                   aria-describedby={errors.password ? 'password-error' : 'password-hint'}
                 />
                 {errors.password ? (
-                  <p id="password-error" className="text-sm text-destructive">
+                  <p id="password-error" class="text-sm text-destructive">
                     {errors.password}
                   </p>
                 ) : (
-                  <p id="password-hint" className="text-sm text-muted-foreground">
+                  <p id="password-hint" class="text-sm text-muted-foreground">
                     Must be at least 8 characters
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="confirmPassword">Confirm Password *</Label>
                 <Input
                   id="confirmPassword"
@@ -358,7 +358,7 @@ export function MultiStepWizard() {
                   aria-describedby={errors.confirmPassword ? 'confirm-error' : undefined}
                 />
                 {errors.confirmPassword && (
-                  <p id="confirm-error" className="text-sm text-destructive">
+                  <p id="confirm-error" class="text-sm text-destructive">
                     {errors.confirmPassword}
                   </p>
                 )}
@@ -368,9 +368,9 @@ export function MultiStepWizard() {
 
           {/* Profile Step */}
           {currentStep === 1 && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
                   <Label htmlFor="firstName">First Name *</Label>
                   <Input
                     id="firstName"
@@ -382,11 +382,11 @@ export function MultiStepWizard() {
                     aria-invalid={errors.firstName ? 'true' : 'false'}
                   />
                   {errors.firstName && (
-                    <p className="text-sm text-destructive">{errors.firstName}</p>
+                    <p class="text-sm text-destructive">{errors.firstName}</p>
                   )}
                 </div>
 
-                <div className="space-y-2">
+                <div class="space-y-2">
                   <Label htmlFor="lastName">Last Name *</Label>
                   <Input
                     id="lastName"
@@ -398,12 +398,12 @@ export function MultiStepWizard() {
                     aria-invalid={errors.lastName ? 'true' : 'false'}
                   />
                   {errors.lastName && (
-                    <p className="text-sm text-destructive">{errors.lastName}</p>
+                    <p class="text-sm text-destructive">{errors.lastName}</p>
                   )}
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="company">Company</Label>
                 <Input
                   id="company"
@@ -414,7 +414,7 @@ export function MultiStepWizard() {
                 />
               </div>
 
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="role">Role *</Label>
                 <Select
                   id="role"
@@ -431,11 +431,11 @@ export function MultiStepWizard() {
                   <option value="other">Other</option>
                 </Select>
                 {errors.role && (
-                  <p className="text-sm text-destructive">{errors.role}</p>
+                  <p class="text-sm text-destructive">{errors.role}</p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="bio">Bio</Label>
                 <Textarea
                   id="bio"
@@ -445,7 +445,7 @@ export function MultiStepWizard() {
                   value={formData.bio}
                   onInput={handleChange}
                 />
-                <p className="text-sm text-muted-foreground">
+                <p class="text-sm text-muted-foreground">
                   {formData.bio.length} / 500 characters
                 </p>
               </div>
@@ -454,11 +454,11 @@ export function MultiStepWizard() {
 
           {/* Preferences Step */}
           {currentStep === 2 && (
-            <div className="space-y-6">
-              <div className="space-y-3">
+            <div class="space-y-6">
+              <div class="space-y-3">
                 <Label>Email Notifications</Label>
                 <RadioGroup name="emailNotifications" value={formData.emailNotifications}>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="notifications-all"
@@ -467,11 +467,11 @@ export function MultiStepWizard() {
                       checked={formData.emailNotifications === 'all'}
                       onInput={handleChange}
                     />
-                    <Label htmlFor="notifications-all" className="font-normal">
+                    <Label htmlFor="notifications-all" class="font-normal">
                       All notifications
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="notifications-important"
@@ -480,11 +480,11 @@ export function MultiStepWizard() {
                       checked={formData.emailNotifications === 'important'}
                       onInput={handleChange}
                     />
-                    <Label htmlFor="notifications-important" className="font-normal">
+                    <Label htmlFor="notifications-important" class="font-normal">
                       Important only
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div class="flex items-center space-x-2">
                     <input
                       type="radio"
                       id="notifications-none"
@@ -493,14 +493,14 @@ export function MultiStepWizard() {
                       checked={formData.emailNotifications === 'none'}
                       onInput={handleChange}
                     />
-                    <Label htmlFor="notifications-none" className="font-normal">
+                    <Label htmlFor="notifications-none" class="font-normal">
                       None
                     </Label>
                   </div>
                 </RadioGroup>
               </div>
 
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="theme">Theme</Label>
                 <Select
                   id="theme"
@@ -514,7 +514,7 @@ export function MultiStepWizard() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
+              <div class="space-y-2">
                 <Label htmlFor="language">Language</Label>
                 <Select
                   id="language"
@@ -533,10 +533,10 @@ export function MultiStepWizard() {
 
           {/* Review Step */}
           {currentStep === 3 && (
-            <div className="space-y-6">
+            <div class="space-y-6">
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold">Account Information</h3>
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="font-semibold">Account Information</h3>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -545,14 +545,14 @@ export function MultiStepWizard() {
                     Edit
                   </Button>
                 </div>
-                <dl className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Email:</dt>
-                    <dd className="font-medium">{formData.email}</dd>
+                <dl class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <dt class="text-muted-foreground">Email:</dt>
+                    <dd class="font-medium">{formData.email}</dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Password:</dt>
-                    <dd className="font-medium">••••••••</dd>
+                  <div class="flex justify-between">
+                    <dt class="text-muted-foreground">Password:</dt>
+                    <dd class="font-medium">••••••••</dd>
                   </div>
                 </dl>
               </div>
@@ -560,8 +560,8 @@ export function MultiStepWizard() {
               <Separator />
 
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold">Profile</h3>
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="font-semibold">Profile</h3>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -570,27 +570,27 @@ export function MultiStepWizard() {
                     Edit
                   </Button>
                 </div>
-                <dl className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Name:</dt>
-                    <dd className="font-medium">
+                <dl class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <dt class="text-muted-foreground">Name:</dt>
+                    <dd class="font-medium">
                       {formData.firstName} {formData.lastName}
                     </dd>
                   </div>
                   {formData.company && (
-                    <div className="flex justify-between">
-                      <dt className="text-muted-foreground">Company:</dt>
-                      <dd className="font-medium">{formData.company}</dd>
+                    <div class="flex justify-between">
+                      <dt class="text-muted-foreground">Company:</dt>
+                      <dd class="font-medium">{formData.company}</dd>
                     </div>
                   )}
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Role:</dt>
-                    <dd className="font-medium capitalize">{formData.role}</dd>
+                  <div class="flex justify-between">
+                    <dt class="text-muted-foreground">Role:</dt>
+                    <dd class="font-medium capitalize">{formData.role}</dd>
                   </div>
                   {formData.bio && (
-                    <div className="flex flex-col space-y-1">
-                      <dt className="text-muted-foreground">Bio:</dt>
-                      <dd className="font-medium">{formData.bio}</dd>
+                    <div class="flex flex-col space-y-1">
+                      <dt class="text-muted-foreground">Bio:</dt>
+                      <dd class="font-medium">{formData.bio}</dd>
                     </div>
                   )}
                 </dl>
@@ -599,8 +599,8 @@ export function MultiStepWizard() {
               <Separator />
 
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold">Preferences</h3>
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="font-semibold">Preferences</h3>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -609,34 +609,34 @@ export function MultiStepWizard() {
                     Edit
                   </Button>
                 </div>
-                <dl className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Email Notifications:</dt>
-                    <dd className="font-medium capitalize">
+                <dl class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <dt class="text-muted-foreground">Email Notifications:</dt>
+                    <dd class="font-medium capitalize">
                       {formData.emailNotifications}
                     </dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Theme:</dt>
-                    <dd className="font-medium capitalize">{formData.theme}</dd>
+                  <div class="flex justify-between">
+                    <dt class="text-muted-foreground">Theme:</dt>
+                    <dd class="font-medium capitalize">{formData.theme}</dd>
                   </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Language:</dt>
-                    <dd className="font-medium">{formData.language}</dd>
+                  <div class="flex justify-between">
+                    <dt class="text-muted-foreground">Language:</dt>
+                    <dd class="font-medium">{formData.language}</dd>
                   </div>
                 </dl>
               </div>
 
               {errors.form && (
-                <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
-                  <p className="text-sm text-destructive">{errors.form}</p>
+                <div class="p-4 bg-destructive/10 border border-destructive rounded-md">
+                  <p class="text-sm text-destructive">{errors.form}</p>
                 </div>
               )}
             </div>
           )}
         </CardContent>
 
-        <CardFooter className="flex justify-between">
+        <CardFooter class="flex justify-between">
           <Button
             variant="outline"
             onClick={handleBack}

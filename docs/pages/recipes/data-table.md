@@ -234,28 +234,28 @@ export function UserTable() {
   const SortIcon = ({column}: {column: SortColumn}) => {
     if (sortColumn !== column) {
       return (
-        <svg className="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
         </svg>
       );
     }
 
     return sortDirection === 'asc' ? (
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
       </svg>
     ) : (
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
       </svg>
     );
   };
 
   return (
-    <div className="space-y-4">
+    <div class="space-y-4">
       {/* Filters and actions */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="flex flex-1 flex-col sm:flex-row gap-2 w-full sm:w-auto">
+      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div class="flex flex-1 flex-col sm:flex-row gap-2 w-full sm:w-auto">
           {/* Search */}
           <Input
             type="search"
@@ -264,7 +264,7 @@ export function UserTable() {
             onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
               setSearchQuery(e.currentTarget.value)
             }
-            className="w-full sm:w-64"
+            class="w-full sm:w-64"
             aria-label="Search users"
           />
 
@@ -299,7 +299,7 @@ export function UserTable() {
 
         {/* Bulk actions */}
         {selectedRows.size > 0 && (
-          <div className="flex gap-2">
+          <div class="flex gap-2">
             <Badge variant="secondary">
               {selectedRows.size} selected
             </Badge>
@@ -323,11 +323,11 @@ export function UserTable() {
       </div>
 
       {/* Table */}
-      <div className="border rounded-lg overflow-hidden">
+      <div class="border rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-12">
+              <TableHead class="w-12">
                 <Checkbox
                   checked={allSelected}
                   indeterminate={someSelected}
@@ -337,7 +337,7 @@ export function UserTable() {
               </TableHead>
               <TableHead>
                 <button
-                  className="flex items-center gap-2 font-medium hover:text-foreground"
+                  class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('name')}
                   aria-label="Sort by name"
                 >
@@ -347,7 +347,7 @@ export function UserTable() {
               </TableHead>
               <TableHead>
                 <button
-                  className="flex items-center gap-2 font-medium hover:text-foreground"
+                  class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('email')}
                   aria-label="Sort by email"
                 >
@@ -357,7 +357,7 @@ export function UserTable() {
               </TableHead>
               <TableHead>
                 <button
-                  className="flex items-center gap-2 font-medium hover:text-foreground"
+                  class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('role')}
                   aria-label="Sort by role"
                 >
@@ -367,7 +367,7 @@ export function UserTable() {
               </TableHead>
               <TableHead>
                 <button
-                  className="flex items-center gap-2 font-medium hover:text-foreground"
+                  class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('status')}
                   aria-label="Sort by status"
                 >
@@ -377,7 +377,7 @@ export function UserTable() {
               </TableHead>
               <TableHead>
                 <button
-                  className="flex items-center gap-2 font-medium hover:text-foreground"
+                  class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('createdAt')}
                   aria-label="Sort by created date"
                 >
@@ -385,8 +385,8 @@ export function UserTable() {
                   <SortIcon column="createdAt" />
                 </button>
               </TableHead>
-              <TableHead className="w-12">
-                <span className="sr-only">Actions</span>
+              <TableHead class="w-12">
+                <span class="sr-only">Actions</span>
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -395,25 +395,25 @@ export function UserTable() {
               // Loading state
               Array.from({length: pageSize}).map((_, i) => (
                 <TableRow key={i}>
-                  <TableCell><Skeleton className="h-4 w-4" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-32" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-48" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-16" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-16" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-24" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-8" /></TableCell>
+                  <TableCell><Skeleton class="h-4 w-4" /></TableCell>
+                  <TableCell><Skeleton class="h-4 w-32" /></TableCell>
+                  <TableCell><Skeleton class="h-4 w-48" /></TableCell>
+                  <TableCell><Skeleton class="h-4 w-16" /></TableCell>
+                  <TableCell><Skeleton class="h-4 w-16" /></TableCell>
+                  <TableCell><Skeleton class="h-4 w-24" /></TableCell>
+                  <TableCell><Skeleton class="h-4 w-8" /></TableCell>
                 </TableRow>
               ))
             ) : paginatedUsers.length === 0 ? (
               // Empty state
               <TableRow>
-                <TableCell colSpan={7} className="h-32 text-center">
-                  <div className="flex flex-col items-center justify-center text-muted-foreground">
-                    <svg className="w-12 h-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <TableCell colSpan={7} class="h-32 text-center">
+                  <div class="flex flex-col items-center justify-center text-muted-foreground">
+                    <svg class="w-12 h-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
-                    <p className="font-medium">No users found</p>
-                    <p className="text-sm">Try adjusting your filters</p>
+                    <p class="font-medium">No users found</p>
+                    <p class="text-sm">Try adjusting your filters</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -428,10 +428,10 @@ export function UserTable() {
                       aria-label={`Select ${user.name}`}
                     />
                   </TableCell>
-                  <TableCell className="font-medium">{user.name}</TableCell>
+                  <TableCell class="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <Badge variant="secondary" className="capitalize">
+                    <Badge variant="secondary" class="capitalize">
                       {user.role}
                     </Badge>
                   </TableCell>
@@ -444,7 +444,7 @@ export function UserTable() {
                           ? 'secondary'
                           : 'outline'
                       }
-                      className="capitalize"
+                      class="capitalize"
                     >
                       {user.status}
                     </Badge>
@@ -460,7 +460,7 @@ export function UserTable() {
                           size="icon"
                           aria-label={`Actions for ${user.name}`}
                         >
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                           </svg>
                         </Button>
@@ -469,7 +469,7 @@ export function UserTable() {
                         <DropdownMenuItem>Edit</DropdownMenuItem>
                         <DropdownMenuItem>View Details</DropdownMenuItem>
                         <DropdownMenuItem>Send Email</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
+                        <DropdownMenuItem class="text-destructive">
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -483,12 +483,12 @@ export function UserTable() {
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="text-sm text-muted-foreground">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-muted-foreground">
           Showing {showingStart} to {showingEnd} of {filteredAndSortedUsers.length} results
         </div>
 
-        <div className="flex items-center gap-2">
+        <div class="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -496,7 +496,7 @@ export function UserTable() {
             disabled={currentPage === 1}
             aria-label="Go to first page"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
             </svg>
           </Button>
@@ -508,12 +508,12 @@ export function UserTable() {
             disabled={currentPage === 1}
             aria-label="Go to previous page"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Button>
 
-          <span className="text-sm">
+          <span class="text-sm">
             Page {currentPage} of {totalPages}
           </span>
 
@@ -524,7 +524,7 @@ export function UserTable() {
             disabled={currentPage === totalPages}
             aria-label="Go to next page"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Button>
@@ -536,7 +536,7 @@ export function UserTable() {
             disabled={currentPage === totalPages}
             aria-label="Go to last page"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
             </svg>
           </Button>
@@ -548,7 +548,7 @@ export function UserTable() {
             setPageSize(Number(e.currentTarget.value));
             setCurrentPage(1);
           }}
-          className="w-32"
+          class="w-32"
           aria-label="Rows per page"
         >
           <option value="10">10 / page</option>
