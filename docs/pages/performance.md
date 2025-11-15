@@ -14,27 +14,17 @@ PUI achieves exceptional performance through:
 
 ## Bundle Size
 
-### Core Library (Uncompressed Source)
+### Production Sizes
 
-| Category | Size | Description |
-| --- | --- | --- |
-| TypeScript/TSX | ~25 KB | Component logic and factories |
-| Component CSS | ~31 KB | All component styles |
-| Base CSS | ~0.3 KB | Reset styles |
-| Variables CSS | ~3.2 KB | Design tokens |
-| **Total Source** | **~59 KB** | Complete uncompressed source |
-
-### Estimated Production Sizes
+The complete PUI library (all components + Preact) is **5 KB minified + gzipped**.
 
 After minification, compression, and tree-shaking:
 
-| Bundle | Size (minified) | Size (gzipped) | Notes |
-| --- | --- | --- | --- |
-| **Core JS** | ~1.2 KB | ~0.6 KB | Factory + utilities |
-| **Full CSS** | ~12 KB | ~4 KB | All component styles |
-| **Complete Library** | ~13 KB | ~4.6 KB | Everything included |
-| **Typical App** | ~8 KB | ~3 KB | 10-15 components |
-| **Minimal App** | ~4 KB | ~1.5 KB | 3-5 components |
+| Bundle | Size (gzipped) | Notes |
+| --- | --- | --- |
+| **Complete Library** | **5 KB** | Everything included |
+| **Typical App** | ~3-4 KB | 10-15 components |
+| **Minimal App** | ~2 KB | 3-5 components |
 
 _Note: Sizes include Preact (~3KB gzipped). Actual sizes depend on which components you import._
 
@@ -55,7 +45,7 @@ Most PUI components add minimal overhead:
 // Import only what you need
 import {Button, Input, Card} from 'pui';
 
-// Final bundle: ~2KB JS + ~2KB CSS (gzipped)
+// Final bundle: ~2-3KB (gzipped)
 ```
 
 vs.
@@ -64,26 +54,26 @@ vs.
 // Full import (not recommended, but supported)
 import * from 'pui';
 
-// Final bundle: ~1.2KB JS + ~4KB CSS (gzipped)
+// Final bundle: ~5KB (gzipped)
 ```
 
 ## Comparison with Other Libraries
 
 ### Bundle Size Comparison
 
-| Library | Min Bundle (gzipped) | Typical App | Full Import |
-| --- | --- | --- | --- |
-| **PUI** | **~1.5 KB** | **~3 KB** | **~4.6 KB** |
-| Material-UI (MUI) | ~80 KB | ~120 KB | ~300 KB+ |
-| Chakra UI | ~45 KB | ~80 KB | ~150 KB+ |
-| Ant Design | ~60 KB | ~100 KB | ~500 KB+ |
-| shadcn/ui * | ~5-8 KB | ~20-35 KB | ~60 KB+ |
-| Radix UI | ~3-5 KB | ~10-20 KB | ~40 KB+ |
-| Headless UI | ~2-4 KB | ~8-15 KB | ~25 KB+ |
+| Library | Size (minified + gzipped) |
+| --- | --- |
+| **PUI** | **5 KB** |
+| Headless UI | 81 KB |
+| Radix UI | 79 KB |
+| Material-UI (MUI) | 164 KB |
+| shadcn/ui * | 193 KB |
+| Chakra UI | 253 KB |
+| Ant Design | 490 KB |
 
-_Note: Sizes are approximate and include required dependencies. MUI, Chakra, and Ant Design include React (~40KB gzipped). PUI includes Preact (~3KB gzipped)._
+_Note: All sizes are minified + gzipped. MUI, Chakra, and Ant Design include React (~40KB gzipped). PUI includes Preact (~3KB gzipped)._
 
-_* shadcn/ui is a wrapper around Radix UI primitives + class-variance-authority + additional styling code. Bundle sizes are similar to or larger than Radix UI alone due to the additional layers._
+_* shadcn/ui size excludes recharts and lucide, which you do end up with if you use charts or icons. shadcn/ui is a wrapper around Radix UI primitives + class-variance-authority + additional styling code._
 
 ### Why PUI is Smaller
 
@@ -177,13 +167,13 @@ const {Button} = PUI;
 
 ```tsx
 // Import the complete PUI stylesheet
-import 'pui/style.css'; // ~4KB gzipped, includes all components
+import 'pui/style.css'; // Included in the 5KB total
 
 // Then import only the components you need
 import {Button, Input, Card} from 'pui';
 ```
 
-PUI's CSS is already optimized and tree-shaken by your bundler. Since it's small (~4KB gzipped for everything), there's no need to split it further.
+PUI's CSS is already optimized and tree-shaken by your bundler. Since it's small (5KB gzipped for everything), there's no need to split it further.
 
 #### Critical CSS
 
@@ -393,7 +383,7 @@ PUI components forward props directly to native DOM elements. CSS handles varian
 
 ### Can I use PUI in a large application?
 
-Absolutely. PUI scales well because each component adds minimal overhead. A large app with 50+ components might still only add ~10KB (gzipped) to your bundle.
+Absolutely. PUI scales well because each component adds minimal overhead. Even a large app using all PUI components is only 5KB (gzipped) total.
 
 ### What about older browsers?
 
