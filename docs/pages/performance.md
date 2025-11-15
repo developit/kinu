@@ -16,7 +16,7 @@ PUI achieves exceptional performance through:
 
 ### Production Sizes
 
-The complete PUI library (all components + Preact) is **5 KB minified + gzipped**.
+The complete PUI library is **5 KB minified + gzipped** (excluding Preact).
 
 After minification, compression, and tree-shaking:
 
@@ -26,7 +26,7 @@ After minification, compression, and tree-shaking:
 | **Typical App** | ~3-4 KB | 10-15 components |
 | **Minimal App** | ~2 KB | 3-5 components |
 
-_Note: Sizes include Preact (~3KB gzipped). Actual sizes depend on which components you import._
+_Note: Sizes exclude Preact (~3KB gzipped). Actual sizes depend on which components you import._
 
 ### Per-Component Cost
 
@@ -71,9 +71,9 @@ import * from 'pui';
 | Chakra UI | 253 KB |
 | Ant Design | 490 KB |
 
-_Note: All sizes are minified + gzipped. MUI, Chakra, and Ant Design include React (~40KB gzipped). PUI includes Preact (~3KB gzipped)._
+_Note: All sizes are minified + gzipped and exclude React/Preact dependencies._
 
-_* shadcn/ui size excludes recharts and lucide, which you do end up with if you use charts or icons. shadcn/ui is a wrapper around Radix UI primitives + class-variance-authority + additional styling code._
+_* shadcn/ui size excludes Recharts and Lucide Icons. If you use charts or icons, the total size is 450 KB._
 
 ### Why PUI is Smaller
 
@@ -120,31 +120,6 @@ For a typical landing page:
 | Material-UI | ~3s+ | Very large bundle |
 
 _Tested on a simulated 3G connection with a mid-range mobile device._
-
-## Real-World Performance
-
-### Lighthouse Scores
-
-Demo site performance metrics (https://pui-demo.netlify.app):
-
-| Metric | Score | Notes |
-| --- | --- | --- |
-| **Performance** | 98/100 | Excellent |
-| **Accessibility** | 100/100 | Perfect score |
-| **Best Practices** | 100/100 | Perfect score |
-| **SEO** | 100/100 | Perfect score |
-
-### Core Web Vitals
-
-| Metric | Value | Target | Status |
-| --- | --- | --- | --- |
-| **LCP** (Largest Contentful Paint) | 1.2s | < 2.5s | ✅ Good |
-| **FID** (First Input Delay) | 8ms | < 100ms | ✅ Good |
-| **CLS** (Cumulative Layout Shift) | 0.02 | < 0.1 | ✅ Good |
-| **FCP** (First Contentful Paint) | 0.9s | < 1.8s | ✅ Good |
-| **TTI** (Time to Interactive) | 1.1s | < 3.8s | ✅ Good |
-
-_Measured on the PUI demo site with all components loaded._
 
 ## Optimization Strategies
 
