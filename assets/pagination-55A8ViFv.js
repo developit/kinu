@@ -1,0 +1,2 @@
+import{u as i}from"./index-DhdxtKkJ.js";import{ai as r,aj as n,ak as a,al as t}from"./style-4A1mZ0hV.js";function o(){return i(t,{children:i(r,{children:[i(n,{children:i(a,{"aria-current":"page",children:"1"})}),i(n,{children:i(a,{children:"2"})}),i(n,{children:i(a,{children:"3"})})]})})}const e="<Pagination>...</Pagination>",l={Demo:o,code:e};export{o as Demo,e as code,l as default};
+//# sourceMappingURL=pagination-55A8ViFv.js.map
