@@ -1,0 +1,2 @@
+import{u as t}from"./index-DbFjT-Hy.js";import{T as e,B as i}from"./style-CLlwlD1p.js";function o(){return t("div",{style:{display:"flex",gap:"0.5rem",flexWrap:"wrap"},children:[t(e,{title:"Save",children:t(i,{size:"icon",children:"💾"})}),t(e,{title:"Delete",children:t(i,{size:"icon",variant:"destructive",children:"🗑"})})]})}const l='<Tooltip title="Save"><Button /></Tooltip>',a={Demo:o,code:l};export{o as Demo,l as code,a as default};
+//# sourceMappingURL=tooltip-CEcag5Eo.js.map
