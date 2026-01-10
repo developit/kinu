@@ -220,7 +220,7 @@ function HeroDemo() {
                 checked={task.completed}
                 onInput={() => toggleTask(task.id)}
               />
-              <span class={task.completed ? 'task-completed' : ''}>
+              <span class={task.completed ? 'align-middle task-completed' : 'align-middle'}>
                 {task.text}
               </span>
             </Label>
