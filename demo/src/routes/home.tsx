@@ -215,12 +215,12 @@ function HeroDemo() {
       <div class="task-list">
         {tasks.map((task) => (
           <div key={task.id} class="task-item">
-            <Label>
+            <Label class="flex items-center gap-2">
               <Checkbox
                 checked={task.completed}
                 onInput={() => toggleTask(task.id)}
               />
-              <span class={task.completed ? 'align-middle task-completed' : 'align-middle'}>
+              <span class={task.completed ? 'task-completed' : ''}>
                 {task.text}
               </span>
             </Label>
