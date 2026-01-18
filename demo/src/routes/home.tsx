@@ -214,7 +214,7 @@ function HeroDemo() {
 
       <div class="task-list">
         {tasks.map((task) => (
-          <div key={task.id} class="task-item">
+          <Label key={task.id} class="task-item">
             <Checkbox
               checked={task.completed}
               onInput={() => toggleTask(task.id)}
@@ -222,7 +222,7 @@ function HeroDemo() {
             <span class={task.completed ? 'task-completed' : ''}>
               {task.text}
             </span>
-          </div>
+          </Label>
         ))}
       </div>
 
