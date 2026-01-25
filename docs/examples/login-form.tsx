@@ -1,11 +1,6 @@
 import {useSignal} from '@preact/signals';
 import {
   Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardDescription,
   Button,
   Input,
   Label,
@@ -54,15 +49,15 @@ function LoginForm() {
 
   return (
     <Card class="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Sign In</CardTitle>
-        <CardDescription>
+      <div>
+        <h3>Sign In</h3>
+        <p>
           Enter your credentials to access your account
-        </CardDescription>
-      </CardHeader>
+        </p>
+      </div>
 
       <form onSubmit={handleSubmit}>
-        <CardContent class="space-y-4">
+        <div class="space-y-4">
           {error.value && (
             <Alert variant="destructive" role="alert">
               <strong>Error:</strong> {error.value}
@@ -136,9 +131,9 @@ function LoginForm() {
               Remember me for 30 days
             </Label>
           </div>
-        </CardContent>
+        </div>
 
-        <CardFooter class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4">
           <Button
             type="submit"
             class="w-full"
@@ -154,7 +149,7 @@ function LoginForm() {
               Sign up
             </a>
           </p>
-        </CardFooter>
+        </div>
       </form>
     </Card>
   );
@@ -163,11 +158,6 @@ function LoginForm() {
 export const code = `import {useSignal} from '@preact/signals';
 import {
   Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardDescription,
   Button,
   Input,
   Label,
@@ -215,15 +205,15 @@ export function LoginForm() {
 
   return (
     <Card class="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Sign In</CardTitle>
-        <CardDescription>
+      <div>
+        <h3>Sign In</h3>
+        <p>
           Enter your credentials to access your account
-        </CardDescription>
-      </CardHeader>
+        </p>
+      </div>
 
       <form onSubmit={handleSubmit}>
-        <CardContent class="space-y-4">
+        <div class="space-y-4">
           {error.value && (
             <Alert variant="destructive" role="alert">
               <strong>Error:</strong> {error.value}
@@ -297,9 +287,9 @@ export function LoginForm() {
               Remember me for 30 days
             </Label>
           </div>
-        </CardContent>
+        </div>
 
-        <CardFooter class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4">
           <Button
             type="submit"
             class="w-full"
@@ -315,7 +305,7 @@ export function LoginForm() {
               Sign up
             </a>
           </p>
-        </CardFooter>
+        </div>
       </form>
     </Card>
   );

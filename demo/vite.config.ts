@@ -14,8 +14,13 @@ export default defineConfig({
     alias: {
       pui: resolve(__dirname, '..'),
       'pui-docs': resolve(__dirname, '../docs'),
+      '@preact/signals': resolve(__dirname, 'node_modules/@preact/signals'),
+      '@preact/signals-core': resolve(__dirname, 'node_modules/@preact/signals-core'),
     },
     conditions: ['source', ...defaultClientConditions],
+  },
+  optimizeDeps: {
+    include: ['@preact/signals', '@preact/signals-core'],
   },
   server: {
     fs: {

@@ -2,11 +2,6 @@ import {signal, computed, batch, type Signal} from '@preact/signals';
 import type {JSX} from 'preact/jsx-runtime';
 import {
   Table,
-  TableHeader,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
   Input,
   Button,
   Checkbox,
@@ -389,17 +384,17 @@ function DataTable() {
       {/* Table */}
       <div class="border rounded-lg overflow-hidden">
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead class="w-12">
+          <thead>
+            <tr>
+              <th class="w-12">
                 <Checkbox
                   checked={allSelected.value}
                   indeterminate={someSelected.value}
                   onInput={handleSelectAll}
                   aria-label="Select all users"
                 />
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('name')}
@@ -408,8 +403,8 @@ function DataTable() {
                   Name
                   <SortIcon column="name" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('email')}
@@ -418,8 +413,8 @@ function DataTable() {
                   Email
                   <SortIcon column="email" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('role')}
@@ -428,8 +423,8 @@ function DataTable() {
                   Role
                   <SortIcon column="role" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('status')}
@@ -438,8 +433,8 @@ function DataTable() {
                   Status
                   <SortIcon column="status" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('createdAt')}
@@ -448,67 +443,67 @@ function DataTable() {
                   Created
                   <SortIcon column="createdAt" />
                 </button>
-              </TableHead>
-              <TableHead class="w-12">
+              </th>
+              <th class="w-12">
                 <span class="sr-only">Actions</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
             {isLoading.value ? (
               Array.from({length: pageSize.value}).map((_, i) => (
-                <TableRow key={i}>
-                  <TableCell>
+                <tr key={i}>
+                  <td>
                     <Skeleton class="h-4 w-4" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-32" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-48" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-16" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-16" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-24" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-8" />
-                  </TableCell>
-                </TableRow>
+                  </td>
+                </tr>
               ))
             ) : paginatedUsers.value.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} class="h-32 text-center">
+              <tr>
+                <td colSpan={7} class="h-32 text-center">
                   <div class="flex flex-col items-center justify-center text-muted-foreground">
                     <iconify-icon icon="mdi:database-off" class="text-4xl mb-2" />
                     <p class="font-medium">No users found</p>
                     <p class="text-sm">Try adjusting your filters</p>
                   </div>
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
             ) : (
               paginatedUsers.value.map(user => (
-                <TableRow key={user.id}>
-                  <TableCell>
+                <tr key={user.id}>
+                  <td>
                     <Checkbox
                       checked={selectedRows.value.has(user.id)}
                       onInput={() => handleSelectRow(user.id)}
                       aria-label={`Select ${user.name}`}
                     />
-                  </TableCell>
-                  <TableCell class="font-medium">{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
+                  </td>
+                  <td class="font-medium">{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
                     <Badge variant="secondary" class="capitalize">
                       {user.role}
                     </Badge>
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Badge
                       variant={
                         user.status === 'active'
@@ -521,17 +516,17 @@ function DataTable() {
                     >
                       {user.status}
                     </Badge>
-                  </TableCell>
-                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
+                  </td>
+                  <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                  <td>
                     <Button variant="ghost" size="icon" aria-label={`Actions for ${user.name}`}>
                       <iconify-icon icon="mdi:dots-vertical" class="text-lg" />
                     </Button>
-                  </TableCell>
-                </TableRow>
+                  </td>
+                </tr>
               ))
             )}
-          </TableBody>
+          </tbody>
         </Table>
       </div>
 
@@ -612,11 +607,6 @@ export const code = `import {signal, computed, batch, type Signal} from '@preact
 import type {JSX} from 'preact/jsx-runtime';
 import {
   Table,
-  TableHeader,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
   Input,
   Button,
   Checkbox,
@@ -909,17 +899,17 @@ export function UserTable() {
       {/* Table */}
       <div class="border rounded-lg overflow-hidden">
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead class="w-12">
+          <thead>
+            <tr>
+              <th class="w-12">
                 <Checkbox
                   checked={allSelected.value}
                   indeterminate={someSelected.value}
                   onInput={handleSelectAll}
                   aria-label="Select all users"
                 />
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('name')}
@@ -928,8 +918,8 @@ export function UserTable() {
                   Name
                   <SortIcon column="name" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('email')}
@@ -938,8 +928,8 @@ export function UserTable() {
                   Email
                   <SortIcon column="email" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('role')}
@@ -948,8 +938,8 @@ export function UserTable() {
                   Role
                   <SortIcon column="role" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('status')}
@@ -958,8 +948,8 @@ export function UserTable() {
                   Status
                   <SortIcon column="status" />
                 </button>
-              </TableHead>
-              <TableHead>
+              </th>
+              <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
                   onClick={() => handleSort('createdAt')}
@@ -968,67 +958,67 @@ export function UserTable() {
                   Created
                   <SortIcon column="createdAt" />
                 </button>
-              </TableHead>
-              <TableHead class="w-12">
+              </th>
+              <th class="w-12">
                 <span class="sr-only">Actions</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
             {isLoading.value ? (
               Array.from({length: pageSize.value}).map((_, i) => (
-                <TableRow key={i}>
-                  <TableCell>
+                <tr key={i}>
+                  <td>
                     <Skeleton class="h-4 w-4" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-32" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-48" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-16" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-16" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-24" />
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Skeleton class="h-4 w-8" />
-                  </TableCell>
-                </TableRow>
+                  </td>
+                </tr>
               ))
             ) : paginatedUsers.value.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} class="h-32 text-center">
+              <tr>
+                <td colSpan={7} class="h-32 text-center">
                   <div class="flex flex-col items-center justify-center text-muted-foreground">
                     <iconify-icon icon="mdi:database-off" class="text-4xl mb-2" />
                     <p class="font-medium">No users found</p>
                     <p class="text-sm">Try adjusting your filters</p>
                   </div>
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
             ) : (
               paginatedUsers.value.map(user => (
-                <TableRow key={user.id}>
-                  <TableCell>
+                <tr key={user.id}>
+                  <td>
                     <Checkbox
                       checked={selectedRows.value.has(user.id)}
                       onInput={() => handleSelectRow(user.id)}
                       aria-label={\`Select \${user.name}\`}
                     />
-                  </TableCell>
-                  <TableCell class="font-medium">{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
+                  </td>
+                  <td class="font-medium">{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
                     <Badge variant="secondary" class="capitalize">
                       {user.role}
                     </Badge>
-                  </TableCell>
-                  <TableCell>
+                  </td>
+                  <td>
                     <Badge
                       variant={
                         user.status === 'active'
@@ -1041,17 +1031,17 @@ export function UserTable() {
                     >
                       {user.status}
                     </Badge>
-                  </TableCell>
-                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
+                  </td>
+                  <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                  <td>
                     <Button variant="ghost" size="icon" aria-label={\`Actions for \${user.name}\`}>
                       <iconify-icon icon="mdi:dots-vertical" class="text-lg" />
                     </Button>
-                  </TableCell>
-                </TableRow>
+                  </td>
+                </tr>
               ))
             )}
-          </TableBody>
+          </tbody>
         </Table>
       </div>
 

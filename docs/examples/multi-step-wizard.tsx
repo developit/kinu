@@ -2,11 +2,6 @@ import {signal, computed, effect} from '@preact/signals';
 import {useMemo} from 'preact/hooks';
 import {
   Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardDescription,
   Button,
   Input,
   Label,
@@ -624,16 +619,16 @@ function MultiStepWizard() {
 
       {/* Main card */}
       <Card>
-        <CardHeader>
-          <CardTitle>{STEPS[wizard.currentStep.value].title}</CardTitle>
-          <CardDescription>{STEPS[wizard.currentStep.value].description}</CardDescription>
-        </CardHeader>
+        <div>
+          <h3>{STEPS[wizard.currentStep.value].title}</h3>
+          <p>{STEPS[wizard.currentStep.value].description}</p>
+        </div>
 
-        <CardContent>
+        <div>
           <CurrentStepComponent wizard={wizard} />
-        </CardContent>
+        </div>
 
-        <CardFooter class="flex justify-between">
+        <div class="flex justify-between">
           <Button
             variant="outline"
             onClick={wizard.handleBack}
@@ -655,7 +650,7 @@ function MultiStepWizard() {
               Complete Registration
             </Button>
           )}
-        </CardFooter>
+        </div>
       </Card>
     </div>
   );
@@ -665,11 +660,6 @@ export const code = `import {signal, computed, effect} from '@preact/signals';
 import {useMemo} from 'preact/hooks';
 import {
   Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardDescription,
   Button,
   Input,
   Label,
@@ -1280,16 +1270,16 @@ export function MultiStepWizard() {
 
       {/* Main card */}
       <Card>
-        <CardHeader>
-          <CardTitle>{STEPS[wizard.currentStep.value].title}</CardTitle>
-          <CardDescription>{STEPS[wizard.currentStep.value].description}</CardDescription>
-        </CardHeader>
+        <div>
+          <h3>{STEPS[wizard.currentStep.value].title}</h3>
+          <p>{STEPS[wizard.currentStep.value].description}</p>
+        </div>
 
-        <CardContent>
+        <div>
           <CurrentStepComponent wizard={wizard} />
-        </CardContent>
+        </div>
 
-        <CardFooter class="flex justify-between">
+        <div class="flex justify-between">
           <Button
             variant="outline"
             onClick={wizard.handleBack}
@@ -1311,7 +1301,7 @@ export function MultiStepWizard() {
               Complete Registration
             </Button>
           )}
-        </CardFooter>
+        </div>
       </Card>
     </div>
   );

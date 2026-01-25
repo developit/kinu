@@ -2,11 +2,6 @@ import type {JSX} from 'preact';
 import {signal, computed, effect, batch} from '@preact/signals';
 import {
   Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-  CardDescription,
-  Tabs,
   TabList,
   Tab,
   TabPanel,
@@ -20,7 +15,7 @@ import {
   Separator,
   Avatar,
   Alert,
-  showToast,
+  toast,
 } from 'pui';
 
 interface Settings {
@@ -188,7 +183,7 @@ function SettingsPanel() {
   // Save settings
   const handleSave = async () => {
     if (!validate()) {
-      showToast({
+      toast({
         title: 'Validation Error',
         description: 'Please fix the errors before saving.',
         variant: 'destructive',
@@ -211,13 +206,13 @@ function SettingsPanel() {
 
       originalSettings.value = settings.value;
 
-      showToast({
+      toast({
         title: 'Settings Saved',
         description: 'Your changes have been saved successfully.',
         variant: 'success',
       });
     } catch (error) {
-      showToast({
+      toast({
         title: 'Error',
         description: 'Failed to save settings. Please try again.',
         variant: 'destructive',
@@ -281,13 +276,13 @@ function SettingsPanel() {
         {/* Profile Tab */}
         <TabPanel value="profile">
           <Card>
-            <CardHeader>
-              <CardTitle>Profile Information</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Profile Information</h3>
+              <p>
                 Update your personal information and profile details
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="flex items-center gap-4">
                 <Avatar class="w-20 h-20">
                   <div class="bg-primary text-primary-foreground text-2xl">
@@ -366,20 +361,20 @@ function SettingsPanel() {
                   <p class="text-sm text-destructive">{errors.value.bio}</p>
                 )}
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
 
         {/* Preferences Tab */}
         <TabPanel value="preferences">
           <Card>
-            <CardHeader>
-              <CardTitle>Preferences</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Preferences</h3>
+              <p>
                 Customize your application experience
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="space-y-3">
                 <Label>Theme</Label>
                 <RadioGroup
@@ -481,20 +476,20 @@ function SettingsPanel() {
                   <option value="YYYY-MM-DD">YYYY-MM-DD</option>
                 </Select>
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
 
         {/* Notifications Tab */}
         <TabPanel value="notifications">
           <Card>
-            <CardHeader>
-              <CardTitle>Notification Settings</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Notification Settings</h3>
+              <p>
                 Control how and when you receive notifications
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="emailNotifications">Email Notifications</Label>
@@ -614,20 +609,20 @@ function SettingsPanel() {
                   }
                 />
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
 
         {/* Privacy Tab */}
         <TabPanel value="privacy">
           <Card>
-            <CardHeader>
-              <CardTitle>Privacy & Security</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Privacy & Security</h3>
+              <p>
                 Control your privacy settings and data sharing
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="space-y-3">
                 <Label>Profile Visibility</Label>
                 <RadioGroup
@@ -729,7 +724,7 @@ function SettingsPanel() {
                   }
                 />
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
       </Tabs>
@@ -772,11 +767,6 @@ export const code = `import type {JSX} from 'preact';
 import {signal, computed, effect, batch} from '@preact/signals';
 import {
   Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-  CardDescription,
-  Tabs,
   TabList,
   Tab,
   TabPanel,
@@ -790,7 +780,7 @@ import {
   Separator,
   Avatar,
   Alert,
-  showToast,
+  toast,
 } from 'pui';
 
 interface Settings {
@@ -915,7 +905,7 @@ export function SettingsPanel() {
   // Save settings
   const handleSave = async () => {
     if (!validate()) {
-      showToast({
+      toast({
         title: 'Validation Error',
         description: 'Please fix the errors before saving.',
         variant: 'destructive',
@@ -938,13 +928,13 @@ export function SettingsPanel() {
 
       originalSettings.value = settings.value;
 
-      showToast({
+      toast({
         title: 'Settings Saved',
         description: 'Your changes have been saved successfully.',
         variant: 'success',
       });
     } catch (error) {
-      showToast({
+      toast({
         title: 'Error',
         description: 'Failed to save settings. Please try again.',
         variant: 'destructive',
@@ -1008,13 +998,13 @@ export function SettingsPanel() {
         {/* Profile Tab */}
         <TabPanel value="profile">
           <Card>
-            <CardHeader>
-              <CardTitle>Profile Information</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Profile Information</h3>
+              <p>
                 Update your personal information and profile details
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="flex items-center gap-4">
                 <Avatar class="w-20 h-20">
                   <div class="bg-primary text-primary-foreground text-2xl">
@@ -1093,20 +1083,20 @@ export function SettingsPanel() {
                   <p class="text-sm text-destructive">{errors.value.bio}</p>
                 )}
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
 
         {/* Preferences Tab */}
         <TabPanel value="preferences">
           <Card>
-            <CardHeader>
-              <CardTitle>Preferences</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Preferences</h3>
+              <p>
                 Customize your application experience
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="space-y-3">
                 <Label>Theme</Label>
                 <RadioGroup
@@ -1208,20 +1198,20 @@ export function SettingsPanel() {
                   <option value="YYYY-MM-DD">YYYY-MM-DD</option>
                 </Select>
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
 
         {/* Notifications Tab */}
         <TabPanel value="notifications">
           <Card>
-            <CardHeader>
-              <CardTitle>Notification Settings</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Notification Settings</h3>
+              <p>
                 Control how and when you receive notifications
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="emailNotifications">Email Notifications</Label>
@@ -1341,20 +1331,20 @@ export function SettingsPanel() {
                   }
                 />
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
 
         {/* Privacy Tab */}
         <TabPanel value="privacy">
           <Card>
-            <CardHeader>
-              <CardTitle>Privacy & Security</CardTitle>
-              <CardDescription>
+            <div>
+              <h3>Privacy & Security</h3>
+              <p>
                 Control your privacy settings and data sharing
-              </CardDescription>
-            </CardHeader>
-            <CardContent class="space-y-6">
+              </p>
+            </div>
+            <div class="space-y-6">
               <div class="space-y-3">
                 <Label>Profile Visibility</Label>
                 <RadioGroup
@@ -1456,7 +1446,7 @@ export function SettingsPanel() {
                   }
                 />
               </div>
-            </CardContent>
+            </div>
           </Card>
         </TabPanel>
       </Tabs>

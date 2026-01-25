@@ -1,4 +1,4 @@
-import {Card, Tabs, TabsList, TabsTrigger, TabsContent} from 'pui';
+import {Card, TabList, Tab, TabPanel} from 'pui';
 import {DocsLayout} from '../app';
 import {getEntryBySlug, loadDocContent, loadExample} from '../docs-data';
 import {useRoute} from 'preact-iso';
@@ -8,6 +8,7 @@ import {markedHighlight} from 'marked-highlight';
 import {hljs} from '../highlight';
 import type {ComponentType, JSX} from 'preact';
 import {CodeBlock} from '../code-block';
+import {useState} from 'preact/hooks';
 
 interface Data {
   markdown: string;
@@ -60,25 +61,40 @@ function splitDocSections(html: string) {
 function ComponentContent({slug, data}: {slug: string; data: Data}) {
   const entry = getEntryBySlug(slug);
   const isRecipe = entry?.category === 'Recipes';
+  const [activeTab, setActiveTab] = useState<'result' | 'code'>('result');
 
   return (
     <section id={slug}>
       <div dangerouslySetInnerHTML={{__html: data.intro}} />
       {data.example && isRecipe ? (
-        <Tabs defaultValue="result" class="my-6">
-          <TabsList>
-            <TabsTrigger value="result">Result</TabsTrigger>
-            <TabsTrigger value="code">Code</TabsTrigger>
-          </TabsList>
-          <TabsContent value="result">
-            <Card class="example-demo">
-              <data.example.Demo />
-            </Card>
-          </TabsContent>
-          <TabsContent value="code">
-            <CodeBlock code={data.example.code} />
-          </TabsContent>
-        </Tabs>
+        <div class="my-6">
+          <TabList>
+            <Tab
+              aria-selected={activeTab === 'result'}
+              onClick={() => setActiveTab('result')}
+            >
+              Result
+            </Tab>
+            <Tab
+              aria-selected={activeTab === 'code'}
+              onClick={() => setActiveTab('code')}
+            >
+              Code
+            </Tab>
+          </TabList>
+          {activeTab === 'result' && (
+            <TabPanel>
+              <Card class="example-demo">
+                <data.example.Demo />
+              </Card>
+            </TabPanel>
+          )}
+          {activeTab === 'code' && (
+            <TabPanel>
+              <CodeBlock code={data.example.code} />
+            </TabPanel>
+          )}
+        </div>
       ) : data.example ? (
         <Card class="example-demo">
           <data.example.Demo />

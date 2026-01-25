@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
-import {Dialog, DialogContent, Input, Badge, Separator} from 'pui';
+import {Dialog, Input, Badge, Separator} from 'pui';
 
 export function Demo() {
   return <CommandPalette />;
@@ -338,7 +338,7 @@ function CommandPalette() {
 
       {/* Dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent
+        <Dialog.Content
           class="max-w-2xl p-0 gap-0 overflow-hidden"
           aria-label="Command palette"
         >
@@ -493,14 +493,14 @@ function CommandPalette() {
               {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
             </div>
           </div>
-        </DialogContent>
+        </Dialog.Content>
       </Dialog>
     </>
   );
 }
 
 export const code = `import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
-import {Dialog, DialogContent, Input, Badge, Separator} from 'pui';
+import {Dialog, Input, Badge, Separator} from 'pui';
 
 // Command interface
 interface Command {
@@ -835,7 +835,7 @@ export function CommandPalette() {
 
       {/* Dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent
+        <Dialog.Content
           class="max-w-2xl p-0 gap-0 overflow-hidden"
           aria-label="Command palette"
         >
@@ -990,7 +990,7 @@ export function CommandPalette() {
               {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
             </div>
           </div>
-        </DialogContent>
+        </Dialog.Content>
       </Dialog>
     </>
   );
