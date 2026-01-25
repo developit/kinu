@@ -48,15 +48,15 @@ function LoginForm() {
   };
 
   return (
-    <Card class="w-full max-w-md mx-auto">
-      <div>
-        <h3>Sign In</h3>
-        <p>
+    <Card class="w-full max-w-md mx-auto p-6">
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold mb-2">Sign In</h3>
+        <p class="text-muted-foreground">
           Enter your credentials to access your account
         </p>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} class="space-y-6">
         <div class="space-y-4">
           {error.value && (
             <Alert variant="destructive" role="alert">
@@ -96,12 +96,13 @@ function LoginForm() {
                 minLength={8}
                 required
                 disabled={isSubmitting.value}
+                class="pr-10"
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
-                class="absolute right-0 top-0 h-full px-3"
+                class="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
                 aria-label={showPassword.value ? 'Hide password' : 'Show password'}
                 onClick={() => showPassword.value = !showPassword.value}
                 disabled={isSubmitting.value}
@@ -133,7 +134,7 @@ function LoginForm() {
           </div>
         </div>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 mt-6">
           <Button
             type="submit"
             class="w-full"
@@ -145,7 +146,7 @@ function LoginForm() {
 
           <p class="text-sm text-center text-muted-foreground">
             Don't have an account?{' '}
-            <a href="/signup" class="text-primary hover:underline">
+            <a href="/signup" class="text-primary hover:underline font-medium">
               Sign up
             </a>
           </p>
@@ -204,15 +205,15 @@ export function LoginForm() {
   };
 
   return (
-    <Card class="w-full max-w-md mx-auto">
-      <div>
-        <h3>Sign In</h3>
-        <p>
+    <Card class="w-full max-w-md mx-auto p-6">
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold mb-2">Sign In</h3>
+        <p class="text-muted-foreground">
           Enter your credentials to access your account
         </p>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} class="space-y-6">
         <div class="space-y-4">
           {error.value && (
             <Alert variant="destructive" role="alert">
@@ -252,12 +253,13 @@ export function LoginForm() {
                 minLength={8}
                 required
                 disabled={isSubmitting.value}
+                class="pr-10"
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
-                class="absolute right-0 top-0 h-full px-3"
+                class="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
                 aria-label={showPassword.value ? 'Hide password' : 'Show password'}
                 onClick={() => showPassword.value = !showPassword.value}
                 disabled={isSubmitting.value}
@@ -289,7 +291,7 @@ export function LoginForm() {
           </div>
         </div>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 mt-6">
           <Button
             type="submit"
             class="w-full"
@@ -301,7 +303,7 @@ export function LoginForm() {
 
           <p class="text-sm text-center text-muted-foreground">
             Don't have an account?{' '}
-            <a href="/signup" class="text-primary hover:underline">
+            <a href="/signup" class="text-primary hover:underline font-medium">
               Sign up
             </a>
           </p>

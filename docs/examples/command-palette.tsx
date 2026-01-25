@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
-import {Dialog, Input, Badge, Separator} from 'pui';
+import {Input, Badge, Separator} from 'pui';
 
 export function Demo() {
   return <CommandPalette />;
@@ -18,10 +18,10 @@ interface Command {
 }
 
 function CommandPalette() {
-  const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [recentCommands, setRecentCommands] = useState<string[]>([]);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -236,28 +236,38 @@ function CommandPalette() {
     return groupedCommands.flatMap(([_, commands]) => commands);
   }, [groupedCommands]);
 
+  // Open/close dialog functions
+  const openDialog = () => {
+    dialogRef.current?.showModal();
+    setSearch('');
+    setSelectedIndex(0);
+    // Focus the input element after dialog opens
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+  };
+
+  const closeDialog = () => {
+    dialogRef.current?.close();
+  };
+
   // Keyboard shortcut to open/close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // ⌘K or Ctrl+K to toggle
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setIsOpen(prev => !prev);
+        if (dialogRef.current?.open) {
+          closeDialog();
+        } else {
+          openDialog();
+        }
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  // Reset state when opening
-  useEffect(() => {
-    if (isOpen) {
-      setSearch('');
-      setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 0);
-    }
-  }, [isOpen]);
 
   // Scroll selected item into view
   useEffect(() => {
@@ -289,7 +299,7 @@ function CommandPalette() {
 
       case 'Escape':
         e.preventDefault();
-        setIsOpen(false);
+        closeDialog();
         break;
 
       case 'Home':
@@ -316,7 +326,21 @@ function CommandPalette() {
     command.action();
 
     // Close palette
-    setIsOpen(false);
+    closeDialog();
+  };
+
+  // Handle backdrop click
+  const handleDialogClick = (e: JSX.TargetedMouseEvent<HTMLDialogElement>) => {
+    const rect = dialogRef.current?.getBoundingClientRect();
+    if (
+      rect &&
+      (e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom)
+    ) {
+      closeDialog();
+    }
   };
 
   // Get keyboard shortcut display
@@ -324,10 +348,10 @@ function CommandPalette() {
 
   return (
     <>
-      {/* Trigger button (optional) */}
+      {/* Trigger button */}
       <button
-        onClick={() => setIsOpen(true)}
-        class="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent"
+        onClick={openDialog}
+        class="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent transition-colors"
         aria-label="Open command palette"
       >
         <span class="text-muted-foreground">Search commands...</span>
@@ -337,15 +361,17 @@ function CommandPalette() {
       </button>
 
       {/* Dialog */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content
-          class="max-w-2xl p-0 gap-0 overflow-hidden"
-          aria-label="Command palette"
-        >
+      <dialog
+        ref={dialogRef}
+        onClick={handleDialogClick}
+        class="rounded-lg shadow-lg border bg-popover text-popover-foreground backdrop:bg-black/50 max-w-2xl w-full p-0 overflow-hidden"
+        aria-label="Command palette"
+      >
+        <div class="flex flex-col">
           {/* Search input */}
           <div class="flex items-center border-b px-3">
             <svg
-              class="w-5 h-5 text-muted-foreground"
+              class="w-5 h-5 text-muted-foreground flex-shrink-0"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -367,7 +393,7 @@ function CommandPalette() {
                 setSearch(e.currentTarget.value)
               }
               onKeyDown={handleKeyDown}
-              class="border-0 focus:ring-0 flex-1"
+              class="border-0 focus-visible:ring-0 flex-1"
               aria-label="Search commands"
               aria-expanded="true"
               aria-controls="command-list"
@@ -401,7 +427,7 @@ function CommandPalette() {
                   <div key={group}>
                     {/* Group label */}
                     {groupIdx > 0 && <Separator class="my-2" />}
-                    <div class="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                    <div class="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                       {group}
                     </div>
 
@@ -420,8 +446,8 @@ function CommandPalette() {
                           onClick={() => executeCommand(command)}
                           onMouseEnter={() => setSelectedIndex(index)}
                           class={`
-                            w-full flex items-center gap-3 px-2 py-2 rounded-md text-left
-                            ${isSelected ? 'bg-accent' : 'hover:bg-accent/50'}
+                            w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-left transition-colors
+                            ${isSelected ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'}
                           `}
                         >
                           {/* Icon */}
@@ -445,7 +471,7 @@ function CommandPalette() {
 
                           {/* Shortcut badge */}
                           {command.shortcut && (
-                            <Badge variant="secondary" class="text-xs">
+                            <Badge variant="secondary" class="text-xs flex-shrink-0">
                               {command.shortcut}
                             </Badge>
                           )}
@@ -453,7 +479,7 @@ function CommandPalette() {
                           {/* Recent indicator */}
                           {!search && recentCommands.includes(command.id) && (
                             <svg
-                              class="w-4 h-4 text-muted-foreground"
+                              class="w-4 h-4 text-muted-foreground flex-shrink-0"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -477,30 +503,30 @@ function CommandPalette() {
           </div>
 
           {/* Footer hints */}
-          <div class="flex items-center justify-between px-3 py-2 border-t text-xs text-muted-foreground">
+          <div class="flex items-center justify-between px-3 py-2.5 border-t text-xs text-muted-foreground bg-muted/30">
             <div class="flex items-center gap-4">
-              <span>
-                <kbd class="px-1.5 py-0.5 border rounded bg-muted">↑↓</kbd> Navigate
+              <span class="flex items-center gap-1">
+                <kbd class="px-1.5 py-0.5 border rounded bg-background">↑↓</kbd> Navigate
               </span>
-              <span>
-                <kbd class="px-1.5 py-0.5 border rounded bg-muted">↵</kbd> Select
+              <span class="flex items-center gap-1">
+                <kbd class="px-1.5 py-0.5 border rounded bg-background">↵</kbd> Select
               </span>
-              <span>
-                <kbd class="px-1.5 py-0.5 border rounded bg-muted">Esc</kbd> Close
+              <span class="flex items-center gap-1">
+                <kbd class="px-1.5 py-0.5 border rounded bg-background">Esc</kbd> Close
               </span>
             </div>
             <div>
               {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
             </div>
           </div>
-        </Dialog.Content>
-      </Dialog>
+        </div>
+      </dialog>
     </>
   );
 }
 
 export const code = `import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
-import {Dialog, Input, Badge, Separator} from 'pui';
+import {Input, Badge, Separator} from 'pui';
 
 // Command interface
 interface Command {
@@ -515,10 +541,10 @@ interface Command {
 }
 
 export function CommandPalette() {
-  const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [recentCommands, setRecentCommands] = useState<string[]>([]);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -733,28 +759,38 @@ export function CommandPalette() {
     return groupedCommands.flatMap(([_, commands]) => commands);
   }, [groupedCommands]);
 
+  // Open/close dialog functions
+  const openDialog = () => {
+    dialogRef.current?.showModal();
+    setSearch('');
+    setSelectedIndex(0);
+    // Focus the input element after dialog opens
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+  };
+
+  const closeDialog = () => {
+    dialogRef.current?.close();
+  };
+
   // Keyboard shortcut to open/close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // ⌘K or Ctrl+K to toggle
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setIsOpen(prev => !prev);
+        if (dialogRef.current?.open) {
+          closeDialog();
+        } else {
+          openDialog();
+        }
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  // Reset state when opening
-  useEffect(() => {
-    if (isOpen) {
-      setSearch('');
-      setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 0);
-    }
-  }, [isOpen]);
 
   // Scroll selected item into view
   useEffect(() => {
@@ -786,7 +822,7 @@ export function CommandPalette() {
 
       case 'Escape':
         e.preventDefault();
-        setIsOpen(false);
+        closeDialog();
         break;
 
       case 'Home':
@@ -813,7 +849,21 @@ export function CommandPalette() {
     command.action();
 
     // Close palette
-    setIsOpen(false);
+    closeDialog();
+  };
+
+  // Handle backdrop click
+  const handleDialogClick = (e: JSX.TargetedMouseEvent<HTMLDialogElement>) => {
+    const rect = dialogRef.current?.getBoundingClientRect();
+    if (
+      rect &&
+      (e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom)
+    ) {
+      closeDialog();
+    }
   };
 
   // Get keyboard shortcut display
@@ -821,10 +871,10 @@ export function CommandPalette() {
 
   return (
     <>
-      {/* Trigger button (optional) */}
+      {/* Trigger button */}
       <button
-        onClick={() => setIsOpen(true)}
-        class="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent"
+        onClick={openDialog}
+        class="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent transition-colors"
         aria-label="Open command palette"
       >
         <span class="text-muted-foreground">Search commands...</span>
@@ -834,15 +884,17 @@ export function CommandPalette() {
       </button>
 
       {/* Dialog */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content
-          class="max-w-2xl p-0 gap-0 overflow-hidden"
-          aria-label="Command palette"
-        >
+      <dialog
+        ref={dialogRef}
+        onClick={handleDialogClick}
+        class="rounded-lg shadow-lg border bg-popover text-popover-foreground backdrop:bg-black/50 max-w-2xl w-full p-0 overflow-hidden"
+        aria-label="Command palette"
+      >
+        <div class="flex flex-col">
           {/* Search input */}
           <div class="flex items-center border-b px-3">
             <svg
-              class="w-5 h-5 text-muted-foreground"
+              class="w-5 h-5 text-muted-foreground flex-shrink-0"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -864,7 +916,7 @@ export function CommandPalette() {
                 setSearch(e.currentTarget.value)
               }
               onKeyDown={handleKeyDown}
-              class="border-0 focus:ring-0 flex-1"
+              class="border-0 focus-visible:ring-0 flex-1"
               aria-label="Search commands"
               aria-expanded="true"
               aria-controls="command-list"
@@ -898,7 +950,7 @@ export function CommandPalette() {
                   <div key={group}>
                     {/* Group label */}
                     {groupIdx > 0 && <Separator class="my-2" />}
-                    <div class="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                    <div class="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                       {group}
                     </div>
 
@@ -917,8 +969,8 @@ export function CommandPalette() {
                           onClick={() => executeCommand(command)}
                           onMouseEnter={() => setSelectedIndex(index)}
                           class={\`
-                            w-full flex items-center gap-3 px-2 py-2 rounded-md text-left
-                            \${isSelected ? 'bg-accent' : 'hover:bg-accent/50'}
+                            w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-left transition-colors
+                            \${isSelected ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'}
                           \`}
                         >
                           {/* Icon */}
@@ -942,7 +994,7 @@ export function CommandPalette() {
 
                           {/* Shortcut badge */}
                           {command.shortcut && (
-                            <Badge variant="secondary" class="text-xs">
+                            <Badge variant="secondary" class="text-xs flex-shrink-0">
                               {command.shortcut}
                             </Badge>
                           )}
@@ -950,7 +1002,7 @@ export function CommandPalette() {
                           {/* Recent indicator */}
                           {!search && recentCommands.includes(command.id) && (
                             <svg
-                              class="w-4 h-4 text-muted-foreground"
+                              class="w-4 h-4 text-muted-foreground flex-shrink-0"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -974,24 +1026,24 @@ export function CommandPalette() {
           </div>
 
           {/* Footer hints */}
-          <div class="flex items-center justify-between px-3 py-2 border-t text-xs text-muted-foreground">
+          <div class="flex items-center justify-between px-3 py-2.5 border-t text-xs text-muted-foreground bg-muted/30">
             <div class="flex items-center gap-4">
-              <span>
-                <kbd class="px-1.5 py-0.5 border rounded bg-muted">↑↓</kbd> Navigate
+              <span class="flex items-center gap-1">
+                <kbd class="px-1.5 py-0.5 border rounded bg-background">↑↓</kbd> Navigate
               </span>
-              <span>
-                <kbd class="px-1.5 py-0.5 border rounded bg-muted">↵</kbd> Select
+              <span class="flex items-center gap-1">
+                <kbd class="px-1.5 py-0.5 border rounded bg-background">↵</kbd> Select
               </span>
-              <span>
-                <kbd class="px-1.5 py-0.5 border rounded bg-muted">Esc</kbd> Close
+              <span class="flex items-center gap-1">
+                <kbd class="px-1.5 py-0.5 border rounded bg-background">Esc</kbd> Close
               </span>
             </div>
             <div>
               {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
             </div>
           </div>
-        </Dialog.Content>
-      </Dialog>
+        </div>
+      </dialog>
     </>
   );
 }`;

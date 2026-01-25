@@ -313,9 +313,9 @@ export function Demo() {
 
 function DataTable() {
   return (
-    <div class="space-y-4">
+    <div class="space-y-6">
       {/* Filters and actions */}
-      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between p-4 bg-muted/50 rounded-lg">
         <div class="flex flex-1 flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <div class="relative w-full sm:w-64">
             <iconify-icon
@@ -382,11 +382,11 @@ function DataTable() {
       </div>
 
       {/* Table */}
-      <div class="border rounded-lg overflow-hidden">
+      <div class="border rounded-lg overflow-hidden shadow-sm">
         <Table>
           <thead>
             <tr>
-              <th class="w-12">
+              <th class="w-12 text-center">
                 <Checkbox
                   checked={allSelected.value}
                   indeterminate={someSelected.value}
@@ -444,7 +444,7 @@ function DataTable() {
                   <SortIcon column="createdAt" />
                 </button>
               </th>
-              <th class="w-12">
+              <th class="w-12 text-center">
                 <span class="sr-only">Actions</span>
               </th>
             </tr>
@@ -489,15 +489,15 @@ function DataTable() {
             ) : (
               paginatedUsers.value.map(user => (
                 <tr key={user.id}>
-                  <td>
+                  <td class="text-center">
                     <Checkbox
                       checked={selectedRows.value.has(user.id)}
                       onInput={() => handleSelectRow(user.id)}
                       aria-label={`Select ${user.name}`}
                     />
                   </td>
-                  <td class="font-medium">{user.name}</td>
-                  <td>{user.email}</td>
+                  <td class="font-medium whitespace-nowrap">{user.name}</td>
+                  <td class="text-muted-foreground">{user.email}</td>
                   <td>
                     <Badge variant="secondary" class="capitalize">
                       {user.role}
@@ -517,8 +517,8 @@ function DataTable() {
                       {user.status}
                     </Badge>
                   </td>
-                  <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td class="text-muted-foreground whitespace-nowrap">{new Date(user.createdAt).toLocaleDateString()}</td>
+                  <td class="text-center">
                     <Button variant="ghost" size="icon" aria-label={`Actions for ${user.name}`}>
                       <iconify-icon icon="mdi:dots-vertical" class="text-lg" />
                     </Button>
@@ -531,7 +531,7 @@ function DataTable() {
       </div>
 
       {/* Pagination */}
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-muted/50 rounded-lg">
         <div class="text-sm text-muted-foreground">
           Showing {showingStart.value} to {showingEnd.value} of{' '}
           {filteredAndSortedUsers.value.length} results
@@ -828,9 +828,9 @@ const SortIcon = ({column}: {column: SortColumn}) => {
 
 export function UserTable() {
   return (
-    <div class="space-y-4">
+    <div class="space-y-6">
       {/* Filters and actions */}
-      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between p-4 bg-muted/50 rounded-lg">
         <div class="flex flex-1 flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <div class="relative w-full sm:w-64">
             <iconify-icon
@@ -897,11 +897,11 @@ export function UserTable() {
       </div>
 
       {/* Table */}
-      <div class="border rounded-lg overflow-hidden">
+      <div class="border rounded-lg overflow-hidden shadow-sm">
         <Table>
           <thead>
             <tr>
-              <th class="w-12">
+              <th class="w-12 text-center">
                 <Checkbox
                   checked={allSelected.value}
                   indeterminate={someSelected.value}
@@ -959,7 +959,7 @@ export function UserTable() {
                   <SortIcon column="createdAt" />
                 </button>
               </th>
-              <th class="w-12">
+              <th class="w-12 text-center">
                 <span class="sr-only">Actions</span>
               </th>
             </tr>
@@ -1004,15 +1004,15 @@ export function UserTable() {
             ) : (
               paginatedUsers.value.map(user => (
                 <tr key={user.id}>
-                  <td>
+                  <td class="text-center">
                     <Checkbox
                       checked={selectedRows.value.has(user.id)}
                       onInput={() => handleSelectRow(user.id)}
                       aria-label={\`Select \${user.name}\`}
                     />
                   </td>
-                  <td class="font-medium">{user.name}</td>
-                  <td>{user.email}</td>
+                  <td class="font-medium whitespace-nowrap">{user.name}</td>
+                  <td class="text-muted-foreground">{user.email}</td>
                   <td>
                     <Badge variant="secondary" class="capitalize">
                       {user.role}
@@ -1032,8 +1032,8 @@ export function UserTable() {
                       {user.status}
                     </Badge>
                   </td>
-                  <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td class="text-muted-foreground whitespace-nowrap">{new Date(user.createdAt).toLocaleDateString()}</td>
+                  <td class="text-center">
                     <Button variant="ghost" size="icon" aria-label={\`Actions for \${user.name}\`}>
                       <iconify-icon icon="mdi:dots-vertical" class="text-lg" />
                     </Button>
@@ -1046,7 +1046,7 @@ export function UserTable() {
       </div>
 
       {/* Pagination */}
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-muted/50 rounded-lg">
         <div class="text-sm text-muted-foreground">
           Showing {showingStart.value} to {showingEnd.value} of{' '}
           {filteredAndSortedUsers.value.length} results

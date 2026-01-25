@@ -1,4 +1,5 @@
 import type {JSX} from 'preact';
+import {useState} from 'preact/hooks';
 import {signal, computed, effect, batch} from '@preact/signals';
 import {
   Card,
@@ -111,6 +112,8 @@ const mockFetch = async (url: string, options?: RequestInit): Promise<Response> 
 };
 
 function SettingsPanel() {
+  const [activeTab, setActiveTab] = useState('profile');
+
   // Load settings on mount
   effect(() => {
     const loadSettings = async () => {
@@ -253,484 +256,508 @@ function SettingsPanel() {
         </Alert>
       )}
 
-      <Tabs defaultValue="profile">
-        <TabList>
-          <Tab value="profile">
+      <div class="space-y-4">
+        <TabList class="border-b">
+          <Tab
+            active={activeTab === 'profile'}
+            onClick={() => setActiveTab('profile')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:account" class="mr-2"></iconify-icon>
             Profile
           </Tab>
-          <Tab value="preferences">
+          <Tab
+            active={activeTab === 'preferences'}
+            onClick={() => setActiveTab('preferences')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:tune" class="mr-2"></iconify-icon>
             Preferences
           </Tab>
-          <Tab value="notifications">
+          <Tab
+            active={activeTab === 'notifications'}
+            onClick={() => setActiveTab('notifications')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:bell" class="mr-2"></iconify-icon>
             Notifications
           </Tab>
-          <Tab value="privacy">
+          <Tab
+            active={activeTab === 'privacy'}
+            onClick={() => setActiveTab('privacy')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:shield-lock" class="mr-2"></iconify-icon>
             Privacy
           </Tab>
         </TabList>
 
         {/* Profile Tab */}
-        <TabPanel value="profile">
-          <Card>
-            <div>
-              <h3>Profile Information</h3>
-              <p>
-                Update your personal information and profile details
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="flex items-center gap-4">
-                <Avatar class="w-20 h-20">
-                  <div class="bg-primary text-primary-foreground text-2xl">
-                    {settings.value.displayName?.[0] || '?'}
+        {activeTab === 'profile' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Profile Information</h3>
+                <p class="text-sm text-muted-foreground">
+                  Update your personal information and profile details
+                </p>
+              </div>
+              <div class="space-y-6">
+                <div class="flex items-center gap-4">
+                  <Avatar class="w-20 h-20">
+                    <div class="bg-primary text-primary-foreground text-2xl flex items-center justify-center w-full h-full rounded-full">
+                      {settings.value.displayName?.[0] || '?'}
+                    </div>
+                  </Avatar>
+                  <div class="space-y-2">
+                    <Button variant="outline" size="sm">
+                      Upload Photo
+                    </Button>
+                    <p class="text-xs text-muted-foreground">
+                      JPG, PNG or GIF. Max 2MB.
+                    </p>
                   </div>
-                </Avatar>
+                </div>
+
+                <Separator />
+
                 <div class="space-y-2">
-                  <Button variant="outline" size="sm">
-                    Upload Photo
-                  </Button>
-                  <p class="text-xs text-muted-foreground">
-                    JPG, PNG or GIF. Max 2MB.
+                  <Label htmlFor="displayName">
+                    Display Name <span class="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="displayName"
+                    value={settings.value.displayName}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('displayName', e.currentTarget.value)
+                    }
+                    aria-invalid={errors.value.displayName ? 'true' : 'false'}
+                    aria-describedby={errors.value.displayName ? 'displayName-error' : undefined}
+                  />
+                  {errors.value.displayName && (
+                    <p id="displayName-error" class="text-sm text-destructive">
+                      {errors.value.displayName}
+                    </p>
+                  )}
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="email">
+                    Email Address <span class="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={settings.value.email}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('email', e.currentTarget.value)
+                    }
+                    aria-invalid={errors.value.email ? 'true' : 'false'}
+                    aria-describedby={errors.value.email ? 'email-error' : undefined}
+                  />
+                  {errors.value.email && (
+                    <p id="email-error" class="text-sm text-destructive">
+                      {errors.value.email}
+                    </p>
+                  )}
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="bio">Bio</Label>
+                  <Textarea
+                    id="bio"
+                    rows={4}
+                    value={settings.value.bio}
+                    onInput={(e: JSX.TargetedEvent<HTMLTextAreaElement>) =>
+                      updateField('bio', e.currentTarget.value)
+                    }
+                    aria-invalid={errors.value.bio ? 'true' : 'false'}
+                    aria-describedby="bio-hint"
+                  />
+                  <p id="bio-hint" class="text-sm text-muted-foreground">
+                    {settings.value.bio.length} / 500 characters
                   </p>
+                  {errors.value.bio && (
+                    <p class="text-sm text-destructive">{errors.value.bio}</p>
+                  )}
                 </div>
               </div>
-
-              <Separator />
-
-              <div class="space-y-2">
-                <Label htmlFor="displayName">
-                  Display Name <span class="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="displayName"
-                  value={settings.value.displayName}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('displayName', e.currentTarget.value)
-                  }
-                  aria-invalid={errors.value.displayName ? 'true' : 'false'}
-                  aria-describedby={errors.value.displayName ? 'displayName-error' : undefined}
-                />
-                {errors.value.displayName && (
-                  <p id="displayName-error" class="text-sm text-destructive">
-                    {errors.value.displayName}
-                  </p>
-                )}
-              </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="email">
-                  Email Address <span class="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={settings.value.email}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('email', e.currentTarget.value)
-                  }
-                  aria-invalid={errors.value.email ? 'true' : 'false'}
-                  aria-describedby={errors.value.email ? 'email-error' : undefined}
-                />
-                {errors.value.email && (
-                  <p id="email-error" class="text-sm text-destructive">
-                    {errors.value.email}
-                  </p>
-                )}
-              </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  rows={4}
-                  value={settings.value.bio}
-                  onInput={(e: JSX.TargetedEvent<HTMLTextAreaElement>) =>
-                    updateField('bio', e.currentTarget.value)
-                  }
-                  aria-invalid={errors.value.bio ? 'true' : 'false'}
-                  aria-describedby="bio-hint"
-                />
-                <p id="bio-hint" class="text-sm text-muted-foreground">
-                  {settings.value.bio.length} / 500 characters
-                </p>
-                {errors.value.bio && (
-                  <p class="text-sm text-destructive">{errors.value.bio}</p>
-                )}
-              </div>
-            </div>
-          </Card>
-        </TabPanel>
+            </Card>
+          </TabPanel>
+        )}
 
         {/* Preferences Tab */}
-        <TabPanel value="preferences">
-          <Card>
-            <div>
-              <h3>Preferences</h3>
-              <p>
-                Customize your application experience
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="space-y-3">
-                <Label>Theme</Label>
-                <RadioGroup
-                  name="theme"
-                  value={settings.value.theme}
-                >
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="theme-light"
-                      name="theme"
-                      value="light"
-                      checked={settings.value.theme === 'light'}
-                      onInput={() => updateField('theme', 'light')}
-                    />
-                    <Label htmlFor="theme-light" class="font-normal">
-                      Light
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="theme-dark"
-                      name="theme"
-                      value="dark"
-                      checked={settings.value.theme === 'dark'}
-                      onInput={() => updateField('theme', 'dark')}
-                    />
-                    <Label htmlFor="theme-dark" class="font-normal">
-                      Dark
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="theme-system"
-                      name="theme"
-                      value="system"
-                      checked={settings.value.theme === 'system'}
-                      onInput={() => updateField('theme', 'system')}
-                    />
-                    <Label htmlFor="theme-system" class="font-normal">
-                      System default
-                    </Label>
-                  </div>
-                </RadioGroup>
+        {activeTab === 'preferences' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Preferences</h3>
+                <p class="text-sm text-muted-foreground">
+                  Customize your application experience
+                </p>
               </div>
+              <div class="space-y-6">
+                <div class="space-y-3">
+                  <Label>Theme</Label>
+                  <RadioGroup
+                    name="theme"
+                    value={settings.value.theme}
+                  >
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="theme-light"
+                        name="theme"
+                        value="light"
+                        checked={settings.value.theme === 'light'}
+                        onInput={() => updateField('theme', 'light')}
+                      />
+                      <Label htmlFor="theme-light" class="font-normal">
+                        Light
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="theme-dark"
+                        name="theme"
+                        value="dark"
+                        checked={settings.value.theme === 'dark'}
+                        onInput={() => updateField('theme', 'dark')}
+                      />
+                      <Label htmlFor="theme-dark" class="font-normal">
+                        Dark
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="theme-system"
+                        name="theme"
+                        value="system"
+                        checked={settings.value.theme === 'system'}
+                        onInput={() => updateField('theme', 'system')}
+                      />
+                      <Label htmlFor="theme-system" class="font-normal">
+                        System default
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
 
-              <Separator />
+                <Separator />
 
-              <div class="space-y-2">
-                <Label htmlFor="language">Language</Label>
-                <Select
-                  id="language"
-                  value={settings.value.language}
-                  onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    updateField('language', e.currentTarget.value)
-                  }
-                >
-                  <option value="en">English</option>
-                  <option value="es">Español</option>
-                  <option value="fr">Français</option>
-                  <option value="de">Deutsch</option>
-                  <option value="ja">日本語</option>
-                </Select>
+                <div class="space-y-2">
+                  <Label htmlFor="language">Language</Label>
+                  <Select
+                    id="language"
+                    value={settings.value.language}
+                    onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
+                      updateField('language', e.currentTarget.value)
+                    }
+                  >
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ja">日本語</option>
+                  </Select>
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="timezone">Timezone</Label>
+                  <Select
+                    id="timezone"
+                    value={settings.value.timezone}
+                    onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
+                      updateField('timezone', e.currentTarget.value)
+                    }
+                  >
+                    <option value="UTC">UTC</option>
+                    <option value="America/New_York">Eastern Time</option>
+                    <option value="America/Chicago">Central Time</option>
+                    <option value="America/Denver">Mountain Time</option>
+                    <option value="America/Los_Angeles">Pacific Time</option>
+                    <option value="Europe/London">London</option>
+                    <option value="Europe/Paris">Paris</option>
+                    <option value="Asia/Tokyo">Tokyo</option>
+                  </Select>
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="dateFormat">Date Format</Label>
+                  <Select
+                    id="dateFormat"
+                    value={settings.value.dateFormat}
+                    onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
+                      updateField('dateFormat', e.currentTarget.value)
+                    }
+                  >
+                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                  </Select>
+                </div>
               </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="timezone">Timezone</Label>
-                <Select
-                  id="timezone"
-                  value={settings.value.timezone}
-                  onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    updateField('timezone', e.currentTarget.value)
-                  }
-                >
-                  <option value="UTC">UTC</option>
-                  <option value="America/New_York">Eastern Time</option>
-                  <option value="America/Chicago">Central Time</option>
-                  <option value="America/Denver">Mountain Time</option>
-                  <option value="America/Los_Angeles">Pacific Time</option>
-                  <option value="Europe/London">London</option>
-                  <option value="Europe/Paris">Paris</option>
-                  <option value="Asia/Tokyo">Tokyo</option>
-                </Select>
-              </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="dateFormat">Date Format</Label>
-                <Select
-                  id="dateFormat"
-                  value={settings.value.dateFormat}
-                  onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    updateField('dateFormat', e.currentTarget.value)
-                  }
-                >
-                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                </Select>
-              </div>
-            </div>
-          </Card>
-        </TabPanel>
+            </Card>
+          </TabPanel>
+        )}
 
         {/* Notifications Tab */}
-        <TabPanel value="notifications">
-          <Card>
-            <div>
-              <h3>Notification Settings</h3>
-              <p>
-                Control how and when you receive notifications
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="emailNotifications">Email Notifications</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Receive notifications via email
-                  </p>
-                </div>
-                <Switch
-                  id="emailNotifications"
-                  checked={settings.value.emailNotifications}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('emailNotifications', e.currentTarget.checked)
-                  }
-                />
+        {activeTab === 'notifications' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Notification Settings</h3>
+                <p class="text-sm text-muted-foreground">
+                  Control how and when you receive notifications
+                </p>
               </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="pushNotifications">Push Notifications</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Receive push notifications in your browser
-                  </p>
-                </div>
-                <Switch
-                  id="pushNotifications"
-                  checked={settings.value.pushNotifications}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('pushNotifications', e.currentTarget.checked)
-                  }
-                />
-              </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="notificationSound">Notification Sound</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Play sound when receiving notifications
-                  </p>
-                </div>
-                <Switch
-                  id="notificationSound"
-                  checked={settings.value.notificationSound}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('notificationSound', e.currentTarget.checked)
-                  }
-                />
-              </div>
-
-              <Separator />
-
-              <div class="space-y-3">
-                <Label>Notification Frequency</Label>
-                <RadioGroup
-                  name="notificationFrequency"
-                  value={settings.value.notificationFrequency}
-                >
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="freq-realtime"
-                      name="notificationFrequency"
-                      value="realtime"
-                      checked={settings.value.notificationFrequency === 'realtime'}
-                      onInput={() => updateField('notificationFrequency', 'realtime')}
-                    />
-                    <Label htmlFor="freq-realtime" class="font-normal">
-                      Real-time
-                    </Label>
+              <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="emailNotifications">Email Notifications</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Receive notifications via email
+                    </p>
                   </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="freq-hourly"
-                      name="notificationFrequency"
-                      value="hourly"
-                      checked={settings.value.notificationFrequency === 'hourly'}
-                      onInput={() => updateField('notificationFrequency', 'hourly')}
-                    />
-                    <Label htmlFor="freq-hourly" class="font-normal">
-                      Hourly digest
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="freq-daily"
-                      name="notificationFrequency"
-                      value="daily"
-                      checked={settings.value.notificationFrequency === 'daily'}
-                      onInput={() => updateField('notificationFrequency', 'daily')}
-                    />
-                    <Label htmlFor="freq-daily" class="font-normal">
-                      Daily digest
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="newsletterSubscribed">Newsletter</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Receive our weekly newsletter
-                  </p>
+                  <Switch
+                    id="emailNotifications"
+                    checked={settings.value.emailNotifications}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('emailNotifications', e.currentTarget.checked)
+                    }
+                  />
                 </div>
-                <Switch
-                  id="newsletterSubscribed"
-                  checked={settings.value.newsletterSubscribed}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('newsletterSubscribed', e.currentTarget.checked)
-                  }
-                />
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="pushNotifications">Push Notifications</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Receive push notifications in your browser
+                    </p>
+                  </div>
+                  <Switch
+                    id="pushNotifications"
+                    checked={settings.value.pushNotifications}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('pushNotifications', e.currentTarget.checked)
+                    }
+                  />
+                </div>
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="notificationSound">Notification Sound</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Play sound when receiving notifications
+                    </p>
+                  </div>
+                  <Switch
+                    id="notificationSound"
+                    checked={settings.value.notificationSound}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('notificationSound', e.currentTarget.checked)
+                    }
+                  />
+                </div>
+
+                <Separator />
+
+                <div class="space-y-3">
+                  <Label>Notification Frequency</Label>
+                  <RadioGroup
+                    name="notificationFrequency"
+                    value={settings.value.notificationFrequency}
+                  >
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="freq-realtime"
+                        name="notificationFrequency"
+                        value="realtime"
+                        checked={settings.value.notificationFrequency === 'realtime'}
+                        onInput={() => updateField('notificationFrequency', 'realtime')}
+                      />
+                      <Label htmlFor="freq-realtime" class="font-normal">
+                        Real-time
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="freq-hourly"
+                        name="notificationFrequency"
+                        value="hourly"
+                        checked={settings.value.notificationFrequency === 'hourly'}
+                        onInput={() => updateField('notificationFrequency', 'hourly')}
+                      />
+                      <Label htmlFor="freq-hourly" class="font-normal">
+                        Hourly digest
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="freq-daily"
+                        name="notificationFrequency"
+                        value="daily"
+                        checked={settings.value.notificationFrequency === 'daily'}
+                        onInput={() => updateField('notificationFrequency', 'daily')}
+                      />
+                      <Label htmlFor="freq-daily" class="font-normal">
+                        Daily digest
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="newsletterSubscribed">Newsletter</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Receive our weekly newsletter
+                    </p>
+                  </div>
+                  <Switch
+                    id="newsletterSubscribed"
+                    checked={settings.value.newsletterSubscribed}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('newsletterSubscribed', e.currentTarget.checked)
+                    }
+                  />
+                </div>
               </div>
-            </div>
-          </Card>
-        </TabPanel>
+            </Card>
+          </TabPanel>
+        )}
 
         {/* Privacy Tab */}
-        <TabPanel value="privacy">
-          <Card>
-            <div>
-              <h3>Privacy & Security</h3>
-              <p>
-                Control your privacy settings and data sharing
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="space-y-3">
-                <Label>Profile Visibility</Label>
-                <RadioGroup
-                  name="profileVisibility"
-                  value={settings.value.profileVisibility}
-                >
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="visibility-public"
-                      name="profileVisibility"
-                      value="public"
-                      checked={settings.value.profileVisibility === 'public'}
-                      onInput={() => updateField('profileVisibility', 'public')}
-                    />
-                    <Label htmlFor="visibility-public" class="font-normal">
-                      Public
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="visibility-friends"
-                      name="profileVisibility"
-                      value="friends"
-                      checked={settings.value.profileVisibility === 'friends'}
-                      onInput={() => updateField('profileVisibility', 'friends')}
-                    />
-                    <Label htmlFor="visibility-friends" class="font-normal">
-                      Friends only
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="visibility-private"
-                      name="profileVisibility"
-                      value="private"
-                      checked={settings.value.profileVisibility === 'private'}
-                      onInput={() => updateField('profileVisibility', 'private')}
-                    />
-                    <Label htmlFor="visibility-private" class="font-normal">
-                      Private
-                    </Label>
-                  </div>
-                </RadioGroup>
+        {activeTab === 'privacy' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Privacy & Security</h3>
+                <p class="text-sm text-muted-foreground">
+                  Control your privacy settings and data sharing
+                </p>
               </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="showEmail">Show Email on Profile</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Make your email address visible to others
-                  </p>
+              <div class="space-y-6">
+                <div class="space-y-3">
+                  <Label>Profile Visibility</Label>
+                  <RadioGroup
+                    name="profileVisibility"
+                    value={settings.value.profileVisibility}
+                  >
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="visibility-public"
+                        name="profileVisibility"
+                        value="public"
+                        checked={settings.value.profileVisibility === 'public'}
+                        onInput={() => updateField('profileVisibility', 'public')}
+                      />
+                      <Label htmlFor="visibility-public" class="font-normal">
+                        Public
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="visibility-friends"
+                        name="profileVisibility"
+                        value="friends"
+                        checked={settings.value.profileVisibility === 'friends'}
+                        onInput={() => updateField('profileVisibility', 'friends')}
+                      />
+                      <Label htmlFor="visibility-friends" class="font-normal">
+                        Friends only
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="visibility-private"
+                        name="profileVisibility"
+                        value="private"
+                        checked={settings.value.profileVisibility === 'private'}
+                        onInput={() => updateField('profileVisibility', 'private')}
+                      />
+                      <Label htmlFor="visibility-private" class="font-normal">
+                        Private
+                      </Label>
+                    </div>
+                  </RadioGroup>
                 </div>
-                <Switch
-                  id="showEmail"
-                  checked={settings.value.showEmail}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('showEmail', e.currentTarget.checked)
-                  }
-                />
-              </div>
 
-              <Separator />
+                <Separator />
 
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="showActivity">Show Activity Status</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Let others see when you're online
-                  </p>
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="showEmail">Show Email on Profile</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Make your email address visible to others
+                    </p>
+                  </div>
+                  <Switch
+                    id="showEmail"
+                    checked={settings.value.showEmail}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('showEmail', e.currentTarget.checked)
+                    }
+                  />
                 </div>
-                <Switch
-                  id="showActivity"
-                  checked={settings.value.showActivity}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('showActivity', e.currentTarget.checked)
-                  }
-                />
-              </div>
 
-              <Separator />
+                <Separator />
 
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="dataSharing">Data Sharing</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Share anonymized usage data to help improve the product
-                  </p>
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="showActivity">Show Activity Status</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Let others see when you're online
+                    </p>
+                  </div>
+                  <Switch
+                    id="showActivity"
+                    checked={settings.value.showActivity}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('showActivity', e.currentTarget.checked)
+                    }
+                  />
                 </div>
-                <Switch
-                  id="dataSharing"
-                  checked={settings.value.dataSharing}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('dataSharing', e.currentTarget.checked)
-                  }
-                />
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="dataSharing">Data Sharing</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Share anonymized usage data to help improve the product
+                    </p>
+                  </div>
+                  <Switch
+                    id="dataSharing"
+                    checked={settings.value.dataSharing}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('dataSharing', e.currentTarget.checked)
+                    }
+                  />
+                </div>
               </div>
-            </div>
-          </Card>
-        </TabPanel>
-      </Tabs>
+            </Card>
+          </TabPanel>
+        )}
+      </div>
 
       {/* Action buttons */}
-      <div class="flex items-center justify-between pt-4 border-t">
+      <div class="flex items-center justify-between pt-6 border-t">
         <Button
           variant="ghost"
           onClick={handleResetToDefaults}
@@ -764,6 +791,7 @@ export function Demo() {
 }
 
 export const code = `import type {JSX} from 'preact';
+import {useState} from 'preact/hooks';
 import {signal, computed, effect, batch} from '@preact/signals';
 import {
   Card,
@@ -833,6 +861,8 @@ const hasUnsavedChanges = computed(() => {
 });
 
 export function SettingsPanel() {
+  const [activeTab, setActiveTab] = useState('profile');
+
   // Load settings on mount
   effect(() => {
     const loadSettings = async () => {
@@ -975,484 +1005,508 @@ export function SettingsPanel() {
         </Alert>
       )}
 
-      <Tabs defaultValue="profile">
-        <TabList>
-          <Tab value="profile">
+      <div class="space-y-4">
+        <TabList class="border-b">
+          <Tab
+            active={activeTab === 'profile'}
+            onClick={() => setActiveTab('profile')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:account" class="mr-2"></iconify-icon>
             Profile
           </Tab>
-          <Tab value="preferences">
+          <Tab
+            active={activeTab === 'preferences'}
+            onClick={() => setActiveTab('preferences')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:tune" class="mr-2"></iconify-icon>
             Preferences
           </Tab>
-          <Tab value="notifications">
+          <Tab
+            active={activeTab === 'notifications'}
+            onClick={() => setActiveTab('notifications')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:bell" class="mr-2"></iconify-icon>
             Notifications
           </Tab>
-          <Tab value="privacy">
+          <Tab
+            active={activeTab === 'privacy'}
+            onClick={() => setActiveTab('privacy')}
+            class="inline-flex items-center"
+          >
             <iconify-icon icon="mdi:shield-lock" class="mr-2"></iconify-icon>
             Privacy
           </Tab>
         </TabList>
 
         {/* Profile Tab */}
-        <TabPanel value="profile">
-          <Card>
-            <div>
-              <h3>Profile Information</h3>
-              <p>
-                Update your personal information and profile details
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="flex items-center gap-4">
-                <Avatar class="w-20 h-20">
-                  <div class="bg-primary text-primary-foreground text-2xl">
-                    {settings.value.displayName?.[0] || '?'}
+        {activeTab === 'profile' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Profile Information</h3>
+                <p class="text-sm text-muted-foreground">
+                  Update your personal information and profile details
+                </p>
+              </div>
+              <div class="space-y-6">
+                <div class="flex items-center gap-4">
+                  <Avatar class="w-20 h-20">
+                    <div class="bg-primary text-primary-foreground text-2xl flex items-center justify-center w-full h-full rounded-full">
+                      {settings.value.displayName?.[0] || '?'}
+                    </div>
+                  </Avatar>
+                  <div class="space-y-2">
+                    <Button variant="outline" size="sm">
+                      Upload Photo
+                    </Button>
+                    <p class="text-xs text-muted-foreground">
+                      JPG, PNG or GIF. Max 2MB.
+                    </p>
                   </div>
-                </Avatar>
+                </div>
+
+                <Separator />
+
                 <div class="space-y-2">
-                  <Button variant="outline" size="sm">
-                    Upload Photo
-                  </Button>
-                  <p class="text-xs text-muted-foreground">
-                    JPG, PNG or GIF. Max 2MB.
+                  <Label htmlFor="displayName">
+                    Display Name <span class="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="displayName"
+                    value={settings.value.displayName}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('displayName', e.currentTarget.value)
+                    }
+                    aria-invalid={errors.value.displayName ? 'true' : 'false'}
+                    aria-describedby={errors.value.displayName ? 'displayName-error' : undefined}
+                  />
+                  {errors.value.displayName && (
+                    <p id="displayName-error" class="text-sm text-destructive">
+                      {errors.value.displayName}
+                    </p>
+                  )}
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="email">
+                    Email Address <span class="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={settings.value.email}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('email', e.currentTarget.value)
+                    }
+                    aria-invalid={errors.value.email ? 'true' : 'false'}
+                    aria-describedby={errors.value.email ? 'email-error' : undefined}
+                  />
+                  {errors.value.email && (
+                    <p id="email-error" class="text-sm text-destructive">
+                      {errors.value.email}
+                    </p>
+                  )}
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="bio">Bio</Label>
+                  <Textarea
+                    id="bio"
+                    rows={4}
+                    value={settings.value.bio}
+                    onInput={(e: JSX.TargetedEvent<HTMLTextAreaElement>) =>
+                      updateField('bio', e.currentTarget.value)
+                    }
+                    aria-invalid={errors.value.bio ? 'true' : 'false'}
+                    aria-describedby="bio-hint"
+                  />
+                  <p id="bio-hint" class="text-sm text-muted-foreground">
+                    {settings.value.bio.length} / 500 characters
                   </p>
+                  {errors.value.bio && (
+                    <p class="text-sm text-destructive">{errors.value.bio}</p>
+                  )}
                 </div>
               </div>
-
-              <Separator />
-
-              <div class="space-y-2">
-                <Label htmlFor="displayName">
-                  Display Name <span class="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="displayName"
-                  value={settings.value.displayName}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('displayName', e.currentTarget.value)
-                  }
-                  aria-invalid={errors.value.displayName ? 'true' : 'false'}
-                  aria-describedby={errors.value.displayName ? 'displayName-error' : undefined}
-                />
-                {errors.value.displayName && (
-                  <p id="displayName-error" class="text-sm text-destructive">
-                    {errors.value.displayName}
-                  </p>
-                )}
-              </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="email">
-                  Email Address <span class="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={settings.value.email}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('email', e.currentTarget.value)
-                  }
-                  aria-invalid={errors.value.email ? 'true' : 'false'}
-                  aria-describedby={errors.value.email ? 'email-error' : undefined}
-                />
-                {errors.value.email && (
-                  <p id="email-error" class="text-sm text-destructive">
-                    {errors.value.email}
-                  </p>
-                )}
-              </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  rows={4}
-                  value={settings.value.bio}
-                  onInput={(e: JSX.TargetedEvent<HTMLTextAreaElement>) =>
-                    updateField('bio', e.currentTarget.value)
-                  }
-                  aria-invalid={errors.value.bio ? 'true' : 'false'}
-                  aria-describedby="bio-hint"
-                />
-                <p id="bio-hint" class="text-sm text-muted-foreground">
-                  {settings.value.bio.length} / 500 characters
-                </p>
-                {errors.value.bio && (
-                  <p class="text-sm text-destructive">{errors.value.bio}</p>
-                )}
-              </div>
-            </div>
-          </Card>
-        </TabPanel>
+            </Card>
+          </TabPanel>
+        )}
 
         {/* Preferences Tab */}
-        <TabPanel value="preferences">
-          <Card>
-            <div>
-              <h3>Preferences</h3>
-              <p>
-                Customize your application experience
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="space-y-3">
-                <Label>Theme</Label>
-                <RadioGroup
-                  name="theme"
-                  value={settings.value.theme}
-                >
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="theme-light"
-                      name="theme"
-                      value="light"
-                      checked={settings.value.theme === 'light'}
-                      onInput={() => updateField('theme', 'light')}
-                    />
-                    <Label htmlFor="theme-light" class="font-normal">
-                      Light
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="theme-dark"
-                      name="theme"
-                      value="dark"
-                      checked={settings.value.theme === 'dark'}
-                      onInput={() => updateField('theme', 'dark')}
-                    />
-                    <Label htmlFor="theme-dark" class="font-normal">
-                      Dark
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="theme-system"
-                      name="theme"
-                      value="system"
-                      checked={settings.value.theme === 'system'}
-                      onInput={() => updateField('theme', 'system')}
-                    />
-                    <Label htmlFor="theme-system" class="font-normal">
-                      System default
-                    </Label>
-                  </div>
-                </RadioGroup>
+        {activeTab === 'preferences' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Preferences</h3>
+                <p class="text-sm text-muted-foreground">
+                  Customize your application experience
+                </p>
               </div>
+              <div class="space-y-6">
+                <div class="space-y-3">
+                  <Label>Theme</Label>
+                  <RadioGroup
+                    name="theme"
+                    value={settings.value.theme}
+                  >
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="theme-light"
+                        name="theme"
+                        value="light"
+                        checked={settings.value.theme === 'light'}
+                        onInput={() => updateField('theme', 'light')}
+                      />
+                      <Label htmlFor="theme-light" class="font-normal">
+                        Light
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="theme-dark"
+                        name="theme"
+                        value="dark"
+                        checked={settings.value.theme === 'dark'}
+                        onInput={() => updateField('theme', 'dark')}
+                      />
+                      <Label htmlFor="theme-dark" class="font-normal">
+                        Dark
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="theme-system"
+                        name="theme"
+                        value="system"
+                        checked={settings.value.theme === 'system'}
+                        onInput={() => updateField('theme', 'system')}
+                      />
+                      <Label htmlFor="theme-system" class="font-normal">
+                        System default
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
 
-              <Separator />
+                <Separator />
 
-              <div class="space-y-2">
-                <Label htmlFor="language">Language</Label>
-                <Select
-                  id="language"
-                  value={settings.value.language}
-                  onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    updateField('language', e.currentTarget.value)
-                  }
-                >
-                  <option value="en">English</option>
-                  <option value="es">Español</option>
-                  <option value="fr">Français</option>
-                  <option value="de">Deutsch</option>
-                  <option value="ja">日本語</option>
-                </Select>
+                <div class="space-y-2">
+                  <Label htmlFor="language">Language</Label>
+                  <Select
+                    id="language"
+                    value={settings.value.language}
+                    onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
+                      updateField('language', e.currentTarget.value)
+                    }
+                  >
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ja">日本語</option>
+                  </Select>
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="timezone">Timezone</Label>
+                  <Select
+                    id="timezone"
+                    value={settings.value.timezone}
+                    onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
+                      updateField('timezone', e.currentTarget.value)
+                    }
+                  >
+                    <option value="UTC">UTC</option>
+                    <option value="America/New_York">Eastern Time</option>
+                    <option value="America/Chicago">Central Time</option>
+                    <option value="America/Denver">Mountain Time</option>
+                    <option value="America/Los_Angeles">Pacific Time</option>
+                    <option value="Europe/London">London</option>
+                    <option value="Europe/Paris">Paris</option>
+                    <option value="Asia/Tokyo">Tokyo</option>
+                  </Select>
+                </div>
+
+                <div class="space-y-2">
+                  <Label htmlFor="dateFormat">Date Format</Label>
+                  <Select
+                    id="dateFormat"
+                    value={settings.value.dateFormat}
+                    onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
+                      updateField('dateFormat', e.currentTarget.value)
+                    }
+                  >
+                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                  </Select>
+                </div>
               </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="timezone">Timezone</Label>
-                <Select
-                  id="timezone"
-                  value={settings.value.timezone}
-                  onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    updateField('timezone', e.currentTarget.value)
-                  }
-                >
-                  <option value="UTC">UTC</option>
-                  <option value="America/New_York">Eastern Time</option>
-                  <option value="America/Chicago">Central Time</option>
-                  <option value="America/Denver">Mountain Time</option>
-                  <option value="America/Los_Angeles">Pacific Time</option>
-                  <option value="Europe/London">London</option>
-                  <option value="Europe/Paris">Paris</option>
-                  <option value="Asia/Tokyo">Tokyo</option>
-                </Select>
-              </div>
-
-              <div class="space-y-2">
-                <Label htmlFor="dateFormat">Date Format</Label>
-                <Select
-                  id="dateFormat"
-                  value={settings.value.dateFormat}
-                  onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    updateField('dateFormat', e.currentTarget.value)
-                  }
-                >
-                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                </Select>
-              </div>
-            </div>
-          </Card>
-        </TabPanel>
+            </Card>
+          </TabPanel>
+        )}
 
         {/* Notifications Tab */}
-        <TabPanel value="notifications">
-          <Card>
-            <div>
-              <h3>Notification Settings</h3>
-              <p>
-                Control how and when you receive notifications
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="emailNotifications">Email Notifications</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Receive notifications via email
-                  </p>
-                </div>
-                <Switch
-                  id="emailNotifications"
-                  checked={settings.value.emailNotifications}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('emailNotifications', e.currentTarget.checked)
-                  }
-                />
+        {activeTab === 'notifications' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Notification Settings</h3>
+                <p class="text-sm text-muted-foreground">
+                  Control how and when you receive notifications
+                </p>
               </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="pushNotifications">Push Notifications</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Receive push notifications in your browser
-                  </p>
-                </div>
-                <Switch
-                  id="pushNotifications"
-                  checked={settings.value.pushNotifications}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('pushNotifications', e.currentTarget.checked)
-                  }
-                />
-              </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="notificationSound">Notification Sound</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Play sound when receiving notifications
-                  </p>
-                </div>
-                <Switch
-                  id="notificationSound"
-                  checked={settings.value.notificationSound}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('notificationSound', e.currentTarget.checked)
-                  }
-                />
-              </div>
-
-              <Separator />
-
-              <div class="space-y-3">
-                <Label>Notification Frequency</Label>
-                <RadioGroup
-                  name="notificationFrequency"
-                  value={settings.value.notificationFrequency}
-                >
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="freq-realtime"
-                      name="notificationFrequency"
-                      value="realtime"
-                      checked={settings.value.notificationFrequency === 'realtime'}
-                      onInput={() => updateField('notificationFrequency', 'realtime')}
-                    />
-                    <Label htmlFor="freq-realtime" class="font-normal">
-                      Real-time
-                    </Label>
+              <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="emailNotifications">Email Notifications</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Receive notifications via email
+                    </p>
                   </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="freq-hourly"
-                      name="notificationFrequency"
-                      value="hourly"
-                      checked={settings.value.notificationFrequency === 'hourly'}
-                      onInput={() => updateField('notificationFrequency', 'hourly')}
-                    />
-                    <Label htmlFor="freq-hourly" class="font-normal">
-                      Hourly digest
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="freq-daily"
-                      name="notificationFrequency"
-                      value="daily"
-                      checked={settings.value.notificationFrequency === 'daily'}
-                      onInput={() => updateField('notificationFrequency', 'daily')}
-                    />
-                    <Label htmlFor="freq-daily" class="font-normal">
-                      Daily digest
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="newsletterSubscribed">Newsletter</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Receive our weekly newsletter
-                  </p>
+                  <Switch
+                    id="emailNotifications"
+                    checked={settings.value.emailNotifications}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('emailNotifications', e.currentTarget.checked)
+                    }
+                  />
                 </div>
-                <Switch
-                  id="newsletterSubscribed"
-                  checked={settings.value.newsletterSubscribed}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('newsletterSubscribed', e.currentTarget.checked)
-                  }
-                />
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="pushNotifications">Push Notifications</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Receive push notifications in your browser
+                    </p>
+                  </div>
+                  <Switch
+                    id="pushNotifications"
+                    checked={settings.value.pushNotifications}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('pushNotifications', e.currentTarget.checked)
+                    }
+                  />
+                </div>
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="notificationSound">Notification Sound</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Play sound when receiving notifications
+                    </p>
+                  </div>
+                  <Switch
+                    id="notificationSound"
+                    checked={settings.value.notificationSound}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('notificationSound', e.currentTarget.checked)
+                    }
+                  />
+                </div>
+
+                <Separator />
+
+                <div class="space-y-3">
+                  <Label>Notification Frequency</Label>
+                  <RadioGroup
+                    name="notificationFrequency"
+                    value={settings.value.notificationFrequency}
+                  >
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="freq-realtime"
+                        name="notificationFrequency"
+                        value="realtime"
+                        checked={settings.value.notificationFrequency === 'realtime'}
+                        onInput={() => updateField('notificationFrequency', 'realtime')}
+                      />
+                      <Label htmlFor="freq-realtime" class="font-normal">
+                        Real-time
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="freq-hourly"
+                        name="notificationFrequency"
+                        value="hourly"
+                        checked={settings.value.notificationFrequency === 'hourly'}
+                        onInput={() => updateField('notificationFrequency', 'hourly')}
+                      />
+                      <Label htmlFor="freq-hourly" class="font-normal">
+                        Hourly digest
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="freq-daily"
+                        name="notificationFrequency"
+                        value="daily"
+                        checked={settings.value.notificationFrequency === 'daily'}
+                        onInput={() => updateField('notificationFrequency', 'daily')}
+                      />
+                      <Label htmlFor="freq-daily" class="font-normal">
+                        Daily digest
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="newsletterSubscribed">Newsletter</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Receive our weekly newsletter
+                    </p>
+                  </div>
+                  <Switch
+                    id="newsletterSubscribed"
+                    checked={settings.value.newsletterSubscribed}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('newsletterSubscribed', e.currentTarget.checked)
+                    }
+                  />
+                </div>
               </div>
-            </div>
-          </Card>
-        </TabPanel>
+            </Card>
+          </TabPanel>
+        )}
 
         {/* Privacy Tab */}
-        <TabPanel value="privacy">
-          <Card>
-            <div>
-              <h3>Privacy & Security</h3>
-              <p>
-                Control your privacy settings and data sharing
-              </p>
-            </div>
-            <div class="space-y-6">
-              <div class="space-y-3">
-                <Label>Profile Visibility</Label>
-                <RadioGroup
-                  name="profileVisibility"
-                  value={settings.value.profileVisibility}
-                >
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="visibility-public"
-                      name="profileVisibility"
-                      value="public"
-                      checked={settings.value.profileVisibility === 'public'}
-                      onInput={() => updateField('profileVisibility', 'public')}
-                    />
-                    <Label htmlFor="visibility-public" class="font-normal">
-                      Public
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="visibility-friends"
-                      name="profileVisibility"
-                      value="friends"
-                      checked={settings.value.profileVisibility === 'friends'}
-                      onInput={() => updateField('profileVisibility', 'friends')}
-                    />
-                    <Label htmlFor="visibility-friends" class="font-normal">
-                      Friends only
-                    </Label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="visibility-private"
-                      name="profileVisibility"
-                      value="private"
-                      checked={settings.value.profileVisibility === 'private'}
-                      onInput={() => updateField('profileVisibility', 'private')}
-                    />
-                    <Label htmlFor="visibility-private" class="font-normal">
-                      Private
-                    </Label>
-                  </div>
-                </RadioGroup>
+        {activeTab === 'privacy' && (
+          <TabPanel>
+            <Card class="p-6">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-1">Privacy & Security</h3>
+                <p class="text-sm text-muted-foreground">
+                  Control your privacy settings and data sharing
+                </p>
               </div>
-
-              <Separator />
-
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="showEmail">Show Email on Profile</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Make your email address visible to others
-                  </p>
+              <div class="space-y-6">
+                <div class="space-y-3">
+                  <Label>Profile Visibility</Label>
+                  <RadioGroup
+                    name="profileVisibility"
+                    value={settings.value.profileVisibility}
+                  >
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="visibility-public"
+                        name="profileVisibility"
+                        value="public"
+                        checked={settings.value.profileVisibility === 'public'}
+                        onInput={() => updateField('profileVisibility', 'public')}
+                      />
+                      <Label htmlFor="visibility-public" class="font-normal">
+                        Public
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="visibility-friends"
+                        name="profileVisibility"
+                        value="friends"
+                        checked={settings.value.profileVisibility === 'friends'}
+                        onInput={() => updateField('profileVisibility', 'friends')}
+                      />
+                      <Label htmlFor="visibility-friends" class="font-normal">
+                        Friends only
+                      </Label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        id="visibility-private"
+                        name="profileVisibility"
+                        value="private"
+                        checked={settings.value.profileVisibility === 'private'}
+                        onInput={() => updateField('profileVisibility', 'private')}
+                      />
+                      <Label htmlFor="visibility-private" class="font-normal">
+                        Private
+                      </Label>
+                    </div>
+                  </RadioGroup>
                 </div>
-                <Switch
-                  id="showEmail"
-                  checked={settings.value.showEmail}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('showEmail', e.currentTarget.checked)
-                  }
-                />
-              </div>
 
-              <Separator />
+                <Separator />
 
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="showActivity">Show Activity Status</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Let others see when you're online
-                  </p>
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="showEmail">Show Email on Profile</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Make your email address visible to others
+                    </p>
+                  </div>
+                  <Switch
+                    id="showEmail"
+                    checked={settings.value.showEmail}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('showEmail', e.currentTarget.checked)
+                    }
+                  />
                 </div>
-                <Switch
-                  id="showActivity"
-                  checked={settings.value.showActivity}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('showActivity', e.currentTarget.checked)
-                  }
-                />
-              </div>
 
-              <Separator />
+                <Separator />
 
-              <div class="flex items-center justify-between">
-                <div class="space-y-0.5">
-                  <Label htmlFor="dataSharing">Data Sharing</Label>
-                  <p class="text-sm text-muted-foreground">
-                    Share anonymized usage data to help improve the product
-                  </p>
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="showActivity">Show Activity Status</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Let others see when you're online
+                    </p>
+                  </div>
+                  <Switch
+                    id="showActivity"
+                    checked={settings.value.showActivity}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('showActivity', e.currentTarget.checked)
+                    }
+                  />
                 </div>
-                <Switch
-                  id="dataSharing"
-                  checked={settings.value.dataSharing}
-                  onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    updateField('dataSharing', e.currentTarget.checked)
-                  }
-                />
+
+                <Separator />
+
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <Label htmlFor="dataSharing">Data Sharing</Label>
+                    <p class="text-sm text-muted-foreground">
+                      Share anonymized usage data to help improve the product
+                    </p>
+                  </div>
+                  <Switch
+                    id="dataSharing"
+                    checked={settings.value.dataSharing}
+                    onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                      updateField('dataSharing', e.currentTarget.checked)
+                    }
+                  />
+                </div>
               </div>
-            </div>
-          </Card>
-        </TabPanel>
-      </Tabs>
+            </Card>
+          </TabPanel>
+        )}
+      </div>
 
       {/* Action buttons */}
-      <div class="flex items-center justify-between pt-4 border-t">
+      <div class="flex items-center justify-between pt-6 border-t">
         <Button
           variant="ghost"
           onClick={handleResetToDefaults}

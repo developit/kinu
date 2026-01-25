@@ -576,7 +576,7 @@ function MultiStepWizard() {
 
       {/* Step indicators */}
       <nav aria-label="Progress steps">
-        <ol class="flex items-center justify-between">
+        <ol class="flex items-center justify-between list-none">
           {STEPS.map((step, index) => {
             const isComplete = index < wizard.currentStep.value;
             const isCurrent = index === wizard.currentStep.value;
@@ -1227,7 +1227,7 @@ export function MultiStepWizard() {
 
       {/* Step indicators */}
       <nav aria-label="Progress steps">
-        <ol class="flex items-center justify-between">
+        <ol class="flex items-center justify-between list-none">
           {STEPS.map((step, index) => {
             const isComplete = index < wizard.currentStep.value;
             const isCurrent = index === wizard.currentStep.value;
