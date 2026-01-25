@@ -1,6 +1,6 @@
 import type {JSX} from 'preact';
 import {useState} from 'preact/hooks';
-import {signal, computed, effect, batch} from '@preact/signals';
+import {useSignal, useComputed, useSignalEffect, batch} from '@preact/signals';
 import {
   Card,
   TabList,
@@ -77,17 +77,6 @@ const MOCK_INITIAL_SETTINGS: Settings = {
   dataSharing: false,
 };
 
-// Signals for state management
-const settings = signal<Settings>(DEFAULT_SETTINGS);
-const originalSettings = signal<Settings>(DEFAULT_SETTINGS);
-const isSaving = signal(false);
-const errors = signal<Record<string, string>>({});
-
-// Computed signal for change detection
-const hasUnsavedChanges = computed(() => {
-  return JSON.stringify(settings.value) !== JSON.stringify(originalSettings.value);
-});
-
 // Mock API for demo purposes
 const mockFetch = async (url: string, options?: RequestInit): Promise<Response> => {
   // Simulate network delay
@@ -114,8 +103,19 @@ const mockFetch = async (url: string, options?: RequestInit): Promise<Response> 
 function SettingsPanel() {
   const [activeTab, setActiveTab] = useState('profile');
 
+  // State management with signals hooks
+  const settings = useSignal<Settings>(DEFAULT_SETTINGS);
+  const originalSettings = useSignal<Settings>(DEFAULT_SETTINGS);
+  const isSaving = useSignal(false);
+  const errors = useSignal<Record<string, string>>({});
+
+  // Computed signal for change detection
+  const hasUnsavedChanges = useComputed(() => {
+    return JSON.stringify(settings.value) !== JSON.stringify(originalSettings.value);
+  });
+
   // Load settings on mount
-  effect(() => {
+  useSignalEffect(() => {
     const loadSettings = async () => {
       try {
         const response = await mockFetch('/api/settings');
@@ -134,7 +134,7 @@ function SettingsPanel() {
   });
 
   // Warn before leaving with unsaved changes
-  effect(() => {
+  useSignalEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges.value) {
         e.preventDefault();
@@ -792,7 +792,7 @@ export function Demo() {
 
 export const code = `import type {JSX} from 'preact';
 import {useState} from 'preact/hooks';
-import {signal, computed, effect, batch} from '@preact/signals';
+import {useSignal, useComputed, useSignalEffect, batch} from '@preact/signals';
 import {
   Card,
   TabList,
@@ -849,22 +849,22 @@ const DEFAULT_SETTINGS: Settings = {
   dataSharing: false,
 };
 
-// Signals for state management
-const settings = signal<Settings>(DEFAULT_SETTINGS);
-const originalSettings = signal<Settings>(DEFAULT_SETTINGS);
-const isSaving = signal(false);
-const errors = signal<Record<string, string>>({});
-
-// Computed signal for change detection
-const hasUnsavedChanges = computed(() => {
-  return JSON.stringify(settings.value) !== JSON.stringify(originalSettings.value);
-});
-
 export function SettingsPanel() {
   const [activeTab, setActiveTab] = useState('profile');
 
+  // State management with signals hooks
+  const settings = useSignal<Settings>(DEFAULT_SETTINGS);
+  const originalSettings = useSignal<Settings>(DEFAULT_SETTINGS);
+  const isSaving = useSignal(false);
+  const errors = useSignal<Record<string, string>>({});
+
+  // Computed signal for change detection
+  const hasUnsavedChanges = useComputed(() => {
+    return JSON.stringify(settings.value) !== JSON.stringify(originalSettings.value);
+  });
+
   // Load settings on mount
-  effect(() => {
+  useSignalEffect(() => {
     const loadSettings = async () => {
       try {
         const response = await fetch('/api/settings');
@@ -883,7 +883,7 @@ export function SettingsPanel() {
   });
 
   // Warn before leaving with unsaved changes
-  effect(() => {
+  useSignalEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges.value) {
         e.preventDefault();

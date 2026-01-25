@@ -1,4 +1,5 @@
 import {signal, computed, batch, type Signal} from '@preact/signals';
+import {useMemo} from 'preact/hooks';
 import type {JSX} from 'preact/jsx-runtime';
 import {
   Table,
@@ -146,172 +147,203 @@ const MOCK_USERS: User[] = [
   },
 ];
 
-// State signals
-const users = signal<User[]>(MOCK_USERS);
-const isLoading = signal(false);
-const searchQuery = signal('');
-const roleFilter = signal('all');
-const statusFilter = signal('all');
-const sortColumn = signal<SortColumn>('name');
-const sortDirection = signal<SortDirection>('asc');
-const currentPage = signal(1);
-const pageSize = signal(10);
-const selectedRows = signal<Set<string>>(new Set());
+// Factory function to create component-scoped signals
+function createDataTableModel() {
+  // State signals
+  const users = signal<User[]>(MOCK_USERS);
+  const isLoading = signal(false);
+  const searchQuery = signal('');
+  const roleFilter = signal('all');
+  const statusFilter = signal('all');
+  const sortColumn = signal<SortColumn>('name');
+  const sortDirection = signal<SortDirection>('asc');
+  const currentPage = signal(1);
+  const pageSize = signal(10);
+  const selectedRows = signal<Set<string>>(new Set());
 
-// Derived state using computed
-const filteredAndSortedUsers = computed(() => {
-  let result = [...users.value];
+  // Derived state using computed
+  const filteredAndSortedUsers = computed(() => {
+    let result = [...users.value];
 
-  // Apply search filter
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    result = result.filter(
-      user =>
-        user.name.toLowerCase().includes(query) ||
-        user.email.toLowerCase().includes(query)
-    );
-  }
+    // Apply search filter
+    if (searchQuery.value) {
+      const query = searchQuery.value.toLowerCase();
+      result = result.filter(
+        user =>
+          user.name.toLowerCase().includes(query) ||
+          user.email.toLowerCase().includes(query)
+      );
+    }
 
-  // Apply role filter
-  if (roleFilter.value !== 'all') {
-    result = result.filter(user => user.role === roleFilter.value);
-  }
+    // Apply role filter
+    if (roleFilter.value !== 'all') {
+      result = result.filter(user => user.role === roleFilter.value);
+    }
 
-  // Apply status filter
-  if (statusFilter.value !== 'all') {
-    result = result.filter(user => user.status === statusFilter.value);
-  }
+    // Apply status filter
+    if (statusFilter.value !== 'all') {
+      result = result.filter(user => user.status === statusFilter.value);
+    }
 
-  // Apply sorting
-  if (sortColumn.value) {
-    result.sort((a, b) => {
-      const aVal = a[sortColumn.value!];
-      const bVal = b[sortColumn.value!];
+    // Apply sorting
+    if (sortColumn.value) {
+      result.sort((a, b) => {
+        const aVal = a[sortColumn.value!];
+        const bVal = b[sortColumn.value!];
 
-      let comparison = 0;
-      if (aVal < bVal) comparison = -1;
-      if (aVal > bVal) comparison = 1;
+        let comparison = 0;
+        if (aVal < bVal) comparison = -1;
+        if (aVal > bVal) comparison = 1;
 
-      return sortDirection.value === 'asc' ? comparison : -comparison;
-    });
-  }
+        return sortDirection.value === 'asc' ? comparison : -comparison;
+      });
+    }
 
-  return result;
-});
+    return result;
+  });
 
-const paginatedUsers = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value;
-  const end = start + pageSize.value;
-  return filteredAndSortedUsers.value.slice(start, end);
-});
+  const paginatedUsers = computed(() => {
+    const start = (currentPage.value - 1) * pageSize.value;
+    const end = start + pageSize.value;
+    return filteredAndSortedUsers.value.slice(start, end);
+  });
 
-const totalPages = computed(() =>
-  Math.ceil(filteredAndSortedUsers.value.length / pageSize.value)
-);
+  const totalPages = computed(() =>
+    Math.ceil(filteredAndSortedUsers.value.length / pageSize.value)
+  );
 
-const showingStart = computed(() =>
-  filteredAndSortedUsers.value.length === 0
-    ? 0
-    : (currentPage.value - 1) * pageSize.value + 1
-);
+  const showingStart = computed(() =>
+    filteredAndSortedUsers.value.length === 0
+      ? 0
+      : (currentPage.value - 1) * pageSize.value + 1
+  );
 
-const showingEnd = computed(() =>
-  Math.min(currentPage.value * pageSize.value, filteredAndSortedUsers.value.length)
-);
+  const showingEnd = computed(() =>
+    Math.min(currentPage.value * pageSize.value, filteredAndSortedUsers.value.length)
+  );
 
-const allSelected = computed(
-  () =>
-    paginatedUsers.value.length > 0 &&
-    paginatedUsers.value.every(u => selectedRows.value.has(u.id))
-);
+  const allSelected = computed(
+    () =>
+      paginatedUsers.value.length > 0 &&
+      paginatedUsers.value.every(u => selectedRows.value.has(u.id))
+  );
 
-const someSelected = computed(
-  () =>
-    paginatedUsers.value.some(u => selectedRows.value.has(u.id)) &&
-    !allSelected.value
-);
+  const someSelected = computed(
+    () =>
+      paginatedUsers.value.some(u => selectedRows.value.has(u.id)) &&
+      !allSelected.value
+  );
 
-// Actions
-const handleSort = (column: SortColumn) => {
-  if (sortColumn.value === column) {
-    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
-  } else {
+  // Actions
+  const handleSort = (column: SortColumn) => {
+    if (sortColumn.value === column) {
+      sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    } else {
+      batch(() => {
+        sortColumn.value = column;
+        sortDirection.value = 'asc';
+      });
+    }
+  };
+
+  const handleSelectAll = (e: JSX.TargetedEvent<HTMLInputElement>) => {
+    if (e.currentTarget.checked) {
+      selectedRows.value = new Set(paginatedUsers.value.map(u => u.id));
+    } else {
+      selectedRows.value = new Set();
+    }
+  };
+
+  const handleSelectRow = (id: string) => {
+    const newSelected = new Set(selectedRows.value);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    selectedRows.value = newSelected;
+  };
+
+  const handleBulkDelete = async () => {
+    if (!confirm(`Delete ${selectedRows.value.size} user(s)?`)) return;
+
+    // Demo: Just remove from local state
     batch(() => {
-      sortColumn.value = column;
-      sortDirection.value = 'asc';
+      users.value = users.value.filter(u => !selectedRows.value.has(u.id));
+      selectedRows.value = new Set();
     });
-  }
-};
+  };
 
-const handleSelectAll = (e: JSX.TargetedEvent<HTMLInputElement>) => {
-  if (e.currentTarget.checked) {
-    selectedRows.value = new Set(paginatedUsers.value.map(u => u.id));
-  } else {
-    selectedRows.value = new Set();
-  }
-};
+  const handleBulkExport = () => {
+    const selected = users.value.filter(u => selectedRows.value.has(u.id));
+    const csv = [
+      'Name,Email,Role,Status,Created',
+      ...selected.map(u => `${u.name},${u.email},${u.role},${u.status},${u.createdAt}`),
+    ].join('\n');
 
-const handleSelectRow = (id: string) => {
-  const newSelected = new Set(selectedRows.value);
-  if (newSelected.has(id)) {
-    newSelected.delete(id);
-  } else {
-    newSelected.add(id);
-  }
-  selectedRows.value = newSelected;
-};
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'users.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
-const handleBulkDelete = async () => {
-  if (!confirm(`Delete ${selectedRows.value.size} user(s)?`)) return;
+  const handlePageSizeChange = (newSize: number) => {
+    batch(() => {
+      pageSize.value = newSize;
+      currentPage.value = 1;
+    });
+  };
 
-  // Demo: Just remove from local state
-  batch(() => {
-    users.value = users.value.filter(u => !selectedRows.value.has(u.id));
-    selectedRows.value = new Set();
-  });
-};
-
-const handleBulkExport = () => {
-  const selected = users.value.filter(u => selectedRows.value.has(u.id));
-  const csv = [
-    'Name,Email,Role,Status,Created',
-    ...selected.map(u => `${u.name},${u.email},${u.role},${u.status},${u.createdAt}`),
-  ].join('\n');
-
-  const blob = new Blob([csv], {type: 'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'users.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
-const handlePageSizeChange = (newSize: number) => {
-  batch(() => {
-    pageSize.value = newSize;
-    currentPage.value = 1;
-  });
-};
+  return {
+    users,
+    isLoading,
+    searchQuery,
+    roleFilter,
+    statusFilter,
+    sortColumn,
+    sortDirection,
+    currentPage,
+    pageSize,
+    selectedRows,
+    filteredAndSortedUsers,
+    paginatedUsers,
+    totalPages,
+    showingStart,
+    showingEnd,
+    allSelected,
+    someSelected,
+    handleSort,
+    handleSelectAll,
+    handleSelectRow,
+    handleBulkDelete,
+    handleBulkExport,
+    handlePageSizeChange,
+  };
+}
 
 // Sort icon component
-const SortIcon = ({column}: {column: SortColumn}) => {
-  if (sortColumn.value !== column) {
+function SortIcon({table, column}: {table: ReturnType<typeof createDataTableModel>; column: SortColumn}) {
+  if (table.sortColumn.value !== column) {
     return <iconify-icon icon="mdi:sort" class="w-4 h-4 text-muted-foreground" />;
   }
 
-  return sortDirection.value === 'asc' ? (
+  return table.sortDirection.value === 'asc' ? (
     <iconify-icon icon="mdi:sort-ascending" class="w-4 h-4" />
   ) : (
     <iconify-icon icon="mdi:sort-descending" class="w-4 h-4" />
   );
-};
+}
 
 export function Demo() {
   return <DataTable />;
 }
 
 function DataTable() {
+  const table = useMemo(() => createDataTableModel(), []);
+
   return (
     <div class="space-y-6">
       {/* Filters and actions */}
@@ -325,9 +357,9 @@ function DataTable() {
             <Input
               type="search"
               placeholder="Search users..."
-              value={searchQuery.value}
+              value={table.searchQuery.value}
               onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                (searchQuery.value = e.currentTarget.value)
+                (table.searchQuery.value = e.currentTarget.value)
               }
               class="pl-9"
               aria-label="Search users"
@@ -335,9 +367,9 @@ function DataTable() {
           </div>
 
           <Select
-            value={roleFilter.value}
+            value={table.roleFilter.value}
             onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-              (roleFilter.value = e.currentTarget.value)
+              (table.roleFilter.value = e.currentTarget.value)
             }
             aria-label="Filter by role"
           >
@@ -348,9 +380,9 @@ function DataTable() {
           </Select>
 
           <Select
-            value={statusFilter.value}
+            value={table.statusFilter.value}
             onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-              (statusFilter.value = e.currentTarget.value)
+              (table.statusFilter.value = e.currentTarget.value)
             }
             aria-label="Filter by status"
           >
@@ -361,18 +393,18 @@ function DataTable() {
           </Select>
         </div>
 
-        {selectedRows.value.size > 0 && (
+        {table.selectedRows.value.size > 0 && (
           <div class="flex gap-2 items-center">
-            <Badge variant="secondary">{selectedRows.value.size} selected</Badge>
-            <Button variant="outline" size="sm" onClick={handleBulkExport}>
+            <Badge variant="secondary">{table.selectedRows.value.size} selected</Badge>
+            <Button variant="outline" size="sm" onClick={table.handleBulkExport}>
               <iconify-icon icon="mdi:download" class="mr-2" />
               Export
             </Button>
             <Button
               variant="destructive"
               size="sm"
-              onClick={handleBulkDelete}
-              disabled={isLoading.value}
+              onClick={table.handleBulkDelete}
+              disabled={table.isLoading.value}
             >
               <iconify-icon icon="mdi:delete" class="mr-2" />
               Delete
@@ -388,60 +420,60 @@ function DataTable() {
             <tr>
               <th class="w-12 text-center">
                 <Checkbox
-                  checked={allSelected.value}
-                  indeterminate={someSelected.value}
-                  onInput={handleSelectAll}
+                  checked={table.allSelected.value}
+                  indeterminate={table.someSelected.value}
+                  onInput={table.handleSelectAll}
                   aria-label="Select all users"
                 />
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('name')}
+                  onClick={() => table.handleSort('name')}
                   aria-label="Sort by name"
                 >
                   Name
-                  <SortIcon column="name" />
+                  <SortIcon table={table} column="name" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('email')}
+                  onClick={() => table.handleSort('email')}
                   aria-label="Sort by email"
                 >
                   Email
-                  <SortIcon column="email" />
+                  <SortIcon table={table} column="email" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('role')}
+                  onClick={() => table.handleSort('role')}
                   aria-label="Sort by role"
                 >
                   Role
-                  <SortIcon column="role" />
+                  <SortIcon table={table} column="role" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('status')}
+                  onClick={() => table.handleSort('status')}
                   aria-label="Sort by status"
                 >
                   Status
-                  <SortIcon column="status" />
+                  <SortIcon table={table} column="status" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('createdAt')}
+                  onClick={() => table.handleSort('createdAt')}
                   aria-label="Sort by created date"
                 >
                   Created
-                  <SortIcon column="createdAt" />
+                  <SortIcon table={table} column="createdAt" />
                 </button>
               </th>
               <th class="w-12 text-center">
@@ -450,8 +482,8 @@ function DataTable() {
             </tr>
           </thead>
           <tbody>
-            {isLoading.value ? (
-              Array.from({length: pageSize.value}).map((_, i) => (
+            {table.isLoading.value ? (
+              Array.from({length: table.pageSize.value}).map((_, i) => (
                 <tr key={i}>
                   <td>
                     <Skeleton class="h-4 w-4" />
@@ -476,7 +508,7 @@ function DataTable() {
                   </td>
                 </tr>
               ))
-            ) : paginatedUsers.value.length === 0 ? (
+            ) : table.paginatedUsers.value.length === 0 ? (
               <tr>
                 <td colSpan={7} class="h-32 text-center">
                   <div class="flex flex-col items-center justify-center text-muted-foreground">
@@ -487,12 +519,12 @@ function DataTable() {
                 </td>
               </tr>
             ) : (
-              paginatedUsers.value.map(user => (
+              table.paginatedUsers.value.map(user => (
                 <tr key={user.id}>
                   <td class="text-center">
                     <Checkbox
-                      checked={selectedRows.value.has(user.id)}
-                      onInput={() => handleSelectRow(user.id)}
+                      checked={table.selectedRows.value.has(user.id)}
+                      onInput={() => table.handleSelectRow(user.id)}
                       aria-label={`Select ${user.name}`}
                     />
                   </td>
@@ -533,16 +565,16 @@ function DataTable() {
       {/* Pagination */}
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-muted/50 rounded-lg">
         <div class="text-sm text-muted-foreground">
-          Showing {showingStart.value} to {showingEnd.value} of{' '}
-          {filteredAndSortedUsers.value.length} results
+          Showing {table.showingStart.value} to {table.showingEnd.value} of{' '}
+          {table.filteredAndSortedUsers.value.length} results
         </div>
 
         <div class="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => (currentPage.value = 1)}
-            disabled={currentPage.value === 1}
+            onClick={() => (table.currentPage.value = 1)}
+            disabled={table.currentPage.value === 1}
             aria-label="Go to first page"
           >
             <iconify-icon icon="mdi:chevron-double-left" />
@@ -551,24 +583,24 @@ function DataTable() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => (currentPage.value = Math.max(1, currentPage.value - 1))}
-            disabled={currentPage.value === 1}
+            onClick={() => (table.currentPage.value = Math.max(1, table.currentPage.value - 1))}
+            disabled={table.currentPage.value === 1}
             aria-label="Go to previous page"
           >
             <iconify-icon icon="mdi:chevron-left" />
           </Button>
 
           <span class="text-sm">
-            Page {currentPage.value} of {totalPages.value}
+            Page {table.currentPage.value} of {table.totalPages.value}
           </span>
 
           <Button
             variant="outline"
             size="sm"
             onClick={() =>
-              (currentPage.value = Math.min(totalPages.value, currentPage.value + 1))
+              (table.currentPage.value = Math.min(table.totalPages.value, table.currentPage.value + 1))
             }
-            disabled={currentPage.value === totalPages.value}
+            disabled={table.currentPage.value === table.totalPages.value}
             aria-label="Go to next page"
           >
             <iconify-icon icon="mdi:chevron-right" />
@@ -577,8 +609,8 @@ function DataTable() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => (currentPage.value = totalPages.value)}
-            disabled={currentPage.value === totalPages.value}
+            onClick={() => (table.currentPage.value = table.totalPages.value)}
+            disabled={table.currentPage.value === table.totalPages.value}
             aria-label="Go to last page"
           >
             <iconify-icon icon="mdi:chevron-double-right" />
@@ -586,9 +618,9 @@ function DataTable() {
         </div>
 
         <Select
-          value={pageSize.value.toString()}
+          value={table.pageSize.value.toString()}
           onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-            handlePageSizeChange(Number(e.currentTarget.value))
+            table.handlePageSizeChange(Number(e.currentTarget.value))
           }
           class="w-32"
           aria-label="Rows per page"
@@ -604,6 +636,7 @@ function DataTable() {
 }
 
 export const code = `import {signal, computed, batch, type Signal} from '@preact/signals';
+import {useMemo} from 'preact/hooks';
 import type {JSX} from 'preact/jsx-runtime';
 import {
   Table,
@@ -627,206 +660,237 @@ interface User {
 type SortColumn = keyof User | null;
 type SortDirection = 'asc' | 'desc';
 
-// State signals
-const users = signal<User[]>([
-  {
-    id: '1',
-    name: 'Alice Johnson',
-    email: 'alice@example.com',
-    role: 'admin',
-    status: 'active',
-    createdAt: '2024-01-15',
-  },
-  {
-    id: '2',
-    name: 'Bob Smith',
-    email: 'bob@example.com',
-    role: 'editor',
-    status: 'active',
-    createdAt: '2024-02-20',
-  },
-  {
-    id: '3',
-    name: 'Carol White',
-    email: 'carol@example.com',
-    role: 'viewer',
-    status: 'inactive',
-    createdAt: '2024-03-10',
-  },
-]);
+// Factory function to create component-scoped signals
+function createDataTableModel() {
+  // State signals
+  const users = signal<User[]>([
+    {
+      id: '1',
+      name: 'Alice Johnson',
+      email: 'alice@example.com',
+      role: 'admin',
+      status: 'active',
+      createdAt: '2024-01-15',
+    },
+    {
+      id: '2',
+      name: 'Bob Smith',
+      email: 'bob@example.com',
+      role: 'editor',
+      status: 'active',
+      createdAt: '2024-02-20',
+    },
+    {
+      id: '3',
+      name: 'Carol White',
+      email: 'carol@example.com',
+      role: 'viewer',
+      status: 'inactive',
+      createdAt: '2024-03-10',
+    },
+  ]);
 
-const isLoading = signal(false);
-const searchQuery = signal('');
-const roleFilter = signal('all');
-const statusFilter = signal('all');
-const sortColumn = signal<SortColumn>('name');
-const sortDirection = signal<SortDirection>('asc');
-const currentPage = signal(1);
-const pageSize = signal(10);
-const selectedRows = signal<Set<string>>(new Set());
+  const isLoading = signal(false);
+  const searchQuery = signal('');
+  const roleFilter = signal('all');
+  const statusFilter = signal('all');
+  const sortColumn = signal<SortColumn>('name');
+  const sortDirection = signal<SortDirection>('asc');
+  const currentPage = signal(1);
+  const pageSize = signal(10);
+  const selectedRows = signal<Set<string>>(new Set());
 
-// Derived state using computed
-const filteredAndSortedUsers = computed(() => {
-  let result = [...users.value];
+  // Derived state using computed
+  const filteredAndSortedUsers = computed(() => {
+    let result = [...users.value];
 
-  // Apply search filter
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    result = result.filter(
-      user =>
-        user.name.toLowerCase().includes(query) ||
-        user.email.toLowerCase().includes(query)
-    );
-  }
+    // Apply search filter
+    if (searchQuery.value) {
+      const query = searchQuery.value.toLowerCase();
+      result = result.filter(
+        user =>
+          user.name.toLowerCase().includes(query) ||
+          user.email.toLowerCase().includes(query)
+      );
+    }
 
-  // Apply role filter
-  if (roleFilter.value !== 'all') {
-    result = result.filter(user => user.role === roleFilter.value);
-  }
+    // Apply role filter
+    if (roleFilter.value !== 'all') {
+      result = result.filter(user => user.role === roleFilter.value);
+    }
 
-  // Apply status filter
-  if (statusFilter.value !== 'all') {
-    result = result.filter(user => user.status === statusFilter.value);
-  }
+    // Apply status filter
+    if (statusFilter.value !== 'all') {
+      result = result.filter(user => user.status === statusFilter.value);
+    }
 
-  // Apply sorting
-  if (sortColumn.value) {
-    result.sort((a, b) => {
-      const aVal = a[sortColumn.value!];
-      const bVal = b[sortColumn.value!];
+    // Apply sorting
+    if (sortColumn.value) {
+      result.sort((a, b) => {
+        const aVal = a[sortColumn.value!];
+        const bVal = b[sortColumn.value!];
 
-      let comparison = 0;
-      if (aVal < bVal) comparison = -1;
-      if (aVal > bVal) comparison = 1;
+        let comparison = 0;
+        if (aVal < bVal) comparison = -1;
+        if (aVal > bVal) comparison = 1;
 
-      return sortDirection.value === 'asc' ? comparison : -comparison;
-    });
-  }
+        return sortDirection.value === 'asc' ? comparison : -comparison;
+      });
+    }
 
-  return result;
-});
-
-const paginatedUsers = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value;
-  const end = start + pageSize.value;
-  return filteredAndSortedUsers.value.slice(start, end);
-});
-
-const totalPages = computed(() =>
-  Math.ceil(filteredAndSortedUsers.value.length / pageSize.value)
-);
-
-const showingStart = computed(() =>
-  filteredAndSortedUsers.value.length === 0
-    ? 0
-    : (currentPage.value - 1) * pageSize.value + 1
-);
-
-const showingEnd = computed(() =>
-  Math.min(currentPage.value * pageSize.value, filteredAndSortedUsers.value.length)
-);
-
-const allSelected = computed(
-  () =>
-    paginatedUsers.value.length > 0 &&
-    paginatedUsers.value.every(u => selectedRows.value.has(u.id))
-);
-
-const someSelected = computed(
-  () =>
-    paginatedUsers.value.some(u => selectedRows.value.has(u.id)) &&
-    !allSelected.value
-);
-
-// Actions
-const handleSort = (column: SortColumn) => {
-  if (sortColumn.value === column) {
-    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
-  } else {
-    batch(() => {
-      sortColumn.value = column;
-      sortDirection.value = 'asc';
-    });
-  }
-};
-
-const handleSelectAll = (e: JSX.TargetedEvent<HTMLInputElement>) => {
-  if (e.currentTarget.checked) {
-    selectedRows.value = new Set(paginatedUsers.value.map(u => u.id));
-  } else {
-    selectedRows.value = new Set();
-  }
-};
-
-const handleSelectRow = (id: string) => {
-  const newSelected = new Set(selectedRows.value);
-  if (newSelected.has(id)) {
-    newSelected.delete(id);
-  } else {
-    newSelected.add(id);
-  }
-  selectedRows.value = newSelected;
-};
-
-const handleBulkDelete = async () => {
-  if (!confirm(\`Delete \${selectedRows.value.size} user(s)?\`)) return;
-
-  isLoading.value = true;
-  try {
-    await fetch('/api/users/bulk-delete', {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ids: Array.from(selectedRows.value)}),
-    });
-
-    batch(() => {
-      users.value = users.value.filter(u => !selectedRows.value.has(u.id));
-      selectedRows.value = new Set();
-    });
-  } catch (error) {
-    console.error('Failed to delete users:', error);
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-const handleBulkExport = () => {
-  const selected = users.value.filter(u => selectedRows.value.has(u.id));
-  const csv = [
-    'Name,Email,Role,Status,Created',
-    ...selected.map(u => \`\${u.name},\${u.email},\${u.role},\${u.status},\${u.createdAt}\`),
-  ].join('\\n');
-
-  const blob = new Blob([csv], {type: 'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'users.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
-const handlePageSizeChange = (newSize: number) => {
-  batch(() => {
-    pageSize.value = newSize;
-    currentPage.value = 1;
+    return result;
   });
-};
+
+  const paginatedUsers = computed(() => {
+    const start = (currentPage.value - 1) * pageSize.value;
+    const end = start + pageSize.value;
+    return filteredAndSortedUsers.value.slice(start, end);
+  });
+
+  const totalPages = computed(() =>
+    Math.ceil(filteredAndSortedUsers.value.length / pageSize.value)
+  );
+
+  const showingStart = computed(() =>
+    filteredAndSortedUsers.value.length === 0
+      ? 0
+      : (currentPage.value - 1) * pageSize.value + 1
+  );
+
+  const showingEnd = computed(() =>
+    Math.min(currentPage.value * pageSize.value, filteredAndSortedUsers.value.length)
+  );
+
+  const allSelected = computed(
+    () =>
+      paginatedUsers.value.length > 0 &&
+      paginatedUsers.value.every(u => selectedRows.value.has(u.id))
+  );
+
+  const someSelected = computed(
+    () =>
+      paginatedUsers.value.some(u => selectedRows.value.has(u.id)) &&
+      !allSelected.value
+  );
+
+  // Actions
+  const handleSort = (column: SortColumn) => {
+    if (sortColumn.value === column) {
+      sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    } else {
+      batch(() => {
+        sortColumn.value = column;
+        sortDirection.value = 'asc';
+      });
+    }
+  };
+
+  const handleSelectAll = (e: JSX.TargetedEvent<HTMLInputElement>) => {
+    if (e.currentTarget.checked) {
+      selectedRows.value = new Set(paginatedUsers.value.map(u => u.id));
+    } else {
+      selectedRows.value = new Set();
+    }
+  };
+
+  const handleSelectRow = (id: string) => {
+    const newSelected = new Set(selectedRows.value);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    selectedRows.value = newSelected;
+  };
+
+  const handleBulkDelete = async () => {
+    if (!confirm(\`Delete \${selectedRows.value.size} user(s)?\`)) return;
+
+    isLoading.value = true;
+    try {
+      await fetch('/api/users/bulk-delete', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ids: Array.from(selectedRows.value)}),
+      });
+
+      batch(() => {
+        users.value = users.value.filter(u => !selectedRows.value.has(u.id));
+        selectedRows.value = new Set();
+      });
+    } catch (error) {
+      console.error('Failed to delete users:', error);
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  const handleBulkExport = () => {
+    const selected = users.value.filter(u => selectedRows.value.has(u.id));
+    const csv = [
+      'Name,Email,Role,Status,Created',
+      ...selected.map(u => \`\${u.name},\${u.email},\${u.role},\${u.status},\${u.createdAt}\`),
+    ].join('\\n');
+
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'users.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handlePageSizeChange = (newSize: number) => {
+    batch(() => {
+      pageSize.value = newSize;
+      currentPage.value = 1;
+    });
+  };
+
+  return {
+    users,
+    isLoading,
+    searchQuery,
+    roleFilter,
+    statusFilter,
+    sortColumn,
+    sortDirection,
+    currentPage,
+    pageSize,
+    selectedRows,
+    filteredAndSortedUsers,
+    paginatedUsers,
+    totalPages,
+    showingStart,
+    showingEnd,
+    allSelected,
+    someSelected,
+    handleSort,
+    handleSelectAll,
+    handleSelectRow,
+    handleBulkDelete,
+    handleBulkExport,
+    handlePageSizeChange,
+  };
+}
 
 // Sort icon component
-const SortIcon = ({column}: {column: SortColumn}) => {
-  if (sortColumn.value !== column) {
+function SortIcon({table, column}: {table: ReturnType<typeof createDataTableModel>; column: SortColumn}) {
+  if (table.sortColumn.value !== column) {
     return <iconify-icon icon="mdi:sort" class="w-4 h-4 text-muted-foreground" />;
   }
 
-  return sortDirection.value === 'asc' ? (
+  return table.sortDirection.value === 'asc' ? (
     <iconify-icon icon="mdi:sort-ascending" class="w-4 h-4" />
   ) : (
     <iconify-icon icon="mdi:sort-descending" class="w-4 h-4" />
   );
-};
+}
 
 export function UserTable() {
+  const table = useMemo(() => createDataTableModel(), []);
+
   return (
     <div class="space-y-6">
       {/* Filters and actions */}
@@ -840,9 +904,9 @@ export function UserTable() {
             <Input
               type="search"
               placeholder="Search users..."
-              value={searchQuery.value}
+              value={table.searchQuery.value}
               onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                (searchQuery.value = e.currentTarget.value)
+                (table.searchQuery.value = e.currentTarget.value)
               }
               class="pl-9"
               aria-label="Search users"
@@ -850,9 +914,9 @@ export function UserTable() {
           </div>
 
           <Select
-            value={roleFilter.value}
+            value={table.roleFilter.value}
             onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-              (roleFilter.value = e.currentTarget.value)
+              (table.roleFilter.value = e.currentTarget.value)
             }
             aria-label="Filter by role"
           >
@@ -863,9 +927,9 @@ export function UserTable() {
           </Select>
 
           <Select
-            value={statusFilter.value}
+            value={table.statusFilter.value}
             onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-              (statusFilter.value = e.currentTarget.value)
+              (table.statusFilter.value = e.currentTarget.value)
             }
             aria-label="Filter by status"
           >
@@ -876,18 +940,18 @@ export function UserTable() {
           </Select>
         </div>
 
-        {selectedRows.value.size > 0 && (
+        {table.selectedRows.value.size > 0 && (
           <div class="flex gap-2 items-center">
-            <Badge variant="secondary">{selectedRows.value.size} selected</Badge>
-            <Button variant="outline" size="sm" onClick={handleBulkExport}>
+            <Badge variant="secondary">{table.selectedRows.value.size} selected</Badge>
+            <Button variant="outline" size="sm" onClick={table.handleBulkExport}>
               <iconify-icon icon="mdi:download" class="mr-2" />
               Export
             </Button>
             <Button
               variant="destructive"
               size="sm"
-              onClick={handleBulkDelete}
-              disabled={isLoading.value}
+              onClick={table.handleBulkDelete}
+              disabled={table.isLoading.value}
             >
               <iconify-icon icon="mdi:delete" class="mr-2" />
               Delete
@@ -903,60 +967,60 @@ export function UserTable() {
             <tr>
               <th class="w-12 text-center">
                 <Checkbox
-                  checked={allSelected.value}
-                  indeterminate={someSelected.value}
-                  onInput={handleSelectAll}
+                  checked={table.allSelected.value}
+                  indeterminate={table.someSelected.value}
+                  onInput={table.handleSelectAll}
                   aria-label="Select all users"
                 />
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('name')}
+                  onClick={() => table.handleSort('name')}
                   aria-label="Sort by name"
                 >
                   Name
-                  <SortIcon column="name" />
+                  <SortIcon table={table} column="name" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('email')}
+                  onClick={() => table.handleSort('email')}
                   aria-label="Sort by email"
                 >
                   Email
-                  <SortIcon column="email" />
+                  <SortIcon table={table} column="email" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('role')}
+                  onClick={() => table.handleSort('role')}
                   aria-label="Sort by role"
                 >
                   Role
-                  <SortIcon column="role" />
+                  <SortIcon table={table} column="role" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('status')}
+                  onClick={() => table.handleSort('status')}
                   aria-label="Sort by status"
                 >
                   Status
-                  <SortIcon column="status" />
+                  <SortIcon table={table} column="status" />
                 </button>
               </th>
               <th>
                 <button
                   class="flex items-center gap-2 font-medium hover:text-foreground"
-                  onClick={() => handleSort('createdAt')}
+                  onClick={() => table.handleSort('createdAt')}
                   aria-label="Sort by created date"
                 >
                   Created
-                  <SortIcon column="createdAt" />
+                  <SortIcon table={table} column="createdAt" />
                 </button>
               </th>
               <th class="w-12 text-center">
@@ -965,8 +1029,8 @@ export function UserTable() {
             </tr>
           </thead>
           <tbody>
-            {isLoading.value ? (
-              Array.from({length: pageSize.value}).map((_, i) => (
+            {table.isLoading.value ? (
+              Array.from({length: table.pageSize.value}).map((_, i) => (
                 <tr key={i}>
                   <td>
                     <Skeleton class="h-4 w-4" />
@@ -991,7 +1055,7 @@ export function UserTable() {
                   </td>
                 </tr>
               ))
-            ) : paginatedUsers.value.length === 0 ? (
+            ) : table.paginatedUsers.value.length === 0 ? (
               <tr>
                 <td colSpan={7} class="h-32 text-center">
                   <div class="flex flex-col items-center justify-center text-muted-foreground">
@@ -1002,12 +1066,12 @@ export function UserTable() {
                 </td>
               </tr>
             ) : (
-              paginatedUsers.value.map(user => (
+              table.paginatedUsers.value.map(user => (
                 <tr key={user.id}>
                   <td class="text-center">
                     <Checkbox
-                      checked={selectedRows.value.has(user.id)}
-                      onInput={() => handleSelectRow(user.id)}
+                      checked={table.selectedRows.value.has(user.id)}
+                      onInput={() => table.handleSelectRow(user.id)}
                       aria-label={\`Select \${user.name}\`}
                     />
                   </td>
@@ -1048,16 +1112,16 @@ export function UserTable() {
       {/* Pagination */}
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-muted/50 rounded-lg">
         <div class="text-sm text-muted-foreground">
-          Showing {showingStart.value} to {showingEnd.value} of{' '}
-          {filteredAndSortedUsers.value.length} results
+          Showing {table.showingStart.value} to {table.showingEnd.value} of{' '}
+          {table.filteredAndSortedUsers.value.length} results
         </div>
 
         <div class="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => (currentPage.value = 1)}
-            disabled={currentPage.value === 1}
+            onClick={() => (table.currentPage.value = 1)}
+            disabled={table.currentPage.value === 1}
             aria-label="Go to first page"
           >
             <iconify-icon icon="mdi:chevron-double-left" />
@@ -1066,24 +1130,24 @@ export function UserTable() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => (currentPage.value = Math.max(1, currentPage.value - 1))}
-            disabled={currentPage.value === 1}
+            onClick={() => (table.currentPage.value = Math.max(1, table.currentPage.value - 1))}
+            disabled={table.currentPage.value === 1}
             aria-label="Go to previous page"
           >
             <iconify-icon icon="mdi:chevron-left" />
           </Button>
 
           <span class="text-sm">
-            Page {currentPage.value} of {totalPages.value}
+            Page {table.currentPage.value} of {table.totalPages.value}
           </span>
 
           <Button
             variant="outline"
             size="sm"
             onClick={() =>
-              (currentPage.value = Math.min(totalPages.value, currentPage.value + 1))
+              (table.currentPage.value = Math.min(table.totalPages.value, table.currentPage.value + 1))
             }
-            disabled={currentPage.value === totalPages.value}
+            disabled={table.currentPage.value === table.totalPages.value}
             aria-label="Go to next page"
           >
             <iconify-icon icon="mdi:chevron-right" />
@@ -1092,8 +1156,8 @@ export function UserTable() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => (currentPage.value = totalPages.value)}
-            disabled={currentPage.value === totalPages.value}
+            onClick={() => (table.currentPage.value = table.totalPages.value)}
+            disabled={table.currentPage.value === table.totalPages.value}
             aria-label="Go to last page"
           >
             <iconify-icon icon="mdi:chevron-double-right" />
@@ -1101,9 +1165,9 @@ export function UserTable() {
         </div>
 
         <Select
-          value={pageSize.value.toString()}
+          value={table.pageSize.value.toString()}
           onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-            handlePageSizeChange(Number(e.currentTarget.value))
+            table.handlePageSizeChange(Number(e.currentTarget.value))
           }
           class="w-32"
           aria-label="Rows per page"
