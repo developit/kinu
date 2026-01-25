@@ -1,5 +1,5 @@
-import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
-import {Input, Badge, Separator} from 'pui';
+import {useState, useEffect, useId, useRef, useMemo, type JSX} from 'preact/hooks';
+import {Badge, Button, Dialog, Input, ScrollArea, Separator} from 'pui';
 
 export function Demo() {
   return <CommandPalette />;
@@ -21,9 +21,11 @@ function CommandPalette() {
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [recentCommands, setRecentCommands] = useState<string[]>([]);
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const getDialog = () =>
+    document.getElementById(dialogId) as HTMLDialogElement | null;
 
   // Define all available commands
   const allCommands: Command[] = [
@@ -238,7 +240,7 @@ function CommandPalette() {
 
   // Open/close dialog functions
   const openDialog = () => {
-    dialogRef.current?.showModal();
+    getDialog()?.showModal();
     setSearch('');
     setSelectedIndex(0);
     // Focus the input element after dialog opens
@@ -248,7 +250,7 @@ function CommandPalette() {
   };
 
   const closeDialog = () => {
-    dialogRef.current?.close();
+    getDialog()?.close();
   };
 
   // Keyboard shortcut to open/close
@@ -257,7 +259,7 @@ function CommandPalette() {
       // ⌘K or Ctrl+K to toggle
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        if (dialogRef.current?.open) {
+        if (getDialog()?.open) {
           closeDialog();
         } else {
           openDialog();
@@ -331,13 +333,12 @@ function CommandPalette() {
 
   // Handle backdrop click
   const handleDialogClick = (e: JSX.TargetedMouseEvent<HTMLDialogElement>) => {
-    const rect = dialogRef.current?.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     if (
-      rect &&
-      (e.clientX < rect.left ||
-        e.clientX > rect.right ||
-        e.clientY < rect.top ||
-        e.clientY > rect.bottom)
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
     ) {
       closeDialog();
     }
@@ -347,186 +348,249 @@ function CommandPalette() {
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPod|iPad/i.test(navigator.platform);
 
   return (
-    <>
+    <Dialog id={dialogId}>
       {/* Trigger button */}
-      <button
-        onClick={openDialog}
-        class="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent transition-colors"
-        aria-label="Open command palette"
-      >
-        <span class="text-muted-foreground">Search commands...</span>
-        <kbd class="px-2 py-1 text-xs border rounded bg-muted">
-          {isMac ? '⌘K' : 'Ctrl+K'}
-        </kbd>
-      </button>
+      <Dialog.Trigger>
+        <Button
+          variant="outline"
+          size="sm"
+          aria-label="Open command palette"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            justifyContent: 'space-between',
+            width: '16rem',
+          }}
+        >
+          <span style={{color: 'hsl(var(--p-muted-foreground))'}}>
+            Search commands...
+          </span>
+          <Badge variant="outline">{isMac ? '⌘K' : 'Ctrl+K'}</Badge>
+        </Button>
+      </Dialog.Trigger>
 
       {/* Dialog */}
-      <dialog
-        ref={dialogRef}
+      <Dialog.Content
         onClick={handleDialogClick}
-        class="rounded-lg shadow-lg border bg-popover text-popover-foreground backdrop:bg-black/50 max-w-2xl w-full p-0 overflow-hidden"
         aria-label="Command palette"
+        style={{
+          padding: 0,
+          gap: 0,
+          width: '100%',
+          maxWidth: '40rem',
+        }}
       >
-        <div class="flex flex-col">
-          {/* Search input */}
-          <div class="flex items-center border-b px-3">
-            <svg
-              class="w-5 h-5 text-muted-foreground flex-shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '0.75rem 1rem',
+          }}
+        >
+          <iconify-icon
+            icon="lucide:search"
+            style={{fontSize: '1.1rem', color: 'hsl(var(--p-muted-foreground))'}}
+            aria-hidden="true"
+          />
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder="Type a command or search..."
+            value={search}
+            onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+              setSearch(e.currentTarget.value)
+            }
+            onKeyDown={handleKeyDown}
+            style={{flex: 1, minWidth: 0}}
+            aria-label="Search commands"
+            aria-expanded="true"
+            aria-controls="command-list"
+            aria-activedescendant={
+              flatCommands[selectedIndex]
+                ? `command-${flatCommands[selectedIndex].id}`
+                : undefined
+            }
+          />
+        </div>
+
+        <Separator />
+
+        <ScrollArea
+          ref={listRef}
+          id="command-list"
+          role="listbox"
+          style={{
+            maxHeight: '20rem',
+            padding: '0.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+          }}
+        >
+          {groupedCommands.length === 0 ? (
+            <div
+              style={{
+                padding: '2.5rem 1rem',
+                textAlign: 'center',
+                fontSize: '0.875rem',
+                color: 'hsl(var(--p-muted-foreground))',
+              }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <Input
-              ref={inputRef}
-              type="text"
-              placeholder="Type a command or search..."
-              value={search}
-              onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                setSearch(e.currentTarget.value)
-              }
-              onKeyDown={handleKeyDown}
-              class="border-0 focus-visible:ring-0 flex-1"
-              aria-label="Search commands"
-              aria-expanded="true"
-              aria-controls="command-list"
-              aria-activedescendant={
-                flatCommands[selectedIndex]
-                  ? `command-${flatCommands[selectedIndex].id}`
-                  : undefined
-              }
-            />
-          </div>
+              No commands found
+            </div>
+          ) : (
+            groupedCommands.map(([group, commands], groupIdx) => {
+              // Calculate starting index for this group
+              const startIndex = groupedCommands
+                .slice(0, groupIdx)
+                .reduce((acc, [_, cmds]) => acc + cmds.length, 0);
 
-          {/* Command list */}
-          <div
-            ref={listRef}
-            id="command-list"
-            role="listbox"
-            class="max-h-96 overflow-y-auto p-2"
-          >
-            {groupedCommands.length === 0 ? (
-              <div class="py-12 text-center text-sm text-muted-foreground">
-                No commands found
-              </div>
-            ) : (
-              groupedCommands.map(([group, commands], groupIdx) => {
-                // Calculate starting index for this group
-                const startIndex = groupedCommands
-                  .slice(0, groupIdx)
-                  .reduce((acc, [_, cmds]) => acc + cmds.length, 0);
+              return (
+                <div key={group} style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
+                  {/* Group label */}
+                  {groupIdx > 0 && <Separator style={{margin: '0.25rem 0'}} />}
+                  <div
+                    style={{
+                      padding: '0.25rem 0.5rem',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: 'hsl(var(--p-muted-foreground))',
+                    }}
+                  >
+                    {group}
+                  </div>
 
-                return (
-                  <div key={group}>
-                    {/* Group label */}
-                    {groupIdx > 0 && <Separator class="my-2" />}
-                    <div class="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                      {group}
-                    </div>
+                  {/* Commands in group */}
+                  {commands.map((command, cmdIdx) => {
+                    const index = startIndex + cmdIdx;
+                    const isSelected = index === selectedIndex;
+                    const descriptionColor = isSelected
+                      ? 'hsl(var(--p-accent-foreground))'
+                      : 'hsl(var(--p-muted-foreground))';
 
-                    {/* Commands in group */}
-                    {commands.map((command, cmdIdx) => {
-                      const index = startIndex + cmdIdx;
-                      const isSelected = index === selectedIndex;
-
-                      return (
-                        <button
-                          key={command.id}
-                          id={`command-${command.id}`}
-                          role="option"
-                          aria-selected={isSelected}
-                          data-command-index={index}
-                          onClick={() => executeCommand(command)}
-                          onMouseEnter={() => setSelectedIndex(index)}
-                          class={`
-                            w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-left transition-colors
-                            ${isSelected ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'}
-                          `}
+                    return (
+                      <Button
+                        key={command.id}
+                        id={`command-${command.id}`}
+                        variant="ghost"
+                        size="sm"
+                        role="option"
+                        aria-selected={isSelected}
+                        data-command-index={index}
+                        onClick={() => executeCommand(command)}
+                        onMouseEnter={() => setSelectedIndex(index)}
+                        style={{
+                          width: '100%',
+                          justifyContent: 'space-between',
+                          textAlign: 'left',
+                          padding: '0.5rem 0.75rem',
+                          height: 'auto',
+                          gap: '0.75rem',
+                          backgroundColor: isSelected
+                            ? 'hsl(var(--p-accent))'
+                            : 'transparent',
+                          color: isSelected
+                            ? 'hsl(var(--p-accent-foreground))'
+                            : 'inherit',
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem',
+                            flex: 1,
+                            minWidth: 0,
+                          }}
                         >
-                          {/* Icon */}
                           {command.icon && (
                             <iconify-icon
                               icon={command.icon}
-                              class="text-xl flex-shrink-0"
+                              style={{fontSize: '1.25rem'}}
                               aria-hidden="true"
                             />
                           )}
 
-                          {/* Label and description */}
-                          <div class="flex-1 min-w-0">
-                            <div class="text-sm font-medium">{command.label}</div>
+                          <div style={{display: 'flex', flexDirection: 'column', minWidth: 0}}>
+                            <span style={{fontSize: '0.875rem', fontWeight: 500}}>
+                              {command.label}
+                            </span>
                             {command.description && (
-                              <div class="text-xs text-muted-foreground truncate">
+                              <span
+                                style={{
+                                  fontSize: '0.75rem',
+                                  color: descriptionColor,
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                }}
+                              >
                                 {command.description}
-                              </div>
+                              </span>
                             )}
                           </div>
+                        </div>
 
-                          {/* Shortcut badge */}
+                        <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
                           {command.shortcut && (
-                            <Badge variant="secondary" class="text-xs flex-shrink-0">
-                              {command.shortcut}
-                            </Badge>
+                            <Badge variant="secondary">{command.shortcut}</Badge>
                           )}
-
-                          {/* Recent indicator */}
                           {!search && recentCommands.includes(command.id) && (
-                            <svg
-                              class="w-4 h-4 text-muted-foreground flex-shrink-0"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
+                            <iconify-icon
+                              icon="lucide:clock"
+                              style={{fontSize: '1rem', color: 'hsl(var(--p-muted-foreground))'}}
                               aria-label="Recent command"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
+                            />
                           )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                );
-              })
-            )}
-          </div>
+                        </div>
+                      </Button>
+                    );
+                  })}
+                </div>
+              );
+            })
+          )}
+        </ScrollArea>
 
-          {/* Footer hints */}
-          <div class="flex items-center justify-between px-3 py-2.5 border-t text-xs text-muted-foreground bg-muted/30">
-            <div class="flex items-center gap-4">
-              <span class="flex items-center gap-1">
-                <kbd class="px-1.5 py-0.5 border rounded bg-background">↑↓</kbd> Navigate
-              </span>
-              <span class="flex items-center gap-1">
-                <kbd class="px-1.5 py-0.5 border rounded bg-background">↵</kbd> Select
-              </span>
-              <span class="flex items-center gap-1">
-                <kbd class="px-1.5 py-0.5 border rounded bg-background">Esc</kbd> Close
-              </span>
+        <Separator />
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0.5rem 1rem',
+            fontSize: '0.75rem',
+            color: 'hsl(var(--p-muted-foreground))',
+            backgroundColor: 'hsl(var(--p-muted))',
+          }}
+        >
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
+              <Badge variant="outline">↑↓</Badge> Navigate
             </div>
-            <div>
-              {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
+              <Badge variant="outline">↵</Badge> Select
             </div>
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
+              <Badge variant="outline">Esc</Badge> Close
+            </div>
+          </div>
+          <div>
+            {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
           </div>
         </div>
-      </dialog>
-    </>
+      </Dialog.Content>
+    </Dialog>
   );
 }
 
-export const code = `import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
-import {Input, Badge, Separator} from 'pui';
+export const code = `import {useState, useEffect, useId, useRef, useMemo, type JSX} from 'preact/hooks';
+import {Badge, Button, Dialog, Input, ScrollArea, Separator} from 'pui';
 
 // Command interface
 interface Command {
@@ -544,9 +608,11 @@ export function CommandPalette() {
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [recentCommands, setRecentCommands] = useState<string[]>([]);
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const getDialog = () =>
+    document.getElementById(dialogId) as HTMLDialogElement | null;
 
   // Define all available commands
   const allCommands: Command[] = [
@@ -761,7 +827,7 @@ export function CommandPalette() {
 
   // Open/close dialog functions
   const openDialog = () => {
-    dialogRef.current?.showModal();
+    getDialog()?.showModal();
     setSearch('');
     setSelectedIndex(0);
     // Focus the input element after dialog opens
@@ -771,7 +837,7 @@ export function CommandPalette() {
   };
 
   const closeDialog = () => {
-    dialogRef.current?.close();
+    getDialog()?.close();
   };
 
   // Keyboard shortcut to open/close
@@ -780,7 +846,7 @@ export function CommandPalette() {
       // ⌘K or Ctrl+K to toggle
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        if (dialogRef.current?.open) {
+        if (getDialog()?.open) {
           closeDialog();
         } else {
           openDialog();
@@ -854,13 +920,12 @@ export function CommandPalette() {
 
   // Handle backdrop click
   const handleDialogClick = (e: JSX.TargetedMouseEvent<HTMLDialogElement>) => {
-    const rect = dialogRef.current?.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     if (
-      rect &&
-      (e.clientX < rect.left ||
-        e.clientX > rect.right ||
-        e.clientY < rect.top ||
-        e.clientY > rect.bottom)
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
     ) {
       closeDialog();
     }
@@ -870,180 +935,244 @@ export function CommandPalette() {
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPod|iPad/i.test(navigator.platform);
 
   return (
-    <>
+    <Dialog id={dialogId}>
       {/* Trigger button */}
-      <button
-        onClick={openDialog}
-        class="flex items-center gap-2 px-3 py-2 text-sm border rounded-md hover:bg-accent transition-colors"
-        aria-label="Open command palette"
-      >
-        <span class="text-muted-foreground">Search commands...</span>
-        <kbd class="px-2 py-1 text-xs border rounded bg-muted">
-          {isMac ? '⌘K' : 'Ctrl+K'}
-        </kbd>
-      </button>
+      <Dialog.Trigger>
+        <Button
+          variant="outline"
+          size="sm"
+          aria-label="Open command palette"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            justifyContent: 'space-between',
+            width: '16rem',
+          }}
+        >
+          <span style={{color: 'hsl(var(--p-muted-foreground))'}}>
+            Search commands...
+          </span>
+          <Badge variant="outline">{isMac ? '⌘K' : 'Ctrl+K'}</Badge>
+        </Button>
+      </Dialog.Trigger>
 
       {/* Dialog */}
-      <dialog
-        ref={dialogRef}
+      <Dialog.Content
         onClick={handleDialogClick}
-        class="rounded-lg shadow-lg border bg-popover text-popover-foreground backdrop:bg-black/50 max-w-2xl w-full p-0 overflow-hidden"
         aria-label="Command palette"
+        style={{
+          padding: 0,
+          gap: 0,
+          width: '100%',
+          maxWidth: '40rem',
+        }}
       >
-        <div class="flex flex-col">
-          {/* Search input */}
-          <div class="flex items-center border-b px-3">
-            <svg
-              class="w-5 h-5 text-muted-foreground flex-shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '0.75rem 1rem',
+          }}
+        >
+          <iconify-icon
+            icon="lucide:search"
+            style={{fontSize: '1.1rem', color: 'hsl(var(--p-muted-foreground))'}}
+            aria-hidden="true"
+          />
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder="Type a command or search..."
+            value={search}
+            onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+              setSearch(e.currentTarget.value)
+            }
+            onKeyDown={handleKeyDown}
+            style={{flex: 1, minWidth: 0}}
+            aria-label="Search commands"
+            aria-expanded="true"
+            aria-controls="command-list"
+            aria-activedescendant={
+              flatCommands[selectedIndex]
+                ? \`command-\${flatCommands[selectedIndex].id}\`
+                : undefined
+            }
+          />
+        </div>
+
+        <Separator />
+
+        <ScrollArea
+          ref={listRef}
+          id="command-list"
+          role="listbox"
+          style={{
+            maxHeight: '20rem',
+            padding: '0.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+          }}
+        >
+          {groupedCommands.length === 0 ? (
+            <div
+              style={{
+                padding: '2.5rem 1rem',
+                textAlign: 'center',
+                fontSize: '0.875rem',
+                color: 'hsl(var(--p-muted-foreground))',
+              }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <Input
-              ref={inputRef}
-              type="text"
-              placeholder="Type a command or search..."
-              value={search}
-              onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                setSearch(e.currentTarget.value)
-              }
-              onKeyDown={handleKeyDown}
-              class="border-0 focus-visible:ring-0 flex-1"
-              aria-label="Search commands"
-              aria-expanded="true"
-              aria-controls="command-list"
-              aria-activedescendant={
-                flatCommands[selectedIndex]
-                  ? \`command-\${flatCommands[selectedIndex].id}\`
-                  : undefined
-              }
-            />
-          </div>
+              No commands found
+            </div>
+          ) : (
+            groupedCommands.map(([group, commands], groupIdx) => {
+              // Calculate starting index for this group
+              const startIndex = groupedCommands
+                .slice(0, groupIdx)
+                .reduce((acc, [_, cmds]) => acc + cmds.length, 0);
 
-          {/* Command list */}
-          <div
-            ref={listRef}
-            id="command-list"
-            role="listbox"
-            class="max-h-96 overflow-y-auto p-2"
-          >
-            {groupedCommands.length === 0 ? (
-              <div class="py-12 text-center text-sm text-muted-foreground">
-                No commands found
-              </div>
-            ) : (
-              groupedCommands.map(([group, commands], groupIdx) => {
-                // Calculate starting index for this group
-                const startIndex = groupedCommands
-                  .slice(0, groupIdx)
-                  .reduce((acc, [_, cmds]) => acc + cmds.length, 0);
+              return (
+                <div key={group} style={{display: 'flex', flexDirection: 'column', gap: '0.25rem'}}>
+                  {/* Group label */}
+                  {groupIdx > 0 && <Separator style={{margin: '0.25rem 0'}} />}
+                  <div
+                    style={{
+                      padding: '0.25rem 0.5rem',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: 'hsl(var(--p-muted-foreground))',
+                    }}
+                  >
+                    {group}
+                  </div>
 
-                return (
-                  <div key={group}>
-                    {/* Group label */}
-                    {groupIdx > 0 && <Separator class="my-2" />}
-                    <div class="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                      {group}
-                    </div>
+                  {/* Commands in group */}
+                  {commands.map((command, cmdIdx) => {
+                    const index = startIndex + cmdIdx;
+                    const isSelected = index === selectedIndex;
+                    const descriptionColor = isSelected
+                      ? 'hsl(var(--p-accent-foreground))'
+                      : 'hsl(var(--p-muted-foreground))';
 
-                    {/* Commands in group */}
-                    {commands.map((command, cmdIdx) => {
-                      const index = startIndex + cmdIdx;
-                      const isSelected = index === selectedIndex;
-
-                      return (
-                        <button
-                          key={command.id}
-                          id={\`command-\${command.id}\`}
-                          role="option"
-                          aria-selected={isSelected}
-                          data-command-index={index}
-                          onClick={() => executeCommand(command)}
-                          onMouseEnter={() => setSelectedIndex(index)}
-                          class={\`
-                            w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-left transition-colors
-                            \${isSelected ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'}
-                          \`}
+                    return (
+                      <Button
+                        key={command.id}
+                        id={\`command-\${command.id}\`}
+                        variant="ghost"
+                        size="sm"
+                        role="option"
+                        aria-selected={isSelected}
+                        data-command-index={index}
+                        onClick={() => executeCommand(command)}
+                        onMouseEnter={() => setSelectedIndex(index)}
+                        style={{
+                          width: '100%',
+                          justifyContent: 'space-between',
+                          textAlign: 'left',
+                          padding: '0.5rem 0.75rem',
+                          height: 'auto',
+                          gap: '0.75rem',
+                          backgroundColor: isSelected
+                            ? 'hsl(var(--p-accent))'
+                            : 'transparent',
+                          color: isSelected
+                            ? 'hsl(var(--p-accent-foreground))'
+                            : 'inherit',
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem',
+                            flex: 1,
+                            minWidth: 0,
+                          }}
                         >
-                          {/* Icon */}
                           {command.icon && (
                             <iconify-icon
                               icon={command.icon}
-                              class="text-xl flex-shrink-0"
+                              style={{fontSize: '1.25rem'}}
                               aria-hidden="true"
                             />
                           )}
 
-                          {/* Label and description */}
-                          <div class="flex-1 min-w-0">
-                            <div class="text-sm font-medium">{command.label}</div>
+                          <div style={{display: 'flex', flexDirection: 'column', minWidth: 0}}>
+                            <span style={{fontSize: '0.875rem', fontWeight: 500}}>
+                              {command.label}
+                            </span>
                             {command.description && (
-                              <div class="text-xs text-muted-foreground truncate">
+                              <span
+                                style={{
+                                  fontSize: '0.75rem',
+                                  color: descriptionColor,
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                }}
+                              >
                                 {command.description}
-                              </div>
+                              </span>
                             )}
                           </div>
+                        </div>
 
-                          {/* Shortcut badge */}
+                        <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
                           {command.shortcut && (
-                            <Badge variant="secondary" class="text-xs flex-shrink-0">
-                              {command.shortcut}
-                            </Badge>
+                            <Badge variant="secondary">{command.shortcut}</Badge>
                           )}
-
-                          {/* Recent indicator */}
                           {!search && recentCommands.includes(command.id) && (
-                            <svg
-                              class="w-4 h-4 text-muted-foreground flex-shrink-0"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
+                            <iconify-icon
+                              icon="lucide:clock"
+                              style={{fontSize: '1rem', color: 'hsl(var(--p-muted-foreground))'}}
                               aria-label="Recent command"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
+                            />
                           )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                );
-              })
-            )}
-          </div>
+                        </div>
+                      </Button>
+                    );
+                  })}
+                </div>
+              );
+            })
+          )}
+        </ScrollArea>
 
-          {/* Footer hints */}
-          <div class="flex items-center justify-between px-3 py-2.5 border-t text-xs text-muted-foreground bg-muted/30">
-            <div class="flex items-center gap-4">
-              <span class="flex items-center gap-1">
-                <kbd class="px-1.5 py-0.5 border rounded bg-background">↑↓</kbd> Navigate
-              </span>
-              <span class="flex items-center gap-1">
-                <kbd class="px-1.5 py-0.5 border rounded bg-background">↵</kbd> Select
-              </span>
-              <span class="flex items-center gap-1">
-                <kbd class="px-1.5 py-0.5 border rounded bg-background">Esc</kbd> Close
-              </span>
+        <Separator />
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0.5rem 1rem',
+            fontSize: '0.75rem',
+            color: 'hsl(var(--p-muted-foreground))',
+            backgroundColor: 'hsl(var(--p-muted))',
+          }}
+        >
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
+              <Badge variant="outline">↑↓</Badge> Navigate
             </div>
-            <div>
-              {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
+              <Badge variant="outline">↵</Badge> Select
             </div>
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
+              <Badge variant="outline">Esc</Badge> Close
+            </div>
+          </div>
+          <div>
+            {filteredCommands.length} command{filteredCommands.length !== 1 ? 's' : ''}
           </div>
         </div>
-      </dialog>
-    </>
+      </Dialog.Content>
+    </Dialog>
   );
-}`;
+}
+`;
