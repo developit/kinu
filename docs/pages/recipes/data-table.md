@@ -1,25 +1,21 @@
 # Data Table with Sorting & Filtering
 
-A production-ready data table implementation with sorting, filtering, pagination, row selection, and bulk actions.
+A production-ready data table with sorting, filtering, pagination, row selection, and bulk actions.
 
-## Overview
-
-This recipe demonstrates how to build a feature-rich data table using PUI components with:
+## Features
 
 - Column sorting (ascending/descending)
 - Multi-column filtering with search
 - Pagination controls
 - Row selection (single and multi-select)
-- Bulk actions on selected rows
-- Loading states
-- Empty states
-- Responsive design
-- Accessibility features
+- Bulk actions
+- Loading and empty states
 
 ## Complete Example
 
 ```tsx
-import {useState, useMemo, type JSX} from 'preact/hooks';
+import {signal, computed, batch, type Signal} from '@preact/signals';
+import type {JSX} from 'preact/jsx-runtime';
 import {
   Table,
   TableHeader,
@@ -32,14 +28,9 @@ import {
   Checkbox,
   Badge,
   Select,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
   Skeleton,
 } from 'pui';
 
-// Data types
 interface User {
   id: string;
   name: string;
@@ -52,227 +43,232 @@ interface User {
 type SortColumn = keyof User | null;
 type SortDirection = 'asc' | 'desc';
 
-export function UserTable() {
-  // Sample data - replace with your API call
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: '1',
-      name: 'Alice Johnson',
-      email: 'alice@example.com',
-      role: 'admin',
-      status: 'active',
-      createdAt: '2024-01-15',
-    },
-    {
-      id: '2',
-      name: 'Bob Smith',
-      email: 'bob@example.com',
-      role: 'editor',
-      status: 'active',
-      createdAt: '2024-02-20',
-    },
-    {
-      id: '3',
-      name: 'Carol White',
-      email: 'carol@example.com',
-      role: 'viewer',
-      status: 'inactive',
-      createdAt: '2024-03-10',
-    },
-    // Add more sample data...
-  ]);
+// State signals
+const users = signal<User[]>([
+  {
+    id: '1',
+    name: 'Alice Johnson',
+    email: 'alice@example.com',
+    role: 'admin',
+    status: 'active',
+    createdAt: '2024-01-15',
+  },
+  {
+    id: '2',
+    name: 'Bob Smith',
+    email: 'bob@example.com',
+    role: 'editor',
+    status: 'active',
+    createdAt: '2024-02-20',
+  },
+  {
+    id: '3',
+    name: 'Carol White',
+    email: 'carol@example.com',
+    role: 'viewer',
+    status: 'inactive',
+    createdAt: '2024-03-10',
+  },
+]);
 
-  const [isLoading, setIsLoading] = useState(false);
+const isLoading = signal(false);
+const searchQuery = signal('');
+const roleFilter = signal('all');
+const statusFilter = signal('all');
+const sortColumn = signal<SortColumn>('name');
+const sortDirection = signal<SortDirection>('asc');
+const currentPage = signal(1);
+const pageSize = signal(10);
+const selectedRows = signal<Set<string>>(new Set());
 
-  // Filtering
-  const [searchQuery, setSearchQuery] = useState('');
-  const [roleFilter, setRoleFilter] = useState<string>('all');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+// Derived state using computed
+const filteredAndSortedUsers = computed(() => {
+  let result = [...users.value];
 
-  // Sorting
-  const [sortColumn, setSortColumn] = useState<SortColumn>('name');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-
-  // Selection
-  const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
-
-  // Handle sorting
-  const handleSort = (column: SortColumn) => {
-    if (sortColumn === column) {
-      // Toggle direction if same column
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      // New column, default to ascending
-      setSortColumn(column);
-      setSortDirection('asc');
-    }
-  };
-
-  // Filter and sort data
-  const filteredAndSortedUsers = useMemo(() => {
-    let result = [...users];
-
-    // Apply search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(
-        user =>
-          user.name.toLowerCase().includes(query) ||
-          user.email.toLowerCase().includes(query)
-      );
-    }
-
-    // Apply role filter
-    if (roleFilter !== 'all') {
-      result = result.filter(user => user.role === roleFilter);
-    }
-
-    // Apply status filter
-    if (statusFilter !== 'all') {
-      result = result.filter(user => user.status === statusFilter);
-    }
-
-    // Apply sorting
-    if (sortColumn) {
-      result.sort((a, b) => {
-        const aVal = a[sortColumn];
-        const bVal = b[sortColumn];
-
-        let comparison = 0;
-        if (aVal < bVal) comparison = -1;
-        if (aVal > bVal) comparison = 1;
-
-        return sortDirection === 'asc' ? comparison : -comparison;
-      });
-    }
-
-    return result;
-  }, [users, searchQuery, roleFilter, statusFilter, sortColumn, sortDirection]);
-
-  // Paginate data
-  const paginatedUsers = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    const end = start + pageSize;
-    return filteredAndSortedUsers.slice(start, end);
-  }, [filteredAndSortedUsers, currentPage, pageSize]);
-
-  // Pagination calculations
-  const totalPages = Math.ceil(filteredAndSortedUsers.length / pageSize);
-  const showingStart = filteredAndSortedUsers.length === 0 ? 0 : (currentPage - 1) * pageSize + 1;
-  const showingEnd = Math.min(currentPage * pageSize, filteredAndSortedUsers.length);
-
-  // Handle select all
-  const handleSelectAll = (e: JSX.TargetedEvent<HTMLInputElement>) => {
-    if (e.currentTarget.checked) {
-      setSelectedRows(new Set(paginatedUsers.map(u => u.id)));
-    } else {
-      setSelectedRows(new Set());
-    }
-  };
-
-  // Handle select row
-  const handleSelectRow = (id: string) => {
-    const newSelected = new Set(selectedRows);
-    if (newSelected.has(id)) {
-      newSelected.delete(id);
-    } else {
-      newSelected.add(id);
-    }
-    setSelectedRows(newSelected);
-  };
-
-  // Check if all visible rows are selected
-  const allSelected = paginatedUsers.length > 0 &&
-    paginatedUsers.every(u => selectedRows.has(u.id));
-  const someSelected = paginatedUsers.some(u => selectedRows.has(u.id)) && !allSelected;
-
-  // Bulk actions
-  const handleBulkDelete = async () => {
-    if (!confirm(`Delete ${selectedRows.size} user(s)?`)) return;
-
-    setIsLoading(true);
-    try {
-      await fetch('/api/users/bulk-delete', {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ids: Array.from(selectedRows)}),
-      });
-
-      // Remove deleted users from state
-      setUsers(users.filter(u => !selectedRows.has(u.id)));
-      setSelectedRows(new Set());
-    } catch (error) {
-      console.error('Failed to delete users:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleBulkExport = () => {
-    const selectedUsers = users.filter(u => selectedRows.has(u.id));
-    const csv = [
-      'Name,Email,Role,Status,Created',
-      ...selectedUsers.map(u =>
-        `${u.name},${u.email},${u.role},${u.status},${u.createdAt}`
-      ),
-    ].join('\n');
-
-    const blob = new Blob([csv], {type: 'text/csv'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'users.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  // Render sort indicator
-  const SortIcon = ({column}: {column: SortColumn}) => {
-    if (sortColumn !== column) {
-      return (
-        <svg class="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-        </svg>
-      );
-    }
-
-    return sortDirection === 'asc' ? (
-      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-      </svg>
-    ) : (
-      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-      </svg>
+  // Apply search filter
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    result = result.filter(
+      user =>
+        user.name.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
     );
-  };
+  }
 
+  // Apply role filter
+  if (roleFilter.value !== 'all') {
+    result = result.filter(user => user.role === roleFilter.value);
+  }
+
+  // Apply status filter
+  if (statusFilter.value !== 'all') {
+    result = result.filter(user => user.status === statusFilter.value);
+  }
+
+  // Apply sorting
+  if (sortColumn.value) {
+    result.sort((a, b) => {
+      const aVal = a[sortColumn.value!];
+      const bVal = b[sortColumn.value!];
+
+      let comparison = 0;
+      if (aVal < bVal) comparison = -1;
+      if (aVal > bVal) comparison = 1;
+
+      return sortDirection.value === 'asc' ? comparison : -comparison;
+    });
+  }
+
+  return result;
+});
+
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return filteredAndSortedUsers.value.slice(start, end);
+});
+
+const totalPages = computed(() =>
+  Math.ceil(filteredAndSortedUsers.value.length / pageSize.value)
+);
+
+const showingStart = computed(() =>
+  filteredAndSortedUsers.value.length === 0
+    ? 0
+    : (currentPage.value - 1) * pageSize.value + 1
+);
+
+const showingEnd = computed(() =>
+  Math.min(currentPage.value * pageSize.value, filteredAndSortedUsers.value.length)
+);
+
+const allSelected = computed(
+  () =>
+    paginatedUsers.value.length > 0 &&
+    paginatedUsers.value.every(u => selectedRows.value.has(u.id))
+);
+
+const someSelected = computed(
+  () =>
+    paginatedUsers.value.some(u => selectedRows.value.has(u.id)) &&
+    !allSelected.value
+);
+
+// Actions
+const handleSort = (column: SortColumn) => {
+  if (sortColumn.value === column) {
+    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+  } else {
+    batch(() => {
+      sortColumn.value = column;
+      sortDirection.value = 'asc';
+    });
+  }
+};
+
+const handleSelectAll = (e: JSX.TargetedEvent<HTMLInputElement>) => {
+  if (e.currentTarget.checked) {
+    selectedRows.value = new Set(paginatedUsers.value.map(u => u.id));
+  } else {
+    selectedRows.value = new Set();
+  }
+};
+
+const handleSelectRow = (id: string) => {
+  const newSelected = new Set(selectedRows.value);
+  if (newSelected.has(id)) {
+    newSelected.delete(id);
+  } else {
+    newSelected.add(id);
+  }
+  selectedRows.value = newSelected;
+};
+
+const handleBulkDelete = async () => {
+  if (!confirm(`Delete ${selectedRows.value.size} user(s)?`)) return;
+
+  isLoading.value = true;
+  try {
+    await fetch('/api/users/bulk-delete', {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ids: Array.from(selectedRows.value)}),
+    });
+
+    batch(() => {
+      users.value = users.value.filter(u => !selectedRows.value.has(u.id));
+      selectedRows.value = new Set();
+    });
+  } catch (error) {
+    console.error('Failed to delete users:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const handleBulkExport = () => {
+  const selected = users.value.filter(u => selectedRows.value.has(u.id));
+  const csv = [
+    'Name,Email,Role,Status,Created',
+    ...selected.map(u => `${u.name},${u.email},${u.role},${u.status},${u.createdAt}`),
+  ].join('\n');
+
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'users.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+const handlePageSizeChange = (newSize: number) => {
+  batch(() => {
+    pageSize.value = newSize;
+    currentPage.value = 1;
+  });
+};
+
+// Sort icon component
+const SortIcon = ({column}: {column: SortColumn}) => {
+  if (sortColumn.value !== column) {
+    return <iconify-icon icon="mdi:sort" class="w-4 h-4 text-muted-foreground" />;
+  }
+
+  return sortDirection.value === 'asc' ? (
+    <iconify-icon icon="mdi:sort-ascending" class="w-4 h-4" />
+  ) : (
+    <iconify-icon icon="mdi:sort-descending" class="w-4 h-4" />
+  );
+};
+
+export function UserTable() {
   return (
     <div class="space-y-4">
       {/* Filters and actions */}
       <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div class="flex flex-1 flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          {/* Search */}
-          <Input
-            type="search"
-            placeholder="Search users..."
-            value={searchQuery}
-            onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-              setSearchQuery(e.currentTarget.value)
-            }
-            class="w-full sm:w-64"
-            aria-label="Search users"
-          />
+          <div class="relative w-full sm:w-64">
+            <iconify-icon
+              icon="mdi:magnify"
+              class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <Input
+              type="search"
+              placeholder="Search users..."
+              value={searchQuery.value}
+              onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
+                (searchQuery.value = e.currentTarget.value)
+              }
+              class="pl-9"
+              aria-label="Search users"
+            />
+          </div>
 
-          {/* Role filter */}
           <Select
-            value={roleFilter}
+            value={roleFilter.value}
             onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-              setRoleFilter(e.currentTarget.value)
+              (roleFilter.value = e.currentTarget.value)
             }
             aria-label="Filter by role"
           >
@@ -282,11 +278,10 @@ export function UserTable() {
             <option value="viewer">Viewer</option>
           </Select>
 
-          {/* Status filter */}
           <Select
-            value={statusFilter}
+            value={statusFilter.value}
             onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-              setStatusFilter(e.currentTarget.value)
+              (statusFilter.value = e.currentTarget.value)
             }
             aria-label="Filter by status"
           >
@@ -297,25 +292,20 @@ export function UserTable() {
           </Select>
         </div>
 
-        {/* Bulk actions */}
-        {selectedRows.size > 0 && (
-          <div class="flex gap-2">
-            <Badge variant="secondary">
-              {selectedRows.size} selected
-            </Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleBulkExport}
-            >
+        {selectedRows.value.size > 0 && (
+          <div class="flex gap-2 items-center">
+            <Badge variant="secondary">{selectedRows.value.size} selected</Badge>
+            <Button variant="outline" size="sm" onClick={handleBulkExport}>
+              <iconify-icon icon="mdi:download" class="mr-2" />
               Export
             </Button>
             <Button
               variant="destructive"
               size="sm"
               onClick={handleBulkDelete}
-              disabled={isLoading}
+              disabled={isLoading.value}
             >
+              <iconify-icon icon="mdi:delete" class="mr-2" />
               Delete
             </Button>
           </div>
@@ -329,8 +319,8 @@ export function UserTable() {
             <TableRow>
               <TableHead class="w-12">
                 <Checkbox
-                  checked={allSelected}
-                  indeterminate={someSelected}
+                  checked={allSelected.value}
+                  indeterminate={someSelected.value}
                   onInput={handleSelectAll}
                   aria-label="Select all users"
                 />
@@ -391,39 +381,48 @@ export function UserTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading ? (
-              // Loading state
-              Array.from({length: pageSize}).map((_, i) => (
+            {isLoading.value ? (
+              Array.from({length: pageSize.value}).map((_, i) => (
                 <TableRow key={i}>
-                  <TableCell><Skeleton class="h-4 w-4" /></TableCell>
-                  <TableCell><Skeleton class="h-4 w-32" /></TableCell>
-                  <TableCell><Skeleton class="h-4 w-48" /></TableCell>
-                  <TableCell><Skeleton class="h-4 w-16" /></TableCell>
-                  <TableCell><Skeleton class="h-4 w-16" /></TableCell>
-                  <TableCell><Skeleton class="h-4 w-24" /></TableCell>
-                  <TableCell><Skeleton class="h-4 w-8" /></TableCell>
+                  <TableCell>
+                    <Skeleton class="h-4 w-4" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton class="h-4 w-32" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton class="h-4 w-48" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton class="h-4 w-16" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton class="h-4 w-16" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton class="h-4 w-24" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton class="h-4 w-8" />
+                  </TableCell>
                 </TableRow>
               ))
-            ) : paginatedUsers.length === 0 ? (
-              // Empty state
+            ) : paginatedUsers.value.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} class="h-32 text-center">
                   <div class="flex flex-col items-center justify-center text-muted-foreground">
-                    <svg class="w-12 h-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                    </svg>
+                    <iconify-icon icon="mdi:database-off" class="text-4xl mb-2" />
                     <p class="font-medium">No users found</p>
                     <p class="text-sm">Try adjusting your filters</p>
                   </div>
                 </TableCell>
               </TableRow>
             ) : (
-              // Data rows
-              paginatedUsers.map(user => (
+              paginatedUsers.value.map(user => (
                 <TableRow key={user.id}>
                   <TableCell>
                     <Checkbox
-                      checked={selectedRows.has(user.id)}
+                      checked={selectedRows.value.has(user.id)}
                       onInput={() => handleSelectRow(user.id)}
                       aria-label={`Select ${user.name}`}
                     />
@@ -449,31 +448,11 @@ export function UserTable() {
                       {user.status}
                     </Badge>
                   </TableCell>
+                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell>
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          aria-label={`Actions for ${user.name}`}
-                        >
-                          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                          </svg>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Send Email</DropdownMenuItem>
-                        <DropdownMenuItem class="text-destructive">
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Button variant="ghost" size="icon" aria-label={`Actions for ${user.name}`}>
+                      <iconify-icon icon="mdi:dots-vertical" class="text-lg" />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))
@@ -485,69 +464,63 @@ export function UserTable() {
       {/* Pagination */}
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="text-sm text-muted-foreground">
-          Showing {showingStart} to {showingEnd} of {filteredAndSortedUsers.length} results
+          Showing {showingStart.value} to {showingEnd.value} of{' '}
+          {filteredAndSortedUsers.value.length} results
         </div>
 
         <div class="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCurrentPage(1)}
-            disabled={currentPage === 1}
+            onClick={() => (currentPage.value = 1)}
+            disabled={currentPage.value === 1}
             aria-label="Go to first page"
           >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-            </svg>
+            <iconify-icon icon="mdi:chevron-double-left" />
           </Button>
 
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
+            onClick={() => (currentPage.value = Math.max(1, currentPage.value - 1))}
+            disabled={currentPage.value === 1}
             aria-label="Go to previous page"
           >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <iconify-icon icon="mdi:chevron-left" />
           </Button>
 
           <span class="text-sm">
-            Page {currentPage} of {totalPages}
+            Page {currentPage.value} of {totalPages.value}
           </span>
 
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
+            onClick={() =>
+              (currentPage.value = Math.min(totalPages.value, currentPage.value + 1))
+            }
+            disabled={currentPage.value === totalPages.value}
             aria-label="Go to next page"
           >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <iconify-icon icon="mdi:chevron-right" />
           </Button>
 
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCurrentPage(totalPages)}
-            disabled={currentPage === totalPages}
+            onClick={() => (currentPage.value = totalPages.value)}
+            disabled={currentPage.value === totalPages.value}
             aria-label="Go to last page"
           >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-            </svg>
+            <iconify-icon icon="mdi:chevron-double-right" />
           </Button>
         </div>
 
         <Select
-          value={pageSize.toString()}
-          onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) => {
-            setPageSize(Number(e.currentTarget.value));
-            setCurrentPage(1);
-          }}
+          value={pageSize.value.toString()}
+          onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
+            handlePageSizeChange(Number(e.currentTarget.value))
+          }
           class="w-32"
           aria-label="Rows per page"
         >
@@ -562,164 +535,163 @@ export function UserTable() {
 }
 ```
 
-## Key Features Explained
+## Key Features
 
-### 1. Sorting
+### Sorting
 
-Click column headers to sort:
+Click column headers to sort data. The sort direction toggles between ascending and descending. Visual indicators show the current sort state.
 
 ```tsx
 const handleSort = (column: SortColumn) => {
-  if (sortColumn === column) {
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  if (sortColumn.value === column) {
+    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
   } else {
-    setSortColumn(column);
-    setSortDirection('asc');
+    batch(() => {
+      sortColumn.value = column;
+      sortDirection.value = 'asc';
+    });
   }
 };
 ```
 
-Visual indicators show current sort state.
+### Filtering
 
-### 2. Filtering
-
-Multiple filter types:
-
-- **Text search**: Searches name and email
-- **Dropdown filters**: Role and status filters
-- **Combined**: All filters work together
+Multiple filters work together: text search (name and email), role dropdown, and status dropdown. All filtering logic is in a single `computed()` signal for optimal performance.
 
 ```tsx
-const filteredAndSortedUsers = useMemo(() => {
-  let result = [...users];
+const filteredAndSortedUsers = computed(() => {
+  let result = [...users.value];
 
-  if (searchQuery) {
-    result = result.filter(/* search logic */);
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    result = result.filter(
+      user =>
+        user.name.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
+    );
   }
 
-  if (roleFilter !== 'all') {
-    result = result.filter(user => user.role === roleFilter);
+  if (roleFilter.value !== 'all') {
+    result = result.filter(user => user.role === roleFilter.value);
   }
 
   // Apply sorting...
   return result;
-}, [users, searchQuery, roleFilter, sortColumn, sortDirection]);
+});
 ```
 
-### 3. Pagination
+### Pagination
 
-Client-side pagination with page controls:
+Client-side pagination using computed signals. For server-side pagination, move filtering and sorting to your API and update the signals based on the response.
 
 ```tsx
-const paginatedUsers = useMemo(() => {
-  const start = (currentPage - 1) * pageSize;
-  const end = start + pageSize;
-  return filteredAndSortedUsers.slice(start, end);
-}, [filteredAndSortedUsers, currentPage, pageSize]);
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return filteredAndSortedUsers.value.slice(start, end);
+});
 ```
 
-For server-side pagination, move filtering and sorting to the API.
+### Row Selection
 
-### 4. Row Selection
-
-Select individual rows or all rows:
+Select individual rows or all rows on the current page. The selection state is stored in a `Set` for O(1) lookups.
 
 ```tsx
 const handleSelectRow = (id: string) => {
-  const newSelected = new Set(selectedRows);
+  const newSelected = new Set(selectedRows.value);
   if (newSelected.has(id)) {
     newSelected.delete(id);
   } else {
     newSelected.add(id);
   }
-  setSelectedRows(newSelected);
+  selectedRows.value = newSelected;
 };
 ```
 
-Indeterminate checkbox state when some rows are selected.
+### Bulk Actions
 
-### 5. Bulk Actions
-
-Perform actions on multiple rows:
+Perform actions on multiple selected rows. Use `batch()` when updating multiple signals together to prevent unnecessary re-renders.
 
 ```tsx
 const handleBulkDelete = async () => {
-  await fetch('/api/users/bulk-delete', {
-    method: 'DELETE',
-    body: JSON.stringify({ids: Array.from(selectedRows)}),
-  });
+  // ... API call ...
 
-  setUsers(users.filter(u => !selectedRows.has(u.id)));
-  setSelectedRows(new Set());
+  batch(() => {
+    users.value = users.value.filter(u => !selectedRows.value.has(u.id));
+    selectedRows.value = new Set();
+  });
 };
 ```
 
-## Performance Optimization
+## Server-Side Data
 
-For large datasets (1000+ rows):
-
-### 1. Server-Side Operations
-
-Move filtering, sorting, and pagination to the server:
+For large datasets, move operations to the server:
 
 ```tsx
-const fetchUsers = async () => {
+import {signal, computed, effect} from '@preact/signals';
+
+const users = signal<User[]>([]);
+const totalCount = signal(0);
+const isLoading = signal(false);
+
+// Fetch data whenever filters change
+effect(() => {
   const params = new URLSearchParams({
-    page: currentPage.toString(),
-    pageSize: pageSize.toString(),
-    sortColumn: sortColumn || '',
-    sortDirection,
-    search: searchQuery,
-    role: roleFilter,
-    status: statusFilter,
+    page: currentPage.value.toString(),
+    pageSize: pageSize.value.toString(),
+    sortColumn: sortColumn.value || '',
+    sortDirection: sortDirection.value,
+    search: searchQuery.value,
+    role: roleFilter.value,
+    status: statusFilter.value,
   });
 
-  const response = await fetch(`/api/users?${params}`);
-  const data = await response.json();
+  isLoading.value = true;
+  fetch(`/api/users?${params}`)
+    .then(res => res.json())
+    .then(data => {
+      users.value = data.users;
+      totalCount.value = data.totalCount;
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+});
 
-  setUsers(data.users);
-  setTotalCount(data.totalCount);
-};
-
-useEffect(() => {
-  fetchUsers();
-}, [currentPage, pageSize, sortColumn, sortDirection, searchQuery, roleFilter, statusFilter]);
+const totalPages = computed(() => Math.ceil(totalCount.value / pageSize.value));
 ```
 
-### 2. Virtual Scrolling
+## Debounced Search
 
-For extremely large tables, use virtual scrolling to only render visible rows.
-
-### 3. Debounced Search
-
-Debounce search input to reduce filtering operations:
+Debounce search input to reduce API calls:
 
 ```tsx
-const [searchQuery, setSearchQuery] = useState('');
-const [debouncedQuery, setDebouncedQuery] = useState('');
+import {signal, computed, effect} from '@preact/signals';
 
-useEffect(() => {
+const searchInput = signal('');
+const searchQuery = signal('');
+
+// Debounce search input
+effect(() => {
   const timer = setTimeout(() => {
-    setDebouncedQuery(searchQuery);
+    searchQuery.value = searchInput.value;
   }, 300);
 
   return () => clearTimeout(timer);
-}, [searchQuery]);
+});
 
-// Use debouncedQuery for filtering
+// Use searchQuery for filtering
+const filteredUsers = computed(() => {
+  // Uses searchQuery.value, not searchInput.value
+});
 ```
-
-## Accessibility Features
-
-- **ARIA labels**: All interactive elements have descriptive labels
-- **Keyboard navigation**: Tab through controls, use keyboard for sorting
-- **Screen reader support**: Table structure with proper headers
-- **Focus management**: Clear focus indicators
-- **Semantic HTML**: Uses `<table>`, `<th>`, `<td>` elements
 
 ## Testing
 
 ```tsx
+import {render, screen, fireEvent} from '@testing-library/preact';
+import {UserTable} from './UserTable';
+
 test('sorts table by column', () => {
   const {container} = render(<UserTable />);
 
@@ -727,7 +699,7 @@ test('sorts table by column', () => {
   fireEvent.click(nameHeader);
 
   const rows = container.querySelectorAll('tbody tr');
-  expect(rows[0]).toHaveTextContent('Alice'); // Alphabetically first
+  expect(rows[0]).toHaveTextContent('Alice');
 });
 
 test('filters by search query', () => {
@@ -739,26 +711,15 @@ test('filters by search query', () => {
   expect(screen.getByText('Alice Johnson')).toBeInTheDocument();
   expect(screen.queryByText('Bob Smith')).not.toBeInTheDocument();
 });
+
+test('selects and deletes multiple rows', async () => {
+  render(<UserTable />);
+
+  const checkboxes = screen.getAllByRole('checkbox');
+  fireEvent.click(checkboxes[1]); // Select first user
+  fireEvent.click(checkboxes[2]); // Select second user
+
+  const deleteButton = screen.getByText('Delete');
+  expect(deleteButton).toBeInTheDocument();
+});
 ```
-
-## Related Recipes
-
-- [Settings Panel](./settings-panel.md) - Complex forms with data
-- [Command Palette](./command-palette.md) - Quick search interface
-- Server-side pagination examples
-- Virtual scrolling patterns
-
-## Best Practices
-
-1. **Use server-side operations for large datasets**: Don't load 10,000 rows to the client
-2. **Debounce search input**: Avoid excessive filtering
-3. **Show loading states**: Use Skeleton components while fetching
-4. **Provide empty states**: Clear messaging when no results
-5. **Make actions accessible**: All controls keyboard-navigable
-6. **Test performance**: Profile with realistic data volumes
-7. **Responsive design**: Tables should work on mobile (consider card view)
-8. **Preserve state**: Remember filters/sorting in URL params
-
----
-
-This data table provides a comprehensive foundation for displaying and managing tabular data in production applications.

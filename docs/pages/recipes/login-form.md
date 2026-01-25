@@ -1,22 +1,21 @@
 # Login Form with Validation
 
-A minimal login form using native HTML5 validation - no custom validation code required.
+A minimal login form using native HTML5 validation with PUI components.
 
 ## Overview
 
-This recipe demonstrates how to build a login form using PUI components with:
+This recipe shows how to build a login form with:
 
-- Native HTML5 form validation (browser handles it)
+- Native HTML5 form validation (no custom validation code)
 - Loading states during submission
 - Server error handling
-- Accessible form structure
 - Password visibility toggle
 - Remember me functionality
 
 ## Complete Example
 
 ```tsx
-import {useState} from 'preact/hooks';
+import {useSignal} from '@preact/signals';
 import {
   Card,
   CardHeader,
@@ -32,9 +31,9 @@ import {
 } from 'pui';
 
 export function LoginForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const isSubmitting = useSignal(false);
+  const showPassword = useSignal(false);
+  const error = useSignal('');
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -42,8 +41,8 @@ export function LoginForm() {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    setIsSubmitting(true);
-    setError('');
+    isSubmitting.value = true;
+    error.value = '';
 
     try {
       const response = await fetch('/api/login', {
@@ -61,12 +60,11 @@ export function LoginForm() {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Success - redirect
       window.location.href = '/dashboard';
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      error.value = err instanceof Error ? err.message : 'An error occurred';
     } finally {
-      setIsSubmitting(false);
+      isSubmitting.value = false;
     }
   };
 
@@ -81,9 +79,9 @@ export function LoginForm() {
 
       <form onSubmit={handleSubmit}>
         <CardContent class="space-y-4">
-          {error && (
+          {error.value && (
             <Alert variant="destructive" role="alert">
-              <strong>Error:</strong> {error}
+              <strong>Error:</strong> {error.value}
             </Alert>
           )}
 
@@ -95,7 +93,7 @@ export function LoginForm() {
               type="email"
               autoComplete="email"
               required
-              disabled={isSubmitting}
+              disabled={isSubmitting.value}
             />
           </div>
 
@@ -105,7 +103,7 @@ export function LoginForm() {
               <a
                 href="/forgot-password"
                 class="text-sm text-primary hover:underline"
-                tabIndex={isSubmitting ? -1 : 0}
+                tabIndex={isSubmitting.value ? -1 : 0}
               >
                 Forgot password?
               </a>
@@ -114,22 +112,26 @@ export function LoginForm() {
               <Input
                 id="password"
                 name="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword.value ? 'text' : 'password'}
                 autoComplete="current-password"
                 minLength={8}
                 required
-                disabled={isSubmitting}
+                disabled={isSubmitting.value}
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
                 class="absolute right-0 top-0 h-full px-3"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                onClick={() => setShowPassword(!showPassword)}
-                disabled={isSubmitting}
+                aria-label={showPassword.value ? 'Hide password' : 'Show password'}
+                onClick={() => showPassword.value = !showPassword.value}
+                disabled={isSubmitting.value}
               >
-                {showPassword ? '👁️‍🗨️' : '👁️'}
+                {showPassword.value ? (
+                  <iconify-icon icon="mdi:eye-off" />
+                ) : (
+                  <iconify-icon icon="mdi:eye" />
+                )}
               </Button>
             </div>
             <p class="text-sm text-muted-foreground">
@@ -141,7 +143,7 @@ export function LoginForm() {
             <Checkbox
               id="rememberMe"
               name="rememberMe"
-              disabled={isSubmitting}
+              disabled={isSubmitting.value}
             />
             <Label
               htmlFor="rememberMe"
@@ -156,8 +158,8 @@ export function LoginForm() {
           <Button
             type="submit"
             class="w-full"
-            loading={isSubmitting}
-            disabled={isSubmitting}
+            loading={isSubmitting.value}
+            disabled={isSubmitting.value}
           >
             Sign In
           </Button>
@@ -175,23 +177,23 @@ export function LoginForm() {
 }
 ```
 
-## Key Features Explained
+## Key Features
 
-### 1. Native HTML5 Validation
+### Native HTML5 Validation
 
-The browser handles all validation automatically:
+The browser handles validation automatically:
 
 ```tsx
 <Input
-  type="email"      // Browser validates email format
-  required          // Browser checks if filled
-  minLength={8}     // Browser checks minimum length
+  type="email"      // Validates email format
+  required          // Checks if filled
+  minLength={8}     // Checks minimum length
 />
 ```
 
-No custom validation code needed! The browser shows native error messages and prevents submission if invalid.
+The browser shows native error messages and prevents submission if invalid.
 
-### 2. FormData API
+### FormData API
 
 Extract form values without managing state:
 
@@ -201,48 +203,32 @@ const handleSubmit = async (e: Event) => {
   const form = e.target as HTMLFormElement;
   const formData = new FormData(form);
 
-  // Get values by name attribute
   const email = formData.get('email');
   const password = formData.get('password');
   const rememberMe = formData.get('rememberMe') === 'on';
 };
 ```
 
-### 3. Minimal State Management
+### Minimal State with Signals
 
-Only track what you actually need:
-
-```tsx
-const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
-const [showPassword, setShowPassword] = useState(false); // Toggle visibility
-const [error, setError] = useState('');                 // Server errors only
-```
-
-No field-level state, no validation state, no change handlers.
-
-### 4. Server Error Handling
-
-Only show errors from the server:
+Track only what you need using individual signals:
 
 ```tsx
-{error && (
-  <Alert variant="destructive" role="alert">
-    <strong>Error:</strong> {error}
-  </Alert>
-)}
+const isSubmitting = useSignal(false); // Loading state
+const showPassword = useSignal(false); // Toggle visibility
+const error = useSignal('');           // Server errors only
 ```
 
-### 5. Accessibility
+Updates use immutable assignment:
 
-Native form elements provide built-in accessibility:
+```tsx
+isSubmitting.value = true;
+error.value = 'Login failed';
+```
 
-- Browser-native validation messages
-- Proper label associations with `htmlFor`
-- ARIA attributes (`role="alert"`)
-- Keyboard navigation works automatically
-- Screen readers announce errors
+No field-level state, no validation state, no change handlers needed.
 
-## Customization Options
+## Customization
 
 ### Custom Validation Messages
 
@@ -266,14 +252,13 @@ Override browser defaults with `setCustomValidity`:
 
 ### Additional Client-Side Checks
 
-Add checks beyond HTML5 validation if needed:
+Add checks beyond HTML5 validation:
 
 ```tsx
 const handleSubmit = async (e: Event) => {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
 
-  // Browser validation happens automatically
   if (!form.checkValidity()) {
     return; // Let browser show errors
   }
@@ -281,9 +266,9 @@ const handleSubmit = async (e: Event) => {
   const formData = new FormData(form);
   const password = formData.get('password') as string;
 
-  // Additional custom check
+  // Custom check
   if (password.toLowerCase() === formData.get('email')) {
-    setError('Password cannot be the same as email');
+    error.value = 'Password cannot be the same as email';
     return;
   }
 
@@ -299,9 +284,11 @@ Add OAuth buttons:
 <CardContent class="space-y-4">
   <div class="grid grid-cols-2 gap-2">
     <Button variant="outline" type="button">
+      <iconify-icon icon="mdi:google" class="mr-2" />
       Google
     </Button>
     <Button variant="outline" type="button">
+      <iconify-icon icon="mdi:github" class="mr-2" />
       GitHub
     </Button>
   </div>
@@ -333,19 +320,15 @@ This form works without JavaScript:
 >
 ```
 
-If JavaScript fails to load:
-- Native HTML5 validation still works
-- Form submits to `/api/login` normally
-- Server handles the submission
+If JavaScript fails to load, native HTML5 validation still works and the form submits normally.
 
 ## Testing
 
-### Browser Validation Testing
+### Validation Testing
 
 ```tsx
 test('form requires email and password', () => {
   const {container} = render(<LoginForm />);
-  const form = container.querySelector('form');
   const emailInput = container.querySelector('#email');
   const passwordInput = container.querySelector('#password');
 
@@ -375,37 +358,15 @@ test('submits form with valid data', async () => {
 });
 ```
 
-## Comparison: Before vs After
-
-### Before (Custom Validation - ❌ Bloated)
-- ~150 lines of validation code
-- Multiple state variables
-- Custom validation functions
-- Change handlers for every field
-- Blur handlers for inline validation
-- Error state management
-
-### After (Native Validation - ✅ Minimal)
-- ~80 lines total
-- 3 state variables (loading, password visibility, server error)
-- No validation code
-- No change handlers
-- No blur handlers
-- Browser does the work
-
-## Related Recipes
-
-- [Multi-Step Wizard](./multi-step-wizard.md) - Multi-page forms
-- [Settings Panel](./settings-panel.md) - Complex form management
-
 ## Security Considerations
 
-1. **Always validate on the server** - Client validation is UX, not security
+1. **Always validate on the server** - Client validation is for UX, not security
 2. **Use HTTPS** - Never send credentials unencrypted
 3. **Implement rate limiting** - Prevent brute force attacks
 4. **Use CSRF tokens** - Protect against CSRF attacks
 5. **Consider 2FA** - Add multi-factor authentication
 
----
+## Related Recipes
 
-This login form demonstrates PUI's philosophy: leverage platform features instead of recreating them in JavaScript. The browser is incredibly capable - let it do the work!
+- [Multi-Step Wizard](./multi-step-wizard.md) - Multi-page forms
+- [Settings Panel](./settings-panel.md) - Complex form management

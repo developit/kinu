@@ -17,7 +17,7 @@ Recipes are comprehensive, real-world examples that demonstrate how to combine m
 
 ### Forms & Input
 
-#### [Login Form with Validation](./recipes/login-form.md)
+#### [Login Form with Validation](/recipes/login-form)
 
 Build a complete login form with client-side validation, loading states, error handling, and password visibility toggle.
 
@@ -34,7 +34,7 @@ Build a complete login form with client-side validation, loading states, error h
 
 ---
 
-#### [Multi-Step Wizard](./recipes/multi-step-wizard.md)
+#### [Multi-Step Wizard](/recipes/multi-step-wizard)
 
 Create a multi-step form wizard with progress tracking, per-step validation, and data persistence across steps.
 
@@ -51,7 +51,7 @@ Create a multi-step form wizard with progress tracking, per-step validation, and
 
 ---
 
-#### [Settings Panel](./recipes/settings-panel.md)
+#### [Settings Panel](/recipes/settings-panel)
 
 Implement a comprehensive settings panel with tabbed navigation, form persistence, validation, and success feedback.
 
@@ -70,7 +70,7 @@ Implement a comprehensive settings panel with tabbed navigation, form persistenc
 
 ### Data Display & Management
 
-#### [Data Table with Sorting & Filtering](./recipes/data-table.md)
+#### [Data Table with Sorting & Filtering](/recipes/data-table)
 
 Build a feature-rich data table with sorting, filtering, pagination, row selection, and bulk actions.
 
@@ -90,7 +90,7 @@ Build a feature-rich data table with sorting, filtering, pagination, row selecti
 
 ### Navigation & Search
 
-#### [Command Palette (⌘K)](./recipes/command-palette.md)
+#### [Command Palette (⌘K)](/recipes/command-palette)
 
 Create a powerful command palette with keyboard shortcuts, fuzzy search, and keyboard navigation - like VS Code or Linear.
 
@@ -110,20 +110,20 @@ Create a powerful command palette with keyboard shortcuts, fuzzy search, and key
 ## Recipe Categories
 
 ### Authentication & User Management
-- [Login Form](./recipes/login-form.md) - Complete authentication form
-- [Settings Panel](./recipes/settings-panel.md) - User preferences and profile
+- [Login Form](/recipes/login-form) - Complete authentication form
+- [Settings Panel](/recipes/settings-panel) - User preferences and profile
 
 ### Data & Tables
-- [Data Table](./recipes/data-table.md) - Advanced table with sorting and filtering
+- [Data Table](/recipes/data-table) - Advanced table with sorting and filtering
 
 ### Navigation & UI Patterns
-- [Command Palette](./recipes/command-palette.md) - Keyboard-first navigation
-- [Multi-Step Wizard](./recipes/multi-step-wizard.md) - Complex form flows
+- [Command Palette](/recipes/command-palette) - Keyboard-first navigation
+- [Multi-Step Wizard](/recipes/multi-step-wizard) - Complex form flows
 
 ### Forms & Validation
-- [Login Form](./recipes/login-form.md) - Form validation patterns
-- [Settings Panel](./recipes/settings-panel.md) - Complex forms with persistence
-- [Multi-Step Wizard](./recipes/multi-step-wizard.md) - Multi-page form validation
+- [Login Form](/recipes/login-form) - Form validation patterns
+- [Settings Panel](/recipes/settings-panel) - Complex forms with persistence
+- [Multi-Step Wizard](/recipes/multi-step-wizard) - Multi-page form validation
 
 ## Using Recipes
 

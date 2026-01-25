@@ -1,20 +1,8 @@
-# Command Palette (⌘K)
+# Command Palette
 
-A production-ready command palette implementation with keyboard shortcuts, fuzzy search, command groups, and keyboard navigation.
+A command palette implementation with keyboard shortcuts, fuzzy search, command groups, and keyboard navigation.
 
-## Overview
-
-This recipe demonstrates how to build a command palette (like VS Code's Command Palette or Spotlight) using PUI components with:
-
-- ⌘K / Ctrl+K keyboard shortcut to open
-- Fuzzy search filtering
-- Grouped commands
-- Keyboard navigation (arrow keys, Enter, Escape)
-- Recent commands history
-- Icons and descriptions
-- Accessibility features
-
-## Complete Example
+## Implementation
 
 ```tsx
 import {useState, useEffect, useRef, useMemo, type JSX} from 'preact/hooks';
@@ -46,14 +34,14 @@ export function CommandPalette() {
     {
       id: 'nav-home',
       label: 'Go to Home',
-      icon: '🏠',
+      icon: 'lucide:home',
       group: 'Navigation',
       action: () => (window.location.href = '/'),
     },
     {
       id: 'nav-dashboard',
       label: 'Go to Dashboard',
-      icon: '📊',
+      icon: 'lucide:bar-chart',
       group: 'Navigation',
       keywords: ['dash', 'overview'],
       action: () => (window.location.href = '/dashboard'),
@@ -61,7 +49,7 @@ export function CommandPalette() {
     {
       id: 'nav-settings',
       label: 'Go to Settings',
-      icon: '⚙️',
+      icon: 'lucide:settings',
       group: 'Navigation',
       keywords: ['preferences', 'config'],
       action: () => (window.location.href = '/settings'),
@@ -69,7 +57,7 @@ export function CommandPalette() {
     {
       id: 'nav-profile',
       label: 'Go to Profile',
-      icon: '👤',
+      icon: 'lucide:user',
       group: 'Navigation',
       action: () => (window.location.href = '/profile'),
     },
@@ -79,7 +67,7 @@ export function CommandPalette() {
       id: 'action-new-project',
       label: 'Create New Project',
       description: 'Start a new project',
-      icon: '➕',
+      icon: 'lucide:plus',
       group: 'Actions',
       keywords: ['add', 'create'],
       shortcut: '⌘N',
@@ -89,7 +77,7 @@ export function CommandPalette() {
       id: 'action-search',
       label: 'Search Everything',
       description: 'Search across all content',
-      icon: '🔍',
+      icon: 'lucide:search',
       group: 'Actions',
       shortcut: '⌘/',
       action: () => console.log('Search'),
@@ -98,7 +86,7 @@ export function CommandPalette() {
       id: 'action-quick-add',
       label: 'Quick Add',
       description: 'Add a new item quickly',
-      icon: '⚡',
+      icon: 'lucide:zap',
       group: 'Actions',
       shortcut: '⌘A',
       action: () => console.log('Quick add'),
@@ -108,7 +96,7 @@ export function CommandPalette() {
     {
       id: 'view-toggle-sidebar',
       label: 'Toggle Sidebar',
-      icon: '◧',
+      icon: 'lucide:panel-left',
       group: 'View',
       shortcut: '⌘B',
       action: () => console.log('Toggle sidebar'),
@@ -116,7 +104,7 @@ export function CommandPalette() {
     {
       id: 'view-fullscreen',
       label: 'Toggle Fullscreen',
-      icon: '⛶',
+      icon: 'lucide:maximize',
       group: 'View',
       keywords: ['maximize'],
       shortcut: 'F11',
@@ -131,7 +119,7 @@ export function CommandPalette() {
     {
       id: 'view-theme',
       label: 'Toggle Dark Mode',
-      icon: '🌙',
+      icon: 'lucide:moon',
       group: 'View',
       keywords: ['theme', 'appearance'],
       action: () => console.log('Toggle theme'),
@@ -141,7 +129,7 @@ export function CommandPalette() {
     {
       id: 'help-docs',
       label: 'View Documentation',
-      icon: '📖',
+      icon: 'lucide:book',
       group: 'Help',
       keywords: ['docs', 'guide'],
       action: () => window.open('/docs', '_blank'),
@@ -149,14 +137,14 @@ export function CommandPalette() {
     {
       id: 'help-shortcuts',
       label: 'Keyboard Shortcuts',
-      icon: '⌨️',
+      icon: 'lucide:keyboard',
       group: 'Help',
       action: () => console.log('Show shortcuts'),
     },
     {
       id: 'help-support',
       label: 'Contact Support',
-      icon: '💬',
+      icon: 'lucide:message-circle',
       group: 'Help',
       action: () => console.log('Contact support'),
     },
@@ -441,9 +429,11 @@ export function CommandPalette() {
                         >
                           {/* Icon */}
                           {command.icon && (
-                            <span class="text-xl flex-shrink-0" aria-hidden="true">
-                              {command.icon}
-                            </span>
+                            <iconify-icon
+                              icon={command.icon}
+                              class="text-xl flex-shrink-0"
+                              aria-hidden="true"
+                            />
                           )}
 
                           {/* Label and description */}
@@ -513,142 +503,20 @@ export function CommandPalette() {
 }
 ```
 
-## Key Features Explained
+## Features
 
-### 1. Keyboard Shortcut
+- **Keyboard shortcut**: ⌘K/Ctrl+K to open
+- **Fuzzy search**: Matches across labels, descriptions, and keywords
+- **Command groups**: Organize commands by category
+- **Recent commands**: Track and prioritize recently used commands
+- **Keyboard navigation**: Arrow keys, Enter, Escape, Home, End
+- **Accessible**: Full ARIA support and keyboard navigation
 
-Global keyboard shortcut to open the palette:
-
-```tsx
-useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      setIsOpen(true);
-    }
-  };
-
-  document.addEventListener('keydown', handleKeyDown);
-  return () => document.removeEventListener('keydown', handleKeyDown);
-}, []);
-```
-
-### 2. Fuzzy Search
-
-Search matches across label, description, and keywords:
-
-```tsx
-const fuzzyMatch = (str: string, pattern: string): number => {
-  // Exact match gets highest score
-  if (str.toLowerCase().includes(pattern.toLowerCase())) {
-    return 100;
-  }
-
-  // Fuzzy matching with consecutive match bonus
-  // ... implementation
-};
-```
-
-### 3. Keyboard Navigation
-
-Arrow keys, Enter, Escape, Home, End:
-
-```tsx
-const handleKeyDown = (e: KeyboardEvent) => {
-  switch (e.key) {
-    case 'ArrowDown':
-      setSelectedIndex(i => Math.min(i + 1, commands.length - 1));
-      break;
-    case 'Enter':
-      executeCommand(commands[selectedIndex]);
-      break;
-    // ... more keys
-  }
-};
-```
-
-### 4. Command Groups
-
-Commands organized into logical groups:
-
-```tsx
-const groupedCommands = useMemo(() => {
-  const groups = new Map<string, Command[]>();
-
-  filteredCommands.forEach(cmd => {
-    const existing = groups.get(cmd.group) || [];
-    groups.set(cmd.group, [...existing, cmd]);
-  });
-
-  return Array.from(groups.entries());
-}, [filteredCommands]);
-```
-
-### 5. Recent Commands
-
-Track and show recently used commands:
-
-```tsx
-const executeCommand = (command: Command) => {
-  setRecentCommands(prev => {
-    const filtered = prev.filter(id => id !== command.id);
-    return [command.id, ...filtered].slice(0, 5); // Keep last 5
-  });
-
-  command.action();
-  setIsOpen(false);
-};
-```
-
-## Customization Options
-
-### Nested Commands
-
-Add sub-commands with breadcrumb navigation:
-
-```tsx
-interface Command {
-  // ... existing fields
-  children?: Command[];
-}
-
-const [commandStack, setCommandStack] = useState<Command[]>([]);
-
-// Navigate into sub-commands
-const navigateInto = (command: Command) => {
-  if (command.children) {
-    setCommandStack([...commandStack, command]);
-  }
-};
-
-// Navigate back
-const navigateBack = () => {
-  setCommandStack(commandStack.slice(0, -1));
-};
-```
-
-### Command Scores/Priority
-
-Boost certain commands in search results:
-
-```tsx
-interface Command {
-  // ... existing fields
-  priority?: number; // 0-10, default 5
-}
-
-// In filtering logic
-.sort((a, b) => {
-  if (b.score === a.score) {
-    return (b.cmd.priority || 5) - (a.cmd.priority || 5);
-  }
-  return b.score - a.score;
-});
-```
+## Customization
 
 ### Dynamic Commands
 
-Load commands from API or context:
+Load commands from an API or context:
 
 ```tsx
 const [dynamicCommands, setDynamicCommands] = useState<Command[]>([]);
@@ -662,67 +530,29 @@ useEffect(() => {
 const allCommands = [...staticCommands, ...dynamicCommands];
 ```
 
-## Accessibility Features
+### Command Priority
 
-- **ARIA roles**: Dialog, listbox, option
-- **aria-activedescendant**: Announces current selection to screen readers
-- **Keyboard shortcuts**: Fully keyboard accessible
-- **Focus management**: Auto-focus input on open
-- **Clear labels**: All interactive elements labeled
-- **Status updates**: Result count displayed
-
-## Performance Tips
-
-For large command lists (100+):
-
-1. **Virtualize the list**: Only render visible commands
-2. **Debounce search**: Wait 100-200ms after typing before filtering
-3. **Web Workers**: Move fuzzy matching to a worker thread
-4. **Lazy load groups**: Only render expanded groups
-
-## Testing
+Boost certain commands in search results:
 
 ```tsx
-test('opens with keyboard shortcut', () => {
-  render(<CommandPalette />);
+interface Command {
+  // ... existing fields
+  priority?: number;
+}
 
-  fireEvent.keyDown(document, {
-    key: 'k',
-    metaKey: true,
-  });
-
-  expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
-});
-
-test('filters commands by search', () => {
-  render(<CommandPalette />);
-
-  const input = screen.getByLabelText('Search commands');
-  fireEvent.input(input, {target: {value: 'dashboard'}});
-
-  expect(screen.getByText('Go to Dashboard')).toBeInTheDocument();
-  expect(screen.queryByText('Go to Home')).not.toBeInTheDocument();
+// In filtering logic
+.sort((a, b) => {
+  if (b.score === a.score) {
+    return (b.cmd.priority || 5) - (a.cmd.priority || 5);
+  }
+  return b.score - a.score;
 });
 ```
 
-## Related Recipes
+### Performance
 
-- [Data Table](./data-table.md) - Filtering and search patterns
-- [Settings Panel](./settings-panel.md) - Complex UI organization
-- Autocomplete patterns
-- Quick switcher implementations
+For large command lists (100+):
 
-## Best Practices
-
-1. **Keep commands fast**: Actions should execute instantly
-2. **Provide feedback**: Show loading states for async actions
-3. **Remember recent**: Help users repeat common actions
-4. **Group logically**: Organize by feature area or action type
-5. **Add keywords**: Help users find commands with alternate terms
-6. **Show shortcuts**: Display keyboard shortcuts for discoverability
-7. **Test search quality**: Ensure fuzzy matching works well
-8. **Support deep linking**: Allow opening palette to specific command
-
----
-
-This command palette provides a powerful, keyboard-first interface for navigating and executing actions in your application, similar to VS Code, Linear, and other modern productivity tools.
+- Virtualize the list to only render visible commands
+- Debounce search input (100-200ms)
+- Move fuzzy matching to a web worker

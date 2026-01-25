@@ -1,24 +1,12 @@
 # Settings Panel
 
-A production-ready settings panel implementation with tabbed navigation, form persistence, validation, and success feedback.
-
-## Overview
-
-This recipe demonstrates how to build a comprehensive settings panel using PUI components with:
-
-- Tabbed navigation between setting categories
-- Form state management
-- Auto-save functionality
-- Input validation
-- Success/error feedback
-- Keyboard navigation
-- Accessibility features
-- Reset to defaults
+A production-ready settings panel with tabbed navigation, validation, and auto-save.
 
 ## Complete Example
 
 ```tsx
-import {useState, useEffect, type JSX} from 'preact/hooks';
+import {type JSX} from 'preact';
+import {signal, computed, effect, batch} from '@preact/signals';
 import {
   Card,
   CardHeader,
@@ -38,33 +26,23 @@ import {
   RadioGroup,
   Separator,
   Avatar,
-  Badge,
   Alert,
   showToast,
 } from 'pui';
 
-// Settings interface
 interface Settings {
-  // Profile
   displayName: string;
   email: string;
   bio: string;
-  avatar: string;
-
-  // Preferences
   theme: 'light' | 'dark' | 'system';
   language: string;
   timezone: string;
   dateFormat: string;
-
-  // Notifications
   emailNotifications: boolean;
   pushNotifications: boolean;
   newsletterSubscribed: boolean;
   notificationSound: boolean;
   notificationFrequency: 'realtime' | 'hourly' | 'daily';
-
-  // Privacy
   profileVisibility: 'public' | 'private' | 'friends';
   showEmail: boolean;
   showActivity: boolean;
@@ -75,7 +53,6 @@ const DEFAULT_SETTINGS: Settings = {
   displayName: '',
   email: '',
   bio: '',
-  avatar: '',
   theme: 'system',
   language: 'en',
   timezone: 'UTC',
@@ -91,40 +68,41 @@ const DEFAULT_SETTINGS: Settings = {
   dataSharing: false,
 };
 
-export function SettingsPanel() {
-  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
-  const [originalSettings, setOriginalSettings] = useState<Settings>(DEFAULT_SETTINGS);
-  const [isSaving, setIsSaving] = useState(false);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+// Signals for state management
+const settings = signal<Settings>(DEFAULT_SETTINGS);
+const originalSettings = signal<Settings>(DEFAULT_SETTINGS);
+const isSaving = signal(false);
+const errors = signal<Record<string, string>>({});
 
+// Computed signal for change detection
+const hasUnsavedChanges = computed(() => {
+  return JSON.stringify(settings.value) !== JSON.stringify(originalSettings.value);
+});
+
+export function SettingsPanel() {
   // Load settings on mount
-  useEffect(() => {
+  effect(() => {
     const loadSettings = async () => {
       try {
         const response = await fetch('/api/settings');
         const data = await response.json();
 
-        setSettings(data);
-        setOriginalSettings(data);
+        batch(() => {
+          settings.value = data;
+          originalSettings.value = data;
+        });
       } catch (error) {
         console.error('Failed to load settings:', error);
       }
     };
 
     loadSettings();
-  }, []);
-
-  // Track unsaved changes
-  useEffect(() => {
-    const changed = JSON.stringify(settings) !== JSON.stringify(originalSettings);
-    setHasUnsavedChanges(changed);
-  }, [settings, originalSettings]);
+  });
 
   // Warn before leaving with unsaved changes
-  useEffect(() => {
+  effect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (hasUnsavedChanges) {
+      if (hasUnsavedChanges.value) {
         e.preventDefault();
         e.returnValue = '';
       }
@@ -132,22 +110,20 @@ export function SettingsPanel() {
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [hasUnsavedChanges]);
+  });
 
-  // Handle input changes
-  const handleChange = (field: keyof Settings, value: any) => {
-    setSettings(prev => ({
-      ...prev,
+  // Update a setting field
+  const updateField = (field: keyof Settings, value: any) => {
+    settings.value = {
+      ...settings.value,
       [field]: value,
-    }));
+    };
 
     // Clear error for this field
-    if (errors[field]) {
-      setErrors(prev => {
-        const next = {...prev};
-        delete next[field];
-        return next;
-      });
+    if (errors.value[field]) {
+      const newErrors = {...errors.value};
+      delete newErrors[field];
+      errors.value = newErrors;
     }
   };
 
@@ -155,21 +131,21 @@ export function SettingsPanel() {
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!settings.displayName.trim()) {
+    if (!settings.value.displayName.trim()) {
       newErrors.displayName = 'Display name is required';
     }
 
-    if (!settings.email.trim()) {
+    if (!settings.value.email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(settings.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(settings.value.email)) {
       newErrors.email = 'Invalid email address';
     }
 
-    if (settings.bio.length > 500) {
+    if (settings.value.bio.length > 500) {
       newErrors.bio = 'Bio must be 500 characters or less';
     }
 
-    setErrors(newErrors);
+    errors.value = newErrors;
     return Object.keys(newErrors).length === 0;
   };
 
@@ -184,20 +160,20 @@ export function SettingsPanel() {
       return;
     }
 
-    setIsSaving(true);
+    isSaving.value = true;
 
     try {
       const response = await fetch('/api/settings', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(settings),
+        body: JSON.stringify(settings.value),
       });
 
       if (!response.ok) {
         throw new Error('Failed to save settings');
       }
 
-      setOriginalSettings(settings);
+      originalSettings.value = settings.value;
 
       showToast({
         title: 'Settings Saved',
@@ -211,26 +187,27 @@ export function SettingsPanel() {
         variant: 'destructive',
       });
     } finally {
-      setIsSaving(false);
+      isSaving.value = false;
     }
   };
 
-  // Reset to original
+  // Reset to last saved state
   const handleReset = () => {
-    setSettings(originalSettings);
-    setErrors({});
+    batch(() => {
+      settings.value = originalSettings.value;
+      errors.value = {};
+    });
   };
 
   // Reset to defaults
   const handleResetToDefaults = () => {
     if (confirm('Reset all settings to default values?')) {
-      setSettings(DEFAULT_SETTINGS);
+      settings.value = DEFAULT_SETTINGS;
     }
   };
 
   return (
     <div class="max-w-4xl mx-auto space-y-6">
-      {/* Header */}
       <div>
         <h1 class="text-3xl font-bold">Settings</h1>
         <p class="text-muted-foreground mt-2">
@@ -238,21 +215,31 @@ export function SettingsPanel() {
         </p>
       </div>
 
-      {/* Unsaved changes banner */}
-      {hasUnsavedChanges && (
+      {hasUnsavedChanges.value && (
         <Alert>
           <strong>Unsaved Changes</strong>
           <p class="text-sm">You have unsaved changes. Don't forget to save!</p>
         </Alert>
       )}
 
-      {/* Tabs */}
       <Tabs defaultValue="profile">
         <TabList>
-          <Tab value="profile">Profile</Tab>
-          <Tab value="preferences">Preferences</Tab>
-          <Tab value="notifications">Notifications</Tab>
-          <Tab value="privacy">Privacy</Tab>
+          <Tab value="profile">
+            <iconify-icon icon="mdi:account" class="mr-2"></iconify-icon>
+            Profile
+          </Tab>
+          <Tab value="preferences">
+            <iconify-icon icon="mdi:tune" class="mr-2"></iconify-icon>
+            Preferences
+          </Tab>
+          <Tab value="notifications">
+            <iconify-icon icon="mdi:bell" class="mr-2"></iconify-icon>
+            Notifications
+          </Tab>
+          <Tab value="privacy">
+            <iconify-icon icon="mdi:shield-lock" class="mr-2"></iconify-icon>
+            Privacy
+          </Tab>
         </TabList>
 
         {/* Profile Tab */}
@@ -265,14 +252,13 @@ export function SettingsPanel() {
               </CardDescription>
             </CardHeader>
             <CardContent class="space-y-6">
-              {/* Avatar */}
               <div class="flex items-center gap-4">
                 <Avatar class="w-20 h-20">
-                  {settings.avatar ? (
-                    <img src={settings.avatar} alt="Profile picture" />
+                  {settings.value.avatar ? (
+                    <img src={settings.value.avatar} alt="Profile picture" />
                   ) : (
                     <div class="bg-primary text-primary-foreground text-2xl">
-                      {settings.displayName?.[0] || '?'}
+                      {settings.value.displayName?.[0] || '?'}
                     </div>
                   )}
                 </Avatar>
@@ -288,28 +274,26 @@ export function SettingsPanel() {
 
               <Separator />
 
-              {/* Display Name */}
               <div class="space-y-2">
                 <Label htmlFor="displayName">
                   Display Name <span class="text-destructive">*</span>
                 </Label>
                 <Input
                   id="displayName"
-                  value={settings.displayName}
+                  value={settings.value.displayName}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('displayName', e.currentTarget.value)
+                    updateField('displayName', e.currentTarget.value)
                   }
-                  aria-invalid={errors.displayName ? 'true' : 'false'}
-                  aria-describedby={errors.displayName ? 'displayName-error' : undefined}
+                  aria-invalid={errors.value.displayName ? 'true' : 'false'}
+                  aria-describedby={errors.value.displayName ? 'displayName-error' : undefined}
                 />
-                {errors.displayName && (
+                {errors.value.displayName && (
                   <p id="displayName-error" class="text-sm text-destructive">
-                    {errors.displayName}
+                    {errors.value.displayName}
                   </p>
                 )}
               </div>
 
-              {/* Email */}
               <div class="space-y-2">
                 <Label htmlFor="email">
                   Email Address <span class="text-destructive">*</span>
@@ -317,38 +301,37 @@ export function SettingsPanel() {
                 <Input
                   id="email"
                   type="email"
-                  value={settings.email}
+                  value={settings.value.email}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('email', e.currentTarget.value)
+                    updateField('email', e.currentTarget.value)
                   }
-                  aria-invalid={errors.email ? 'true' : 'false'}
-                  aria-describedby={errors.email ? 'email-error' : undefined}
+                  aria-invalid={errors.value.email ? 'true' : 'false'}
+                  aria-describedby={errors.value.email ? 'email-error' : undefined}
                 />
-                {errors.email && (
+                {errors.value.email && (
                   <p id="email-error" class="text-sm text-destructive">
-                    {errors.email}
+                    {errors.value.email}
                   </p>
                 )}
               </div>
 
-              {/* Bio */}
               <div class="space-y-2">
                 <Label htmlFor="bio">Bio</Label>
                 <Textarea
                   id="bio"
                   rows={4}
-                  value={settings.bio}
+                  value={settings.value.bio}
                   onInput={(e: JSX.TargetedEvent<HTMLTextAreaElement>) =>
-                    handleChange('bio', e.currentTarget.value)
+                    updateField('bio', e.currentTarget.value)
                   }
-                  aria-invalid={errors.bio ? 'true' : 'false'}
+                  aria-invalid={errors.value.bio ? 'true' : 'false'}
                   aria-describedby="bio-hint"
                 />
                 <p id="bio-hint" class="text-sm text-muted-foreground">
-                  {settings.bio.length} / 500 characters
+                  {settings.value.bio.length} / 500 characters
                 </p>
-                {errors.bio && (
-                  <p class="text-sm text-destructive">{errors.bio}</p>
+                {errors.value.bio && (
+                  <p class="text-sm text-destructive">{errors.value.bio}</p>
                 )}
               </div>
             </CardContent>
@@ -365,12 +348,11 @@ export function SettingsPanel() {
               </CardDescription>
             </CardHeader>
             <CardContent class="space-y-6">
-              {/* Theme */}
               <div class="space-y-3">
                 <Label>Theme</Label>
                 <RadioGroup
                   name="theme"
-                  value={settings.theme}
+                  value={settings.value.theme}
                 >
                   <div class="flex items-center space-x-2">
                     <input
@@ -378,8 +360,8 @@ export function SettingsPanel() {
                       id="theme-light"
                       name="theme"
                       value="light"
-                      checked={settings.theme === 'light'}
-                      onInput={() => handleChange('theme', 'light')}
+                      checked={settings.value.theme === 'light'}
+                      onInput={() => updateField('theme', 'light')}
                     />
                     <Label htmlFor="theme-light" class="font-normal">
                       Light
@@ -391,8 +373,8 @@ export function SettingsPanel() {
                       id="theme-dark"
                       name="theme"
                       value="dark"
-                      checked={settings.theme === 'dark'}
-                      onInput={() => handleChange('theme', 'dark')}
+                      checked={settings.value.theme === 'dark'}
+                      onInput={() => updateField('theme', 'dark')}
                     />
                     <Label htmlFor="theme-dark" class="font-normal">
                       Dark
@@ -404,8 +386,8 @@ export function SettingsPanel() {
                       id="theme-system"
                       name="theme"
                       value="system"
-                      checked={settings.theme === 'system'}
-                      onInput={() => handleChange('theme', 'system')}
+                      checked={settings.value.theme === 'system'}
+                      onInput={() => updateField('theme', 'system')}
                     />
                     <Label htmlFor="theme-system" class="font-normal">
                       System default
@@ -416,14 +398,13 @@ export function SettingsPanel() {
 
               <Separator />
 
-              {/* Language */}
               <div class="space-y-2">
                 <Label htmlFor="language">Language</Label>
                 <Select
                   id="language"
-                  value={settings.language}
+                  value={settings.value.language}
                   onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    handleChange('language', e.currentTarget.value)
+                    updateField('language', e.currentTarget.value)
                   }
                 >
                   <option value="en">English</option>
@@ -434,14 +415,13 @@ export function SettingsPanel() {
                 </Select>
               </div>
 
-              {/* Timezone */}
               <div class="space-y-2">
                 <Label htmlFor="timezone">Timezone</Label>
                 <Select
                   id="timezone"
-                  value={settings.timezone}
+                  value={settings.value.timezone}
                   onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    handleChange('timezone', e.currentTarget.value)
+                    updateField('timezone', e.currentTarget.value)
                   }
                 >
                   <option value="UTC">UTC</option>
@@ -455,14 +435,13 @@ export function SettingsPanel() {
                 </Select>
               </div>
 
-              {/* Date Format */}
               <div class="space-y-2">
                 <Label htmlFor="dateFormat">Date Format</Label>
                 <Select
                   id="dateFormat"
-                  value={settings.dateFormat}
+                  value={settings.value.dateFormat}
                   onInput={(e: JSX.TargetedEvent<HTMLSelectElement>) =>
-                    handleChange('dateFormat', e.currentTarget.value)
+                    updateField('dateFormat', e.currentTarget.value)
                   }
                 >
                   <option value="MM/DD/YYYY">MM/DD/YYYY</option>
@@ -484,7 +463,6 @@ export function SettingsPanel() {
               </CardDescription>
             </CardHeader>
             <CardContent class="space-y-6">
-              {/* Email Notifications */}
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="emailNotifications">Email Notifications</Label>
@@ -494,16 +472,15 @@ export function SettingsPanel() {
                 </div>
                 <Switch
                   id="emailNotifications"
-                  checked={settings.emailNotifications}
+                  checked={settings.value.emailNotifications}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('emailNotifications', e.currentTarget.checked)
+                    updateField('emailNotifications', e.currentTarget.checked)
                   }
                 />
               </div>
 
               <Separator />
 
-              {/* Push Notifications */}
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="pushNotifications">Push Notifications</Label>
@@ -513,16 +490,15 @@ export function SettingsPanel() {
                 </div>
                 <Switch
                   id="pushNotifications"
-                  checked={settings.pushNotifications}
+                  checked={settings.value.pushNotifications}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('pushNotifications', e.currentTarget.checked)
+                    updateField('pushNotifications', e.currentTarget.checked)
                   }
                 />
               </div>
 
               <Separator />
 
-              {/* Notification Sound */}
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="notificationSound">Notification Sound</Label>
@@ -532,21 +508,20 @@ export function SettingsPanel() {
                 </div>
                 <Switch
                   id="notificationSound"
-                  checked={settings.notificationSound}
+                  checked={settings.value.notificationSound}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('notificationSound', e.currentTarget.checked)
+                    updateField('notificationSound', e.currentTarget.checked)
                   }
                 />
               </div>
 
               <Separator />
 
-              {/* Notification Frequency */}
               <div class="space-y-3">
                 <Label>Notification Frequency</Label>
                 <RadioGroup
                   name="notificationFrequency"
-                  value={settings.notificationFrequency}
+                  value={settings.value.notificationFrequency}
                 >
                   <div class="flex items-center space-x-2">
                     <input
@@ -554,8 +529,8 @@ export function SettingsPanel() {
                       id="freq-realtime"
                       name="notificationFrequency"
                       value="realtime"
-                      checked={settings.notificationFrequency === 'realtime'}
-                      onInput={() => handleChange('notificationFrequency', 'realtime')}
+                      checked={settings.value.notificationFrequency === 'realtime'}
+                      onInput={() => updateField('notificationFrequency', 'realtime')}
                     />
                     <Label htmlFor="freq-realtime" class="font-normal">
                       Real-time
@@ -567,8 +542,8 @@ export function SettingsPanel() {
                       id="freq-hourly"
                       name="notificationFrequency"
                       value="hourly"
-                      checked={settings.notificationFrequency === 'hourly'}
-                      onInput={() => handleChange('notificationFrequency', 'hourly')}
+                      checked={settings.value.notificationFrequency === 'hourly'}
+                      onInput={() => updateField('notificationFrequency', 'hourly')}
                     />
                     <Label htmlFor="freq-hourly" class="font-normal">
                       Hourly digest
@@ -580,8 +555,8 @@ export function SettingsPanel() {
                       id="freq-daily"
                       name="notificationFrequency"
                       value="daily"
-                      checked={settings.notificationFrequency === 'daily'}
-                      onInput={() => handleChange('notificationFrequency', 'daily')}
+                      checked={settings.value.notificationFrequency === 'daily'}
+                      onInput={() => updateField('notificationFrequency', 'daily')}
                     />
                     <Label htmlFor="freq-daily" class="font-normal">
                       Daily digest
@@ -592,7 +567,6 @@ export function SettingsPanel() {
 
               <Separator />
 
-              {/* Newsletter */}
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="newsletterSubscribed">Newsletter</Label>
@@ -602,9 +576,9 @@ export function SettingsPanel() {
                 </div>
                 <Switch
                   id="newsletterSubscribed"
-                  checked={settings.newsletterSubscribed}
+                  checked={settings.value.newsletterSubscribed}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('newsletterSubscribed', e.currentTarget.checked)
+                    updateField('newsletterSubscribed', e.currentTarget.checked)
                   }
                 />
               </div>
@@ -622,12 +596,11 @@ export function SettingsPanel() {
               </CardDescription>
             </CardHeader>
             <CardContent class="space-y-6">
-              {/* Profile Visibility */}
               <div class="space-y-3">
                 <Label>Profile Visibility</Label>
                 <RadioGroup
                   name="profileVisibility"
-                  value={settings.profileVisibility}
+                  value={settings.value.profileVisibility}
                 >
                   <div class="flex items-center space-x-2">
                     <input
@@ -635,8 +608,8 @@ export function SettingsPanel() {
                       id="visibility-public"
                       name="profileVisibility"
                       value="public"
-                      checked={settings.profileVisibility === 'public'}
-                      onInput={() => handleChange('profileVisibility', 'public')}
+                      checked={settings.value.profileVisibility === 'public'}
+                      onInput={() => updateField('profileVisibility', 'public')}
                     />
                     <Label htmlFor="visibility-public" class="font-normal">
                       Public
@@ -648,8 +621,8 @@ export function SettingsPanel() {
                       id="visibility-friends"
                       name="profileVisibility"
                       value="friends"
-                      checked={settings.profileVisibility === 'friends'}
-                      onInput={() => handleChange('profileVisibility', 'friends')}
+                      checked={settings.value.profileVisibility === 'friends'}
+                      onInput={() => updateField('profileVisibility', 'friends')}
                     />
                     <Label htmlFor="visibility-friends" class="font-normal">
                       Friends only
@@ -661,8 +634,8 @@ export function SettingsPanel() {
                       id="visibility-private"
                       name="profileVisibility"
                       value="private"
-                      checked={settings.profileVisibility === 'private'}
-                      onInput={() => handleChange('profileVisibility', 'private')}
+                      checked={settings.value.profileVisibility === 'private'}
+                      onInput={() => updateField('visibility-private', 'private')}
                     />
                     <Label htmlFor="visibility-private" class="font-normal">
                       Private
@@ -673,7 +646,6 @@ export function SettingsPanel() {
 
               <Separator />
 
-              {/* Show Email */}
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="showEmail">Show Email on Profile</Label>
@@ -683,16 +655,15 @@ export function SettingsPanel() {
                 </div>
                 <Switch
                   id="showEmail"
-                  checked={settings.showEmail}
+                  checked={settings.value.showEmail}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('showEmail', e.currentTarget.checked)
+                    updateField('showEmail', e.currentTarget.checked)
                   }
                 />
               </div>
 
               <Separator />
 
-              {/* Show Activity */}
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="showActivity">Show Activity Status</Label>
@@ -702,16 +673,15 @@ export function SettingsPanel() {
                 </div>
                 <Switch
                   id="showActivity"
-                  checked={settings.showActivity}
+                  checked={settings.value.showActivity}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('showActivity', e.currentTarget.checked)
+                    updateField('showActivity', e.currentTarget.checked)
                   }
                 />
               </div>
 
               <Separator />
 
-              {/* Data Sharing */}
               <div class="flex items-center justify-between">
                 <div class="space-y-0.5">
                   <Label htmlFor="dataSharing">Data Sharing</Label>
@@ -721,9 +691,9 @@ export function SettingsPanel() {
                 </div>
                 <Switch
                   id="dataSharing"
-                  checked={settings.dataSharing}
+                  checked={settings.value.dataSharing}
                   onInput={(e: JSX.TargetedEvent<HTMLInputElement>) =>
-                    handleChange('dataSharing', e.currentTarget.checked)
+                    updateField('dataSharing', e.currentTarget.checked)
                   }
                 />
               </div>
@@ -745,16 +715,16 @@ export function SettingsPanel() {
           <Button
             variant="outline"
             onClick={handleReset}
-            disabled={!hasUnsavedChanges}
+            disabled={!hasUnsavedChanges.value}
           >
             Cancel
           </Button>
           <Button
             onClick={handleSave}
-            disabled={!hasUnsavedChanges || isSaving}
-            loading={isSaving}
+            disabled={!hasUnsavedChanges.value || isSaving.value}
+            loading={isSaving.value}
           >
-            {isSaving ? 'Saving...' : 'Save Changes'}
+            {isSaving.value ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
       </div>
@@ -763,39 +733,58 @@ export function SettingsPanel() {
 }
 ```
 
-## Key Features Explained
+## Key Features
 
-### 1. Tabbed Navigation
+### Signals-Based State Management
 
-Organize settings into logical groups:
+This recipe uses Signals for reactive state management with immutable updates:
 
 ```tsx
-<Tabs defaultValue="profile">
-  <TabList>
-    <Tab value="profile">Profile</Tab>
-    <Tab value="preferences">Preferences</Tab>
-    {/* ... more tabs */}
-  </TabList>
+import {signal, computed, effect, batch} from '@preact/signals';
 
-  <TabPanel value="profile">
-    {/* Profile settings */}
-  </TabPanel>
-</Tabs>
+// Individual signals for each piece of state
+const settings = signal<Settings>(DEFAULT_SETTINGS);
+const originalSettings = signal<Settings>(DEFAULT_SETTINGS);
+const isSaving = signal(false);
+const errors = signal<Record<string, string>>({});
+
+// Computed signal for derived state
+const hasUnsavedChanges = computed(() => {
+  return JSON.stringify(settings.value) !== JSON.stringify(originalSettings.value);
+});
+
+// Update with immutable pattern
+const updateField = (field: keyof Settings, value: any) => {
+  settings.value = {
+    ...settings.value,
+    [field]: value,
+  };
+};
 ```
 
-### 2. Unsaved Changes Detection
+### Effects for Side Effects
 
-Warn users before navigating away:
+Use `effect()` for loading data and handling browser events:
 
 ```tsx
-useEffect(() => {
-  const changed = JSON.stringify(settings) !== JSON.stringify(originalSettings);
-  setHasUnsavedChanges(changed);
-}, [settings, originalSettings]);
+// Load settings on mount
+effect(() => {
+  const loadSettings = async () => {
+    const response = await fetch('/api/settings');
+    const data = await response.json();
 
-useEffect(() => {
+    batch(() => {
+      settings.value = data;
+      originalSettings.value = data;
+    });
+  };
+  loadSettings();
+});
+
+// Cleanup with return function
+effect(() => {
   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-    if (hasUnsavedChanges) {
+    if (hasUnsavedChanges.value) {
       e.preventDefault();
       e.returnValue = '';
     }
@@ -803,55 +792,42 @@ useEffect(() => {
 
   window.addEventListener('beforeunload', handleBeforeUnload);
   return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-}, [hasUnsavedChanges]);
+});
 ```
 
-### 3. Form Validation
+### Validation and Error Handling
 
-Validate before saving:
+Validate before saving and show inline errors:
 
 ```tsx
 const validate = (): boolean => {
   const newErrors: Record<string, string> = {};
 
-  if (!settings.displayName.trim()) {
+  if (!settings.value.displayName.trim()) {
     newErrors.displayName = 'Display name is required';
   }
 
-  // ... more validation
+  if (!settings.value.email.trim()) {
+    newErrors.email = 'Email is required';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(settings.value.email)) {
+    newErrors.email = 'Invalid email address';
+  }
 
-  setErrors(newErrors);
+  errors.value = newErrors;
   return Object.keys(newErrors).length === 0;
 };
 ```
 
-### 4. Toast Notifications
+### Batch Updates for Multiple Changes
 
-Provide feedback on save success/failure:
-
-```tsx
-showToast({
-  title: 'Settings Saved',
-  description: 'Your changes have been saved successfully.',
-  variant: 'success',
-});
-```
-
-### 5. Reset Functionality
-
-Allow users to reset changes:
+Use `batch()` when updating multiple signals together:
 
 ```tsx
-// Reset to last saved
 const handleReset = () => {
-  setSettings(originalSettings);
-};
-
-// Reset to defaults
-const handleResetToDefaults = () => {
-  if (confirm('Reset all settings to default values?')) {
-    setSettings(DEFAULT_SETTINGS);
-  }
+  batch(() => {
+    settings.value = originalSettings.value;
+    errors.value = {};
+  });
 };
 ```
 
@@ -859,68 +835,62 @@ const handleResetToDefaults = () => {
 
 ### Auto-Save
 
-Save automatically after changes:
+Add auto-save after a delay:
 
 ```tsx
-useEffect(() => {
-  if (!hasUnsavedChanges) return;
+effect(() => {
+  if (!hasUnsavedChanges.value) return;
 
-  const timer = setTimeout(() => {
-    handleSave();
-  }, 2000); // Auto-save after 2 seconds of no changes
+  const timer = setTimeout(async () => {
+    await handleSave();
+  }, 2000);
 
   return () => clearTimeout(timer);
-}, [settings, hasUnsavedChanges]);
+});
 ```
 
-### Section-Specific Save
+### Per-Section Save
 
-Save individual sections instead of all at once:
+Save individual sections instead of all settings:
 
 ```tsx
 const handleSaveProfile = async () => {
-  const profileSettings = {
-    displayName: settings.displayName,
-    email: settings.email,
-    bio: settings.bio,
+  const profileData = {
+    displayName: settings.value.displayName,
+    email: settings.value.email,
+    bio: settings.value.bio,
   };
 
   await fetch('/api/settings/profile', {
     method: 'PUT',
-    body: JSON.stringify(profileSettings),
+    body: JSON.stringify(profileData),
   });
 };
 ```
 
-### Search/Filter Settings
+### Search Settings
 
-Add search for large settings panels:
+Filter settings with a search query:
 
 ```tsx
-const [searchQuery, setSearchQuery] = useState('');
+const searchQuery = signal('');
 
-const filteredSettings = useMemo(() => {
-  if (!searchQuery) return allSettings;
+const filteredSettings = computed(() => {
+  if (!searchQuery.value) return allSettings.value;
 
-  return allSettings.filter(setting =>
-    setting.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    setting.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  const query = searchQuery.value.toLowerCase();
+  return allSettings.value.filter(setting =>
+    setting.label.toLowerCase().includes(query) ||
+    setting.description?.toLowerCase().includes(query)
   );
-}, [searchQuery, allSettings]);
+});
 ```
-
-## Accessibility Features
-
-- **Semantic HTML**: Proper form elements and labels
-- **ARIA attributes**: `aria-invalid`, `aria-describedby` for errors
-- **Keyboard navigation**: All controls keyboard accessible
-- **Tab navigation**: Logical tab order between sections
-- **Focus management**: Clear focus indicators
-- **Screen reader support**: Error messages announced
 
 ## Testing
 
 ```tsx
+import {signal} from '@preact/signals';
+
 test('saves settings successfully', async () => {
   render(<SettingsPanel />);
 
@@ -933,6 +903,15 @@ test('saves settings successfully', async () => {
   await waitFor(() => {
     expect(screen.getByText(/settings saved/i)).toBeInTheDocument();
   });
+});
+
+test('detects unsaved changes', () => {
+  render(<SettingsPanel />);
+
+  const nameInput = screen.getByLabelText(/display name/i);
+  fireEvent.input(nameInput, {target: {value: 'Changed'}});
+
+  expect(screen.getByText(/unsaved changes/i)).toBeInTheDocument();
 });
 
 test('warns before leaving with unsaved changes', () => {
@@ -952,22 +931,3 @@ test('warns before leaving with unsaved changes', () => {
 
 - [Login Form](./login-form.md) - Form validation patterns
 - [Multi-Step Wizard](./multi-step-wizard.md) - Complex form flows
-- Profile editing patterns
-- User preferences management
-
-## Best Practices
-
-1. **Group related settings**: Use tabs or sections logically
-2. **Validate before saving**: Prevent invalid data from being saved
-3. **Warn about unsaved changes**: Don't lose user work
-4. **Provide feedback**: Confirm saves with toasts or messages
-5. **Allow reset**: Let users undo changes easily
-6. **Show defaults**: Indicate default values clearly
-7. **Test thoroughly**: Ensure all settings save correctly
-8. **Consider auto-save**: For better UX in appropriate contexts
-9. **Responsive design**: Settings should work on mobile
-10. **Document changes**: Consider showing a settings history
-
----
-
-This settings panel provides a comprehensive foundation for managing user preferences and configuration in production applications with excellent UX and accessibility.
