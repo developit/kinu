@@ -40,6 +40,12 @@ importers:
 
   demo:
     dependencies:
+      '@preact/signals':
+        specifier: ^2.6.1
+        version: 2.6.1(preact@10.26.9)
+      '@preact/signals-core':
+        specifier: ^1.12.2
+        version: 1.12.2
       highlight.js:
         specifier: ^11.11.1
         version: 11.11.1
@@ -402,6 +408,14 @@ packages:
     peerDependencies:
       '@babel/core': 7.x
       vite: 2.x || 3.x || 4.x || 5.x || 6.x
+
+  '@preact/signals-core@1.12.2':
+    resolution: {integrity: sha512-5Yf8h1Ke3SMHr15xl630KtwPTW4sYDFkkxS0vQ8UiQLWwZQnrF9IKaVG1mN5VcJz52EcWs2acsc/Npjha/7ysA==}
+
+  '@preact/signals@2.6.1':
+    resolution: {integrity: sha512-Gp3DI1T/0YyirwJnImR8l9xyVJgKiVzJXmEhic1/7SPw3zStrsvuBpwKnD609CzsIdzxprWa6yTNXN+VLLZPGQ==}
+    peerDependencies:
+      preact: '>= 10.25.0 || >=11.0.0-0'
 
   '@prefresh/babel-plugin@0.5.1':
     resolution: {integrity: sha512-uG3jGEAysxWoyG3XkYfjYHgaySFrSsaEb4GagLzYaxlydbuREtaX+FTxuIidp241RaLl85XoHg9Ej6E4+V1pcg==}
@@ -1262,6 +1276,13 @@ snapshots:
     transitivePeerDependencies:
       - preact
       - supports-color
+
+  '@preact/signals-core@1.12.2': {}
+
+  '@preact/signals@2.6.1(preact@10.26.9)':
+    dependencies:
+      '@preact/signals-core': 1.12.2
+      preact: 10.26.9
 
   '@prefresh/babel-plugin@0.5.1': {}
 
