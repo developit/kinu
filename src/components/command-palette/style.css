@@ -1,0 +1,37 @@
+@import "../../variables.css";
+
+[p="command-palette"] {
+  border: none;
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-background));
+  padding: 0.5rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  max-width: 32rem;
+}
+[p="command-palette"][open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+[p="command-palette"]::backdrop {
+  background-color: rgb(0 0 0 / 0.8);
+}
+
+[p="command-palette-input"] {
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  background-color: hsl(var(--p-muted));
+  border-radius: var(--p-radius);
+}
+
+[p="command-palette-item"] {
+  text-align: left;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+}
+[p="command-palette-item"][selected],
+[p="command-palette-item"]:focus {
+  background-color: hsl(var(--p-muted));
+}

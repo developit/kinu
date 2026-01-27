@@ -93,4 +93,5 @@ export {
   CarouselNext,
 } from './components/carousel';
 export {DatePicker} from './components/date-picker';
+export {CommandPalette} from './components/command-palette';
 export * from './components/typography';
