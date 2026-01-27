@@ -1,4 +1,5 @@
 import {Avatar, Button, Input} from 'pui';
+import type {JSX} from 'preact';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
 
@@ -64,9 +65,11 @@ export default function Chat() {
     }, 1000);
   }
 
-  function handleKeyPress(e: any) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
+  function handleKeyPress(
+    event: JSX.TargetedKeyboardEvent<HTMLInputElement>,
+  ) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
       sendMessage();
     }
   }
@@ -81,7 +84,7 @@ export default function Chat() {
           {/* Chat Header */}
           <div class="chat-header">
             <div class="chat-contact">
-              <Avatar class="chat-avatar" fallback="SA" />
+              <Avatar class="chat-avatar" alt="Support Agent" />
               <div class="contact-info">
                 <h3 class="contact-name">Support Agent</h3>
                 <p class="contact-email">support@example.com</p>

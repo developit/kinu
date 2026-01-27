@@ -1,12 +1,12 @@
 {
-  "name": "ui-toolkit",
-  "version": "1.0.0",
+  "name": "pui",
+  "version": "0.1.0",
   "description": "Performance-focused Preact UI toolkit",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "type": "module",
-  "types": "dist/index.d.ts",
-  "sideEffects": [
+  "types": "./dist/index.d.ts",
+  "x-sideEffects": [
     "src/lib/commands.ts"
   ],
   "exports": {
@@ -16,12 +16,17 @@
       "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./*.css": "./dist/*.css"
+    "./style.css": "./dist/index.css"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build",
+    "build:demo": "cd demo && pnpm build",
     "lint": "tsc && biome lint",
-    "dev": "vite build --watch"
+    "dev": "vite build --watch",
+    "test": "vitest run"
   },
   "peerDependencies": {
     "preact": "^10.26.8"
@@ -31,8 +36,10 @@
     "@preact/preset-vite": "^2.10.1",
     "@types/node": "^22.15.30",
     "preact": "^10.26.9",
+    "preact-render-to-string": "^6.5.11",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^3.0.6"
   },
   "keywords": [
     "preact",
@@ -40,6 +47,11 @@
     "ui-toolkit",
     "pui"
   ],
-  "author": "",
-  "license": "MIT"
+  "author": "Jason Miller (http://developit.dev)",
+  "license": "MIT",
+  "pnpm": {
+    "patchedDependencies": {
+      "preact-iso": "patches/preact-iso.patch"
+    }
+  }
 }

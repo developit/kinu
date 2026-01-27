@@ -7,6 +7,13 @@
   padding: 0.5rem 0;
   min-width: 100%;
 }
+[p="dropdown-content"][to="left"] {
+  left: auto;
+  right: 0;
+  --tf-x: 0;
+  padding: 0.5rem 0;
+  min-width: 100%;
+}
 
 [p="dropdown-menu-item"],
 [p="context-menu-item"],
@@ -23,6 +30,8 @@
   white-space: nowrap;
   font: inherit;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
   outline: none;
 
   &:hover,

@@ -5,10 +5,11 @@
   display: inline-block;
 }
 
-[p="hover-card"] > [p="hover-card-content"] {
+[p="hover-card-content"] {
   position: absolute;
   top: 100%;
   left: 50%;
+  width: max-content;
   transform: translateX(-50%) scale(0.95);
   transform-origin: top center;
   background-color: hsl(var(--p-popover));

@@ -2,16 +2,12 @@ import {
   Button,
   Card,
   Input,
-  TabList,
-  Tab,
-  TabPanel,
   Badge,
   Alert,
   Progress,
   Switch,
   Tooltip,
   Avatar,
-  Separator,
   Dialog,
   toast,
   ToastContainer,
@@ -19,7 +15,7 @@ import {
   Checkbox,
   Label,
 } from 'pui';
-import {useState, useEffect} from 'preact/hooks';
+import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
 
 export default function Home() {
@@ -43,7 +39,7 @@ export default function Home() {
               <Button href="/getting-started" size="lg">
                 Get Started
               </Button>
-              <Button href="/components" variant="outline" size="lg">
+              <Button href="/docs" variant="outline" size="lg">
                 Browse Components
               </Button>
             </div>
@@ -155,7 +151,7 @@ export default function Home() {
             <Button href="/getting-started" size="lg">
               Start Building →
             </Button>
-            <Button variant="ghost" href="/components">
+            <Button variant="ghost" href="/docs">
               Explore Components
             </Button>
           </div>
@@ -218,7 +214,7 @@ function HeroDemo() {
 
       <div class="task-list">
         {tasks.map((task) => (
-          <div key={task.id} class="task-item">
+          <Label key={task.id} class="task-item">
             <Checkbox
               checked={task.completed}
               onInput={() => toggleTask(task.id)}
@@ -226,7 +222,7 @@ function HeroDemo() {
             <span class={task.completed ? 'task-completed' : ''}>
               {task.text}
             </span>
-          </div>
+          </Label>
         ))}
       </div>
 

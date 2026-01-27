@@ -13,6 +13,7 @@ export default defineConfig({
   resolve: {
     alias: {
       pui: resolve(__dirname, '..'),
+      'pui-docs': resolve(__dirname, '../docs'),
     },
     conditions: ['source', ...defaultClientConditions],
   },

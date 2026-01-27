@@ -7,6 +7,7 @@ import {
   Textarea,
   RadioGroup,
   Radio,
+  Label,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
@@ -100,16 +101,22 @@ function DetailsEditor({
         }
       />
       <RadioGroup>
-        {statuses.map((s) => (
-          <label>
-            <Radio
-              name={`status-${issue.id}`}
-              checked={issue.status === s}
-              onInput={() => updateIssue({status: s})}
-            />
-            {s}
-          </label>
-        ))}
+        {statuses.map((status) => {
+          const statusId = `status-${issue.id}-${status
+            .toLowerCase()
+            .replace(/\s+/g, '-')}`;
+          return (
+            <div class="linear-radio-option">
+              <Radio
+                id={statusId}
+                name={`status-${issue.id}`}
+                checked={issue.status === status}
+                onInput={() => updateIssue({status})}
+              />
+              <Label htmlFor={statusId}>{status}</Label>
+            </div>
+          );
+        })}
       </RadioGroup>
       <Select
         value={issue.assignee}
@@ -122,16 +129,20 @@ function DetailsEditor({
         ))}
       </Select>
       <RadioGroup>
-        {priorities.map((p) => (
-          <label>
-            <Radio
-              name={`priority-${issue.id}`}
-              checked={issue.priority === p}
-              onInput={() => updateIssue({priority: p})}
-            />
-            {p}
-          </label>
-        ))}
+        {priorities.map((priority) => {
+          const priorityId = `priority-${issue.id}-${priority.toLowerCase()}`;
+          return (
+            <div class="linear-radio-option">
+              <Radio
+                id={priorityId}
+                name={`priority-${issue.id}`}
+                checked={issue.priority === priority}
+                onInput={() => updateIssue({priority})}
+              />
+              <Label htmlFor={priorityId}>{priority}</Label>
+            </div>
+          );
+        })}
       </RadioGroup>
       <div class="linear-tag-editor">
         {issue.labels.map((l) => (
@@ -215,7 +226,7 @@ function DetailsEditor({
 
 export default function Linear() {
   const [issues, setIssues] = useState<Issue[]>(initialIssues);
-  const [selectedId, setSelectedId] = useState();
+  const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [title, setTitle] = useState('');
   const [query, setQuery] = useState('');
   const drawerRef = useRef<HTMLDialogElement>(null);
@@ -296,9 +307,9 @@ export default function Linear() {
         <Sidebar>
           <h1 style="margin:0;font-size:1.25rem;padding:.5rem;">Linear</h1>
           <nav class="linear-nav">
-            <a href="#">Inbox</a>
-            <a href="#">My Issues</a>
-            <a href="#">Projects</a>
+            <a href="/linear?view=inbox">Inbox</a>
+            <a href="/linear?view=my-issues">My Issues</a>
+            <a href="/linear?view=projects">Projects</a>
           </nav>
           <div class="linear-mobile-menu">
             <DropdownMenu>
@@ -313,14 +324,12 @@ export default function Linear() {
             </DropdownMenu>
           </div>
           <Input
-            size="sm"
             value={query}
             onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
             placeholder="Search issues"
           />
           <div class="linear-add">
             <Input
-              size="sm"
               value={title}
               onInput={(e) => setTitle((e.target as HTMLInputElement).value)}
               placeholder="New issue"
