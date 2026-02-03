@@ -91,6 +91,8 @@ export function Nav({
                 class="theme-menu-item"
                 data-theme="default"
                 htmlFor="pui-theme-default"
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={(event) => event.stopPropagation()}
               >
                 Default
                 <span class="theme-menu-indicator" aria-hidden="true" />
@@ -99,6 +101,8 @@ export function Nav({
                 class="theme-menu-item"
                 data-theme="glass"
                 htmlFor="pui-theme-glass"
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={(event) => event.stopPropagation()}
               >
                 Glass
                 <span class="theme-menu-indicator" aria-hidden="true" />
