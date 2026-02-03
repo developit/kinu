@@ -18,6 +18,19 @@ export function Nav({
   return (
     <NavigationMenu class={className ?? 'home-nav'}>
       {left}
+      <input
+        id="pui-theme-default"
+        class="theme-input"
+        type="radio"
+        name="pui-theme"
+        defaultChecked
+      />
+      <input
+        id="pui-theme-glass"
+        class="theme-input"
+        type="radio"
+        name="pui-theme"
+      />
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink href="/">Home</NavigationMenuLink>
@@ -74,14 +87,21 @@ export function Nav({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent class="theme-menu" to="left">
-              <input
-                id="pui-theme-glass"
-                class="theme-input"
-                type="checkbox"
-              />
-              <label class="theme-menu-item" htmlFor="pui-theme-glass">
-                Glass theme
-                <span class="theme-menu-state" aria-hidden="true" />
+              <label
+                class="theme-menu-item"
+                data-theme="default"
+                htmlFor="pui-theme-default"
+              >
+                Default
+                <span class="theme-menu-indicator" aria-hidden="true" />
+              </label>
+              <label
+                class="theme-menu-item"
+                data-theme="glass"
+                htmlFor="pui-theme-glass"
+              >
+                Glass
+                <span class="theme-menu-indicator" aria-hidden="true" />
               </label>
             </DropdownMenuContent>
           </DropdownMenu>
