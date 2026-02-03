@@ -13,14 +13,19 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: hsl(var(--p-background));
+  background-color: hsl(var(--p-surface));
+  color: hsl(var(--p-surface-foreground));
+  -webkit-backdrop-filter: var(--p-glass-backdrop);
+  backdrop-filter: var(--p-glass-backdrop);
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   border-radius: 0;
   animation: sheet-show 300ms var(--p-ease);
 }
 
 [p="sheet-content"]::backdrop {
-  background-color: rgb(0 0 0 / 0.8);
+  background-color: hsl(var(--p-overlay));
+  -webkit-backdrop-filter: blur(var(--p-overlay-blur));
+  backdrop-filter: blur(var(--p-overlay-blur));
   animation: dialog-overlay-show 300ms var(--p-ease);
 }
 

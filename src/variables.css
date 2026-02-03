@@ -39,6 +39,10 @@
   /* Radius */
   --p-radius: 0.5rem;
 
+  --p-surface: var(--p-background);
+  --p-surface-foreground: var(--p-foreground);
+  --p-overlay: 0 0% 0% / 0.8;
+  --p-overlay-blur: 0px;
   --p-glass-backdrop: none;
   --p-theme-bg: hsl(var(--p-background));
 
@@ -154,6 +158,11 @@
   --p-border: 217.2 32.6% 17.5%;
   --p-input: 217.2 32.6% 17.5%;
   --p-ring: 212.7 26.8% 83.9%;
+
+  --p-surface: var(--p-background);
+  --p-surface-foreground: var(--p-foreground);
+  --p-overlay: 0 0% 0% / 0.8;
+  --p-overlay-blur: 0px;
 }
 
 :root:has(#pui-theme-glass:checked),
@@ -196,6 +205,11 @@
   --p-input: 220 30% 82% / 0.4;
   --p-ring: 230 55% 40%;
 
+  --p-surface: 210 40% 98% / 0.95;
+  --p-surface-foreground: 230 35% 12%;
+  --p-overlay: 230 25% 12% / 0.45;
+  --p-overlay-blur: 6px;
+
   --p-theme-bg:
     radial-gradient(
       120% 120% at 20% 10%,
@@ -208,5 +222,5 @@
       transparent 50%
     ),
     linear-gradient(135deg, hsl(210 40% 98%), hsl(220 35% 96%));
-  --p-glass-backdrop: blur(18px) saturate(140%);
+  --p-glass-backdrop: blur(32px) saturate(160%);
 }

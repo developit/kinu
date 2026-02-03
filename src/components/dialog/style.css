@@ -3,7 +3,10 @@
 [p="dialog-content"] {
   border: none;
   border-radius: var(--p-radius);
-  background-color: hsl(var(--p-background));
+  background-color: hsl(var(--p-surface));
+  color: hsl(var(--p-surface-foreground));
+  -webkit-backdrop-filter: var(--p-glass-backdrop);
+  backdrop-filter: var(--p-glass-backdrop);
   padding: 0;
   max-width: 32rem;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
@@ -19,8 +22,10 @@
   display: flex;
 }
 [p="dialog-content"]::backdrop {
-  background-color: rgb(0 0 0 / 0.8);
-  animation: dialog-overlay-show 300ms  var(--p-ease);
+  background-color: hsl(var(--p-overlay));
+  -webkit-backdrop-filter: blur(var(--p-overlay-blur));
+  backdrop-filter: blur(var(--p-overlay-blur));
+  animation: dialog-overlay-show 300ms var(--p-ease);
   /* backdrop-filter: blur(1px); */
 }
 

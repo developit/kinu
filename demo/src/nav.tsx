@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  Button,
 } from 'pui';
 
 export function Nav({
@@ -51,9 +52,39 @@ export function Nav({
           </DropdownMenu>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <label class="theme-toggle" htmlFor="pui-theme-glass">
-            Glass
-          </label>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="theme-trigger"
+                aria-label="Theme options"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M12 3.5c-5.3 0-9.5 3.8-9.5 8.6 0 4.1 3.1 7.4 7.5 8.2 1.2.2 2.4-.3 3.1-1.3l.7-1c.4-.6 1.1-.9 1.8-.9h1.2c3 0 5.4-2.1 5.4-4.7C22.2 7.3 17.5 3.5 12 3.5Zm-4.1 8.6a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0Zm3-4.3a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0Zm3.6 5.9a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0Zm.7-4.8a1.2 1.2 0 1 1 2.4 0 1.2 1.2 0 0 1-2.4 0Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent class="theme-menu" to="left">
+              <input
+                id="pui-theme-glass"
+                class="theme-input"
+                type="checkbox"
+              />
+              <label class="theme-menu-item" htmlFor="pui-theme-glass">
+                Glass theme
+                <span class="theme-menu-state" aria-hidden="true" />
+              </label>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
