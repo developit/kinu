@@ -39,6 +39,9 @@
   /* Radius */
   --p-radius: 0.5rem;
 
+  --p-glass-backdrop: none;
+  --p-theme-bg: hsl(var(--p-background));
+
   --p-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --p-ease-out: var(--p-ease-fallback);
   --p-ease-elastic: var(--p-ease-fallback);
@@ -151,4 +154,59 @@
   --p-border: 217.2 32.6% 17.5%;
   --p-input: 217.2 32.6% 17.5%;
   --p-ring: 212.7 26.8% 83.9%;
+}
+
+:root:has(#pui-theme-glass:checked),
+[data-theme="glass"],
+.glass {
+  /* Base colors */
+  --p-background: 210 40% 98% / 0.72;
+  --p-foreground: 230 35% 12%;
+  --p-card: 210 40% 98% / 0.55;
+  --p-card-foreground: 230 35% 12%;
+  --p-popover: 210 40% 98% / 0.75;
+  --p-popover-foreground: 230 35% 12%;
+  --p-sidebar: 210 40% 96% / 0.6;
+
+  /* Primary colors */
+  --p-primary: 230 55% 38%;
+  --p-primary-foreground: 210 40% 98%;
+  --p-primary-hover: 230 55% 32%;
+
+  /* Secondary colors */
+  --p-secondary: 210 30% 92% / 0.6;
+  --p-secondary-foreground: 230 35% 12%;
+  --p-secondary-hover: 210 30% 88% / 0.7;
+
+  /* Muted colors */
+  --p-muted: 210 30% 92% / 0.45;
+  --p-muted-foreground: 230 16% 40%;
+
+  /* Accent colors */
+  --p-accent: 210 40% 95% / 0.6;
+  --p-accent-foreground: 230 35% 12%;
+
+  /* Destructive colors */
+  --p-destructive: 0 72% 48%;
+  --p-destructive-foreground: 210 40% 98%;
+  --p-destructive-hover: 0 72% 42%;
+
+  /* Border and input */
+  --p-border: 220 30% 80% / 0.5;
+  --p-input: 220 30% 82% / 0.4;
+  --p-ring: 230 55% 40%;
+
+  --p-theme-bg:
+    radial-gradient(
+      120% 120% at 20% 10%,
+      hsl(210 100% 96% / 0.8),
+      transparent 55%
+    ),
+    radial-gradient(
+      100% 100% at 80% 0%,
+      hsl(270 95% 92% / 0.65),
+      transparent 50%
+    ),
+    linear-gradient(135deg, hsl(210 40% 98%), hsl(220 35% 96%));
+  --p-glass-backdrop: blur(18px) saturate(140%);
 }

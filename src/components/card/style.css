@@ -5,6 +5,8 @@
   border: 1px solid hsl(var(--p-border));
   background-color: hsl(var(--p-card));
   color: hsl(var(--p-card-foreground));
+  -webkit-backdrop-filter: var(--p-glass-backdrop);
+  backdrop-filter: var(--p-glass-backdrop);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   
   /* Default padding */

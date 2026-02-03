@@ -50,6 +50,11 @@ export function Nav({
             </DropdownMenuContent>
           </DropdownMenu>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <label class="theme-toggle" htmlFor="pui-theme-glass">
+            Glass
+          </label>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

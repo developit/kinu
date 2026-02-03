@@ -5,12 +5,13 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: hsl(var(--p-background));
+  background: var(--p-theme-bg, hsl(var(--p-background)));
   color: hsl(var(--p-foreground));
   font-family: system-ui, sans-serif;
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
   overflow-x: clip;
+  background-attachment: fixed;
 }
 
 /* .home,
@@ -139,6 +140,42 @@ pre.code-block {
   box-shadow: inset 0 -1px 0 hsl(var(--p-border)), 0 0 12px rgb(0 0 0 / 0.1);
   z-index: 500;
   overflow: visible;
+}
+
+.theme-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid hsl(var(--p-border));
+  background: hsl(var(--p-card));
+  color: hsl(var(--p-foreground));
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease,
+    box-shadow 150ms ease;
+  -webkit-backdrop-filter: var(--p-glass-backdrop);
+  backdrop-filter: var(--p-glass-backdrop);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+:root:has(#pui-theme-glass:checked) .theme-toggle {
+  background: hsl(var(--p-primary) / 0.18);
+  border-color: hsl(var(--p-primary) / 0.4);
+  box-shadow: 0 8px 24px hsl(var(--p-primary) / 0.25);
 }
 body .home-nav + * {
   margin-top: 4rem;

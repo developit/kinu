@@ -16,6 +16,8 @@
   color: hsl(var(--p-popover-foreground));
   border-radius: var(--p-radius);
   border: 1px solid hsl(var(--p-border));
+  -webkit-backdrop-filter: var(--p-glass-backdrop);
+  backdrop-filter: var(--p-glass-backdrop);
   padding: 0.5rem;
   margin-top: 0.25rem;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
