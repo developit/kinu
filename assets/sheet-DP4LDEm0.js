@@ -1,2 +1,0 @@
-import{u as e}from"./index-DbFjT-Hy.js";import{U as n,B as t,V as r,W as o,Q as h}from"./style-CLlwlD1p.js";function i(){return e(h,{children:[e(n,{children:e(t,{variant:"outline",children:"Open Sheet"})}),e(r,{children:[e("p",{style:{margin:"0 0 1rem 0"},children:"Sheet Content"}),e(o,{children:e(t,{variant:"outline",children:"Close"})})]})]})}const l="<Sheet>...</Sheet>",c={Demo:i,code:l};export{i as Demo,l as code,c as default};
-//# sourceMappingURL=sheet-DP4LDEm0.js.map

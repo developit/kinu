@@ -1,2 +1,0 @@
-import{u as t}from"./index-DbFjT-Hy.js";import{a4 as e}from"./style-CLlwlD1p.js";function o(){return t(e,{ratio:16/9,style:{backgroundColor:"hsl(var(--p-muted))",borderRadius:"0.5rem",display:"flex",alignItems:"center",justifyContent:"center"},children:t("span",{children:"16:9 Aspect Ratio"})})}const r="<AspectRatio ratio={16/9}>...</AspectRatio>",s={Demo:o,code:r};export{o as Demo,r as code,s as default};
-//# sourceMappingURL=aspect-ratio-CIcgMj-M.js.map
