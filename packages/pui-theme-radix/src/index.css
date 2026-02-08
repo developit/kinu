@@ -1,0 +1,17 @@
+/**
+ * PUI Radix Themes - Main entry point
+ *
+ * This theme maps Radix Themes design tokens to PUI's --p-* CSS custom properties
+ * and ports component styles from Radix Themes to PUI attribute selectors.
+ *
+ * To use: import this file (or the built dist/style.css) alongside PUI.
+ * It will override PUI's default tokens and component styles with Radix-flavored ones.
+ */
+
+/* Generated tokens (Radix → PUI HSL triplets) */
+@import "./generated/tokens.css";
+
+/* Component ports */
+@import "./components/button.css";
+@import "./components/input.css";
+@import "./components/dialog.css";

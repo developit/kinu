@@ -1,0 +1,153 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/dialog.css
+ *
+ * Selector mapping:
+ * - .rt-DialogOverlay            -> [p="dialog-content"]::backdrop
+ * - .rt-DialogContent            -> [p="dialog-content"]
+ * - .rt-DialogTitle              -> (inherited from PUI)
+ * - .rt-DialogDescription        -> (inherited from PUI)
+ *
+ * State mapping:
+ * - [data-state="open"]          -> [open] (native dialog)
+ * - [data-state="closed"]        -> close animation (via closing class or :not([open]))
+ *
+ * Radix tokens used:
+ * - --color-overlay              -> mapped to --p-overlay
+ * - --color-panel-solid          -> mapped to --p-card
+ * - --shadow-4 / --shadow-5      -> approximated with --p-shadow-1
+ */
+
+/* ============================================================================
+ * Dialog content
+ * ============================================================================ */
+
+[p="dialog-content"] {
+  border: none;
+  border-radius: calc(var(--p-radius) + 0.25rem);
+  background-color: hsl(var(--p-card));
+  color: hsl(var(--p-card-foreground));
+  padding: 0;
+  max-width: 32rem;
+  width: calc(100% - 2rem);
+
+  /* Radix-style shadow */
+  box-shadow:
+    0 0 0 0.5px hsl(var(--p-border) / 0.3),
+    0 16px 70px hsl(var(--p-foreground) / 0.35);
+
+  /* Animation for opening */
+  animation: p-dialog-content-show 200ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+[p="dialog-content"][open] {
+  display: flex;
+}
+
+/* ============================================================================
+ * Backdrop / Overlay (Radix: semi-transparent dark overlay)
+ * ============================================================================ */
+
+[p="dialog-content"]::backdrop {
+  background-color: hsl(var(--p-overlay, 0 0% 0% / 0.45));
+  animation: p-dialog-overlay-show 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================================
+ * Animations
+ * ============================================================================ */
+
+@keyframes p-dialog-content-show {
+  from {
+    opacity: 0;
+    transform: translate(0, -0.5rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes p-dialog-overlay-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================================================
+ * Dialog sizes (optional, Radix supports different max widths)
+ * ============================================================================ */
+
+[p="dialog-content"][size="1"] {
+  max-width: 28rem;
+}
+
+[p="dialog-content"][size="2"],
+[p="dialog-content"][size="sm"],
+[p="dialog-content"]:not([size]) {
+  max-width: 32rem;
+}
+
+[p="dialog-content"][size="3"],
+[p="dialog-content"][size="md"] {
+  max-width: 40rem;
+}
+
+[p="dialog-content"][size="4"],
+[p="dialog-content"][size="lg"] {
+  max-width: 48rem;
+}
+
+/* ============================================================================
+ * Popover content (shared Radix surface styles)
+ * ============================================================================ */
+
+[p="popover-content"] {
+  border: none;
+  border-radius: calc(var(--p-radius) + 0.125rem);
+  background-color: hsl(var(--p-popover));
+  color: hsl(var(--p-popover-foreground));
+  padding: 1rem;
+
+  /* Radix popover shadow */
+  box-shadow:
+    0 0 0 0.5px hsl(var(--p-border) / 0.3),
+    0 8px 40px hsl(var(--p-foreground) / 0.14);
+
+  animation: p-popover-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes p-popover-show {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================================================
+ * Dropdown menu content (shared surface)
+ * ============================================================================ */
+
+[p="dropdown-content"] {
+  border: none;
+  border-radius: calc(var(--p-radius) + 0.125rem);
+  background-color: hsl(var(--p-popover));
+  color: hsl(var(--p-popover-foreground));
+  padding: 0.25rem;
+
+  box-shadow:
+    0 0 0 0.5px hsl(var(--p-border) / 0.3),
+    0 12px 60px hsl(var(--p-foreground) / 0.2);
+
+  animation: p-popover-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
