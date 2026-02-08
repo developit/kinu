@@ -64,11 +64,15 @@
 [p="scroll-area"]::-webkit-scrollbar-track {
   background-color: var(--gray-a3);
   border-radius: var(--scrollarea-scrollbar-border-radius);
+  border: var(--space-1) solid transparent;
+  background-clip: content-box;
 }
 
 [p="scroll-area"]::-webkit-scrollbar-thumb {
   background-color: var(--gray-a8);
   border-radius: var(--scrollarea-scrollbar-border-radius);
+  border: var(--space-1) solid transparent;
+  background-clip: content-box;
 }
 
 [p="scroll-area"]::-webkit-scrollbar-thumb:hover {
