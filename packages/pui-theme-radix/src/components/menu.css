@@ -1,59 +1,54 @@
-/* Ported from Radix Themes:
- * - Menu items (context-menu, dropdown-menu, combobox)
- * - Radix uses accent-colored hover highlights, not gray
+/* Ported from Radix Themes base-menu.css
+ *
+ * Radix size-2 values (default):
+ *   --base-menu-content-padding: var(--space-2) = 8px
+ *   --base-menu-item-padding-left/right: var(--space-3) = 12px
+ *   --base-menu-item-height: var(--space-6) = 32px
+ *   content border-radius: var(--radius-4) = 8px
+ *   item border-radius: var(--radius-2) = 4px
+ *   shadow: --shadow-5 (1px outline + deep shadow)
+ *   highlighted: accent-9 bg, accent-contrast text (macOS Sonoma style)
  *
  * Selector mapping:
- * - .rt-BaseMenuItem -> [p="dropdown-menu-item"], [p="context-menu-item"], [p="combobox-option"]
- * - .rt-ContextMenuContent -> [p="context-menu"]
- * - .rt-DropdownMenuContent -> [p="dropdown-content"]
+ *   .rt-BaseMenuContent  -> [p="context-menu"], [p="dropdown-content"], [p="combobox-list"]
+ *   .rt-BaseMenuItem     -> [p="dropdown-menu-item"], [p="context-menu-item"], [p="combobox-option"]
+ *   .rt-BaseMenuSeparator -> [p="separator"] (inside a menu)
  */
 
 /* ============================================================================
- * Context menu surface
+ * Menu surfaces – generous padding, Radix shadow-5, rounded
  * ============================================================================ */
 
-[p="context-menu"] {
+[p="context-menu"],
+[p="dropdown-content"],
+[p="combobox-list"] {
   border: none;
-  border-radius: calc(var(--p-radius) + 0.125rem);
+  border-radius: 8px;
   background-color: hsl(var(--p-popover));
   color: hsl(var(--p-popover-foreground));
-  padding: 0.25rem;
+  padding: 0.5rem;
 
+  /* Radix --shadow-5: 1px outline ring + deep layered shadow */
   box-shadow:
-    0 0 0 0.5px hsl(var(--p-border) / 0.3),
-    0 12px 60px hsl(var(--p-foreground) / 0.25);
+    0 0 0 1px hsl(var(--p-border) / 0.25),
+    0 12px 60px rgba(0, 0, 0, 0.12),
+    0 12px 32px -16px hsl(var(--p-border) / 0.4);
 }
 
 /* ============================================================================
- * Dropdown content surface
- * ============================================================================ */
-
-[p="dropdown-content"] {
-  border: none;
-  border-radius: calc(var(--p-radius) + 0.125rem);
-  background-color: hsl(var(--p-popover));
-  color: hsl(var(--p-popover-foreground));
-  padding: 0.25rem;
-
-  box-shadow:
-    0 0 0 0.5px hsl(var(--p-border) / 0.3),
-    0 12px 60px hsl(var(--p-foreground) / 0.2);
-}
-
-/* ============================================================================
- * Menu items – accent-colored hover (the #1 visual difference from PUI)
- * Radix Themes highlights menu items with the accent color (blue) on hover,
- * giving white text on a saturated background.
+ * Menu items – 32px height, 12px padding, 4px radius, accent highlight
  * ============================================================================ */
 
 [p="dropdown-menu-item"],
 [p="context-menu-item"],
 [p="combobox-option"] {
-  padding: 0.375rem 0.5rem;
-  border-radius: calc(var(--p-radius) - 0.0625rem);
+  height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: 4px;
   font-size: 0.875rem;
   line-height: 1.25rem;
   transition: none;
+  outline: none;
 
   &:hover,
   &:focus,
@@ -64,15 +59,14 @@
 }
 
 /* ============================================================================
- * Combobox list surface
+ * Separators inside menus – inset with margins matching item padding
+ * (Radix: margin-left/right = item padding, margin-top/bottom = space-2)
  * ============================================================================ */
 
-[p="combobox-list"] {
-  border: none;
-  border-radius: calc(var(--p-radius) + 0.125rem);
-  padding: 0.25rem;
-
-  box-shadow:
-    0 0 0 0.5px hsl(var(--p-border) / 0.3),
-    0 12px 60px hsl(var(--p-foreground) / 0.2);
+[p="context-menu"] > [p="separator"],
+[p="dropdown-content"] > [p="separator"],
+[p="combobox-list"] [p="separator"] {
+  height: 1px;
+  background-color: hsl(var(--p-border) / 0.6);
+  margin: 0.5rem 0.75rem;
 }
