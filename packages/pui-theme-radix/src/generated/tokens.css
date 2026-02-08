@@ -1,0 +1,93 @@
+/* src/generated/tokens.css - GENERATED; DO NOT EDIT */
+:root {
+  --p-background: 0 0% 100%;
+  --p-foreground: 210 15% 15%;
+  --p-card: 0 0% 100%;
+  --p-card-foreground: 210 15% 15%;
+  --p-popover: 0 0% 100%;
+  --p-popover-foreground: 210 15% 15%;
+  --p-sidebar: 210 18% 96%;
+  --p-primary: 210 88% 48%;
+  --p-primary-hover: 210 90% 42%;
+  --p-primary-foreground: 0 0% 100%;
+  --p-secondary: 210 16% 93%;
+  --p-secondary-hover: 210 14% 90%;
+  --p-secondary-foreground: 210 15% 15%;
+  --p-muted: 210 16% 93%;
+  --p-muted-foreground: 210 10% 30%;
+  --p-accent: 210 95% 91%;
+  --p-accent-foreground: 210 98% 28%;
+  --p-destructive: 0 85% 55%;
+  --p-destructive-hover: 0 90% 50%;
+  --p-destructive-foreground: 0 0% 100%;
+  --p-border: 210 5.1% 84.6%;
+  --p-input: 210 5.1% 84.6%;
+  --p-ring: 210 80% 54%;
+  --p-radius: 0.5rem;
+  --p-surface: 210 20% 98%;
+  --p-overlay: 0 0% 55%;
+  --p-shadow-1: 0 1px 2px hsl(var(--p-foreground) / 0.06), 0 2px 10px hsl(var(--p-foreground) / 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --p-background: 220 18% 10%;
+    --p-foreground: 210 20% 94%;
+    --p-card: 220 18% 14%;
+    --p-card-foreground: 210 20% 94%;
+    --p-popover: 220 18% 14%;
+    --p-popover-foreground: 210 20% 94%;
+    --p-sidebar: 210 18% 12%;
+    --p-primary: 210 90% 60%;
+    --p-primary-hover: 210 92% 66%;
+    --p-primary-foreground: 210 40% 10%;
+    --p-secondary: 210 18% 16%;
+    --p-secondary-hover: 210 18% 20%;
+    --p-secondary-foreground: 210 20% 94%;
+    --p-muted: 210 18% 16%;
+    --p-muted-foreground: 210 20% 80%;
+    --p-accent: 211.9 33.8% 22%;
+    --p-accent-foreground: 210 100% 85%;
+    --p-destructive: 0 80% 65%;
+    --p-destructive-hover: 0 85% 70%;
+    --p-destructive-foreground: 0 0% 10%;
+    --p-border: 217.3 7.3% 26.5%;
+    --p-input: 217.3 7.3% 26.5%;
+    --p-ring: 210 85% 52%;
+    --p-radius: 0.5rem;
+    --p-surface: 220 18% 18%;
+    --p-overlay: 220 18% 4%;
+    --p-shadow-1: 0 1px 2px hsl(var(--p-foreground) / 0.06), 0 2px 10px hsl(var(--p-foreground) / 0.08);
+  }
+}
+
+.dark {
+  --p-background: 220 18% 10%;
+  --p-foreground: 210 20% 94%;
+  --p-card: 220 18% 14%;
+  --p-card-foreground: 210 20% 94%;
+  --p-popover: 220 18% 14%;
+  --p-popover-foreground: 210 20% 94%;
+  --p-sidebar: 210 18% 12%;
+  --p-primary: 210 90% 60%;
+  --p-primary-hover: 210 92% 66%;
+  --p-primary-foreground: 210 40% 10%;
+  --p-secondary: 210 18% 16%;
+  --p-secondary-hover: 210 18% 20%;
+  --p-secondary-foreground: 210 20% 94%;
+  --p-muted: 210 18% 16%;
+  --p-muted-foreground: 210 20% 80%;
+  --p-accent: 211.9 33.8% 22%;
+  --p-accent-foreground: 210 100% 85%;
+  --p-destructive: 0 80% 65%;
+  --p-destructive-hover: 0 85% 70%;
+  --p-destructive-foreground: 0 0% 10%;
+  --p-border: 217.3 7.3% 26.5%;
+  --p-input: 217.3 7.3% 26.5%;
+  --p-ring: 210 85% 52%;
+  --p-radius: 0.5rem;
+  --p-surface: 220 18% 18%;
+  --p-overlay: 220 18% 4%;
+  --p-shadow-1: 0 1px 2px hsl(var(--p-foreground) / 0.06), 0 2px 10px hsl(var(--p-foreground) / 0.08);
+}
+

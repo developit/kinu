@@ -1,0 +1,9 @@
+:root {
+  --red-scale-9: hsl(0 85% 55%);
+  --red-scale-10: hsl(0 90% 50%);
+  --red-scale-contrast: hsl(0 0% 100%);
+
+  --red-dark-scale-9: hsl(0 80% 65%);
+  --red-dark-scale-10: hsl(0 85% 70%);
+  --red-dark-scale-contrast: hsl(0 0% 10%);
+}

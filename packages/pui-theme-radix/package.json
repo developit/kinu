@@ -1,0 +1,21 @@
+{
+  "name": "@pui/theme-radix",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "dist",
+    "src/generated/tokens.css"
+  ],
+  "scripts": {
+    "build:tokens": "node ./src/build/gen-tokens.mjs",
+    "build:css": "postcss src/index.css -o dist/style.css",
+    "build": "pnpm run build:tokens && pnpm run build:css"
+  },
+  "devDependencies": {
+    "culori": "^4.0.1",
+    "postcss": "^8.4.49",
+    "postcss-import": "^16.1.0",
+    "postcss-nesting": "^13.0.1"
+  }
+}
