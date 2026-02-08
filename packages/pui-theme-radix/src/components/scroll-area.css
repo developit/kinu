@@ -1,0 +1,153 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/scroll-area.css
+ *
+ * Selector mapping:
+ * - .rt-ScrollAreaRoot               -> [p="scroll-area"]
+ * - .rt-ScrollAreaViewport           -> [p="scroll-area-viewport"]
+ * - .rt-ScrollAreaViewportFocusRing  -> [p="scroll-area-focus-ring"]
+ * - .rt-ScrollAreaScrollbar          -> [p="scroll-area-scrollbar"]
+ * - .rt-ScrollAreaThumb              -> [p="scroll-area-thumb"]
+ * - .rt-r-size-1..3                  -> [size="1"]..[size="3"]
+ */
+
+:root {
+  --scrollarea-scrollbar-horizontal-margin-top: var(--space-1);
+  --scrollarea-scrollbar-horizontal-margin-bottom: var(--space-1);
+  --scrollarea-scrollbar-horizontal-margin-left: var(--space-1);
+  --scrollarea-scrollbar-horizontal-margin-right: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-top: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-bottom: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-left: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-right: var(--space-1);
+}
+
+[p="scroll-area"] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+[p="scroll-area-viewport"] {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+[p="scroll-area-viewport"]:where(:focus-visible) + [p="scroll-area-focus-ring"] {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  outline: 2px solid var(--focus-8);
+  outline-offset: -2px;
+}
+
+[p="scroll-area-viewport"]:where(:has([p="scroll-area-scrollbar"][data-orientation='horizontal'])) {
+  overscroll-behavior-x: contain;
+}
+
+[p="scroll-area-viewport"] > * {
+  display: block !important;
+  width: fit-content;
+  flex-grow: 1;
+}
+
+[p="scroll-area-scrollbar"] {
+  display: flex;
+  user-select: none;
+  touch-action: none;
+}
+
+[p="scroll-area-scrollbar"]:where([data-orientation='vertical']) {
+  flex-direction: column;
+  width: var(--scrollarea-scrollbar-size);
+}
+
+[p="scroll-area-scrollbar"]:where([data-orientation='horizontal']) {
+  flex-direction: row;
+  height: var(--scrollarea-scrollbar-size);
+}
+
+[p="scroll-area-thumb"] {
+  position: relative;
+}
+
+[p="scroll-area-thumb"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  min-width: var(--space-4);
+  min-height: var(--space-4);
+}
+
+/***************************************************************************************************
+ * Sizes
+ ***************************************************************************************************/
+
+[p="scroll-area-scrollbar"][size="1"] {
+  --scrollarea-scrollbar-size: var(--space-1);
+  --scrollarea-scrollbar-border-radius: max(var(--radius-1), var(--radius-full));
+}
+
+[p="scroll-area-scrollbar"][size="2"] {
+  --scrollarea-scrollbar-size: var(--space-2);
+  --scrollarea-scrollbar-border-radius: max(var(--radius-1), var(--radius-full));
+}
+
+[p="scroll-area-scrollbar"]:not([size]),
+[p="scroll-area-scrollbar"][size="3"],
+[p="scroll-area-scrollbar"][size="md"] {
+  --scrollarea-scrollbar-size: var(--space-3);
+  --scrollarea-scrollbar-border-radius: max(var(--radius-1), var(--radius-full));
+}
+
+/***************************************************************************************************
+ * Variants
+ ***************************************************************************************************/
+
+[p="scroll-area-scrollbar"] {
+  background-color: var(--gray-a3);
+  border-radius: var(--scrollarea-scrollbar-border-radius);
+  animation-duration: 120ms;
+  animation-timing-function: ease-out;
+}
+
+[p="scroll-area-scrollbar"]:where([data-state='visible']) {
+  animation-name: rt-fade-in;
+}
+
+[p="scroll-area-scrollbar"]:where([data-state='hidden']) {
+  animation-name: rt-fade-out;
+}
+
+[p="scroll-area-scrollbar"]:where([data-orientation='horizontal']) {
+  margin-top: var(--scrollarea-scrollbar-horizontal-margin-top);
+  margin-bottom: var(--scrollarea-scrollbar-horizontal-margin-bottom);
+  margin-left: var(--scrollarea-scrollbar-horizontal-margin-left);
+  margin-right: var(--scrollarea-scrollbar-horizontal-margin-right);
+}
+
+[p="scroll-area-scrollbar"]:where([data-orientation='vertical']) {
+  margin-top: var(--scrollarea-scrollbar-vertical-margin-top);
+  margin-bottom: var(--scrollarea-scrollbar-vertical-margin-bottom);
+  margin-left: var(--scrollarea-scrollbar-vertical-margin-left);
+  margin-right: var(--scrollarea-scrollbar-vertical-margin-right);
+}
+
+[p="scroll-area-thumb"] {
+  background-color: var(--gray-a8);
+  border-radius: inherit;
+  transition: background-color 100ms;
+}
+
+@media (hover: hover) {
+  [p="scroll-area-thumb"]:where(:hover) {
+    background-color: var(--gray-a9);
+  }
+}
