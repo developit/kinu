@@ -1,0 +1,81 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/text-area.css
+ *
+ * Selector mapping:
+ * - .rt-TextAreaInput            -> [p="textarea"]
+ * - .rt-r-size-1..4              -> [size="1"]..[size="4"]
+ */
+
+[p="textarea"] {
+  display: block;
+  width: 100%;
+  border-radius: var(--p-radius);
+  border: 1px solid hsl(var(--p-border));
+  background-color: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  padding: 0.75rem;
+  min-height: 6rem;
+  resize: vertical;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+[p="textarea"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: -1px;
+  border-color: hsl(var(--p-ring));
+}
+
+[p="textarea"]::placeholder {
+  color: hsl(var(--p-muted-foreground));
+}
+
+[p="textarea"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+[p="textarea"]:invalid,
+[p="textarea"][invalid] {
+  border-color: hsl(var(--p-destructive));
+}
+
+[p="textarea"]:invalid:focus-visible,
+[p="textarea"][invalid]:focus-visible {
+  outline-color: hsl(var(--p-destructive));
+  border-color: hsl(var(--p-destructive));
+}
+
+/***************************************************************************************************
+ * Sizes
+ ***************************************************************************************************/
+
+[p="textarea"][size="1"] {
+  font-size: 0.75rem;
+  padding: 0.625rem;
+  min-height: 5rem;
+}
+
+[p="textarea"][size="2"],
+[p="textarea"][size="sm"] {
+  font-size: 0.8125rem;
+  padding: 0.75rem;
+  min-height: 5.5rem;
+}
+
+[p="textarea"]:not([size]),
+[p="textarea"][size="3"],
+[p="textarea"][size="md"] {
+  font-size: 0.875rem;
+  padding: 0.875rem;
+  min-height: 6rem;
+}
+
+[p="textarea"][size="4"],
+[p="textarea"][size="lg"] {
+  font-size: 0.9375rem;
+  padding: 1rem;
+  min-height: 7rem;
+}
