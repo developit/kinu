@@ -1,0 +1,34 @@
+/* Ported from Radix Themes:
+ * - Table component
+ * Radix tables are borderless with clean divider lines,
+ * subtle header backgrounds, and optional row highlighting.
+ */
+
+[p="table"] {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+[p="table"] th,
+[p="table"] td {
+  border: none;
+  border-bottom: 1px solid hsl(var(--p-border));
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+}
+
+[p="table"] th {
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  color: hsl(var(--p-muted-foreground));
+}
+
+/* Subtle row hover */
+@media (hover: hover) {
+  [p="table"] tbody tr:hover {
+    background-color: hsl(var(--p-accent) / 0.5);
+  }
+}

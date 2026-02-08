@@ -1,0 +1,21 @@
+/* Ported from Radix Themes:
+ * - Progress component
+ * Radix progress uses accent color with a slightly taller bar
+ * and rounded ends on the value indicator.
+ */
+
+[p="progress"] {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--p-accent));
+}
+
+[p="progress"]::-webkit-progress-value {
+  border-radius: 9999px;
+  background-color: hsl(var(--p-primary));
+}
+
+[p="progress"]::-moz-progress-bar {
+  border-radius: 9999px;
+  background-color: hsl(var(--p-primary));
+}

@@ -1,0 +1,28 @@
+/* Ported from Radix Themes:
+ * - Textarea component
+ * Radix textarea uses outline-based focus matching the input port.
+ */
+
+[p="textarea"] {
+  border: 1px solid hsl(var(--p-border));
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-surface, var(--p-background)));
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  transition:
+    border-color 120ms ease,
+    outline 80ms ease;
+}
+
+[p="textarea"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: -1px;
+  border-color: hsl(var(--p-ring));
+  box-shadow: none;
+}
+
+@media (hover: hover) {
+  [p="textarea"]:not(:focus-visible, :disabled):hover {
+    border-color: hsl(var(--p-foreground) / 0.25);
+  }
+}

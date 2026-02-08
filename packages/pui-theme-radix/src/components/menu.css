@@ -1,0 +1,78 @@
+/* Ported from Radix Themes:
+ * - Menu items (context-menu, dropdown-menu, combobox)
+ * - Radix uses accent-colored hover highlights, not gray
+ *
+ * Selector mapping:
+ * - .rt-BaseMenuItem -> [p="dropdown-menu-item"], [p="context-menu-item"], [p="combobox-option"]
+ * - .rt-ContextMenuContent -> [p="context-menu"]
+ * - .rt-DropdownMenuContent -> [p="dropdown-content"]
+ */
+
+/* ============================================================================
+ * Context menu surface
+ * ============================================================================ */
+
+[p="context-menu"] {
+  border: none;
+  border-radius: calc(var(--p-radius) + 0.125rem);
+  background-color: hsl(var(--p-popover));
+  color: hsl(var(--p-popover-foreground));
+  padding: 0.25rem;
+
+  box-shadow:
+    0 0 0 0.5px hsl(var(--p-border) / 0.3),
+    0 12px 60px hsl(var(--p-foreground) / 0.25);
+}
+
+/* ============================================================================
+ * Dropdown content surface
+ * ============================================================================ */
+
+[p="dropdown-content"] {
+  border: none;
+  border-radius: calc(var(--p-radius) + 0.125rem);
+  background-color: hsl(var(--p-popover));
+  color: hsl(var(--p-popover-foreground));
+  padding: 0.25rem;
+
+  box-shadow:
+    0 0 0 0.5px hsl(var(--p-border) / 0.3),
+    0 12px 60px hsl(var(--p-foreground) / 0.2);
+}
+
+/* ============================================================================
+ * Menu items – accent-colored hover (the #1 visual difference from PUI)
+ * Radix Themes highlights menu items with the accent color (blue) on hover,
+ * giving white text on a saturated background.
+ * ============================================================================ */
+
+[p="dropdown-menu-item"],
+[p="context-menu-item"],
+[p="combobox-option"] {
+  padding: 0.375rem 0.5rem;
+  border-radius: calc(var(--p-radius) - 0.0625rem);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: none;
+
+  &:hover,
+  &:focus,
+  &[selected] {
+    background-color: hsl(var(--p-primary));
+    color: hsl(var(--p-primary-foreground));
+  }
+}
+
+/* ============================================================================
+ * Combobox list surface
+ * ============================================================================ */
+
+[p="combobox-list"] {
+  border: none;
+  border-radius: calc(var(--p-radius) + 0.125rem);
+  padding: 0.25rem;
+
+  box-shadow:
+    0 0 0 0.5px hsl(var(--p-border) / 0.3),
+    0 12px 60px hsl(var(--p-foreground) / 0.2);
+}

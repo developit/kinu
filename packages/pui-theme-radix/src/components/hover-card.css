@@ -1,0 +1,12 @@
+/* Ported from Radix Themes:
+ * - Hover card component
+ * Radix hover cards use refined shadows matching other surface components.
+ */
+
+[p="hover-card-content"] {
+  border: none;
+  border-radius: calc(var(--p-radius) + 0.125rem);
+  box-shadow:
+    0 0 0 0.5px hsl(var(--p-border) / 0.3),
+    0 8px 40px hsl(var(--p-foreground) / 0.14);
+}

@@ -1,0 +1,24 @@
+/* Ported from Radix Themes:
+ * - Skeleton component
+ * Radix uses a subtle pulse animation instead of shimmer.
+ */
+
+[p="skeleton"] {
+  background-color: hsl(var(--p-accent));
+  border-radius: var(--p-radius);
+}
+
+[p="skeleton"]::after {
+  background: none;
+  animation: p-skeleton-pulse 1.5s ease-in-out infinite;
+  transform: none;
+}
+
+@keyframes p-skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}

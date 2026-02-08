@@ -1,0 +1,12 @@
+/* Ported from Radix Themes:
+ * - Label component
+ * Radix uses slightly different typography for labels.
+ */
+
+[p="label"] {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: hsl(var(--p-foreground));
+  letter-spacing: -0.006em;
+}

@@ -1,0 +1,36 @@
+/* Ported from Radix Themes:
+ * - Badge component
+ * Radix badges are more rounded (pill-shaped) with softer colors.
+ */
+
+[p="badge"] {
+  border-radius: 9999px;
+  padding: 0.125rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+/* Soft variant (Radix default) - uses accent alpha fill */
+[p="badge"]:not([variant]) {
+  background-color: hsl(var(--p-primary));
+  color: hsl(var(--p-primary-foreground));
+}
+
+[p="badge"][variant="secondary"] {
+  background-color: hsl(var(--p-secondary));
+  color: hsl(var(--p-secondary-foreground));
+  border-radius: 9999px;
+}
+
+[p="badge"][variant="outline"] {
+  border-radius: 9999px;
+  border-color: hsl(var(--p-border));
+  box-shadow: inset 0 0 0 1px hsl(var(--p-border));
+  border: none;
+}
+
+[p="badge"][variant="destructive"] {
+  border-radius: 9999px;
+}

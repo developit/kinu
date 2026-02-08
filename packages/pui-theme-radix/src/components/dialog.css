@@ -134,20 +134,4 @@
   }
 }
 
-/* ============================================================================
- * Dropdown menu content (shared surface)
- * ============================================================================ */
-
-[p="dropdown-content"] {
-  border: none;
-  border-radius: calc(var(--p-radius) + 0.125rem);
-  background-color: hsl(var(--p-popover));
-  color: hsl(var(--p-popover-foreground));
-  padding: 0.25rem;
-
-  box-shadow:
-    0 0 0 0.5px hsl(var(--p-border) / 0.3),
-    0 12px 60px hsl(var(--p-foreground) / 0.2);
-
-  animation: p-popover-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+/* Dropdown menu content moved to menu.css */

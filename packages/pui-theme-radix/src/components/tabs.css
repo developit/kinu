@@ -1,0 +1,85 @@
+/* Ported from Radix Themes:
+ * - Tabs component
+ * Radix Themes uses a clean underline-style tab indicator
+ * instead of the shadcn-style pill/shadow tabs.
+ */
+
+/* ============================================================================
+ * Tab list – horizontal line along bottom
+ * ============================================================================ */
+
+[p="tablist"] {
+  display: flex;
+  align-items: stretch;
+  height: auto;
+  width: auto;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  gap: 0;
+  border-bottom: 1px solid hsl(var(--p-border));
+}
+
+/* ============================================================================
+ * Individual tab – underline indicator on active
+ * ============================================================================ */
+
+[p="tab"] {
+  appearance: none;
+  background: none;
+  border: none;
+  border-radius: 0;
+  height: auto;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: hsl(var(--p-muted-foreground));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  position: relative;
+  transition: color 120ms ease;
+  box-shadow: none;
+
+  /* Underline indicator (inactive = transparent) */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: transparent;
+    transition: background-color 120ms ease;
+  }
+}
+
+@media (hover: hover) {
+  [p="tab"]:hover {
+    color: hsl(var(--p-foreground));
+  }
+}
+
+[p="tab"][aria-selected="true"] {
+  background: transparent;
+  color: hsl(var(--p-foreground));
+  border-color: transparent;
+  box-shadow: none;
+
+  &::after {
+    background-color: hsl(var(--p-primary));
+  }
+}
+
+[p="tab"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+[p="tab-panel"] {
+  padding-top: 1rem;
+}
