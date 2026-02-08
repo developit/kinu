@@ -120,6 +120,34 @@ pre.code-block {
   max-width: 100%;
 }
 
+/* Theme toggle */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  padding: 0.25rem 0.75rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid hsl(var(--p-border));
+  background: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background-color 150ms, border-color 150ms, box-shadow 150ms;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  border-color: hsl(var(--p-primary) / 0.4);
+  background: hsl(var(--p-accent));
+}
+.theme-toggle-indicator[data-active] {
+  color: hsl(var(--p-primary));
+}
+
 /* Home route styles */
 .home-nav {
   padding: 1rem;

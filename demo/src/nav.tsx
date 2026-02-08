@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from 'pui';
+import {ThemeToggle} from './theme-toggle.tsx';
 
 export function Nav({
   class: className,
@@ -51,6 +52,7 @@ export function Nav({
           </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
+      <ThemeToggle />
     </NavigationMenu>
   );
 }
