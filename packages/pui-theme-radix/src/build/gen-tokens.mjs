@@ -194,6 +194,14 @@ function resolvePuiTokens(scopeVars) {
       resolved[puiVar] = rawValue;
       continue;
     }
+    if (entry.type === 'rawValue') {
+      const rawValue = resolveValue(entry.radixVar, scopeVars, new Set());
+      if (!rawValue) {
+        throw new Error(`Missing value for ${entry.radixVar}`);
+      }
+      resolved[puiVar] = rawValue;
+      continue;
+    }
     const raw = resolveValue(entry.radixVar, scopeVars, new Set());
     if (!raw) {
       throw new Error(`Missing value for ${entry.radixVar}`);

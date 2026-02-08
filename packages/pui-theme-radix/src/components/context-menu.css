@@ -1,0 +1,101 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/context-menu.css
+ * - radix-src/components/_internal/base-menu.css
+ *
+ * Selector mapping:
+ * - .rt-ContextMenuContent         -> [p="context-menu"]
+ * - .rt-BaseMenuContent            -> [p="context-menu"]
+ * - .rt-BaseMenuItem               -> [p="context-menu-item"]
+ */
+
+[p="context-menu"] {
+  --base-menu-content-padding: var(--space-2);
+  --base-menu-item-padding-left: var(--space-3);
+  --base-menu-item-padding-right: var(--space-3);
+  --base-menu-item-height: var(--space-6);
+  --base-menu-item-radius: var(--radius-2);
+  --base-menu-bg: hsl(var(--p-popover));
+  --menu-highlight-bg: var(--accent-a4);
+  --menu-highlight-color: inherit;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+  background-color: var(--base-menu-bg);
+  box-shadow: var(--shadow-5);
+  padding: var(--base-menu-content-padding);
+  border-radius: var(--radius-4);
+  max-height: var(--radix-context-menu-content-available-height);
+  transform-origin: var(--radix-context-menu-content-transform-origin);
+}
+
+[p="context-menu"][variant="solid"] {
+  --menu-highlight-bg: var(--accent-9);
+  --menu-highlight-color: var(--accent-contrast);
+}
+
+[p="context-menu"][size="1"] {
+  --base-menu-content-padding: var(--space-1);
+  --base-menu-item-padding-left: calc(var(--space-5) / 1.2);
+  --base-menu-item-padding-right: var(--space-2);
+  --base-menu-item-height: var(--space-5);
+  --base-menu-item-radius: var(--radius-1);
+}
+
+[p="context-menu"][size="2"] {
+  --base-menu-content-padding: var(--space-2);
+  --base-menu-item-padding-left: var(--space-3);
+  --base-menu-item-padding-right: var(--space-3);
+  --base-menu-item-height: var(--space-6);
+  --base-menu-item-radius: var(--radius-2);
+}
+
+[p="context-menu-item"] {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--base-menu-item-height);
+  padding-left: var(--base-menu-item-padding-left);
+  padding-right: var(--base-menu-item-padding-right);
+  box-sizing: border-box;
+  border-radius: var(--base-menu-item-radius);
+  border: none;
+  background: none;
+  text-align: left;
+  white-space: nowrap;
+  font: inherit;
+  font-size: var(--font-size-2);
+  line-height: var(--line-height-2);
+  letter-spacing: var(--letter-spacing-2);
+  font-weight: var(--font-weight-regular);
+  cursor: var(--cursor-menu-item);
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+}
+
+[p="context-menu-item"]:where(:hover, :focus-visible, [selected]) {
+  background-color: var(--menu-highlight-bg);
+  color: var(--menu-highlight-color);
+}
+
+[p="context-menu-item"][disabled],
+[p="context-menu-item"][aria-disabled="true"] {
+  color: var(--gray-a8);
+  cursor: default;
+}
+
+[p="context-menu-item"][variant="destructive"],
+[p="context-menu-item"][data-destructive] {
+  color: hsl(var(--p-destructive));
+}
+
+[p="context-menu"] [p="separator"] {
+  height: 1px;
+  margin: var(--space-2) 0;
+  background-color: var(--gray-a6);
+}

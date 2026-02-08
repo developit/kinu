@@ -32,14 +32,45 @@
   --radius-factor: 1;
   --radius-full: 0px;
   --radius-1: calc(3px * var(--scaling) * var(--radius-factor));
+  --radius-2: calc(4px * var(--scaling) * var(--radius-factor));
+  --radius-3: calc(6px * var(--scaling) * var(--radius-factor));
+  --radius-4: calc(8px * var(--scaling) * var(--radius-factor));
   --space-1: calc(4px * var(--scaling));
   --space-2: calc(8px * var(--scaling));
   --space-3: calc(12px * var(--scaling));
   --space-4: calc(16px * var(--scaling));
+  --space-5: calc(24px * var(--scaling));
+  --space-6: calc(32px * var(--scaling));
   --gray-a3: #0000330f;
+  --gray-a5: #0009321f;
+  --gray-a6: #00002f26;
   --gray-a8: #00083046;
   --gray-a9: #00051d74;
+  --gray-a10: #00071b7f;
+  --gray-a11: #0007149f;
+  --gray-12: #1c2024;
+  --black-a3: rgba(0, 0, 0, 0.15);
+  --black-a5: rgba(0, 0, 0, 0.3);
+  --black-a7: rgba(0, 0, 0, 0.5);
+  --accent-9: #0090ff;
+  --accent-12: #113264;
+  --accent-contrast: white;
+  --accent-a3: #008ff519;
+  --accent-a4: #009eff2a;
+  --accent-a11: #006dcbf2;
   --focus-8: #5eb1ef;
+  --shadow-5: 0 0 0 1px #0000330f,
+    0 12px 60px rgba(0, 0, 0, 0.15),
+    0 12px 32px -16px #0009321f;
+  --font-size-1: calc(12px * var(--scaling));
+  --font-size-2: calc(14px * var(--scaling));
+  --line-height-1: calc(16px * var(--scaling));
+  --line-height-2: calc(20px * var(--scaling));
+  --letter-spacing-1: 0.0025em;
+  --letter-spacing-2: 0em;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --cursor-menu-item: default;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -75,14 +106,45 @@
     --radius-factor: 1;
     --radius-full: 0px;
     --radius-1: calc(3px * var(--scaling) * var(--radius-factor));
+    --radius-2: calc(4px * var(--scaling) * var(--radius-factor));
+    --radius-3: calc(6px * var(--scaling) * var(--radius-factor));
+    --radius-4: calc(8px * var(--scaling) * var(--radius-factor));
     --space-1: calc(4px * var(--scaling));
     --space-2: calc(8px * var(--scaling));
     --space-3: calc(12px * var(--scaling));
     --space-4: calc(16px * var(--scaling));
+    --space-5: calc(24px * var(--scaling));
+    --space-6: calc(32px * var(--scaling));
     --gray-a3: #ddeaf814;
+    --gray-a5: #d9edfe25;
+    --gray-a6: #d6ebfd30;
     --gray-a8: #d9edff5d;
     --gray-a9: #dfebfd6d;
+    --gray-a10: #e5edfd7b;
+    --gray-a11: #f1f7feb5;
+    --gray-12: #edeef0;
+    --black-a3: rgba(0, 0, 0, 0.15);
+    --black-a5: rgba(0, 0, 0, 0.3);
+    --black-a7: rgba(0, 0, 0, 0.5);
+    --accent-9: #0090ff;
+    --accent-12: #c2e6ff;
+    --accent-contrast: white;
+    --accent-a3: #0077ff3a;
+    --accent-a4: #0075ff57;
+    --accent-a11: #70b8ff;
     --focus-8: #2870bd;
+    --shadow-5: 0 0 0 1px #d6ebfd30,
+      0 12px 60px rgba(0, 0, 0, 0.3),
+      0 12px 32px -16px rgba(0, 0, 0, 0.5);
+    --font-size-1: calc(12px * var(--scaling));
+    --font-size-2: calc(14px * var(--scaling));
+    --line-height-1: calc(16px * var(--scaling));
+    --line-height-2: calc(20px * var(--scaling));
+    --letter-spacing-1: 0.0025em;
+    --letter-spacing-2: 0em;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --cursor-menu-item: default;
   }
 }
 
@@ -118,12 +180,43 @@
   --radius-factor: 1;
   --radius-full: 0px;
   --radius-1: calc(3px * var(--scaling) * var(--radius-factor));
+  --radius-2: calc(4px * var(--scaling) * var(--radius-factor));
+  --radius-3: calc(6px * var(--scaling) * var(--radius-factor));
+  --radius-4: calc(8px * var(--scaling) * var(--radius-factor));
   --space-1: calc(4px * var(--scaling));
   --space-2: calc(8px * var(--scaling));
   --space-3: calc(12px * var(--scaling));
   --space-4: calc(16px * var(--scaling));
+  --space-5: calc(24px * var(--scaling));
+  --space-6: calc(32px * var(--scaling));
   --gray-a3: #ddeaf814;
+  --gray-a5: #d9edfe25;
+  --gray-a6: #d6ebfd30;
   --gray-a8: #d9edff5d;
   --gray-a9: #dfebfd6d;
+  --gray-a10: #e5edfd7b;
+  --gray-a11: #f1f7feb5;
+  --gray-12: #edeef0;
+  --black-a3: rgba(0, 0, 0, 0.15);
+  --black-a5: rgba(0, 0, 0, 0.3);
+  --black-a7: rgba(0, 0, 0, 0.5);
+  --accent-9: #0090ff;
+  --accent-12: #c2e6ff;
+  --accent-contrast: white;
+  --accent-a3: #0077ff3a;
+  --accent-a4: #0075ff57;
+  --accent-a11: #70b8ff;
   --focus-8: #2870bd;
+  --shadow-5: 0 0 0 1px #d6ebfd30,
+    0 12px 60px rgba(0, 0, 0, 0.3),
+    0 12px 32px -16px rgba(0, 0, 0, 0.5);
+  --font-size-1: calc(12px * var(--scaling));
+  --font-size-2: calc(14px * var(--scaling));
+  --line-height-1: calc(16px * var(--scaling));
+  --line-height-2: calc(20px * var(--scaling));
+  --letter-spacing-1: 0.0025em;
+  --letter-spacing-2: 0em;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --cursor-menu-item: default;
 }
