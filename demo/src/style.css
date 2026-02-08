@@ -1,5 +1,6 @@
 @import "../../src/variables.css";
 @import "../../src/base.css";
+@import "../../src/themes/radix/index.css";
 
 html,
 body {
