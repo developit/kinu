@@ -30,6 +30,14 @@
   transform-origin: var(--radix-dropdown-menu-content-transform-origin);
 }
 
+[p="dropdown-content"]:not(:open) {
+  display: none;
+}
+
+[p="dropdown-content"]:open {
+  display: flex;
+}
+
 [p="dropdown-content"][variant="solid"] {
   --menu-highlight-bg: var(--accent-9);
   --menu-highlight-color: var(--accent-contrast);

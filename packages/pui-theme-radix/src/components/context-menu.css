@@ -30,6 +30,14 @@
   transform-origin: var(--radix-context-menu-content-transform-origin);
 }
 
+[p="context-menu"]:not(:open) {
+  display: none;
+}
+
+[p="context-menu"]:open {
+  display: flex;
+}
+
 [p="context-menu"][variant="solid"] {
   --menu-highlight-bg: var(--accent-9);
   --menu-highlight-color: var(--accent-contrast);
