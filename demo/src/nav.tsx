@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
 } from 'pui';
 import {ThemeToggle} from './theme-toggle.tsx';
+import {ThemeCustomizer} from './theme-customizer.tsx';
 
 export function Nav({
   class: className,
@@ -52,7 +53,10 @@ export function Nav({
           </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
-      <ThemeToggle />
+      <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+        <ThemeCustomizer />
+        <ThemeToggle />
+      </div>
     </NavigationMenu>
   );
 }

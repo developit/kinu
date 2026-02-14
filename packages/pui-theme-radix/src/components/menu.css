@@ -16,7 +16,7 @@
  */
 
 /* ============================================================================
- * Menu surfaces – generous padding, Radix shadow-5, rounded
+ * Menu surfaces – Radix shadow-5, rounded, 4px vertical padding
  * ============================================================================ */
 
 [p="context-menu"],
@@ -26,7 +26,7 @@
   border-radius: 8px;
   background-color: hsl(var(--p-popover));
   color: hsl(var(--p-popover-foreground));
-  padding: 0.5rem;
+  padding: 0.25rem 0;
 
   /* Radix --shadow-5: 1px outline ring + deep layered shadow */
   box-shadow:
