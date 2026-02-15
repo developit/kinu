@@ -316,6 +316,23 @@ export default [
     ]
   },
   {
+    slug: 'input-group',
+    title: 'Input Group',
+    section: 'Components',
+    category: 'Forms',
+    order: 2,
+    folder: 'input-group',
+    description: 'Compact fieldset wrapper for joined controls like input and button rows.',
+    usage: `<InputGroup>
+  <Input placeholder="Search" />
+  <Button variant="outline">Go</Button>
+</InputGroup>`,
+    notes: [
+      'Uses CSS-only border and radius joining for grouped controls.',
+      'Works with both PUI primitives and native form elements.'
+    ]
+  },
+  {
     slug: 'label',
     title: 'Label',
     section: 'Components',
@@ -492,6 +509,20 @@ export default [
     notes: [
       'Renders a <dialog> so it can slide in as a modal on small screens.',
       'SidebarTrigger toggles the hidden/open state with the command attribute.'
+    ]
+  },
+  {
+    slug: 'spinner',
+    title: 'Spinner',
+    section: 'Components',
+    category: 'Feedback',
+    order: 2,
+    folder: 'spinner',
+    description: 'Inline loading indicator for compact pending states.',
+    usage: '<Spinner aria-label="Loading" />',
+    notes: [
+      'Wraps a <span> and animates purely in CSS.',
+      'Supports size="sm" and size="lg" attributes for dense or prominent loading states.'
     ]
   },
   {

@@ -4,6 +4,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   white-space: nowrap;
   border-radius: var(--p-radius);
   font-size: 0.875rem;
@@ -45,6 +46,10 @@
 [p="button"]:disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+
+[p="button"]:active:not(:disabled):not([loading]) {
+  transform: translate(0, 1px);
 }
 
 [p="button"][loading] {
