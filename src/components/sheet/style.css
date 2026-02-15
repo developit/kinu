@@ -7,16 +7,20 @@
   width: 20rem;
   max-width: 90vw;
   height: 100vh;
-  max-height: 100vh;
+  height: 100dvh;
+  max-height: calc(100vh - env(keyboard-inset-bottom, 0));
+  max-height: calc(100dvh - env(keyboard-inset-bottom, 0));
   position: fixed;
   left: auto;
   top: 0;
   right: 0;
   bottom: 0;
+  bottom: env(keyboard-inset-bottom, 0);
   background-color: hsl(var(--p-background));
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   border-radius: 0;
   animation: sheet-show 300ms var(--p-ease);
+  overflow-y: auto;
 }
 
 [p="sheet-content"]::backdrop {

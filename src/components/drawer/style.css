@@ -10,9 +10,13 @@
   position: fixed;
   top: auto;
   bottom: 0;
+  bottom: env(keyboard-inset-bottom, 0);
   left: 0;
   background-color: hsl(var(--p-background));
   animation: drawer-show 300ms var(--p-ease);
+  max-height: calc(100vh - env(keyboard-inset-bottom, 0));
+  max-height: calc(100dvh - env(keyboard-inset-bottom, 0));
+  overflow-y: auto;
 }
 
 [p="drawer-content"]::backdrop {
