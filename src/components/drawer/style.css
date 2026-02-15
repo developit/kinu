@@ -11,12 +11,17 @@
   top: auto;
   bottom: 0;
   left: 0;
-  background-color: hsl(var(--p-background));
+  background-color: hsl(var(--p-surface));
+  color: hsl(var(--p-surface-foreground));
+  -webkit-backdrop-filter: var(--p-glass-backdrop);
+  backdrop-filter: var(--p-glass-backdrop);
   animation: drawer-show 300ms var(--p-ease);
 }
 
 [p="drawer-content"]::backdrop {
-  background-color: rgb(0 0 0 / 0.8);
+  background-color: hsl(var(--p-overlay));
+  -webkit-backdrop-filter: blur(var(--p-overlay-blur));
+  backdrop-filter: blur(var(--p-overlay-blur));
   animation: dialog-overlay-show 300ms var(--p-ease);
 }
 

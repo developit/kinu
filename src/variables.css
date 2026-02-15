@@ -39,6 +39,13 @@
   /* Radius */
   --p-radius: 0.5rem;
 
+  --p-surface: var(--p-background);
+  --p-surface-foreground: var(--p-foreground);
+  --p-overlay: 0 0% 0% / 0.8;
+  --p-overlay-blur: 0px;
+  --p-glass-backdrop: none;
+  --p-theme-bg: hsl(var(--p-background));
+
   --p-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --p-ease-out: var(--p-ease-fallback);
   --p-ease-elastic: var(--p-ease-fallback);
@@ -195,4 +202,69 @@
   --p-border: 217.2 32.6% 17.5%;
   --p-input: 217.2 32.6% 17.5%;
   --p-ring: 212.7 26.8% 83.9%;
+
+  --p-surface: var(--p-background);
+  --p-surface-foreground: var(--p-foreground);
+  --p-overlay: 0 0% 0% / 0.8;
+  --p-overlay-blur: 0px;
+}
+
+:root:has(#pui-theme-glass:checked),
+[data-theme="glass"],
+.glass {
+  /* Base colors */
+  --p-background: 0 0% 98% / 0.72;
+  --p-foreground: 0 0% 12%;
+  --p-card: 0 0% 98% / 0.55;
+  --p-card-foreground: 0 0% 12%;
+  --p-popover: 0 0% 98% / 0.75;
+  --p-popover-foreground: 0 0% 12%;
+  --p-sidebar: 0 0% 96% / 0.6;
+
+  /* Primary colors */
+  --p-primary: 0 0% 20%;
+  --p-primary-foreground: 0 0% 98%;
+  --p-primary-hover: 0 0% 16%;
+
+  /* Secondary colors */
+  --p-secondary: 0 0% 92% / 0.6;
+  --p-secondary-foreground: 0 0% 12%;
+  --p-secondary-hover: 0 0% 88% / 0.7;
+
+  /* Muted colors */
+  --p-muted: 0 0% 92% / 0.45;
+  --p-muted-foreground: 0 0% 40%;
+
+  /* Accent colors */
+  --p-accent: 0 0% 95% / 0.6;
+  --p-accent-foreground: 0 0% 12%;
+
+  /* Destructive colors */
+  --p-destructive: 0 72% 48%;
+  --p-destructive-foreground: 210 40% 98%;
+  --p-destructive-hover: 0 72% 42%;
+
+  /* Border and input */
+  --p-border: 0 0% 80% / 0.5;
+  --p-input: 0 0% 82% / 0.4;
+  --p-ring: 0 0% 40%;
+
+  --p-surface: 0 0% 98% / 0.95;
+  --p-surface-foreground: 0 0% 12%;
+  --p-overlay: 0 0% 0% / 0.45;
+  --p-overlay-blur: 6px;
+
+  --p-theme-bg:
+    radial-gradient(
+      120% 120% at 20% 10%,
+      hsl(0 0% 100% / 0.85),
+      transparent 55%
+    ),
+    radial-gradient(
+      100% 100% at 80% 0%,
+      hsl(0 0% 96% / 0.8),
+      transparent 50%
+    ),
+    linear-gradient(135deg, hsl(0 0% 98%), hsl(0 0% 96%));
+  --p-glass-backdrop: blur(32px) saturate(160%);
 }
