@@ -45,12 +45,12 @@
   border-end-start-radius: var(--p-radius);
 }
 
-[p="input-group"]:has(> [p="input"]:focus-visible):not(:has(> [p="input"] ~ [p="input"])) {
+[p="input-group"]:has(> :is([p="input"], [p="textarea"]):focus-visible):not(:has(> :is([p="input"], [p="textarea"]) ~ :is([p="input"], [p="textarea"]))) {
   box-shadow: 0 0 0 2px hsl(var(--p-ring));
   border-radius: var(--p-radius);
 }
 
-[p="input-group"]:has(> [p="input"]:focus-visible):not(:has(> [p="input"] ~ [p="input"])) > [p="input"]:focus-visible {
+[p="input-group"]:has(> :is([p="input"], [p="textarea"]):focus-visible):not(:has(> :is([p="input"], [p="textarea"]) ~ :is([p="input"], [p="textarea"]))) > :is([p="input"], [p="textarea"]):focus-visible {
   box-shadow: none;
   border-color: hsl(var(--p-input));
 }
