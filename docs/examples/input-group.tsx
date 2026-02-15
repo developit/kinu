@@ -1,4 +1,4 @@
-import {Button, Input, InputGroup} from 'pui';
+import {Button, Input, InputGroup, Select} from 'pui';
 
 export function Demo() {
   return (
@@ -11,6 +11,15 @@ export function Demo() {
       <InputGroup>
         <legend>@</legend>
         <Input placeholder="username" />
+      </InputGroup>
+
+      <InputGroup>
+        <Select defaultValue="all" aria-label="Filter scope">
+          <option value="all">All docs</option>
+          <option value="components">Components</option>
+          <option value="foundations">Foundations</option>
+        </Select>
+        <Button variant="outline">Apply</Button>
       </InputGroup>
     </div>
   );
