@@ -5,53 +5,38 @@ Composable tree view built from native `<details>` and `<summary>` primitives.
 ## Usage
 
 ```tsx
-import {
-  TreeRoot,
-  TreeBranch,
-  TreeBranchLabel,
-  TreeBranchChildren,
-  TreeNode,
-} from 'pui';
+import {Tree} from 'pui';
 
-<TreeRoot>
-  <TreeBranch open>
-    <TreeBranchLabel>src</TreeBranchLabel>
-    <TreeBranchChildren>
-      <TreeNode>index.ts</TreeNode>
-      <TreeBranch>
-        <TreeBranchLabel>components</TreeBranchLabel>
-        <TreeBranchChildren>
-          <TreeNode>button.tsx</TreeNode>
-        </TreeBranchChildren>
-      </TreeBranch>
-    </TreeBranchChildren>
-  </TreeBranch>
-</TreeRoot>
+<Tree>
+  <Tree.Group open>
+    <Tree.GroupLabel>src</Tree.GroupLabel>
+    <Tree.GroupItems>
+      <Tree.Item>index.ts</Tree.Item>
+      <Tree.Group>
+        <Tree.GroupLabel>components</Tree.GroupLabel>
+        <Tree.GroupItems>
+          <Tree.Item>button.tsx</Tree.Item>
+        </Tree.GroupItems>
+      </Tree.Group>
+    </Tree.GroupItems>
+  </Tree.Group>
+</Tree>
 ```
 
-## Exports
+## Members
 
-| Export | Element | Notes |
+| Member | Element | Notes |
 | --- | --- | --- |
-| Tree / TreeRoot | `div` | Container for tree nodes. |
-| TreeItem / TreeBranch | `details` | Expandable branch node. |
-| TreeLabel / TreeBranchLabel | `summary` | Branch trigger/label. |
-| TreeGroup / TreeBranchChildren | `div` | Nested branch container. |
-| TreeLeaf / TreeNode | `button` | Terminal node/action row. |
-
-## Nomenclature options
-
-You can use either naming style depending on what reads best in your codebase:
-
-- **Compact**: `Tree`, `TreeItem`, `TreeLabel`, `TreeGroup`, `TreeLeaf`
-- **Semantic**: `TreeRoot`, `TreeBranch`, `TreeBranchLabel`, `TreeBranchChildren`, `TreeNode`
-
-Both styles are functionally equivalent and map to the same native elements.
+| `Tree` | `div` | Root container for tree nodes. |
+| `Tree.Group` | `details` | Expandable branch group. |
+| `Tree.GroupLabel` | `summary` | Branch trigger/label row. |
+| `Tree.GroupItems` | `div` | Nested container for group content. |
+| `Tree.Item` | `button` | Terminal row/action item. |
 
 ## Notes
 
-- State is fully native through the `open` attribute on each branch (`TreeItem`/`TreeBranch`).
-- Nest branches inside `TreeGroup`/`TreeBranchChildren` for deep hierarchies.
+- State is native via the `open` attribute on `Tree.Group`.
+- Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.
 
 ---
 

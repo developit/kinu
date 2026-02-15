@@ -1,37 +1,31 @@
-import {
-  TreeRoot,
-  TreeBranch,
-  TreeBranchLabel,
-  TreeBranchChildren,
-  TreeNode,
-} from 'pui';
+import {Tree} from 'pui';
 
 export function Demo() {
   return (
-    <TreeRoot style={{maxWidth: '20rem'}}>
-      <TreeBranch open>
-        <TreeBranchLabel>src</TreeBranchLabel>
-        <TreeBranchChildren>
-          <TreeNode>index.ts</TreeNode>
-          <TreeBranch open>
-            <TreeBranchLabel>components</TreeBranchLabel>
-            <TreeBranchChildren>
-              <TreeNode>button.tsx</TreeNode>
-              <TreeNode>dialog.tsx</TreeNode>
-            </TreeBranchChildren>
-          </TreeBranch>
-          <TreeBranch>
-            <TreeBranchLabel>lib</TreeBranchLabel>
-            <TreeBranchChildren>
-              <TreeNode>commands.ts</TreeNode>
-            </TreeBranchChildren>
-          </TreeBranch>
-        </TreeBranchChildren>
-      </TreeBranch>
-    </TreeRoot>
+    <Tree style={{maxWidth: '20rem'}}>
+      <Tree.Group open>
+        <Tree.GroupLabel>src</Tree.GroupLabel>
+        <Tree.GroupItems>
+          <Tree.Item>index.ts</Tree.Item>
+          <Tree.Group open>
+            <Tree.GroupLabel>components</Tree.GroupLabel>
+            <Tree.GroupItems>
+              <Tree.Item>button.tsx</Tree.Item>
+              <Tree.Item>dialog.tsx</Tree.Item>
+            </Tree.GroupItems>
+          </Tree.Group>
+          <Tree.Group>
+            <Tree.GroupLabel>lib</Tree.GroupLabel>
+            <Tree.GroupItems>
+              <Tree.Item>commands.ts</Tree.Item>
+            </Tree.GroupItems>
+          </Tree.Group>
+        </Tree.GroupItems>
+      </Tree.Group>
+    </Tree>
   );
 }
 
-export const code = `<TreeRoot>...</TreeRoot>`;
+export const code = `<Tree>...</Tree>`;
 
 export default {Demo, code};
