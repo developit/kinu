@@ -316,6 +316,23 @@ export default [
     ]
   },
   {
+    slug: 'input-group',
+    title: 'Input Group',
+    section: 'Components',
+    category: 'Forms',
+    order: 2,
+    folder: 'input-group',
+    description: 'Fieldset wrapper that visually joins adjacent form controls.',
+    usage: `<InputGroup>
+  <Input placeholder="Search" />
+  <Button>Go</Button>
+</InputGroup>`,
+    notes: [
+      'Renders a native <fieldset> to preserve semantic grouping.',
+      'Supports an optional <legend> as a compact leading label.'
+    ]
+  },
+  {
     slug: 'label',
     title: 'Label',
     section: 'Components',
@@ -506,6 +523,20 @@ export default [
     notes: [
       'Wraps a <div> so you can size it however you want.',
       'Use data-rounded to switch to pill skeletons.'
+    ]
+  },
+  {
+    slug: 'spinner',
+    title: 'Spinner',
+    section: 'Components',
+    category: 'Feedback',
+    order: 4,
+    folder: 'spinner',
+    description: 'Compact CSS-only loading indicator for inline pending states.',
+    usage: '<Spinner aria-label="Loading" />',
+    notes: [
+      'Renders a <div> with a lightweight border animation.',
+      'Use size="sm" or size="lg" to scale the indicator.'
     ]
   },
   {

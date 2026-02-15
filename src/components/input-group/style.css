@@ -1,0 +1,43 @@
+@import "../../variables.css";
+
+[p="input-group"] {
+  display: flex;
+  align-items: stretch;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+[p="input-group"] > :is(input, [p="input"], textarea, [p="textarea"], select, [p="select"]) {
+  flex: 1;
+  margin-block-start: 0;
+  border-inline-end: 0;
+}
+
+[p="input-group"] > :is(input, [p="input"], textarea, [p="textarea"], select, [p="select"], button, [p="button"], a[p="button"]) {
+  border-radius: 0;
+}
+
+[p="input-group"] > :is(input, [p="input"], textarea, [p="textarea"], select, [p="select"], button, [p="button"], a[p="button"]):first-child {
+  border-top-left-radius: var(--p-radius);
+  border-bottom-left-radius: var(--p-radius);
+}
+
+[p="input-group"] > :is(input, [p="input"], textarea, [p="textarea"], select, [p="select"], button, [p="button"], a[p="button"]):last-child {
+  border-top-right-radius: var(--p-radius);
+  border-bottom-right-radius: var(--p-radius);
+}
+
+[p="input-group"] > legend {
+  float: inline-start;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: hsl(var(--p-muted-foreground));
+  background-color: hsl(var(--p-muted));
+  border: 1px solid hsl(var(--p-input));
+  border-inline-end: none;
+  border-radius: var(--p-radius) 0 0 var(--p-radius);
+}

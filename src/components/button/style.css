@@ -12,6 +12,7 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
   border: 1px solid transparent;
+  border-color: hsl(0 0% 100% / 0.18) hsl(0 0% 0% / 0.24) hsl(0 0% 0% / 0.24) hsl(0 0% 100% / 0.18);
   text-decoration: none;
   cursor: pointer;
   user-select: none;
@@ -32,6 +33,10 @@
 
 [p="button"]:hover {
   background-color: hsl(var(--p-primary-hover));
+}
+
+[p="button"]:active:not(:disabled) {
+  transform: translate(1px, 1px);
 }
 
 /* Default size (when no size attribute or size="md") */
@@ -64,7 +69,7 @@
 
 /* Variant: outline */
 [p="button"][variant="outline"] {
-  border: 1px solid hsl(var(--p-border));
+  border-color: hsl(var(--p-border));
   background-color: hsl(var(--p-background));
   color: hsl(var(--p-foreground));
 }
@@ -87,6 +92,7 @@
 /* Variant: ghost */
 [p="button"][variant="ghost"] {
   background-color: transparent;
+  border-color: transparent;
   color: hsl(var(--p-foreground));
 }
 
@@ -98,6 +104,7 @@
 /* Variant: link */
 [p="button"][variant="link"] {
   background-color: transparent;
+  border-color: transparent;
   color: hsl(var(--p-primary));
   text-decoration: underline;
   text-underline-offset: 4px;

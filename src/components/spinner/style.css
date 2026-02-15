@@ -1,0 +1,28 @@
+@import "../../variables.css";
+
+[p="spinner"] {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid hsl(var(--p-muted));
+  border-top-color: hsl(var(--p-primary));
+  border-radius: 9999px;
+  animation: p-spinner 1s linear infinite;
+}
+
+[p="spinner"][size="sm"] {
+  width: 1rem;
+  height: 1rem;
+}
+
+[p="spinner"][size="lg"] {
+  width: 2rem;
+  height: 2rem;
+  border-width: 3px;
+}
+
+@keyframes p-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
