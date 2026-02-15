@@ -1,0 +1,47 @@
+@import "../../variables.css";
+
+[p="tree"] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+[p="tree"] [p="tree"] {
+  margin: 0;
+  padding-inline-start: 1rem;
+}
+
+[p="tree-item"] {
+  margin: 0;
+  padding-block: 0.125rem;
+}
+
+[p="tree-branch"] {
+  margin: 0;
+}
+
+[p="tree-branch"] > summary {
+  cursor: pointer;
+  list-style: none;
+  padding-block: 0.125rem;
+  user-select: none;
+}
+
+[p="tree-branch"] > summary::-webkit-details-marker {
+  display: none;
+}
+
+[p="tree-branch"] > summary::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 0.25rem;
+  transition: transform 0.15s var(--p-ease);
+}
+
+[p="tree-branch"][open] > summary::before {
+  transform: rotate(90deg);
+}
+
+[p="tree-branch"] > [p="tree"] {
+  padding-inline-start: 1.25rem;
+}
