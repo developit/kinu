@@ -115,7 +115,50 @@
   --p-ease: var(--p-ease-out);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    /* Base colors */
+    --p-background: 222.2 84% 4.9%;
+    --p-foreground: 210 40% 98%;
+    --p-card: 222.2 84% 4.9%;
+    --p-card-foreground: 210 40% 98%;
+    --p-popover: 222.2 84% 4.9%;
+    --p-popover-foreground: 210 40% 98%;
+    --p-sidebar: 222.2 84% 4.9%;
+
+    /* Primary colors */
+    --p-primary: 210 40% 98%;
+    --p-primary-foreground: 222.2 47.4% 11.2%;
+    --p-primary-hover: 210 40% 90%;
+
+    /* Secondary colors */
+    --p-secondary: 217.2 32.6% 17.5%;
+    --p-secondary-foreground: 210 40% 98%;
+    --p-secondary-hover: 217.2 32.6% 25%;
+
+    /* Muted colors */
+    --p-muted: 217.2 32.6% 17.5%;
+    --p-muted-foreground: 215 20.2% 65.1%;
+
+    /* Accent colors */
+    --p-accent: 217.2 32.6% 17.5%;
+    --p-accent-foreground: 210 40% 98%;
+
+    /* Destructive colors */
+    --p-destructive: 0 62.8% 30.6%;
+    --p-destructive-foreground: 210 40% 98%;
+    --p-destructive-hover: 0 62.8% 40%;
+
+    /* Border and input */
+    --p-border: 217.2 32.6% 17.5%;
+    --p-input: 217.2 32.6% 17.5%;
+    --p-ring: 212.7 26.8% 83.9%;
+  }
+}
+
 .dark {
+  color-scheme: dark;
   /* Base colors */
   --p-background: 222.2 84% 4.9%;
   --p-foreground: 210 40% 98%;
@@ -123,6 +166,7 @@
   --p-card-foreground: 210 40% 98%;
   --p-popover: 222.2 84% 4.9%;
   --p-popover-foreground: 210 40% 98%;
+  --p-sidebar: 222.2 84% 4.9%;
 
   /* Primary colors */
   --p-primary: 210 40% 98%;
