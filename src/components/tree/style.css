@@ -29,6 +29,7 @@
 [p="tree-item"] > [p="tree-label"]::before {
   content: '▸';
   color: hsl(var(--p-muted-foreground));
+  opacity: 0.5;
   transition: transform 0.2s var(--p-ease);
 }
 
