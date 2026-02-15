@@ -12,8 +12,7 @@
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-  border: 1px solid;
-  border-color: hsl(0 0% 100% / 0.2) hsl(0 0% 0% / 0.22) hsl(0 0% 0% / 0.3) hsl(0 0% 100% / 0.12);
+  border: 1px solid transparent;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
@@ -50,7 +49,7 @@
 }
 
 [p="button"]:active:not(:disabled):not([loading]) {
-  transform: translate(1px, 1px);
+  transform: translate(0, 1px);
 }
 
 [p="button"][loading] {
@@ -71,7 +70,6 @@
 /* Variant: outline */
 [p="button"][variant="outline"] {
   border: 1px solid hsl(var(--p-border));
-  border-color: hsl(var(--p-border));
   background-color: hsl(var(--p-background));
   color: hsl(var(--p-foreground));
 }
@@ -94,7 +92,6 @@
 /* Variant: ghost */
 [p="button"][variant="ghost"] {
   background-color: transparent;
-  border-color: transparent;
   color: hsl(var(--p-foreground));
 }
 
@@ -106,7 +103,6 @@
 /* Variant: link */
 [p="button"][variant="link"] {
   background-color: transparent;
-  border-color: transparent;
   color: hsl(var(--p-primary));
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -138,5 +134,4 @@
   height: 2.5rem;
   width: 2.5rem;
   padding: 0;
-  gap: 0;
 }
