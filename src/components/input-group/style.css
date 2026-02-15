@@ -45,13 +45,12 @@
   border-end-start-radius: var(--p-radius);
 }
 
-
-[p="input-group"]:has(> :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea):focus-visible):has(> :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea)):not(:has(> :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea) ~ :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea))) {
+[p="input-group"]:has(> [p="input"]:focus-visible):not(:has(> [p="input"] ~ [p="input"])) {
   box-shadow: 0 0 0 2px hsl(var(--p-ring));
   border-radius: var(--p-radius);
 }
 
-[p="input-group"]:has(> :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea):focus-visible):has(> :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea)):not(:has(> :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea) ~ :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea))) > :is([p="input"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"], [type="button"], [type="submit"], [type="reset"]), textarea):focus-visible {
+[p="input-group"]:has(> [p="input"]:focus-visible):not(:has(> [p="input"] ~ [p="input"])) > [p="input"]:focus-visible {
   box-shadow: none;
   border-color: hsl(var(--p-input));
 }
