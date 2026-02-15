@@ -1,50 +1,5 @@
 [
   {
-    "slug": "overview",
-    "title": "PUI Overview",
-    "section": "Foundations",
-    "category": "Introduction",
-    "order": 1,
-    "file": "pages/overview.md",
-    "description": ""
-  },
-  {
-    "slug": "theming",
-    "title": "Theming & Tokens",
-    "section": "Foundations",
-    "category": "Styling",
-    "order": 2,
-    "file": "pages/theming.md",
-    "description": ""
-  },
-  {
-    "slug": "commands",
-    "title": "Command Attributes",
-    "section": "Foundations",
-    "category": "Interactivity",
-    "order": 3,
-    "file": "pages/commands.md",
-    "description": ""
-  },
-  {
-    "slug": "base-css",
-    "title": "Base Styles",
-    "section": "Foundations",
-    "category": "Styling",
-    "order": 3,
-    "file": "pages/base-styles.md",
-    "description": ""
-  },
-  {
-    "slug": "typography",
-    "title": "Typography",
-    "section": "Components",
-    "category": "Data Display",
-    "order": 0,
-    "file": "pages/typography.md",
-    "description": ""
-  },
-  {
     "slug": "badge",
     "title": "Badge",
     "section": "Components",
@@ -63,13 +18,13 @@
     "description": "Button component that forwards props to <button> or <a> when href is provided."
   },
   {
-    "slug": "avatar",
-    "title": "Avatar",
+    "slug": "typography",
+    "title": "Typography",
     "section": "Components",
     "category": "Data Display",
-    "order": 1,
-    "file": "components/avatar.md",
-    "description": "Styled <img> avatar that falls back to initials from the alt text."
+    "order": 0,
+    "file": "pages/typography.md",
+    "description": ""
   },
   {
     "slug": "accordion",
@@ -90,13 +45,13 @@
     "description": "Inline status message with tone variants."
   },
   {
-    "slug": "input",
-    "title": "Input",
+    "slug": "avatar",
+    "title": "Avatar",
     "section": "Components",
-    "category": "Forms",
+    "category": "Data Display",
     "order": 1,
-    "file": "components/input.md",
-    "description": "Text input with size, tone, and invalid states handled in CSS."
+    "file": "components/avatar.md",
+    "description": "Styled <img> avatar that falls back to initials from the alt text."
   },
   {
     "slug": "card",
@@ -106,6 +61,24 @@
     "order": 1,
     "file": "components/card.md",
     "description": "Surface container with padding, border, and typography defaults."
+  },
+  {
+    "slug": "input",
+    "title": "Input",
+    "section": "Components",
+    "category": "Forms",
+    "order": 1,
+    "file": "components/input.md",
+    "description": "Text input with size, tone, and invalid states handled in CSS."
+  },
+  {
+    "slug": "overview",
+    "title": "PUI Overview",
+    "section": "Foundations",
+    "category": "Introduction",
+    "order": 1,
+    "file": "pages/overview.md",
+    "description": ""
   },
   {
     "slug": "tabs",
@@ -126,33 +99,6 @@
     "description": "Hover/focus tooltip with placement attributes and CSS timing."
   },
   {
-    "slug": "table",
-    "title": "Table",
-    "section": "Components",
-    "category": "Data Display",
-    "order": 2,
-    "file": "components/table.md",
-    "description": "Table wrapper with zebra striping and compact density."
-  },
-  {
-    "slug": "collapsible",
-    "title": "Collapsible",
-    "section": "Components",
-    "category": "Disclosure",
-    "order": 2,
-    "file": "components/collapsible.md",
-    "description": "Minimal hide/show container built on <details> without default markers."
-  },
-  {
-    "slug": "checkbox",
-    "title": "Checkbox",
-    "section": "Components",
-    "category": "Forms",
-    "order": 2,
-    "file": "components/checkbox.md",
-    "description": "Accessible checkbox input with custom visuals."
-  },
-  {
     "slug": "aspect-ratio",
     "title": "Aspect Ratio",
     "section": "Components",
@@ -171,6 +117,33 @@
     "description": "Composable breadcrumb trail built from list primitives."
   },
   {
+    "slug": "checkbox",
+    "title": "Checkbox",
+    "section": "Components",
+    "category": "Forms",
+    "order": 2,
+    "file": "components/checkbox.md",
+    "description": "Accessible checkbox input with custom visuals."
+  },
+  {
+    "slug": "collapsible",
+    "title": "Collapsible",
+    "section": "Components",
+    "category": "Disclosure",
+    "order": 2,
+    "file": "components/collapsible.md",
+    "description": "Minimal hide/show container built on <details> without default markers."
+  },
+  {
+    "slug": "input-group",
+    "title": "Input Group",
+    "section": "Components",
+    "category": "Forms",
+    "order": 2,
+    "file": "components/input-group.md",
+    "description": "Compact fieldset wrapper for joined controls like input and button rows."
+  },
+  {
     "slug": "popover",
     "title": "Popover",
     "section": "Components",
@@ -178,6 +151,69 @@
     "order": 2,
     "file": "components/popover.md",
     "description": "Lightweight popover using native dialog with trigger/content primitives."
+  },
+  {
+    "slug": "spinner",
+    "title": "Spinner",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 2,
+    "file": "components/spinner.md",
+    "description": "Inline loading indicator for compact pending states."
+  },
+  {
+    "slug": "table",
+    "title": "Table",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 2,
+    "file": "components/table.md",
+    "description": "Table wrapper with zebra striping and compact density."
+  },
+  {
+    "slug": "theming",
+    "title": "Theming & Tokens",
+    "section": "Foundations",
+    "category": "Styling",
+    "order": 2,
+    "file": "pages/theming.md",
+    "description": ""
+  },
+  {
+    "slug": "base-css",
+    "title": "Base Styles",
+    "section": "Foundations",
+    "category": "Styling",
+    "order": 3,
+    "file": "pages/base-styles.md",
+    "description": ""
+  },
+  {
+    "slug": "commands",
+    "title": "Command Attributes",
+    "section": "Foundations",
+    "category": "Interactivity",
+    "order": 3,
+    "file": "pages/commands.md",
+    "description": ""
+  },
+  {
+    "slug": "dialog",
+    "title": "Dialog",
+    "section": "Components",
+    "category": "Overlay",
+    "order": 3,
+    "file": "components/dialog.md",
+    "description": "Composable modal built on the native <dialog> element."
+  },
+  {
+    "slug": "navigation-menu",
+    "title": "Navigation Menu",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 3,
+    "file": "components/navigation-menu.md",
+    "description": "Composable navigation with list, item, and link helpers."
   },
   {
     "slug": "progress",
@@ -207,49 +243,13 @@
     "description": "Overflow wrapper with custom scrollbars and shadow indicators."
   },
   {
-    "slug": "navigation-menu",
-    "title": "Navigation Menu",
-    "section": "Components",
-    "category": "Navigation",
-    "order": 3,
-    "file": "components/navigation-menu.md",
-    "description": "Composable navigation with list, item, and link helpers."
-  },
-  {
-    "slug": "dialog",
-    "title": "Dialog",
+    "slug": "alert-dialog",
+    "title": "Alert Dialog",
     "section": "Components",
     "category": "Overlay",
-    "order": 3,
-    "file": "components/dialog.md",
-    "description": "Composable modal built on the native <dialog> element."
-  },
-  {
-    "slug": "skeleton",
-    "title": "Skeleton",
-    "section": "Components",
-    "category": "Feedback",
     "order": 4,
-    "file": "components/skeleton.md",
-    "description": "Animated shimmer placeholder for loading states."
-  },
-  {
-    "slug": "select",
-    "title": "Select",
-    "section": "Components",
-    "category": "Forms",
-    "order": 4,
-    "file": "components/select.md",
-    "description": "Styled native <select> element with size variants."
-  },
-  {
-    "slug": "resizable",
-    "title": "Resizable",
-    "section": "Components",
-    "category": "Layout",
-    "order": 4,
-    "file": "components/resizable.md",
-    "description": "Resizable container that exposes native CSS handles."
+    "file": "components/alert-dialog.md",
+    "description": "Alias of Dialog with alert-focused styling defaults."
   },
   {
     "slug": "menubar",
@@ -261,49 +261,31 @@
     "description": "Horizontal command bar composed of styled buttons."
   },
   {
-    "slug": "alert-dialog",
-    "title": "Alert Dialog",
-    "section": "Components",
-    "category": "Overlay",
-    "order": 4,
-    "file": "components/alert-dialog.md",
-    "description": "Alias of Dialog with alert-focused styling defaults."
-  },
-  {
-    "slug": "toast",
-    "title": "Toast",
-    "section": "Components",
-    "category": "Feedback",
-    "order": 5,
-    "file": "pages/toast.md",
-    "description": ""
-  },
-  {
-    "slug": "slider",
-    "title": "Slider",
-    "section": "Components",
-    "category": "Forms",
-    "order": 5,
-    "file": "components/slider.md",
-    "description": "Range input with CSS-driven track and thumb styling."
-  },
-  {
-    "slug": "separator",
-    "title": "Separator",
+    "slug": "resizable",
+    "title": "Resizable",
     "section": "Components",
     "category": "Layout",
-    "order": 5,
-    "file": "components/separator.md",
-    "description": "Semantic horizontal or vertical divider."
+    "order": 4,
+    "file": "components/resizable.md",
+    "description": "Resizable container that exposes native CSS handles."
   },
   {
-    "slug": "pagination",
-    "title": "Pagination",
+    "slug": "select",
+    "title": "Select",
     "section": "Components",
-    "category": "Navigation",
-    "order": 5,
-    "file": "components/pagination.md",
-    "description": "Semantic pagination list with previous/next helpers."
+    "category": "Forms",
+    "order": 4,
+    "file": "components/select.md",
+    "description": "Styled native <select> element with size variants."
+  },
+  {
+    "slug": "skeleton",
+    "title": "Skeleton",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 4,
+    "file": "components/skeleton.md",
+    "description": "Animated shimmer placeholder for loading states."
   },
   {
     "slug": "drawer",
@@ -315,6 +297,42 @@
     "description": "Bottom sheet style overlay with trigger and close helpers."
   },
   {
+    "slug": "pagination",
+    "title": "Pagination",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 5,
+    "file": "components/pagination.md",
+    "description": "Semantic pagination list with previous/next helpers."
+  },
+  {
+    "slug": "separator",
+    "title": "Separator",
+    "section": "Components",
+    "category": "Layout",
+    "order": 5,
+    "file": "components/separator.md",
+    "description": "Semantic horizontal or vertical divider."
+  },
+  {
+    "slug": "slider",
+    "title": "Slider",
+    "section": "Components",
+    "category": "Forms",
+    "order": 5,
+    "file": "components/slider.md",
+    "description": "Range input with CSS-driven track and thumb styling."
+  },
+  {
+    "slug": "toast",
+    "title": "Toast",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 5,
+    "file": "pages/toast.md",
+    "description": ""
+  },
+  {
     "slug": "calendar",
     "title": "Calendar",
     "section": "Components",
@@ -322,24 +340,6 @@
     "order": 6,
     "file": "components/calendar.md",
     "description": "Styled wrapper around the native <input type=\"date\"> element."
-  },
-  {
-    "slug": "switch",
-    "title": "Switch",
-    "section": "Components",
-    "category": "Forms",
-    "order": 6,
-    "file": "components/switch.md",
-    "description": "Accessible toggle switch built from a checkbox input."
-  },
-  {
-    "slug": "sidebar",
-    "title": "Sidebar",
-    "section": "Components",
-    "category": "Layout",
-    "order": 6,
-    "file": "components/sidebar.md",
-    "description": "Responsive sidebar dialog that collapses on mobile."
   },
   {
     "slug": "carousel",
@@ -358,6 +358,24 @@
     "order": 6,
     "file": "components/dropdown-menu.md",
     "description": "Command-driven dropdown built on top of <dialog>."
+  },
+  {
+    "slug": "sidebar",
+    "title": "Sidebar",
+    "section": "Components",
+    "category": "Layout",
+    "order": 6,
+    "file": "components/sidebar.md",
+    "description": "Responsive sidebar dialog that collapses on mobile."
+  },
+  {
+    "slug": "switch",
+    "title": "Switch",
+    "section": "Components",
+    "category": "Forms",
+    "order": 6,
+    "file": "components/switch.md",
+    "description": "Accessible toggle switch built from a checkbox input."
   },
   {
     "slug": "combobox",
