@@ -1,0 +1,2 @@
+import{d as t,y as m,u as e}from"./index-DwQQdDh5.js";import{P as r}from"./style-CLEdeqkB.js";function a(){const[s,o]=t(10);return m(()=>{setTimeout(o,500,50),setTimeout(o,1e3,90)},[]),e("div",{style:{display:"flex",flexDirection:"column",gap:"0.5rem"},children:[e(r,{value:s,max:100}),e(r,{value:75,max:100})]})}const i="<Progress value={25} max={100} />",n={Demo:a,code:i};export{a as Demo,i as code,n as default};
+//# sourceMappingURL=progress-C-2b1ZdR.js.map
