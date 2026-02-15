@@ -20,7 +20,18 @@ export {Separator} from './components/separator';
 export {Avatar} from './components/avatar';
 export {Toggle} from './components/toggle';
 export {ToggleGroup} from './components/toggle-group';
-export {Tree, TreeItem, TreeLabel, TreeGroup, TreeLeaf} from './components/tree';
+export {
+  Tree,
+  TreeItem,
+  TreeLabel,
+  TreeGroup,
+  TreeLeaf,
+  TreeRoot,
+  TreeBranch,
+  TreeBranchLabel,
+  TreeBranchChildren,
+  TreeNode,
+} from './components/tree';
 export {AspectRatio} from './components/aspect-ratio';
 export {ScrollArea} from './components/scroll-area';
 export {Popover, PopoverTrigger, PopoverContent} from './components/popover';
