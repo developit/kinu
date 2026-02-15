@@ -11,6 +11,32 @@
   margin: 0;
 }
 
+
+[p="tree-item"]::details-content {
+  overflow: clip;
+  height: 0;
+  transition: height 0.25s var(--p-ease), content-visibility 0.25s linear allow-discrete;
+}
+
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  [p="tree-item"][open]::details-content {
+    height: auto;
+  }
+}
+
+@supports not (interpolate-size: allow-keywords) {
+  [p="tree-item"]::details-content {
+    transition: none;
+  }
+
+  [p="tree-item"][open]::details-content {
+    height: auto;
+  }
+}
 [p="tree-item"] > [p="tree-label"] {
   list-style: none;
   display: flex;
