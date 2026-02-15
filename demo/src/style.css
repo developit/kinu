@@ -81,6 +81,27 @@ body {
   margin-right: auto;
 }
 
+.theme-toggle {
+  border: 1px solid hsl(var(--p-border));
+  background-color: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.theme-toggle:hover {
+  background-color: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+}
+
+[data-theme="radix"] .theme-toggle {
+  border-color: hsl(var(--p-primary) / 0.5);
+}
+
 .demo-app > [p="sidebar"] {
   top: 4rem;
   height: calc(100vh - 4rem);

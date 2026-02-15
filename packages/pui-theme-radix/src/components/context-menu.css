@@ -1,0 +1,105 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/context-menu.css
+ * - radix-src/components/_internal/base-menu.css
+ *
+ * Selector mapping:
+ * - .rt-ContextMenuContent         -> [p="context-menu"]
+ * - .rt-BaseMenuContent            -> [p="context-menu"]
+ * - .rt-BaseMenuItem               -> [p="context-menu-item"]
+ */
+
+[p="context-menu"] {
+  --base-menu-content-padding: calc(5px * var(--scaling));
+  --base-menu-item-padding-left: calc(25px * var(--scaling));
+  --base-menu-item-padding-right: calc(5px * var(--scaling));
+  --base-menu-item-height: calc(25px * var(--scaling));
+  --base-menu-item-radius: calc(3px * var(--scaling));
+  --base-menu-bg: hsl(var(--p-popover));
+  --menu-highlight-bg: var(--accent-a4);
+  --menu-highlight-color: inherit;
+  --menu-item-color: var(--gray-12);
+  --menu-shadow:
+    0 10px 38px -10px rgb(22 23 24 / 0.35),
+    0 10px 20px -15px rgb(22 23 24 / 0.2);
+
+  box-sizing: border-box;
+  overflow: auto;
+  background-color: var(--base-menu-bg);
+  box-shadow: var(--menu-shadow);
+  padding: var(--base-menu-content-padding);
+  border-radius: calc(6px * var(--scaling));
+  min-width: calc(220px * var(--scaling));
+  max-height: var(--radix-context-menu-content-available-height);
+  transform-origin: var(--radix-context-menu-content-transform-origin);
+}
+
+[p="context-menu"]:not(:open) {
+  display: none;
+}
+
+[p="context-menu"]:open {
+  display: flex;
+  flex-direction: column;
+}
+
+[p="context-menu"][variant="solid"] {
+  --menu-highlight-bg: var(--accent-9);
+  --menu-highlight-color: var(--accent-contrast);
+}
+
+[p="context-menu"][size="1"] {
+  --base-menu-content-padding: calc(5px * var(--scaling));
+}
+
+[p="context-menu"][size="2"] {
+  --base-menu-content-padding: calc(5px * var(--scaling));
+}
+
+[p="context-menu-item"] {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--base-menu-item-height);
+  padding-left: var(--base-menu-item-padding-left);
+  padding-right: var(--base-menu-item-padding-right);
+  box-sizing: border-box;
+  border-radius: var(--base-menu-item-radius);
+  border: none;
+  background: none;
+  text-align: left;
+  white-space: nowrap;
+  font: inherit;
+  font-size: calc(13px * var(--scaling));
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: var(--font-weight-regular);
+  cursor: var(--cursor-menu-item);
+  color: var(--menu-item-color);
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+}
+
+[p="context-menu-item"]:where(:hover, :focus-visible, [selected]) {
+  background-color: var(--menu-highlight-bg);
+  color: var(--menu-highlight-color);
+}
+
+[p="context-menu-item"][disabled],
+[p="context-menu-item"][aria-disabled="true"] {
+  color: var(--gray-a8);
+  cursor: default;
+}
+
+[p="context-menu-item"][variant="destructive"],
+[p="context-menu-item"][data-destructive] {
+  color: hsl(var(--p-destructive));
+}
+
+[p="context-menu"] [p="separator"] {
+  height: 1px;
+  margin: calc(5px * var(--scaling));
+  background-color: var(--accent-a11);
+}

@@ -3,6 +3,7 @@ import './iconify.d.ts';
 import {render} from 'preact';
 import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
 import 'iconify-icon';
+import {applyTheme, getInitialTheme} from './theme';
 
 const Home = lazy(() => import('./routes/home.tsx'));
 const GettingStarted = lazy(() => import('./routes/getting-started.tsx'));
@@ -23,6 +24,8 @@ function setViewportVars() {
 
 setViewportVars();
 window.visualViewport?.addEventListener('resize', setViewportVars);
+
+applyTheme(getInitialTheme());
 
 function loadStart() {
   document.body.classList.add('loading');

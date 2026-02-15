@@ -1,0 +1,83 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/text-field.css
+ *
+ * Selector mapping:
+ * - .rt-TextFieldInput           -> [p="input"]
+ * - .rt-r-size-1..4              -> [size="1"]..[size="4"]
+ *
+ * State mapping:
+ * - :focus-within / :has focus   -> :focus-visible
+ * - [data-invalid]               -> :invalid + [invalid]
+ */
+
+[p="input"] {
+  display: flex;
+  width: 100%;
+  border-radius: var(--p-radius);
+  border: 1px solid hsl(var(--p-border));
+  background-color: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  font: inherit;
+  font-size: 0.875rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+
+  height: 2.5rem;
+  padding: 0 0.75rem;
+}
+
+[p="input"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: -1px;
+  border-color: hsl(var(--p-ring));
+}
+
+[p="input"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+[p="input"]::placeholder {
+  color: hsl(var(--p-muted-foreground));
+}
+
+[p="input"]:invalid,
+[p="input"][invalid] {
+  border-color: hsl(var(--p-destructive));
+}
+
+[p="input"]:invalid:focus-visible,
+[p="input"][invalid]:focus-visible {
+  outline-color: hsl(var(--p-destructive));
+  border-color: hsl(var(--p-destructive));
+}
+
+/***************************************************************************************************
+ * Sizes
+ ***************************************************************************************************/
+
+[p="input"][size="1"] {
+  height: 2rem;
+  padding: 0 0.625rem;
+  font-size: 0.75rem;
+}
+
+[p="input"][size="2"],
+[p="input"][size="sm"] {
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+}
+
+[p="input"]:not([size]),
+[p="input"][size="3"],
+[p="input"][size="md"] {
+  height: 2.5rem;
+  padding: 0 0.875rem;
+}
+
+[p="input"][size="4"],
+[p="input"][size="lg"] {
+  height: 2.75rem;
+  padding: 0 1rem;
+  font-size: 0.9375rem;
+}

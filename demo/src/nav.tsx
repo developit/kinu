@@ -9,11 +9,20 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from 'pui';
+import {useState} from 'preact/hooks';
+import {applyTheme, getInitialTheme, type DemoTheme} from './theme';
 
 export function Nav({
   class: className,
   left,
 }: {class?: string; left?: ComponentChildren}) {
+  const [theme, setTheme] = useState<DemoTheme>(() => getInitialTheme());
+  const toggleTheme = () => {
+    const nextTheme = theme === 'radix' ? 'default' : 'radix';
+    setTheme(nextTheme);
+    applyTheme(nextTheme);
+  };
+
   return (
     <NavigationMenu class={className ?? 'home-nav'}>
       {left}
@@ -28,6 +37,16 @@ export function Nav({
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <button
+            type="button"
+            class="theme-toggle"
+            onClick={toggleTheme}
+            aria-pressed={theme === 'radix'}
+          >
+            Theme: {theme === 'radix' ? 'Radix' : 'Default'}
+          </button>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <DropdownMenu>

@@ -1,0 +1,80 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/scroll-area.css
+ *
+ * Selector mapping:
+ * - .rt-ScrollAreaRoot               -> [p="scroll-area"]
+ * - .rt-r-size-1..3                  -> [size="1"]..[size="3"]
+ */
+
+:root {
+  --scrollarea-scrollbar-horizontal-margin-top: var(--space-1);
+  --scrollarea-scrollbar-horizontal-margin-bottom: var(--space-1);
+  --scrollarea-scrollbar-horizontal-margin-left: var(--space-1);
+  --scrollarea-scrollbar-horizontal-margin-right: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-top: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-bottom: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-left: var(--space-1);
+  --scrollarea-scrollbar-vertical-margin-right: var(--space-1);
+}
+
+[p="scroll-area"] {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--gray-a8) var(--gray-a3);
+  scrollbar-width: thin;
+}
+
+[p="scroll-area"]:focus-visible {
+  outline: 2px solid var(--focus-8);
+  outline-offset: -2px;
+}
+
+/***************************************************************************************************
+ * Sizes
+ ***************************************************************************************************/
+
+[p="scroll-area"][size="1"] {
+  --scrollarea-scrollbar-size: var(--space-1);
+  --scrollarea-scrollbar-border-radius: max(var(--radius-1), var(--radius-full));
+}
+
+[p="scroll-area"][size="2"] {
+  --scrollarea-scrollbar-size: var(--space-2);
+  --scrollarea-scrollbar-border-radius: max(var(--radius-1), var(--radius-full));
+}
+
+[p="scroll-area"]:not([size]),
+[p="scroll-area"][size="3"],
+[p="scroll-area"][size="md"] {
+  --scrollarea-scrollbar-size: var(--space-3);
+  --scrollarea-scrollbar-border-radius: max(var(--radius-1), var(--radius-full));
+}
+
+/***************************************************************************************************
+ * Variants
+ ***************************************************************************************************/
+
+[p="scroll-area"]::-webkit-scrollbar {
+  width: var(--scrollarea-scrollbar-size);
+  height: var(--scrollarea-scrollbar-size);
+}
+
+[p="scroll-area"]::-webkit-scrollbar-track {
+  background-color: var(--gray-a3);
+  border-radius: var(--scrollarea-scrollbar-border-radius);
+  border: var(--space-1) solid transparent;
+  background-clip: content-box;
+}
+
+[p="scroll-area"]::-webkit-scrollbar-thumb {
+  background-color: var(--gray-a8);
+  border-radius: var(--scrollarea-scrollbar-border-radius);
+  border: var(--space-1) solid transparent;
+  background-clip: content-box;
+}
+
+[p="scroll-area"]::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gray-a9);
+}
