@@ -1,0 +1,70 @@
+@import "../../variables.css";
+
+[p="tree"] {
+  --p-tree-indent: 1rem;
+  display: grid;
+  gap: 0.125rem;
+  font-size: 0.875rem;
+}
+
+[p="tree-item"] {
+  margin: 0;
+}
+
+[p="tree-item"] > [p="tree-label"] {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  cursor: pointer;
+  color: hsl(var(--p-foreground));
+  border-radius: calc(var(--p-radius) - 2px);
+  padding: 0.25rem 0.5rem;
+}
+
+[p="tree-item"] > [p="tree-label"]::-webkit-details-marker {
+  display: none;
+}
+
+[p="tree-item"] > [p="tree-label"]::before {
+  content: '▸';
+  color: hsl(var(--p-muted-foreground));
+  transition: transform 0.2s var(--p-ease);
+}
+
+[p="tree-item"][open] > [p="tree-label"]::before {
+  transform: rotate(90deg);
+}
+
+[p="tree-group"] {
+  display: grid;
+  gap: 0.125rem;
+  margin-inline-start: var(--p-tree-indent);
+  border-inline-start: 1px solid hsl(var(--p-border));
+  padding-inline-start: 0.5rem;
+}
+
+[p="tree-leaf"] {
+  border: 0;
+  margin: 0;
+  background: transparent;
+  color: hsl(var(--p-foreground));
+  text-align: left;
+  border-radius: calc(var(--p-radius) - 2px);
+  padding: 0.25rem 0.5rem;
+  font: inherit;
+  width: 100%;
+  cursor: pointer;
+}
+
+[p="tree-item"] > [p="tree-label"]:is(:hover, :focus-visible),
+[p="tree-leaf"]:is(:hover, :focus-visible) {
+  background: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+}
+
+[p="tree-item"] > [p="tree-label"]:focus-visible,
+[p="tree-leaf"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: 1px;
+}
