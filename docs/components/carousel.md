@@ -18,23 +18,19 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Carousel | — | Custom component implemented in the source file. |
-| CarouselContent | — | Custom component implemented in the source file. |
-| CarouselItem | `<div>` | Wraps `<div>` and sets `p="carousel-item"`. |
-| CarouselPrevious | `p="carousel-previous"` | Renders markup that includes `p="carousel-previous"`. |
-| CarouselNext | `p="carousel-next"` | Renders markup that includes `p="carousel-next"`. |
+| Carousel | Image slider | — |
+| CarouselContent | Slider content | — |
+| CarouselItem | Slide item | `<div p="carousel-item">` |
+| CarouselPrevious | Previous button | `p="carousel-previous"` |
+| CarouselNext | Next button | `p="carousel-next"` |
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | id | `string` | — | Optional ID for the carousel content. If not provided, one will be auto-generated. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 

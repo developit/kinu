@@ -16,16 +16,12 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Breadcrumb | `<nav>` | Wraps `<nav>` and sets `p="breadcrumb"`. |
-| BreadcrumbList | `<ol>` | Wraps `<ol>` and sets `p="breadcrumb-list"`. |
-| BreadcrumbItem | `<li>` | Wraps `<li>` and sets `p="breadcrumb-item"`. |
-| BreadcrumbLink | `<a>` | Wraps `<a>` and sets `p="breadcrumb-link"`. |
-
-## Attributes
-
-Inherits all native attributes from `<nav>`. No additional styling attributes are required.
+| Breadcrumb | Navigation trail | `<nav p="breadcrumb">` |
+| BreadcrumbList | Trail container | `<ol p="breadcrumb-list">` |
+| BreadcrumbItem | Trail item | `<li p="breadcrumb-item">` |
+| BreadcrumbLink | Trail link | `<a p="breadcrumb-link">` |
 
 ## Notes
 

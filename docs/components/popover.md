@@ -15,12 +15,12 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Popover | `p="popover"` | Renders markup that includes `p="popover"`. |
-| PopoverTrigger | — | Custom component implemented in the source file. |
-| PopoverContent | `p="popover-content"` | Renders markup that includes `p="popover-content"`. |
-| PopoverClose | — | Custom component implemented in the source file. |
+| Popover | Floating content | `p="popover"` |
+| PopoverTrigger | Popover trigger | — |
+| PopoverContent | Popover content | `p="popover-content"` |
+| PopoverClose | Component | — |
 
 ## Props
 

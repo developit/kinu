@@ -12,9 +12,9 @@ import {Alert} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Alert | `<div>` | Wraps `<div>` and sets `p="alert"`. |
+| Alert | Status message | `<div p="alert">` |
 
 ## Props
 

@@ -19,13 +19,9 @@ import {Tree} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Tree | — | Custom component implemented in the source file. |
-
-## Attributes
-
-Relies on forwarded native attributes; no additional styling attributes are defined.
+| Tree | Tree view | — |
 
 ## Notes
 

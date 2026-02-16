@@ -15,15 +15,11 @@ import {HoverCard, HoverCardContent, HoverCardTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| HoverCard | `<div>` | Wraps `<div>` and sets `p="hover-card"`. |
-| HoverCardTrigger | `<span>` | Wraps `<span>` and sets `p="hover-card-trigger"`. |
-| HoverCardContent | `<div>` | Wraps `<div>` and sets `p="hover-card-content"`. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| HoverCard | Hover preview | `<div p="hover-card">` |
+| HoverCardTrigger | Hover target | `<span p="hover-card-trigger">` |
+| HoverCardContent | Preview content | `<div p="hover-card-content">` |
 
 ## Notes
 

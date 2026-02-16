@@ -15,12 +15,12 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Drawer | `p="drawer"` | Renders markup that includes `p="drawer"`. |
-| DrawerTrigger | — | Custom component implemented in the source file. |
-| DrawerContent | `p="drawer-content"` | Renders markup that includes `p="drawer-content"`. |
-| DrawerClose | — | Custom component implemented in the source file. |
+| Drawer | Slide-out panel | `p="drawer"` |
+| DrawerTrigger | Drawer trigger | — |
+| DrawerContent | Drawer content | `p="drawer-content"` |
+| DrawerClose | Close button | — |
 
 ## Props
 
@@ -41,10 +41,6 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
 - `Drawer.Trigger = DrawerTrigger`
 - `Drawer.Content = DrawerContent`
 - `Drawer.Close = DrawerClose`
-
-## Attributes
-
-Relies on forwarded native attributes; no additional styling attributes are defined.
 
 ## Notes
 

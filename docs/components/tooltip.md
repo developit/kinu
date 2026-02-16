@@ -12,9 +12,9 @@ import {Tooltip} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Tooltip | `<span>` | Wraps `<span>` and sets `p="tooltip"`. |
+| Tooltip | Hover hint | `<span p="tooltip">` |
 
 ## Props
 

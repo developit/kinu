@@ -17,12 +17,12 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| DropdownMenu | `p="dropdown"` | Renders markup that includes `p="dropdown"`. |
-| DropdownMenuTrigger | — | Custom component implemented in the source file. |
-| DropdownMenuContent | `p="dropdown-content"` | Renders markup that includes `p="dropdown-content"`. |
-| DropdownMenuItem | `p="dropdown-menu-item"` | Resolves the underlying element at runtime using `(props) => (props.href ? 'a' : 'button')`. |
+| DropdownMenu | Dropdown menu | `p="dropdown"` |
+| DropdownMenuTrigger | Menu trigger | — |
+| DropdownMenuContent | Menu content | `p="dropdown-content"` |
+| DropdownMenuItem | Menu item | `p="dropdown-menu-item"` |
 
 ## Props
 

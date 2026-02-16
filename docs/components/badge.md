@@ -12,9 +12,9 @@ import {Badge} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Badge | `<span>` | Wraps `<span>` and sets `p="badge"`. |
+| Badge | Inline status indicator | `<span p="badge">` |
 
 ## Props
 
@@ -27,10 +27,6 @@ import {Badge} from 'pui';
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
 | Badge | variant | secondary | destructive | outline | Visual style variant selector. |
-
-## Notes
-
-- Renders a `<span>` and forwards standard inline attributes.
 
 ---
 

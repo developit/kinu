@@ -18,16 +18,12 @@ import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuLi
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| NavigationMenu | `<nav>` | Wraps `<nav>` and sets `p="navigation-menu"`. |
-| NavigationMenuList | `<ul>` | Wraps `<ul>` and sets `p="navigation-menu-list"`. |
-| NavigationMenuItem | `<li>` | Wraps `<li>` and sets `p="navigation-menu-item"`. |
-| NavigationMenuLink | `<a>` | Wraps `<a>` and sets `p="navigation-menu-link"`. |
-
-## Attributes
-
-Inherits all native attributes from `<nav>`. No additional styling attributes are required.
+| NavigationMenu | Menu container | `<nav p="navigation-menu">` |
+| NavigationMenuList | Menu list | `<ul p="navigation-menu-list">` |
+| NavigationMenuItem | Menu item | `<li p="navigation-menu-item">` |
+| NavigationMenuLink | Menu link | `<a p="navigation-menu-link">` |
 
 ## Notes
 

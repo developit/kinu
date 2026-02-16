@@ -12,9 +12,9 @@ import {Slider} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Slider | `<input>` | Wraps `<input>` and sets `p="slider"`. Defaults props to `{type: 'range'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>`. Attaches a ref callback for additional behaviour. |
+| Slider | Range input | `<input p="slider">` |
 
 ## Props
 
@@ -26,10 +26,6 @@ import {Slider} from 'pui';
 | step | `number` | — | Step granularity for the slider. |
 | onInput | `JSX.IntrinsicElements` | — | Change handler for the slider input. |
 | disabled | `boolean` | — | Disable the slider. |
-
-## Attributes
-
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
 
 ## Notes
 

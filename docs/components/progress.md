@@ -12,9 +12,9 @@ import {Progress} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Progress | `<progress>` | Wraps `<progress>` and sets `p="progress"`. |
+| Progress | Loading indicator | `<progress p="progress">` |
 
 ## Props
 
@@ -23,10 +23,6 @@ import {Progress} from 'pui';
 | value | `number` | — | Current progress value. |
 | max | `number` | — | Maximum progress value. |
 | data-state | `"indeterminate"` | — | Marks the progress as indeterminate for styling. |
-
-## Attributes
-
-Inherits all native attributes from `<progress>`. No additional styling attributes are required.
 
 ## Notes
 

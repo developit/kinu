@@ -16,12 +16,12 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Pagination | `<nav>` | Wraps `<nav>` and sets `p="pagination"`. |
-| PaginationList | `<ul>` | Wraps `<ul>` and sets `p="pagination-list"`. |
-| PaginationItem | `<li>` | Wraps `<li>` and sets `p="pagination-item"`. |
-| PaginationLink | `<button>` | Wraps `<button>` and sets `p="pagination-link"`. |
+| Pagination | Page navigation | `<nav p="pagination">` |
+| PaginationList | Page list | `<ul p="pagination-list">` |
+| PaginationItem | Page item | `<li p="pagination-item">` |
+| PaginationLink | Page link | `<button p="pagination-link">` |
 
 ## Props
 

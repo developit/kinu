@@ -12,9 +12,9 @@ import {Calendar} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Calendar | `<input>` | Wraps `<input>` and sets `p="calendar"`. Defaults props to `{type: 'date'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>`. |
+| Calendar | Date picker | `<input p="calendar">` |
 
 ## Props
 
@@ -24,10 +24,6 @@ import {Calendar} from 'pui';
 | onChange | `JSX.IntrinsicElements` | — | Change handler for date input. |
 | disabled | `boolean` | — | Disable the input. |
 | name | `string` | — | Input name used for form submissions. |
-
-## Attributes
-
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
 
 ## Notes
 

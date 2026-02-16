@@ -12,19 +12,15 @@ import {Label} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Label | `<label>` | Wraps `<label>` and sets `p="label"`. |
+| Label | Form field label | `<label p="label">` |
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | htmlFor | `string` | — | ID of the form element this label describes. |
-
-## Attributes
-
-Inherits all native attributes from `<label>`. No additional styling attributes are required.
 
 ## Notes
 

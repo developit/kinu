@@ -259,6 +259,106 @@ function describeAttribute(attr) {
   return attributeDescriptions.get(attr) ?? attributeDescriptionsFallback;
 }
 
+function getComponentDescription(componentName, entry) {
+  // Simple component-name-to-description mapping
+  const descriptions = {
+    Badge: 'Inline status indicator',
+    Button: 'Interactive action control',
+    Card: 'Surface container',
+    Input: 'Text input field',
+    Checkbox: 'Selection control',
+    Select: 'Dropdown selection',
+    Switch: 'Toggle control',
+    Slider: 'Range input',
+    Textarea: 'Multi-line text input',
+    Label: 'Form field label',
+    Dialog: 'Modal overlay',
+    Alert: 'Status message',
+    Avatar: 'User profile image',
+    Tooltip: 'Hover hint',
+    Progress: 'Loading indicator',
+    Spinner: 'Loading animation',
+    Skeleton: 'Content placeholder',
+    Accordion: 'Collapsible section',
+    Tabs: 'Tabbed navigation',
+    Tab: 'Tab trigger',
+    TabList: 'Tab container',
+    TabPanel: 'Tab content',
+    Table: 'Data table',
+    Popover: 'Floating content',
+    Drawer: 'Slide-out panel',
+    Sheet: 'Overlay panel',
+    Sidebar: 'Side navigation',
+    Breadcrumb: 'Navigation trail',
+    BreadcrumbList: 'Trail container',
+    BreadcrumbItem: 'Trail item',
+    BreadcrumbLink: 'Trail link',
+    NavigationMenu: 'Menu container',
+    NavigationMenuList: 'Menu list',
+    NavigationMenuItem: 'Menu item',
+    NavigationMenuLink: 'Menu link',
+    Pagination: 'Page navigation',
+    PaginationList: 'Page list',
+    PaginationItem: 'Page item',
+    PaginationLink: 'Page link',
+    Menubar: 'Horizontal menu',
+    MenubarItem: 'Menu item',
+    Carousel: 'Image slider',
+    CarouselContent: 'Slider content',
+    CarouselItem: 'Slide item',
+    CarouselPrevious: 'Previous button',
+    CarouselNext: 'Next button',
+    Combobox: 'Autocomplete input',
+    ComboboxInput: 'Search input',
+    ComboboxList: 'Results list',
+    ComboboxOption: 'Result option',
+    ContextMenu: 'Right-click menu',
+    ContextMenuTrigger: 'Menu trigger',
+    ContextMenuContent: 'Menu content',
+    ContextMenuItem: 'Menu item',
+    DropdownMenu: 'Dropdown menu',
+    DropdownMenuTrigger: 'Menu trigger',
+    DropdownMenuContent: 'Menu content',
+    DropdownMenuItem: 'Menu item',
+    HoverCard: 'Hover preview',
+    HoverCardTrigger: 'Hover target',
+    HoverCardContent: 'Preview content',
+    Calendar: 'Date picker',
+    DatePicker: 'Date input',
+    RadioGroup: 'Radio group',
+    Radio: 'Radio input',
+    ToggleGroup: 'Toggle group',
+    Toggle: 'Toggle button',
+    Separator: 'Divider',
+    AspectRatio: 'Ratio container',
+    ScrollArea: 'Scrollable area',
+    Resizable: 'Resizable panel',
+    Collapsible: 'Collapsible content',
+    AlertDialog: 'Alert modal',
+    Tree: 'Tree view',
+    TreeRoot: 'Tree container',
+    TreeGroup: 'Tree branch',
+    TreeGroupLabel: 'Branch label',
+    TreeGroupItems: 'Branch items',
+    TreeItem: 'Tree leaf',
+    InputGroup: 'Input group',
+    PopoverTrigger: 'Popover trigger',
+    PopoverContent: 'Popover content',
+    DialogTrigger: 'Dialog trigger',
+    DialogContent: 'Dialog content',
+    DialogClose: 'Close button',
+    SheetTrigger: 'Sheet trigger',
+    SheetContent: 'Sheet content',
+    SheetClose: 'Close button',
+    DrawerTrigger: 'Drawer trigger',
+    DrawerContent: 'Drawer content',
+    DrawerClose: 'Close button',
+    SidebarTrigger: 'Sidebar toggle',
+  };
+
+  return descriptions[componentName] || 'Component';
+}
+
 
 async function generateComponentDoc(entry) {
   const folder = entry.folder ?? entry.slug;
@@ -281,8 +381,22 @@ async function generateComponentDoc(entry) {
   const cssAttributes = await extractCssAttributes(folder, allPTokens);
 
   const exportRows = exports.map((exp) => {
-    const dom = exp.kind === 'simple' && exp.tag ? `\`<${exp.tag}>\`` : exp.kind === 'alias' && exp.aliasTarget ? `Alias of ${exp.aliasTarget}` : exp.pNames.size ? `\`p="${[...exp.pNames].join(', ')}"\`` : '—';
-    return `| ${exp.name} | ${dom} | ${describeExport(exp)} |`;
+    // Rendered HTML column
+    let renderedHtml = '—';
+    if (exp.kind === 'simple' && exp.tag && exp.pNames.size) {
+      renderedHtml = '`<' + exp.tag + ' p="' + [...exp.pNames].join(' ') + '">`';
+    } else if (exp.kind === 'simple' && !exp.tag && exp.pNames.size) {
+      renderedHtml = '`p="' + [...exp.pNames].join(' ') + '"`';
+    } else if (exp.kind === 'alias' && exp.aliasTarget) {
+      renderedHtml = `Alias of ${exp.aliasTarget}`;
+    } else if (exp.pNames.size) {
+      renderedHtml = '`p="' + [...exp.pNames].join(' ') + '"`';
+    }
+
+    // Description - use a shortened version from entry description or component name
+    const description = getComponentDescription(exp.name, entry);
+
+    return `| ${exp.name} | ${description} | ${renderedHtml} |`;
   });
 
   const attachmentRows = attachments.map((item) => `- \`${item.owner}.${item.property} = ${item.target}\``);
@@ -322,7 +436,7 @@ async function generateComponentDoc(entry) {
   if (exportRows.length) {
     lines.push('## Exports');
     lines.push('');
-    lines.push('| Name | DOM element | Details |');
+    lines.push('| Name | Description | Rendered HTML |');
     lines.push('| --- | --- | --- |');
     lines.push(...exportRows);
     lines.push('');
@@ -365,16 +479,6 @@ async function generateComponentDoc(entry) {
     lines.push('| Export | Attribute | Values | Notes |');
     lines.push('| --- | --- | --- | --- |');
     lines.push(...attributeRows);
-    lines.push('');
-  } else {
-    lines.push('## Attributes');
-    lines.push('');
-    const base = exports.find((exp) => exp.kind === 'simple' && exp.tag);
-    if (base) {
-    lines.push(`Inherits all native attributes from \`<${base.tag}>\`. No additional styling attributes are required.`);
-    } else {
-      lines.push('Relies on forwarded native attributes; no additional styling attributes are defined.');
-    }
     lines.push('');
   }
   if (entry.notes?.length) {

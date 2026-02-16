@@ -12,9 +12,9 @@ import {Avatar} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Avatar | `p="avatar"` | Renders markup that includes `p="avatar"`. |
+| Avatar | User profile image | `p="avatar"` |
 
 ## Props
 
@@ -24,10 +24,6 @@ import {Avatar} from 'pui';
 | alt | `string` | — | Alt text used by the image and for fallback initials. |
 | children | `any` | — | Fallback initials or text rendered via the alt attribute. |
 | size | `AvatarSize` | — | Size preset for the avatar. |
-
-## Attributes
-
-Relies on forwarded native attributes; no additional styling attributes are defined.
 
 ## Notes
 

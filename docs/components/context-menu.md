@@ -17,12 +17,12 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ContextMenuTrigger | — | Custom component implemented in the source file. |
-| ContextMenu | — | Custom component implemented in the source file. |
-| ContextMenuContent | `p="context-menu"` | Renders markup that includes `p="context-menu"`. |
-| ContextMenuItem | `<button>` | Wraps `<button>` and sets `p="context-menu-item"`. Defaults props to `{tabIndex: 0}`. |
+| ContextMenuTrigger | Menu trigger | — |
+| ContextMenu | Right-click menu | — |
+| ContextMenuContent | Menu content | `p="context-menu"` |
+| ContextMenuItem | Menu item | `<button p="context-menu-item">` |
 
 ## Props
 
@@ -43,10 +43,6 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | selected | `boolean` | — | Marks the item as selected for styling. |
-
-## Attributes
-
-Inherits all native attributes from `<button>`. No additional styling attributes are required.
 
 ## Notes
 

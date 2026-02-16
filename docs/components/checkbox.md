@@ -12,9 +12,9 @@ import {Checkbox} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Checkbox | `<input>` | Wraps `<input>` and sets `p="checkbox"`. Defaults props to `{type: 'checkbox'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>`. |
+| Checkbox | Selection control | `<input p="checkbox">` |
 
 ## Props
 
@@ -26,10 +26,6 @@ import {Checkbox} from 'pui';
 | disabled | `boolean` | — | Disable the checkbox. |
 | name | `string` | — | Input name used for form submissions. |
 | value | `JSX.IntrinsicElements` | — | Input value used for form submissions. |
-
-## Attributes
-
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
 
 ## Notes
 

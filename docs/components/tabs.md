@@ -15,11 +15,11 @@ import {Tab, TabList, TabPanel} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| TabList | `<div>` | Wraps `<div>` and sets `p="tablist"`. |
-| Tab | `<button>` | Wraps `<button>` and sets `p="tab"`. |
-| TabPanel | `<div>` | Wraps `<div>` and sets `p="tab-panel"`. |
+| TabList | Tab container | `<div p="tablist">` |
+| Tab | Tab trigger | `<button p="tab">` |
+| TabPanel | Tab content | `<div p="tab-panel">` |
 
 ## Props
 

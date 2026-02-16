@@ -15,13 +15,9 @@ import {Table} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Table | `<table>` | Wraps `<table>` and sets `p="table"`. |
-
-## Attributes
-
-Inherits all native attributes from `<table>`. No additional styling attributes are required.
+| Table | Data table | `<table p="table">` |
 
 ## Notes
 

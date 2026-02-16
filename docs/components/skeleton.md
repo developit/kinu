@@ -12,13 +12,9 @@ import {Skeleton} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Skeleton | `<div>` | Wraps `<div>` and sets `p="skeleton"`. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Skeleton | Content placeholder | `<div p="skeleton">` |
 
 ## Notes
 

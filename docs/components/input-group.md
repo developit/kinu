@@ -1,6 +1,6 @@
 # Input Group
 
-Compact field wrapper for joined controls like input + button actions.
+Compact fieldset wrapper for joined controls like input and button rows.
 
 ## Usage
 
@@ -15,18 +15,14 @@ import {InputGroup} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| InputGroup | `<fieldset>` | Wraps `<fieldset>` and sets `p="input-group"`. |
-
-## Attributes
-
-Inherits all native attributes from `<fieldset>`. No additional styling attributes are required.
+| InputGroup | Input group | `<fieldset p="input-group">` |
 
 ## Notes
 
-- Joins borders and corner radii across child controls using CSS only.
-- Supports both PUI primitives (`[p="input"]`, `[p="button"]`) and native form elements.
+- Uses CSS-only border and radius joining for grouped controls.
+- Works with both PUI primitives and native form elements.
 
 ---
 

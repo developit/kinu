@@ -12,9 +12,9 @@ import {Spinner} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Spinner | `<span>` | Wraps `<span>` and sets `p="spinner"`. |
+| Spinner | Loading animation | `<span p="spinner">` |
 
 ## Props
 
@@ -30,8 +30,8 @@ import {Spinner} from 'pui';
 
 ## Notes
 
-- Wraps a native `<span>` with purely CSS-driven animation.
-- Use `aria-label` or `aria-hidden` based on whether the spinner conveys status text.
+- Wraps a <span> and animates purely in CSS.
+- Supports size="sm" and size="lg" attributes for dense or prominent loading states.
 
 ---
 

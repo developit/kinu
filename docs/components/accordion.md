@@ -15,9 +15,9 @@ import {Accordion} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Accordion | `<details>` | Wraps `<details>` and sets `p="accordion"`. |
+| Accordion | Collapsible section | `<details p="accordion">` |
 
 ## Props
 

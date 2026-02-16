@@ -12,13 +12,9 @@ import {Separator} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Separator | `<div>` | Wraps `<div>` and sets `p="separator"`. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Separator | Divider | `<div p="separator">` |
 
 ## Notes
 

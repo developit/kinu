@@ -15,13 +15,9 @@ import {ToggleGroup} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ToggleGroup | `<div>` | Wraps `<div>` and sets `p="toggle-group"`. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| ToggleGroup | Toggle group | `<div p="toggle-group">` |
 
 ## Notes
 

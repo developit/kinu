@@ -12,9 +12,9 @@ import {Textarea} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Textarea | `<textarea>` | Wraps `<textarea>` and sets `p="textarea"`. |
+| Textarea | Multi-line text input | `<textarea p="textarea">` |
 
 ## Props
 
@@ -25,10 +25,6 @@ import {Textarea} from 'pui';
 | value | `JSX.IntrinsicElements` | — | Textarea value. |
 | onInput | `JSX.IntrinsicElements` | — | Change handler for controlled textareas. |
 | disabled | `boolean` | — | Disables interactions and applies disabled styling. |
-
-## Attributes
-
-Inherits all native attributes from `<textarea>`. No additional styling attributes are required.
 
 ## Notes
 

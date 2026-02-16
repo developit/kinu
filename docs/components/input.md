@@ -12,9 +12,9 @@ import {Input} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Input | `<input>` | Wraps `<input>` and sets `p="input"`. |
+| Input | Text input field | `<input p="input">` |
 
 ## Props
 

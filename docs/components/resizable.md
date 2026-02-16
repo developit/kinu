@@ -12,13 +12,9 @@ import {Resizable} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Resizable | `<div>` | Wraps `<div>` and sets `p="resizable"`. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Resizable | Resizable panel | `<div p="resizable">` |
 
 ## Notes
 

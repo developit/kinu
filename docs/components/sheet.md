@@ -15,12 +15,12 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Sheet | `p="sheet"` | Renders markup that includes `p="sheet"`. |
-| SheetTrigger | — | Custom component implemented in the source file. |
-| SheetContent | `p="sheet-content"` | Renders markup that includes `p="sheet-content"`. |
-| SheetClose | — | Custom component implemented in the source file. |
+| Sheet | Overlay panel | `p="sheet"` |
+| SheetTrigger | Sheet trigger | — |
+| SheetContent | Sheet content | `p="sheet-content"` |
+| SheetClose | Close button | — |
 
 ## Props
 
@@ -41,10 +41,6 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
 - `Sheet.Trigger = SheetTrigger`
 - `Sheet.Content = SheetContent`
 - `Sheet.Close = SheetClose`
-
-## Attributes
-
-Relies on forwarded native attributes; no additional styling attributes are defined.
 
 ## Notes
 

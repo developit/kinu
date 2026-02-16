@@ -12,13 +12,9 @@ import {ScrollArea} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ScrollArea | `<div>` | Wraps `<div>` and sets `p="scroll-area"`. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| ScrollArea | Scrollable area | `<div p="scroll-area">` |
 
 ## Notes
 

@@ -12,9 +12,9 @@ import {Collapsible} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Collapsible | `<details>` | Wraps `<details>` and sets `p="collapsible"`. Defaults props to `{}`. Attaches a ref callback for additional behaviour. |
+| Collapsible | Collapsible content | `<details p="collapsible">` |
 
 ## Props
 

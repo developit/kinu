@@ -14,9 +14,9 @@ import {Select} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Select | `<select>` | Wraps `<select>` and sets `p="select"`. |
+| Select | Dropdown selection | `<select p="select">` |
 
 ## Props
 
@@ -27,10 +27,6 @@ import {Select} from 'pui';
 | disabled | `boolean` | — | Disable the select input. |
 | multiple | `boolean` | — | Native multiple selection toggle. |
 | size | `number` | — | Number of visible options when using native size. |
-
-## Attributes
-
-Inherits all native attributes from `<select>`. No additional styling attributes are required.
 
 ## Notes
 

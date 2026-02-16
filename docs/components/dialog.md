@@ -16,12 +16,12 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Dialog | — | Custom component implemented in the source file. |
-| DialogTrigger | — | Custom component implemented in the source file. |
-| DialogContent | `p="dialog-content"` | Renders markup that includes `p="dialog-content"`. |
-| DialogClose | — | Custom component implemented in the source file. |
+| Dialog | Modal overlay | — |
+| DialogTrigger | Dialog trigger | — |
+| DialogContent | Dialog content | `p="dialog-content"` |
+| DialogClose | Close button | — |
 
 ## Props
 

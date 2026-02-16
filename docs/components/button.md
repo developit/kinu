@@ -12,9 +12,9 @@ import {Button} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Button | `p="button"` | Resolves the underlying element at runtime using `(props) => (props.href ? 'a' : 'button')`. |
+| Button | Interactive action control | `p="button"` |
 
 ## Props
 

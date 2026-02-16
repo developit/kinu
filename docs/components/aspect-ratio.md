@@ -14,19 +14,15 @@ import {AspectRatio} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| AspectRatio | `p="aspect-ratio"` | Renders markup that includes `p="aspect-ratio"`. |
+| AspectRatio | Ratio container | `p="aspect-ratio"` |
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | ratio | `string` | — | Aspect ratio expressed as a CSS ratio string (e.g. "16 / 9"). |
-
-## Attributes
-
-Relies on forwarded native attributes; no additional styling attributes are defined.
 
 ## Notes
 

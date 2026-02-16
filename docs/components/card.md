@@ -15,9 +15,9 @@ import {Card} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Card | `<div>` | Wraps `<div>` and sets `p="card"`. |
+| Card | Surface container | `<div p="card">` |
 
 ## Props
 

@@ -15,19 +15,15 @@ import {AlertDialog} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| AlertDialog | — | Custom component implemented in the source file. |
+| AlertDialog | Alert modal | — |
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | id | `string` | — | Optional ID for the dialog. If not provided, one will be auto-generated. |
-
-## Attributes
-
-Relies on forwarded native attributes; no additional styling attributes are defined.
 
 ## Notes
 

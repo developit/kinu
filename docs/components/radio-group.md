@@ -15,10 +15,10 @@ import {Radio, RadioGroup} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| RadioGroup | `<div>` | Wraps `<div>` and sets `p="radio-group"`. |
-| Radio | `<input>` | Wraps `<input>` and sets `p="radio"`. Defaults props to `{type: 'radio'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>`. |
+| RadioGroup | Radio group | `<div p="radio-group">` |
+| Radio | Radio input | `<input p="radio">` |
 
 ## Props
 
@@ -29,10 +29,6 @@ import {Radio, RadioGroup} from 'pui';
 | value | `JSX.IntrinsicElements` | — | Radio value used for form submissions. |
 | onChange | `JSX.IntrinsicElements` | — | Change handler for the radio. |
 | disabled | `boolean` | — | Disable the radio input. |
-
-## Attributes
-
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
 
 ## Notes
 

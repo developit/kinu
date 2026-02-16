@@ -14,21 +14,10 @@ import {Menubar, MenubarItem} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Details |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Menubar | `<nav>` | Wraps `<nav>` and sets `p="menubar"`. |
-| MenubarItem | `<button>` | Wraps `<button>` and sets `p="menubar-item"`. Defaults props to `{
-    onMouseEnterCapture(e) {
-      const el = e.currentTarget
-        .closest('[p="menubar"]')
-        ?.querySelector<HTMLDialogElement>('[p="dropdown-content"][open]');
-      if (el) e.currentTarget.click();
-    },
-  }`. |
-
-## Attributes
-
-Inherits all native attributes from `<nav>`. No additional styling attributes are required.
+| Menubar | Horizontal menu | `<nav p="menubar">` |
+| MenubarItem | Menu item | `<button p="menubar-item">` |
 
 ## Notes
 
