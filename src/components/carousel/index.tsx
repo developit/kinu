@@ -1,4 +1,4 @@
-import {type ComponentChildren, createContext} from 'preact';
+import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installCommands} from '../../lib/commands';

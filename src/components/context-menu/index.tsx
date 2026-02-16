@@ -1,4 +1,4 @@
-import {type ComponentChildren, type JSX, createContext} from 'preact';
+import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';

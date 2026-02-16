@@ -13,6 +13,18 @@ import {Card} from 'pui';
 </Card>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Card | `<div>` | Wraps `<div>` and sets `p="card"`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| padding | `CardPadding` | 'md' | Padding preset for the card content. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -25,4 +37,4 @@ import {Card} from 'pui';
 
 ---
 
-<source-ref src="src/components/card/index.tsx"></source-ref>
+_Source: `src/components/card/index.tsx`

@@ -18,12 +18,12 @@ import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuLi
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | DOM element | Details |
 | --- | --- | --- |
-| NavigationMenu | `<nav>` | Navigation landmark for grouped menu links. |
-| NavigationMenuList | `<ul>` | Unordered list that arranges navigation items. |
-| NavigationMenuItem | `<li>` | List item wrapper for each navigation link. |
-| NavigationMenuLink | `<a>` | Anchor styled for the navigation menu. |
+| NavigationMenu | `<nav>` | Wraps `<nav>` and sets `p="navigation-menu"`. |
+| NavigationMenuList | `<ul>` | Wraps `<ul>` and sets `p="navigation-menu-list"`. |
+| NavigationMenuItem | `<li>` | Wraps `<li>` and sets `p="navigation-menu-item"`. |
+| NavigationMenuLink | `<a>` | Wraps `<a>` and sets `p="navigation-menu-link"`. |
 
 ## Attributes
 
@@ -36,4 +36,4 @@ Inherits all native attributes from `<nav>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/navigation-menu/index.tsx"></source-ref>
+_Source: `src/components/navigation-menu/index.tsx`

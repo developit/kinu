@@ -17,16 +17,38 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | DOM element | Details |
 | --- | --- | --- |
-| Combobox | `<span>` | Root wrapper that provides context for the input, list, and options. |
-| ComboboxInput | `<input>` | Text field that filters and toggles the option list. |
-| ComboboxList | `<dialog>` | Dialog surface that displays the available options. |
-| ComboboxOption | `<button>` | Button representing a selectable option. |
+| ComboboxInput | `<input>` | Wraps `<input>` and sets `p="combobox-input"`. Defaults props to `{}`. Attaches a ref callback for additional behaviour. |
+| ComboboxList | `<dialog>` | Wraps `<dialog>` and sets `p="combobox-list"`. Defaults props to `{
+    onMouseDown: (e) => e.preventDefault(),
+    onClick: (e) => e.currentTarget.close(),
+  }`. |
+| ComboboxOption | `<button>` | Wraps `<button>` and sets `p="combobox-option"`. Defaults props to `{
+    tabIndex: -1,
+  }`. Attaches a ref callback for additional behaviour. |
+| Combobox | — | Custom component implemented in the source file. |
+
+## Props
+
+### ComboboxInputProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `JSX.IntrinsicElements` | — | Input value for controlled usage. |
+| placeholder | `string` | — | Placeholder text for the input. |
+| onInput | `JSX.IntrinsicElements` | — | Change handler for controlled inputs. |
+| disabled | `boolean` | — | Disable the input. |
+
+### ComboboxOptionProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| selected | `boolean` | — | Marks the option as selected for styling. |
 
 ## Attributes
 
-Inherits all native attributes from `<span>`. No additional styling attributes are required.
+Inherits all native attributes from `<input>`. No additional styling attributes are required.
 
 ## Notes
 
@@ -35,4 +57,4 @@ Inherits all native attributes from `<span>`. No additional styling attributes a
 
 ---
 
-<source-ref src="src/components/combobox/index.tsx"></source-ref>
+_Source: `src/components/combobox/index.tsx`

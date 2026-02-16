@@ -10,6 +10,33 @@ import {Toggle} from 'pui';
 <Toggle aria-pressed={value}>Bold</Toggle>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Toggle | `<button>` | Wraps `<button>` and sets `p="toggle"`. Defaults props to `{
+    get 'aria-pressed'() {
+      return this.pressed;
+    },
+    onClickCapture(e: MouseEvent) {
+      const el = e.currentTarget as HTMLButtonElement;
+      el.closest('[p="toggle-group"]')
+        ?.querySelector('[aria-pressed]')
+        ?.removeAttribute('aria-pressed');
+      el.hasAttribute('aria-pressed')
+        ? el.removeAttribute('aria-pressed')
+        : el.setAttribute('aria-pressed', 'true');
+    },
+  }`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| aria-pressed | `boolean | "true" | "false"` | — | Controls the pressed state via aria-pressed. |
+| onClick | `JSX.IntrinsicElements` | — | Click handler for toggling state. |
+| disabled | `boolean` | — | Disable the toggle. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -23,4 +50,4 @@ import {Toggle} from 'pui';
 
 ---
 
-<source-ref src="src/components/toggle/index.tsx"></source-ref>
+_Source: `src/components/toggle/index.tsx`

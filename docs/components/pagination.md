@@ -16,12 +16,18 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | DOM element | Details |
 | --- | --- | --- |
-| Pagination | `<nav>` | Navigation landmark announcing the pagination controls. |
-| PaginationList | `<ul>` | Unordered list that arranges pagination items. |
-| PaginationItem | `<li>` | List item wrapper for each pagination control. |
-| PaginationLink | `<button>` | Button styled as a pagination link. |
+| Pagination | `<nav>` | Wraps `<nav>` and sets `p="pagination"`. |
+| PaginationList | `<ul>` | Wraps `<ul>` and sets `p="pagination-list"`. |
+| PaginationItem | `<li>` | Wraps `<li>` and sets `p="pagination-item"`. |
+| PaginationLink | `<button>` | Wraps `<button>` and sets `p="pagination-link"`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| aria-current | `boolean | "page" | "true" | "false"` | — | Marks the current page for styling. |
 
 ## Attributes
 
@@ -36,4 +42,4 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 ---
 
-<source-ref src="src/components/pagination/index.tsx"></source-ref>
+_Source: `src/components/pagination/index.tsx`

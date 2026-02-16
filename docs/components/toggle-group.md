@@ -13,6 +13,12 @@ import {ToggleGroup} from 'pui';
 </ToggleGroup>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| ToggleGroup | `<div>` | Wraps `<div>` and sets `p="toggle-group"`. |
+
 ## Attributes
 
 Inherits all native attributes from `<div>`. No additional styling attributes are required.
@@ -24,4 +30,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/toggle-group/index.tsx"></source-ref>
+_Source: `src/components/toggle-group/index.tsx`

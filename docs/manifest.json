@@ -60,7 +60,7 @@
     "category": "Forms",
     "order": 0,
     "file": "components/button.md",
-    "description": "Button component that forwards props to <button> or <a> when href is provided."
+    "description": "Button component that forwards props to `<button>` or `<a>` when href is provided."
   },
   {
     "slug": "avatar",
@@ -69,7 +69,7 @@
     "category": "Data Display",
     "order": 1,
     "file": "components/avatar.md",
-    "description": "Styled <img> avatar that falls back to initials from the alt text."
+    "description": "Styled `<img>` avatar that falls back to initials from the alt text."
   },
   {
     "slug": "accordion",
@@ -78,7 +78,7 @@
     "category": "Disclosure",
     "order": 1,
     "file": "components/accordion.md",
-    "description": "Disclosure built on the native <details> element with smooth open and close animation."
+    "description": "Disclosure built on the native `<details>` element with smooth open and close animation."
   },
   {
     "slug": "alert",
@@ -141,7 +141,7 @@
     "category": "Disclosure",
     "order": 2,
     "file": "components/collapsible.md",
-    "description": "Minimal hide/show container built on <details> without default markers."
+    "description": "Minimal hide/show container built on `<details>` without default markers."
   },
   {
     "slug": "checkbox",
@@ -222,7 +222,7 @@
     "category": "Overlay",
     "order": 3,
     "file": "components/dialog.md",
-    "description": "Composable modal built on the native <dialog> element."
+    "description": "Composable modal built on the native `<dialog>` element."
   },
   {
     "slug": "skeleton",
@@ -240,7 +240,7 @@
     "category": "Forms",
     "order": 4,
     "file": "components/select.md",
-    "description": "Styled native <select> element with size variants."
+    "description": "Styled native `<select>` element with size variants."
   },
   {
     "slug": "resizable",
@@ -321,7 +321,7 @@
     "category": "Forms",
     "order": 6,
     "file": "components/calendar.md",
-    "description": "Styled wrapper around the native <input type=\"date\"> element."
+    "description": "Styled wrapper around the native `<input type=\"date\">` element."
   },
   {
     "slug": "switch",
@@ -357,7 +357,7 @@
     "category": "Overlay",
     "order": 6,
     "file": "components/dropdown-menu.md",
-    "description": "Command-driven dropdown built on top of <dialog>."
+    "description": "Command-driven dropdown built on top of `<dialog>`."
   },
   {
     "slug": "combobox",

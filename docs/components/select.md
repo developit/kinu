@@ -12,6 +12,22 @@ import {Select} from 'pui';
 </Select>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Select | `<select>` | Wraps `<select>` and sets `p="select"`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `JSX.IntrinsicElements` | — | Current selected value. |
+| onChange | `JSX.IntrinsicElements` | — | Change handler for controlled selects. |
+| disabled | `boolean` | — | Disable the select input. |
+| multiple | `boolean` | — | Native multiple selection toggle. |
+| size | `number` | — | Number of visible options when using native size. |
+
 ## Attributes
 
 Inherits all native attributes from `<select>`. No additional styling attributes are required.
@@ -23,4 +39,4 @@ Inherits all native attributes from `<select>`. No additional styling attributes
 
 ---
 
-<source-ref src="src/components/select/index.tsx"></source-ref>
+_Source: `src/components/select/index.tsx`
