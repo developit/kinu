@@ -1,8 +1,12 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installCommands, installDialogsDropdowns} from '../../lib/commands';
+import type {SidebarOwnProps, SidebarTriggerOwnProps} from './types';
 import './style.css';
 
-export const SidebarTrigger = createSimpleComponent(
+export const SidebarTrigger = createSimpleComponent<
+  'button',
+  SidebarTriggerOwnProps
+>(
   'sidebar-trigger',
   'button',
   {},
@@ -33,7 +37,7 @@ export const SidebarTrigger = createSimpleComponent(
   },
 );
 
-export const Sidebar = createSimpleComponent(
+export const Sidebar = createSimpleComponent<'dialog', SidebarOwnProps>(
   'sidebar',
   'dialog',
   {

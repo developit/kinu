@@ -2,14 +2,17 @@ import {type ComponentChildren, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {installCommands} from '../../lib/commands';
+import type {
+  PopoverOwnProps,
+  PopoverTriggerOwnProps,
+  PopoverContentOwnProps,
+  PopoverCloseOwnProps,
+} from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function Popover({
-  id: idProp,
-  children,
-}: {id?: string; children: ComponentChildren}) {
+export function Popover({id: idProp, children}: PopoverOwnProps) {
   installCommands();
   const gen = useId();
   const id = idProp ?? gen;
@@ -23,7 +26,8 @@ export function Popover({
 export function PopoverTrigger({
   children,
   ...props
-}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+}: PopoverTriggerOwnProps &
+  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -51,7 +55,7 @@ export function PopoverTrigger({
 export function PopoverContent({
   id,
   ...props
-}: JSX.IntrinsicElements['dialog']) {
+}: PopoverContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
   return <dialog p="popover-content" id={id ?? ctx} {...props} />;
 }
@@ -59,7 +63,8 @@ export function PopoverContent({
 export function PopoverClose({
   children,
   ...props
-}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+}: PopoverCloseOwnProps &
+  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,

@@ -1,7 +1,8 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
+import type {CollapsibleOwnProps} from './types';
 import './style.css';
 
-export const Collapsible = createSimpleComponent(
+export const Collapsible = createSimpleComponent<'details', CollapsibleOwnProps>(
   'collapsible',
   'details',
   {},

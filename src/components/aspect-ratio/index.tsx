@@ -1,4 +1,13 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
+import type {AspectRatioOwnProps, AspectRatioProps} from './types';
 import './style.css';
 
-export const AspectRatio = createSimpleComponent('aspect-ratio', 'div');
+const AspectRatioBase = createSimpleComponent<'div', AspectRatioOwnProps>(
+  'aspect-ratio',
+  'div',
+);
+
+export function AspectRatio({ratio, style, ...props}: AspectRatioProps) {
+  const mergedStyle = ratio ? {...(style || {}), '--ratio': ratio} : style;
+  return <AspectRatioBase {...props} style={mergedStyle} />;
+}

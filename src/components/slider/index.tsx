@@ -1,5 +1,6 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import type {JSX} from 'preact';
+import type {SliderOwnProps} from './types';
 import './style.css';
 
 function updateSlider(this: HTMLInputElement) {
@@ -7,7 +8,7 @@ function updateSlider(this: HTMLInputElement) {
   this.style.setProperty('--progress', progress);
 }
 
-export const Slider = createSimpleComponent(
+export const Slider = createSimpleComponent<'input', SliderOwnProps>(
   'slider',
   'input',
   {type: 'range'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>,

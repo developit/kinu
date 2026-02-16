@@ -1,12 +1,23 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts} from '../../lib/commands';
+import type {
+  ComboboxOwnProps,
+  ComboboxInputOwnProps,
+  ComboboxListOwnProps,
+  ComboboxOptionOwnProps,
+} from './types';
 import './style.css';
 
-const ComboboxBase = createSimpleComponent('combobox', 'span', {}, () => {
-  installMenuShortcuts();
-});
+const ComboboxBase = createSimpleComponent<'span', ComboboxOwnProps>(
+  'combobox',
+  'span',
+  {},
+  () => {
+    installMenuShortcuts();
+  },
+);
 
-export const ComboboxInput = createSimpleComponent(
+export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProps>(
   'combobox-input',
   'input',
   {},
@@ -61,12 +72,19 @@ export const ComboboxInput = createSimpleComponent(
   },
 );
 
-export const ComboboxList = createSimpleComponent('combobox-list', 'dialog', {
-  onMouseDown: (e) => e.preventDefault(),
-  onClick: (e) => e.currentTarget.close(),
-});
+export const ComboboxList = createSimpleComponent<'dialog', ComboboxListOwnProps>(
+  'combobox-list',
+  'dialog',
+  {
+    onMouseDown: (e) => e.preventDefault(),
+    onClick: (e) => e.currentTarget.close(),
+  },
+);
 
-export const ComboboxOption = createSimpleComponent(
+export const ComboboxOption = createSimpleComponent<
+  'button',
+  ComboboxOptionOwnProps
+>(
   'combobox-option',
   'button',
   {
