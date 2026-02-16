@@ -14,10 +14,17 @@ import {Menubar, MenubarItem} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | DOM element | Details |
 | --- | --- | --- |
-| Menubar | `<nav>` | Navigation container for top-level application commands. |
-| MenubarItem | `<button>` | Button representing a command within the menubar. |
+| Menubar | `<nav>` | Wraps `<nav>` and sets `p="menubar"`. |
+| MenubarItem | `<button>` | Wraps `<button>` and sets `p="menubar-item"`. Defaults props to `{
+    onMouseEnterCapture(e) {
+      const el = e.currentTarget
+        .closest('[p="menubar"]')
+        ?.querySelector<HTMLDialogElement>('[p="dropdown-content"][open]');
+      if (el) e.currentTarget.click();
+    },
+  }`. |
 
 ## Attributes
 
@@ -29,4 +36,4 @@ Inherits all native attributes from `<nav>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/menubar/index.tsx"></source-ref>
+_Source: `src/components/menubar/index.tsx`

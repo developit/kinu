@@ -15,11 +15,26 @@ import {Tab, TabList, TabPanel} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | DOM element | Details |
 | --- | --- | --- |
-| TabList | `<div>` | Container that groups related tabs. |
-| Tab | `<button>` | Button that selects a tab panel. |
-| TabPanel | `<div>` | Panel that displays the active tab content. |
+| TabList | `<div>` | Wraps `<div>` and sets `p="tablist"`. |
+| Tab | `<button>` | Wraps `<button>` and sets `p="tab"`. |
+| TabPanel | `<div>` | Wraps `<div>` and sets `p="tab-panel"`. |
+
+## Props
+
+### TabProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| aria-selected | `boolean | "true" | "false"` | — | Marks the tab as selected. |
+| disabled | `boolean` | — | Disable tab interactions. |
+
+### TabPanelProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| hidden | `boolean` | — | Hide the panel when inactive. |
 
 ## Attributes
 
@@ -35,4 +50,4 @@ import {Tab, TabList, TabPanel} from 'pui';
 
 ---
 
-<source-ref src="src/components/tabs/index.tsx"></source-ref>
+_Source: `src/components/tabs/index.tsx`

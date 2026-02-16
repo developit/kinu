@@ -10,6 +10,26 @@ import {Button} from 'pui';
 <Button variant="outline">Action</Button>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Button | `p="button"` | Resolves the underlying element at runtime using `(props) => (props.href ? 'a' : 'button')`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| variant | `ButtonVariant` | 'default' | Visual style variant. |
+| size | `ButtonSize` | 'md' | Size preset for the button. |
+| loading | `boolean` | — | Shows a pending state and disables interactions. |
+| href | `string` | — | When provided, renders the Button as an anchor element. |
+| target | `JSX.IntrinsicElements` | — | Target for anchor elements. |
+| rel | `JSX.IntrinsicElements` | — | Relationship between the current page and the linked resource. |
+| onClick | `JSX.IntrinsicElements` | — | Click handler for the button. |
+| disabled | `boolean` | — | Disables interactions and applies disabled styling. |
+| type | `JSX.IntrinsicElements` | — | Button type attribute. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -25,4 +45,4 @@ import {Button} from 'pui';
 
 ---
 
-<source-ref src="src/components/button/index.tsx"></source-ref>
+_Source: `src/components/button/index.tsx`

@@ -1,5 +1,5 @@
 import type {JSX} from 'preact';
-import type {BaseProps, RequiredChildrenProps} from '../../types/component-props';
+import type {RequiredChildrenProps} from '../../types/component-props';
 
 export interface AlertDialogOwnProps extends RequiredChildrenProps {
   /**

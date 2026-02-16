@@ -12,9 +12,21 @@ import {AspectRatio} from 'pui';
 </AspectRatio>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| AspectRatio | `p="aspect-ratio"` | Renders markup that includes `p="aspect-ratio"`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| ratio | `string` | — | Aspect ratio expressed as a CSS ratio string (e.g. "16 / 9"). |
+
 ## Attributes
 
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+Relies on forwarded native attributes; no additional styling attributes are defined.
 
 ## Notes
 
@@ -22,4 +34,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/aspect-ratio/index.tsx"></source-ref>
+_Source: `src/components/aspect-ratio/index.tsx`

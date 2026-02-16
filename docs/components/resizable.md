@@ -10,6 +10,12 @@ import {Resizable} from 'pui';
 <Resizable style={{width: "20rem", height: "12rem"}} />
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Resizable | `<div>` | Wraps `<div>` and sets `p="resizable"`. |
+
 ## Attributes
 
 Inherits all native attributes from `<div>`. No additional styling attributes are required.
@@ -21,4 +27,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/resizable/index.tsx"></source-ref>
+_Source: `src/components/resizable/index.tsx`

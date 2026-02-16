@@ -1,4 +1,4 @@
-import type {ComponentChildren, JSX} from 'preact';
+import type {JSX} from 'preact';
 import type {BaseProps} from '../../types/component-props';
 
 /**

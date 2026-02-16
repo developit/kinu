@@ -153,17 +153,17 @@ function describeExport(exp) {
   }
   const parts = [];
   if (exp.kind === 'simple') {
-    if (exp.tag) parts.push(`Wraps <${exp.tag}> and sets p="${[...exp.pNames].join(', ')}".`);
-    else if (exp.dynamicTag) parts.push(`Resolves the underlying element at runtime using ${exp.dynamicTag}.`);
-    else parts.push(`Styled wrapper that sets p="${[...exp.pNames].join(', ')}".`);
+    if (exp.tag) parts.push(`Wraps \`<${exp.tag}>\` and sets \`p="${[...exp.pNames].join(', ')}"\`.`);
+    else if (exp.dynamicTag) parts.push(`Resolves the underlying element at runtime using \`${exp.dynamicTag}\`.`);
+    else parts.push(`Styled wrapper that sets \`p="${[...exp.pNames].join(', ')}"\`.`);
   } else {
     if (exp.pNames.size > 0) {
-      parts.push(`Renders markup that includes p="${[...exp.pNames].join(', ')}".`);
+      parts.push(`Renders markup that includes \`p="${[...exp.pNames].join(', ')}"\`.`);
     } else {
       parts.push('Custom component implemented in the source file.');
     }
   }
-  if (exp.defaultProps) parts.push(`Defaults props to ${exp.defaultProps}.`);
+  if (exp.defaultProps) parts.push(`Defaults props to \`${exp.defaultProps}\`.`);
   if (exp.hasRefCallback) parts.push('Attaches a ref callback for additional behaviour.');
   return parts.join(' ');
 }
@@ -259,6 +259,7 @@ function describeAttribute(attr) {
   return attributeDescriptions.get(attr) ?? attributeDescriptionsFallback;
 }
 
+
 async function generateComponentDoc(entry) {
   const folder = entry.folder ?? entry.slug;
   const indexPath = path.join(componentsDir, folder, 'index.tsx');
@@ -280,7 +281,7 @@ async function generateComponentDoc(entry) {
   const cssAttributes = await extractCssAttributes(folder, allPTokens);
 
   const exportRows = exports.map((exp) => {
-    const dom = exp.kind === 'simple' && exp.tag ? `<${exp.tag}>` : exp.kind === 'alias' && exp.aliasTarget ? `Alias of ${exp.aliasTarget}` : exp.pNames.size ? `p="${[...exp.pNames].join(', ')}"` : '—';
+    const dom = exp.kind === 'simple' && exp.tag ? `\`<${exp.tag}>\`` : exp.kind === 'alias' && exp.aliasTarget ? `Alias of ${exp.aliasTarget}` : exp.pNames.size ? `\`p="${[...exp.pNames].join(', ')}"\`` : '—';
     return `| ${exp.name} | ${dom} | ${describeExport(exp)} |`;
   });
 
@@ -345,9 +346,9 @@ async function generateComponentDoc(entry) {
       lines.push('| Prop | Type | Default | Description |');
       lines.push('| --- | --- | --- | --- |');
       for (const prop of section.props) {
-        lines.push(
-          `| ${prop.name} | ${prop.type} | ${prop.default} | ${prop.doc} |`,
-        );
+      lines.push(
+        `| ${prop.name} | \`${prop.type}\` | ${prop.default} | ${prop.doc} |`,
+      );
       }
       lines.push('');
     }
@@ -370,7 +371,7 @@ async function generateComponentDoc(entry) {
     lines.push('');
     const base = exports.find((exp) => exp.kind === 'simple' && exp.tag);
     if (base) {
-      lines.push(`Inherits all native attributes from <${base.tag}>. No additional styling attributes are required.`);
+    lines.push(`Inherits all native attributes from \`<${base.tag}>\`. No additional styling attributes are required.`);
     } else {
       lines.push('Relies on forwarded native attributes; no additional styling attributes are defined.');
     }

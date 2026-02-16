@@ -15,11 +15,11 @@ import {HoverCard, HoverCardContent, HoverCardTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | DOM element | Details |
 | --- | --- | --- |
-| HoverCard | `<div>` | Wrapper that manages hover timing for the preview. |
-| HoverCardTrigger | `<span>` | Inline element that reveals the hover card. |
-| HoverCardContent | `<div>` | Panel that displays the hover card details. |
+| HoverCard | `<div>` | Wraps `<div>` and sets `p="hover-card"`. |
+| HoverCardTrigger | `<span>` | Wraps `<span>` and sets `p="hover-card-trigger"`. |
+| HoverCardContent | `<div>` | Wraps `<div>` and sets `p="hover-card-content"`. |
 
 ## Attributes
 
@@ -32,4 +32,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/hover-card/index.tsx"></source-ref>
+_Source: `src/components/hover-card/index.tsx`

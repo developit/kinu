@@ -23,7 +23,7 @@ export function Nav({
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink href="/getting-started">
-            Getting Started
+            Get&nbsp;Started
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>

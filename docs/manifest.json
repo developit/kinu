@@ -15,7 +15,7 @@
     "category": "Forms",
     "order": 0,
     "file": "components/button.md",
-    "description": "Button component that forwards props to <button> or <a> when href is provided."
+    "description": "Button component that forwards props to `<button>` or `<a>` when href is provided."
   },
   {
     "slug": "typography",
@@ -33,7 +33,7 @@
     "category": "Disclosure",
     "order": 1,
     "file": "components/accordion.md",
-    "description": "Disclosure built on the native <details> element with smooth open and close animation."
+    "description": "Disclosure built on the native `<details>` element with smooth open and close animation."
   },
   {
     "slug": "alert",
@@ -51,7 +51,7 @@
     "category": "Data Display",
     "order": 1,
     "file": "components/avatar.md",
-    "description": "Styled <img> avatar that falls back to initials from the alt text."
+    "description": "Styled `<img>` avatar that falls back to initials from the alt text."
   },
   {
     "slug": "card",
@@ -132,7 +132,7 @@
     "category": "Disclosure",
     "order": 2,
     "file": "components/collapsible.md",
-    "description": "Minimal hide/show container built on <details> without default markers."
+    "description": "Minimal hide/show container built on `<details>` without default markers."
   },
   {
     "slug": "input-group",
@@ -204,7 +204,7 @@
     "category": "Overlay",
     "order": 3,
     "file": "components/dialog.md",
-    "description": "Composable modal built on the native <dialog> element."
+    "description": "Composable modal built on the native `<dialog>` element."
   },
   {
     "slug": "navigation-menu",
@@ -339,7 +339,7 @@
     "category": "Forms",
     "order": 6,
     "file": "components/calendar.md",
-    "description": "Styled wrapper around the native <input type=\"date\"> element."
+    "description": "Styled wrapper around the native `<input type=\"date\">` element."
   },
   {
     "slug": "carousel",
@@ -357,7 +357,25 @@
     "category": "Overlay",
     "order": 6,
     "file": "components/dropdown-menu.md",
-    "description": "Command-driven dropdown built on top of <dialog>."
+    "description": "Command-driven dropdown built on top of `<dialog>`."
+  },
+  {
+    "slug": "sidebar",
+    "title": "Sidebar",
+    "section": "Components",
+    "category": "Layout",
+    "order": 6,
+    "file": "components/sidebar.md",
+    "description": "Responsive sidebar dialog that collapses on mobile."
+  },
+  {
+    "slug": "switch",
+    "title": "Switch",
+    "section": "Components",
+    "category": "Forms",
+    "order": 6,
+    "file": "components/switch.md",
+    "description": "Accessible toggle switch built from a checkbox input."
   },
   {
     "slug": "sidebar",

@@ -39,11 +39,11 @@ export default [
     order: 1,
     folder: 'accordion',
     description:
-      'Disclosure built on the native <details> element with smooth open and close animation.',
+      'Disclosure built on the native `<details>` element with smooth open and close animation.',
     usage: `<Accordion open>\n  <summary>Details</summary>\n  <p>Hidden content</p>\n</Accordion>`,
     notes: [
-      'Forwards every native <details> attribute so you can control open state.',
-      'Provide your own <summary> element to define the trigger.'
+      'Forwards every native `<details>` attribute so you can control open state.',
+      'Provide your own `<summary>` element to define the trigger.'
     ]
   },
   {
@@ -55,7 +55,7 @@ export default [
     folder: 'alert',
     description: 'Inline status message with tone variants.',
     usage: '<Alert variant="default">Heads up!</Alert>',
-    notes: ['Renders a <div> so you can include any markup you need.']
+    notes: ['Renders a `<div>` so you can include any markup you need.']
   },
   {
     slug: 'alert-dialog',
@@ -80,7 +80,7 @@ export default [
     folder: 'aspect-ratio',
     description: 'Maintains responsive boxes at a fixed ratio using pure CSS.',
     usage: `<AspectRatio ratio="16 / 9">\n  <img src="..." alt="Video thumbnail" />\n</AspectRatio>`,
-    notes: ['Wraps a <div> that defines the ratio using a CSS custom property.']
+    notes: ['Wraps a `<div>` that defines the ratio using a CSS custom property.']
   },
   {
     slug: 'avatar',
@@ -89,7 +89,7 @@ export default [
     category: 'Data Display',
     order: 1,
     folder: 'avatar',
-    description: 'Styled <img> avatar that falls back to initials from the alt text.',
+    description: 'Styled `<img>` avatar that falls back to initials from the alt text.',
     usage: '<Avatar alt="JM" src="/user.jpg" />',
     notes: [
       'Uses the alt attribute content as a CSS-rendered fallback when the image fails.',
@@ -105,7 +105,7 @@ export default [
     folder: 'badge',
     description: 'Tiny inline status indicator with multiple tone variants.',
     usage: '<Badge variant="secondary">New</Badge>',
-    notes: ['Renders a <span> and forwards standard inline attributes.']
+    notes: ['Renders a `<span>` and forwards standard inline attributes.']
   },
   {
     slug: 'breadcrumb',
@@ -129,7 +129,7 @@ export default [
     order: 0,
     folder: 'button',
     description:
-      'Button component that forwards props to <button> or <a> when href is provided.',
+      'Button component that forwards props to `<button>` or `<a>` when href is provided.',
     usage: '<Button variant="outline">Action</Button>',
     notes: [
       'Use the loading attribute to reflect pending state without extra handlers.',
@@ -143,7 +143,7 @@ export default [
     category: 'Forms',
     order: 6,
     folder: 'calendar',
-    description: 'Styled wrapper around the native <input type="date"> element.',
+    description: 'Styled wrapper around the native `<input type="date">` element.',
     usage: '<Calendar />',
     notes: [
       'Forwards every standard input attribute, defaulting type to "date".',
@@ -159,7 +159,7 @@ export default [
     folder: 'card',
     description: 'Surface container with padding, border, and typography defaults.',
     usage: `<Card>\n  <h3>Title</h3>\n  <p>Content</p>\n</Card>`,
-    notes: ['Wraps a <div> and exposes padding/variant control via attributes.']
+    notes: ['Wraps a `<div>` and exposes padding/variant control via attributes.']
   },
   {
     slug: 'carousel',
@@ -185,7 +185,7 @@ export default [
     description: 'Accessible checkbox input with custom visuals.',
     usage: '<Checkbox checked aria-label="Accept" />',
     notes: [
-      'Wraps <input type="checkbox"> so forms just work.',
+      'Wraps `<input type="checkbox">` so forms just work.',
       'Supports data-state="indeterminate" styling for tri-state usage.'
     ]
   },
@@ -196,7 +196,7 @@ export default [
     category: 'Disclosure',
     order: 2,
     folder: 'collapsible',
-    description: 'Minimal hide/show container built on <details> without default markers.',
+    description: 'Minimal hide/show container built on `<details>` without default markers.',
     usage: '<Collapsible open summary="Trigger">Hidden content</Collapsible>',
     notes: [
       'Expose the open attribute for controlled usage.',
@@ -228,7 +228,7 @@ export default [
     usage: `<ContextMenu>\n  <ContextMenuTrigger>Open</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
     notes: [
       'Installs the commands polyfill when rendered.',
-      'Menu content is focus-trapped via <dialog>.'
+      'Menu content is focus-trapped via `<dialog>`.'
     ]
   },
   {
@@ -252,11 +252,11 @@ export default [
     category: 'Overlay',
     order: 3,
     folder: 'dialog',
-    description: 'Composable modal built on the native <dialog> element.',
+    description: 'Composable modal built on the native `<dialog>` element.',
     usage: `<Dialog>\n  <Dialog.Trigger><Button>Open</Button></Dialog.Trigger>\n  <Dialog.Content>Modal body</Dialog.Content>\n  <Dialog.Close><Button>Close</Button></Dialog.Close>\n</Dialog>`,
     notes: [
       'Relies on command attributes instead of portal gymnastics.',
-      'Dialog.Content forwards all native <dialog> props.'
+      'Dialog.Content forwards all native `<dialog>` props.'
     ]
   },
   {
@@ -280,10 +280,10 @@ export default [
     category: 'Overlay',
     order: 6,
     folder: 'dropdown-menu',
-    description: 'Command-driven dropdown built on top of <dialog>.',
+    description: 'Command-driven dropdown built on top of `<dialog>`.',
     usage: `<DropdownMenu>\n  <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Item</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`,
     notes: [
-      'Menu items render as <button> elements by default.',
+      'Menu items render as `<button>` elements by default.',
       'Automatically closes when an item dispatches the close command.'
     ]
   },
@@ -311,7 +311,7 @@ export default [
     description: 'Text input with size, tone, and invalid states handled in CSS.',
     usage: '<Input placeholder="Email" type="email" />',
     notes: [
-      'Wraps the native <input> element so forms behave as expected.',
+      'Wraps the native `<input>` element so forms behave as expected.',
       'Supports size="sm" and size="lg" for compact or spacious layouts.'
     ]
   },
@@ -342,7 +342,7 @@ export default [
     description: 'Typography-aligned label component for form controls.',
     usage: '<Label htmlFor="name">Name</Label>',
     notes: [
-      'Wraps the native <label> element and forwards htmlFor.',
+      'Wraps the native `<label>` element and forwards htmlFor.',
       'Pair with controls to provide accessible names.'
     ]
   },
@@ -381,7 +381,7 @@ export default [
     description: 'Semantic pagination list with previous/next helpers.',
     usage: `<Pagination>\n  <PaginationList>\n    <PaginationItem><PaginationLink aria-current="page">1</PaginationLink></PaginationItem>\n  </PaginationList>\n</Pagination>`,
     notes: [
-      'Renders <nav> and list markup for accessibility.',
+      'Renders `<nav>` and list markup for accessibility.',
       'Use aria-current on the active page link.'
     ]
   },
@@ -409,7 +409,7 @@ export default [
     description: 'Styled progress meter with determinate and indeterminate states.',
     usage: '<Progress value={60} max={100} />',
     notes: [
-      'Wraps the native <progress> element for semantics.',
+      'Wraps the native `<progress>` element for semantics.',
       'Use the data-state attribute for indeterminate styling.'
     ]
   },
@@ -423,7 +423,7 @@ export default [
     description: 'Container that styles a set of native radio inputs.',
     usage: `<RadioGroup>\n  <Radio name="plan" value="basic" />\n  <Radio name="plan" value="pro" />\n</RadioGroup>`,
     notes: [
-      'Radio renders an <input type="radio"> so browser form behavior stays intact.',
+      'Radio renders an `<input type="radio">` so browser form behavior stays intact.',
       'Use the native name/value model or controlled props to manage selection.'
     ]
   },
@@ -437,7 +437,7 @@ export default [
     description: 'Resizable container that exposes native CSS handles.',
     usage: '<Resizable style={{width: "20rem", height: "12rem"}} />',
     notes: [
-      'Wraps a <div> with resize: both so the browser handles drag gestures.',
+      'Wraps a `<div>` with resize: both so the browser handles drag gestures.',
       'Perfect for scratchpads, preview panes, or demos where users adjust size.'
     ]
   },
@@ -462,7 +462,7 @@ export default [
     category: 'Forms',
     order: 4,
     folder: 'select',
-    description: 'Styled native <select> element with size variants.',
+    description: 'Styled native `<select>` element with size variants.',
     usage: `<Select>\n  <option>One</option>\n</Select>`,
     notes: [
       'Leverages the platform picker on touch devices.',
@@ -479,7 +479,7 @@ export default [
     description: 'Semantic horizontal or vertical divider.',
     usage: '<Separator />',
     notes: [
-      'Rendered as a <div> so you can set orientation via attribute.',
+      'Rendered as a `<div>` so you can set orientation via attribute.',
       'Use decorative when the separator is purely visual.'
     ]
   },
@@ -507,7 +507,7 @@ export default [
     description: 'Responsive sidebar dialog that collapses on mobile.',
     usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandfor="app-sidebar">Toggle</SidebarTrigger>`,
     notes: [
-      'Renders a <dialog> so it can slide in as a modal on small screens.',
+      'Renders a `<dialog>` so it can slide in as a modal on small screens.',
       'SidebarTrigger toggles the hidden/open state with the command attribute.'
     ]
   },
@@ -535,7 +535,7 @@ export default [
     description: 'Animated shimmer placeholder for loading states.',
     usage: '<Skeleton style={{height: "1.5rem"}} />',
     notes: [
-      'Wraps a <div> so you can size it however you want.',
+      'Wraps a `<div>` so you can size it however you want.',
       'Use data-rounded to switch to pill skeletons.'
     ]
   },
@@ -549,7 +549,7 @@ export default [
     description: 'Range input with CSS-driven track and thumb styling.',
     usage: '<Slider min={0} max={100} value={50} />',
     notes: [
-      'Wraps <input type="range"> for seamless form integration.',
+      'Wraps `<input type="range">` for seamless form integration.',
       'Supports data-orientation for vertical sliders.'
     ]
   },
@@ -564,7 +564,7 @@ export default [
     usage: '<Switch checked />',
     notes: [
       'It is just a checkbox under the hood so forms stay in sync.',
-      'Use aria-label or pair with <Label> for accessible naming.'
+      'Use aria-label or pair with `<Label>` for accessible naming.'
     ]
   },
   {
@@ -577,7 +577,7 @@ export default [
     description: 'Table wrapper with zebra striping and compact density.',
     usage: `<Table>\n  <thead>...</thead>\n  <tbody>...</tbody>\n</Table>`,
     notes: [
-      'Uses native <table> markup so semantics stay intact.',
+      'Uses native `<table>` markup so semantics stay intact.',
       'Supports sticky headers via CSS attribute toggles.'
     ]
   },
@@ -605,7 +605,7 @@ export default [
     description: 'Text area with matching input styling, variants, and sizes.',
     usage: '<Textarea rows={4} placeholder="Write here" />',
     notes: [
-      'Wraps the native <textarea> for full form support.',
+      'Wraps the native `<textarea>` for full form support.',
       'Use the resize attribute to control user resizing.'
     ]
   },
@@ -619,7 +619,7 @@ export default [
     description: 'ARIA-pressed aware button for on/off interactions.',
     usage: '<Toggle aria-pressed={value}>Bold</Toggle>',
     notes: [
-      'Wraps <button> so keyboard support comes for free.',
+      'Wraps `<button>` so keyboard support comes for free.',
       'Style pressed state using the aria-pressed attribute selectors.'
     ]
   },
@@ -634,7 +634,7 @@ export default [
     usage: `<ToggleGroup>\n  <Toggle>Bold</Toggle>\n  <Toggle>Italic</Toggle>\n</ToggleGroup>`,
     notes: [
       'Each Toggle toggles aria-pressed and clears other toggles in the same group.',
-      'Pass props like disabled or value straight to the underlying <button>.'
+      'Pass props like disabled or value straight to the underlying `<button>`.'
     ]
   },
   {

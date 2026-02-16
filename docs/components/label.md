@@ -10,6 +10,18 @@ import {Label} from 'pui';
 <Label htmlFor="name">Name</Label>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Label | `<label>` | Wraps `<label>` and sets `p="label"`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| htmlFor | `string` | — | ID of the form element this label describes. |
+
 ## Attributes
 
 Inherits all native attributes from `<label>`. No additional styling attributes are required.
@@ -21,4 +33,4 @@ Inherits all native attributes from `<label>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/label/index.tsx"></source-ref>
+_Source: `src/components/label/index.tsx`

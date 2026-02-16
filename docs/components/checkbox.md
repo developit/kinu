@@ -10,6 +10,23 @@ import {Checkbox} from 'pui';
 <Checkbox checked aria-label="Accept" />
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Checkbox | `<input>` | Wraps `<input>` and sets `p="checkbox"`. Defaults props to `{type: 'checkbox'} as Partial<JSX.HTMLAttributes<HTMLInputElement>>`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| checked | `boolean` | — | Controls the checked state. |
+| data-state | `"indeterminate"` | — | Marks the checkbox as indeterminate for styling. |
+| onChange | `JSX.IntrinsicElements` | — | Change handler for the checkbox. |
+| disabled | `boolean` | — | Disable the checkbox. |
+| name | `string` | — | Input name used for form submissions. |
+| value | `JSX.IntrinsicElements` | — | Input value used for form submissions. |
+
 ## Attributes
 
 Inherits all native attributes from `<input>`. No additional styling attributes are required.
@@ -21,4 +38,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/checkbox/index.tsx"></source-ref>
+_Source: `src/components/checkbox/index.tsx`
