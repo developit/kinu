@@ -4,10 +4,10 @@ export function Demo() {
   return (
     <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap'}}>
       <Spinner aria-label="Loading" />
-      <Spinner size={'sm' as any} aria-label="Loading small" />
-      <Spinner size={'lg' as any} aria-label="Loading large" />
+      <Spinner size="sm" aria-label="Loading small" />
+      <Spinner size="lg" aria-label="Loading large" />
       <Button loading>
-        <Spinner size={'sm' as any} aria-hidden="true" />
+        <Spinner size="sm" aria-hidden="true" />
         Saving
       </Button>
     </div>

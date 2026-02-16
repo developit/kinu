@@ -9,7 +9,6 @@ export type SpinnerSize = 'sm' | 'lg';
 export interface SpinnerOwnProps extends BaseProps {
   /**
    * Size preset for the spinner.
-   * @default 'md'
    */
   size?: SpinnerSize;
 }
