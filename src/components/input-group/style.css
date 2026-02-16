@@ -1,0 +1,56 @@
+@import "../../variables.css";
+
+[p="input-group"] {
+  display: flex;
+  align-items: stretch;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], input, textarea, select) {
+  flex: 1;
+}
+
+[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], [p="button"], input, textarea, select, button) {
+  border-radius: 0;
+}
+
+[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], input, textarea, select):not(:last-child) {
+  border-inline-end: 0;
+}
+
+[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], [p="button"], input, textarea, select, button):first-child {
+  border-start-start-radius: var(--p-radius);
+  border-end-start-radius: var(--p-radius);
+}
+
+[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], [p="button"], input, textarea, select, button):last-child {
+  border-start-end-radius: var(--p-radius);
+  border-end-end-radius: var(--p-radius);
+}
+
+[p="input-group"] > legend {
+  float: inline-start;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: hsl(var(--p-muted-foreground));
+  background-color: hsl(var(--p-muted));
+  border: 1px solid hsl(var(--p-input));
+  border-inline-end: none;
+  border-start-start-radius: var(--p-radius);
+  border-end-start-radius: var(--p-radius);
+}
+
+[p="input-group"]:has(> :is([p="input"], [p="textarea"], [p="select"]):focus-visible):not(:has(> :is([p="input"], [p="textarea"], [p="select"]) ~ :is([p="input"], [p="textarea"], [p="select"]))) {
+  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+  border-radius: var(--p-radius);
+}
+
+[p="input-group"]:has(> :is([p="input"], [p="textarea"], [p="select"]):focus-visible):not(:has(> :is([p="input"], [p="textarea"], [p="select"]) ~ :is([p="input"], [p="textarea"], [p="select"]))) > :is([p="input"], [p="textarea"], [p="select"]):focus-visible {
+  box-shadow: none;
+  border-color: hsl(var(--p-input));
+}
