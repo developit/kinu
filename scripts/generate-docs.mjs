@@ -170,6 +170,82 @@ function describeExport(exp) {
 
 const attributeDescriptionsFallback = 'Forwarded attribute used by the component styling.';
 
+const typeDocCache = new Map();
+
+function formatDocText(text) {
+  return text?.trim() || '—';
+}
+
+function formatTagText(tagText) {
+  if (!tagText) return '';
+  if (typeof tagText === 'string') return tagText.trim();
+  return tagText.map((part) => part.text).join('').trim();
+}
+
+function extractPropsFromTypes(typesPath) {
+  if (typeDocCache.has(typesPath)) return typeDocCache.get(typesPath);
+
+  const options = {
+    target: ts.ScriptTarget.ES2020,
+    module: ts.ModuleKind.ESNext,
+    jsx: ts.JsxEmit.ReactJSX,
+    jsxImportSource: 'preact',
+  };
+  const program = ts.createProgram([typesPath], options);
+  const checker = program.getTypeChecker();
+  const sourceFile = program.getSourceFile(typesPath);
+  const results = new Map();
+
+  if (!sourceFile) {
+    typeDocCache.set(typesPath, results);
+    return results;
+  }
+
+  sourceFile.forEachChild((node) => {
+    if (!ts.isInterfaceDeclaration(node) || !node.name) return;
+    const name = node.name.text;
+    if (!name.endsWith('OwnProps')) return;
+    const componentName = name.replace(/OwnProps$/, '');
+    const props = [];
+
+    for (const member of node.members) {
+      if (!ts.isPropertySignature(member) || !member.name) continue;
+      let propName = '';
+      if (ts.isIdentifier(member.name)) propName = member.name.text;
+      else if (ts.isStringLiteral(member.name)) propName = member.name.text;
+      else propName = member.name.getText(sourceFile);
+
+      const symbol = checker.getSymbolAtLocation(member.name);
+      const doc = symbol
+        ? ts.displayPartsToString(symbol.getDocumentationComment(checker))
+        : '';
+      const defaultTag = symbol
+        ? symbol.getJsDocTags().find((tag) => tag.name === 'default')
+        : undefined;
+      const defaultValue = defaultTag ? formatTagText(defaultTag.text) : '';
+      const type = checker.getTypeAtLocation(member);
+      const typeText = checker.typeToString(
+        type,
+        member,
+        ts.TypeFormatFlags.NoTruncation |
+          ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope,
+      );
+
+      props.push({
+        name: propName,
+        type: typeText,
+        doc: formatDocText(doc),
+        default: defaultValue || '—',
+      });
+    }
+
+    results.set(componentName, props);
+  });
+
+  typeDocCache.set(typesPath, results);
+  return results;
+}
+
 function formatValues(values) {
   const options = [...values].filter((v) => v !== '__BOOLEAN__');
   const hasBoolean = values.has('__BOOLEAN__');
@@ -186,9 +262,18 @@ function describeAttribute(attr) {
 async function generateComponentDoc(entry) {
   const folder = entry.folder ?? entry.slug;
   const indexPath = path.join(componentsDir, folder, 'index.tsx');
+  const typesPath = path.join(componentsDir, folder, 'types.ts');
   const sourceText = await fs.readFile(indexPath, 'utf8');
   const sourceFile = ts.createSourceFile(indexPath, sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const {exports, attachments} = analyzeExports(sourceFile, sourceText);
+
+  let propDocs = new Map();
+  try {
+    await fs.access(typesPath);
+    propDocs = extractPropsFromTypes(typesPath);
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+  }
 
   const allPTokens = new Set();
   for (const exp of exports) for (const token of exp.pNames) allPTokens.add(token);
@@ -240,6 +325,32 @@ async function generateComponentDoc(entry) {
     lines.push('| --- | --- | --- |');
     lines.push(...exportRows);
     lines.push('');
+  }
+  const propSections = exports
+    .map((exp) => ({
+      name: exp.name,
+      props: propDocs.get(exp.name) || [],
+    }))
+    .filter((section) => section.props.length > 0);
+
+  if (propSections.length) {
+    lines.push('## Props');
+    lines.push('');
+    const includeHeading = propSections.length > 1;
+    for (const section of propSections) {
+      if (includeHeading) {
+        lines.push(`### ${section.name}Props`);
+        lines.push('');
+      }
+      lines.push('| Prop | Type | Default | Description |');
+      lines.push('| --- | --- | --- | --- |');
+      for (const prop of section.props) {
+        lines.push(
+          `| ${prop.name} | ${prop.type} | ${prop.default} | ${prop.doc} |`,
+        );
+      }
+      lines.push('');
+    }
   }
   if (attachmentRows.length) {
     lines.push('### Static Shortcuts');

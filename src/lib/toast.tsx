@@ -1,20 +1,7 @@
 import {useEffect, useState} from 'preact/hooks';
 import type {ComponentChild} from 'preact';
+import type {ToastOptions, ToastInternal, ToastApi} from '../components/toast/types';
 import './toast.css';
-
-interface ToastOptions {
-  title?: ComponentChild;
-  icon?: ComponentChild;
-  action?: ComponentChild;
-  duration?: number;
-}
-
-interface ToastInternal extends ToastOptions {
-  id: number;
-  content: ComponentChild;
-  mounted?: boolean;
-  closing?: boolean;
-}
 
 const EVENT_NAME = 'pui-toast-show';
 let nextId = Date.now();
@@ -24,7 +11,7 @@ function dispatchToast(content: ComponentChild, opts: ToastOptions = {}) {
   dispatchEvent(new CustomEvent(EVENT_NAME, {detail}));
 }
 
-export const toast = {show: dispatchToast};
+export const toast: ToastApi = {show: dispatchToast};
 
 export function ToastContainer() {
   const [toasts, setToasts] = useState<ToastInternal[]>([]);

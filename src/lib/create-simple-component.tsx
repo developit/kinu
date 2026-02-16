@@ -12,17 +12,18 @@ declare global {
 
 export function createSimpleComponent<
   T extends keyof HTMLElementTagNameMap & keyof JSX.IntrinsicElements,
+  P extends object = Record<string, never>,
 >(
   name: string,
-  tag: T | ((props: any) => T) = 'div' as T,
+  tag: T | ((props: P & JSX.IntrinsicElements[T]) => T) = 'div' as T,
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
   ref?: RefCallbackWithCleanup<HTMLElementTagNameMap[T]>,
 ) {
-  type Props = JSX.IntrinsicElements[T] & {
-    p?: never; // Don't allow overriding the p attribute
-    ref?: Ref<T>;
-    [key: string]: any; // allow custom attributes for styling
-  };
+  type Props = Omit<JSX.IntrinsicElements[T], keyof P> &
+    P & {
+      p?: never; // Don't allow overriding the p attribute
+      ref?: Ref<HTMLElementTagNameMap[T]>;
+    };
 
   function proxyRef(
     this: Ref<HTMLElementTagNameMap[T]>,
