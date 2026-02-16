@@ -1,0 +1,14 @@
+/* Ported from Radix Themes:
+ * - Tooltip component
+ * Radix tooltip uses a dark solid background with clean shadow.
+ */
+
+[p="tooltip"][title]::after {
+  background-color: hsl(var(--p-foreground));
+  color: hsl(var(--p-background));
+  padding: 0.25rem 0.625rem;
+  border-radius: calc(var(--p-radius) - 0.0625rem);
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  box-shadow: 0 2px 8px hsl(var(--p-foreground) / 0.2);
+}

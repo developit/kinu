@@ -14,6 +14,7 @@ export default defineConfig({
     alias: {
       pui: resolve(__dirname, '..'),
       'pui-docs': resolve(__dirname, '../docs'),
+      'pui-theme-radix': resolve(__dirname, '../packages/pui-theme-radix'),
     },
     conditions: ['source', ...defaultClientConditions],
   },

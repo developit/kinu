@@ -1,0 +1,5 @@
+/**
+ * Radix token entry - used to load Radix tokens via postcss-import.
+ * This is referenced by the build pipeline, not consumed directly.
+ */
+@import "../../radix-src/tokens/index.css";

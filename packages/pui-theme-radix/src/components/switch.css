@@ -1,0 +1,48 @@
+/* Ported from Radix Themes:
+ * - Switch component
+ * Radix switch is slightly larger with smoother transitions
+ * and uses accent color when checked. Focus uses outline.
+ */
+
+[p="switch"] {
+  width: 2.75rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--p-muted));
+  border: none;
+  transition:
+    background-color 120ms ease;
+}
+
+[p="switch"]::before {
+  top: 0.1875rem;
+  left: 0.1875rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  background-color: white;
+  box-shadow:
+    0 1px 3px hsl(var(--p-foreground) / 0.15),
+    0 1px 2px hsl(var(--p-foreground) / 0.1);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[p="switch"]:checked {
+  background-color: hsl(var(--p-primary));
+  border-color: hsl(var(--p-primary));
+}
+
+[p="switch"]:checked::before {
+  transform: translateX(1.25rem);
+}
+
+[p="switch"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+@media (hover: hover) {
+  [p="switch"]:not(:checked, :disabled):hover {
+    background-color: hsl(var(--p-muted-foreground) / 0.3);
+  }
+}

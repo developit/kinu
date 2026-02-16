@@ -1,0 +1,44 @@
+/* Ported from Radix Themes:
+ * - Navigation menu, menubar, sidebar components
+ * Radix uses accent-colored hover for nav items.
+ */
+
+/* ============================================================================
+ * Navigation menu links
+ * ============================================================================ */
+
+[p="navigation-menu-link"]:hover {
+  background-color: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+}
+
+/* ============================================================================
+ * Menubar
+ * ============================================================================ */
+
+[p="menubar-item"]:hover {
+  background-color: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+  border-radius: var(--p-radius);
+}
+
+/* ============================================================================
+ * Sidebar – accent-colored active/hover states
+ * ============================================================================ */
+
+[p="sidebar"] {
+  border-right-color: hsl(var(--p-border) / 0.8);
+}
+
+[p="sidebar"] nav a:hover,
+[p="sidebar"] nav button:hover {
+  background-color: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+}
+
+[p="sidebar"] nav a[aria-current="page"],
+[p="sidebar"] nav button[aria-current="page"] {
+  background-color: hsl(var(--p-primary) / 0.1);
+  color: hsl(var(--p-primary));
+  font-weight: 500;
+}

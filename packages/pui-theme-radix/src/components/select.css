@@ -1,0 +1,30 @@
+/* Ported from Radix Themes:
+ * - Select component
+ * Radix select uses outline-based focus and surface-style background.
+ */
+
+[p="select"] {
+  border: 1px solid hsl(var(--p-border));
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-surface, var(--p-background)));
+  height: 2.25rem;
+  padding-left: 0.75rem;
+  padding-right: 2rem;
+  font-size: 0.875rem;
+  transition:
+    border-color 120ms ease,
+    outline 80ms ease;
+}
+
+[p="select"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: -1px;
+  border-color: hsl(var(--p-ring));
+  box-shadow: none;
+}
+
+@media (hover: hover) {
+  [p="select"]:not(:focus-visible, :disabled):hover {
+    border-color: hsl(var(--p-foreground) / 0.25);
+  }
+}

@@ -1,0 +1,15 @@
+/* Ported from Radix Themes:
+ * - Avatar component
+ * Radix avatars use accent-tinted fallback backgrounds.
+ */
+
+[p="avatar"] {
+  border-radius: 9999px;
+  background-color: hsl(var(--p-accent));
+}
+
+[p="avatar"]:after {
+  background-color: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+  font-weight: 500;
+}

@@ -1,0 +1,10 @@
+/* Ported from Radix Themes:
+ * - Separator component
+ * Radix uses a slightly more subtle separator.
+ */
+
+[p="separator"] {
+  width: 100%;
+  height: 1px;
+  background-color: hsl(var(--p-border) / 0.8);
+}

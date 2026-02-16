@@ -1,0 +1,354 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/button.css
+ * - radix-src/components/_internal/base-button.css
+ *
+ * Selector mapping:
+ * - .rt-BaseButton              -> [p="button"]
+ * - .rt-variant-solid           -> default / [variant="solid"]
+ * - .rt-variant-outline         -> [variant="outline"]
+ * - .rt-variant-ghost           -> [variant="ghost"]
+ * - .rt-variant-soft            -> [variant="soft"]         (new)
+ * - .rt-variant-surface         -> [variant="surface"]      (new)
+ * - .rt-r-size-1..4             -> [size="1"]..[size="4"]   (theme-only)
+ *
+ * State mapping:
+ * - [data-disabled]             -> :disabled + [disabled]
+ * - [data-state="open"]         -> [data-state="open"] (ensure PUI triggers emit this)
+ * - .rt-loading                 -> [loading]
+ * - .rt-high-contrast           -> [contrast="high"] or omit initially
+ *
+ * Size aliases:
+ * - sm -> size="2"
+ * - md -> size="3" (default)
+ * - lg -> size="4"
+ */
+
+/* ============================================================================
+ * Base button
+ * ============================================================================ */
+
+[p="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  user-select: none;
+  vertical-align: top;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+
+  /* Typography */
+  font: inherit;
+  font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Default visuals = Radix solid variant */
+  background-color: hsl(var(--p-primary));
+  color: hsl(var(--p-primary-foreground));
+  border: 1px solid transparent;
+  border-radius: var(--p-radius);
+
+  /* Transitions matching Radix feel */
+  transition:
+    background-color 120ms ease-in-out,
+    color 120ms ease-in-out,
+    box-shadow 120ms ease-in-out,
+    filter 120ms ease-in-out,
+    outline-offset 80ms ease-in-out;
+}
+
+/* Icon opacity (Radix applies this to svg for non-ghost variants) */
+[p="button"]:not([variant="ghost"]) :where(svg) {
+  opacity: 0.9;
+}
+
+/* ============================================================================
+ * Disabled + Loading
+ * ============================================================================ */
+
+[p="button"]:disabled,
+[p="button"][disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Solid disabled */
+[p="button"]:not([variant]):disabled,
+[p="button"]:not([variant])[disabled],
+[p="button"][variant="solid"]:disabled,
+[p="button"][variant="solid"][disabled] {
+  color: hsl(var(--p-primary-foreground) / 0.5);
+  background-color: hsl(var(--p-muted));
+}
+
+/* Outline / ghost / soft / surface disabled */
+[p="button"][variant="outline"]:disabled,
+[p="button"][variant="outline"][disabled],
+[p="button"][variant="ghost"]:disabled,
+[p="button"][variant="ghost"][disabled],
+[p="button"][variant="soft"]:disabled,
+[p="button"][variant="soft"][disabled],
+[p="button"][variant="surface"]:disabled,
+[p="button"][variant="surface"][disabled] {
+  color: hsl(var(--p-muted-foreground) / 0.5);
+  background-color: hsl(var(--p-muted) / 0.5);
+}
+
+[p="button"][loading] {
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* ============================================================================
+ * Focus (Radix: outline with offset for solid/classic)
+ * ============================================================================ */
+
+[p="button"]:focus-visible {
+  outline: 2px solid hsl(var(--p-ring));
+  outline-offset: 2px;
+}
+
+/* ============================================================================
+ * Sizes (4-size mapping: 1/2/3/4, with sm/md/lg aliases)
+ * ============================================================================ */
+
+/* Size 1 (xs) */
+[p="button"][size="1"] {
+  height: 1.75rem;
+  padding: 0 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.0025em;
+  gap: 0.25rem;
+  border-radius: max(var(--p-radius), 0.25rem);
+}
+
+/* Size 2 / sm */
+[p="button"][size="2"],
+[p="button"][size="sm"] {
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1;
+  letter-spacing: 0;
+  gap: 0.375rem;
+  border-radius: max(var(--p-radius), 0.3125rem);
+}
+
+/* Size 3 / md (default) */
+[p="button"]:not([size]),
+[p="button"][size="3"],
+[p="button"][size="md"] {
+  height: 2.25rem;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: 0;
+  gap: 0.5rem;
+  border-radius: max(var(--p-radius), 0.375rem);
+}
+
+/* Size 4 / lg */
+[p="button"][size="4"],
+[p="button"][size="lg"] {
+  height: 2.75rem;
+  padding: 0 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1;
+  letter-spacing: -0.0025em;
+  gap: 0.5rem;
+  border-radius: max(var(--p-radius), 0.4375rem);
+}
+
+/* Size: icon (keep PUI behavior) */
+[p="button"][size="icon"] {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+}
+
+/* ============================================================================
+ * SOLID variant (default)
+ * ============================================================================ */
+
+[p="button"]:not([variant]),
+[p="button"][variant="solid"] {
+  background-color: hsl(var(--p-primary));
+  color: hsl(var(--p-primary-foreground));
+}
+
+@media (hover: hover) {
+  [p="button"]:not([variant]):hover,
+  [p="button"][variant="solid"]:hover {
+    background-color: hsl(var(--p-primary-hover));
+  }
+}
+
+[p="button"]:not([variant]):active:not([data-state="open"], :disabled, [disabled]),
+[p="button"][variant="solid"]:active:not([data-state="open"], :disabled, [disabled]) {
+  filter: brightness(0.92) saturate(1.1);
+}
+
+/* ============================================================================
+ * DESTRUCTIVE variant
+ * ============================================================================ */
+
+[p="button"][variant="destructive"] {
+  background-color: hsl(var(--p-destructive));
+  color: hsl(var(--p-destructive-foreground));
+}
+
+@media (hover: hover) {
+  [p="button"][variant="destructive"]:hover {
+    background-color: hsl(var(--p-destructive-hover));
+  }
+}
+
+[p="button"][variant="destructive"]:active:not([data-state="open"], :disabled, [disabled]) {
+  filter: brightness(0.92) saturate(1.1);
+}
+
+/* ============================================================================
+ * OUTLINE variant (Radix: inset box-shadow + subtle hover fill)
+ * ============================================================================ */
+
+[p="button"][variant="outline"] {
+  background-color: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
+  box-shadow: inset 0 0 0 1px hsl(var(--p-border));
+  border-color: transparent;
+}
+
+@media (hover: hover) {
+  [p="button"][variant="outline"]:hover {
+    background-color: hsl(var(--p-accent));
+  }
+}
+
+[p="button"][variant="outline"]:active:not([data-state="open"], :disabled, [disabled]) {
+  background-color: hsl(var(--p-accent));
+  filter: brightness(0.98);
+}
+
+/* ============================================================================
+ * SECONDARY variant
+ * ============================================================================ */
+
+[p="button"][variant="secondary"] {
+  background-color: hsl(var(--p-secondary));
+  color: hsl(var(--p-secondary-foreground));
+}
+
+@media (hover: hover) {
+  [p="button"][variant="secondary"]:hover {
+    background-color: hsl(var(--p-secondary-hover));
+  }
+}
+
+[p="button"][variant="secondary"]:active:not([data-state="open"], :disabled, [disabled]) {
+  filter: brightness(0.97);
+}
+
+/* ============================================================================
+ * GHOST variant (Radix: transparent bg, hover uses accent alpha)
+ * ============================================================================ */
+
+[p="button"][variant="ghost"] {
+  background-color: transparent;
+  color: hsl(var(--p-accent-foreground));
+  border-color: transparent;
+}
+
+@media (hover: hover) {
+  [p="button"][variant="ghost"]:hover {
+    background-color: hsl(var(--p-accent));
+  }
+}
+
+[p="button"][variant="ghost"]:active:not([data-state="open"], :disabled, [disabled]) {
+  background-color: hsl(var(--p-accent));
+  filter: brightness(0.97);
+}
+
+/* ============================================================================
+ * SOFT variant (Radix: accent alpha fill, darker text)
+ * ============================================================================ */
+
+[p="button"][variant="soft"] {
+  background-color: hsl(var(--p-accent));
+  color: hsl(var(--p-accent-foreground));
+}
+
+@media (hover: hover) {
+  [p="button"][variant="soft"]:hover {
+    filter: brightness(0.96) saturate(1.1);
+  }
+}
+
+[p="button"][variant="soft"]:active:not([data-state="open"], :disabled, [disabled]) {
+  filter: brightness(0.92) saturate(1.15);
+}
+
+/* ============================================================================
+ * SURFACE variant (Radix: subtle bg + border)
+ * ============================================================================ */
+
+[p="button"][variant="surface"] {
+  background-color: hsl(var(--p-surface, var(--p-background)));
+  color: hsl(var(--p-accent-foreground));
+  box-shadow: inset 0 0 0 1px hsl(var(--p-border));
+}
+
+@media (hover: hover) {
+  [p="button"][variant="surface"]:hover {
+    box-shadow: inset 0 0 0 1px hsl(var(--p-border));
+    filter: brightness(0.97);
+  }
+}
+
+[p="button"][variant="surface"]:active:not([data-state="open"], :disabled, [disabled]) {
+  filter: brightness(0.94);
+}
+
+/* ============================================================================
+ * LINK variant (PUI-specific, kept for compatibility)
+ * ============================================================================ */
+
+[p="button"][variant="link"] {
+  background-color: transparent;
+  color: hsl(var(--p-primary));
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  border-color: transparent;
+}
+
+@media (hover: hover) {
+  [p="button"][variant="link"]:hover {
+    color: hsl(var(--p-primary-hover));
+    text-decoration-color: transparent;
+  }
+}
+
+/* ============================================================================
+ * Open state (Radix triggers treat open as "hovered")
+ * ============================================================================ */
+
+[p="button"]:not([variant])[data-state="open"],
+[p="button"][variant="solid"][data-state="open"] {
+  background-color: hsl(var(--p-primary-hover));
+}
+
+[p="button"][variant="outline"][data-state="open"],
+[p="button"][variant="ghost"][data-state="open"],
+[p="button"][variant="soft"][data-state="open"] {
+  background-color: hsl(var(--p-accent));
+}
+
+[p="button"][variant="surface"][data-state="open"] {
+  filter: brightness(0.96);
+}
+
+[p="button"][variant="destructive"][data-state="open"] {
+  background-color: hsl(var(--p-destructive-hover));
+}

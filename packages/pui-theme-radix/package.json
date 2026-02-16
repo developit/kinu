@@ -1,0 +1,30 @@
+{
+  "name": "pui-theme-radix",
+  "version": "0.1.0",
+  "description": "Radix Themes-based theme for PUI",
+  "type": "module",
+  "main": "./dist/style.css",
+  "exports": {
+    ".": "./dist/style.css",
+    "./style.css": "./dist/style.css",
+    "./tokens.css": "./src/generated/tokens.css"
+  },
+  "files": [
+    "dist",
+    "src/generated"
+  ],
+  "scripts": {
+    "build:tokens": "node src/build/gen-tokens.mjs",
+    "build:css": "postcss src/index.css -o dist/style.css",
+    "build": "npm run build:tokens && npm run build:css",
+    "dev": "npm run build:tokens && postcss src/index.css -o dist/style.css --watch"
+  },
+  "devDependencies": {
+    "@radix-ui/colors": "^3.0.0",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "postcss-nesting": "^13.0.1"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,21 @@
+/* Ported from Radix Themes:
+ * - Alert (Callout) component
+ * Radix uses a tinted background with accent color left border indicator.
+ */
+
+[p="alert"] {
+  border: none;
+  border-radius: var(--p-radius);
+  border-left: 3px solid hsl(var(--p-primary));
+  padding: 0.75rem 1rem;
+  background-color: hsl(var(--p-accent));
+  color: hsl(var(--p-foreground));
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+[p="alert"][variant="destructive"] {
+  border-left-color: hsl(var(--p-destructive));
+  background-color: hsl(var(--p-destructive) / 0.1);
+  color: hsl(var(--p-foreground));
+}
