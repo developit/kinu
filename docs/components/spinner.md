@@ -20,7 +20,7 @@ import {Spinner} from 'pui';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| size | `SpinnerSize` | 'md' | Size preset for the spinner. |
+| size | `SpinnerSize` | — | Size preset for the spinner. |
 
 ## Attributes
 
