@@ -276,4 +276,21 @@ export type {
 } from './components/carousel/types';
 export {DatePicker} from './components/date-picker';
 export type {DatePickerProps, DatePickerOwnProps} from './components/date-picker/types';
+export {Spinner} from './components/spinner';
+export type {SpinnerProps, SpinnerOwnProps, SpinnerSize} from './components/spinner/types';
+export {InputGroup} from './components/input-group';
+export type {InputGroupProps, InputGroupOwnProps} from './components/input-group/types';
+export {Tree} from './components/tree';
+export type {
+  TreeRootProps,
+  TreeRootOwnProps,
+  TreeGroupProps,
+  TreeGroupOwnProps,
+  TreeGroupLabelProps,
+  TreeGroupLabelOwnProps,
+  TreeGroupItemsProps,
+  TreeGroupItemsOwnProps,
+  TreeItemProps,
+  TreeItemOwnProps,
+} from './components/tree/types';
 export * from './components/typography';

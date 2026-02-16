@@ -635,5 +635,47 @@ export default [
     category: 'Feedback',
     order: 5,
     file: 'pages/toast.md'
+  },
+  {
+    slug: 'spinner',
+    title: 'Spinner',
+    section: 'Components',
+    category: 'Feedback',
+    order: 6,
+    folder: 'spinner',
+    description: 'Inline loading indicator for compact pending states.',
+    usage: '<Spinner aria-label="Loading" />',
+    notes: [
+      'Wraps a native `<span>` with purely CSS-driven animation.',
+      'Use `aria-label` or `aria-hidden` based on whether the spinner conveys status text.'
+    ]
+  },
+  {
+    slug: 'input-group',
+    title: 'Input Group',
+    section: 'Components',
+    category: 'Forms',
+    order: 13,
+    folder: 'input-group',
+    description: 'Compact field wrapper for joined controls like input + button actions.',
+    usage: `<InputGroup>\n  <Input placeholder="Search" />\n  <Button variant="outline">Go</Button>\n</InputGroup>`,
+    notes: [
+      'Joins borders and corner radii across child controls using CSS only.',
+      'Supports both PUI primitives (`[p="input"]`, `[p="button"]`) and native form elements.'
+    ]
+  },
+  {
+    slug: 'tree',
+    title: 'Tree',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'tree',
+    description: 'Composable tree view built from native `<details>` and `<summary>` primitives.',
+    usage: `<Tree>\n  <Tree.Group open>\n    <Tree.GroupLabel>src</Tree.GroupLabel>\n    <Tree.GroupItems>\n      <Tree.Item>index.ts</Tree.Item>\n    </Tree.GroupItems>\n  </Tree.Group>\n</Tree>`,
+    notes: [
+      'State is native via the `open` attribute on `Tree.Group`.',
+      'Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.'
+    ]
   }
 ];

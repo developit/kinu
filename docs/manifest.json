@@ -180,6 +180,15 @@
     "description": "Lightweight popover using native dialog with trigger/content primitives."
   },
   {
+    "slug": "tree",
+    "title": "Tree",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 3,
+    "file": "components/tree.md",
+    "description": "Composable tree view built from native `<details>` and `<summary>` primitives."
+  },
+  {
     "slug": "progress",
     "title": "Progress",
     "section": "Components",
@@ -315,6 +324,15 @@
     "description": "Bottom sheet style overlay with trigger and close helpers."
   },
   {
+    "slug": "spinner",
+    "title": "Spinner",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 6,
+    "file": "components/spinner.md",
+    "description": "Inline loading indicator for compact pending states."
+  },
+  {
     "slug": "calendar",
     "title": "Calendar",
     "section": "Components",
@@ -439,5 +457,14 @@
     "order": 12,
     "file": "components/toggle-group.md",
     "description": "Container that lets Toggle buttons coordinate pressed state."
+  },
+  {
+    "slug": "input-group",
+    "title": "Input Group",
+    "section": "Components",
+    "category": "Forms",
+    "order": 13,
+    "file": "components/input-group.md",
+    "description": "Compact field wrapper for joined controls like input + button actions."
   }
 ]
