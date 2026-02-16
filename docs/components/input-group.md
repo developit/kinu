@@ -5,7 +5,7 @@ Compact field wrapper for joined controls like input + button actions.
 ## Usage
 
 ```tsx
-import {Button, Input, InputGroup} from 'pui';
+import {InputGroup} from 'pui';
 
 <InputGroup>
   <Input placeholder="Search" />
@@ -13,9 +13,15 @@ import {Button, Input, InputGroup} from 'pui';
 </InputGroup>
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| InputGroup | `<fieldset>` | Wraps `<fieldset>` and sets `p="input-group"`. |
+
 ## Attributes
 
-Inherits all native attributes from `<fieldset>`. Add a `<legend>` as the first child when you need a prefixed label.
+Inherits all native attributes from `<fieldset>`. No additional styling attributes are required.
 
 ## Notes
 
@@ -24,4 +30,4 @@ Inherits all native attributes from `<fieldset>`. Add a `<legend>` as the first 
 
 ---
 
-<source-ref src="src/components/input-group/index.tsx"></source-ref>
+_Source: `src/components/input-group/index.tsx`

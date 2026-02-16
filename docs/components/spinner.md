@@ -10,11 +10,23 @@ import {Spinner} from 'pui';
 <Spinner aria-label="Loading" />
 ```
 
+## Exports
+
+| Name | DOM element | Details |
+| --- | --- | --- |
+| Spinner | `<span>` | Wraps `<span>` and sets `p="spinner"`. |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| size | `SpinnerSize` | 'md' | Size preset for the spinner. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
-| Spinner | size | sm \| lg | Optional size variants. Omit for default md sizing. |
+| Spinner | size | sm | lg | Controls component sizing. |
 
 ## Notes
 
@@ -23,4 +35,4 @@ import {Spinner} from 'pui';
 
 ---
 
-<source-ref src="src/components/spinner/index.tsx"></source-ref>
+_Source: `src/components/spinner/index.tsx`
