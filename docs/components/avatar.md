@@ -14,7 +14,7 @@ import {Avatar} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Avatar | User profile image | `p="avatar"` |
+| Avatar | User profile image | `<img p="avatar">` |
 
 ## Props
 

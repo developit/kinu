@@ -17,9 +17,9 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Sheet | Overlay panel | `p="sheet"` |
+| Sheet | Overlay panel | `<div p="sheet">` |
 | SheetTrigger | Sheet trigger | — |
-| SheetContent | Sheet content | `p="sheet-content"` |
+| SheetContent | Sheet content | `<dialog p="sheet-content">` |
 | SheetClose | Close button | — |
 
 ## Props

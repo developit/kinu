@@ -21,7 +21,7 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 | --- | --- | --- |
 | ContextMenuTrigger | Menu trigger | — |
 | ContextMenu | Right-click menu | — |
-| ContextMenuContent | Menu content | `p="context-menu"` |
+| ContextMenuContent | Menu content | `<dialog p="context-menu">` |
 | ContextMenuItem | Menu item | `<button p="context-menu-item">` |
 
 ## Props

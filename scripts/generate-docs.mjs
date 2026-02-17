@@ -43,7 +43,7 @@ function analyzeExports(sourceFile, sourceText) {
       for (const decl of node.declarationList.declarations) {
         if (!ts.isIdentifier(decl.name)) continue;
         const name = decl.name.text;
-        const info = {name, kind: 'function', pNames: new Set()};
+        const info = {name, kind: 'function', pNames: new Set(), elementMap: new Map()};
         if (decl.initializer) {
           if (
             ts.isCallExpression(decl.initializer) &&
@@ -67,8 +67,12 @@ function analyzeExports(sourceFile, sourceText) {
           }
         }
         const text = decl.initializer ? decl.initializer.getText(sourceFile) : '';
-        for (const match of text.matchAll(/<[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
-          info.pNames.add(match[1]);
+        // Extract element name along with p attribute
+        for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
+          const element = match[1];
+          const pName = match[2];
+          info.pNames.add(pName);
+          info.elementMap.set(pName, element);
         }
         exports.push(info);
       }
@@ -77,10 +81,15 @@ function analyzeExports(sourceFile, sourceText) {
         name: node.name.text,
         kind: 'function',
         pNames: new Set(),
+        elementMap: new Map(),
       };
       const text = node.getText(sourceFile);
-      for (const match of text.matchAll(/<[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
-        info.pNames.add(match[1]);
+      // Extract element name along with p attribute
+      for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
+        const element = match[1];
+        const pName = match[2];
+        info.pNames.add(pName);
+        info.elementMap.set(pName, element);
       }
       exports.push(info);
     } else if (ts.isExpressionStatement(node)) {
@@ -385,12 +394,17 @@ async function generateComponentDoc(entry) {
     let renderedHtml = '—';
     if (exp.kind === 'simple' && exp.tag && exp.pNames.size) {
       renderedHtml = '`<' + exp.tag + ' p="' + [...exp.pNames].join(' ') + '">`';
-    } else if (exp.kind === 'simple' && !exp.tag && exp.pNames.size) {
-      renderedHtml = '`p="' + [...exp.pNames].join(' ') + '"`';
     } else if (exp.kind === 'alias' && exp.aliasTarget) {
       renderedHtml = `Alias of ${exp.aliasTarget}`;
     } else if (exp.pNames.size) {
-      renderedHtml = '`p="' + [...exp.pNames].join(' ') + '"`';
+      // Use elementMap to get the actual element name
+      const pName = [...exp.pNames][0];
+      const element = exp.elementMap?.get(pName);
+      if (element) {
+        renderedHtml = '`<' + element + ' p="' + [...exp.pNames].join(' ') + '">`';
+      } else {
+        renderedHtml = '`p="' + [...exp.pNames].join(' ') + '"`';
+      }
     }
 
     // Description - use a shortened version from entry description or component name

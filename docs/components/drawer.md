@@ -17,9 +17,9 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Drawer | Slide-out panel | `p="drawer"` |
+| Drawer | Slide-out panel | `<div p="drawer">` |
 | DrawerTrigger | Drawer trigger | — |
-| DrawerContent | Drawer content | `p="drawer-content"` |
+| DrawerContent | Drawer content | `<dialog p="drawer-content">` |
 | DrawerClose | Close button | — |
 
 ## Props

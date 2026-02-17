@@ -20,7 +20,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 | --- | --- | --- |
 | Dialog | Modal overlay | — |
 | DialogTrigger | Dialog trigger | — |
-| DialogContent | Dialog content | `p="dialog-content"` |
+| DialogContent | Dialog content | `<dialog p="dialog-content">` |
 | DialogClose | Close button | — |
 
 ## Props

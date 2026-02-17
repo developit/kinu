@@ -17,9 +17,9 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Popover | Floating content | `p="popover"` |
+| Popover | Floating content | `<span p="popover">` |
 | PopoverTrigger | Popover trigger | — |
-| PopoverContent | Popover content | `p="popover-content"` |
+| PopoverContent | Popover content | `<dialog p="popover-content">` |
 | PopoverClose | Component | — |
 
 ## Props

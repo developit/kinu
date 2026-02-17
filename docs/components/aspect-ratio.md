@@ -16,7 +16,7 @@ import {AspectRatio} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| AspectRatio | Ratio container | `p="aspect-ratio"` |
+| AspectRatio | Ratio container | `<div p="aspect-ratio">` |
 
 ## Props
 
