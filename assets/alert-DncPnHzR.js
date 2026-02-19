@@ -1,2 +1,0 @@
-import{u as r}from"./index-CoZWNxXO.js";import{A as e}from"./style-CFUZX4Qb.js";function n(){return r("div",{style:{display:"flex",flexDirection:"column",gap:"1rem"},children:[r(e,{children:[r("strong",{children:"Info:"})," This is an informational alert."]}),r(e,{variant:"destructive",children:[r("strong",{children:"Error:"})," Something went wrong."]})]})}const t="<Alert>Info</Alert>",l={Demo:n,code:t};export{n as Demo,t as code,l as default};
-//# sourceMappingURL=alert-DncPnHzR.js.map
