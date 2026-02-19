@@ -200,7 +200,7 @@ function HeroDemo() {
         <Avatar>JD</Avatar>
         <div>
           <div class="demo-title">Project Dashboard</div>
-          <Badge variant={progress === 100 ? 'default' : 'secondary'}>
+          <Badge variant={progress === 100 ? undefined : 'secondary'}>
             {completedCount}/{tasks.length} Complete
           </Badge>
         </div>
@@ -235,7 +235,7 @@ function HeroDemo() {
         />
         <Tooltip title="Add task">
           <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
-            +
+            ＋
           </Button>
         </Tooltip>
       </div>

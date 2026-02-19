@@ -229,6 +229,11 @@ function applyCustomTheme(css: string) {
   document.head.appendChild(style);
 }
 
+try {
+  const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
+  if (saved) applyCustomTheme(saved);
+} catch {}
+
 /* ── Color swatch ─────────────────────────────────────────── */
 function Swatch({color, selected, onClick, label}: {
   color: string;
@@ -265,14 +270,6 @@ export function ThemeCustomizer() {
     } catch {}
     return {accentColor: 'blue', grayColor: 'slate', radius: 'medium', scaling: '100%'};
   });
-
-  // Apply saved theme on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
-      if (saved) applyCustomTheme(saved);
-    } catch {}
-  }, []);
 
   // const handlePaste = () => {
   //   const val = pasteRef.current?.value ?? '';
