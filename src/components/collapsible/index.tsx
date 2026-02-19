@@ -7,6 +7,9 @@ export const Collapsible = createSimpleComponent<'details', CollapsibleOwnProps>
   'details',
   {},
   (el: HTMLDetailsElement) => {
+    el.addEventListener('command', () => {
+      el.open = !el.open;
+    });
     el.insertBefore(document.createElement('summary'), el.firstChild);
   },
 );
