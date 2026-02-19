@@ -24,49 +24,49 @@ export interface ButtonOwnProps extends BaseProps {
    * Visual style variant.
    * @default 'default'
    */
-  variant?: ButtonVariant;
+  variant?: ButtonVariant | null;
 
   /**
    * Size preset for the button.
    * @default 'md'
    */
-  size?: ButtonSize;
+  size?: ButtonSize | null;
 
   /**
    * Shows a pending state and disables interactions.
    */
-  loading?: boolean;
+  loading?: boolean | null;
 
   /**
    * When provided, renders the Button as an anchor element.
    */
-  href?: string;
+  href?: string | null;
 
   /**
    * Target for anchor elements.
    */
-  target?: AnchorElementProps['target'];
+  target?: AnchorElementProps['target'] | null;
 
   /**
    * Relationship between the current page and the linked resource.
    */
-  rel?: AnchorElementProps['rel'];
+  rel?: AnchorElementProps['rel'] | null;
 
 
   /**
    * Click handler for the button.
    */
-  onClick?: ButtonElementProps['onClick'];
+  onClick?: ButtonElementProps['onClick'] | null;
 
   /**
    * Disables interactions and applies disabled styling.
    */
-  disabled?: boolean;
+  disabled?: boolean | null;
 
   /**
    * Button type attribute.
    */
-  type?: ButtonElementProps['type'];
+  type?: ButtonElementProps['type'] | null;
 }
 
 export type ButtonProps = ButtonOwnProps &

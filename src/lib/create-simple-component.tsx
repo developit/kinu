@@ -1,4 +1,5 @@
 import {h, type JSX, type RefObject, type Component} from 'preact';
+import {forwardRef} from './forwardref';
 
 type RefCallbackWithCleanup<T> = (el: T) => (() => void) | void;
 type RefCallback<T> = ((el: T | null) => void) | ((el: T) => () => void);
@@ -41,17 +42,17 @@ export function createSimpleComponent<
     };
   }
 
-  function Wrap(this: ComponentInstance, props: Props) {
+  const Wrap = forwardRef<HTMLElementTagNameMap[T], Props>(function Wrap(this: ComponentInstance, props, fwdRef) {
     let normalizedProps = props;
     if (defaultProps || ref) {
       normalizedProps = Object.assign({}, defaultProps || {}, props);
       normalizedProps.ref =
-        this.$_ref || (this.$_ref = proxyRef.bind(props.ref as any) as any);
+        this.$_ref || (this.$_ref = proxyRef.bind(fwdRef || props.ref as any) as any);
     }
     (normalizedProps as any).p = name;
     const resolvedTag = typeof tag === 'function' ? tag(props) : tag;
     return h(resolvedTag, normalizedProps);
-  }
+  });
 
   Wrap.displayName = name;
   return Wrap;

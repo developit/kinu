@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from 'pui';
+import {ThemeCustomizer} from './theme-customizer.tsx';
 
 export function Nav({
   class: className,
@@ -51,6 +52,9 @@ export function Nav({
           </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
+      <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+        <ThemeCustomizer />
+      </div>
     </NavigationMenu>
   );
 }
