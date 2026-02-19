@@ -1,2 +1,0 @@
-import{u as n}from"./index-Bj5wn7f6.js";import{N as a,z as i,E as e,F as o}from"./style-BcsuV1TF.js";function r(){return n(o,{children:n(a,{children:[n(i,{children:n(e,{href:"#",children:"Home"})}),n(i,{children:n(e,{href:"#",children:"Docs"})}),n(i,{children:n(e,{href:"#",children:"Blog"})})]})})}const t="<NavigationMenu>...</NavigationMenu>",u={Demo:r,code:t};export{r as Demo,t as code,u as default};
-//# sourceMappingURL=navigation-menu-A9T5DMEj.js.map

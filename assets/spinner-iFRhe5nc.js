@@ -1,0 +1,2 @@
+import{u as a}from"./index-BkiaUr-9.js";import{ao as e,B as i}from"./style-DwSGpkT8.js";function r(){return a("div",{style:{display:"flex",alignItems:"center",gap:"0.75rem",flexWrap:"wrap"},children:[a(e,{"aria-label":"Loading"}),a(e,{size:"sm","aria-label":"Loading small"}),a(e,{size:"lg","aria-label":"Loading large"}),a(i,{loading:!0,children:[a(e,{size:"sm","aria-hidden":"true"}),"Saving"]})]})}const n='<Spinner aria-label="Loading" />',s={Demo:r,code:n};export{r as Demo,n as code,s as default};
+//# sourceMappingURL=spinner-iFRhe5nc.js.map

@@ -1,2 +1,0 @@
-import{d as r,u as e}from"./index-Bj5wn7f6.js";import{d as a,e as n,f as s}from"./style-BcsuV1TF.js";function c(){const[t,i]=r("first");return e("div",{children:[e(a,{children:[e(n,{"aria-selected":t==="first",onClick:()=>i("first"),children:"First"}),e(n,{"aria-selected":t==="second",onClick:()=>i("second"),children:"Second"})]}),t==="first"&&e(s,{children:"Content for first tab."}),t==="second"&&e(s,{children:"Second tab panel."})]})}const o="<TabList>...</TabList>",f={Demo:c,code:o};export{c as Demo,o as code,f as default};
-//# sourceMappingURL=tabs-C76gz4PS.js.map
