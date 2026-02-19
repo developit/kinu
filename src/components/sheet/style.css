@@ -17,11 +17,15 @@
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   border-radius: 0;
   animation: sheet-show 300ms var(--p-ease);
+  overscroll-behavior: contain;
 }
 
 [p="sheet-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   animation: dialog-overlay-show 300ms var(--p-ease);
+  overscroll-behavior: contain;
+  overflow: auto;
+  scrollbar-width: none;
 }
 
 @keyframes sheet-show {
