@@ -10,7 +10,10 @@
   position: absolute;
   left: 50%;
   bottom: 100%;
-  transform: translate(-50%, -0.25rem) scale(0.95);
+  --p-tl: -50%;
+  --p-tt: 0%;
+  --p-to: -0.25rem;
+  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to))) scale(0.95);
   background-color: hsl(var(--p-foreground));
   color: hsl(var(--p-background));
   padding: 0.25rem 0.5rem;
@@ -25,8 +28,28 @@
   z-index: 10;
 }
 
+[p="tooltip"][side="bottom"][title]::after {
+  bottom: auto;
+  top: 100%;
+  --p-to: 0.25rem;
+}
+[p="tooltip"][side="left"][title]::after {
+  top: 50%;
+  left: 0;
+  --p-tt: -50%;
+  --p-tl: -100%;
+  --p-to: 0;
+}
+[p="tooltip"][side="right"][title]::after {
+  top: 50%;
+  left: 100%;
+  --p-tt: -50%;
+  --p-tl: 0;
+  --p-to: 0;
+}
+
 [p="tooltip"][title]:hover::after,
 [p="tooltip"][title]:focus::after {
   opacity: 1;
-  transform: translate(-50%, -0.5rem) scale(1);
+  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to) * 2)) scale(1);
 }
