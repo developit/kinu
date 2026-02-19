@@ -1,11 +1,11 @@
 # Input Group
 
-Compact field wrapper for joined controls like input + button actions.
+Compact fieldset wrapper for joined controls like input and button rows.
 
 ## Usage
 
 ```tsx
-import {Button, Input, InputGroup} from 'pui';
+import {InputGroup} from 'pui';
 
 <InputGroup>
   <Input placeholder="Search" />
@@ -13,15 +13,17 @@ import {Button, Input, InputGroup} from 'pui';
 </InputGroup>
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<fieldset>`. Add a `<legend>` as the first child when you need a prefixed label.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| InputGroup | Input group | `<fieldset p="input-group">` |
 
 ## Notes
 
-- Joins borders and corner radii across child controls using CSS only.
-- Supports both PUI primitives (`[p="input"]`, `[p="button"]`) and native form elements.
+- Uses CSS-only border and radius joining for grouped controls.
+- Works with both PUI primitives and native form elements.
 
 ---
 
-<source-ref src="src/components/input-group/index.tsx"></source-ref>
+_Source: `src/components/input-group/index.tsx`

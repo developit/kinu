@@ -15,16 +15,32 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Sheet | `<div>` | Container that provides sheet context and wraps its children. |
-| SheetTrigger | — | Decorator that opens the sheet when its child is activated. |
-| SheetContent | `<dialog>` | Dialog element that renders the sheet surface. |
-| SheetClose | — | Decorator that closes the sheet for its child control. |
+| Sheet | Overlay panel | `<div p="sheet">` |
+| SheetTrigger | Sheet trigger | — |
+| SheetContent | Sheet content | `<dialog p="sheet-content">` |
+| SheetClose | Close button | — |
 
-## Attributes
+## Props
 
-Relies on forwarded native attributes; no additional styling attributes are defined.
+### SheetProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the sheet dialog. If not provided, one will be auto-generated. |
+
+### SheetContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Override the auto-generated dialog ID. |
+
+### Static Shortcuts
+
+- `Sheet.Trigger = SheetTrigger`
+- `Sheet.Content = SheetContent`
+- `Sheet.Close = SheetClose`
 
 ## Notes
 
@@ -33,4 +49,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-<source-ref src="src/components/sheet/index.tsx"></source-ref>
+_Source: `src/components/sheet/index.tsx`

@@ -10,17 +10,29 @@ import {Spinner} from 'pui';
 <Spinner aria-label="Loading" />
 ```
 
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Spinner | Loading animation | `<span p="spinner">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| size | `SpinnerSize` | — | Size preset for the spinner. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
-| Spinner | size | sm \| lg | Optional size variants. Omit for default md sizing. |
+| Spinner | size | sm | lg | Controls component sizing. |
 
 ## Notes
 
-- Wraps a native `<span>` with purely CSS-driven animation.
-- Use `aria-label` or `aria-hidden` based on whether the spinner conveys status text.
+- Wraps a <span> and animates purely in CSS.
+- Supports size="sm" and size="lg" attributes for dense or prominent loading states.
 
 ---
 
-<source-ref src="src/components/spinner/index.tsx"></source-ref>
+_Source: `src/components/spinner/index.tsx`

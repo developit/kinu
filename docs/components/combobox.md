@@ -17,16 +17,29 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Combobox | `<span>` | Root wrapper that provides context for the input, list, and options. |
-| ComboboxInput | `<input>` | Text field that filters and toggles the option list. |
-| ComboboxList | `<dialog>` | Dialog surface that displays the available options. |
-| ComboboxOption | `<button>` | Button representing a selectable option. |
+| ComboboxInput | Search input | `<input p="combobox-input">` |
+| ComboboxList | Results list | `<dialog p="combobox-list">` |
+| ComboboxOption | Result option | `<button p="combobox-option">` |
+| Combobox | Autocomplete input | — |
 
-## Attributes
+## Props
 
-Inherits all native attributes from `<span>`. No additional styling attributes are required.
+### ComboboxInputProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `JSX.IntrinsicElements` | — | Input value for controlled usage. |
+| placeholder | `string` | — | Placeholder text for the input. |
+| onInput | `JSX.IntrinsicElements` | — | Change handler for controlled inputs. |
+| disabled | `boolean` | — | Disable the input. |
+
+### ComboboxOptionProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| selected | `boolean` | — | Marks the option as selected for styling. |
 
 ## Notes
 
@@ -35,4 +48,4 @@ Inherits all native attributes from `<span>`. No additional styling attributes a
 
 ---
 
-<source-ref src="src/components/combobox/index.tsx"></source-ref>
+_Source: `src/components/combobox/index.tsx`

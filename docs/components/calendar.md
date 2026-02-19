@@ -10,9 +10,20 @@ import {Calendar} from 'pui';
 <Calendar />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Calendar | Date picker | `<input p="calendar">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `JSX.IntrinsicElements` | — | Current date value. |
+| onChange | `JSX.IntrinsicElements` | — | Change handler for date input. |
+| disabled | `boolean` | — | Disable the input. |
+| name | `string` | — | Input name used for form submissions. |
 
 ## Notes
 
@@ -21,4 +32,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/calendar/index.tsx"></source-ref>
+_Source: `src/components/calendar/index.tsx`

@@ -17,16 +17,32 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ContextMenuTrigger | — | Decorator that equips its child with right-click menu behavior. |
-| ContextMenu | — | Context provider that coordinates trigger and content. |
-| ContextMenuContent | `<dialog>` | Dialog that renders the contextual menu surface. |
-| ContextMenuItem | `<button>` | Button-style command inside the context menu. |
+| ContextMenuTrigger | Menu trigger | — |
+| ContextMenu | Right-click menu | — |
+| ContextMenuContent | Menu content | `<dialog p="context-menu">` |
+| ContextMenuItem | Menu item | `<button p="context-menu-item">` |
 
-## Attributes
+## Props
 
-Inherits all native attributes from `<button>`. No additional styling attributes are required.
+### ContextMenuProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the context menu dialog. If not provided, one will be auto-generated. |
+
+### ContextMenuContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Override the auto-generated dialog ID. |
+
+### ContextMenuItemProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| selected | `boolean` | — | Marks the item as selected for styling. |
 
 ## Notes
 
@@ -35,4 +51,4 @@ Inherits all native attributes from `<button>`. No additional styling attributes
 
 ---
 
-<source-ref src="src/components/context-menu/index.tsx"></source-ref>
+_Source: `src/components/context-menu/index.tsx`

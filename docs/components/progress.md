@@ -10,9 +10,19 @@ import {Progress} from 'pui';
 <Progress value={60} max={100} />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<progress>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Progress | Loading indicator | `<progress p="progress">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `number` | — | Current progress value. |
+| max | `number` | — | Maximum progress value. |
+| data-state | `"indeterminate"` | — | Marks the progress as indeterminate for styling. |
 
 ## Notes
 
@@ -21,4 +31,4 @@ Inherits all native attributes from `<progress>`. No additional styling attribut
 
 ---
 
-<source-ref src="src/components/progress/index.tsx"></source-ref>
+_Source: `src/components/progress/index.tsx`

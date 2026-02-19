@@ -10,6 +10,18 @@ import {Collapsible} from 'pui';
 <Collapsible open summary="Trigger">Hidden content</Collapsible>
 ```
 
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Collapsible | Collapsible content | `<details p="collapsible">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| open | `boolean` | — | Controls the open state of the details element. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -23,4 +35,4 @@ import {Collapsible} from 'pui';
 
 ---
 
-<source-ref src="src/components/collapsible/index.tsx"></source-ref>
+_Source: `src/components/collapsible/index.tsx`

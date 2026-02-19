@@ -12,26 +12,16 @@ import {Tree} from 'pui';
     <Tree.GroupLabel>src</Tree.GroupLabel>
     <Tree.GroupItems>
       <Tree.Item>index.ts</Tree.Item>
-      <Tree.Group>
-        <Tree.GroupLabel>components</Tree.GroupLabel>
-        <Tree.GroupItems>
-          <Tree.Item>button.tsx</Tree.Item>
-        </Tree.GroupItems>
-      </Tree.Group>
     </Tree.GroupItems>
   </Tree.Group>
 </Tree>
 ```
 
-## Members
+## Exports
 
-| Member | Element | Notes |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| `Tree` | `div` | Root container for tree nodes. |
-| `Tree.Group` | `details` | Expandable branch group. |
-| `Tree.GroupLabel` | `summary` | Branch trigger/label row. |
-| `Tree.GroupItems` | `div` | Nested container for group content. |
-| `Tree.Item` | `button` | Terminal row/action item. |
+| Tree | Tree view | — |
 
 ## Notes
 
@@ -40,4 +30,4 @@ import {Tree} from 'pui';
 
 ---
 
-<source-ref src="src/components/tree/index.tsx"></source-ref>
+_Source: `src/components/tree/index.tsx`

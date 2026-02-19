@@ -2,3 +2,4 @@ node_modules/
 dist/
 .claude
 .playwright-mcp
+package-lock.json

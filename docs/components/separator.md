@@ -10,9 +10,11 @@ import {Separator} from 'pui';
 <Separator />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Separator | Divider | `<div p="separator">` |
 
 ## Notes
 
@@ -21,4 +23,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/separator/index.tsx"></source-ref>
+_Source: `src/components/separator/index.tsx`

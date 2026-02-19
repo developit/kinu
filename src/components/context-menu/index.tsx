@@ -1,8 +1,14 @@
-import {type ComponentChildren, type JSX, createContext} from 'preact';
+import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installDialogsDropdowns} from '../../lib/commands';
+import type {
+  ContextMenuOwnProps,
+  ContextMenuTriggerOwnProps,
+  ContextMenuContentOwnProps,
+  ContextMenuItemOwnProps,
+} from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
@@ -25,7 +31,9 @@ function handleContextMenu(e: MouseEvent) {
   target.showModal();
 }
 
-export function ContextMenuTrigger({children}: JSX.ElementChildrenAttribute) {
+export function ContextMenuTrigger({
+  children,
+}: ContextMenuTriggerOwnProps & JSX.ElementChildrenAttribute) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     commandfor: id,
@@ -33,10 +41,7 @@ export function ContextMenuTrigger({children}: JSX.ElementChildrenAttribute) {
   });
 }
 
-export function ContextMenu({
-  id: idProp,
-  children,
-}: {id?: string; children: ComponentChildren}) {
+export function ContextMenu({id: idProp, children}: ContextMenuOwnProps) {
   installDialogsDropdowns();
   const gen = useId();
   const id = idProp ?? gen;
@@ -52,7 +57,7 @@ function click(e: MouseEvent) {
 export function ContextMenuContent({
   id,
   ...props
-}: JSX.IntrinsicElements['dialog']) {
+}: ContextMenuContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
   return (
     <dialog
@@ -65,8 +70,7 @@ export function ContextMenuContent({
   );
 }
 
-export const ContextMenuItem = createSimpleComponent(
-  'context-menu-item',
+export const ContextMenuItem = createSimpleComponent<
   'button',
-  {tabIndex: 0},
-);
+  ContextMenuItemOwnProps
+>('context-menu-item', 'button', {tabIndex: 0});

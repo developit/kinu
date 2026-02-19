@@ -10,9 +10,20 @@ import {DatePicker} from 'pui';
 <DatePicker />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| DatePicker | Date input | `<input p="date-picker">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `JSX.IntrinsicElements` | — | Current date value. |
+| onChange | `JSX.IntrinsicElements` | — | Change handler for date input. |
+| disabled | `boolean` | — | Disable the input. |
+| name | `string` | — | Input name used for form submissions. |
 
 ## Notes
 
@@ -21,4 +32,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/date-picker/index.tsx"></source-ref>
+_Source: `src/components/date-picker/index.tsx`

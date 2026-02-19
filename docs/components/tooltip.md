@@ -10,6 +10,18 @@ import {Tooltip} from 'pui';
 <Tooltip text="Info"><Button>Hover</Button></Tooltip>
 ```
 
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Tooltip | Hover hint | `<span p="tooltip">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| title | `string` | — | Tooltip text provided via the title attribute. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -23,4 +35,4 @@ import {Tooltip} from 'pui';
 
 ---
 
-<source-ref src="src/components/tooltip/index.tsx"></source-ref>
+_Source: `src/components/tooltip/index.tsx`

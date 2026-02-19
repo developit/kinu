@@ -10,6 +10,20 @@ import {Toggle} from 'pui';
 <Toggle aria-pressed={value}>Bold</Toggle>
 ```
 
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Toggle | Toggle button | `<button p="toggle">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| aria-pressed | `boolean | "true" | "false"` | — | Controls the pressed state via aria-pressed. |
+| onClick | `JSX.IntrinsicElements` | — | Click handler for toggling state. |
+| disabled | `boolean` | — | Disable the toggle. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -23,4 +37,4 @@ import {Toggle} from 'pui';
 
 ---
 
-<source-ref src="src/components/toggle/index.tsx"></source-ref>
+_Source: `src/components/toggle/index.tsx`

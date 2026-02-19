@@ -1,75 +1,12 @@
 [
   {
-    "slug": "badge",
-    "title": "Badge",
-    "section": "Components",
-    "category": "Feedback",
-    "order": 0,
-    "file": "components/badge.md",
-    "description": "Tiny inline status indicator with multiple tone variants."
-  },
-  {
-    "slug": "button",
-    "title": "Button",
-    "section": "Components",
-    "category": "Forms",
-    "order": 0,
-    "file": "components/button.md",
-    "description": "Button component that forwards props to <button> or <a> when href is provided."
-  },
-  {
     "slug": "typography",
     "title": "Typography",
-    "section": "Components",
-    "category": "Data Display",
+    "section": "Foundations",
+    "category": "Styling",
     "order": 0,
     "file": "pages/typography.md",
     "description": ""
-  },
-  {
-    "slug": "accordion",
-    "title": "Accordion",
-    "section": "Components",
-    "category": "Disclosure",
-    "order": 1,
-    "file": "components/accordion.md",
-    "description": "Disclosure built on the native <details> element with smooth open and close animation."
-  },
-  {
-    "slug": "alert",
-    "title": "Alert",
-    "section": "Components",
-    "category": "Feedback",
-    "order": 1,
-    "file": "components/alert.md",
-    "description": "Inline status message with tone variants."
-  },
-  {
-    "slug": "avatar",
-    "title": "Avatar",
-    "section": "Components",
-    "category": "Data Display",
-    "order": 1,
-    "file": "components/avatar.md",
-    "description": "Styled <img> avatar that falls back to initials from the alt text."
-  },
-  {
-    "slug": "card",
-    "title": "Card",
-    "section": "Components",
-    "category": "Layout",
-    "order": 1,
-    "file": "components/card.md",
-    "description": "Surface container with padding, border, and typography defaults."
-  },
-  {
-    "slug": "input",
-    "title": "Input",
-    "section": "Components",
-    "category": "Forms",
-    "order": 1,
-    "file": "components/input.md",
-    "description": "Text input with size, tone, and invalid states handled in CSS."
   },
   {
     "slug": "overview",
@@ -81,111 +18,12 @@
     "description": ""
   },
   {
-    "slug": "tabs",
-    "title": "Tabs",
-    "section": "Components",
-    "category": "Navigation",
-    "order": 1,
-    "file": "components/tabs.md",
-    "description": "TabList, Tab, and TabPanel wrappers using aria attributes."
-  },
-  {
-    "slug": "tooltip",
-    "title": "Tooltip",
-    "section": "Components",
-    "category": "Overlay",
-    "order": 1,
-    "file": "components/tooltip.md",
-    "description": "Hover/focus tooltip with placement attributes and CSS timing."
-  },
-  {
-    "slug": "aspect-ratio",
-    "title": "Aspect Ratio",
-    "section": "Components",
-    "category": "Layout",
-    "order": 2,
-    "file": "components/aspect-ratio.md",
-    "description": "Maintains responsive boxes at a fixed ratio using pure CSS."
-  },
-  {
-    "slug": "breadcrumb",
-    "title": "Breadcrumb",
-    "section": "Components",
-    "category": "Navigation",
-    "order": 2,
-    "file": "components/breadcrumb.md",
-    "description": "Composable breadcrumb trail built from list primitives."
-  },
-  {
-    "slug": "checkbox",
-    "title": "Checkbox",
-    "section": "Components",
-    "category": "Forms",
-    "order": 2,
-    "file": "components/checkbox.md",
-    "description": "Accessible checkbox input with custom visuals."
-  },
-  {
-    "slug": "collapsible",
-    "title": "Collapsible",
-    "section": "Components",
-    "category": "Disclosure",
-    "order": 2,
-    "file": "components/collapsible.md",
-    "description": "Minimal hide/show container built on <details> without default markers."
-  },
-  {
-    "slug": "input-group",
-    "title": "Input Group",
-    "section": "Components",
-    "category": "Forms",
-    "order": 2,
-    "file": "components/input-group.md",
-    "description": "Compact fieldset wrapper for joined controls like input and button rows."
-  },
-  {
-    "slug": "popover",
-    "title": "Popover",
-    "section": "Components",
-    "category": "Overlay",
-    "order": 2,
-    "file": "components/popover.md",
-    "description": "Lightweight popover using native dialog with trigger/content primitives."
-  },
-  {
-    "slug": "spinner",
-    "title": "Spinner",
-    "section": "Components",
-    "category": "Feedback",
-    "order": 2,
-    "file": "components/spinner.md",
-    "description": "Inline loading indicator for compact pending states."
-  },
-  {
-    "slug": "table",
-    "title": "Table",
-    "section": "Components",
-    "category": "Data Display",
-    "order": 2,
-    "file": "components/table.md",
-    "description": "Table wrapper with zebra striping and compact density."
-  },
-  {
     "slug": "theming",
     "title": "Theming & Tokens",
     "section": "Foundations",
     "category": "Styling",
     "order": 2,
     "file": "pages/theming.md",
-    "description": ""
-  },
-  {
-    "slug": "base-css",
-    "title": "Base Styles",
-    "section": "Foundations",
-    "category": "Styling",
-    "order": 3,
-    "file": "pages/base-styles.md",
     "description": ""
   },
   {
@@ -198,22 +36,193 @@
     "description": ""
   },
   {
+    "slug": "base-css",
+    "title": "Base Styles",
+    "section": "Foundations",
+    "category": "Styling",
+    "order": 3,
+    "file": "pages/base-styles.md",
+    "description": ""
+  },
+  {
+    "slug": "button",
+    "title": "Button",
+    "section": "Components",
+    "category": "Actions",
+    "order": 0,
+    "file": "components/button.md",
+    "description": "Button component that forwards props to `<button>` or `<a>` when href is provided."
+  },
+  {
+    "slug": "badge",
+    "title": "Badge",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 0,
+    "file": "components/badge.md",
+    "description": "Tiny inline status indicator with multiple tone variants."
+  },
+  {
+    "slug": "accordion",
+    "title": "Accordion",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 1,
+    "file": "components/accordion.md",
+    "description": "Disclosure built on the native `<details>` element with smooth open and close animation."
+  },
+  {
+    "slug": "avatar",
+    "title": "Avatar",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 1,
+    "file": "components/avatar.md",
+    "description": "Styled `<img>` avatar that falls back to initials from the alt text."
+  },
+  {
+    "slug": "card",
+    "title": "Card",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 1,
+    "file": "components/card.md",
+    "description": "Surface container with padding, border, and typography defaults."
+  },
+  {
+    "slug": "input",
+    "title": "Input",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 1,
+    "file": "components/input.md",
+    "description": "Text input with size, tone, and invalid states handled in CSS."
+  },
+  {
+    "slug": "alert",
+    "title": "Alert",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 1,
+    "file": "components/alert.md",
+    "description": "Inline status message with tone variants."
+  },
+  {
+    "slug": "tooltip",
+    "title": "Tooltip",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 1,
+    "file": "components/tooltip.md",
+    "description": "Hover/focus tooltip with placement attributes and CSS timing."
+  },
+  {
+    "slug": "tabs",
+    "title": "Tabs",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 1,
+    "file": "components/tabs.md",
+    "description": "TabList, Tab, and TabPanel wrappers using aria attributes."
+  },
+  {
+    "slug": "collapsible",
+    "title": "Collapsible",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 2,
+    "file": "components/collapsible.md",
+    "description": "Minimal hide/show container built on `<details>` without default markers."
+  },
+  {
+    "slug": "table",
+    "title": "Table",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 2,
+    "file": "components/table.md",
+    "description": "Table wrapper with zebra striping and compact density."
+  },
+  {
+    "slug": "checkbox",
+    "title": "Checkbox",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 2,
+    "file": "components/checkbox.md",
+    "description": "Accessible checkbox input with custom visuals."
+  },
+  {
+    "slug": "input-group",
+    "title": "Input Group",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 2,
+    "file": "components/input-group.md",
+    "description": "Compact fieldset wrapper for joined controls like input and button rows."
+  },
+  {
+    "slug": "spinner",
+    "title": "Spinner",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 2,
+    "file": "components/spinner.md",
+    "description": "Inline loading indicator for compact pending states."
+  },
+  {
+    "slug": "aspect-ratio",
+    "title": "Aspect Ratio",
+    "section": "Components",
+    "category": "Layout",
+    "order": 2,
+    "file": "components/aspect-ratio.md",
+    "description": "Maintains responsive boxes at a fixed ratio using pure CSS."
+  },
+  {
+    "slug": "popover",
+    "title": "Popover",
+    "section": "Components",
+    "category": "Layout",
+    "order": 2,
+    "file": "components/popover.md",
+    "description": "Lightweight popover using native dialog with trigger/content primitives."
+  },
+  {
+    "slug": "breadcrumb",
+    "title": "Breadcrumb",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 2,
+    "file": "components/breadcrumb.md",
+    "description": "Composable breadcrumb trail built from list primitives."
+  },
+  {
     "slug": "dialog",
     "title": "Dialog",
     "section": "Components",
-    "category": "Overlay",
+    "category": "Actions",
     "order": 3,
     "file": "components/dialog.md",
-    "description": "Composable modal built on the native <dialog> element."
+    "description": "Composable modal built on the native `<dialog>` element."
   },
   {
-    "slug": "navigation-menu",
-    "title": "Navigation Menu",
+    "slug": "tree",
+    "title": "Tree",
     "section": "Components",
-    "category": "Navigation",
+    "category": "Data Display",
     "order": 3,
-    "file": "components/navigation-menu.md",
-    "description": "Composable navigation with list, item, and link helpers."
+    "file": "components/tree.md",
+    "description": "Composable tree view built from native `<details>` and `<summary>` primitives."
+  },
+  {
+    "slug": "radio-group",
+    "title": "Radio Group",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 3,
+    "file": "components/radio-group.md",
+    "description": "Container that styles a set of native radio inputs."
   },
   {
     "slug": "progress",
@@ -225,15 +234,6 @@
     "description": "Styled progress meter with determinate and indeterminate states."
   },
   {
-    "slug": "radio-group",
-    "title": "Radio Group",
-    "section": "Components",
-    "category": "Forms",
-    "order": 3,
-    "file": "components/radio-group.md",
-    "description": "Container that styles a set of native radio inputs."
-  },
-  {
     "slug": "scroll-area",
     "title": "Scroll Area",
     "section": "Components",
@@ -243,22 +243,40 @@
     "description": "Overflow wrapper with custom scrollbars and shadow indicators."
   },
   {
+    "slug": "navigation-menu",
+    "title": "Navigation Menu",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 3,
+    "file": "components/navigation-menu.md",
+    "description": "Composable navigation with list, item, and link helpers."
+  },
+  {
     "slug": "alert-dialog",
     "title": "Alert Dialog",
     "section": "Components",
-    "category": "Overlay",
+    "category": "Actions",
     "order": 4,
     "file": "components/alert-dialog.md",
     "description": "Alias of Dialog with alert-focused styling defaults."
   },
   {
-    "slug": "menubar",
-    "title": "Menubar",
+    "slug": "skeleton",
+    "title": "Skeleton",
     "section": "Components",
-    "category": "Navigation",
+    "category": "Data Display",
     "order": 4,
-    "file": "components/menubar.md",
-    "description": "Horizontal command bar composed of styled buttons."
+    "file": "components/skeleton.md",
+    "description": "Animated shimmer placeholder for loading states."
+  },
+  {
+    "slug": "select",
+    "title": "Select",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 4,
+    "file": "components/select.md",
+    "description": "Styled native `<select>` element with size variants."
   },
   {
     "slug": "resizable",
@@ -270,55 +288,28 @@
     "description": "Resizable container that exposes native CSS handles."
   },
   {
-    "slug": "select",
-    "title": "Select",
+    "slug": "menubar",
+    "title": "Menubar",
     "section": "Components",
-    "category": "Forms",
+    "category": "Navigation",
     "order": 4,
-    "file": "components/select.md",
-    "description": "Styled native <select> element with size variants."
-  },
-  {
-    "slug": "skeleton",
-    "title": "Skeleton",
-    "section": "Components",
-    "category": "Feedback",
-    "order": 4,
-    "file": "components/skeleton.md",
-    "description": "Animated shimmer placeholder for loading states."
+    "file": "components/menubar.md",
+    "description": "Horizontal command bar composed of styled buttons."
   },
   {
     "slug": "drawer",
     "title": "Drawer",
     "section": "Components",
-    "category": "Overlay",
+    "category": "Actions",
     "order": 5,
     "file": "components/drawer.md",
     "description": "Bottom sheet style overlay with trigger and close helpers."
   },
   {
-    "slug": "pagination",
-    "title": "Pagination",
-    "section": "Components",
-    "category": "Navigation",
-    "order": 5,
-    "file": "components/pagination.md",
-    "description": "Semantic pagination list with previous/next helpers."
-  },
-  {
-    "slug": "separator",
-    "title": "Separator",
-    "section": "Components",
-    "category": "Layout",
-    "order": 5,
-    "file": "components/separator.md",
-    "description": "Semantic horizontal or vertical divider."
-  },
-  {
     "slug": "slider",
     "title": "Slider",
     "section": "Components",
-    "category": "Forms",
+    "category": "Data Input",
     "order": 5,
     "file": "components/slider.md",
     "description": "Range input with CSS-driven track and thumb styling."
@@ -333,31 +324,58 @@
     "description": ""
   },
   {
-    "slug": "calendar",
-    "title": "Calendar",
+    "slug": "separator",
+    "title": "Separator",
     "section": "Components",
-    "category": "Forms",
-    "order": 6,
-    "file": "components/calendar.md",
-    "description": "Styled wrapper around the native <input type=\"date\"> element."
+    "category": "Layout",
+    "order": 5,
+    "file": "components/separator.md",
+    "description": "Semantic horizontal or vertical divider."
   },
   {
-    "slug": "carousel",
-    "title": "Carousel",
+    "slug": "pagination",
+    "title": "Pagination",
     "section": "Components",
     "category": "Navigation",
-    "order": 6,
-    "file": "components/carousel.md",
-    "description": "Scroll snapping carousel with previous/next helpers."
+    "order": 5,
+    "file": "components/pagination.md",
+    "description": "Semantic pagination list with previous/next helpers."
   },
   {
     "slug": "dropdown-menu",
     "title": "Dropdown Menu",
     "section": "Components",
-    "category": "Overlay",
+    "category": "Actions",
     "order": 6,
     "file": "components/dropdown-menu.md",
-    "description": "Command-driven dropdown built on top of <dialog>."
+    "description": "Command-driven dropdown built on top of `<dialog>`."
+  },
+  {
+    "slug": "carousel",
+    "title": "Carousel",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 6,
+    "file": "components/carousel.md",
+    "description": "Scroll snapping carousel with previous/next helpers."
+  },
+  {
+    "slug": "calendar",
+    "title": "Calendar",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 6,
+    "file": "components/calendar.md",
+    "description": "Styled wrapper around the native `<input type=\"date\">` element."
+  },
+  {
+    "slug": "switch",
+    "title": "Switch",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 6,
+    "file": "components/switch.md",
+    "description": "Accessible toggle switch built from a checkbox input."
   },
   {
     "slug": "sidebar",
@@ -369,73 +387,64 @@
     "description": "Responsive sidebar dialog that collapses on mobile."
   },
   {
-    "slug": "switch",
-    "title": "Switch",
-    "section": "Components",
-    "category": "Forms",
-    "order": 6,
-    "file": "components/switch.md",
-    "description": "Accessible toggle switch built from a checkbox input."
-  },
-  {
-    "slug": "combobox",
-    "title": "Combobox",
-    "section": "Components",
-    "category": "Forms",
-    "order": 7,
-    "file": "components/combobox.md",
-    "description": "Autocomplete input with trigger, list, and option primitives."
-  },
-  {
     "slug": "context-menu",
     "title": "Context Menu",
     "section": "Components",
-    "category": "Overlay",
+    "category": "Actions",
     "order": 7,
     "file": "components/context-menu.md",
     "description": "Right-click context menu powered by the native dialog element."
   },
   {
-    "slug": "date-picker",
-    "title": "Date Picker",
+    "slug": "combobox",
+    "title": "Combobox",
     "section": "Components",
-    "category": "Forms",
-    "order": 8,
-    "file": "components/date-picker.md",
-    "description": "Styled date input that shares the same foundation as Calendar."
+    "category": "Data Input",
+    "order": 7,
+    "file": "components/combobox.md",
+    "description": "Autocomplete input with trigger, list, and option primitives."
   },
   {
     "slug": "hover-card",
     "title": "Hover Card",
     "section": "Components",
-    "category": "Overlay",
+    "category": "Data Display",
     "order": 8,
     "file": "components/hover-card.md",
     "description": "Delayed hover preview card with trigger/content primitives."
   },
   {
-    "slug": "label",
-    "title": "Label",
+    "slug": "date-picker",
+    "title": "Date Picker",
     "section": "Components",
-    "category": "Forms",
-    "order": 9,
-    "file": "components/label.md",
-    "description": "Typography-aligned label component for form controls."
+    "category": "Data Input",
+    "order": 8,
+    "file": "components/date-picker.md",
+    "description": "Styled date input that shares the same foundation as Calendar."
   },
   {
     "slug": "sheet",
     "title": "Sheet",
     "section": "Components",
-    "category": "Overlay",
+    "category": "Actions",
     "order": 9,
     "file": "components/sheet.md",
     "description": "Side or bottom sheet overlay with directional variants."
   },
   {
+    "slug": "label",
+    "title": "Label",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 9,
+    "file": "components/label.md",
+    "description": "Typography-aligned label component for form controls."
+  },
+  {
     "slug": "textarea",
     "title": "Textarea",
     "section": "Components",
-    "category": "Forms",
+    "category": "Data Input",
     "order": 10,
     "file": "components/textarea.md",
     "description": "Text area with matching input styling, variants, and sizes."
@@ -444,7 +453,7 @@
     "slug": "toggle",
     "title": "Toggle",
     "section": "Components",
-    "category": "Forms",
+    "category": "Data Input",
     "order": 11,
     "file": "components/toggle.md",
     "description": "ARIA-pressed aware button for on/off interactions."
@@ -453,18 +462,9 @@
     "slug": "toggle-group",
     "title": "Toggle Group",
     "section": "Components",
-    "category": "Forms",
+    "category": "Data Input",
     "order": 12,
     "file": "components/toggle-group.md",
     "description": "Container that lets Toggle buttons coordinate pressed state."
-  },
-  {
-    "slug": "tree",
-    "title": "Tree",
-    "section": "Components",
-    "category": "Navigation",
-    "order": 13,
-    "file": "components/tree.md",
-    "description": "Tree view primitives built from native details/summary elements."
   }
 ]

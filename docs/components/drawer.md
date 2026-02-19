@@ -15,16 +15,32 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Drawer | `<div>` | Container that provides drawer context and wraps the trigger and content. |
-| DrawerTrigger | — | Decorator that opens the drawer when its child is activated. |
-| DrawerContent | `<dialog>` | Dialog element that renders the sliding panel. |
-| DrawerClose | — | Decorator that closes the drawer for its child control. |
+| Drawer | Slide-out panel | `<div p="drawer">` |
+| DrawerTrigger | Drawer trigger | — |
+| DrawerContent | Drawer content | `<dialog p="drawer-content">` |
+| DrawerClose | Close button | — |
 
-## Attributes
+## Props
 
-Relies on forwarded native attributes; no additional styling attributes are defined.
+### DrawerProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the drawer dialog. If not provided, one will be auto-generated. |
+
+### DrawerContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Override the auto-generated dialog ID. |
+
+### Static Shortcuts
+
+- `Drawer.Trigger = DrawerTrigger`
+- `Drawer.Content = DrawerContent`
+- `Drawer.Close = DrawerClose`
 
 ## Notes
 
@@ -33,4 +49,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-<source-ref src="src/components/drawer/index.tsx"></source-ref>
+_Source: `src/components/drawer/index.tsx`

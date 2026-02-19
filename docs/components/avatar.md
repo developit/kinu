@@ -10,9 +10,20 @@ import {Avatar} from 'pui';
 <Avatar alt="JM" src="/user.jpg" />
 ```
 
-## Attributes
+## Exports
 
-Relies on forwarded native attributes; no additional styling attributes are defined.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Avatar | User profile image | `<img p="avatar">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| src | `string` | — | Image source for the avatar. |
+| alt | `string` | — | Alt text used by the image and for fallback initials. |
+| children | `any` | — | Fallback initials or text rendered via the alt attribute. |
+| size | `AvatarSize` | — | Size preset for the avatar. |
 
 ## Notes
 
@@ -21,4 +32,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-<source-ref src="src/components/avatar/index.tsx"></source-ref>
+_Source: `src/components/avatar/index.tsx`

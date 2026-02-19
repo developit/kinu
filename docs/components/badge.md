@@ -10,16 +10,24 @@ import {Badge} from 'pui';
 <Badge variant="secondary">New</Badge>
 ```
 
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Badge | Inline status indicator | `<span p="badge">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| variant | `BadgeVariant` | 'default' | Visual style variant. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
 | Badge | variant | secondary | destructive | outline | Visual style variant selector. |
 
-## Notes
-
-- Renders a `<span>` and forwards standard inline attributes.
-
 ---
 
-<source-ref src="src/components/badge/index.tsx"></source-ref>
+_Source: `src/components/badge/index.tsx`

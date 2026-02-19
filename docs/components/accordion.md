@@ -13,6 +13,18 @@ import {Accordion} from 'pui';
 </Accordion>
 ```
 
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Accordion | Collapsible section | `<details p="accordion">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| open | `boolean` | — | Controls the open state of the details element. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -26,4 +38,4 @@ import {Accordion} from 'pui';
 
 ---
 
-<source-ref src="src/components/accordion/index.tsx"></source-ref>
+_Source: `src/components/accordion/index.tsx`

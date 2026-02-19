@@ -17,16 +17,41 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| DropdownMenu | `<span>` | Context wrapper that wires triggers and menu content. |
-| DropdownMenuTrigger | — | Decorator that opens the menu for its child control. |
-| DropdownMenuContent | `<dialog>` | Dialog element that displays the dropdown menu. |
-| DropdownMenuItem | `<button>` | Button-style command within the menu. |
+| DropdownMenu | Dropdown menu | `<span p="dropdown">` |
+| DropdownMenuTrigger | Menu trigger | — |
+| DropdownMenuContent | Menu content | `<dialog p="dropdown-content">` |
+| DropdownMenuItem | Menu item | `p="dropdown-menu-item"` |
+
+## Props
+
+### DropdownMenuProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the dropdown content. If not provided, one will be auto-generated. |
+
+### DropdownMenuContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Override the auto-generated dialog ID. |
+| command | `string` | 'close' | Command dispatched when the dialog receives the command event. |
+| commandfor | `string` | — | Target dialog identifier for the command dispatch. |
+
+### DropdownMenuItemProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| href | `string` | — | When provided, renders the item as an anchor element. |
+| selected | `boolean` | — | Marks the item as selected for styling. |
 
 ## Attributes
 
-Inherits all native attributes from `<button>`. No additional styling attributes are required.
+| Export | Attribute | Values | Notes |
+| --- | --- | --- | --- |
+| DropdownMenuContent | to | left | Forwarded attribute used by the component styling. |
 
 ## Notes
 
@@ -35,4 +60,4 @@ Inherits all native attributes from `<button>`. No additional styling attributes
 
 ---
 
-<source-ref src="src/components/dropdown-menu/index.tsx"></source-ref>
+_Source: `src/components/dropdown-menu/index.tsx`

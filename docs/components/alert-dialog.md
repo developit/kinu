@@ -13,9 +13,17 @@ import {AlertDialog} from 'pui';
 </AlertDialog>
 ```
 
-## Attributes
+## Exports
 
-Relies on forwarded native attributes; no additional styling attributes are defined.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| AlertDialog | Alert modal | — |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the dialog. If not provided, one will be auto-generated. |
 
 ## Notes
 
@@ -24,4 +32,4 @@ Relies on forwarded native attributes; no additional styling attributes are defi
 
 ---
 
-<source-ref src="src/components/alert-dialog/index.tsx"></source-ref>
+_Source: `src/components/alert-dialog/index.tsx`

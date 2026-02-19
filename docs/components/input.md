@@ -10,6 +10,27 @@ import {Input} from 'pui';
 <Input placeholder="Email" type="email" />
 ```
 
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Input | Text input field | `<input p="input">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| size | `InputSize` | 'md' | Size preset for the input field. |
+| invalid | `boolean` | — | Marks the input as invalid for styling purposes. |
+| value | `JSX.IntrinsicElements` | — | Input value. |
+| type | `JSX.IntrinsicElements` | — | Input type attribute. |
+| placeholder | `string` | — | Placeholder text for the input. |
+| onInput | `JSX.IntrinsicElements` | — | Change handler for controlled inputs. |
+| onBlur | `JSX.IntrinsicElements` | — | Blur handler. |
+| onFocus | `JSX.IntrinsicElements` | — | Focus handler. |
+| disabled | `boolean` | — | Disables interactions and applies disabled styling. |
+| name | `string` | — | Input name attribute used for form submissions. |
+
 ## Attributes
 
 | Export | Attribute | Values | Notes |
@@ -24,4 +45,4 @@ import {Input} from 'pui';
 
 ---
 
-<source-ref src="src/components/input/index.tsx"></source-ref>
+_Source: `src/components/input/index.tsx`

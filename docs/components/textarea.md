@@ -10,9 +10,21 @@ import {Textarea} from 'pui';
 <Textarea rows={4} placeholder="Write here" />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<textarea>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Textarea | Multi-line text input | `<textarea p="textarea">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| rows | `number` | — | Number of visible text rows. |
+| placeholder | `string` | — | Placeholder text for the textarea. |
+| value | `JSX.IntrinsicElements` | — | Textarea value. |
+| onInput | `JSX.IntrinsicElements` | — | Change handler for controlled textareas. |
+| disabled | `boolean` | — | Disables interactions and applies disabled styling. |
 
 ## Notes
 
@@ -21,4 +33,4 @@ Inherits all native attributes from `<textarea>`. No additional styling attribut
 
 ---
 
-<source-ref src="src/components/textarea/index.tsx"></source-ref>
+_Source: `src/components/textarea/index.tsx`

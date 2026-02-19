@@ -1,4 +1,4 @@
-import {type ComponentChildren, createContext} from 'preact';
+import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {createSimpleComponent} from '../../lib/create-simple-component';
@@ -7,14 +7,17 @@ import {
   installDialogsDropdowns,
   installMenuShortcuts,
 } from '../../lib/commands';
+import type {
+  DropdownMenuOwnProps,
+  DropdownMenuTriggerOwnProps,
+  DropdownMenuContentOwnProps,
+  DropdownMenuItemOwnProps,
+} from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function DropdownMenu({
-  id: idProp,
-  children,
-}: {id?: string; children: ComponentChildren}) {
+export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   installCommands();
   installDialogsDropdowns();
   installMenuShortcuts();
@@ -30,7 +33,8 @@ export function DropdownMenu({
 export function DropdownMenuTrigger({
   children,
   ...props
-}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+}: DropdownMenuTriggerOwnProps &
+  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -44,10 +48,8 @@ export function DropdownMenuContent({
   command = 'close',
   commandfor,
   ...props
-}: Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor'> & {
-  command?: string;
-  commandfor?: string;
-}) {
+}: DropdownMenuContentOwnProps &
+  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor'>) {
   const ctx = useContext(IdCtx);
   const resolvedId = id ?? ctx;
   return (
@@ -61,7 +63,7 @@ export function DropdownMenuContent({
   );
 }
 
-export const DropdownMenuItem = createSimpleComponent(
-  'dropdown-menu-item',
-  (props: any) => (props.href ? 'a' : 'button'),
-);
+export const DropdownMenuItem = createSimpleComponent<
+  'button' | 'a',
+  DropdownMenuItemOwnProps
+>('dropdown-menu-item', (props) => (props.href ? 'a' : 'button'));

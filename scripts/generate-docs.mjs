@@ -43,7 +43,7 @@ function analyzeExports(sourceFile, sourceText) {
       for (const decl of node.declarationList.declarations) {
         if (!ts.isIdentifier(decl.name)) continue;
         const name = decl.name.text;
-        const info = {name, kind: 'function', pNames: new Set()};
+        const info = {name, kind: 'function', pNames: new Set(), elementMap: new Map()};
         if (decl.initializer) {
           if (
             ts.isCallExpression(decl.initializer) &&
@@ -67,8 +67,12 @@ function analyzeExports(sourceFile, sourceText) {
           }
         }
         const text = decl.initializer ? decl.initializer.getText(sourceFile) : '';
-        for (const match of text.matchAll(/<[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
-          info.pNames.add(match[1]);
+        // Extract element name along with p attribute
+        for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
+          const element = match[1];
+          const pName = match[2];
+          info.pNames.add(pName);
+          info.elementMap.set(pName, element);
         }
         exports.push(info);
       }
@@ -77,10 +81,15 @@ function analyzeExports(sourceFile, sourceText) {
         name: node.name.text,
         kind: 'function',
         pNames: new Set(),
+        elementMap: new Map(),
       };
       const text = node.getText(sourceFile);
-      for (const match of text.matchAll(/<[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
-        info.pNames.add(match[1]);
+      // Extract element name along with p attribute
+      for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
+        const element = match[1];
+        const pName = match[2];
+        info.pNames.add(pName);
+        info.elementMap.set(pName, element);
       }
       exports.push(info);
     } else if (ts.isExpressionStatement(node)) {
@@ -153,22 +162,98 @@ function describeExport(exp) {
   }
   const parts = [];
   if (exp.kind === 'simple') {
-    if (exp.tag) parts.push(`Wraps <${exp.tag}> and sets p="${[...exp.pNames].join(', ')}".`);
-    else if (exp.dynamicTag) parts.push(`Resolves the underlying element at runtime using ${exp.dynamicTag}.`);
-    else parts.push(`Styled wrapper that sets p="${[...exp.pNames].join(', ')}".`);
+    if (exp.tag) parts.push(`Wraps \`<${exp.tag}>\` and sets \`p="${[...exp.pNames].join(', ')}"\`.`);
+    else if (exp.dynamicTag) parts.push(`Resolves the underlying element at runtime using \`${exp.dynamicTag}\`.`);
+    else parts.push(`Styled wrapper that sets \`p="${[...exp.pNames].join(', ')}"\`.`);
   } else {
     if (exp.pNames.size > 0) {
-      parts.push(`Renders markup that includes p="${[...exp.pNames].join(', ')}".`);
+      parts.push(`Renders markup that includes \`p="${[...exp.pNames].join(', ')}"\`.`);
     } else {
       parts.push('Custom component implemented in the source file.');
     }
   }
-  if (exp.defaultProps) parts.push(`Defaults props to ${exp.defaultProps}.`);
+  if (exp.defaultProps) parts.push(`Defaults props to \`${exp.defaultProps}\`.`);
   if (exp.hasRefCallback) parts.push('Attaches a ref callback for additional behaviour.');
   return parts.join(' ');
 }
 
 const attributeDescriptionsFallback = 'Forwarded attribute used by the component styling.';
+
+const typeDocCache = new Map();
+
+function formatDocText(text) {
+  return text?.trim() || '—';
+}
+
+function formatTagText(tagText) {
+  if (!tagText) return '';
+  if (typeof tagText === 'string') return tagText.trim();
+  return tagText.map((part) => part.text).join('').trim();
+}
+
+function extractPropsFromTypes(typesPath) {
+  if (typeDocCache.has(typesPath)) return typeDocCache.get(typesPath);
+
+  const options = {
+    target: ts.ScriptTarget.ES2020,
+    module: ts.ModuleKind.ESNext,
+    jsx: ts.JsxEmit.ReactJSX,
+    jsxImportSource: 'preact',
+  };
+  const program = ts.createProgram([typesPath], options);
+  const checker = program.getTypeChecker();
+  const sourceFile = program.getSourceFile(typesPath);
+  const results = new Map();
+
+  if (!sourceFile) {
+    typeDocCache.set(typesPath, results);
+    return results;
+  }
+
+  sourceFile.forEachChild((node) => {
+    if (!ts.isInterfaceDeclaration(node) || !node.name) return;
+    const name = node.name.text;
+    if (!name.endsWith('OwnProps')) return;
+    const componentName = name.replace(/OwnProps$/, '');
+    const props = [];
+
+    for (const member of node.members) {
+      if (!ts.isPropertySignature(member) || !member.name) continue;
+      let propName = '';
+      if (ts.isIdentifier(member.name)) propName = member.name.text;
+      else if (ts.isStringLiteral(member.name)) propName = member.name.text;
+      else propName = member.name.getText(sourceFile);
+
+      const symbol = checker.getSymbolAtLocation(member.name);
+      const doc = symbol
+        ? ts.displayPartsToString(symbol.getDocumentationComment(checker))
+        : '';
+      const defaultTag = symbol
+        ? symbol.getJsDocTags().find((tag) => tag.name === 'default')
+        : undefined;
+      const defaultValue = defaultTag ? formatTagText(defaultTag.text) : '';
+      const type = checker.getTypeAtLocation(member);
+      const typeText = checker.typeToString(
+        type,
+        member,
+        ts.TypeFormatFlags.NoTruncation |
+          ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope,
+      );
+
+      props.push({
+        name: propName,
+        type: typeText,
+        doc: formatDocText(doc),
+        default: defaultValue || '—',
+      });
+    }
+
+    results.set(componentName, props);
+  });
+
+  typeDocCache.set(typesPath, results);
+  return results;
+}
 
 function formatValues(values) {
   const options = [...values].filter((v) => v !== '__BOOLEAN__');
@@ -183,20 +268,149 @@ function describeAttribute(attr) {
   return attributeDescriptions.get(attr) ?? attributeDescriptionsFallback;
 }
 
+function getComponentDescription(componentName, entry) {
+  // Simple component-name-to-description mapping
+  const descriptions = {
+    Badge: 'Inline status indicator',
+    Button: 'Interactive action control',
+    Card: 'Surface container',
+    Input: 'Text input field',
+    Checkbox: 'Selection control',
+    Select: 'Dropdown selection',
+    Switch: 'Toggle control',
+    Slider: 'Range input',
+    Textarea: 'Multi-line text input',
+    Label: 'Form field label',
+    Dialog: 'Modal overlay',
+    Alert: 'Status message',
+    Avatar: 'User profile image',
+    Tooltip: 'Hover hint',
+    Progress: 'Loading indicator',
+    Spinner: 'Loading animation',
+    Skeleton: 'Content placeholder',
+    Accordion: 'Collapsible section',
+    Tabs: 'Tabbed navigation',
+    Tab: 'Tab trigger',
+    TabList: 'Tab container',
+    TabPanel: 'Tab content',
+    Table: 'Data table',
+    Popover: 'Floating content',
+    Drawer: 'Slide-out panel',
+    Sheet: 'Overlay panel',
+    Sidebar: 'Side navigation',
+    Breadcrumb: 'Navigation trail',
+    BreadcrumbList: 'Trail container',
+    BreadcrumbItem: 'Trail item',
+    BreadcrumbLink: 'Trail link',
+    NavigationMenu: 'Menu container',
+    NavigationMenuList: 'Menu list',
+    NavigationMenuItem: 'Menu item',
+    NavigationMenuLink: 'Menu link',
+    Pagination: 'Page navigation',
+    PaginationList: 'Page list',
+    PaginationItem: 'Page item',
+    PaginationLink: 'Page link',
+    Menubar: 'Horizontal menu',
+    MenubarItem: 'Menu item',
+    Carousel: 'Image slider',
+    CarouselContent: 'Slider content',
+    CarouselItem: 'Slide item',
+    CarouselPrevious: 'Previous button',
+    CarouselNext: 'Next button',
+    Combobox: 'Autocomplete input',
+    ComboboxInput: 'Search input',
+    ComboboxList: 'Results list',
+    ComboboxOption: 'Result option',
+    ContextMenu: 'Right-click menu',
+    ContextMenuTrigger: 'Menu trigger',
+    ContextMenuContent: 'Menu content',
+    ContextMenuItem: 'Menu item',
+    DropdownMenu: 'Dropdown menu',
+    DropdownMenuTrigger: 'Menu trigger',
+    DropdownMenuContent: 'Menu content',
+    DropdownMenuItem: 'Menu item',
+    HoverCard: 'Hover preview',
+    HoverCardTrigger: 'Hover target',
+    HoverCardContent: 'Preview content',
+    Calendar: 'Date picker',
+    DatePicker: 'Date input',
+    RadioGroup: 'Radio group',
+    Radio: 'Radio input',
+    ToggleGroup: 'Toggle group',
+    Toggle: 'Toggle button',
+    Separator: 'Divider',
+    AspectRatio: 'Ratio container',
+    ScrollArea: 'Scrollable area',
+    Resizable: 'Resizable panel',
+    Collapsible: 'Collapsible content',
+    AlertDialog: 'Alert modal',
+    Tree: 'Tree view',
+    TreeRoot: 'Tree container',
+    TreeGroup: 'Tree branch',
+    TreeGroupLabel: 'Branch label',
+    TreeGroupItems: 'Branch items',
+    TreeItem: 'Tree leaf',
+    InputGroup: 'Input group',
+    PopoverTrigger: 'Popover trigger',
+    PopoverContent: 'Popover content',
+    DialogTrigger: 'Dialog trigger',
+    DialogContent: 'Dialog content',
+    DialogClose: 'Close button',
+    SheetTrigger: 'Sheet trigger',
+    SheetContent: 'Sheet content',
+    SheetClose: 'Close button',
+    DrawerTrigger: 'Drawer trigger',
+    DrawerContent: 'Drawer content',
+    DrawerClose: 'Close button',
+    SidebarTrigger: 'Sidebar toggle',
+  };
+
+  return descriptions[componentName] || 'Component';
+}
+
+
 async function generateComponentDoc(entry) {
   const folder = entry.folder ?? entry.slug;
   const indexPath = path.join(componentsDir, folder, 'index.tsx');
+  const typesPath = path.join(componentsDir, folder, 'types.ts');
   const sourceText = await fs.readFile(indexPath, 'utf8');
   const sourceFile = ts.createSourceFile(indexPath, sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const {exports, attachments} = analyzeExports(sourceFile, sourceText);
+
+  let propDocs = new Map();
+  try {
+    await fs.access(typesPath);
+    propDocs = extractPropsFromTypes(typesPath);
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+  }
 
   const allPTokens = new Set();
   for (const exp of exports) for (const token of exp.pNames) allPTokens.add(token);
   const cssAttributes = await extractCssAttributes(folder, allPTokens);
 
   const exportRows = exports.map((exp) => {
-    const dom = exp.kind === 'simple' && exp.tag ? `<${exp.tag}>` : exp.kind === 'alias' && exp.aliasTarget ? `Alias of ${exp.aliasTarget}` : exp.pNames.size ? `p="${[...exp.pNames].join(', ')}"` : '—';
-    return `| ${exp.name} | ${dom} | ${describeExport(exp)} |`;
+    // Rendered HTML column
+    let renderedHtml = '—';
+    if (exp.kind === 'simple' && exp.tag && exp.pNames.size) {
+      renderedHtml = '`<' + exp.tag + ' p="' + [...exp.pNames].join(' ') + '">`';
+    } else if (exp.kind === 'alias' && exp.aliasTarget) {
+      renderedHtml = `Alias of ${exp.aliasTarget}`;
+    } else if (exp.pNames.size) {
+      // Use elementMap to get the actual element name
+      const pName = [...exp.pNames][0];
+      const element = exp.elementMap?.get(pName);
+      if (element) {
+        renderedHtml = '`<' + element + ' p="' + [...exp.pNames].join(' ') + '">`';
+      } else {
+        renderedHtml = '`p="' + [...exp.pNames].join(' ') + '"`';
+      }
+    }
+
+    // Description - use a shortened version from entry description or component name
+    const description = getComponentDescription(exp.name, entry);
+
+    return `| ${exp.name} | ${description} | ${renderedHtml} |`;
   });
 
   const attachmentRows = attachments.map((item) => `- \`${item.owner}.${item.property} = ${item.target}\``);
@@ -236,10 +450,36 @@ async function generateComponentDoc(entry) {
   if (exportRows.length) {
     lines.push('## Exports');
     lines.push('');
-    lines.push('| Name | DOM element | Details |');
+    lines.push('| Name | Description | Rendered HTML |');
     lines.push('| --- | --- | --- |');
     lines.push(...exportRows);
     lines.push('');
+  }
+  const propSections = exports
+    .map((exp) => ({
+      name: exp.name,
+      props: propDocs.get(exp.name) || [],
+    }))
+    .filter((section) => section.props.length > 0);
+
+  if (propSections.length) {
+    lines.push('## Props');
+    lines.push('');
+    const includeHeading = propSections.length > 1;
+    for (const section of propSections) {
+      if (includeHeading) {
+        lines.push(`### ${section.name}Props`);
+        lines.push('');
+      }
+      lines.push('| Prop | Type | Default | Description |');
+      lines.push('| --- | --- | --- | --- |');
+      for (const prop of section.props) {
+      lines.push(
+        `| ${prop.name} | \`${prop.type}\` | ${prop.default} | ${prop.doc} |`,
+      );
+      }
+      lines.push('');
+    }
   }
   if (attachmentRows.length) {
     lines.push('### Static Shortcuts');
@@ -253,16 +493,6 @@ async function generateComponentDoc(entry) {
     lines.push('| Export | Attribute | Values | Notes |');
     lines.push('| --- | --- | --- | --- |');
     lines.push(...attributeRows);
-    lines.push('');
-  } else {
-    lines.push('## Attributes');
-    lines.push('');
-    const base = exports.find((exp) => exp.kind === 'simple' && exp.tag);
-    if (base) {
-      lines.push(`Inherits all native attributes from <${base.tag}>. No additional styling attributes are required.`);
-    } else {
-      lines.push('Relies on forwarded native attributes; no additional styling attributes are defined.');
-    }
     lines.push('');
   }
   if (entry.notes?.length) {
