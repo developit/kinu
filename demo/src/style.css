@@ -153,8 +153,12 @@ body .home-nav + * {
 .hero-content {
   display: grid;
   grid-template-columns: 1fr 400px;
-  gap: 4rem;
+  gap: 2rem;
   align-items: center;
+}
+
+.hero-text {
+  padding: 0 2rem;
 }
 
 .hero-text h1 {
@@ -167,6 +171,7 @@ body .home-nav + * {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-wrap-style: pretty;
 }
 
 .hero-subtitle {
@@ -175,6 +180,7 @@ body .home-nav + * {
   color: hsl(var(--p-muted-foreground));
   margin: 0 0 2rem 0;
   max-width: 500px;
+  text-wrap-style: pretty;
 }
 
 .hero-features {
@@ -310,6 +316,7 @@ body .task-item {
 .showcase-header p {
   font-size: 1.125rem;
   color: hsl(var(--p-muted-foreground));
+  text-wrap-style: balance;
 }
 
 .showcase-grid {
@@ -457,6 +464,7 @@ body .task-item {
 
 .benefit {
   text-align: center;
+  text-wrap-style: balance;
   padding: 1.5rem;
 }
 
@@ -554,6 +562,7 @@ body .task-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 0.25rem;
   }
 
   .hero-text h1 {
