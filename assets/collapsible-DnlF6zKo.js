@@ -1,0 +1,40 @@
+const e=`# Collapsible
+
+Minimal hide/show container built on \`<details>\` without default markers.
+
+## Usage
+
+\`\`\`tsx
+import {Collapsible} from 'pui';
+
+<Collapsible open summary="Trigger">Hidden content</Collapsible>
+\`\`\`
+
+## Exports
+
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Collapsible | Collapsible content | \`<details p="collapsible">\` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| open | \`boolean\` | — | Controls the open state of the details element. |
+
+## Attributes
+
+| Export | Attribute | Values | Notes |
+| --- | --- | --- | --- |
+| Collapsible | open | boolean | Reflects whether the element is expanded. |
+
+## Notes
+
+- Expose the open attribute for controlled usage.
+- Great for FAQs when you want custom trigger markup.
+
+---
+
+_Source: \`src/components/collapsible/index.tsx\`
+`;export{e as default};
+//# sourceMappingURL=collapsible-DnlF6zKo.js.map
