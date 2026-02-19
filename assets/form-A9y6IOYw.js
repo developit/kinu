@@ -1,3 +1,0 @@
-import{d as m,u as e}from"./index-DrAZhjUC.js";import{B as i}from"./style-CVnlSvH2.js";import{t as r}from"./toast-DAkopXu-.js";function a(t){const n=t instanceof Event?t.currentTarget.textContent:t,o=t instanceof Event?"Selected item:":"Value:";r.show(n,{title:o})}function c(){const[t,n]=m(""),[o,l]=m("");return e("div",{children:[e("p",{children:["Current values: ",t&&`Email: ${t}`," ",o&&`Name: ${o}`]}),e(i,{onClick:()=>{console.log("Form data:",{email:t,name:o}),a(`Email: ${t}
-Name: ${o}`)},children:"Submit Form"})]})}const s="<Button onClick={submit}>Submit Form</Button>",p={Demo:c,code:s};export{c as Demo,s as code,p as default};
-//# sourceMappingURL=form-A9y6IOYw.js.map
