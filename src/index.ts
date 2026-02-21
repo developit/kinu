@@ -277,7 +277,7 @@ export type {
 export {DatePicker} from './components/date-picker';
 export type {DatePickerProps, DatePickerOwnProps} from './components/date-picker/types';
 export {Spinner} from './components/spinner';
-export type {SpinnerProps, SpinnerOwnProps, SpinnerSize} from './components/spinner/types';
+export type {SpinnerProps, SpinnerOwnProps, SpinnerSize, SpinnerVariant} from './components/spinner/types';
 export {InputGroup} from './components/input-group';
 export type {InputGroupProps, InputGroupOwnProps} from './components/input-group/types';
 export {Tree} from './components/tree';
