@@ -211,13 +211,11 @@
 }
 
 [p="spinner"][variant="thinking"] {
-  border: 1px solid hsl(var(--p-border));
-  border-radius: 0.375rem;
-  width: 2rem;
-  height: 1rem;
-  animation: p-spinner-thinking 1.2s linear infinite;
+  border: 1.5px solid hsl(var(--p-muted));
+  border-radius: 0.25rem;
+  animation: p-spinner-thinking 0.9s linear infinite;
   color: hsl(var(--p-primary));
-  background: hsl(var(--p-primary) / 0.12);
+  background: hsl(var(--p-background));
 }
 
 @keyframes p-spinner-spin {
@@ -371,10 +369,10 @@
 
 @keyframes p-spinner-thinking {
   from {
-    box-shadow: 0 0 inset;
+    box-shadow: 0 0 inset currentColor;
   }
 
   to {
-    box-shadow: -2rem 0 inset;
+    box-shadow: -1.5rem 0 inset currentColor;
   }
 }
