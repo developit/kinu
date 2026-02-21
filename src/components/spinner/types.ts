@@ -6,9 +6,7 @@ import type {BaseProps} from '../../types/component-props';
  */
 export type SpinnerSize = 'sm' | 'lg';
 
-export type SpinnerColor = 'primary' | 'secondary' | 'destructive';
-
-export type SpinnerVariant =
+export type SpinnerType =
   | 'turn'
   | 'concentric'
   | 'concentric2'
@@ -21,6 +19,8 @@ export type SpinnerVariant =
   | 'circle'
   | 'dots';
 
+export type SpinnerVariant = 'primary' | 'secondary' | 'destructive';
+
 export interface SpinnerOwnProps extends BaseProps {
   /**
    * Size preset for the spinner.
@@ -30,12 +30,12 @@ export interface SpinnerOwnProps extends BaseProps {
   /**
    * Visual style preset for the spinner.
    */
-  variant?: SpinnerVariant;
+  type?: SpinnerType;
 
   /**
    * Optional semantic color override. Defaults to inherited text color.
    */
-  color?: SpinnerColor;
+  variant?: SpinnerVariant;
 }
 
 export type SpinnerProps = SpinnerOwnProps &
