@@ -1,6 +1,7 @@
 import {Button, Spinner} from 'pui';
 
 const variants = [
+  'default',
   'turn',
   'concentric',
   'concentric2',
@@ -10,6 +11,8 @@ const variants = [
   'radar',
   'bubble',
   'fold',
+  'circle',
+  'dots',
   'thinking',
 ] as const;
 
@@ -47,8 +50,16 @@ export function Demo() {
               borderRadius: 'var(--p-radius)',
             }}
           >
-            <Spinner variant={variant} aria-label={`${variant} loading`} />
-            <code style={{fontSize: '0.75rem'}}>{variant}</code>
+            {variant === 'default' ? (
+              <Spinner aria-label="default loading" />
+            ) : (
+              <Spinner variant={variant} aria-label={`${variant} loading`} />
+            )}
+            {variant === 'default' ? (
+              <span style={{fontSize: '0.75rem'}}>default</span>
+            ) : (
+              <code style={{fontSize: '0.75rem'}}>{variant}</code>
+            )}
           </div>
         ))}
       </div>

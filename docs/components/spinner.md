@@ -8,7 +8,7 @@ Inline loading indicator for compact pending states.
 import {Spinner} from 'pui';
 
 <Spinner aria-label="Loading" />
-<Spinner variant="concentric" aria-label="Loading" />
+<Spinner variant="circle" aria-label="Loading" />
 ```
 
 ## Exports
@@ -29,7 +29,7 @@ import {Spinner} from 'pui';
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
 | Spinner | size | `sm` \| `lg` | Controls component sizing. |
-| Spinner | variant | `turn` \| `concentric` \| `concentric2` \| `ripple` \| `light` \| `ghost` \| `radar` \| `bubble` \| `fold` \| `thinking` | Selects a CSS-only spinner style. |
+| Spinner | variant | `turn` \| `concentric` \| `concentric2` \| `ripple` \| `light` \| `ghost` \| `radar` \| `bubble` \| `fold` \| `circle` \| `dots` \| `thinking` | Selects a CSS-only spinner style. |
 
 ## Notes
 
