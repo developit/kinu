@@ -17,8 +17,7 @@ export type SpinnerVariant =
   | 'bubble'
   | 'fold'
   | 'circle'
-  | 'dots'
-  | 'thinking';
+  | 'dots';
 
 export interface SpinnerOwnProps extends BaseProps {
   /**

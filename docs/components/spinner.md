@@ -29,7 +29,7 @@ import {Spinner} from 'pui';
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
 | Spinner | size | `sm` \| `lg` | Controls component sizing. |
-| Spinner | variant | `turn` \| `concentric` \| `concentric2` \| `ripple` \| `light` \| `ghost` \| `radar` \| `bubble` \| `fold` \| `circle` \| `dots` \| `thinking` | Selects a CSS-only spinner style. |
+| Spinner | variant | `turn` \| `concentric` \| `concentric2` \| `ripple` \| `light` \| `ghost` \| `radar` \| `bubble` \| `fold` \| `circle` \| `dots` | Selects a CSS-only spinner style. |
 
 ## Notes
 

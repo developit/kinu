@@ -13,7 +13,6 @@ const variants = [
   'fold',
   'circle',
   'dots',
-  'thinking',
 ] as const;
 
 export function Demo() {
