@@ -23,6 +23,7 @@ import {Spinner} from 'pui';
 | --- | --- | --- | --- |
 | size | `SpinnerSize` | — | Size preset for the spinner. |
 | variant | `SpinnerVariant` | — | Visual style preset for the spinner. |
+| color | `SpinnerColor` | inherited text color | Optional semantic color override. |
 
 ## Attributes
 
@@ -30,6 +31,7 @@ import {Spinner} from 'pui';
 | --- | --- | --- | --- |
 | Spinner | size | `sm` \| `lg` | Controls component sizing. |
 | Spinner | variant | `turn` \| `concentric` \| `concentric2` \| `ripple` \| `light` \| `ghost` \| `radar` \| `bubble` \| `fold` \| `circle` \| `dots` | Selects a CSS-only spinner style. |
+| Spinner | color | `primary` \| `secondary` \| `destructive` | Overrides spinner color token; default is `currentColor`. |
 
 ## Notes
 
