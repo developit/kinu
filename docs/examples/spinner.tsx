@@ -35,7 +35,7 @@ export function Demo() {
         <strong style={{fontSize: '0.8rem'}}>Variant:</strong>
         <ToggleGroup>
           {variants.map((v) => (
-            <Toggle key={v} pressed={(variant || null) == v} onClick={() => setVariant(v)}>
+            <Toggle pressed={variant == v} onClick={() => setVariant(v)}>
               {v || 'default'}
             </Toggle>
           ))}
