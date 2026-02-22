@@ -4,14 +4,27 @@
 
 body [p="context-menu"] {
   position: fixed;
-  position-anchor: --p-context-menu;
-  left: anchor(left);
-  top: anchor(top);
+  left: var(--p-context-menu-x, 0px);
+  top: var(--p-context-menu-y, 0px);
   --tf-x: 0;
   min-width: 6rem;
-  margin-left: var(--p-context-menu-x);
-  margin-top: var(--p-context-menu-y);
+  margin: 0;
+  max-inline-size: calc(100vw - 0.5rem);
+  max-block-size: calc(100dvh - 0.5rem);
+  overflow: auto;
 }
+
+@supports (position-anchor: --p-context-menu) and (position-try-fallbacks: flip-block) {
+  body [p="context-menu"] {
+    position-anchor: --p-context-menu;
+    left: anchor(left);
+    top: anchor(top);
+    margin-left: calc(var(--p-context-menu-x) - anchor(left));
+    margin-top: calc(var(--p-context-menu-y) - anchor(top));
+    position-try-fallbacks: flip-block, flip-inline;
+  }
+}
+
 [p="context-menu"]::backdrop {
   opacity: 0;
 }
