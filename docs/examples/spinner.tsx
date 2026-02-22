@@ -3,21 +3,21 @@ import {useState} from 'preact/hooks';
 
 const types = [
   'default',
+  'circle',
+  'light',
+  'dots',
+  'ripple',
+  'radar',
   'turn',
   'concentric',
-  'ripple',
-  'light',
-  'radar',
   'bubble',
   'fold',
-  'circle',
-  'dots',
 ] as const;
 
-const variants = ['primary', 'secondary', 'destructive'] as const;
+const variants = [null, 'primary', 'secondary', 'destructive'] as const;
 
 export function Demo() {
-  const [variant, setVariant] = useState<(typeof variants)[number]>('primary');
+  const [variant, setVariant] = useState<(typeof variants)[number]>(null);
 
   return (
     <div style={{display: 'grid', gap: '1rem'}}>
@@ -35,8 +35,8 @@ export function Demo() {
         <strong style={{fontSize: '0.8rem'}}>Variant:</strong>
         <ToggleGroup>
           {variants.map((v) => (
-            <Toggle key={v} pressed={variant === v} onClick={() => setVariant(v)}>
-              {v}
+            <Toggle key={v} pressed={(variant || null) == v} onClick={() => setVariant(v)}>
+              {v || 'default'}
             </Toggle>
           ))}
         </ToggleGroup>
