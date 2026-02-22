@@ -46,7 +46,7 @@
   outline: none;
 
   &:hover,
-  &:focus,
+  &:focus-visible,
   &[selected] {
     background-color: hsl(var(--p-primary));
     color: hsl(var(--p-primary-foreground));
@@ -69,13 +69,13 @@
 }
 
 [p="dropdown-menu-item"][shortcut]:hover::after,
-[p="dropdown-menu-item"][shortcut]:focus::after,
+[p="dropdown-menu-item"][shortcut]:focus-visible::after,
 [p="dropdown-menu-item"][selected]::after,
 [p="context-menu-item"][shortcut]:hover::after,
-[p="context-menu-item"][shortcut]:focus::after,
+[p="context-menu-item"][shortcut]:focus-visible::after,
 [p="context-menu-item"][selected]::after,
 [p="combobox-option"][shortcut]:hover::after,
-[p="combobox-option"][shortcut]:focus::after,
+[p="combobox-option"][shortcut]:focus-visible::after,
 [p="combobox-option"][selected]::after {
   color: inherit;
   opacity: 0.85;
