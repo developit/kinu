@@ -150,6 +150,14 @@ body .home-nav + * {
   align-items: center;
 }
 
+.docs-nav {
+  gap: 0.5rem;
+}
+
+.docs-nav [p="navigation-menu-list"] {
+  gap: 0.25rem;
+}
+
 .hero {
   padding: 4rem 1rem;
   max-width: 1200px;

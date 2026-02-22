@@ -93,6 +93,7 @@ export function DocsLayout({children}: {children?: ComponentChildren}) {
       </Sidebar>
       <main class="docs-content">
         <Nav
+          class="home-nav docs-nav"
           left={
             <SidebarTrigger
               commandFor="demo-sidebar"
