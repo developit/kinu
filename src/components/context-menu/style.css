@@ -4,14 +4,12 @@
 
 body [p="context-menu"] {
   position: fixed;
-  position-anchor: --p-context-menu;
-  left: anchor(left);
-  top: anchor(top);
-  --tf-x: 0;
+  left: 0;
+  top: 0;
   min-width: 6rem;
-  margin-left: var(--p-context-menu-x);
-  margin-top: var(--p-context-menu-y);
   padding: 0.25rem 0;
+  --p-x: 0;
+  --p-y: 0;
 }
 [p="context-menu"]::backdrop {
   opacity: 0;
