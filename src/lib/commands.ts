@@ -85,39 +85,7 @@ export function installMenuShortcuts() {
   if (menuShortcutsInstalled) return;
   if (typeof document === 'undefined') return;
   menuShortcutsInstalled = true;
-  addEventListener('click', handleMenuSurfaceFocus, true);
   addEventListener('keydown', handleMenuShortcutsKeydown);
-}
-
-function clearMenuSelection(dialog: HTMLDialogElement) {
-  const selected = dialog.querySelectorAll<HTMLElement>('[selected]');
-  for (let i = 0; i < selected.length; i++) {
-    selected[i].toggleAttribute('selected', false);
-  }
-}
-
-function focusMenuSurface(dialog: HTMLDialogElement) {
-  if (!dialog.hasAttribute('tabindex')) dialog.tabIndex = -1;
-  clearMenuSelection(dialog);
-  dialog.focus({preventScroll: true});
-}
-
-function handleMenuSurfaceFocus(e: MouseEvent) {
-  const el = elementTarget(e.target!);
-  const trigger = el.closest<Element>('[command][commandfor]');
-  if (!trigger) return;
-  const command = trigger.getAttribute('command') || 'toggle-popover';
-  if (command !== 'show' && command !== 'show-modal' && command !== 'toggle') {
-    return;
-  }
-  const id = trigger.getAttribute('commandfor');
-  if (!id) return;
-  const dialog = document.getElementById(id) as HTMLDialogElement | null;
-  if (!dialog || dialog.localName !== 'dialog' || !dialog.getAttribute('p')) return;
-  queueMicrotask(() => {
-    if (!dialog.open) return;
-    focusMenuSurface(dialog);
-  });
 }
 
 function handleMenuShortcutsKeydown(e: KeyboardEvent) {
