@@ -31,7 +31,7 @@ import {Spinner} from 'pui';
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
 | Spinner | size | `sm` \| `lg` | Controls component sizing. |
-| Spinner | type | `turn` \| `concentric` \| `concentric2` \| `ripple` \| `light` \| `ghost` \| `radar` \| `bubble` \| `fold` \| `circle` \| `dots` | Selects a CSS-only spinner style. |
+| Spinner | type | `turn` \| `concentric` \| `ripple` \| `light` \| `radar` \| `bubble` \| `fold` \| `circle` \| `dots` | Selects a CSS-only spinner style. |
 | Spinner | variant | `primary` \| `secondary` \| `destructive` | Overrides spinner color token; default is `currentColor`. |
 
 ## Notes

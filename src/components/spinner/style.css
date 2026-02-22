@@ -73,28 +73,6 @@
   animation: p-spinner-rotation-back 0.55s linear infinite;
 }
 
-[p="spinner"][type="concentric2"] {
-  border: 2px solid;
-  border-color: var(--p-spinner-track) var(--p-spinner-track) transparent transparent;
-  animation: p-spinner-spin 1s linear infinite;
-}
-
-[p="spinner"][type="concentric2"]::after,
-[p="spinner"][type="concentric2"]::before {
-  content: "";
-  position: absolute;
-  inset: 0.18rem;
-  border-radius: 9999px;
-  border: 2px solid;
-  border-color: transparent transparent var(--p-spinner-color) var(--p-spinner-color);
-  animation: p-spinner-rotation-back 0.55s linear infinite;
-}
-
-[p="spinner"][type="concentric2"]::before {
-  inset: 0.34rem;
-  border-color: var(--p-spinner-track) var(--p-spinner-track) transparent transparent;
-  animation: p-spinner-spin 1.25s linear infinite;
-}
 
 [p="spinner"][type="ripple"] {
   border: 0;
@@ -134,12 +112,6 @@
   content: none;
 }
 
-[p="spinner"][type="ghost"] {
-  border: 2px solid transparent;
-  border-top-color: var(--p-spinner-color);
-  border-right-color: transparent;
-  animation: p-spinner-spin 1s linear infinite;
-}
 
 [p="spinner"][type="radar"] {
   border: 0;

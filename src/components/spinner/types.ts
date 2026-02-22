@@ -9,10 +9,8 @@ export type SpinnerSize = 'sm' | 'lg';
 export type SpinnerType =
   | 'turn'
   | 'concentric'
-  | 'concentric2'
   | 'ripple'
   | 'light'
-  | 'ghost'
   | 'radar'
   | 'bubble'
   | 'fold'
