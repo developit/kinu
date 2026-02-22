@@ -1,2 +1,0 @@
-import{u as e}from"./index-CuPIwAlO.js";import{V as n,B as t,W as r,X as o,U as h}from"./style-B45ND8Hj.js";function i(){return e(h,{children:[e(n,{children:e(t,{variant:"outline",children:"Open Sheet"})}),e(r,{children:[e("p",{style:{margin:"0 0 1rem 0"},children:"Sheet Content"}),e(o,{children:e(t,{variant:"outline",children:"Close"})})]})]})}const l="<Sheet>...</Sheet>",c={Demo:i,code:l};export{i as Demo,l as code,c as default};
-//# sourceMappingURL=sheet-CqscToZV.js.map
