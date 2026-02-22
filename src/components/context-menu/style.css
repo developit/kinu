@@ -4,8 +4,8 @@
 
 body [p="context-menu"] {
   position: fixed;
-  left: var(--p-context-menu-x, 0px);
-  top: var(--p-context-menu-y, 0px);
+  left: var(--p-context-menu-client-x, 0px);
+  top: var(--p-context-menu-client-y, 0px);
   --tf-x: 0;
   min-width: 6rem;
   margin: 0;
@@ -19,8 +19,8 @@ body [p="context-menu"] {
     position-anchor: --p-context-menu;
     left: anchor(left);
     top: anchor(top);
-    margin-left: calc(var(--p-context-menu-x) - anchor(left));
-    margin-top: calc(var(--p-context-menu-y) - anchor(top));
+    margin-left: var(--p-context-menu-x);
+    margin-top: var(--p-context-menu-y);
     position-try-fallbacks: flip-block, flip-inline;
   }
 }

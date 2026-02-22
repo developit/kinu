@@ -73,19 +73,18 @@
     max-block-size: min(24rem, calc(100dvh - 1rem));
     overflow: auto;
     position-try-fallbacks: flip-block, flip-inline;
-    min-width: max-content;
   }
 
   [p="popover-content"] {
     left: anchor(center);
     --tf-x: -50%;
-    min-width: 12rem;
+    min-width: anchor-size(width);
   }
 
   [p="dropdown-content"] {
     left: anchor(left);
     --tf-x: 0;
-    min-width: 13.5rem;
+    min-width: max(13.5rem, anchor-size(width));
   }
 
   [p="dropdown-content"][to="left"] {
@@ -97,6 +96,6 @@
     left: anchor(left);
     --tf-x: 0;
     width: auto;
-    min-width: 12rem;
+    min-width: anchor-size(width);
   }
 }
