@@ -4,6 +4,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  isolation: isolate;
   height: 2.25rem;
   width: fit-content;
   background: hsl(var(--p-muted));
@@ -11,6 +13,21 @@
   padding: 3px;
   border-radius: var(--p-radius);
   gap: 2px;
+}
+
+[p="tablist"]::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: calc(var(--p-radius) - 2px);
+  background: hsl(var(--p-background));
+  box-shadow:
+    0 1px 3px 0 var(--p-shadow-color, rgba(0, 0, 0, 0.1)),
+    0 1px 2px -1px var(--p-shadow-color, rgba(0, 0, 0, 0.1));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 0;
 }
 
 [p="tab"] {
@@ -28,6 +45,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
+  position: relative;
+  z-index: 1;
   transition: color 0.15s, box-shadow 0.15s;
 }
 
@@ -38,6 +57,34 @@
   box-shadow:
     0 1px 3px 0 var(--p-shadow-color, rgba(0, 0, 0, 0.1)),
     0 1px 2px -1px var(--p-shadow-color, rgba(0, 0, 0, 0.1));
+}
+
+@supports (left: anchor(left)) {
+  [p="tablist"] {
+    anchor-scope: --p-tab-active;
+  }
+
+  [p="tab"][aria-selected="true"] {
+    anchor-name: --p-tab-active;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [p="tablist"]::before {
+    opacity: 1;
+    inset: auto;
+    position-anchor: --p-tab-active;
+    left: anchor(left);
+    top: anchor(top);
+    width: anchor-size(width);
+    height: anchor-size(height);
+    transition:
+      left 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      top 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.2s ease;
+  }
 }
 
 [p="tab"]:focus-visible {
