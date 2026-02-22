@@ -52,7 +52,7 @@ export function Nav({
           </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
-      <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+      <div class="nav-actions">
         <ThemeCustomizer />
       </div>
     </NavigationMenu>
