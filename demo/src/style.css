@@ -2526,4 +2526,5 @@ body .docs-content pre > code {
 @media (prefers-color-scheme: dark) {
   .hljs {
     color: #bbc9d7;
+  }
 }
