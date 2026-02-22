@@ -2522,3 +2522,8 @@ body .docs-content pre > code {
     gap: 1.5rem;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .hljs {
+    color: #bbc9d7;
+}
