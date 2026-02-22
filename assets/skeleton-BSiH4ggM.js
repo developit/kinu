@@ -1,0 +1,2 @@
+import{u as e}from"./index-CXqivMSf.js";import{an as t}from"./style-DHb5djW_.js";function o(){return e("div",{style:{display:"flex",flexDirection:"column",gap:"0.5rem"},children:[e(t,{style:{height:"1.5rem"}}),e(t,{style:{height:"1.5rem",width:"60%"}})]})}const l="<Skeleton style={{height: '1.5rem'}} />",n={Demo:o,code:l};export{o as Demo,l as code,n as default};
+//# sourceMappingURL=skeleton-BSiH4ggM.js.map

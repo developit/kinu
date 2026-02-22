@@ -1,2 +1,0 @@
-import{u as e}from"./index-BlJbM6k3.js";import{t as r}from"./style-CPc80NFE.js";function l(){return e(r,{style:{height:"100px",border:"1px solid hsl(var(--p-border))",padding:"0.5rem"},children:[e("p",{children:"Scrollable content"}),e("p",{children:"Line 2"}),e("p",{children:"Line 3"}),e("p",{children:"Line 4"}),e("p",{children:"Line 5"}),e("p",{children:"Line 6"})]})}const n="<ScrollArea style={{height:100}}>...</ScrollArea>",c={Demo:l,code:n};export{l as Demo,n as code,c as default};
-//# sourceMappingURL=scroll-area-BhKld-Lz.js.map

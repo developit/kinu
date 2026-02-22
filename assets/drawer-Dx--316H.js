@@ -1,0 +1,2 @@
+import{u as r}from"./index-CXqivMSf.js";import{a3 as n,B as e,o as a,p as t,n as o}from"./style-DHb5djW_.js";function i(){return r(o,{children:[r(n,{children:r(e,{variant:"outline",children:"Open Drawer"})}),r(a,{children:[r("p",{style:{margin:"0 0 1rem 0"},children:"Drawer Content"}),r(t,{children:r(e,{variant:"outline",children:"Close"})})]})]})}const l="<Drawer>...</Drawer>",d={Demo:i,code:l};export{i as Demo,l as code,d as default};
+//# sourceMappingURL=drawer-Dx--316H.js.map
