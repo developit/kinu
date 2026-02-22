@@ -1,0 +1,2 @@
+import{d as t,u as e}from"./index-B6uoEDW2.js";import{L as n,S as r}from"./style-BPszGXT1.js";function d(){const[l,i]=t(50);return e("div",{style:{display:"flex",flexDirection:"column",gap:"1rem"},children:[e(n,{children:["Value: ",l]}),e(r,{min:0,max:100,value:l,onInput:a=>i(Number(a.target.value))}),e(r,{min:0,max:100,value:25,disabled:!0})]})}const m="<Slider min={0} max={100} />",u={Demo:d,code:m};export{d as Demo,m as code,u as default};
+//# sourceMappingURL=slider-B09X_Iag.js.map
