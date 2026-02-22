@@ -6,15 +6,17 @@
   background-color: hsl(var(--p-background));
   color: hsl(var(--p-foreground));
   border-radius: var(--p-radius);
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
   cursor: pointer;
   transition: background-color 150ms cubic-bezier(0.4,0,0.2,1),
+    border-color 150ms cubic-bezier(0.4,0,0.2,1),
     color 150ms cubic-bezier(0.4,0,0.2,1);
 }
 
 [p="toggle"][aria-pressed="true"] {
-  background-color: hsl(var(--p-primary));
+  border-color: hsl(var(--p-primary));
+  background-color: hsl(var(--p-primary) / 0.8);
   color: hsl(var(--p-primary-foreground));
 }
 
