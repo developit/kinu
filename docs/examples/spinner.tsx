@@ -1,4 +1,4 @@
-import {Button, Spinner} from 'pui';
+import {Button, Spinner, Toggle, ToggleGroup} from 'pui';
 import {useState} from 'preact/hooks';
 
 const types = [
@@ -33,22 +33,19 @@ export function Demo() {
 
       <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap'}}>
         <strong style={{fontSize: '0.8rem'}}>Variant:</strong>
-        {variants.map((v) => (
-          <button
-            key={v}
-            type="button"
-            onClick={() => setVariant(v)}
-            style={{
-              fontSize: '0.75rem',
-              padding: '0.25rem 0.5rem',
-              borderRadius: '999px',
-              border: '1px solid hsl(var(--p-border))',
-              background: variant === v ? 'hsl(var(--p-accent))' : 'transparent',
-            }}
-          >
-            {v}
-          </button>
-        ))}
+        <ToggleGroup
+          type="single"
+          value={variant}
+          onValueChange={(next: (typeof variants)[number] | undefined) => {
+            if (next) setVariant(next);
+          }}
+        >
+          {variants.map((v) => (
+            <Toggle key={v} value={v} size="sm">
+              {v}
+            </Toggle>
+          ))}
+        </ToggleGroup>
       </div>
 
       <div
