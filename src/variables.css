@@ -119,13 +119,13 @@
   :root {
     color-scheme: dark;
     /* Base colors */
-    --p-background: 222.2 84% 4.9%;
+    --p-background: 222.2 50% 7%;
     --p-foreground: 210 40% 98%;
     --p-card: 222.2 84% 4.9%;
     --p-card-foreground: 210 40% 98%;
     --p-popover: 222.2 84% 4.9%;
     --p-popover-foreground: 210 40% 98%;
-    --p-sidebar: 222.2 84% 4.9%;
+    --p-sidebar: 222.2 50% 9%;
 
     /* Primary colors */
     --p-primary: 210 40% 98%;
@@ -160,13 +160,13 @@
 .dark {
   color-scheme: dark;
   /* Base colors */
-  --p-background: 222.2 84% 4.9%;
+  --p-background: 222.2 50% 7%;
   --p-foreground: 210 40% 98%;
   --p-card: 222.2 84% 4.9%;
   --p-card-foreground: 210 40% 98%;
   --p-popover: 222.2 84% 4.9%;
   --p-popover-foreground: 210 40% 98%;
-  --p-sidebar: 222.2 84% 4.9%;
+  --p-sidebar: 222.2 50% 9%;
 
   /* Primary colors */
   --p-primary: 210 40% 98%;

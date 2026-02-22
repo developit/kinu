@@ -144,6 +144,12 @@ body .home-nav + * {
   margin-top: 4rem;
 }
 
+.home-nav [p="navigation-menu-link"] {
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+}
+
 .hero {
   padding: 4rem 1rem;
   max-width: 1200px;
@@ -2514,5 +2520,11 @@ body .docs-content pre > code {
 
   .docs-sidebar-content {
     gap: 1.5rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body .hljs {
+    color: #bbc9d7;
   }
 }
