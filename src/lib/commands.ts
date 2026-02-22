@@ -110,9 +110,10 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   if (!dir) return;
   e.preventDefault();
   if (!selected) {
-    const first = dialog.querySelector<HTMLElement>('button[p],[p][tabindex]');
-    if (useFocus) first?.focus();
-    else first?.toggleAttribute('selected', true);
+    const items = dialog.querySelectorAll<HTMLElement>('button[p],[p][tabindex]');
+    const item = items[dir > 0 ? 0 : items.length - 1];
+    if (useFocus) item?.focus();
+    else item?.toggleAttribute('selected', true);
     return;
   }
   const type = selected.getAttribute('p');

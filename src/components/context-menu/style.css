@@ -11,7 +11,6 @@ body [p="context-menu"] {
   min-width: 6rem;
   margin-left: var(--p-context-menu-x);
   margin-top: var(--p-context-menu-y);
-  padding: 0.25rem 0;
 }
 [p="context-menu"]::backdrop {
   opacity: 0;
