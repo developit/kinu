@@ -4,39 +4,74 @@
 [p="dropdown-content"] {
   left: 0;
   --tf-x: 0;
-  padding: 0.5rem 0;
-  min-width: 100%;
+  min-width: 14rem;
+  padding: 0.45rem;
 }
 [p="dropdown-content"][to="left"] {
   left: auto;
   right: 0;
   --tf-x: 0;
-  padding: 0.5rem 0;
-  min-width: 100%;
+}
+
+[p="dropdown-content"] [p="separator"],
+[p="context-menu"] [p="separator"],
+[p="combobox-list"] [p="separator"] {
+  width: auto;
+  margin: 0.45rem 0.5rem;
 }
 
 [p="dropdown-menu-item"],
 [p="context-menu-item"],
 [p="combobox-option"] {
   appearance: none;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.5rem;
+  column-gap: 1rem;
   width: 100%;
-  background: none;
   border: none;
+  border-radius: calc(var(--p-radius) * 0.85);
+  background: none;
   text-align: left;
-  padding: 0.25rem 0.75rem;
+  padding: 0.45rem 0.7rem;
+  min-height: 2.35rem;
   white-space: nowrap;
   font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.15;
   cursor: pointer;
-  color: inherit;
+  color: hsl(var(--p-popover-foreground));
   text-decoration: none;
   outline: none;
 
   &:hover,
-  &:focus,
+  &:focus {
+    background-color: hsl(var(--p-accent));
+  }
+
   &[selected] {
-    background-color: hsl(var(--p-muted));
+    background-color: hsl(var(--p-primary));
+    color: hsl(var(--p-primary-foreground));
+  }
+
+  &[shortcut]::after {
+    content: attr(shortcut);
+    color: hsl(var(--p-muted-foreground));
+    font-size: 0.92em;
+    letter-spacing: 0.01em;
+  }
+
+  &[selected][shortcut]::after {
+    color: color-mix(in oklab, hsl(var(--p-primary-foreground)) 74%, transparent);
+  }
+
+  &[destructive],
+  &[variant="destructive"] {
+    color: hsl(var(--p-destructive));
+  }
+
+  &[destructive][shortcut]::after,
+  &[variant="destructive"][shortcut]::after {
+    color: color-mix(in oklab, hsl(var(--p-destructive)) 45%, hsl(var(--p-muted-foreground)));
   }
 }

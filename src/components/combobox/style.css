@@ -10,20 +10,24 @@
 [p="combobox-input"] {
   display: block;
   width: 100%;
+  min-height: 2.4rem;
   padding: 0.5rem 0.75rem;
   border: 1px solid hsl(var(--p-input));
-  border-radius: var(--p-radius);
+  border-radius: calc(var(--p-radius) * 1.2);
   background-color: hsl(var(--p-background));
+  color: hsl(var(--p-foreground));
   font: inherit;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
 }
 
 [p="combobox-list"] {
   width: 100%;
+  min-width: max-content;
+  padding: 0.45rem;
 }
 
 [p="combobox-list"] ul {
   list-style: none;
   margin: 0;
-  padding: 0.25rem 0;
+  padding: 0;
 }

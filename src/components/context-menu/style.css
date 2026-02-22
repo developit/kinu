@@ -8,10 +8,10 @@ body [p="context-menu"] {
   left: anchor(left);
   top: anchor(top);
   --tf-x: 0;
-  min-width: 6rem;
+  min-width: 14rem;
   margin-left: var(--p-context-menu-x);
   margin-top: var(--p-context-menu-y);
-  padding: 0.25rem 0;
+  padding: 0.45rem;
 }
 [p="context-menu"]::backdrop {
   opacity: 0;
