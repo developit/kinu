@@ -1,4 +1,4 @@
-import {Spinner} from 'pui';
+import {Button, Spinner} from 'pui';
 import {useState} from 'preact/hooks';
 
 const types = [
@@ -23,6 +23,16 @@ export function Demo() {
 
   return (
     <div style={{display: 'grid', gap: '1rem'}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap'}}>
+        <Spinner aria-label="Loading" />
+        <Spinner size="sm" aria-label="Loading small" />
+        <Spinner size="lg" aria-label="Loading large" />
+        <Button loading>
+          <Spinner size="sm" aria-hidden="true" />
+          Saving
+        </Button>
+      </div>
+
       <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap'}}>
         <strong style={{fontSize: '0.8rem'}}>Variant:</strong>
         {variants.map((v) => (
