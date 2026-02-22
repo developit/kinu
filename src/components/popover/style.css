@@ -96,6 +96,7 @@
     top: anchor(bottom);
     bottom: auto;
     margin: 0.25rem 0 0;
+    width: max-content;
     max-inline-size: min(24rem, calc(100vw - 1rem));
     max-block-size: min(24rem, calc(100dvh - 1rem));
     overflow: auto;
@@ -111,7 +112,6 @@
   }
 
   [p="combobox-list"] {
-    width: auto;
     min-width: anchor-size(width);
   }
 }
