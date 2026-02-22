@@ -1,6 +1,8 @@
 @import "../../variables.css";
 
 [p="tablist"] {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +16,8 @@
 }
 
 [p="tab"] {
+  position: relative;
+  z-index: 1;
   appearance: none;
   background: none;
   border: 1px solid transparent;
@@ -38,6 +42,41 @@
   box-shadow:
     0 1px 3px 0 var(--p-shadow-color, rgba(0, 0, 0, 0.1)),
     0 1px 2px -1px var(--p-shadow-color, rgba(0, 0, 0, 0.1));
+}
+
+@supports (anchor-name: --p-tab-anchor) and (inset-inline-start: anchor(left)) {
+  [p="tablist"]::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 3px;
+    inset-inline-start: 3px;
+    block-size: calc(100% - 6px);
+    inline-size: 0;
+    border: 1px solid transparent;
+    border-radius: calc(var(--p-radius) - 2px);
+    background: hsl(var(--p-background));
+    box-shadow:
+      0 1px 3px 0 var(--p-shadow-color, rgba(0, 0, 0, 0.1)),
+      0 1px 2px -1px var(--p-shadow-color, rgba(0, 0, 0, 0.1));
+    pointer-events: none;
+    transition:
+      inset-inline-start 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+      inline-size 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  [p="tab"][aria-selected="true"] {
+    anchor-name: --p-tab-anchor;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  [p="tablist"]:has([p="tab"][aria-selected="true"])::before {
+    position-anchor: --p-tab-anchor;
+    inset-inline-start: anchor(left);
+    inline-size: anchor-size(width);
+  }
 }
 
 [p="tab"]:focus-visible {
