@@ -13,22 +13,21 @@ import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-let lastAnchor: HTMLElement | null = null;
-
 function handleContextMenu(e: MouseEvent) {
   e.preventDefault();
   const el = e.currentTarget as HTMLElement;
-  if (lastAnchor) lastAnchor.style.anchorName = '';
-  lastAnchor = el;
-  el.style.anchorName = '--p-context-menu';
   const target = el.ownerDocument.getElementById(
     el.getAttribute('commandfor')!,
   ) as HTMLDialogElement;
   if (!target) return;
-  const rect = el.getBoundingClientRect();
-  target.style.setProperty('--p-context-menu-x', `${e.clientX - rect.x}px`);
-  target.style.setProperty('--p-context-menu-y', `${e.clientY - rect.y}px`);
+  let x = e.clientX;
+  let y = e.clientY;
   target.showModal();
+  const r = target.getBoundingClientRect();
+  if (x + r.width > innerWidth) x = Math.max(0, x - r.width);
+  if (y + r.height > innerHeight) y = Math.max(0, y - r.height);
+  target.style.setProperty('--p-x', x + 'px');
+  target.style.setProperty('--p-y', y + 'px');
 }
 
 export function ContextMenuTrigger({

@@ -1,4 +1,5 @@
 let commandsInstalled: boolean;
+const triggers = new WeakMap<Element, Element>();
 
 export function installCommands() {
   if (commandsInstalled) return;
@@ -6,12 +7,54 @@ export function installCommands() {
   commandsInstalled = true;
   if ('commandFor' in HTMLButtonElement.prototype) return;
   addEventListener('click', commandClickHandler);
+  addEventListener('toggle', dialogToggleHandler, true);
+  addEventListener('show', dialogToggleHandler, true);
 }
 
 function elementTarget(node: EventTarget) {
   return 'closest' in node
     ? (node as Element)
     : ((node as Node).parentNode as Element);
+}
+
+function positionDialog(target: HTMLDialogElement, trigger: Element) {
+  const a = trigger.getBoundingClientRect();
+  const t = target.style.transform;
+  target.style.setProperty('transform', 'none');
+  const d = target.getBoundingClientRect();
+  if (t) target.style.setProperty('transform', t);
+  else target.style.removeProperty('transform');
+  target.style.setProperty('--p-anchor-left', `${a.left}px`);
+  target.style.setProperty('--p-anchor-top', `${a.top}px`);
+  target.style.setProperty('--p-anchor-width', `${a.width}px`);
+  target.style.setProperty('--p-anchor-height', `${a.height}px`);
+  target.style.setProperty('--p-content-width', `${d.width}px`);
+  target.style.setProperty('--p-content-height', `${d.height}px`);
+  const flipX = a.left + d.width > innerWidth && a.left + a.width > d.width;
+  const flipY =
+    a.top + a.height + d.height > innerHeight && a.top > d.height;
+  let flip = '';
+  if (flipX) flip += ' x';
+  if (flipY) flip += ' y';
+  target.setAttribute('data-flip', flip);
+}
+
+let resizeInstalled: boolean;
+function ensureResize() {
+  if (resizeInstalled) return;
+  resizeInstalled = true;
+  addEventListener(
+    'resize',
+    () => {
+      document
+        .querySelectorAll<HTMLDialogElement>('dialog[p][open]')
+        .forEach((el) => {
+          const trig = triggers.get(el);
+          if (trig) positionDialog(el, trig);
+        });
+    },
+    {passive: true},
+  );
 }
 
 function commandClickHandler(e: MouseEvent) {
@@ -38,7 +81,17 @@ function commandClickHandler(e: MouseEvent) {
   }
 
   const method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  if (target instanceof HTMLDialogElement) triggers.set(target, trigger);
   (target as any)[method]?.();
+}
+
+function dialogToggleHandler(e: Event) {
+  const target = e.target as Element;
+  if (target instanceof HTMLDialogElement && target.open) {
+    const trig = triggers.get(target);
+    if (trig) positionDialog(target, trig);
+    ensureResize();
+  }
 }
 
 let dialogsDropdownsInstalled: boolean;
