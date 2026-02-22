@@ -1,0 +1,2 @@
+import{u as e}from"./index-BlJbM6k3.js";import"./style-CPc80NFE.js";import{A as r}from"./index-BXsaCtS2.js";function t(){return e("div",{style:{display:"flex",gap:"1rem",alignItems:"center"},children:[e(r,{src:"https://github.com/developit.png",alt:"Profile"}),e(r,{children:"JD"}),e(r,{size:"sm",children:"SM"}),e(r,{size:"lg",children:"LG"})]})}const i='<Avatar src="..." />',s={Demo:t,code:i};export{t as Demo,i as code,s as default};
+//# sourceMappingURL=avatar-lLKVki5c.js.map
