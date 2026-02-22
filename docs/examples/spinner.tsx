@@ -33,15 +33,9 @@ export function Demo() {
 
       <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap'}}>
         <strong style={{fontSize: '0.8rem'}}>Variant:</strong>
-        <ToggleGroup
-          type="single"
-          value={variant}
-          onValueChange={(next: (typeof variants)[number] | undefined) => {
-            if (next) setVariant(next);
-          }}
-        >
+        <ToggleGroup>
           {variants.map((v) => (
-            <Toggle key={v} value={v} size="sm">
+            <Toggle key={v} pressed={variant === v} onClick={() => setVariant(v)}>
               {v}
             </Toggle>
           ))}
