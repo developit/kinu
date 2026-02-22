@@ -1,2 +1,0 @@
-import{u as t}from"./index-CXqivMSf.js";import{B as o,ah as n}from"./style-DHb5djW_.js";import{t as e}from"./toast-X8lCgPxU.js";function s(){return t(n,{children:[t(o,{onClick:()=>e.show("Hello from toast!"),children:"Basic Toast"}),t(o,{onClick:()=>e.show("Your event has been successfully created!",{title:"Event created",icon:"🎉",action:t(o,{children:"Undo"}),duration:5e3}),children:"With Title"})]})}const a="<Button onClick={() => toast.show('msg')}>Show Toast</Button>",l={Demo:s,code:a};export{s as Demo,a as code,l as default};
-//# sourceMappingURL=toast-BsiN_c3s.js.map
