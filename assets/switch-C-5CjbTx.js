@@ -1,2 +1,0 @@
-import{d as o,u as e}from"./index-B6uoEDW2.js";import{c as r}from"./style-BPszGXT1.js";function s(){const[t,c]=o(!1);return e("div",{style:{display:"flex",alignItems:"center",gap:"0.5rem"},children:[e(r,{checked:t,onInput:n=>c(n.target.checked)}),e("span",{children:t?"On":"Off"})]})}const a="<Switch />",l={Demo:s,code:a};export{s as Demo,a as code,l as default};
-//# sourceMappingURL=switch-C-5CjbTx.js.map
