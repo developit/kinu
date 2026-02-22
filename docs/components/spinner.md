@@ -8,6 +8,8 @@ Inline loading indicator for compact pending states.
 import {Spinner} from 'pui';
 
 <Spinner aria-label="Loading" />
+<Spinner type="circle" aria-label="Loading" />
+<Spinner type="circle" variant="primary" aria-label="Loading" />
 ```
 
 ## Exports
@@ -21,17 +23,22 @@ import {Spinner} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | size | `SpinnerSize` | — | Size preset for the spinner. |
+| type | `SpinnerType` | — | Visual spinner style preset. |
+| variant | `SpinnerVariant` | inherited text color | Optional semantic color override. |
 
 ## Attributes
 
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
-| Spinner | size | sm | lg | Controls component sizing. |
+| Spinner | size | `sm` \| `lg` | Controls component sizing. |
+| Spinner | type | `turn` \| `concentric` \| `ripple` \| `light` \| `radar` \| `bubble` \| `fold` \| `circle` \| `dots` | Selects a CSS-only spinner style. |
+| Spinner | variant | `primary` \| `secondary` \| `destructive` | Overrides spinner color token; default is `currentColor`. |
 
 ## Notes
 
-- Wraps a <span> and animates purely in CSS.
-- Supports size="sm" and size="lg" attributes for dense or prominent loading states.
+- Wraps a `<span>` and animates purely in CSS.
+- The docs preview includes all shipped variants.
+- Supports `size="sm"` and `size="lg"` attributes for dense or prominent loading states.
 
 ---
 
