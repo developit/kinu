@@ -35,6 +35,7 @@
     "@biomejs/biome": "^1.9.4",
     "@preact/preset-vite": "^2.10.1",
     "@types/node": "^22.15.30",
+    "jsdom": "^28.1.0",
     "preact": "^10.26.9",
     "preact-forwardref": "^0.2.0",
     "preact-render-to-string": "^6.5.11",
