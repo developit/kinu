@@ -48,6 +48,9 @@ export function Nav({
               <DropdownMenuItem as="a" href="/dashboard">
                 Dashboard Demo
               </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/members">
+                Members Demo
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </NavigationMenuItem>
