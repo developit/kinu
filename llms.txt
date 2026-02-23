@@ -426,7 +426,7 @@ Renders as: `<div>`
 #### Toggle & ToggleGroup
 Renders as: `<button>` (Toggle), `<div>` (ToggleGroup)
 ```tsx
-<Toggle pressed={pressed} onPressedChange={setPPressed}>Bold</Toggle>
+<Toggle pressed={pressed} onClick={() => setPressed((v) => !v)}>Bold</Toggle>
 <Toggle disabled>Disabled</Toggle>
 
 <ToggleGroup type="multiple" value={values} onValueChange={setValues}>

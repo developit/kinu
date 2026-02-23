@@ -1,0 +1,2 @@
+import{u as e}from"./index-CaskcNvp.js";import{H as o,B as r,J as n,G as i}from"./style-4aNoTMAL.js";function t(){return e(i,{children:[e(o,{children:e(r,{variant:"outline",children:"Open Popover"})}),e(n,{children:e("div",{style:{padding:"1rem"},children:[e("h3",{style:{margin:"0 0 0.5rem 0"},children:"Popover Content"}),e("p",{style:{margin:"0"},children:"This is content inside a popover."})]})})]})}const p="<Popover>...</Popover>",a={Demo:t,code:p};export{t as Demo,p as code,a as default};
+//# sourceMappingURL=popover-BctA6QHi.js.map
