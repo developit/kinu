@@ -4,7 +4,7 @@
 html,
 body {
   margin: 0;
-  padding: 0 !important;
+  padding: 0;
   background: hsl(var(--p-background));
   color: hsl(var(--p-foreground));
   font-family: system-ui, sans-serif;
@@ -2324,7 +2324,7 @@ body .example-demo {
   min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  padding: 2.5rem clamp(1.25rem, 4vw, 2rem);
+  padding: 2rem 1rem;
 }
 
 .docs-sidebar-section {
