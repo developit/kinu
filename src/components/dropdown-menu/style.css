@@ -105,10 +105,16 @@
 
 @supports (position-anchor: --p-trigger) {
   [p="dropdown-content"] {
+    left: anchor(left);
+    right: auto;
+    --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 
   [p="dropdown-content"][to="left"] {
+    left: auto;
+    right: anchor(right);
+    --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 }
