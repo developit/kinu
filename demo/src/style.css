@@ -2300,22 +2300,30 @@ body .example-demo {
 }
 
 .docs-sidebar {
-  padding: 2.5rem clamp(1.25rem, 4vw, 2rem);
-  gap: 2rem;
   width: min(320px, 100%);
   border-right: 1px solid hsl(var(--p-border));
   background: hsl(var(--p-background));
   box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
 }
 
 .docs-sidebar-mobile-header {
   display: none;
+  flex-shrink: 0;
 }
 
 .docs-sidebar-content {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 2.5rem clamp(1.25rem, 4vw, 2rem);
 }
 
 .docs-sidebar-section {
@@ -2524,8 +2532,6 @@ body .docs-content pre > code {
 
   .docs-sidebar {
     width: min(320px, 82vw);
-    padding: 0;
-    gap: 0;
   }
 
   .docs-sidebar-mobile-header {
@@ -2543,7 +2549,7 @@ body .docs-content pre > code {
 
   .docs-sidebar-content {
     gap: 1.5rem;
-    padding: 1.75rem 1.5rem 2.5rem;
+    padding: 1rem 1.5rem 2rem;
   }
 }
 
