@@ -1,0 +1,2 @@
+import{u as r}from"./index-BGhijbl9.js";import{M as d,O as e,Q as c,K as m}from"./style-BCnO_0BW.js";function n(){return r(m,{children:r(d,{children:[r(e,{children:r(c,{href:"#",children:"Home"})}),r(e,{children:r(c,{href:"#",children:"Docs"})}),r(e,{children:"Current"})]})})}const a="<Breadcrumb>...</Breadcrumb>",u={Demo:n,code:a};export{n as Demo,a as code,u as default};
+//# sourceMappingURL=breadcrumb-Bc0PDog1.js.map
