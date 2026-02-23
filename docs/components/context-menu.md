@@ -43,6 +43,8 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | selected | `boolean` | — | Marks the item as selected for styling. |
+| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| destructive | `boolean` | — | Applies destructive styling to the item. |
 
 ## Notes
 

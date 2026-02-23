@@ -3,7 +3,12 @@ import type {BaseProps} from '../../types/component-props';
 
 export interface ToggleOwnProps extends BaseProps {
   /**
-   * Controls the pressed state via aria-pressed.
+   * Convenience prop that maps to `aria-pressed`.
+   */
+  pressed?: boolean;
+
+  /**
+   * Controls the pressed state via aria-pressed. Takes precedence over `pressed`.
    */
   'aria-pressed'?: 'true' | 'false' | boolean;
 

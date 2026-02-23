@@ -40,6 +40,8 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | selected | `boolean` | — | Marks the option as selected for styling. |
+| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| destructive | `boolean` | — | Applies destructive styling to the option. |
 
 ## Notes
 
