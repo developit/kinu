@@ -38,7 +38,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 | --- | --- | --- | --- |
 | id | `string` | — | Override the auto-generated dialog ID. |
 | command | `string` | 'close' | Command dispatched when the dialog receives the command event. |
-| commandfor | `string` | — | Target dialog identifier for the command dispatch. |
+| commandFor | `string` | — | Target dialog identifier for the command dispatch. |
 
 ### DropdownMenuItemProps
 
@@ -46,16 +46,6 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 | --- | --- | --- | --- |
 | href | `string` | — | When provided, renders the item as an anchor element. |
 | selected | `boolean` | — | Marks the item as selected for styling. |
-
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| DropdownMenuContent | to | left | Forwarded attribute used by the component styling. |
-| DropdownMenuContent | role | separator | Forwarded attribute used by the component styling. |
-| DropdownMenuItem | shortcut | boolean | Forwarded attribute used by the component styling. |
-| DropdownMenuItem | selected | boolean | Forwarded attribute used by the component styling. |
-| DropdownMenuItem | destructive | boolean | Forwarded attribute used by the component styling. |
 
 ## Notes
 

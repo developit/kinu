@@ -23,13 +23,6 @@ import {Tooltip} from 'pui';
 | title | `string` | — | Tooltip text provided via the title attribute. |
 | side | `"left" | "right" | "top" | "bottom"` | — | The direction the tooltip should open towards. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Tooltip | title | boolean | Forwarded attribute used by the component styling. |
-| Tooltip | side | bottom | left | right | Controls which edge the overlay anchors to. |
-
 ## Notes
 
 - Uses data attributes for fade transitions.

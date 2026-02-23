@@ -212,7 +212,7 @@ export default [
     description: 'Autocomplete input with trigger, list, and option primitives.',
     usage: `<Combobox>\n  <ComboboxInput placeholder="Search" />\n  <ComboboxList>\n    <ComboboxOption>One</ComboboxOption>\n  </ComboboxList>\n</Combobox>`,
     notes: [
-      'Uses command/commandfor attributes for disclosure logic.',
+      'Uses command/commandFor attributes for disclosure logic.',
       'Keep option counts manageable for usability.'
     ]
   },
@@ -504,7 +504,7 @@ export default [
     order: 6,
     folder: 'sidebar',
     description: 'Responsive sidebar dialog that collapses on mobile.',
-    usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandfor="app-sidebar">Toggle</SidebarTrigger>`,
+    usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>`,
     notes: [
       'Renders a `<dialog>` so it can slide in as a modal on small screens.',
       'SidebarTrigger toggles the hidden/open state with the command attribute.'

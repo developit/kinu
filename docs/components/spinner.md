@@ -24,14 +24,6 @@ import {Spinner} from 'pui';
 | type | `SpinnerType` | — | Visual style preset for the spinner. |
 | variant | `SpinnerVariant` | — | Optional semantic color override. Defaults to inherited text color. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Spinner | variant | primary | secondary | destructive | dots | Visual style variant selector. |
-| Spinner | size | sm | lg | Controls component sizing. |
-| Spinner | type | turn | concentric | ripple | light | radar | bubble | circle | dots | fold | Forwarded attribute used by the component styling. |
-
 ## Notes
 
 - Wraps a <span> and animates purely in CSS.

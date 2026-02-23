@@ -29,7 +29,7 @@ export interface DropdownMenuContentOwnProps {
   /**
    * Target dialog identifier for the command dispatch.
    */
-  commandfor?: string;
+  commandFor?: string;
 }
 
 export interface DropdownMenuItemOwnProps extends BaseProps {

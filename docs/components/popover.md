@@ -37,13 +37,6 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 | --- | --- | --- | --- |
 | id | `string` | — | Override the auto-generated dialog ID. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Popover | commandfor | boolean | Target dialog identifier for command dispatch. |
-| PopoverContent | open | boolean | Reflects whether the element is expanded. |
-
 ## Notes
 
 - Control placement with the placement attribute on PopoverContent.

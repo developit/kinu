@@ -37,14 +37,6 @@ import {Tab, TabList, TabPanel} from 'pui';
 | --- | --- | --- | --- |
 | hidden | `boolean` | — | Hide the panel when inactive. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| TabList | aria-selected | true | Forwarded attribute used by the component styling. |
-| Tab | aria-selected | true | Forwarded attribute used by the component styling. |
-| Tab | disabled | boolean | Forwarded attribute used by the component styling. |
-
 ## Notes
 
 - Control selection state by toggling aria-selected.

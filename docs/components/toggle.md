@@ -24,12 +24,6 @@ import {Toggle} from 'pui';
 | onClick | `(event: MouseEvent) => void` | — | Click handler for toggling state. |
 | disabled | `boolean` | — | Disable the toggle. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Toggle | aria-pressed | true | Forwarded attribute used by the component styling. |
-
 ## Notes
 
 - Wraps `<button>` so keyboard support comes for free.

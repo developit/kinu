@@ -22,12 +22,6 @@ import {Alert} from 'pui';
 | --- | --- | --- | --- |
 | variant | `"destructive"` | 'default' | Visual style variant. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Alert | variant | destructive | Visual style variant selector. |
-
 ## Notes
 
 - Renders a `<div>` so you can include any markup you need.

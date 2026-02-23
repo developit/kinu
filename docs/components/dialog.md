@@ -43,12 +43,6 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 - `Dialog.Content = DialogContent`
 - `Dialog.Close = DialogClose`
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| DialogContent | open | boolean | Reflects whether the element is expanded. |
-
 ## Notes
 
 - Relies on command attributes instead of portal gymnastics.

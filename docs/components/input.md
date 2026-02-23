@@ -31,13 +31,6 @@ import {Input} from 'pui';
 | disabled | `boolean` | — | Disables interactions and applies disabled styling. |
 | name | `string` | — | Input name attribute used for form submissions. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Input | invalid | boolean | Forwarded attribute used by the component styling. |
-| Input | size | sm | lg | Controls component sizing. |
-
 ## Notes
 
 - Wraps the native `<input>` element so forms behave as expected.

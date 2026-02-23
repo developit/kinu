@@ -43,7 +43,7 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
 ## Notes
 
-- Uses command/commandfor attributes for disclosure logic.
+- Uses command/commandFor attributes for disclosure logic.
 - Keep option counts manageable for usability.
 
 ---
