@@ -101,3 +101,14 @@
   height: 0;
   margin: 0.5rem 0.25rem;
 }
+
+
+@supports (position-anchor: --p-trigger) {
+  [p="dropdown-content"] {
+    min-width: max(13.5rem, anchor-size(width));
+  }
+
+  [p="dropdown-content"][to="left"] {
+    min-width: max(13.5rem, anchor-size(width));
+  }
+}

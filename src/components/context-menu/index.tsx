@@ -25,11 +25,13 @@ function handleContextMenu(e: MouseEvent) {
     el.getAttribute('commandfor')!,
   ) as HTMLDialogElement;
   if (!target) return;
-  const rect = el.getBoundingClientRect();
-  target.style.setProperty('--p-context-menu-x', `${e.clientX - rect.x}px`);
-  target.style.setProperty('--p-context-menu-y', `${e.clientY - rect.y}px`);
+  const doc = el.ownerDocument;
+  const win = doc.defaultView;
+  if (!win) return;
   target.style.setProperty('--p-context-menu-client-x', `${e.clientX}px`);
   target.style.setProperty('--p-context-menu-client-y', `${e.clientY}px`);
+  target.style.setProperty('--p-context-menu-client-right', `${win.innerWidth - e.clientX}px`);
+  target.style.setProperty('--p-context-menu-client-bottom', `${win.innerHeight - e.clientY}px`);
   target.showModal();
 }
 

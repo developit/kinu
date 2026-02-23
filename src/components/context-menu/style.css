@@ -15,27 +15,28 @@ body [p="context-menu"] {
 }
 
 @position-try --p-context-menu-right-top {
-  margin-left: calc(var(--p-context-menu-x) - 100%);
-  margin-top: var(--p-context-menu-y);
+  left: auto;
+  right: var(--p-context-menu-client-right, 0px);
+  top: var(--p-context-menu-client-y, 0px);
+  bottom: auto;
 }
 
 @position-try --p-context-menu-left-bottom {
-  margin-left: var(--p-context-menu-x);
-  margin-top: calc(var(--p-context-menu-y) - 100%);
+  left: var(--p-context-menu-client-x, 0px);
+  right: auto;
+  top: auto;
+  bottom: var(--p-context-menu-client-bottom, 0px);
 }
 
 @position-try --p-context-menu-right-bottom {
-  margin-left: calc(var(--p-context-menu-x) - 100%);
-  margin-top: calc(var(--p-context-menu-y) - 100%);
+  left: auto;
+  right: var(--p-context-menu-client-right, 0px);
+  top: auto;
+  bottom: var(--p-context-menu-client-bottom, 0px);
 }
 
-@supports (position-anchor: --p-context-menu) and (position-try-fallbacks: --p-context-menu-right-top) {
+@supports (position-try-fallbacks: --p-context-menu-right-top) {
   body [p="context-menu"] {
-    position-anchor: --p-context-menu;
-    left: anchor(left);
-    top: anchor(top);
-    margin-left: var(--p-context-menu-x);
-    margin-top: var(--p-context-menu-y);
     position-try-fallbacks: --p-context-menu-right-top, --p-context-menu-left-bottom, --p-context-menu-right-bottom;
   }
 }
