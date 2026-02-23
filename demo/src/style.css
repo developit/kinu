@@ -4,7 +4,7 @@
 html,
 body {
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
   background: hsl(var(--p-background));
   color: hsl(var(--p-foreground));
   font-family: system-ui, sans-serif;
@@ -2306,7 +2306,7 @@ body .example-demo {
   box-shadow: none;
   display: flex;
   flex-direction: column;
-  padding: 0;
+  padding: 0 !important;
   gap: 0;
   overflow: hidden;
 }
