@@ -48,6 +48,9 @@ export function Nav({
               <DropdownMenuItem as="a" href="/dashboard">
                 Dashboard Demo
               </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/a11y-modes">
+                A11y Modes
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </NavigationMenuItem>

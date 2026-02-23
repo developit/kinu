@@ -48,3 +48,10 @@
     opacity: 1;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  [p="dialog-content"],
+  [p="dialog-content"]::backdrop {
+    animation: none;
+  }
+}

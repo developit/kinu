@@ -34,3 +34,10 @@
     transform: translateX(100%);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  [p="sheet-content"],
+  [p="sheet-content"]::backdrop {
+    animation: none;
+  }
+}

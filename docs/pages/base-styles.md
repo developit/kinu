@@ -17,3 +17,19 @@ import 'pui/style.css';
 ```
 
 If you already have a global reset, audit it against the defaults in `style.css`. Keep the root-level tokens and dialog/backdrop rules so overlay components remain functional.
+
+
+## Accessibility Media Queries
+
+PUI base styles include two accessibility-focused media queries:
+
+- `@media (prefers-reduced-motion: reduce)` minimizes non-essential animation and long transitions.
+  - Entry transitions for overlays (`dialog`, `drawer`, `sheet`) are disabled.
+  - Continuous loaders (`spinner`, `skeleton`) become static fallbacks.
+  - Toast movement/transition timing is reduced to avoid motion-heavy stacking.
+- `@media (forced-colors: active)` preserves critical affordances in high-contrast environments.
+  - Focus-visible state uses a system `Highlight` outline.
+  - Key surfaces and controls retain visible borders.
+  - Disabled and selected/active states remain distinguishable.
+
+If you layer custom styles on top of PUI, prefer extending these same media queries rather than adding JS flags. Keep motion/contrast behavior declarative so it stays cheap and predictable.

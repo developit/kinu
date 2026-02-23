@@ -12,3 +12,62 @@
 :where([p], a, button, input, select, textarea, summary) {
   -webkit-tap-highlight-color: transparent;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  :where([p], [p]::before, [p]::after) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  :where([p="dialog-content"], [p="drawer-content"], [p="sheet-content"]),
+  :where([p="dialog-content"]::backdrop, [p="drawer-content"]::backdrop, [p="sheet-content"]::backdrop) {
+    animation: none !important;
+  }
+
+  [p="spinner"],
+  [p="spinner"]::before,
+  [p="spinner"]::after,
+  [p="skeleton"]::after,
+  [p="toast"],
+  [p="toast-item"],
+  [p="toast-container"] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  [p="spinner"][type="dots"] {
+    background-position: 50% 50%;
+  }
+
+  [p="spinner"][type="ripple"]::after {
+    content: none;
+  }
+}
+
+@media (forced-colors: active) {
+  :where([p], button, input, select, textarea, a) {
+    forced-color-adjust: auto;
+  }
+
+  :where([p], button, input, select, textarea, a):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
+  :where([p="button"], [p="input"], [p="select"], [p="textarea"], [p="dialog-content"], [p="drawer-content"], [p="sheet-content"], [p="card"]) {
+    border: 1px solid CanvasText;
+  }
+
+  :where([disabled], [aria-disabled="true"]) {
+    color: GrayText;
+    border-color: GrayText;
+    opacity: 1;
+  }
+
+  :where([aria-selected="true"], [data-state="active"], [checked], [open]) {
+    outline: 1px solid Highlight;
+    outline-offset: 0;
+  }
+}
