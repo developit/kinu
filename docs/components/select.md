@@ -22,8 +22,8 @@ import {Select} from 'pui';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| value | `JSX.IntrinsicElements` | — | Current selected value. |
-| onChange | `JSX.IntrinsicElements` | — | Change handler for controlled selects. |
+| value | `string | number | readonly string[] | undefined` | — | Current selected value. |
+| onChange | `(event: Event) => void` | — | Change handler for controlled selects. |
 | disabled | `boolean` | — | Disable the select input. |
 | multiple | `boolean` | — | Native multiple selection toggle. |
 | size | `number` | — | Number of visible options when using native size. |

@@ -52,6 +52,10 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
 | DropdownMenuContent | to | left | Forwarded attribute used by the component styling. |
+| DropdownMenuContent | role | separator | Forwarded attribute used by the component styling. |
+| DropdownMenuItem | shortcut | boolean | Forwarded attribute used by the component styling. |
+| DropdownMenuItem | selected | boolean | Forwarded attribute used by the component styling. |
+| DropdownMenuItem | destructive | boolean | Forwarded attribute used by the component styling. |
 
 ## Notes
 

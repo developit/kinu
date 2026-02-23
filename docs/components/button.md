@@ -24,11 +24,11 @@ import {Button} from 'pui';
 | size | `ButtonSize` | 'md' | Size preset for the button. |
 | loading | `boolean` | — | Shows a pending state and disables interactions. |
 | href | `string` | — | When provided, renders the Button as an anchor element. |
-| target | `JSX.IntrinsicElements` | — | Target for anchor elements. |
-| rel | `JSX.IntrinsicElements` | — | Relationship between the current page and the linked resource. |
-| onClick | `JSX.IntrinsicElements` | — | Click handler for the button. |
+| target | `any` | — | Target for anchor elements. |
+| rel | `any` | — | Relationship between the current page and the linked resource. |
+| onClick | `any` | — | Click handler for the button. |
 | disabled | `boolean` | — | Disables interactions and applies disabled styling. |
-| type | `JSX.IntrinsicElements` | — | Button type attribute. |
+| type | `any` | — | Button type attribute. |
 
 ## Attributes
 

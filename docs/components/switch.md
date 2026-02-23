@@ -21,10 +21,10 @@ import {Switch} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | checked | `boolean` | — | Controls the checked state. |
-| onChange | `JSX.IntrinsicElements` | — | Change handler for the switch. |
+| onChange | `(event: Event) => void` | — | Change handler for the switch. |
 | disabled | `boolean` | — | Disable the switch. |
 | name | `string` | — | Input name used for form submissions. |
-| value | `JSX.IntrinsicElements` | — | Input value used for form submissions. |
+| value | `string | number | readonly string[] | undefined` | — | Input value used for form submissions. |
 
 ## Notes
 

@@ -8,7 +8,7 @@ Right-click context menu powered by the native dialog element.
 import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from 'pui';
 
 <ContextMenu>
-  <ContextMenuTrigger>Open</ContextMenuTrigger>
+  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>
   <ContextMenuContent>
     <ContextMenuItem>Copy</ContextMenuItem>
   </ContextMenuContent>

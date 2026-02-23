@@ -191,6 +191,36 @@ function formatTagText(tagText) {
   return tagText.map((part) => part.text).join('').trim();
 }
 
+const intrinsicTypePattern = /JSX\.IntrinsicElements\['([^']+)'\]\['([^']+)'\]/;
+
+function normalizeIntrinsicType(tagName, propName) {
+  if (propName === 'value') return 'string | number | readonly string[] | undefined';
+  if (propName === 'type' || propName === 'target' || propName === 'rel') return 'string | undefined';
+  if (propName === 'onInput') return '(event: InputEvent) => void';
+  if (propName === 'onChange') return '(event: Event) => void';
+  if (propName === 'onBlur') return '(event: FocusEvent) => void';
+  if (propName === 'onFocus') return '(event: FocusEvent) => void';
+  if (propName === 'onClick') return '(event: MouseEvent) => void';
+  return `${tagName}.${propName}`;
+}
+
+function normalizeDisplayedType(typeText, member, sourceFile) {
+  const rawTypeText = member.type?.getText(sourceFile) ?? '';
+  const rawMatch = rawTypeText.match(intrinsicTypePattern);
+  if (rawMatch) {
+    const [, tagName, propName] = rawMatch;
+    return normalizeIntrinsicType(tagName, propName);
+  }
+
+  const typeMatch = typeText.match(intrinsicTypePattern);
+  if (typeMatch) {
+    const [, tagName, propName] = typeMatch;
+    return normalizeIntrinsicType(tagName, propName);
+  }
+
+  return typeText;
+}
+
 function extractPropsFromTypes(typesPath) {
   if (typeDocCache.has(typesPath)) return typeDocCache.get(typesPath);
 
@@ -242,7 +272,7 @@ function extractPropsFromTypes(typesPath) {
 
       props.push({
         name: propName,
-        type: typeText,
+        type: normalizeDisplayedType(typeText, member, sourceFile),
         doc: formatDocText(doc),
         default: defaultValue || '—',
       });

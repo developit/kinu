@@ -10,6 +10,7 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 <Popover>
   <PopoverTrigger><Button>Open</Button></PopoverTrigger>
   <PopoverContent>Content</PopoverContent>
+  <PopoverClose><Button>Close</Button></PopoverClose>
 </Popover>
 ```
 
@@ -40,6 +41,7 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 
 | Export | Attribute | Values | Notes |
 | --- | --- | --- | --- |
+| Popover | commandfor | boolean | Target dialog identifier for command dispatch. |
 | PopoverContent | open | boolean | Reflects whether the element is expanded. |
 
 ## Notes

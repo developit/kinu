@@ -8,9 +8,9 @@ Composable modal built on the native `<dialog>` element.
 import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 
 <Dialog>
-  <Dialog.Trigger><Button>Open</Button></Dialog.Trigger>
-  <Dialog.Content>Modal body</Dialog.Content>
-  <Dialog.Close><Button>Close</Button></Dialog.Close>
+  <DialogTrigger><Button>Open</Button></DialogTrigger>
+  <DialogContent>Modal body</DialogContent>
+  <DialogClose><Button>Close</Button></DialogClose>
 </Dialog>
 ```
 

@@ -21,7 +21,7 @@ import {Toggle} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | aria-pressed | `boolean | "true" | "false"` | — | Controls the pressed state via aria-pressed. |
-| onClick | `JSX.IntrinsicElements` | — | Click handler for toggling state. |
+| onClick | `(event: MouseEvent) => void` | — | Click handler for toggling state. |
 | disabled | `boolean` | — | Disable the toggle. |
 
 ## Attributes

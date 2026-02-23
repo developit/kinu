@@ -19,6 +19,12 @@ import {ToggleGroup} from 'pui';
 | --- | --- | --- |
 | ToggleGroup | Toggle group | `<div p="toggle-group">` |
 
+## Attributes
+
+| Export | Attribute | Values | Notes |
+| --- | --- | --- | --- |
+| ToggleGroup | aria-pressed | true | Forwarded attribute used by the component styling. |
+
 ## Notes
 
 - Each Toggle toggles aria-pressed and clears other toggles in the same group.

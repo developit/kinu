@@ -26,8 +26,8 @@ import {Radio, RadioGroup} from 'pui';
 | --- | --- | --- | --- |
 | checked | `boolean` | — | Controls the checked state. |
 | name | `string` | — | Radio group name. |
-| value | `JSX.IntrinsicElements` | — | Radio value used for form submissions. |
-| onChange | `JSX.IntrinsicElements` | — | Change handler for the radio. |
+| value | `string | number | readonly string[] | undefined` | — | Radio value used for form submissions. |
+| onChange | `(event: Event) => void` | — | Change handler for the radio. |
 | disabled | `boolean` | — | Disable the radio input. |
 
 ## Notes

@@ -8,8 +8,9 @@ Bottom sheet style overlay with trigger and close helpers.
 import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
 
 <Drawer>
-  <DrawerTrigger>Open</DrawerTrigger>
+  <DrawerTrigger><Button>Open</Button></DrawerTrigger>
   <DrawerContent>Content</DrawerContent>
+  <DrawerClose><Button>Close</Button></DrawerClose>
 </Drawer>
 ```
 

@@ -22,12 +22,12 @@ import {Input} from 'pui';
 | --- | --- | --- | --- |
 | size | `InputSize` | 'md' | Size preset for the input field. |
 | invalid | `boolean` | — | Marks the input as invalid for styling purposes. |
-| value | `JSX.IntrinsicElements` | — | Input value. |
-| type | `JSX.IntrinsicElements` | — | Input type attribute. |
+| value | `string | number | readonly string[] | undefined` | — | Input value. |
+| type | `string | undefined` | — | Input type attribute. |
 | placeholder | `string` | — | Placeholder text for the input. |
-| onInput | `JSX.IntrinsicElements` | — | Change handler for controlled inputs. |
-| onBlur | `JSX.IntrinsicElements` | — | Blur handler. |
-| onFocus | `JSX.IntrinsicElements` | — | Focus handler. |
+| onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
+| onBlur | `(event: FocusEvent) => void` | — | Blur handler. |
+| onFocus | `(event: FocusEvent) => void` | — | Focus handler. |
 | disabled | `boolean` | — | Disables interactions and applies disabled styling. |
 | name | `string` | — | Input name attribute used for form submissions. |
 
