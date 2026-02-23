@@ -22,10 +22,10 @@ import {Checkbox} from 'pui';
 | --- | --- | --- | --- |
 | checked | `boolean` | — | Controls the checked state. |
 | data-state | `"indeterminate"` | — | Marks the checkbox as indeterminate for styling. |
-| onChange | `JSX.IntrinsicElements` | — | Change handler for the checkbox. |
+| onChange | `(event: Event) => void` | — | Change handler for the checkbox. |
 | disabled | `boolean` | — | Disable the checkbox. |
 | name | `string` | — | Input name used for form submissions. |
-| value | `JSX.IntrinsicElements` | — | Input value used for form submissions. |
+| value | `string | number | readonly string[] | undefined` | — | Input value used for form submissions. |
 
 ## Notes
 

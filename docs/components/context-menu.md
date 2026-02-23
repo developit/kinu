@@ -8,7 +8,7 @@ Right-click context menu powered by the native dialog element.
 import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from 'pui';
 
 <ContextMenu>
-  <ContextMenuTrigger>Open</ContextMenuTrigger>
+  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>
   <ContextMenuContent>
     <ContextMenuItem>Copy</ContextMenuItem>
   </ContextMenuContent>
@@ -43,6 +43,8 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | selected | `boolean` | — | Marks the item as selected for styling. |
+| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| destructive | `boolean` | — | Applies destructive styling to the item. |
 
 ## Notes
 

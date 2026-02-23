@@ -29,12 +29,6 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 | --- | --- | --- | --- |
 | aria-current | `boolean | "page" | "true" | "false"` | — | Marks the current page for styling. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| PaginationLink | aria-current | page | Forwarded attribute used by the component styling. |
-
 ## Notes
 
 - Renders `<nav>` and list markup for accessibility.

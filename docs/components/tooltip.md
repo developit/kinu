@@ -21,12 +21,7 @@ import {Tooltip} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | title | `string` | — | Tooltip text provided via the title attribute. |
-
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Tooltip | title | boolean | Forwarded attribute used by the component styling. |
+| side | `"left" | "right" | "top" | "bottom"` | — | The direction the tooltip should open towards. |
 
 ## Notes
 

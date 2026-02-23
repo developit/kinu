@@ -17,7 +17,7 @@ export interface SidebarTriggerOwnProps extends BaseProps {
   /**
    * Target sidebar ID to control.
    */
-  commandfor?: string;
+  commandFor?: string;
 }
 
 export type SidebarTriggerProps = SidebarTriggerOwnProps &

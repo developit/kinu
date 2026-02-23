@@ -25,12 +25,6 @@ import {Accordion} from 'pui';
 | --- | --- | --- | --- |
 | open | `boolean` | — | Controls the open state of the details element. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Accordion | open | boolean | Reflects whether the element is expanded. |
-
 ## Notes
 
 - Forwards every native `<details>` attribute so you can control open state.

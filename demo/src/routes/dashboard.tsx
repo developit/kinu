@@ -310,7 +310,7 @@ function OverviewTab() {
 
             <Toggle
               pressed={showAdvancedMetrics}
-              onPressedChange={setShowAdvancedMetrics}
+              onClick={() => setShowAdvancedMetrics((prev) => !prev)}
             >
               <iconify-icon
                 icon="lucide:microscope"

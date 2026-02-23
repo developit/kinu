@@ -36,6 +36,16 @@ export interface ComboboxOptionOwnProps extends BaseProps {
    * Marks the option as selected for styling.
    */
   selected?: boolean;
+
+  /**
+   * Optional shortcut hint rendered on the trailing edge.
+   */
+  shortcut?: string;
+
+  /**
+   * Applies destructive styling to the option.
+   */
+  destructive?: boolean;
 }
 
 export type ComboboxInputProps = ComboboxInputOwnProps &
