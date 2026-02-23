@@ -104,14 +104,17 @@
   }
 
   [p="popover-content"] {
+    --tf-x: 0;
     min-width: anchor-size(width);
   }
 
   [p="dropdown-content"] {
+    --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 
   [p="combobox-list"] {
+    --tf-x: 0;
     min-width: anchor-size(width);
   }
 }
