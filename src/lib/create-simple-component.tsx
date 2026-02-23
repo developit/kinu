@@ -47,9 +47,11 @@ export function createSimpleComponent<
   const Wrap = forwardRef<HTMLElementTagNameMap[T], Props>(function Wrap(this: ComponentInstance, props, fwdRef) {
     let normalizedProps = props;
     if (defaultProps || ref) {
+      const propsWithDefaults = Object.create(props, defaultDescriptors);
       normalizedProps = Object.assign(
         {},
-        Object.create(props, defaultDescriptors),
+        propsWithDefaults,
+        props,
       );
       normalizedProps.ref =
         this.$_ref || (this.$_ref = proxyRef.bind(fwdRef || props.ref as any) as any);
