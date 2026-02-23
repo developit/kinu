@@ -85,7 +85,7 @@ const RADIUS_MAP: Record<string, string> = {
   small: '0.25rem',
   medium: '0.5rem',
   large: '0.75rem',
-  full: '9999px',
+  full: '2rem',
 };
 
 const SCALING_OPTIONS = ['90%', '95%', '100%', '105%', '110%'];

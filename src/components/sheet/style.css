@@ -23,6 +23,7 @@
 [p="sheet-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   animation: dialog-overlay-show 300ms var(--p-ease);
+  backdrop-filter: blur(1px);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;
