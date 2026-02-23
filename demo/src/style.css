@@ -81,11 +81,6 @@ body {
   margin-right: auto;
 }
 
-.demo-app > [p="sidebar"] {
-  top: 4rem;
-  height: calc(100vh - 4rem);
-  max-height: calc(100vh - 4rem);
-}
 
 .nav {
   margin: 0;
@@ -2313,6 +2308,10 @@ body .example-demo {
   box-shadow: none;
 }
 
+.docs-sidebar-mobile-header {
+  display: none;
+}
+
 .docs-sidebar-content {
   display: flex;
   flex-direction: column;
@@ -2516,11 +2515,6 @@ body .docs-content pre > code {
     display: none;
   }
 
-  .components-docs .docs-sidebar {
-    top: 4.5rem;
-    height: calc(100vh - 4.5rem);
-    max-height: calc(100vh - 4.5rem);
-  }
 }
 
 @media (max-width: 640px) {
@@ -2530,12 +2524,26 @@ body .docs-content pre > code {
 
   .docs-sidebar {
     width: min(320px, 82vw);
-    padding: 1.75rem 1.5rem 2.5rem;
-    gap: 1.75rem;
+    padding: 0;
+    gap: 0;
+  }
+
+  .docs-sidebar-mobile-header {
+    height: 4rem;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid hsl(var(--p-border));
+    background: hsl(var(--p-background));
+  }
+
+  .docs-sidebar-mobile-header .demo-sidebar-trigger {
+    margin-right: 0;
   }
 
   .docs-sidebar-content {
     gap: 1.5rem;
+    padding: 1.75rem 1.5rem 2.5rem;
   }
 }
 
