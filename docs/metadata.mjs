@@ -616,10 +616,10 @@ export default [
     order: 11,
     folder: 'toggle',
     description: 'ARIA-pressed aware button for on/off interactions.',
-    usage: '<Toggle aria-pressed={value}>Bold</Toggle>',
+    usage: '<Toggle pressed={value}>Bold</Toggle>',
     notes: [
       'Wraps `<button>` so keyboard support comes for free.',
-      'Style pressed state using the aria-pressed attribute selectors.'
+      'Use the `pressed` prop for state; it maps to `aria-pressed` on the DOM.'
     ]
   },
   {

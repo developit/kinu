@@ -3,9 +3,9 @@ import type {BaseProps} from '../../types/component-props';
 
 export interface ToggleOwnProps extends BaseProps {
   /**
-   * Controls the pressed state via aria-pressed.
+   * Controls the pressed state and maps to `aria-pressed` on the DOM element.
    */
-  'aria-pressed'?: 'true' | 'false' | boolean;
+  pressed?: boolean;
 
   /**
    * Click handler for toggling state.
