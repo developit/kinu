@@ -26,6 +26,10 @@ export function createSimpleComponent<
       ref?: Ref<HTMLElementTagNameMap[T]>;
     };
 
+  const defaultDescriptors = defaultProps
+    ? Object.getOwnPropertyDescriptors(defaultProps)
+    : null;
+
   function proxyRef(
     this: Ref<HTMLElementTagNameMap[T]>,
     el: HTMLElementTagNameMap[T],
@@ -45,7 +49,14 @@ export function createSimpleComponent<
   const Wrap = forwardRef<HTMLElementTagNameMap[T], Props>(function Wrap(this: ComponentInstance, props, fwdRef) {
     let normalizedProps = props;
     if (defaultProps || ref) {
-      normalizedProps = Object.assign({}, defaultProps || {}, props);
+      if (defaultDescriptors) {
+        normalizedProps = Object.assign(
+          {},
+          Object.create(props, defaultDescriptors),
+        );
+      } else {
+        normalizedProps = Object.assign({}, props);
+      }
       normalizedProps.ref =
         this.$_ref || (this.$_ref = proxyRef.bind(fwdRef || props.ref as any) as any);
     }
