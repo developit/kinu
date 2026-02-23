@@ -2323,6 +2323,7 @@ body .example-demo {
   flex: 1;
   min-height: 0;
   overflow: auto;
+  overscroll-behavior: contain;
   padding: 2.5rem clamp(1.25rem, 4vw, 2rem);
 }
 
