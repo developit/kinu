@@ -17,47 +17,33 @@ export function ToastContainer() {
   const [toasts, setToasts] = useState<ToastInternal[]>([]);
 
   useEffect(() => {
-    const reducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     const handler = (e: Event) => {
       const item = (e as CustomEvent<ToastInternal>).detail;
       item.id = nextId++;
       setToasts((t) => t.slice(-3).concat(item));
-
-      if (reducedMotion) {
-        setToasts((t) => t.map((i) => (i.id === item.id ? {...i, mounted: true} : i)));
-      } else {
-        // allow CSS transitions to apply
+      // allow CSS transitions to apply
+      requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setToasts((t) =>
-              t.map((i) => (i.id === item.id ? {...i, mounted: true} : i)),
-            );
-          });
+          setToasts((t) =>
+            t.map((i) => (i.id === item.id ? {...i, mounted: true} : i)),
+          );
         });
-      }
-
-      setTimeout(startRemove, item.duration || 3000, item.id, reducedMotion);
+      });
+      setTimeout(startRemove, item.duration || 3000, item.id);
     };
-
     addEventListener(EVENT_NAME, handler);
     return () => {
       removeEventListener(EVENT_NAME, handler);
     };
   }, []);
 
-  function startRemove(id: number, reducedMotion = false) {
+  function startRemove(id: number) {
     setToasts((t) => {
       const item = t.find((i) => i.id === id);
       if (!item || item.closing) return t;
-      setTimeout(
-        () => {
-          setToasts((t2) => t2.filter((p) => p.id !== id));
-        },
-        reducedMotion ? 0 : 400,
-      );
+      setTimeout(() => {
+        setToasts((t2) => t2.filter((p) => p.id !== id));
+      }, 400);
       return t.map((i) => (i.id === id ? {...i, closing: true} : i));
     });
   }
