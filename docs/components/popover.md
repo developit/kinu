@@ -10,6 +10,7 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 <Popover>
   <PopoverTrigger><Button>Open</Button></PopoverTrigger>
   <PopoverContent>Content</PopoverContent>
+  <PopoverClose><Button>Close</Button></PopoverClose>
 </Popover>
 ```
 
@@ -35,12 +36,6 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | id | `string` | — | Override the auto-generated dialog ID. |
-
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| PopoverContent | open | boolean | Reflects whether the element is expanded. |
 
 ## Notes
 

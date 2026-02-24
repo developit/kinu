@@ -24,7 +24,7 @@ import {Slider} from 'pui';
 | max | `number` | — | Maximum slider value. |
 | value | `number` | — | Current slider value. |
 | step | `number` | — | Step granularity for the slider. |
-| onInput | `JSX.IntrinsicElements` | — | Change handler for the slider input. |
+| onInput | `(event: InputEvent) => void` | — | Change handler for the slider input. |
 | disabled | `boolean` | — | Disable the slider. |
 
 ## Notes

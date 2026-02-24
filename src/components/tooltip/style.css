@@ -13,7 +13,7 @@
   --p-tl: -50%;
   --p-tt: 0%;
   --p-to: -0.25rem;
-  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to))) scale(0.95);
+  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to)));
   background-color: hsl(var(--p-foreground));
   color: hsl(var(--p-background));
   padding: 0.25rem 0.5rem;
@@ -23,8 +23,11 @@
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: none;
+  transition:
+    opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    display 150ms allow-discrete;
   z-index: 10;
 }
 
@@ -50,6 +53,15 @@
 
 [p="tooltip"][title]:hover::after,
 [p="tooltip"][title]:focus::after {
+  display: block;
   opacity: 1;
-  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to) * 2)) scale(1);
+  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to) * 2));
+}
+
+@starting-style {
+  [p="tooltip"][title]:hover::after,
+  [p="tooltip"][title]:focus::after {
+    opacity: 0;
+    transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to)));
+  }
 }

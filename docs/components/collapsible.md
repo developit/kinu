@@ -22,12 +22,6 @@ import {Collapsible} from 'pui';
 | --- | --- | --- | --- |
 | open | `boolean` | — | Controls the open state of the details element. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Collapsible | open | boolean | Reflects whether the element is expanded. |
-
 ## Notes
 
 - Expose the open attribute for controlled usage.

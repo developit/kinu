@@ -54,6 +54,17 @@ export function DocsLayout({children}: {children?: ComponentChildren}) {
         class="docs-sidebar"
         aria-label="Documentation navigation"
       >
+        <header class="docs-sidebar-mobile-header">
+          <button
+            type="button"
+            class="demo-sidebar-trigger"
+            commandfor="demo-sidebar"
+            command="close"
+            aria-label="Close sidebar"
+          >
+            ☰
+          </button>
+        </header>
         <nav class="docs-sidebar-content" aria-label="Documentation sections">
           {overviewEntries.length > 0 && (
             <section class="docs-sidebar-section">

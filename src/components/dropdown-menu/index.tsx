@@ -38,7 +38,7 @@ export function DropdownMenuTrigger({
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
-    commandfor: id,
+    commandFor: id,
     command: 'show',
   });
 }
@@ -46,10 +46,10 @@ export function DropdownMenuTrigger({
 export function DropdownMenuContent({
   id,
   command = 'close',
-  commandfor,
+  commandFor,
   ...props
 }: DropdownMenuContentOwnProps &
-  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor'>) {
+  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor' | 'commandFor'>) {
   const ctx = useContext(IdCtx);
   const resolvedId = id ?? ctx;
   return (
@@ -57,7 +57,7 @@ export function DropdownMenuContent({
       p="dropdown-content"
       id={resolvedId}
       command={command}
-      commandfor={commandfor ?? resolvedId}
+      commandFor={commandFor ?? resolvedId}
       {...props}
     />
   );

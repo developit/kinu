@@ -7,10 +7,10 @@ Autocomplete input with trigger, list, and option primitives.
 ```tsx
 import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
-<Combobox value={value} onChange={setValue}>
-  <ComboboxInput />
+<Combobox>
+  <ComboboxInput placeholder="Search" />
   <ComboboxList>
-    <ComboboxOption value="1">One</ComboboxOption>
+    <ComboboxOption>One</ComboboxOption>
   </ComboboxList>
 </Combobox>
 ```
@@ -30,9 +30,9 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| value | `JSX.IntrinsicElements` | — | Input value for controlled usage. |
+| value | `string | number | readonly string[] | undefined` | — | Input value for controlled usage. |
 | placeholder | `string` | — | Placeholder text for the input. |
-| onInput | `JSX.IntrinsicElements` | — | Change handler for controlled inputs. |
+| onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
 | disabled | `boolean` | — | Disable the input. |
 
 ### ComboboxOptionProps
@@ -40,10 +40,12 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | selected | `boolean` | — | Marks the option as selected for styling. |
+| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| destructive | `boolean` | — | Applies destructive styling to the option. |
 
 ## Notes
 
-- Uses command/commandfor attributes for disclosure logic.
+- Uses command/commandFor attributes for disclosure logic.
 - Keep option counts manageable for usability.
 
 ---

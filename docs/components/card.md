@@ -25,12 +25,6 @@ import {Card} from 'pui';
 | --- | --- | --- | --- |
 | padding | `CardPadding` | 'md' | Padding preset for the card content. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Card | padding | none | sm | lg | Forwarded attribute used by the component styling. |
-
 ## Notes
 
 - Wraps a `<div>` and exposes padding/variant control via attributes.
