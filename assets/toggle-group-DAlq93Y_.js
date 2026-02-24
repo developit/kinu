@@ -1,2 +1,0 @@
-import{d as u,u as e}from"./index-CaskcNvp.js";import{Z as o,Y as n}from"./style-4aNoTMAL.js";function t(){const[l,r]=u([]);return e(n,{type:"multiple",value:l,onValueChange:r,children:[e(o,{value:"bold",children:"Bold"}),e(o,{value:"italic",children:"Italic"}),e(o,{value:"underline",children:"Underline"})]})}const g="<ToggleGroup>...</ToggleGroup>",c={Demo:t,code:g};export{t as Demo,g as code,c as default};
-//# sourceMappingURL=toggle-group-DAlq93Y_.js.map

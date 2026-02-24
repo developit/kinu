@@ -1,2 +1,0 @@
-import{d as l,u as e}from"./index-CaskcNvp.js";import{L as o,s as a}from"./style-4aNoTMAL.js";function d(){const[s,r]=l("");return e("div",{style:{display:"flex",flexDirection:"column",gap:"1rem"},children:[e(o,{htmlFor:"message",children:"Message"}),e(a,{id:"message",placeholder:"Enter your message...",value:s,onInput:t=>r(t.target.value)}),e(a,{placeholder:"Disabled textarea",disabled:!0})]})}const n='<Textarea placeholder="Enter your message..." />',i={Demo:d,code:n};export{d as Demo,n as code,i as default};
-//# sourceMappingURL=textarea-DKWJIykS.js.map
