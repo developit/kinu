@@ -118,3 +118,10 @@
     min-width: max(13.5rem, anchor-size(width));
   }
 }
+
+@supports (position-anchor: --p-anchor) and (position-try-fallbacks: flip-block) {
+  [p="dropdown-content"] {
+    left: anchor(start);
+    transform: none;
+  }
+}

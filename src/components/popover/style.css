@@ -5,6 +5,7 @@
   position: relative;
   display: inline-block;
   overflow: visible;
+  anchor-name: --p-anchor;
 }
 
 [p="popover"],
@@ -48,6 +49,20 @@
     overlay 200ms allow-discrete;
   z-index: 10;
   outline: none;
+}
+
+@supports (position-anchor: --p-anchor) and (position-try-fallbacks: flip-block) {
+  [p="popover-content"],
+  [p="dropdown-content"],
+  [p="context-menu"],
+  [p="combobox-list"] {
+    position: fixed;
+    position-anchor: --p-anchor;
+    top: anchor(bottom);
+    left: anchor(center);
+    transform: translateX(-50%);
+    position-try-fallbacks: flip-block, flip-inline;
+  }
 }
 
 [p="popover-content"][open],
