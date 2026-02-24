@@ -22,8 +22,8 @@ import {Textarea} from 'pui';
 | --- | --- | --- | --- |
 | rows | `number` | — | Number of visible text rows. |
 | placeholder | `string` | — | Placeholder text for the textarea. |
-| value | `JSX.IntrinsicElements` | — | Textarea value. |
-| onInput | `JSX.IntrinsicElements` | — | Change handler for controlled textareas. |
+| value | `string | number | readonly string[] | undefined` | — | Textarea value. |
+| onInput | `(event: InputEvent) => void` | — | Change handler for controlled textareas. |
 | disabled | `boolean` | — | Disables interactions and applies disabled styling. |
 
 ## Notes

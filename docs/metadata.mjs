@@ -210,9 +210,9 @@ export default [
     order: 7,
     folder: 'combobox',
     description: 'Autocomplete input with trigger, list, and option primitives.',
-    usage: `<Combobox value={value} onChange={setValue}>\n  <ComboboxInput />\n  <ComboboxList>\n    <ComboboxOption value="1">One</ComboboxOption>\n  </ComboboxList>\n</Combobox>`,
+    usage: `<Combobox>\n  <ComboboxInput placeholder="Search" />\n  <ComboboxList>\n    <ComboboxOption>One</ComboboxOption>\n  </ComboboxList>\n</Combobox>`,
     notes: [
-      'Uses command/commandfor attributes for disclosure logic.',
+      'Uses command/commandFor attributes for disclosure logic.',
       'Keep option counts manageable for usability.'
     ]
   },
@@ -224,7 +224,7 @@ export default [
     order: 7,
     folder: 'context-menu',
     description: 'Right-click context menu powered by the native dialog element.',
-    usage: `<ContextMenu>\n  <ContextMenuTrigger>Open</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
+    usage: `<ContextMenu>\n  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
     notes: [
       'Installs the commands polyfill when rendered.',
       'Menu content is focus-trapped via `<dialog>`.'
@@ -252,7 +252,7 @@ export default [
     order: 3,
     folder: 'dialog',
     description: 'Composable modal built on the native `<dialog>` element.',
-    usage: `<Dialog>\n  <Dialog.Trigger><Button>Open</Button></Dialog.Trigger>\n  <Dialog.Content>Modal body</Dialog.Content>\n  <Dialog.Close><Button>Close</Button></Dialog.Close>\n</Dialog>`,
+    usage: `<Dialog>\n  <DialogTrigger><Button>Open</Button></DialogTrigger>\n  <DialogContent>Modal body</DialogContent>\n  <DialogClose><Button>Close</Button></DialogClose>\n</Dialog>`,
     notes: [
       'Relies on command attributes instead of portal gymnastics.',
       'Dialog.Content forwards all native `<dialog>` props.'
@@ -266,7 +266,7 @@ export default [
     order: 5,
     folder: 'drawer',
     description: 'Bottom sheet style overlay with trigger and close helpers.',
-    usage: `<Drawer>\n  <DrawerTrigger>Open</DrawerTrigger>\n  <DrawerContent>Content</DrawerContent>\n</Drawer>`,
+    usage: `<Drawer>\n  <DrawerTrigger><Button>Open</Button></DrawerTrigger>\n  <DrawerContent>Content</DrawerContent>\n  <DrawerClose><Button>Close</Button></DrawerClose>\n</Drawer>`,
     notes: [
       'Positions content with CSS variables so you can change direction.',
       'Attach Drawer.Close to any element that should dismiss.'
@@ -392,7 +392,7 @@ export default [
     order: 2,
     folder: 'popover',
     description: 'Lightweight popover using native dialog with trigger/content primitives.',
-    usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n</Popover>`,
+    usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n  <PopoverClose><Button>Close</Button></PopoverClose>\n</Popover>`,
     notes: [
       'Control placement with the placement attribute on PopoverContent.',
       'Stays declarative thanks to the commands polyfill.'
@@ -490,7 +490,7 @@ export default [
     order: 9,
     folder: 'sheet',
     description: 'Side or bottom sheet overlay with directional variants.',
-    usage: `<Sheet side="right">\n  <SheetTrigger>Open</SheetTrigger>\n  <SheetContent>Panel</SheetContent>\n</Sheet>`,
+    usage: `<Sheet>\n  <SheetTrigger><Button>Open</Button></SheetTrigger>\n  <SheetContent side="right">Panel</SheetContent>\n  <SheetClose><Button>Close</Button></SheetClose>\n</Sheet>`,
     notes: [
       'Control the slide direction with the side attribute on SheetContent.',
       'SheetClose attaches the close command to any child element.'
@@ -504,7 +504,7 @@ export default [
     order: 6,
     folder: 'sidebar',
     description: 'Responsive sidebar dialog that collapses on mobile.',
-    usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandfor="app-sidebar">Toggle</SidebarTrigger>`,
+    usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>`,
     notes: [
       'Renders a `<dialog>` so it can slide in as a modal on small screens.',
       'SidebarTrigger toggles the hidden/open state with the command attribute.'
@@ -588,7 +588,7 @@ export default [
     order: 1,
     folder: 'tabs',
     description: 'TabList, Tab, and TabPanel wrappers using aria attributes.',
-    usage: `<TabList>\n  <Tab aria-selected>Tab</Tab>\n</TabList>\n<TabPanel>Panel</TabPanel>`,
+    usage: `<TabList role="tablist">\n  <Tab role="tab" aria-selected="true">Account</Tab>\n  <Tab role="tab" aria-selected="false">Password</Tab>\n</TabList>\n<TabPanel role="tabpanel">Account settings</TabPanel>`,
     notes: [
       'Control selection state by toggling aria-selected.',
       'TabPanel toggles the hidden attribute so CSS handles transitions.'
@@ -616,10 +616,10 @@ export default [
     order: 11,
     folder: 'toggle',
     description: 'ARIA-pressed aware button for on/off interactions.',
-    usage: '<Toggle aria-pressed={value}>Bold</Toggle>',
+    usage: '<Toggle pressed={value}>Bold</Toggle>',
     notes: [
       'Wraps `<button>` so keyboard support comes for free.',
-      'Style pressed state using the aria-pressed attribute selectors.'
+      'Use the `pressed` prop for state; it maps to `aria-pressed` on the DOM.'
     ]
   },
   {

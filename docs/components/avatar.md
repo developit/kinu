@@ -22,7 +22,7 @@ import {Avatar} from 'pui';
 | --- | --- | --- | --- |
 | src | `string` | — | Image source for the avatar. |
 | alt | `string` | — | Alt text used by the image and for fallback initials. |
-| children | `any` | — | Fallback initials or text rendered via the alt attribute. |
+| children | `element.children` | — | Fallback initials or text rendered via the alt attribute. |
 | size | `AvatarSize` | — | Size preset for the avatar. |
 
 ## Notes

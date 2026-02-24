@@ -7,9 +7,10 @@ Side or bottom sheet overlay with directional variants.
 ```tsx
 import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
 
-<Sheet side="right">
-  <SheetTrigger>Open</SheetTrigger>
-  <SheetContent>Panel</SheetContent>
+<Sheet>
+  <SheetTrigger><Button>Open</Button></SheetTrigger>
+  <SheetContent side="right">Panel</SheetContent>
+  <SheetClose><Button>Close</Button></SheetClose>
 </Sheet>
 ```
 

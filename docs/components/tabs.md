@@ -7,10 +7,11 @@ TabList, Tab, and TabPanel wrappers using aria attributes.
 ```tsx
 import {Tab, TabList, TabPanel} from 'pui';
 
-<TabList>
-  <Tab aria-selected>Tab</Tab>
+<TabList role="tablist">
+  <Tab role="tab" aria-selected="true">Account</Tab>
+  <Tab role="tab" aria-selected="false">Password</Tab>
 </TabList>
-<TabPanel>Panel</TabPanel>
+<TabPanel role="tabpanel">Account settings</TabPanel>
 ```
 
 ## Exports
@@ -35,13 +36,6 @@ import {Tab, TabList, TabPanel} from 'pui';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | hidden | `boolean` | — | Hide the panel when inactive. |
-
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Tab | aria-selected | true | Forwarded attribute used by the component styling. |
-| Tab | disabled | boolean | Forwarded attribute used by the component styling. |
 
 ## Notes
 

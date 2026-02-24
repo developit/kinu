@@ -19,20 +19,7 @@ function sectionRank(section) {
   return sectionWeights.get(section) ?? sectionWeights.size + 1;
 }
 
-const attributeDescriptions = new Map([
-  ['variant', 'Visual style variant selector.'],
-  ['size', 'Controls component sizing.'],
-  ['loading', 'Boolean flag to show pending state.'],
-  ['open', 'Reflects whether the element is expanded.'],
-  ['orientation', 'Switch between horizontal and vertical styling.'],
-  ['placement', 'Preferred overlay placement relative to the trigger.'],
-  ['side', 'Controls which edge the overlay anchors to.'],
-  ['state', 'State flag used by CSS for styling.'],
-  ['data-state', 'Data attribute emitted by the component for styling state.'],
-  ['data-orientation', 'Orientation emitted for styling purposes.'],
-  ['command', 'Command dispatched to native dialog APIs.'],
-  ['commandfor', 'Target dialog identifier for command dispatch.'],
-]);
+
 
 function analyzeExports(sourceFile, sourceText) {
   const exports = [];
@@ -110,52 +97,6 @@ function analyzeExports(sourceFile, sourceText) {
   return {exports, attachments};
 }
 
-async function extractCssAttributes(folder, pNames) {
-  const cssPath = path.join(componentsDir, folder, 'style.css');
-  try {
-    const cssText = await fs.readFile(cssPath, 'utf8');
-    const results = new Map();
-    const ruleRegex = /([^{}]+)\{/g;
-    let match;
-    while ((match = ruleRegex.exec(cssText))) {
-      const selector = match[1];
-      const attrRegex = /\[([^\]=\s]+)(?:="([^"]*)")?\]/g;
-      const pTokens = [];
-      const attrs = [];
-      let attrMatch;
-      while ((attrMatch = attrRegex.exec(selector))) {
-        const attrName = attrMatch[1];
-        const value = attrMatch[2];
-        if (attrName === 'p') {
-          pTokens.push(attrMatch[2]);
-        } else {
-          attrs.push({name: attrName, value});
-        }
-      }
-      for (const pToken of pTokens) {
-        if (!pNames.has(pToken)) continue;
-        let attrMap = results.get(pToken);
-        if (!attrMap) {
-          attrMap = new Map();
-          results.set(pToken, attrMap);
-        }
-        for (const attr of attrs) {
-          let values = attrMap.get(attr.name);
-          if (!values) {
-            values = new Set();
-            attrMap.set(attr.name, values);
-          }
-          values.add(attr.value ?? '__BOOLEAN__');
-        }
-      }
-    }
-    return results;
-  } catch (err) {
-    if (err.code === 'ENOENT') return new Map();
-    throw err;
-  }
-}
-
 function describeExport(exp) {
   if (exp.kind === 'alias') {
     return `Alias of ${exp.aliasTarget}.`;
@@ -177,8 +118,6 @@ function describeExport(exp) {
   return parts.join(' ');
 }
 
-const attributeDescriptionsFallback = 'Forwarded attribute used by the component styling.';
-
 const typeDocCache = new Map();
 
 function formatDocText(text) {
@@ -189,6 +128,51 @@ function formatTagText(tagText) {
   if (!tagText) return '';
   if (typeof tagText === 'string') return tagText.trim();
   return tagText.map((part) => part.text).join('').trim();
+}
+
+const intrinsicTypePattern = /JSX\.IntrinsicElements\['([^']+)'\]\['([^']+)'\]/;
+const elementAliasTypePattern = /(\w+ElementProps)\['([^']+)'\]/;
+
+function normalizeIntrinsicType(tagName, propName) {
+  if (propName === 'value') return 'string | number | readonly string[] | undefined';
+  if (propName === 'type' || propName === 'target' || propName === 'rel') return 'string | undefined';
+  if (propName === 'onInput') return '(event: InputEvent) => void';
+  if (propName === 'onChange') return '(event: Event) => void';
+  if (propName === 'onBlur') return '(event: FocusEvent) => void';
+  if (propName === 'onFocus') return '(event: FocusEvent) => void';
+  if (propName === 'onClick') return '(event: MouseEvent) => void';
+  return `${tagName}.${propName}`;
+}
+
+function normalizeDisplayedType(typeText, member, sourceFile) {
+  const rawTypeText = member.type?.getText(sourceFile) ?? '';
+  const hasNull = /\|\s*null/.test(rawTypeText);
+  const withNull = (normalized) => (hasNull ? `${normalized} | null` : normalized);
+
+  const rawMatch = rawTypeText.match(intrinsicTypePattern);
+  if (rawMatch) {
+    const [, tagName, propName] = rawMatch;
+    return withNull(normalizeIntrinsicType(tagName, propName));
+  }
+
+  const rawAliasMatch = rawTypeText.match(elementAliasTypePattern);
+  if (rawAliasMatch) {
+    const [, aliasName, propName] = rawAliasMatch;
+    return withNull(normalizeIntrinsicType(aliasName, propName));
+  }
+
+  const typeMatch = typeText.match(intrinsicTypePattern);
+  if (typeMatch) {
+    const [, tagName, propName] = typeMatch;
+    return withNull(normalizeIntrinsicType(tagName, propName));
+  }
+
+  if (typeText === 'any') {
+    const propTokenMatch = rawTypeText.match(/\['([^']+)'\]/);
+    if (propTokenMatch) return withNull(normalizeIntrinsicType('element', propTokenMatch[1]));
+  }
+
+  return typeText;
 }
 
 function extractPropsFromTypes(typesPath) {
@@ -242,7 +226,7 @@ function extractPropsFromTypes(typesPath) {
 
       props.push({
         name: propName,
-        type: typeText,
+        type: normalizeDisplayedType(typeText, member, sourceFile),
         doc: formatDocText(doc),
         default: defaultValue || '—',
       });
@@ -253,19 +237,6 @@ function extractPropsFromTypes(typesPath) {
 
   typeDocCache.set(typesPath, results);
   return results;
-}
-
-function formatValues(values) {
-  const options = [...values].filter((v) => v !== '__BOOLEAN__');
-  const hasBoolean = values.has('__BOOLEAN__');
-  if (options.length === 0 && hasBoolean) return 'boolean';
-  if (options.length && hasBoolean) return `${options.join(' | ')} (omit for default)`;
-  if (options.length) return options.join(' | ');
-  return '—';
-}
-
-function describeAttribute(attr) {
-  return attributeDescriptions.get(attr) ?? attributeDescriptionsFallback;
 }
 
 function getComponentDescription(componentName, entry) {
@@ -385,10 +356,6 @@ async function generateComponentDoc(entry) {
     if (err.code !== 'ENOENT') throw err;
   }
 
-  const allPTokens = new Set();
-  for (const exp of exports) for (const token of exp.pNames) allPTokens.add(token);
-  const cssAttributes = await extractCssAttributes(folder, allPTokens);
-
   const exportRows = exports.map((exp) => {
     // Rendered HTML column
     let renderedHtml = '—';
@@ -414,19 +381,6 @@ async function generateComponentDoc(entry) {
   });
 
   const attachmentRows = attachments.map((item) => `- \`${item.owner}.${item.property} = ${item.target}\``);
-
-  const attributeRows = [];
-  for (const exp of exports) {
-    for (const token of exp.pNames) {
-      const attrMap = cssAttributes.get(token);
-      if (!attrMap) continue;
-      for (const [attr, values] of attrMap) {
-        attributeRows.push(
-          `| ${exp.name} | ${attr} | ${formatValues(values)} | ${describeAttribute(attr)} |`,
-        );
-      }
-    }
-  }
 
   const usageSnippet = entry.usage ?? `<${exports[0]?.name ?? entry.title.replace(/\s+/g, '')} />`;
   const importNames = exports.map((exp) => exp.name).sort();
@@ -485,14 +439,6 @@ async function generateComponentDoc(entry) {
     lines.push('### Static Shortcuts');
     lines.push('');
     lines.push(...attachmentRows);
-    lines.push('');
-  }
-  if (attributeRows.length) {
-    lines.push('## Attributes');
-    lines.push('');
-    lines.push('| Export | Attribute | Values | Notes |');
-    lines.push('| --- | --- | --- | --- |');
-    lines.push(...attributeRows);
     lines.push('');
   }
   if (entry.notes?.length) {

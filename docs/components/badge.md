@@ -22,12 +22,6 @@ import {Badge} from 'pui';
 | --- | --- | --- | --- |
 | variant | `BadgeVariant` | 'default' | Visual style variant. |
 
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Badge | variant | secondary | destructive | outline | Visual style variant selector. |
-
 ---
 
 _Source: `src/components/badge/index.tsx`

@@ -27,6 +27,16 @@ export interface ContextMenuItemOwnProps extends BaseProps {
    * Marks the item as selected for styling.
    */
   selected?: boolean;
+
+  /**
+   * Optional shortcut hint rendered on the trailing edge.
+   */
+  shortcut?: string;
+
+  /**
+   * Applies destructive styling to the item.
+   */
+  destructive?: boolean;
 }
 
 export type ContextMenuTriggerProps = ContextMenuTriggerOwnProps &

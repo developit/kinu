@@ -24,19 +24,11 @@ import {Button} from 'pui';
 | size | `ButtonSize` | 'md' | Size preset for the button. |
 | loading | `boolean` | — | Shows a pending state and disables interactions. |
 | href | `string` | — | When provided, renders the Button as an anchor element. |
-| target | `JSX.IntrinsicElements` | — | Target for anchor elements. |
-| rel | `JSX.IntrinsicElements` | — | Relationship between the current page and the linked resource. |
-| onClick | `JSX.IntrinsicElements` | — | Click handler for the button. |
+| target | `string | undefined | null` | — | Target for anchor elements. |
+| rel | `string | undefined | null` | — | Relationship between the current page and the linked resource. |
+| onClick | `(event: MouseEvent) => void | null` | — | Click handler for the button. |
 | disabled | `boolean` | — | Disables interactions and applies disabled styling. |
-| type | `JSX.IntrinsicElements` | — | Button type attribute. |
-
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Button | size | md | sm | lg | icon (omit for default) | Controls component sizing. |
-| Button | loading | boolean | Boolean flag to show pending state. |
-| Button | variant | destructive | outline | secondary | ghost | link | Visual style variant selector. |
+| type | `string | undefined | null` | — | Button type attribute. |
 
 ## Notes
 

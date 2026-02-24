@@ -29,7 +29,12 @@ export interface DropdownMenuContentOwnProps {
   /**
    * Target dialog identifier for the command dispatch.
    */
-  commandfor?: string;
+  commandFor?: string;
+
+  /**
+   * Align the menu panel to the trigger's left or right edge.
+   */
+  to?: 'left';
 }
 
 export interface DropdownMenuItemOwnProps extends BaseProps {
@@ -43,6 +48,16 @@ export interface DropdownMenuItemOwnProps extends BaseProps {
    * Marks the item as selected for styling.
    */
   selected?: boolean;
+
+  /**
+   * Optional shortcut hint rendered on the trailing edge.
+   */
+  shortcut?: string;
+
+  /**
+   * Applies destructive styling to the item.
+   */
+  destructive?: boolean;
 }
 
 export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &

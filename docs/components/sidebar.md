@@ -10,7 +10,7 @@ import {Sidebar, SidebarTrigger} from 'pui';
 <Sidebar id="app-sidebar">
   <nav>...</nav>
 </Sidebar>
-<SidebarTrigger commandfor="app-sidebar">Toggle</SidebarTrigger>
+<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>
 ```
 
 ## Exports
@@ -26,21 +26,13 @@ import {Sidebar, SidebarTrigger} from 'pui';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| commandfor | `string` | — | Target sidebar ID to control. |
+| commandFor | `string` | — | Target sidebar ID to control. |
 
 ### SidebarProps
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | id | `string` | — | Optional ID for the sidebar dialog. |
-
-## Attributes
-
-| Export | Attribute | Values | Notes |
-| --- | --- | --- | --- |
-| Sidebar | aria-current | page | Forwarded attribute used by the component styling. |
-| Sidebar | hidden | boolean | Forwarded attribute used by the component styling. |
-| Sidebar | open | boolean | Reflects whether the element is expanded. |
 
 ## Notes
 

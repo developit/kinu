@@ -20,8 +20,8 @@ import {DatePicker} from 'pui';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| value | `JSX.IntrinsicElements` | — | Current date value. |
-| onChange | `JSX.IntrinsicElements` | — | Change handler for date input. |
+| value | `string | number | readonly string[] | undefined` | — | Current date value. |
+| onChange | `(event: Event) => void` | — | Change handler for date input. |
 | disabled | `boolean` | — | Disable the input. |
 | name | `string` | — | Input name used for form submissions. |
 
