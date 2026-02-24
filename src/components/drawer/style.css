@@ -12,24 +12,43 @@
   bottom: 0;
   left: 0;
   background-color: hsl(var(--p-background));
-  animation: drawer-show 300ms var(--p-ease);
   overscroll-behavior: contain;
+  transform: translateY(100%);
+  transition:
+    transform 300ms var(--p-ease),
+    display 300ms allow-discrete,
+    overlay 300ms allow-discrete;
+}
+
+[p="drawer-content"][open] {
+  transform: translateY(0);
+}
+
+@starting-style {
+  [p="drawer-content"][open] {
+    transform: translateY(100%);
+  }
 }
 
 [p="drawer-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
-  animation: dialog-overlay-show 300ms var(--p-ease);
   backdrop-filter: blur(1px);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;
+  opacity: 0;
+  transition:
+    opacity 300ms var(--p-ease),
+    display 300ms allow-discrete,
+    overlay 300ms allow-discrete;
 }
 
-@keyframes drawer-show {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
+[p="drawer-content"][open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  [p="drawer-content"][open]::backdrop {
+    opacity: 0;
   }
 }
