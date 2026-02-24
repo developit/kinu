@@ -2307,7 +2307,7 @@ body .example-demo {
   display: flex;
   flex-direction: column;
   padding: 0 !important;
-  gap: 0;
+  gap: 0 !important;
   overflow: hidden;
 }
 
@@ -2537,7 +2537,7 @@ body .docs-content pre > code {
 
   .docs-sidebar-mobile-header {
     height: 4rem;
-    padding: 0.75rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
     border-bottom: 1px solid hsl(var(--p-border));
@@ -2546,11 +2546,6 @@ body .docs-content pre > code {
 
   .docs-sidebar-mobile-header .demo-sidebar-trigger {
     margin-right: 0;
-  }
-
-  .docs-sidebar-content {
-    gap: 1.5rem;
-    padding: 1rem 1.5rem 2rem;
   }
 }
 
