@@ -2317,6 +2317,7 @@ body .example-demo {
 }
 
 .docs-sidebar-content {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 2rem;
