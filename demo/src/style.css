@@ -2312,11 +2312,17 @@ body .example-demo {
 }
 
 .docs-sidebar-mobile-header {
-  /*
-  display: none;
-  flex-shrink: 0;
-  */
   visibility: hidden;
+  height: 4rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid hsl(var(--p-border));
+  background: hsl(var(--p-background));
+}
+
+.docs-sidebar-mobile-header .demo-sidebar-trigger {
+  margin-right: 0;
 }
 
 .docs-sidebar-content {
@@ -2540,16 +2546,7 @@ body .docs-content pre > code {
   }
 
   .docs-sidebar-mobile-header {
-    height: 4rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid hsl(var(--p-border));
-    background: hsl(var(--p-background));
-  }
-
-  .docs-sidebar-mobile-header .demo-sidebar-trigger {
-    margin-right: 0;
+    visibility: visible;
   }
 }
 
