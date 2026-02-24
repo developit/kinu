@@ -2312,8 +2312,11 @@ body .example-demo {
 }
 
 .docs-sidebar-mobile-header {
+  /*
   display: none;
   flex-shrink: 0;
+  */
+  visibility: hidden;
 }
 
 .docs-sidebar-content {
