@@ -458,3 +458,19 @@
   }
 }
 
+
+@media (prefers-reduced-motion: reduce) {
+  [p="spinner"],
+  [p="spinner"]::before,
+  [p="spinner"]::after {
+    animation: none;
+  }
+
+  [p="spinner"][type="dots"] {
+    background-position: 50% 50%;
+  }
+
+  [p="spinner"][type="ripple"]::after {
+    content: none;
+  }
+}

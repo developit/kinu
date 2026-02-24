@@ -24,3 +24,11 @@
     transform: translateX(100%);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  [p="skeleton"]::after {
+    animation: none;
+    transform: none;
+    opacity: 0.3;
+  }
+}

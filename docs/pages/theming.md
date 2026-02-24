@@ -65,3 +65,28 @@ Animation curves live in `--p-ease` and related tokens. Adjust them globally or 
 
 When you need reduced motion support, respect the `prefers-reduced-motion` media query and reduce durations or disable
 animations in your overrides.
+
+PUI already applies low-motion defaults for core animated primitives (`dialog`, `drawer`, `sheet`, `spinner`, `skeleton`, `toast`). Custom themes should preserve (or further reduce) those transitions instead of re-introducing heavy motion.
+
+## High Contrast / Forced Colors
+
+Use `@media (forced-colors: active)` to keep themes legible in system high-contrast mode. PUI base styles provide defaults for focus ring, border visibility, disabled controls, and selected/active states.
+
+If your theme customizes those affordances, add explicit high-contrast styles using system colors:
+
+```css
+@media (forced-colors: active) {
+  [p="button"]:focus-visible {
+    outline: 2px solid Highlight;
+  }
+
+  [p="button"][aria-selected="true"] {
+    outline: 1px solid Highlight;
+  }
+
+  [p="button"][disabled] {
+    color: GrayText;
+    border-color: GrayText;
+  }
+}
+```

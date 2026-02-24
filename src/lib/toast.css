@@ -119,3 +119,22 @@
   opacity: 0;
   transform: translateY(calc(110% + var(--offset))) scale(var(--scale));
 }
+
+@media (prefers-reduced-motion: reduce) {
+  [p="toast"] {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  [p="toast"] {
+    background: Canvas;
+    color: CanvasText;
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+
+  [p="toast-title"] {
+    color: CanvasText;
+  }
+}

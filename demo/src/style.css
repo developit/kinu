@@ -2555,3 +2555,38 @@ body .docs-content pre > code {
     color: #bbc9d7;
   }
 }
+
+.a11y-page {
+  min-height: 100vh;
+}
+
+.a11y-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 6rem 1rem 2rem;
+}
+
+.a11y-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.a11y-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.a11y-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.a11y-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

@@ -52,3 +52,10 @@
     opacity: 0;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  [p="drawer-content"],
+  [p="drawer-content"]::backdrop {
+    animation: none;
+  }
+}
