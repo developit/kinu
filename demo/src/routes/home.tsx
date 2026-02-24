@@ -14,6 +14,13 @@ import {
   Slider,
   Checkbox,
   Label,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from 'pui';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
@@ -78,6 +85,11 @@ export default function Home() {
             <h3>Notifications</h3>
             <p>Toast messages and alert dialogs</p>
             <NotificationDemo />
+          </Card>
+          <Card class="showcase-demo">
+            <h3>Nested Menus</h3>
+            <p>Pure CSS hover/focus submenus using existing menu primitives</p>
+            <NestedDropdownDemo />
           </Card>
         </div>
       </section>
@@ -425,5 +437,34 @@ function NotificationDemo() {
         </Dialog.Content>
       </Dialog>
     </div>
+  );
+}
+
+function NestedDropdownDemo() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button variant="outline">Open menu</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>New File</DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Share</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem>Email Link</DropdownMenuItem>
+            <DropdownMenuItem>Copy Invite</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Permissions</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent to="left">
+                <DropdownMenuItem>Can view</DropdownMenuItem>
+                <DropdownMenuItem>Can comment</DropdownMenuItem>
+                <DropdownMenuItem>Can edit</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuItem destructive>Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
