@@ -110,6 +110,10 @@
   margin: 0.5rem 0.25rem;
 }
 
+[p="dropdown-content"]:has([p="dropdown-submenu-trigger"]) {
+  overflow: visible;
+}
+
 [p="dropdown-content"] [p="dropdown"] {
   display: block;
 }
@@ -175,7 +179,8 @@
   }
 }
 
-@supports (position-anchor: --p-trigger) and (position-try-fallbacks: --p-submenu-left-top) {
+@supports (position-anchor: --p-trigger) and
+  (position-try-fallbacks: --p-submenu-left-top) {
   [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"] {
     position-try-fallbacks: --p-submenu-left-top, --p-submenu-right-bottom,
       --p-submenu-left-bottom;
