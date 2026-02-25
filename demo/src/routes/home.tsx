@@ -18,9 +18,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSub,
   DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
 } from 'pui';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
@@ -88,7 +86,7 @@ export default function Home() {
           </Card>
           <Card class="showcase-demo">
             <h3>Nested Menus</h3>
-            <p>Pure CSS hover/focus submenus using existing menu primitives</p>
+            <p>Nested dialog submenus with command-driven triggers</p>
             <NestedDropdownDemo />
           </Card>
         </div>
@@ -448,21 +446,25 @@ function NestedDropdownDemo() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>New File</DropdownMenuItem>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Share</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <DropdownMenuSubTrigger>Share</DropdownMenuSubTrigger>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
             <DropdownMenuItem>Email Link</DropdownMenuItem>
             <DropdownMenuItem>Copy Invite</DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Permissions</DropdownMenuSubTrigger>
-              <DropdownMenuSubContent to="left">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <DropdownMenuSubTrigger>Permissions</DropdownMenuSubTrigger>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
                 <DropdownMenuItem>Can view</DropdownMenuItem>
                 <DropdownMenuItem>Can comment</DropdownMenuItem>
                 <DropdownMenuItem>Can edit</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <DropdownMenuItem destructive>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

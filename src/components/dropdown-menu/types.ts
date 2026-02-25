@@ -6,13 +6,11 @@ export interface DropdownMenuOwnProps extends RequiredChildrenProps {
    * Optional ID for the dropdown content. If not provided, one will be auto-generated.
    */
   id?: string;
-
 }
 
 export type DropdownMenuProps = DropdownMenuOwnProps;
 
-export interface DropdownMenuTriggerOwnProps extends BaseProps {
-}
+export interface DropdownMenuTriggerOwnProps extends BaseProps {}
 
 export interface DropdownMenuContentOwnProps {
   /**
@@ -38,7 +36,6 @@ export interface DropdownMenuContentOwnProps {
 }
 
 export interface DropdownMenuItemOwnProps extends BaseProps {
-
   /**
    * When provided, renders the item as an anchor element.
    */
@@ -60,16 +57,7 @@ export interface DropdownMenuItemOwnProps extends BaseProps {
   destructive?: boolean;
 }
 
-export interface DropdownMenuSubOwnProps extends RequiredChildrenProps {}
-
 export interface DropdownMenuSubTriggerOwnProps extends DropdownMenuItemOwnProps {}
-
-export interface DropdownMenuSubContentOwnProps extends BaseProps {
-  /**
-   * Flip submenu alignment to the trigger's left edge.
-   */
-  to?: 'left';
-}
 
 export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
   JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>;
@@ -81,11 +69,6 @@ export type DropdownMenuItemProps = DropdownMenuItemOwnProps &
   Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuItemOwnProps> &
   Omit<JSX.IntrinsicElements['a'], keyof DropdownMenuItemOwnProps>;
 
-export type DropdownMenuSubProps = DropdownMenuSubOwnProps;
-
 export type DropdownMenuSubTriggerProps = DropdownMenuSubTriggerOwnProps &
   Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuSubTriggerOwnProps> &
   Omit<JSX.IntrinsicElements['a'], keyof DropdownMenuSubTriggerOwnProps>;
-
-export type DropdownMenuSubContentProps = DropdownMenuSubContentOwnProps &
-  Omit<JSX.IntrinsicElements['div'], keyof DropdownMenuSubContentOwnProps>;

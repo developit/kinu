@@ -12,9 +12,7 @@ import type {
   DropdownMenuTriggerOwnProps,
   DropdownMenuContentOwnProps,
   DropdownMenuItemOwnProps,
-  DropdownMenuSubOwnProps,
   DropdownMenuSubTriggerOwnProps,
-  DropdownMenuSubContentOwnProps,
 } from './types';
 import './style.css';
 
@@ -71,17 +69,13 @@ export const DropdownMenuItem = createSimpleComponent<
   DropdownMenuItemOwnProps
 >('dropdown-menu-item', (props) => (props.href ? 'a' : 'button'));
 
-export const DropdownMenuSub = createSimpleComponent<'div', DropdownMenuSubOwnProps>(
-  'dropdown-submenu',
-  'div',
-);
+function submenuPointerEnter(this: HTMLElement) {
+  this.click();
+}
 
 export const DropdownMenuSubTrigger = createSimpleComponent<
   'button' | 'a',
   DropdownMenuSubTriggerOwnProps
->('dropdown-submenu-trigger', (props) => (props.href ? 'a' : 'button'));
-
-export const DropdownMenuSubContent = createSimpleComponent<
-  'div',
-  DropdownMenuSubContentOwnProps
->('dropdown-submenu-content', 'div');
+>('dropdown-submenu-trigger', (props) => (props.href ? 'a' : 'button'), {
+  onPointerEnter: submenuPointerEnter,
+});
