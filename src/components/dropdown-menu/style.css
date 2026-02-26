@@ -152,6 +152,38 @@
   margin: 0;
 }
 
+@position-try --p-submenu-right-inset-top {
+  left: calc(0.5rem + 0px);
+  right: auto;
+  top: 0.5rem;
+  bottom: auto;
+  margin: 0;
+}
+
+@position-try --p-submenu-left-inset-top {
+  left: auto;
+  right: 0.5rem;
+  top: 0.5rem;
+  bottom: auto;
+  margin: 0;
+}
+
+@position-try --p-submenu-right-inset-bottom {
+  left: calc(0.5rem + 0px);
+  right: auto;
+  top: auto;
+  bottom: 0.5rem;
+  margin: 0;
+}
+
+@position-try --p-submenu-left-inset-bottom {
+  left: auto;
+  right: 0.5rem;
+  top: auto;
+  bottom: 0.5rem;
+  margin: 0;
+}
+
 @supports (position-anchor: --p-trigger) {
   [p="dropdown-content"] {
     left: anchor(left);
@@ -182,7 +214,12 @@
 @supports (position-anchor: --p-trigger) and
   (position-try-fallbacks: --p-submenu-left-top) {
   [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"] {
-    position-try-fallbacks: --p-submenu-left-top, --p-submenu-right-bottom,
-      --p-submenu-left-bottom;
+    position-try-fallbacks: --p-submenu-left-top,
+      --p-submenu-right-inset-top,
+      --p-submenu-left-inset-top,
+      --p-submenu-right-bottom,
+      --p-submenu-left-bottom,
+      --p-submenu-right-inset-bottom,
+      --p-submenu-left-inset-bottom;
   }
 }
