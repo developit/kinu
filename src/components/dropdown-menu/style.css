@@ -208,12 +208,6 @@
     max-inline-size: min(24rem, calc(100vw - 1rem));
     max-block-size: min(24rem, calc(100dvh - 1rem));
     margin: 0;
-  }
-}
-
-@supports (position-anchor: --p-trigger) and
-  (position-try-fallbacks: --p-submenu-left-top) {
-  [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"] {
     position-try-fallbacks: --p-submenu-left-top,
       --p-submenu-right-inset-top,
       --p-submenu-left-inset-top,
