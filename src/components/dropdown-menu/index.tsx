@@ -69,13 +69,13 @@ export const DropdownMenuItem = createSimpleComponent<
   DropdownMenuItemOwnProps
 >('dropdown-menu-item', (props) => (props.href ? 'a' : 'button'));
 
-function submenuPointerEnter(this: HTMLElement) {
-  this.click();
+function submenuPointerEnter(e: PointerEvent) {
+  (e.currentTarget as HTMLElement | null)?.click();
 }
 
 export const DropdownMenuSubTrigger = createSimpleComponent<
-  'button' | 'a',
+  'button',
   DropdownMenuSubTriggerOwnProps
->('dropdown-submenu-trigger', (props) => (props.href ? 'a' : 'button'), {
+>('dropdown-submenu-trigger', 'button', {
   onPointerEnter: submenuPointerEnter,
 });

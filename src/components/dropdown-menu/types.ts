@@ -57,7 +57,8 @@ export interface DropdownMenuItemOwnProps extends BaseProps {
   destructive?: boolean;
 }
 
-export interface DropdownMenuSubTriggerOwnProps extends DropdownMenuItemOwnProps {}
+export interface DropdownMenuSubTriggerOwnProps
+  extends Omit<DropdownMenuItemOwnProps, 'href'> {}
 
 export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
   JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>;
@@ -70,5 +71,4 @@ export type DropdownMenuItemProps = DropdownMenuItemOwnProps &
   Omit<JSX.IntrinsicElements['a'], keyof DropdownMenuItemOwnProps>;
 
 export type DropdownMenuSubTriggerProps = DropdownMenuSubTriggerOwnProps &
-  Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuSubTriggerOwnProps> &
-  Omit<JSX.IntrinsicElements['a'], keyof DropdownMenuSubTriggerOwnProps>;
+  Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuSubTriggerOwnProps>;
