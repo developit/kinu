@@ -81,8 +81,9 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
 }
 
 let menuShortcutsInstalled: boolean;
-const menuItemSelector =
-  '[p="dropdown-menu-item"],[p="dropdown-submenu-trigger"],[p="context-menu-item"],[p="combobox-option"],[p][tabindex]';
+const topLevelMenuItemSelector =
+  ':scope > :is(button[p], [p][tabindex]), :scope > * > :is(button[p], [p][tabindex])';
+const menuItemSelector = ':is(button[p], [p][tabindex])';
 
 export function installMenuShortcuts() {
   if (menuShortcutsInstalled) return;
@@ -113,7 +114,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   if (!dir) return;
   e.preventDefault();
   if (!selected) {
-    const items = dialog.querySelectorAll<HTMLElement>(menuItemSelector);
+    const items = dialog.querySelectorAll<HTMLElement>(topLevelMenuItemSelector);
     const item = items[dir > 0 ? 0 : items.length - 1];
     if (useFocus) item?.focus();
     else item?.toggleAttribute('selected', true);
