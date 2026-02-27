@@ -81,23 +81,8 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
 }
 
 let menuShortcutsInstalled: boolean;
-const MENU_ITEM_ATTR = 'p';
-const MENU_ITEM_SELECTOR =
+const menuItemSelector =
   '[p="dropdown-menu-item"],[p="dropdown-submenu-trigger"],[p="context-menu-item"],[p="combobox-option"],[p][tabindex]';
-
-function isMenuItem(el: Element | null): el is HTMLElement {
-  if (!el) return false;
-  if (el.hasAttribute('tabindex')) return true;
-  switch (el.getAttribute(MENU_ITEM_ATTR)) {
-    case 'dropdown-menu-item':
-    case 'dropdown-submenu-trigger':
-    case 'context-menu-item':
-    case 'combobox-option':
-      return true;
-    default:
-      return false;
-  }
-}
 
 export function installMenuShortcuts() {
   if (menuShortcutsInstalled) return;
@@ -128,7 +113,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   if (!dir) return;
   e.preventDefault();
   if (!selected) {
-    const items = dialog.querySelectorAll<HTMLElement>(MENU_ITEM_SELECTOR);
+    const items = dialog.querySelectorAll<HTMLElement>(menuItemSelector);
     const item = items[dir > 0 ? 0 : items.length - 1];
     if (useFocus) item?.focus();
     else item?.toggleAttribute('selected', true);
@@ -146,7 +131,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
       next = next.firstElementChild as HTMLElement;
       if (!next) continue;
     }
-    if (!isMenuItem(next)) continue;
+    if (!next.matches(menuItemSelector)) continue;
     if (useFocus) next.focus();
     else {
       selected.toggleAttribute('selected', false);
