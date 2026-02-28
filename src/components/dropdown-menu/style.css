@@ -177,5 +177,26 @@
     margin: 0;
     position-try-fallbacks: --p-submenu-left-top, --p-submenu-right-bottom,
       --p-submenu-left-bottom;
+
+    /* Diagnostic: disable animation transforms for nested submenus so
+       position-try-fallback behavior can be verified in isolation.
+       Revert by removing this override block. */
+    /* transform: translateX(var(--tf-x)) scale(1); */
+    transform: none;
+    /* transition:
+      opacity 200ms var(--p-ease),
+      transform 200ms var(--p-ease),
+      display 200ms allow-discrete,
+      overlay 200ms allow-discrete; */
+    transition: none;
+  }
+}
+
+/* Diagnostic: neutralize @starting-style only for nested submenus while
+   testing anchor + try-fallback interaction. Revert by removing this block. */
+@starting-style {
+  [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"][open] {
+    opacity: 1;
+    transform: none;
   }
 }
