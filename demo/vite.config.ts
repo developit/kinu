@@ -3,11 +3,20 @@ import preact from '@preact/preset-vite';
 import {resolve} from 'node:path';
 
 export default defineConfig({
-  plugins: [preact()],
+  plugins: [
+    preact({
+      prerender: {
+        enabled: true,
+        renderTarget: '#app',
+        previewMiddlewareEnabled: true,
+      },
+    }),
+  ],
   // Use the repository name for asset paths when deployed to GitHub Pages
   //base: '/pui/',
   build: {
     modulePreload: false,
+    cssCodeSplit: false,
     sourcemap: true,
   },
   resolve: {
