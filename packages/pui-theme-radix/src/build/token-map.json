@@ -1,0 +1,65 @@
+{
+  "defaults": {
+    "accent": "blue",
+    "gray": "slate",
+    "panelBackground": "solid"
+  },
+  "radix": {
+    "rootScopeSelector": ".radix-themes",
+    "darkScopeSelector": ".dark .radix-themes",
+    "accentAttr": "[data-accent-color]",
+    "grayAttr": "[data-gray-color]"
+  },
+  "output": {
+    "lightSelector": ":root",
+    "darkSelector": ".dark"
+  },
+  "hslConversion": {
+    "compositeAlphaOver": "--color-background",
+    "normalizeTo": "srgb"
+  },
+  "map": {
+    "--p-background": { "radixVar": "--color-background", "type": "color" },
+    "--p-foreground": { "radixVar": "--gray-12", "type": "color" },
+
+    "--p-card": { "radixVar": "--color-panel-solid", "type": "color" },
+    "--p-card-foreground": { "radixVar": "--gray-12", "type": "color" },
+
+    "--p-popover": { "radixVar": "--color-panel-solid", "type": "color" },
+    "--p-popover-foreground": { "radixVar": "--gray-12", "type": "color" },
+
+    "--p-sidebar": { "radixVar": "--gray-2", "type": "color" },
+
+    "--p-primary": { "radixVar": "--accent-9", "type": "color" },
+    "--p-primary-hover": { "radixVar": "--accent-10", "type": "color" },
+    "--p-primary-foreground": { "radixVar": "--accent-contrast", "type": "color" },
+
+    "--p-secondary": { "radixVar": "--gray-3", "type": "color" },
+    "--p-secondary-hover": { "radixVar": "--gray-4", "type": "color" },
+    "--p-secondary-foreground": { "radixVar": "--gray-12", "type": "color" },
+
+    "--p-muted": { "radixVar": "--gray-3", "type": "color" },
+    "--p-muted-foreground": { "radixVar": "--gray-11", "type": "color" },
+
+    "--p-accent": { "radixVar": "--accent-a3", "type": "color" },
+    "--p-accent-foreground": { "radixVar": "--accent-12", "type": "color" },
+
+    "--p-destructive": { "radixVar": "--red-9", "type": "color" },
+    "--p-destructive-hover": { "radixVar": "--red-10", "type": "color" },
+    "--p-destructive-foreground": { "radixVar": "--red-contrast", "type": "color" },
+
+    "--p-border": { "radixVar": "--gray-a6", "type": "color" },
+    "--p-input": { "radixVar": "--gray-a6", "type": "color" },
+    "--p-ring": { "radixVar": "--focus-8", "type": "color" },
+
+    "--p-radius": { "value": "0.5rem", "type": "raw" },
+
+    "--p-surface": { "radixVar": "--color-surface", "type": "color" },
+    "--p-overlay": { "radixVar": "--color-overlay", "type": "color" },
+
+    "--p-shadow-1": {
+      "value": "0 1px 2px hsl(var(--p-foreground) / 0.06), 0 2px 10px hsl(var(--p-foreground) / 0.08)",
+      "type": "raw"
+    }
+  }
+}

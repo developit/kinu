@@ -1,0 +1,29 @@
+:root {
+  --slate-1: hsl(210 20% 98%);
+  --slate-2: hsl(210 18% 96%);
+  --slate-3: hsl(210 16% 93%);
+  --slate-4: hsl(210 14% 90%);
+  --slate-5: hsl(210 12% 86%);
+  --slate-6: hsl(210 10% 80%);
+  --slate-7: hsl(210 9% 72%);
+  --slate-8: hsl(210 8% 62%);
+  --slate-9: hsl(210 7% 52%);
+  --slate-10: hsl(210 8% 43%);
+  --slate-11: hsl(210 10% 30%);
+  --slate-12: hsl(210 15% 15%);
+  --slate-a6: hsl(210 12% 30% / 0.22);
+
+  --slate-dark-1: hsl(210 18% 10%);
+  --slate-dark-2: hsl(210 18% 12%);
+  --slate-dark-3: hsl(210 18% 16%);
+  --slate-dark-4: hsl(210 18% 20%);
+  --slate-dark-5: hsl(210 18% 24%);
+  --slate-dark-6: hsl(210 18% 30%);
+  --slate-dark-7: hsl(210 18% 38%);
+  --slate-dark-8: hsl(210 18% 48%);
+  --slate-dark-9: hsl(210 18% 58%);
+  --slate-dark-10: hsl(210 18% 68%);
+  --slate-dark-11: hsl(210 20% 80%);
+  --slate-dark-12: hsl(210 20% 94%);
+  --slate-dark-a6: hsl(210 16% 85% / 0.22);
+}

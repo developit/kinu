@@ -1,0 +1,50 @@
+/* Ported from Radix Themes:
+ * - radix-src/components/dialog.css
+ *
+ * Selector mapping:
+ * - .rt-DialogContent             -> [p="dialog-content"]
+ * - .rt-DialogOverlay             -> [p="dialog-content"]::backdrop
+ */
+
+[p="dialog-content"] {
+  border: none;
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-card));
+  color: hsl(var(--p-card-foreground));
+  padding: 1.5rem;
+  max-width: 32rem;
+  box-shadow: var(--p-shadow-1);
+
+  animation: dialog-content-show 250ms ease;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+[p="dialog-content"][open] {
+  display: flex;
+}
+
+[p="dialog-content"]::backdrop {
+  background-color: hsl(var(--p-overlay));
+  animation: dialog-overlay-show 250ms ease;
+}
+
+@keyframes dialog-content-show {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dialog-overlay-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
