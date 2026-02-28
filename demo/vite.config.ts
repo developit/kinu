@@ -16,6 +16,7 @@ export default defineConfig({
   //base: '/pui/',
   build: {
     modulePreload: false,
+    cssCodeSplit: false,
     sourcemap: true,
   },
   resolve: {
