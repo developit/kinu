@@ -5,6 +5,7 @@
   left: 0;
   --tf-x: 0;
   min-width: max(13.5rem, 100%);
+  overflow: visible;
 }
 [p="dropdown-content"][to="left"] {
   left: auto;
@@ -110,9 +111,6 @@
   margin: 0.5rem 0.25rem;
 }
 
-[p="dropdown-content"]:has([p="dropdown-submenu-trigger"]) {
-  overflow: visible;
-}
 
 [p="dropdown-content"] [p="dropdown"] {
   display: block;
@@ -151,7 +149,7 @@
     min-width: max(13.5rem, anchor-size(width));
     max-inline-size: min(24rem, calc(100vw - 1rem));
     max-block-size: min(24rem, calc(100dvh - 1rem));
-    overflow: auto;
+    overflow: visible;
     margin: 0;
     position-try-fallbacks: flip-inline, flip-block, flip-inline flip-block;
     position-try-order: most-inline-size;
