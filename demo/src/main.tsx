@@ -1,12 +1,12 @@
 import './style.css';
 import './iconify.d.ts';
-import {render} from 'preact';
 import {
   LocationProvider,
   Router,
   Route,
   lazy,
   ErrorBoundary,
+  hydrate,
   prerender as ssr,
 } from 'preact-iso';
 import 'iconify-icon';
@@ -69,5 +69,5 @@ export async function prerender(data: {url: string}) {
 if (typeof window !== 'undefined') {
   setViewportVars();
   window.visualViewport?.addEventListener('resize', setViewportVars);
-  render(<App />, document.getElementById('app')!);
+  hydrate(<App />, document.getElementById('app')!);
 }
