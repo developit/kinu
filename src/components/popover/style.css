@@ -13,8 +13,8 @@
   anchor-scope: --p-trigger;
 }
 
-[p="popover"] > [commandfor],
-[p="dropdown"] > [commandfor],
+[p="popover"] > :not(dialog)[commandfor],
+[p="dropdown"] > :not(dialog)[commandfor],
 [p="combobox"] > [p="combobox-input"] {
   anchor-name: --p-trigger;
 }
