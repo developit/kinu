@@ -2,14 +2,14 @@
  * PUI Android Mobile Theme
  *
  * Import after `pui/style.css` and enable with `data-theme="android"`.
- * This theme biases toward Material 3 color, shape, and elevation semantics
- * while staying token-driven and zero-runtime.
+ * Optimized for high-density touch UI: Material-like structure with
+ * subtle iOS-level polish on spacing and typography.
  */
 
 :root[data-theme='android'] {
   color-scheme: light;
 
-  /* Material 3-ish dynamic blue baseline */
+  /* Dynamic-color-inspired baseline */
   --p-background: 210 20% 98%;
   --p-foreground: 225 18% 16%;
   --p-card: 0 0% 100%;
@@ -40,8 +40,15 @@
   --p-input: 220 16% 84%;
   --p-ring: 221 83% 53%;
 
-  /* Material shape scale */
   --p-radius: 1rem;
+
+  /* Theme-local control tokens */
+  --p-mobile-control-height: 2.75rem;
+  --p-mobile-switch-width: 3.25rem;
+  --p-mobile-switch-height: 2rem;
+  --p-mobile-switch-thumb: 1.5rem;
+  --p-mobile-elev-1: 0 1px 2px hsl(220 45% 8% / 0.08), 0 8px 24px hsl(220 45% 8% / 0.1);
+  --p-mobile-elev-2: 0 2px 6px hsl(220 45% 8% / 0.14), 0 18px 42px hsl(220 45% 8% / 0.18);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -76,6 +83,9 @@
     --p-border: 220 12% 25%;
     --p-input: 220 12% 25%;
     --p-ring: 221 92% 72%;
+
+    --p-mobile-elev-1: 0 1px 2px hsl(0 0% 0% / 0.25), 0 10px 26px hsl(0 0% 0% / 0.36);
+    --p-mobile-elev-2: 0 3px 10px hsl(0 0% 0% / 0.34), 0 22px 44px hsl(0 0% 0% / 0.5);
   }
 }
 
@@ -111,25 +121,49 @@
   --p-border: 220 12% 25%;
   --p-input: 220 12% 25%;
   --p-ring: 221 92% 72%;
+
+  --p-mobile-elev-1: 0 1px 2px hsl(0 0% 0% / 0.25), 0 10px 26px hsl(0 0% 0% / 0.36);
+  --p-mobile-elev-2: 0 3px 10px hsl(0 0% 0% / 0.34), 0 22px 44px hsl(0 0% 0% / 0.5);
 }
 
-/* Elevated surfaces and motion cues */
-[data-theme='android'] [p='card'],
-[data-theme='android'] [p='dialog-content'],
-[data-theme='android'] [p='popover-content'],
-[data-theme='android'] [p='sheet-content'],
-[data-theme='android'] [p='drawer-content'] {
+/* Elevated surfaces */
+[data-theme='android'] :is([p='card'], [p='dialog-content'], [p='popover-content']) {
   border: 1px solid hsl(var(--p-border) / 0.35);
   border-radius: calc(var(--p-radius) + 0.25rem);
-  box-shadow: 0 1px 2px hsl(220 45% 8% / 0.08), 0 8px 24px hsl(220 45% 8% / 0.1);
+  box-shadow: var(--p-mobile-elev-1);
 }
 
-/* Filled + tonal + text-like mobile buttons */
+[data-theme='android'] [p='dialog-content'] {
+  box-shadow: var(--p-mobile-elev-2);
+}
+
+[data-theme='android'] [p='sheet-content'] {
+  border-radius: 1.5rem 0 0 1.5rem;
+  border-inline-start: 1px solid hsl(var(--p-border) / 0.4);
+  box-shadow: var(--p-mobile-elev-2);
+}
+
+[data-theme='android'] [p='drawer-content'] {
+  border-radius: 1.5rem 1.5rem 0 0;
+  border-top: 1px solid hsl(var(--p-border) / 0.4);
+  box-shadow: var(--p-mobile-elev-2);
+}
+
+/* Touch-first buttons */
 [data-theme='android'] [p='button'] {
-  min-height: 2.5rem;
+  min-height: var(--p-mobile-control-height);
   border-radius: 999px;
   font-weight: 600;
   letter-spacing: 0.01em;
+}
+
+[data-theme='android'] [p='button'][size='sm'] {
+  min-height: 2.375rem;
+}
+
+[data-theme='android'] [p='button'][size='icon'] {
+  min-width: var(--p-mobile-control-height);
+  min-height: var(--p-mobile-control-height);
 }
 
 [data-theme='android'] [p='button'][variant='outline'] {
@@ -147,33 +181,129 @@
   color: hsl(var(--p-secondary-foreground));
 }
 
-/* Inputs feel native: subtle fill + stronger active ring */
+/* Inputs */
 [data-theme='android'] :is([p='input'], [p='textarea'], [p='select']) {
   border-radius: 0.875rem;
   background: hsl(var(--p-muted) / 0.55);
   border-color: hsl(var(--p-border) / 0.65);
+  min-height: var(--p-mobile-control-height);
+}
+
+[data-theme='android'] [p='textarea'] {
+  padding-block: 0.65rem;
 }
 
 [data-theme='android'] :is([p='input'], [p='textarea'], [p='select']):focus,
 [data-theme='android'] :is([p='input'], [p='textarea'], [p='select']):focus-visible {
   border-color: hsl(var(--p-primary));
-  box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.25);
+  box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.24);
 }
 
-/* Touch-first list/menu rows */
-[data-theme='android'] :is([p='dropdown-item'], [p='context-menu-item'], [p='menubar-item'], [p='navigation-menu-link']) {
+[data-theme='android'] [p='input-group'] {
+  border-radius: 0.875rem;
+  overflow: clip;
+}
+
+/* Lists / menus */
+[data-theme='android'] :is([p='dropdown-menu-item'], [p='context-menu-item'], [p='menubar-item'], [p='navigation-menu-link'], [p='combobox-option']) {
   min-height: 2.75rem;
   border-radius: 0.75rem;
 }
 
-/* Material-like selection controls */
-[data-theme='android'] :is([p='checkbox'], [p='radio']) {
-  border-radius: 0.4rem;
+[data-theme='android'] :is([p='dropdown-content'], [p='context-menu'], [p='combobox-list']) {
+  border-radius: 1rem;
+  box-shadow: var(--p-mobile-elev-2);
+  border-color: hsl(var(--p-border) / 0.65);
+}
+
+/* Tabs feel segmented and tactile */
+[data-theme='android'] [p='tablist'] {
+  min-height: 2.75rem;
+  border-radius: 999px;
+  background: hsl(var(--p-muted));
+  padding: 0.2rem;
+  gap: 0.25rem;
+}
+
+[data-theme='android'] [p='tab'] {
+  min-height: 2.25rem;
+  border-radius: 999px;
+  padding-inline: 0.95rem;
+}
+
+/* Selection controls */
+[data-theme='android'] [p='checkbox'] {
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 0.375rem;
   border-width: 2px;
 }
 
+[data-theme='android'] [p='checkbox']::before {
+  width: 0.58rem;
+  height: 0.58rem;
+}
+
+[data-theme='android'] [p='radio'] {
+  width: 1.125rem;
+  height: 1.125rem;
+  border-width: 2px;
+}
+
+[data-theme='android'] [p='radio']::before {
+  width: 0.54rem;
+  height: 0.54rem;
+}
+
+/* Switch: fix thumb/track proportion and movement */
 [data-theme='android'] [p='switch'] {
-  min-width: 3.25rem;
-  height: 2rem;
+  width: var(--p-mobile-switch-width);
+  height: var(--p-mobile-switch-height);
   border-radius: 999px;
+  border-width: 2px;
+  background-color: hsl(var(--p-muted));
+  border-color: hsl(var(--p-border));
+}
+
+[data-theme='android'] [p='switch']::before {
+  width: var(--p-mobile-switch-thumb);
+  height: var(--p-mobile-switch-thumb);
+  top: calc((var(--p-mobile-switch-height) - var(--p-mobile-switch-thumb)) / 2 - 1px);
+  left: calc((var(--p-mobile-switch-height) - var(--p-mobile-switch-thumb)) / 2 - 1px);
+  background: hsl(var(--p-background));
+  box-shadow: 0 1px 2px hsl(0 0% 0% / 0.28);
+}
+
+[data-theme='android'] [p='switch']:checked {
+  background-color: hsl(var(--p-primary));
+  border-color: hsl(var(--p-primary));
+}
+
+[data-theme='android'] [p='switch']:checked::before {
+  transform: translateX(calc(var(--p-mobile-switch-width) - var(--p-mobile-switch-height)));
+  background: hsl(var(--p-primary-foreground));
+}
+
+[data-theme='android'] [p='switch']:focus-visible {
+  box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.28);
+}
+
+/* Slider thumb/track feel more native on touch */
+[data-theme='android'] [p='slider'] {
+  height: 0.42rem;
+}
+
+[data-theme='android'] [p='slider']::-webkit-slider-thumb {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+[data-theme='android'] [p='slider']::-moz-range-thumb {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Mobile-safe typography spacing */
+[data-theme='android'] :is([p='button'], [p='tab'], [p='navigation-menu-link']) {
+  font-size: 0.95rem;
 }
