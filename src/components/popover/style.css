@@ -95,7 +95,6 @@
   margin: 0 0 0.25rem;
 }
 
-@supports (position-anchor: --p-trigger) and (position-try-fallbacks: --p-menu-right-top) {
   [p="popover-content"],
   [p="dropdown-content"],
   [p="combobox-list"] {
@@ -127,4 +126,4 @@
     --tf-x: 0;
     min-width: anchor-size(width);
   }
-}
+

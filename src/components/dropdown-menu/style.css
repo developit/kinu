@@ -150,7 +150,6 @@
   margin: 0;
 }
 
-@supports (position-anchor: --p-trigger) and (position-try-fallbacks: --p-submenu-left-top) {
   [p="dropdown-content"] {
     left: anchor(left);
     right: auto;
@@ -190,7 +189,7 @@
       overlay 200ms allow-discrete; */
     transition: none;
   }
-}
+
 
 /* Diagnostic: neutralize @starting-style only for nested submenus while
    testing anchor + try-fallback interaction. Revert by removing this block.
