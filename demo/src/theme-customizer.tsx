@@ -3,6 +3,7 @@ import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'pui';
 
 const CUSTOM_THEME_STORAGE_KEY = 'pui-custom-theme';
 const CUSTOM_THEME_STYLE_ID = 'pui-custom-style';
+const DEMO_THEME_STORAGE_KEY = 'pui-demo-theme';
 
 /* ── hex→HSL helper ───────────────────────────────────────── */
 function hexToHsl(hex: string): [number, number, number] {
@@ -91,6 +92,8 @@ const RADIUS_MAP: Record<string, string> = {
 const SCALING_OPTIONS = ['90%', '95%', '100%', '105%', '110%'];
 
 /* ── Generate CSS from settings ────────────────────────────── */
+type DemoTheme = 'default' | 'android';
+
 interface ThemeSettings {
   accentColor: string;
   grayColor: string;
@@ -218,6 +221,28 @@ function parseThemeJSX(input: string): Partial<ThemeSettings> | null {
 }
   */
 
+
+function readSavedTheme(): DemoTheme {
+  try {
+    return localStorage.getItem(DEMO_THEME_STORAGE_KEY) === 'android' ? 'android' : 'default';
+  } catch {}
+  return 'default';
+}
+
+function applyDemoTheme(theme: DemoTheme) {
+  if (theme === 'android') {
+    document.documentElement.dataset.theme = 'android';
+    try {
+      localStorage.setItem(DEMO_THEME_STORAGE_KEY, 'android');
+    } catch {}
+    return;
+  }
+  delete document.documentElement.dataset.theme;
+  try {
+    localStorage.removeItem(DEMO_THEME_STORAGE_KEY);
+  } catch {}
+}
+
 /* ── apply/remove style element ───────────────────────────── */
 function applyCustomTheme(css: string) {
   const existing = document.getElementById(CUSTOM_THEME_STYLE_ID);
@@ -233,6 +258,8 @@ try {
   const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
   if (saved) applyCustomTheme(saved);
 } catch {}
+
+if (typeof window !== 'undefined') applyDemoTheme(readSavedTheme());
 
 /* ── Color swatch ─────────────────────────────────────────── */
 function Swatch({color, selected, onClick, label}: {
@@ -263,6 +290,11 @@ function Swatch({color, selected, onClick, label}: {
 
 /* ── Main component ───────────────────────────────────────── */
 export function ThemeCustomizer() {
+  const [theme, setTheme] = useState<DemoTheme>(() => {
+    if (typeof window === 'undefined') return 'default';
+    return readSavedTheme();
+  });
+
   const [settings, setSettings] = useState<ThemeSettings>(() => {
     try {
       const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
@@ -270,6 +302,10 @@ export function ThemeCustomizer() {
     } catch {}
     return {accentColor: 'blue', grayColor: 'slate', radius: 'medium', scaling: '100%'};
   });
+
+  useEffect(() => {
+    applyDemoTheme(theme);
+  }, [theme]);
 
   // const handlePaste = () => {
   //   const val = pasteRef.current?.value ?? '';
@@ -325,6 +361,27 @@ export function ThemeCustomizer() {
                 <iconify-icon icon="lucide:x" />
               </Button>
             </Dialog.Close>
+          </div>
+
+
+          <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+            <Label>Base Theme</Label>
+            <div style={{display: 'flex', gap: '0.375rem', flexWrap: 'wrap'}}>
+              <Button
+                variant={theme === 'default' ? null : 'outline'}
+                size="sm"
+                onClick={() => setTheme('default')}
+              >
+                Default
+              </Button>
+              <Button
+                variant={theme === 'android' ? null : 'outline'}
+                size="sm"
+                onClick={() => setTheme('android')}
+              >
+                Android
+              </Button>
+            </div>
           </div>
 
           {/* Accent color */}

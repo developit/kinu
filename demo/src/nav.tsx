@@ -10,7 +10,6 @@ import {
   DropdownMenuItem,
 } from 'pui';
 import {ThemeCustomizer} from './theme-customizer.tsx';
-import {ThemeSwitcher} from './theme-switcher.tsx';
 
 export function Nav({
   class: className,
@@ -54,7 +53,6 @@ export function Nav({
         </NavigationMenuItem>
       </NavigationMenuList>
       <div class="nav-actions">
-        <ThemeSwitcher />
         <ThemeCustomizer />
       </div>
     </NavigationMenu>

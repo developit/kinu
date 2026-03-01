@@ -2557,28 +2557,3 @@ body .docs-content pre > code {
   }
 }
 
-
-.theme-switcher {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  color: hsl(var(--p-muted-foreground));
-}
-
-.theme-switcher select {
-  appearance: none;
-  border: 1px solid hsl(var(--p-border));
-  background: hsl(var(--p-background));
-  color: hsl(var(--p-foreground));
-  border-radius: 999px;
-  min-height: 2rem;
-  padding: 0.125rem 0.75rem;
-  font: inherit;
-}
-
-.theme-switcher select:focus-visible {
-  outline: none;
-  border-color: hsl(var(--p-primary));
-  box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.22);
-}
