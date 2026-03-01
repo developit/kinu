@@ -51,8 +51,8 @@
     'Helvetica Neue', 'Inter', system-ui, sans-serif;
   --p-mobile-hairline: rgb(60 60 67 / 0.29);
   --p-mobile-hairline-strong: rgb(60 60 67 / 0.38);
-  --p-mobile-glass: 0 0% 100% / 0.72;
-  --p-mobile-panel: 0 0% 100% / 0.9;
+  --p-mobile-glass: 0 0% 100% / 0.86;
+  --p-mobile-panel: 0 0% 100% / 0.95;
   --p-mobile-vibrancy: saturate(180%) blur(24px);
   --p-mobile-shadow-1: 0 1px 2px rgb(0 0 0 / 0.06);
   --p-mobile-shadow-2: 0 12px 30px rgb(0 0 0 / 0.12);
@@ -97,8 +97,8 @@
 
     --p-mobile-hairline: rgb(84 84 88 / 0.66);
     --p-mobile-hairline-strong: rgb(84 84 88 / 0.84);
-    --p-mobile-glass: 240 5% 14% / 0.76;
-    --p-mobile-panel: 240 5% 16% / 0.9;
+    --p-mobile-glass: 240 5% 12% / 0.8;
+    --p-mobile-panel: 240 6% 14% / 0.92;
     --p-mobile-shadow-1: 0 1px 2px rgb(0 0 0 / 0.42);
     --p-mobile-shadow-2: 0 14px 34px rgb(0 0 0 / 0.46);
     --p-mobile-shadow-press: inset 0 1px 0 rgb(255 255 255 / 0.12),
@@ -150,17 +150,11 @@
 }
 
 [data-theme='mobile-native'] [p='sheet-content'] {
-  border-top-left-radius: 1.25rem;
-  border-bottom-left-radius: 1.25rem;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 1.25rem 0 0 1.25rem;
 }
 
 [data-theme='mobile-native'] [p='drawer-content'] {
-  border-top-left-radius: 1.25rem;
-  border-top-right-radius: 1.25rem;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 1.25rem 1.25rem 0 0;
 }
 
 /* Plain rows resemble grouped list cells */
@@ -177,6 +171,7 @@
 /* iOS-style controls */
 [data-theme='mobile-native'] [p='button'] {
   min-height: 2.75rem;
+  min-width: 2.75rem;
   border-radius: 999px;
   font-size: 1rem;
   font-weight: 600;
@@ -199,6 +194,20 @@
 [data-theme='mobile-native'] [p='button'][variant='secondary'] {
   border: 1px solid var(--p-mobile-hairline);
   background: hsl(var(--p-secondary));
+}
+
+[data-theme='mobile-native'] [p='button'][variant='ghost'] {
+  border: 1px solid transparent;
+  background: transparent;
+  color: hsl(var(--p-primary));
+  box-shadow: none;
+  font-weight: 600;
+}
+
+[data-theme='mobile-native'] [p='button'][variant='ghost']:hover,
+[data-theme='mobile-native'] [p='button'][variant='ghost']:focus-visible {
+  background: hsl(var(--p-primary) / 0.12);
+  color: hsl(var(--p-primary-hover));
 }
 
 [data-theme='mobile-native'] [p='button']:active {
@@ -229,10 +238,14 @@
 [data-theme='mobile-native'] [p='input']:focus,
 [data-theme='mobile-native'] [p='textarea']:focus,
 [data-theme='mobile-native'] [p='select']:focus,
-[data-theme='mobile-native'] [p='combobox-input']:focus {
-  outline: 3px solid hsl(var(--p-ring) / 0.28);
-  outline-offset: 1px;
-  border-color: hsl(var(--p-ring) / 0.55);
+[data-theme='mobile-native'] [p='combobox-input']:focus,
+[data-theme='mobile-native'] [p='input']:focus-visible,
+[data-theme='mobile-native'] [p='textarea']:focus-visible,
+[data-theme='mobile-native'] [p='select']:focus-visible,
+[data-theme='mobile-native'] [p='combobox-input']:focus-visible {
+  outline: none;
+  border-color: hsl(var(--p-ring));
+  box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.22);
 }
 
 /* segmented controls */
@@ -241,11 +254,13 @@
   padding: 0;
   border: 0;
   background: transparent;
+  border-radius: 999px;
 }
 
+
 [data-theme='mobile-native'] [p='toggle-group'] [p='toggle'] {
-  min-height: 2.35rem;
-  padding-inline: 0.9rem;
+  min-height: 2.5rem;
+  padding: 0.45rem 1rem;
   font-weight: 600;
 }
 
@@ -332,6 +347,32 @@
 
 [data-theme='mobile-native'] [p='separator'] {
   background: var(--p-mobile-hairline);
+}
+
+
+[data-theme='mobile-native'] [p='scroll-area'] {
+  scrollbar-width: auto;
+  scrollbar-color: hsl(var(--p-muted-foreground) / 0.5) hsl(var(--p-secondary) / 0.72);
+}
+
+[data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar-track {
+  background: hsl(var(--p-secondary) / 0.68);
+  border-radius: 999px;
+}
+
+[data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar-thumb {
+  background: hsl(var(--p-muted-foreground) / 0.5);
+  border: 2px solid hsl(var(--p-secondary) / 0.72);
+  border-radius: 999px;
+}
+
+[data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--p-muted-foreground) / 0.68);
 }
 
 /* touch ergonomics */
