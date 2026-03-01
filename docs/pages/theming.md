@@ -37,7 +37,7 @@ PUI now includes a mobile-native preset at `src/themes/mobile-native.css`, scope
 <html data-theme="mobile-native">
 ```
 
-The preset pushes controls toward a modern mobile UI look (iOS-inspired colors, frosted surfaces, pill buttons, segmented controls, and touch-sized form fields) while still using the same token contract and attribute selectors.
+The preset pushes controls toward modern iOS UI conventions: SF-style typography stack, translucent/vibrant surfaces, grouped-list row radii, segmented controls, capsule switches/buttons, and touch-sized form fields while still using the same token contract and attribute selectors.
 
 ## Component Variants via Attributes
 
