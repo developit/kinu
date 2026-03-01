@@ -53,6 +53,20 @@ Check out the [live demo](https://pui-demo.netlify.app) to see all components in
 - [Architecture Overview](./ARCHITECTURE.md) - Technical details and design decisions
 - [Component Reference](./docs/components.md) - Complete component API documentation
 
+## Releases (Changesets + npm Trusted Publishing)
+
+This repo publishes from `main` using Changesets and GitHub Actions OIDC (trusted publishing).
+
+### One-time setup required
+
+1. In npm package settings for `pui`, add a **Trusted Publisher** pointing to this GitHub repository and the `.github/workflows/release.yml` workflow on branch `main`.
+2. In GitHub repo settings, allow Actions to create and approve pull requests (needed for the Changesets release PR flow).
+3. Do **not** add `NPM_TOKEN` secrets for publishing; the workflow uses OIDC (`id-token: write`) instead.
+
+After setup, merge PRs with changesets. The release workflow will either:
+- open/update a release PR, or
+- publish to npm when the release PR is merged.
+
 ## Development
 
 ```bash
