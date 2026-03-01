@@ -25,6 +25,20 @@ Override tokens at the root or within a scope. Tokens follow the `--p-*` naming 
 Because values are stored as space-separated `h s l` triplets, components call `hsl(var(--p-primary))` to render consistent
 colors. You can replace tokens with your own palette or plug in design system values.
 
+
+## Mobile Native Theme Preset
+
+PUI now includes a mobile-native preset at `src/themes/mobile-native.css`, scoped to `data-theme="mobile-native"`.
+
+```css
+@import "pui/style.css";
+@import "pui/themes/mobile-native.css";
+
+<html data-theme="mobile-native">
+```
+
+The preset pushes controls toward a modern mobile UI look (iOS-inspired colors, frosted surfaces, pill buttons, segmented controls, and touch-sized form fields) while still using the same token contract and attribute selectors.
+
 ## Component Variants via Attributes
 
 Each component maps props to attributes, letting you target them with CSS selectors:

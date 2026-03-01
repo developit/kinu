@@ -16,13 +16,14 @@
       "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./style.css": "./dist/index.css"
+    "./style.css": "./dist/index.css",
+    "./themes/mobile-native.css": "./dist/themes/mobile-native.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && mkdir -p dist/themes && cp src/themes/*.css dist/themes/",
     "build:demo": "cd demo && pnpm build",
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
