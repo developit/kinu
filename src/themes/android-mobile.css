@@ -1,0 +1,179 @@
+/*
+ * PUI Android Mobile Theme
+ *
+ * Import after `pui/style.css` and enable with `data-theme="android"`.
+ * This theme biases toward Material 3 color, shape, and elevation semantics
+ * while staying token-driven and zero-runtime.
+ */
+
+:root[data-theme='android'] {
+  color-scheme: light;
+
+  /* Material 3-ish dynamic blue baseline */
+  --p-background: 210 20% 98%;
+  --p-foreground: 225 18% 16%;
+  --p-card: 0 0% 100%;
+  --p-card-foreground: 225 18% 16%;
+  --p-popover: 0 0% 100%;
+  --p-popover-foreground: 225 18% 16%;
+  --p-sidebar: 210 20% 96%;
+
+  --p-primary: 221 83% 53%;
+  --p-primary-foreground: 210 40% 99%;
+  --p-primary-hover: 221 83% 48%;
+
+  --p-secondary: 221 35% 92%;
+  --p-secondary-foreground: 224 26% 24%;
+  --p-secondary-hover: 221 35% 87%;
+
+  --p-muted: 220 26% 94%;
+  --p-muted-foreground: 224 12% 45%;
+
+  --p-accent: 221 76% 94%;
+  --p-accent-foreground: 225 18% 16%;
+
+  --p-destructive: 4 74% 52%;
+  --p-destructive-foreground: 0 0% 100%;
+  --p-destructive-hover: 4 74% 46%;
+
+  --p-border: 220 16% 84%;
+  --p-input: 220 16% 84%;
+  --p-ring: 221 83% 53%;
+
+  /* Material shape scale */
+  --p-radius: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='android'] {
+    color-scheme: dark;
+    --p-background: 220 18% 7%;
+    --p-foreground: 210 30% 94%;
+    --p-card: 222 16% 12%;
+    --p-card-foreground: 210 30% 94%;
+    --p-popover: 222 16% 12%;
+    --p-popover-foreground: 210 30% 94%;
+    --p-sidebar: 220 15% 10%;
+
+    --p-primary: 221 92% 72%;
+    --p-primary-foreground: 225 34% 14%;
+    --p-primary-hover: 221 92% 77%;
+
+    --p-secondary: 223 16% 24%;
+    --p-secondary-foreground: 210 30% 94%;
+    --p-secondary-hover: 223 16% 29%;
+
+    --p-muted: 223 12% 19%;
+    --p-muted-foreground: 220 12% 70%;
+
+    --p-accent: 223 16% 22%;
+    --p-accent-foreground: 210 30% 94%;
+
+    --p-destructive: 5 82% 69%;
+    --p-destructive-foreground: 0 0% 12%;
+    --p-destructive-hover: 5 82% 73%;
+
+    --p-border: 220 12% 25%;
+    --p-input: 220 12% 25%;
+    --p-ring: 221 92% 72%;
+  }
+}
+
+.dark[data-theme='android'],
+[data-theme='android'] .dark {
+  color-scheme: dark;
+  --p-background: 220 18% 7%;
+  --p-foreground: 210 30% 94%;
+  --p-card: 222 16% 12%;
+  --p-card-foreground: 210 30% 94%;
+  --p-popover: 222 16% 12%;
+  --p-popover-foreground: 210 30% 94%;
+  --p-sidebar: 220 15% 10%;
+
+  --p-primary: 221 92% 72%;
+  --p-primary-foreground: 225 34% 14%;
+  --p-primary-hover: 221 92% 77%;
+
+  --p-secondary: 223 16% 24%;
+  --p-secondary-foreground: 210 30% 94%;
+  --p-secondary-hover: 223 16% 29%;
+
+  --p-muted: 223 12% 19%;
+  --p-muted-foreground: 220 12% 70%;
+
+  --p-accent: 223 16% 22%;
+  --p-accent-foreground: 210 30% 94%;
+
+  --p-destructive: 5 82% 69%;
+  --p-destructive-foreground: 0 0% 12%;
+  --p-destructive-hover: 5 82% 73%;
+
+  --p-border: 220 12% 25%;
+  --p-input: 220 12% 25%;
+  --p-ring: 221 92% 72%;
+}
+
+/* Elevated surfaces and motion cues */
+[data-theme='android'] [p='card'],
+[data-theme='android'] [p='dialog-content'],
+[data-theme='android'] [p='popover-content'],
+[data-theme='android'] [p='sheet-content'],
+[data-theme='android'] [p='drawer-content'] {
+  border: 1px solid hsl(var(--p-border) / 0.35);
+  border-radius: calc(var(--p-radius) + 0.25rem);
+  box-shadow: 0 1px 2px hsl(220 45% 8% / 0.08), 0 8px 24px hsl(220 45% 8% / 0.1);
+}
+
+/* Filled + tonal + text-like mobile buttons */
+[data-theme='android'] [p='button'] {
+  min-height: 2.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+[data-theme='android'] [p='button'][variant='outline'] {
+  border-color: hsl(var(--p-border));
+  background: hsl(var(--p-background));
+}
+
+[data-theme='android'] [p='button'][variant='ghost'] {
+  color: hsl(var(--p-primary));
+  background: transparent;
+}
+
+[data-theme='android'] [p='button'][variant='secondary'] {
+  background: hsl(var(--p-secondary));
+  color: hsl(var(--p-secondary-foreground));
+}
+
+/* Inputs feel native: subtle fill + stronger active ring */
+[data-theme='android'] :is([p='input'], [p='textarea'], [p='select']) {
+  border-radius: 0.875rem;
+  background: hsl(var(--p-muted) / 0.55);
+  border-color: hsl(var(--p-border) / 0.65);
+}
+
+[data-theme='android'] :is([p='input'], [p='textarea'], [p='select']):focus,
+[data-theme='android'] :is([p='input'], [p='textarea'], [p='select']):focus-visible {
+  border-color: hsl(var(--p-primary));
+  box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.25);
+}
+
+/* Touch-first list/menu rows */
+[data-theme='android'] :is([p='dropdown-item'], [p='context-menu-item'], [p='menubar-item'], [p='navigation-menu-link']) {
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+}
+
+/* Material-like selection controls */
+[data-theme='android'] :is([p='checkbox'], [p='radio']) {
+  border-radius: 0.4rem;
+  border-width: 2px;
+}
+
+[data-theme='android'] [p='switch'] {
+  min-width: 3.25rem;
+  height: 2rem;
+  border-radius: 999px;
+}

@@ -65,3 +65,22 @@ Animation curves live in `--p-ease` and related tokens. Adjust them globally or 
 
 When you need reduced motion support, respect the `prefers-reduced-motion` media query and reduce durations or disable
 animations in your overrides.
+
+## Native Android Mobile Theme
+
+PUI now ships an opinionated mobile theme tuned for modern Material-style surfaces and controls.
+Import it after the default stylesheet, then opt-in via `data-theme="android"`:
+
+```ts
+import 'pui/style.css';
+import 'pui/themes/android-mobile.css';
+```
+
+```html
+<html data-theme="android">
+  <!-- app -->
+</html>
+```
+
+The theme stays token-based (no runtime provider), includes light + dark palettes, and adds mobile-specific styling for
+surface elevation, pill buttons, touch-target sizing, and input focus rings.
