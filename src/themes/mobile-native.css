@@ -149,6 +149,20 @@
   box-shadow: var(--p-mobile-shadow-1), var(--p-mobile-shadow-2);
 }
 
+[data-theme='mobile-native'] [p='sheet-content'] {
+  border-top-left-radius: 1.25rem;
+  border-bottom-left-radius: 1.25rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+[data-theme='mobile-native'] [p='drawer-content'] {
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 /* Plain rows resemble grouped list cells */
 [data-theme='mobile-native'] [p='menubar-item'],
 [data-theme='mobile-native'] [p='dropdown-menu-item'],
@@ -222,17 +236,33 @@
 }
 
 /* segmented controls */
-[data-theme='mobile-native'] [p='toggle-group'],
+[data-theme='mobile-native'] [p='toggle-group'] {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+[data-theme='mobile-native'] [p='toggle-group'] [p='toggle'] {
+  min-height: 2.35rem;
+  padding-inline: 0.9rem;
+  font-weight: 600;
+}
+
+[data-theme='mobile-native'] [p='toggle-group'] [p='toggle'][aria-pressed='true'] {
+  position: relative;
+  z-index: 1;
+}
+
 [data-theme='mobile-native'] [p='tab-list'] {
   display: inline-flex;
   gap: 0.2rem;
-  padding: 0.22rem;
+  padding: 0.2rem;
   border-radius: 999px;
   border: 1px solid var(--p-mobile-hairline);
   background: hsl(var(--p-secondary));
 }
 
-[data-theme='mobile-native'] [p='toggle-group'] [p='toggle'],
 [data-theme='mobile-native'] [p='tab-list'] [p='tab'] {
   min-height: 2.15rem;
   border-radius: 999px;
@@ -240,8 +270,6 @@
   font-weight: 600;
 }
 
-[data-theme='mobile-native'] [p='toggle-group'] [p='toggle'][pressed],
-[data-theme='mobile-native'] [p='toggle-group'] [p='toggle'][aria-pressed='true'],
 [data-theme='mobile-native'] [p='tab-list'] [p='tab'][active],
 [data-theme='mobile-native'] [p='tab-list'] [p='tab'][aria-selected='true'] {
   background: hsl(var(--p-card));
@@ -265,6 +293,22 @@
   box-shadow:
     0 1px 2px rgb(0 0 0 / 0.22),
     0 0 0 0.5px rgb(0 0 0 / 0.08);
+}
+
+[data-theme='mobile-native'] [p='toast'],
+[data-theme='mobile-native'] [p='dropdown-menu-content'],
+[data-theme='mobile-native'] [p='context-menu-content'],
+[data-theme='mobile-native'] [p='popover-content'],
+[data-theme='mobile-native'] [p='dialog-content'],
+[data-theme='mobile-native'] [p='alert-dialog-content'] {
+  background: hsl(var(--p-mobile-glass));
+  -webkit-backdrop-filter: var(--p-mobile-vibrancy);
+  backdrop-filter: var(--p-mobile-vibrancy);
+  border-color: var(--p-mobile-hairline);
+}
+
+[data-theme='mobile-native'] [p='toast'] {
+  box-shadow: var(--p-mobile-shadow-1), var(--p-mobile-shadow-2);
 }
 
 /* modal polish */
