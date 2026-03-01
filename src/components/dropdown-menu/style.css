@@ -126,30 +126,6 @@
   z-index: 11;
 }
 
-@position-try --p-submenu-left-top {
-  left: auto;
-  right: anchor(left);
-  top: anchor(top);
-  bottom: auto;
-  margin: 0;
-}
-
-@position-try --p-submenu-right-bottom {
-  left: anchor(right);
-  right: auto;
-  top: auto;
-  bottom: anchor(bottom);
-  margin: 0;
-}
-
-@position-try --p-submenu-left-bottom {
-  left: auto;
-  right: anchor(left);
-  top: auto;
-  bottom: anchor(bottom);
-  margin: 0;
-}
-
   [p="dropdown-content"] {
     left: anchor(left);
     right: auto;
@@ -165,17 +141,15 @@
   }
 
   [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"] {
-    left: anchor(right);
+    left: clamp(0.5rem, anchor(right), calc(100vw - 13.5rem - 0.5rem));
     right: auto;
-    top: anchor(top);
+    top: clamp(0.5rem, anchor(top), calc(100dvh - 24rem - 0.5rem));
     bottom: auto;
     min-width: max(13.5rem, anchor-size(width));
     max-inline-size: min(24rem, calc(100vw - 1rem));
     max-block-size: min(24rem, calc(100dvh - 1rem));
     overflow: visible;
     margin: 0;
-    position-try-fallbacks: --p-submenu-left-top, --p-submenu-right-bottom,
-      --p-submenu-left-bottom;
 
     /* Diagnostic: disable animation transforms for nested submenus so
        position-try-fallback behavior can be verified in isolation.
