@@ -193,10 +193,12 @@
 }
 
 /* Diagnostic: neutralize @starting-style only for nested submenus while
-   testing anchor + try-fallback interaction. Revert by removing this block. */
+   testing anchor + try-fallback interaction. Revert by removing this block.
 @starting-style {
   [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"][open] {
     opacity: 1;
     transform: none;
   }
 }
+*/
+

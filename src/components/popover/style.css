@@ -60,6 +60,7 @@
   transform: translateX(var(--tf-x)) scale(1);
 }
 
+/* Diagnostic: temporarily disabled to test anchor/try-fallback behavior.
 @starting-style {
   [p="popover-content"][open],
   [p="dropdown-content"][open],
@@ -69,7 +70,7 @@
     transform: translateX(var(--tf-x)) scale(0.94);
   }
 }
-
+*/
 @position-try --p-menu-right-top {
   left: auto;
   right: anchor(right);
