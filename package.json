@@ -26,13 +26,17 @@
     "build:demo": "cd demo && pnpm build",
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
-    "test": "vitest run"
+    "test": "vitest run",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
   },
   "peerDependencies": {
     "preact": "^10.26.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.29.8",
     "@preact/preset-vite": "^2.10.1",
     "@types/node": "^22.15.30",
     "preact": "^10.26.9",
@@ -54,5 +58,9 @@
     "patchedDependencies": {
       "preact-iso": "patches/preact-iso.patch"
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
