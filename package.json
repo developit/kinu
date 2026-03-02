@@ -2,6 +2,10 @@
   "name": "pui",
   "version": "0.1.0",
   "description": "Performance-focused Preact UI toolkit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/developit/pui.git"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "type": "module",
