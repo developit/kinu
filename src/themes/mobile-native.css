@@ -351,28 +351,35 @@
 
 
 [data-theme='mobile-native'] [p='scroll-area'] {
+  overflow: scroll;
+  scrollbar-gutter: stable both-edges;
   scrollbar-width: auto;
-  scrollbar-color: hsl(var(--p-muted-foreground) / 0.5) hsl(var(--p-secondary) / 0.72);
+  scrollbar-color: hsl(var(--p-muted-foreground) / 0.58) hsl(var(--p-secondary) / 0.78);
 }
 
 [data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
 }
 
 [data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar-track {
-  background: hsl(var(--p-secondary) / 0.68);
+  background: hsl(var(--p-secondary) / 0.78);
   border-radius: 999px;
 }
 
 [data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar-thumb {
-  background: hsl(var(--p-muted-foreground) / 0.5);
-  border: 2px solid hsl(var(--p-secondary) / 0.72);
+  background: hsl(var(--p-muted-foreground) / 0.58);
+  border: 2px solid hsl(var(--p-secondary) / 0.78);
   border-radius: 999px;
+  background-clip: padding-box;
 }
 
 [data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--p-muted-foreground) / 0.68);
+  background: hsl(var(--p-muted-foreground) / 0.72);
+}
+
+[data-theme='mobile-native'] [p='scroll-area']::-webkit-scrollbar-corner {
+  background: hsl(var(--p-secondary) / 0.78);
 }
 
 /* touch ergonomics */
