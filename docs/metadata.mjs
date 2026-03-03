@@ -237,7 +237,7 @@ export default [
     category: 'Data Input',
     order: 8,
     folder: 'file-upload',
-    description: 'Styled file input using ::file-selector-button to match the design system without hiding the native element.',
+    description: 'Native file input with a styled button for selecting local files.',
     usage: '<FileUpload accept="image/*" />',
     notes: [
       'Sets type="file" for you and forwards all native input props.',

@@ -1,6 +1,6 @@
 # File Upload
 
-Styled file input using `::file-selector-button` to match the design system without hiding the native element.
+Native file input with a styled button for selecting local files.
 
 ## Usage
 
