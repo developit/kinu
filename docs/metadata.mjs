@@ -231,6 +231,20 @@ export default [
     ]
   },
   {
+    slug: 'color-picker',
+    title: 'Color Picker',
+    section: 'Components',
+    category: 'Data Input',
+    order: 7,
+    folder: 'color-picker',
+    description: 'Styled color swatch input that opens the native OS color picker.',
+    usage: '<ColorPicker />',
+    notes: [
+      'Sets type="color" for you and forwards all native input props.',
+      'Pairs naturally with `Input` inside an `InputGroup` to show an editable hex value alongside the swatch.',
+    ]
+  },
+  {
     slug: 'date-picker',
     title: 'Date Picker',
     section: 'Components',
