@@ -1,11 +1,12 @@
 import type {JSX} from 'preact';
+import type {BaseProps} from '../../types/component-props';
 
 /**
  * Size presets supported by Avatar.
  */
 export type AvatarSize = 'sm' | 'md' | 'lg';
 
-export interface AvatarOwnProps {
+export interface AvatarOwnProps extends BaseProps {
   /**
    * Image source for the avatar.
    */
@@ -19,7 +20,7 @@ export interface AvatarOwnProps {
   /**
    * Fallback initials or text rendered via the alt attribute.
    */
-  children?: string | number;
+  children?: string | number | BaseProps['children'];
 
   /**
    * Size preset for the avatar.

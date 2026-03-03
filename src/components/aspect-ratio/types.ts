@@ -1,6 +1,7 @@
 import type {JSX} from 'preact';
+import type {BaseProps} from '../../types/component-props';
 
-export interface AspectRatioOwnProps {
+export interface AspectRatioOwnProps extends BaseProps {
   /**
    * Aspect ratio expressed as a CSS ratio string (e.g. "16 / 9").
    */
