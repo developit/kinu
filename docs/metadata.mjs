@@ -231,6 +231,21 @@ export default [
     ]
   },
   {
+    slug: 'file-upload',
+    title: 'File Upload',
+    section: 'Components',
+    category: 'Data Input',
+    order: 8,
+    folder: 'file-upload',
+    description: 'Styled file input using ::file-selector-button to match the design system without hiding the native element.',
+    usage: '<FileUpload accept="image/*" />',
+    notes: [
+      'Sets type="file" for you and forwards all native input props.',
+      'Use the accept prop to restrict selectable file types.',
+      'Use capture="user" or capture="environment" to invoke the camera on mobile.',
+    ]
+  },
+  {
     slug: 'date-picker',
     title: 'Date Picker',
     section: 'Components',

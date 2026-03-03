@@ -1,0 +1,42 @@
+@import "../../variables.css";
+
+[p="file-upload"] {
+  font: inherit;
+  font-size: 0.875rem;
+  color: hsl(var(--p-foreground));
+}
+
+[p="file-upload"]::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid hsl(var(--p-input));
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-background));
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--p-foreground));
+  cursor: pointer;
+  transition-property: background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+[p="file-upload"]::file-selector-button:hover {
+  background-color: hsl(var(--p-accent));
+  border-color: hsl(var(--p-border));
+}
+
+[p="file-upload"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+}
+
+[p="file-upload"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+[p="file-upload"]:disabled::file-selector-button {
+  pointer-events: none;
+}

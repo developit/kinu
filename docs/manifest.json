@@ -423,6 +423,15 @@
     "description": "Styled date input that shares the same foundation as Calendar."
   },
   {
+    "slug": "file-upload",
+    "title": "File Upload",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 8,
+    "file": "components/file-upload.md",
+    "description": "Styled file input using ::file-selector-button to match the design system without hiding the native element."
+  },
+  {
     "slug": "sheet",
     "title": "Sheet",
     "section": "Components",
