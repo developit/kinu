@@ -20,7 +20,7 @@ import {DatePicker} from 'kinu';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| value | `string | number | readonly string[] | undefined` | — | Current date value. |
+| value | `string \| number \| readonly string[] \| undefined` | — | Current date value. |
 | onChange | `(event: Event) => void` | — | Change handler for date input. |
 | disabled | `boolean` | — | Disable the input. |
 | name | `string` | — | Input name used for form submissions. |
