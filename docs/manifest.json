@@ -423,6 +423,15 @@
     "description": "Styled date input that shares the same foundation as Calendar."
   },
   {
+    "slug": "time-picker",
+    "title": "Time Picker",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 9,
+    "file": "components/time-picker.md",
+    "description": "Styled time input that shares the same foundation as Date Picker."
+  },
+  {
     "slug": "sheet",
     "title": "Sheet",
     "section": "Components",

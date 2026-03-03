@@ -245,6 +245,20 @@ export default [
     ]
   },
   {
+    slug: 'time-picker',
+    title: 'Time Picker',
+    section: 'Components',
+    category: 'Data Input',
+    order: 9,
+    folder: 'time-picker',
+    description: 'Styled time input that shares the same foundation as Date Picker.',
+    usage: '<TimePicker />',
+    notes: [
+      'Sets type="time" for you and forwards all native input props.',
+      'Use the step prop to constrain selectable intervals, e.g. step={1800} for 30-minute increments.',
+    ]
+  },
+  {
     slug: 'dialog',
     title: 'Dialog',
     section: 'Components',

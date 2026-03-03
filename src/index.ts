@@ -276,6 +276,8 @@ export type {
 } from './components/carousel/types';
 export {DatePicker} from './components/date-picker';
 export type {DatePickerProps, DatePickerOwnProps} from './components/date-picker/types';
+export {TimePicker} from './components/time-picker';
+export type {TimePickerProps, TimePickerOwnProps} from './components/time-picker/types';
 export {Spinner} from './components/spinner';
 export type {SpinnerProps, SpinnerOwnProps, SpinnerSize, SpinnerType, SpinnerVariant} from './components/spinner/types';
 export {InputGroup} from './components/input-group';
