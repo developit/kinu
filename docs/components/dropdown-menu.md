@@ -5,7 +5,7 @@ Command-driven dropdown built on top of `<dialog>`.
 ## Usage
 
 ```tsx
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from 'pui';
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from 'kinu';
 
 <DropdownMenu>
   <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>
@@ -19,10 +19,10 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| DropdownMenu | Dropdown menu | `<span p="dropdown">` |
+| DropdownMenu | Dropdown menu | `<span k="dropdown">` |
 | DropdownMenuTrigger | Menu trigger | — |
-| DropdownMenuContent | Menu content | `<dialog p="dropdown-content">` |
-| DropdownMenuItem | Menu item | `p="dropdown-menu-item"` |
+| DropdownMenuContent | Menu content | `<dialog k="dropdown-content">` |
+| DropdownMenuItem | Menu item | `k="dropdown-menu-item"` |
 
 ## Props
 

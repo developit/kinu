@@ -25,7 +25,7 @@ export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <span p="dropdown">{children}</span>
+      <span k="dropdown">{children}</span>
     </IdCtx.Provider>
   );
 }
@@ -54,7 +54,7 @@ export function DropdownMenuContent({
   const resolvedId = id ?? ctx;
   return (
     <dialog
-      p="dropdown-content"
+      k="dropdown-content"
       id={resolvedId}
       command={command}
       commandFor={commandFor ?? resolvedId}

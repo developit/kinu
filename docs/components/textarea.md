@@ -5,7 +5,7 @@ Text area with matching input styling, variants, and sizes.
 ## Usage
 
 ```tsx
-import {Textarea} from 'pui';
+import {Textarea} from 'kinu';
 
 <Textarea rows={4} placeholder="Write here" />
 ```
@@ -14,7 +14,7 @@ import {Textarea} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Textarea | Multi-line text input | `<textarea p="textarea">` |
+| Textarea | Multi-line text input | `<textarea k="textarea">` |
 
 ## Props
 

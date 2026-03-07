@@ -1,4 +1,4 @@
-import {Button, Dialog} from 'pui';
+import {Button, Dialog} from 'kinu';
 
 export function Demo() {
   return (

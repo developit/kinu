@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="card"] {
+[k="card"] {
   border-radius: var(--p-radius);
   border: 1px solid hsl(var(--p-border));
   background-color: hsl(var(--p-card));
@@ -12,16 +12,16 @@
 }
 
 /* No padding variant for when you want manual control */
-[p="card"][padding="none"] {
+[k="card"][padding="none"] {
   padding: 0;
 }
 
 /* Smaller padding */
-[p="card"][padding="sm"] {
+[k="card"][padding="sm"] {
   padding: 1rem;
 }
 
 /* Larger padding */
-[p="card"][padding="lg"] {
+[k="card"][padding="lg"] {
   padding: 2rem;
 }

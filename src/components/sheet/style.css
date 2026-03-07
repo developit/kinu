@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="sheet-content"] {
+[k="sheet-content"] {
   border: none;
   padding: 1rem;
   margin: 0;
@@ -24,17 +24,17 @@
     overlay 300ms allow-discrete;
 }
 
-[p="sheet-content"][open] {
+[k="sheet-content"][open] {
   transform: translateX(0);
 }
 
 @starting-style {
-  [p="sheet-content"][open] {
+  [k="sheet-content"][open] {
     transform: translateX(100%);
   }
 }
 
-[p="sheet-content"]::backdrop {
+[k="sheet-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(1px);
   overscroll-behavior: contain;
@@ -47,12 +47,12 @@
     overlay 300ms allow-discrete;
 }
 
-[p="sheet-content"][open]::backdrop {
+[k="sheet-content"][open]::backdrop {
   opacity: 1;
 }
 
 @starting-style {
-  [p="sheet-content"][open]::backdrop {
+  [k="sheet-content"][open]::backdrop {
     opacity: 0;
   }
 }

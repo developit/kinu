@@ -1,4 +1,4 @@
-import {AspectRatio} from 'pui';
+import {AspectRatio} from 'kinu';
 
 export function Demo() {
   return (

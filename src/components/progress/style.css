@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="progress"] {
+[k="progress"] {
   width: 100%;
   height: 0.5rem;
   appearance: none;
@@ -10,16 +10,16 @@
   background-color: hsl(var(--p-secondary));
 }
 
-[p="progress"]::-webkit-progress-bar {
+[k="progress"]::-webkit-progress-bar {
   background-color: transparent;
 }
 
-[p="progress"]::-webkit-progress-value {
+[k="progress"]::-webkit-progress-value {
   background-color: hsl(var(--p-primary));
   transition: all 300ms var(--p-ease);
 }
 
-[p="progress"]::-moz-progress-bar {
+[k="progress"]::-moz-progress-bar {
   background-color: hsl(var(--p-primary));
   transition: all 300ms var(--p-ease);
 }

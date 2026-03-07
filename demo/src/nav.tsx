@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from 'pui';
+} from 'kinu';
 import {ThemeCustomizer} from './theme-customizer.tsx';
 
 export function Nav({

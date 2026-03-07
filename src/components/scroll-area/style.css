@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="scroll-area"] {
+[k="scroll-area"] {
   overflow: auto;
   scrollbar-width: thin;
 }

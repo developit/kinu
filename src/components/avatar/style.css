@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="avatar"] {
+[k="avatar"] {
   display: inline-block;
   width: 2rem;
   height: 2rem;
@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-[p="avatar"]:after {
+[k="avatar"]:after {
   position: absolute;
   display: block;
   left: 0;

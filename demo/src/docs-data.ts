@@ -1,5 +1,5 @@
-// import manifestJson from 'pui-docs/manifest.json' assert {type: 'json'};
-import manifestJson from 'pui-docs/manifest.json';
+// import manifestJson from 'kinu-docs/manifest.json' assert {type: 'json'};
+import manifestJson from 'kinu-docs/manifest.json';
 
 // Lazy-loaded markdown docs
 const docsLoaders = import.meta.glob('../../docs/**/*.md', {

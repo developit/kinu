@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="drawer-content"] {
+[k="drawer-content"] {
   border: none;
   padding: 1rem;
   margin: 0;
@@ -20,17 +20,17 @@
     overlay 300ms allow-discrete;
 }
 
-[p="drawer-content"][open] {
+[k="drawer-content"][open] {
   transform: translateY(0);
 }
 
 @starting-style {
-  [p="drawer-content"][open] {
+  [k="drawer-content"][open] {
     transform: translateY(100%);
   }
 }
 
-[p="drawer-content"]::backdrop {
+[k="drawer-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(1px);
   overscroll-behavior: contain;
@@ -43,12 +43,12 @@
     overlay 300ms allow-discrete;
 }
 
-[p="drawer-content"][open]::backdrop {
+[k="drawer-content"][open]::backdrop {
   opacity: 1;
 }
 
 @starting-style {
-  [p="drawer-content"][open]::backdrop {
+  [k="drawer-content"][open]::backdrop {
     opacity: 0;
   }
 }

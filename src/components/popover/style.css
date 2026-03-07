@@ -1,28 +1,28 @@
 @import "../../variables.css";
 
-[p="popover"],
-[p="dropdown"] {
+[k="popover"],
+[k="dropdown"] {
   position: relative;
   display: inline-block;
   overflow: visible;
 }
 
-[p="popover"],
-[p="dropdown"],
-[p="combobox"] {
+[k="popover"],
+[k="dropdown"],
+[k="combobox"] {
   anchor-scope: --p-trigger;
 }
 
-[p="popover"] > [commandfor],
-[p="dropdown"] > [commandfor],
-[p="combobox"] > [p="combobox-input"] {
+[k="popover"] > [commandfor],
+[k="dropdown"] > [commandfor],
+[k="combobox"] > [k="combobox-input"] {
   anchor-name: --p-trigger;
 }
 
-[p="popover-content"],
-[p="dropdown-content"],
-[p="context-menu"],
-[p="combobox-list"] {
+[k="popover-content"],
+[k="dropdown-content"],
+[k="context-menu"],
+[k="combobox-list"] {
   position: absolute;
   display: none;
   top: 100%;
@@ -50,10 +50,10 @@
   outline: none;
 }
 
-[p="popover-content"][open],
-[p="dropdown-content"][open],
-[p="context-menu"][open],
-[p="combobox-list"][open] {
+[k="popover-content"][open],
+[k="dropdown-content"][open],
+[k="context-menu"][open],
+[k="combobox-list"][open] {
   display: inline-block;
   pointer-events: auto;
   opacity: 1;
@@ -61,10 +61,10 @@
 }
 
 @starting-style {
-  [p="popover-content"][open],
-  [p="dropdown-content"][open],
-  [p="context-menu"][open],
-  [p="combobox-list"][open] {
+  [k="popover-content"][open],
+  [k="dropdown-content"][open],
+  [k="context-menu"][open],
+  [k="combobox-list"][open] {
     opacity: 0;
     transform: translateX(var(--tf-x)) scale(0.94);
   }
@@ -95,9 +95,9 @@
 }
 
 @supports (position-anchor: --p-trigger) and (position-try-fallbacks: --p-menu-right-top) {
-  [p="popover-content"],
-  [p="dropdown-content"],
-  [p="combobox-list"] {
+  [k="popover-content"],
+  [k="dropdown-content"],
+  [k="combobox-list"] {
     position: fixed;
     position-anchor: --p-trigger;
     left: anchor(left);
@@ -112,17 +112,17 @@
     position-try-fallbacks: --p-menu-right-top, --p-menu-left-bottom, --p-menu-right-bottom;
   }
 
-  [p="popover-content"] {
+  [k="popover-content"] {
     --tf-x: 0;
     min-width: anchor-size(width);
   }
 
-  [p="dropdown-content"] {
+  [k="dropdown-content"] {
     --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 
-  [p="combobox-list"] {
+  [k="combobox-list"] {
     --tf-x: 0;
     min-width: anchor-size(width);
   }

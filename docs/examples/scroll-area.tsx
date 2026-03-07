@@ -1,4 +1,4 @@
-import {ScrollArea} from 'pui';
+import {ScrollArea} from 'kinu';
 
 export function Demo() {
   return (

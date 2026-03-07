@@ -4,7 +4,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
   toast,
-} from 'pui';
+} from 'kinu';
 
 function logText(e: MouseEvent | string) {
   const text =

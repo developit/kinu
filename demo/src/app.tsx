@@ -1,4 +1,4 @@
-import {Sidebar, SidebarTrigger, ToastContainer} from 'pui';
+import {Sidebar, SidebarTrigger, ToastContainer} from 'kinu';
 import {Nav} from './nav';
 import {componentGroups, overviewEntries} from './docs-data';
 import {useEffect} from 'preact/hooks';

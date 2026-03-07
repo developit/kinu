@@ -8,7 +8,7 @@ import {
   TabList,
   Tab,
   TabPanel,
-} from 'pui';
+} from 'kinu';
 import {useState} from 'preact/hooks';
 import {CodeBlock} from '../code-block';
 import {Nav} from '../nav';
@@ -24,9 +24,9 @@ export default function GettingStarted() {
 
       <main class="getting-started-content">
         <header class="getting-started-header">
-          <h1>Getting Started with PUI</h1>
+          <h1>Getting Started with kinu</h1>
           <p class="lead">
-            Learn how to set up and use PUI components in your project. Build
+            Learn how to set up and use kinu components in your project. Build
             beautiful, accessible interfaces with minimal effort.
           </p>
         </header>
@@ -56,22 +56,22 @@ export default function GettingStarted() {
           {activeTab === 'install' && (
             <TabPanel>
               <Card>
-                <h3>Install PUI</h3>
+                <h3>Install kinu</h3>
                 <p>
-                  Add PUI to your project using your preferred package manager:
+                  Add kinu to your project using your preferred package manager:
                 </p>
 
                 <h4>npm</h4>
-                <CodeBlock code="npm install pui" />
+                <CodeBlock code="npm install kinu" />
 
                 <h4>pnpm</h4>
-                <CodeBlock code="pnpm add pui" />
+                <CodeBlock code="pnpm add kinu" />
 
                 <h4>yarn</h4>
-                <CodeBlock code="yarn add pui" />
+                <CodeBlock code="yarn add kinu" />
 
                 <Alert>
-                  <strong>Prerequisites:</strong> PUI requires Preact 10.5.0 or
+                  <strong>Prerequisites:</strong> kinu requires Preact 10.5.0 or
                   higher.
                 </Alert>
               </Card>
@@ -83,7 +83,7 @@ export default function GettingStarted() {
               <Card>
                 <h3>Project Setup</h3>
                 <p>
-                  After installation, import the PUI styles and start using
+                  After installation, import the kinu styles and start using
                   components:
                 </p>
 
@@ -91,13 +91,13 @@ export default function GettingStarted() {
                 <p>Add the CSS import to your main entry point:</p>
                 <CodeBlock
                   code={`// In your main.tsx or index.tsx
-import 'pui/style.css';`}
+import 'kinu/style.css';`}
                 />
 
                 <h4>Import Components</h4>
                 <p>Import individual components as needed:</p>
                 <CodeBlock
-                  code={`import { Button, Card, Input } from 'pui';`}
+                  code={`import { Button, Card, Input } from 'kinu';`}
                 />
                 <p>
                   Unused components will be tree-shaken, though frankly at 5kB
@@ -106,12 +106,12 @@ import 'pui/style.css';`}
 
                 <h4>TypeScript Support</h4>
                 <p>
-                  PUI comes with built-in TypeScript definitions. No additional
+                  kinu comes with built-in TypeScript definitions. No additional
                   setup required!
                 </p>
 
                 <Alert variant="default">
-                  <strong>CSS Variables:</strong> PUI uses CSS custom properties
+                  <strong>CSS Variables:</strong> kinu uses CSS custom properties
                   for theming. You can customize the design tokens by overriding
                   these variables.
                 </Alert>
@@ -126,7 +126,7 @@ import 'pui/style.css';`}
                 <p>Here's a simple example to get you started:</p>
 
                 <CodeBlock
-                  code={`import { Button, Card, Input } from 'pui';
+                  code={`import { Button, Card, Input } from 'kinu';
 import { useState } from 'preact/hooks';
 
 function MyApp() {
@@ -134,7 +134,7 @@ function MyApp() {
 
   return (
     <Card>
-      <h2>Welcome to PUI</h2>
+      <h2>Welcome to kinu</h2>
       <Input
         placeholder="Enter your name"
         value={name}
@@ -161,7 +161,7 @@ function MyApp() {
 
         <section class="features-overview">
           <h2>What's Included</h2>
-          <p>PUI provides a comprehensive set of accessible components:</p>
+          <p>kinu provides a comprehensive set of accessible components:</p>
 
           <div class="features-grid">
             <Card>
@@ -233,7 +233,7 @@ function MyApp() {
 
         <section class="next-steps">
           <h2>Next Steps</h2>
-          <p>Now that you're set up, explore what PUI has to offer:</p>
+          <p>Now that you're set up, explore what kinu has to offer:</p>
 
           <div class="next-steps-actions">
             <Button href="/components" variant="default">
@@ -281,7 +281,7 @@ function DemoExample() {
 
   return (
     <Card style={{marginTop: '1rem', padding: '1rem'}}>
-      <h3 style={{margin: '0 0 1rem 0'}}>Welcome to PUI</h3>
+      <h3 style={{margin: '0 0 1rem 0'}}>Welcome to kinu</h3>
       <Input
         placeholder="Enter your name"
         value={name}

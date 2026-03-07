@@ -1,4 +1,4 @@
-import {Button, Spinner, Toggle, ToggleGroup} from 'pui';
+import {Button, Spinner, Toggle, ToggleGroup} from 'kinu';
 import {useState} from 'preact/hooks';
 
 const types = [

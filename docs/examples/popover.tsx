@@ -1,4 +1,4 @@
-import {Button, Popover, PopoverContent, PopoverTrigger} from 'pui';
+import {Button, Popover, PopoverContent, PopoverTrigger} from 'kinu';
 
 export function Demo() {
   return (

@@ -5,7 +5,7 @@ Side or bottom sheet overlay with directional variants.
 ## Usage
 
 ```tsx
-import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
+import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'kinu';
 
 <Sheet>
   <SheetTrigger><Button>Open</Button></SheetTrigger>
@@ -18,9 +18,9 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Sheet | Overlay panel | `<div p="sheet">` |
+| Sheet | Overlay panel | `<div k="sheet">` |
 | SheetTrigger | Sheet trigger | — |
-| SheetContent | Sheet content | `<dialog p="sheet-content">` |
+| SheetContent | Sheet content | `<dialog k="sheet-content">` |
 | SheetClose | Close button | — |
 
 ## Props

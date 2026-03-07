@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="checkbox"] {
+[k="checkbox"] {
   appearance: none;
   width: 1rem;
   height: 1rem;
@@ -14,7 +14,7 @@
     border-color 150ms cubic-bezier(0.4,0,0.2,1);
 }
 
-[p="checkbox"]::before {
+[k="checkbox"]::before {
   content: "";
   width: 0.5rem;
   height: 0.5rem;
@@ -24,17 +24,17 @@
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 10%, 80% 0%, 43% 62%);
 }
 
-[p="checkbox"]:checked {
+[k="checkbox"]:checked {
   background-color: hsl(var(--p-primary));
   border-color: hsl(var(--p-primary));
 }
 
-[p="checkbox"]:checked::before {
+[k="checkbox"]:checked::before {
   transform: scale(1);
   background-color: hsl(var(--p-primary-foreground));
 }
 
-[p="checkbox"]:disabled {
+[k="checkbox"]:disabled {
   opacity: 0.5;
   pointer-events: none;
 }

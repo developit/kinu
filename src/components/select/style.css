@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="select"] {
+[k="select"] {
   display: inline-flex;
   align-items: center;
   border-radius: var(--p-radius);
@@ -19,12 +19,12 @@
   background-position: right 0.5rem center;
 }
 
-[p="select"]:focus-visible {
+[k="select"]:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px hsl(var(--p-ring));
 }
 
-[p="select"]:disabled {
+[k="select"]:disabled {
   opacity: 0.5;
   pointer-events: none;
 }

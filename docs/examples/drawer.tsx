@@ -1,4 +1,4 @@
-import {Button, Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
+import {Button, Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'kinu';
 
 export function Demo() {
   return (

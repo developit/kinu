@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="dialog-content"] {
+[k="dialog-content"] {
   border: none;
   border-radius: var(--p-radius);
   background-color: hsl(var(--p-background));
@@ -19,7 +19,7 @@
     overlay 300ms allow-discrete;
 }
 
-[p="dialog-content"][open] {
+[k="dialog-content"][open] {
   display: flex;
   opacity: 1;
   transform: scale(1);
@@ -27,13 +27,13 @@
 }
 
 @starting-style {
-  [p="dialog-content"][open] {
+  [k="dialog-content"][open] {
     opacity: 0;
     transform: scale(0.96);
   }
 }
 
-[p="dialog-content"]::backdrop {
+[k="dialog-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(1px);
   overscroll-behavior: contain;
@@ -46,12 +46,12 @@
     overlay 300ms allow-discrete;
 }
 
-[p="dialog-content"][open]::backdrop {
+[k="dialog-content"][open]::backdrop {
   opacity: 1;
 }
 
 @starting-style {
-  [p="dialog-content"][open]::backdrop {
+  [k="dialog-content"][open]::backdrop {
     opacity: 0;
   }
 }

@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="navigation-menu-list"] {
+[k="navigation-menu-list"] {
   list-style: none;
   display: flex;
   gap: 0.5rem;
@@ -8,13 +8,13 @@
   margin: 0;
 }
 
-[p="navigation-menu-link"] {
+[k="navigation-menu-link"] {
   text-decoration: none;
   color: inherit;
   padding: 0.25rem 0.5rem;
   border-radius: var(--p-radius);
 }
 
-[p="navigation-menu-link"]:hover {
+[k="navigation-menu-link"]:hover {
   background-color: hsl(var(--p-muted));
 }

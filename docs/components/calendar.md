@@ -5,7 +5,7 @@ Styled wrapper around the native `<input type="date">` element.
 ## Usage
 
 ```tsx
-import {Calendar} from 'pui';
+import {Calendar} from 'kinu';
 
 <Calendar />
 ```
@@ -14,7 +14,7 @@ import {Calendar} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Calendar | Date picker | `<input p="calendar">` |
+| Calendar | Date picker | `<input k="calendar">` |
 
 ## Props
 

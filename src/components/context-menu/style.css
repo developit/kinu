@@ -2,7 +2,7 @@
 @import "../../components/popover/style.css";
 @import "../dropdown-menu/style.css";
 
-body [p="context-menu"] {
+body [k="context-menu"] {
   position: fixed;
   left: var(--p-context-menu-client-x, 0px);
   top: var(--p-context-menu-client-y, 0px);
@@ -36,11 +36,11 @@ body [p="context-menu"] {
 }
 
 @supports (position-try-fallbacks: --p-context-menu-right-top) {
-  body [p="context-menu"] {
+  body [k="context-menu"] {
     position-try-fallbacks: --p-context-menu-right-top, --p-context-menu-left-bottom, --p-context-menu-right-bottom;
   }
 }
 
-[p="context-menu"]::backdrop {
+[k="context-menu"]::backdrop {
   opacity: 0;
 }

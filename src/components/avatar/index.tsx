@@ -3,5 +3,5 @@ import './style.css';
 
 export function Avatar({children, alt, ...props}: AvatarProps) {
   const fallback = children ?? alt ?? '';
-  return <img p="avatar" alt={String(fallback)} {...props} />;
+  return <img k="avatar" alt={String(fallback)} {...props} />;
 }

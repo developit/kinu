@@ -10,7 +10,7 @@ export function AspectRatio({ratio, style, ...props}: AspectRatioProps) {
     : style;
   return (
     <div
-      p="aspect-ratio"
+      k="aspect-ratio"
       {...(props as Omit<AspectRatioProps, 'ratio'>)}
       style={mergedStyle}
     />

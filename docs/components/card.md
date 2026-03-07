@@ -5,7 +5,7 @@ Surface container with padding, border, and typography defaults.
 ## Usage
 
 ```tsx
-import {Card} from 'pui';
+import {Card} from 'kinu';
 
 <Card>
   <h3>Title</h3>
@@ -17,7 +17,7 @@ import {Card} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Card | Surface container | `<div p="card">` |
+| Card | Surface container | `<div k="card">` |
 
 ## Props
 

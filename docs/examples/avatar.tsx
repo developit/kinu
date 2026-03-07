@@ -1,4 +1,4 @@
-import {Avatar} from 'pui';
+import {Avatar} from 'kinu';
 
 export function Demo() {
   return (

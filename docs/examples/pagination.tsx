@@ -3,7 +3,7 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationList,
-} from 'pui';
+} from 'kinu';
 
 export function Demo() {
   return (

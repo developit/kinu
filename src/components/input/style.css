@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="input"] {
+[k="input"] {
   display: flex;
   width: 100%;
   border-radius: var(--p-radius);
@@ -18,33 +18,33 @@
   padding-right: 0.75rem;
 }
 
-[p="input"]:focus-visible {
+[k="input"]:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px hsl(var(--p-ring));
 }
 
-[p="input"]:disabled {
+[k="input"]:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-[p="input"]::placeholder {
+[k="input"]::placeholder {
   color: hsl(var(--p-muted-foreground));
 }
 
 /* Invalid state - uses HTML5 validation or explicit invalid attribute */
-[p="input"]:invalid,
-[p="input"][invalid] {
+[k="input"]:invalid,
+[k="input"][invalid] {
   border-color: hsl(var(--p-destructive));
 }
 
-[p="input"]:invalid:focus-visible,
-[p="input"][invalid]:focus-visible {
+[k="input"]:invalid:focus-visible,
+[k="input"][invalid]:focus-visible {
   box-shadow: 0 0 0 2px hsl(var(--p-destructive));
 }
 
 /* Size: sm */
-[p="input"][size="sm"] {
+[k="input"][size="sm"] {
   height: 2.25rem;
   border-radius: calc(var(--p-radius) - 2px);
   padding-left: 0.5rem;
@@ -53,7 +53,7 @@
 }
 
 /* Size: lg */
-[p="input"][size="lg"] {
+[k="input"][size="lg"] {
   height: 2.75rem;
   padding-left: 1rem;
   padding-right: 1rem;

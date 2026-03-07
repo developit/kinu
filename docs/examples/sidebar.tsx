@@ -1,4 +1,4 @@
-import {Sidebar} from 'pui';
+import {Sidebar} from 'kinu';
 
 export function Demo() {
   return (

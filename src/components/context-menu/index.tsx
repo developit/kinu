@@ -65,7 +65,7 @@ export function ContextMenuContent({
   const ctx = useContext(IdCtx);
   return (
     <dialog
-      p="context-menu"
+      k="context-menu"
       id={id ?? ctx}
       onClickCapture={click}
       onContextMenuCapture={click}

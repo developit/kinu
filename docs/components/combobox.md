@@ -5,7 +5,7 @@ Autocomplete input with trigger, list, and option primitives.
 ## Usage
 
 ```tsx
-import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
+import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 
 <Combobox>
   <ComboboxInput placeholder="Search" />
@@ -19,9 +19,9 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ComboboxInput | Search input | `<input p="combobox-input">` |
-| ComboboxList | Results list | `<dialog p="combobox-list">` |
-| ComboboxOption | Result option | `<button p="combobox-option">` |
+| ComboboxInput | Search input | `<input k="combobox-input">` |
+| ComboboxList | Results list | `<dialog k="combobox-list">` |
+| ComboboxOption | Result option | `<button k="combobox-option">` |
 | Combobox | Autocomplete input | — |
 
 ## Props

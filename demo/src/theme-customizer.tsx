@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'preact/hooks';
-import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'pui';
+import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'kinu';
 
-const CUSTOM_THEME_STORAGE_KEY = 'pui-custom-theme';
-const CUSTOM_THEME_STYLE_ID = 'pui-custom-style';
+const CUSTOM_THEME_STORAGE_KEY = 'kinu-custom-theme';
+const CUSTOM_THEME_STYLE_ID = 'kinu-custom-style';
 
 /* ── hex→HSL helper ───────────────────────────────────────── */
 function hexToHsl(hex: string): [number, number, number] {

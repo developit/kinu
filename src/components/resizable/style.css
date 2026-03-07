@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="resizable"] {
+[k="resizable"] {
   resize: both;
   overflow: auto;
   border: 1px solid hsl(var(--p-border));

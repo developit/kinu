@@ -16,7 +16,7 @@ import {
   DrawerContent,
   Sidebar,
   DrawerClose,
-} from 'pui';
+} from 'kinu';
 import {useState, useRef, useEffect} from 'preact/hooks';
 
 interface Comment {

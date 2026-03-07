@@ -5,7 +5,7 @@ Composable tree view built from native `<details>` and `<summary>` primitives.
 ## Usage
 
 ```tsx
-import {Tree} from 'pui';
+import {Tree} from 'kinu';
 
 <Tree>
   <Tree.Group open>

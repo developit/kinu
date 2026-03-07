@@ -14,7 +14,7 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   Separator,
-} from 'pui';
+} from 'kinu';
 import type {JSX} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import {Nav} from '../nav';

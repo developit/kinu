@@ -5,7 +5,7 @@ Semantic pagination list with previous/next helpers.
 ## Usage
 
 ```tsx
-import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
+import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'kinu';
 
 <Pagination>
   <PaginationList>
@@ -18,10 +18,10 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Pagination | Page navigation | `<nav p="pagination">` |
-| PaginationList | Page list | `<ul p="pagination-list">` |
-| PaginationItem | Page item | `<li p="pagination-item">` |
-| PaginationLink | Page link | `<button p="pagination-link">` |
+| Pagination | Page navigation | `<nav k="pagination">` |
+| PaginationList | Page list | `<ul k="pagination-list">` |
+| PaginationItem | Page item | `<li k="pagination-item">` |
+| PaginationLink | Page link | `<button k="pagination-link">` |
 
 ## Props
 

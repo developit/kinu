@@ -1,4 +1,4 @@
-import {Switch} from 'pui';
+import {Switch} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

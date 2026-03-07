@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="switch"] {
+[k="switch"] {
   appearance: none;
   position: relative;
   display: inline-block;
@@ -14,7 +14,7 @@
   transition: background-color 150ms ease, border-color 150ms ease;
 }
 
-[p="switch"]::before {
+[k="switch"]::before {
   content: "";
   position: absolute;
   top: 0.125rem;
@@ -26,21 +26,21 @@
   transition: transform 250ms var(--p-ease);
 }
 
-[p="switch"]:checked {
+[k="switch"]:checked {
   background-color: hsl(var(--p-primary));
   border-color: hsl(var(--p-primary));
 }
 
-[p="switch"]:checked::before {
+[k="switch"]:checked::before {
   transform: translateX(1.2rem);
 }
 
-[p="switch"]:focus-visible {
+[k="switch"]:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px hsl(var(--p-ring));
 }
 
-[p="switch"]:disabled {
+[k="switch"]:disabled {
   opacity: 0.5;
   pointer-events: none;
 }

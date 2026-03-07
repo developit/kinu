@@ -139,7 +139,7 @@ body .home-nav + * {
   margin-top: 4rem;
 }
 
-.home-nav [p="navigation-menu-link"] {
+.home-nav [k="navigation-menu-link"] {
   height: 2.5rem;
   display: inline-flex;
   align-items: center;
@@ -152,7 +152,7 @@ body .home-nav + * {
   align-items: center;
 }
 
-.home-nav [p="navigation-menu-list"] {
+.home-nav [k="navigation-menu-list"] {
   gap: 0.2rem;
 }
 
@@ -801,7 +801,7 @@ body .task-item {
   align-items: center;
 }
 
-.linear-tag-editor [p="badge"] {
+.linear-tag-editor [k="badge"] {
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -817,7 +817,7 @@ body .task-item {
   gap: 0.25rem;
 }
 
-.linear-comments li [p="button"] {
+.linear-comments li [k="button"] {
   padding: 0;
   width: 1.5rem;
   height: 1.5rem;
@@ -1429,11 +1429,11 @@ body .task-item {
   margin-bottom: 4rem;
 }
 
-.getting-started [p="separator"] {
+.getting-started [k="separator"] {
   margin: 4rem 0;
 }
 
-.quick-start [p="tab-panel"] {
+.quick-start [k="tab-panel"] {
   margin-top: 1.5rem;
 }
 
@@ -1506,8 +1506,8 @@ body .example-demo {
   margin-top: 2rem;
 }
 
-.features-grid [p="card"],
-.principles-grid [p="card"] {
+.features-grid [k="card"],
+.principles-grid [k="card"] {
   text-align: left;
 }
 
@@ -1528,7 +1528,7 @@ body .example-demo {
   color: hsl(var(--p-muted-foreground));
 }
 
-.features-grid [p="badge"] {
+.features-grid [k="badge"] {
   margin-top: auto;
 }
 

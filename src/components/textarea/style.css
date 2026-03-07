@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="textarea"] {
+[k="textarea"] {
   display: block;
   width: 100%;
   border-radius: var(--p-radius);
@@ -16,16 +16,16 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[p="textarea"]:focus-visible {
+[k="textarea"]:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px hsl(var(--p-ring));
 }
 
-[p="textarea"]:disabled {
+[k="textarea"]:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-[p="textarea"]::placeholder {
+[k="textarea"]::placeholder {
   color: hsl(var(--p-muted-foreground));
 }

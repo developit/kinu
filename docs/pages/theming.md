@@ -1,6 +1,6 @@
 # Theming & Tokens
 
-PUI exposes all visual styling through CSS Custom Properties declared in the bundled `pui/style.css` (sourced from
+kinu exposes all visual styling through CSS Custom Properties declared in the bundled `kinu/style.css` (sourced from
 `src/variables.css`). The defaults define both light and dark palettes, radii, spacing, and motion tokens. Because components
 forward props as attributes, you override the design by setting CSS variables or adding new attribute selectors—no JavaScript
 theme provider required.
@@ -30,18 +30,18 @@ colors. You can replace tokens with your own palette or plug in design system va
 Each component maps props to attributes, letting you target them with CSS selectors:
 
 ```css
-[p="button"][variant="brand"] {
+[k="button"][variant="brand"] {
   background-color: hsl(var(--brand));
   color: hsl(var(--brand-foreground));
 }
 ```
 
 Keep selectors minimal—apply only the delta from the base style to preserve small bundle size. For boolean props, target the
-presence of the attribute: `[p="button"][loading] { opacity: 0.6; }`.
+presence of the attribute: `[k="button"][loading] { opacity: 0.6; }`.
 
 ## Dark Mode
 
-PUI ships with `data-theme="dark"` tokens ready to go. Toggle the attribute on `<html>` or any container:
+kinu ships with `data-theme="dark"` tokens ready to go. Toggle the attribute on `<html>` or any container:
 
 ```ts
 document.documentElement.dataset.theme = 'dark';
@@ -58,7 +58,7 @@ Animation curves live in `--p-ease` and related tokens. Adjust them globally or 
   --p-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-[p="accordion"][open] {
+[k="accordion"][open] {
   transition-duration: 200ms;
 }
 ```

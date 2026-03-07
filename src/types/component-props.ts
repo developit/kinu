@@ -11,7 +11,7 @@ export interface BaseProps {
   command?: 'show-modal' | 'close' | 'show-popover' | 'hide-popover' | 'toggle-popover' | `--${string}` | null;
 
   /**
-   * ID of a DOM element or PUI component to invoke `command` on.
+   * ID of a DOM element or kinu component to invoke `command` on.
    */
   commandFor?: string | null;
 

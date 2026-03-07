@@ -1,10 +1,10 @@
 @import "../../variables.css";
 
-[p="collapsible"] > summary {
+[k="collapsible"] > summary {
   display: none;
 }
 
-[p="collapsible"]::details-content {
+[k="collapsible"]::details-content {
   overflow: clip;
   height: 0;
   transition: height 0.25s var(--p-ease), content-visibility 0.25s linear allow-discrete;
@@ -15,17 +15,17 @@
     interpolate-size: allow-keywords;
   }
 
-  [p="collapsible"][open]::details-content {
+  [k="collapsible"][open]::details-content {
     height: auto;
   }
 }
 
 @supports not (interpolate-size: allow-keywords) {
-  [p="collapsible"]::details-content {
+  [k="collapsible"]::details-content {
     transition: none;
   }
 
-  [p="collapsible"][open]::details-content {
+  [k="collapsible"][open]::details-content {
     height: auto;
   }
 }

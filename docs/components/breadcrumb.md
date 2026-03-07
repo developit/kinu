@@ -5,7 +5,7 @@ Composable breadcrumb trail built from list primitives.
 ## Usage
 
 ```tsx
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'kinu';
 
 <Breadcrumb>
   <BreadcrumbList>
@@ -18,10 +18,10 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Breadcrumb | Navigation trail | `<nav p="breadcrumb">` |
-| BreadcrumbList | Trail container | `<ol p="breadcrumb-list">` |
-| BreadcrumbItem | Trail item | `<li p="breadcrumb-item">` |
-| BreadcrumbLink | Trail link | `<a p="breadcrumb-link">` |
+| Breadcrumb | Navigation trail | `<nav k="breadcrumb">` |
+| BreadcrumbList | Trail container | `<ol k="breadcrumb-list">` |
+| BreadcrumbItem | Trail item | `<li k="breadcrumb-item">` |
+| BreadcrumbLink | Trail link | `<a k="breadcrumb-link">` |
 
 ## Notes
 

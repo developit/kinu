@@ -1,13 +1,13 @@
 @import "../../variables.css";
 
-[p="skeleton"] {
+[k="skeleton"] {
   position: relative;
   overflow: hidden;
   background-color: hsl(var(--p-muted));
   border-radius: var(--p-radius);
 }
 
-[p="skeleton"]::after {
+[k="skeleton"]::after {
   content: '';
   position: absolute;
   inset: 0;

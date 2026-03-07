@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="badge"] {
+[k="badge"] {
   display: inline-flex;
   align-items: center;
   border-radius: calc(var(--p-radius) - 2px);
@@ -19,29 +19,29 @@
 }
 
 /* Variant: secondary */
-[p="badge"][variant="secondary"] {
+[k="badge"][variant="secondary"] {
   border: 1px solid transparent;
   background-color: hsl(var(--p-secondary));
   color: hsl(var(--p-secondary-foreground));
 }
 
-[p="badge"][variant="secondary"]:hover {
+[k="badge"][variant="secondary"]:hover {
   background-color: hsl(var(--p-secondary-hover));
 }
 
 /* Variant: destructive */
-[p="badge"][variant="destructive"] {
+[k="badge"][variant="destructive"] {
   border: 1px solid transparent;
   background-color: hsl(var(--p-destructive));
   color: hsl(var(--p-destructive-foreground));
 }
 
-[p="badge"][variant="destructive"]:hover {
+[k="badge"][variant="destructive"]:hover {
   background-color: hsl(var(--p-destructive-hover));
 }
 
 /* Variant: outline */
-[p="badge"][variant="outline"] {
+[k="badge"][variant="outline"] {
   border-color: hsl(var(--p-border));
   background-color: transparent;
   color: hsl(var(--p-foreground));

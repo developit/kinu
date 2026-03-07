@@ -5,7 +5,7 @@ Bottom sheet style overlay with trigger and close helpers.
 ## Usage
 
 ```tsx
-import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
+import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'kinu';
 
 <Drawer>
   <DrawerTrigger><Button>Open</Button></DrawerTrigger>
@@ -18,9 +18,9 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Drawer | Slide-out panel | `<div p="drawer">` |
+| Drawer | Slide-out panel | `<div k="drawer">` |
 | DrawerTrigger | Drawer trigger | — |
-| DrawerContent | Drawer content | `<dialog p="drawer-content">` |
+| DrawerContent | Drawer content | `<dialog k="drawer-content">` |
 | DrawerClose | Close button | — |
 
 ## Props
