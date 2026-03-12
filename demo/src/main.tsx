@@ -20,6 +20,45 @@ const Chat = lazy(() => import('./routes/chat.tsx'));
 const Player = lazy(() => import('./routes/player.tsx'));
 const Dashboard = lazy(() => import('./routes/dashboard.tsx'));
 
+
+const DEMO_THEME_STORAGE_KEY = 'pui-demo-theme';
+
+function resolveDemoTheme(): 'mobile-native' | 'default' {
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get('theme');
+
+  const fromQuery =
+    requested === 'native-mobile' || requested === 'mobile-native'
+      ? 'mobile-native'
+      : requested === 'default'
+        ? 'default'
+        : null;
+
+  if (fromQuery) {
+    try {
+      localStorage.setItem(DEMO_THEME_STORAGE_KEY, fromQuery);
+    } catch {}
+    return fromQuery;
+  }
+
+  try {
+    return localStorage.getItem(DEMO_THEME_STORAGE_KEY) === 'mobile-native'
+      ? 'mobile-native'
+      : 'default';
+  } catch {
+    return 'default';
+  }
+}
+
+function applyDemoTheme() {
+  const theme = resolveDemoTheme();
+  if (theme === 'mobile-native') {
+    document.documentElement.dataset.theme = 'mobile-native';
+    return;
+  }
+  delete document.documentElement.dataset.theme;
+}
+
 function setViewportVars() {
   const vv = window.visualViewport;
   const vh = vv ? vv.height : window.innerHeight;
@@ -68,6 +107,7 @@ export async function prerender(data: {url: string}) {
 
 if (typeof window !== 'undefined') {
   setViewportVars();
+  applyDemoTheme();
   window.visualViewport?.addEventListener('resize', setViewportVars);
   hydrate(<App />, document.getElementById('app')!);
 }

@@ -3,6 +3,9 @@ import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'pui';
 
 const CUSTOM_THEME_STORAGE_KEY = 'pui-custom-theme';
 const CUSTOM_THEME_STYLE_ID = 'pui-custom-style';
+const DEMO_THEME_STORAGE_KEY = 'pui-demo-theme';
+
+type DemoTheme = 'default' | 'mobile-native';
 
 /* ── hex→HSL helper ───────────────────────────────────────── */
 function hexToHsl(hex: string): [number, number, number] {
@@ -229,9 +232,19 @@ function applyCustomTheme(css: string) {
   document.head.appendChild(style);
 }
 
+function applyDemoTheme(theme: DemoTheme) {
+  if (theme === 'mobile-native') {
+    document.documentElement.dataset.theme = 'mobile-native';
+    return;
+  }
+  delete document.documentElement.dataset.theme;
+}
+
 try {
   const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
   if (saved) applyCustomTheme(saved);
+  const savedDemoTheme = localStorage.getItem(DEMO_THEME_STORAGE_KEY);
+  if (savedDemoTheme === 'mobile-native') applyDemoTheme('mobile-native');
 } catch {}
 
 /* ── Color swatch ─────────────────────────────────────────── */
@@ -263,6 +276,15 @@ function Swatch({color, selected, onClick, label}: {
 
 /* ── Main component ───────────────────────────────────────── */
 export function ThemeCustomizer() {
+  const [demoTheme, setDemoTheme] = useState<DemoTheme>(() => {
+    try {
+      return localStorage.getItem(DEMO_THEME_STORAGE_KEY) === 'mobile-native'
+        ? 'mobile-native'
+        : 'default';
+    } catch {
+      return 'default';
+    }
+  });
   const [settings, setSettings] = useState<ThemeSettings>(() => {
     try {
       const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
@@ -270,6 +292,13 @@ export function ThemeCustomizer() {
     } catch {}
     return {accentColor: 'blue', grayColor: 'slate', radius: 'medium', scaling: '100%'};
   });
+
+  useEffect(() => {
+    applyDemoTheme(demoTheme);
+    try {
+      localStorage.setItem(DEMO_THEME_STORAGE_KEY, demoTheme);
+    } catch {}
+  }, [demoTheme]);
 
   // const handlePaste = () => {
   //   const val = pasteRef.current?.value ?? '';
@@ -328,6 +357,28 @@ export function ThemeCustomizer() {
           </div>
 
           {/* Accent color */}
+          <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+            <Label>
+              Preset: <strong>{demoTheme === 'mobile-native' ? 'mobile-native' : 'default'}</strong>
+            </Label>
+            <div style={{display: 'flex', gap: '0.375rem', flexWrap: 'wrap'}}>
+              <Button
+                variant={demoTheme === 'default' ? null : 'outline'}
+                size="sm"
+                onClick={() => setDemoTheme('default')}
+              >
+                Default
+              </Button>
+              <Button
+                variant={demoTheme === 'mobile-native' ? null : 'outline'}
+                size="sm"
+                onClick={() => setDemoTheme('mobile-native')}
+              >
+                Mobile Native
+              </Button>
+            </div>
+          </div>
+
           <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
             <Label>
               Accent color: <strong>{settings.accentColor}</strong>
