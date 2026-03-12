@@ -1,0 +1,37 @@
+@import "../../variables.css";
+
+[p="color-picker"] {
+  appearance: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.25rem;
+  border: 1px solid hsl(var(--p-input));
+  border-radius: var(--p-radius);
+  background-color: hsl(var(--p-background));
+  cursor: pointer;
+}
+
+[p="color-picker"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: calc(var(--p-radius) - 4px);
+}
+
+[p="color-picker"]::-webkit-color-swatch {
+  border: none;
+  border-radius: calc(var(--p-radius) - 4px);
+}
+
+[p="color-picker"]::-moz-color-swatch {
+  border: none;
+  border-radius: calc(var(--p-radius) - 4px);
+}
+
+[p="color-picker"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+}
+
+[p="color-picker"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

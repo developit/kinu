@@ -274,10 +274,14 @@ export type {
   CarouselNextProps,
   CarouselNextOwnProps,
 } from './components/carousel/types';
+export {ColorPicker} from './components/color-picker';
+export type {ColorPickerProps, ColorPickerOwnProps} from './components/color-picker/types';
 export {DatePicker} from './components/date-picker';
 export type {DatePickerProps, DatePickerOwnProps} from './components/date-picker/types';
 export {FileUpload} from './components/file-upload';
 export type {FileUploadProps, FileUploadOwnProps} from './components/file-upload/types';
+export {TimePicker} from './components/time-picker';
+export type {TimePickerProps, TimePickerOwnProps} from './components/time-picker/types';
 export {Spinner} from './components/spinner';
 export type {SpinnerProps, SpinnerOwnProps, SpinnerSize, SpinnerType, SpinnerVariant} from './components/spinner/types';
 export {InputGroup} from './components/input-group';
