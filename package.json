@@ -20,10 +20,12 @@
       "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./style.css": "./dist/index.css"
+    "./style.css": "./dist/index.css",
+    "./themes/android-mobile.css": "./src/themes/android-mobile.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "src/themes"
   ],
   "scripts": {
     "build": "vite build",
