@@ -231,6 +231,21 @@ export default [
     ]
   },
   {
+    slug: 'file-upload',
+    title: 'File Upload',
+    section: 'Components',
+    category: 'Data Input',
+    order: 8,
+    folder: 'file-upload',
+    description: 'Native file input with a styled button for selecting local files.',
+    usage: '<FileUpload accept="image/*" />',
+    notes: [
+      'Sets type="file" for you and forwards all native input props.',
+      'Use the accept prop to restrict selectable file types.',
+      'Use capture="user" or capture="environment" to invoke the camera on mobile.'
+    ]
+  },
+  {
     slug: 'color-picker',
     title: 'Color Picker',
     section: 'Components',
