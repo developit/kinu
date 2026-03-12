@@ -1,2 +1,0 @@
-import{d as g,u as e}from"./main-D7Ut1Pl7.js";import{Z as l}from"./style-DOt-eoGK.js";function r(){const[o,t]=g(!1);return e("div",{style:{display:"flex",gap:"0.5rem",alignItems:"center"},children:[e(l,{pressed:o,onClick:()=>t(d=>!d),children:"Bold"}),e(l,{disabled:!0,children:"Disabled"})]})}const s="<Toggle>Bold</Toggle>",c={Demo:r,code:s};export{r as Demo,s as code,c as default};
-//# sourceMappingURL=toggle-XFYIc_Fc.js.map

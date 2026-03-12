@@ -1,0 +1,2 @@
+import{u as n}from"./main-3DTJg-GO.js";import{N as a,z as i,E as e,F as o}from"./style-BhV-nVvT.js";function r(){return n(o,{children:n(a,{children:[n(i,{children:n(e,{href:"#",children:"Home"})}),n(i,{children:n(e,{href:"#",children:"Docs"})}),n(i,{children:n(e,{href:"#",children:"Blog"})})]})})}const t="<NavigationMenu>...</NavigationMenu>",u={Demo:r,code:t};export{r as Demo,t as code,u as default};
+//# sourceMappingURL=navigation-menu-BM-U_RjX.js.map
