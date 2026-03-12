@@ -1,4 +1,4 @@
-import {TimePicker} from 'pui';
+import {TimePicker} from 'kinu';
 
 export function Demo() {
   return <TimePicker />;

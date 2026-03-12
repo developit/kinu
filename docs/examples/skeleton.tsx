@@ -1,4 +1,4 @@
-import {Skeleton} from 'pui';
+import {Skeleton} from 'kinu';
 
 export function Demo() {
   return (

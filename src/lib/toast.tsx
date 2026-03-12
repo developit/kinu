@@ -3,7 +3,7 @@ import type {ComponentChild} from 'preact';
 import type {ToastOptions, ToastInternal, ToastApi} from '../components/toast/types';
 import './toast.css';
 
-const EVENT_NAME = 'pui-toast-show';
+const EVENT_NAME = 'kinu-toast-show';
 let nextId = Date.now();
 
 function dispatchToast(content: ComponentChild, opts: ToastOptions = {}) {
@@ -49,19 +49,19 @@ export function ToastContainer() {
   }
 
   return (
-    <div p="toast-container">
+    <div k="toast-container">
       {toasts.map((t) => (
         <div
           key={t.id}
-          p="toast"
+          k="toast"
           data-toast={t.id}
           data-mounted={t.mounted || undefined}
           data-closing={t.closing || undefined}
         >
-          {t.title && <h6 p="toast-title">{t.title}</h6>}
-          <div p="toast-content">{t.content}</div>
-          <div p="toast-icon">{t.icon}</div>
-          {t.action && <div p="toast-action">{t.action}</div>}
+          {t.title && <h6 k="toast-title">{t.title}</h6>}
+          <div k="toast-content">{t.content}</div>
+          <div k="toast-icon">{t.icon}</div>
+          {t.action && <div k="toast-action">{t.action}</div>}
         </div>
       ))}
     </div>

@@ -5,7 +5,7 @@ Inline status message with tone variants.
 ## Usage
 
 ```tsx
-import {Alert} from 'pui';
+import {Alert} from 'kinu';
 
 <Alert variant="default">Heads up!</Alert>
 ```
@@ -14,7 +14,7 @@ import {Alert} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Alert | Status message | `<div p="alert">` |
+| Alert | Status message | `<div k="alert">` |
 
 ## Props
 

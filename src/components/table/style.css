@@ -1,18 +1,18 @@
 @import "../../variables.css";
 
-[p="table"] {
+[k="table"] {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875rem;
 }
 
-[p="table"] th,
-[p="table"] td {
-  border: 1px solid hsl(var(--p-border));
+[k="table"] th,
+[k="table"] td {
+  border: 1px solid hsl(var(--k-border));
   padding: 0.5rem;
 }
 
-[p="table"] th {
-  background-color: hsl(var(--p-muted));
+[k="table"] th {
+  background-color: hsl(var(--k-muted));
   text-align: left;
 }

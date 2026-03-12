@@ -2,10 +2,10 @@
 @import "../../components/popover/style.css";
 @import "../dropdown-menu/style.css";
 
-body [p="context-menu"] {
+body [k="context-menu"] {
   position: fixed;
-  left: var(--p-context-menu-client-x, 0px);
-  top: var(--p-context-menu-client-y, 0px);
+  left: var(--k-context-menu-client-x, 0px);
+  top: var(--k-context-menu-client-y, 0px);
   --tf-x: 0;
   min-width: 6rem;
   margin: 0;
@@ -14,33 +14,33 @@ body [p="context-menu"] {
   overflow: auto;
 }
 
-@position-try --p-context-menu-right-top {
+@position-try --k-context-menu-right-top {
   left: auto;
-  right: var(--p-context-menu-client-right, 0px);
-  top: var(--p-context-menu-client-y, 0px);
+  right: var(--k-context-menu-client-right, 0px);
+  top: var(--k-context-menu-client-y, 0px);
   bottom: auto;
 }
 
-@position-try --p-context-menu-left-bottom {
-  left: var(--p-context-menu-client-x, 0px);
+@position-try --k-context-menu-left-bottom {
+  left: var(--k-context-menu-client-x, 0px);
   right: auto;
   top: auto;
-  bottom: var(--p-context-menu-client-bottom, 0px);
+  bottom: var(--k-context-menu-client-bottom, 0px);
 }
 
-@position-try --p-context-menu-right-bottom {
+@position-try --k-context-menu-right-bottom {
   left: auto;
-  right: var(--p-context-menu-client-right, 0px);
+  right: var(--k-context-menu-client-right, 0px);
   top: auto;
-  bottom: var(--p-context-menu-client-bottom, 0px);
+  bottom: var(--k-context-menu-client-bottom, 0px);
 }
 
-@supports (position-try-fallbacks: --p-context-menu-right-top) {
-  body [p="context-menu"] {
-    position-try-fallbacks: --p-context-menu-right-top, --p-context-menu-left-bottom, --p-context-menu-right-bottom;
+@supports (position-try-fallbacks: --k-context-menu-right-top) {
+  body [k="context-menu"] {
+    position-try-fallbacks: --k-context-menu-right-top, --k-context-menu-left-bottom, --k-context-menu-right-bottom;
   }
 }
 
-[p="context-menu"]::backdrop {
+[k="context-menu"]::backdrop {
   opacity: 0;
 }

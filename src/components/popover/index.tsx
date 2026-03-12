@@ -18,7 +18,7 @@ export function Popover({id: idProp, children}: PopoverOwnProps) {
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <span p="popover">{children}</span>
+      <span k="popover">{children}</span>
     </IdCtx.Provider>
   );
 }
@@ -40,7 +40,7 @@ export function PopoverTrigger({
 //   'click',
 //   (e: MouseEvent) => {
 //     const dialogs = new Set(
-//       Array.from(document.querySelectorAll('[p="popover-content"]')),
+//       Array.from(document.querySelectorAll('[k="popover-content"]')),
 //     );
 //     let el = e.target as Node | null;
 //     while (el) {
@@ -57,7 +57,7 @@ export function PopoverContent({
   ...props
 }: PopoverContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="popover-content" id={id ?? ctx} {...props} />;
+  return <dialog k="popover-content" id={id ?? ctx} {...props} />;
 }
 
 export function PopoverClose({

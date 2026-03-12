@@ -5,7 +5,7 @@ Inline loading indicator for compact pending states.
 ## Usage
 
 ```tsx
-import {Spinner} from 'pui';
+import {Spinner} from 'kinu';
 
 <Spinner aria-label="Loading" />
 ```
@@ -14,7 +14,7 @@ import {Spinner} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Spinner | Loading animation | `<span p="spinner">` |
+| Spinner | Loading animation | `<span k="spinner">` |
 
 ## Props
 

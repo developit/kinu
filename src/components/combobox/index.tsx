@@ -24,8 +24,8 @@ export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProp
   (el: HTMLInputElement) => {
     const getList = () =>
       el
-        .closest('[p="combobox"]')
-        ?.querySelector<HTMLDialogElement>('[p="combobox-list"]')!;
+        .closest('[k="combobox"]')
+        ?.querySelector<HTMLDialogElement>('[k="combobox-list"]')!;
 
     function onInputFocusClick(e: Event) {
       filter(e.type !== 'input');
@@ -43,7 +43,7 @@ export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProp
     function filter(select?: boolean) {
       const value = el.value.toLowerCase();
       const items = getList().querySelectorAll<HTMLElement>(
-        '[p="combobox-option"]',
+        '[k="combobox-option"]',
       );
       let hit = false;
       for (const item of items) {

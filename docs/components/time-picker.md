@@ -5,7 +5,7 @@ Styled time input that shares the same foundation as Date Picker.
 ## Usage
 
 ```tsx
-import {TimePicker} from 'pui';
+import {TimePicker} from 'kinu';
 
 <TimePicker />
 ```
@@ -14,7 +14,7 @@ import {TimePicker} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| TimePicker | Time input | `<input p="time-picker">` |
+| TimePicker | Time input | `<input k="time-picker">` |
 
 ## Props
 

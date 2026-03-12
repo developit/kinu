@@ -49,7 +49,7 @@ import {
   Radio,
   Label,
   toast,
-} from 'pui';
+} from 'kinu';
 import type {JSX} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 
@@ -421,7 +421,7 @@ function OverviewTab() {
                       style={{
                         marginTop: '0.5rem',
                         fontSize: '0.75rem',
-                        color: 'hsl(var(--p-muted-foreground))',
+                        color: 'hsl(var(--k-muted-foreground))',
                       }}
                     >
                       <div>Avg per day: ${(totalIncome / 30).toFixed(2)}</div>
@@ -578,7 +578,7 @@ function OverviewTab() {
                       style={{
                         marginTop: '0.5rem',
                         fontSize: '0.75rem',
-                        color: 'hsl(var(--p-muted-foreground))',
+                        color: 'hsl(var(--k-muted-foreground))',
                       }}
                     >
                       <div>Avg per day: ${(totalExpenses / 30).toFixed(2)}</div>
@@ -656,7 +656,7 @@ function OverviewTab() {
                   style={{
                     marginTop: '0.5rem',
                     fontSize: '0.75rem',
-                    color: 'hsl(var(--p-muted-foreground))',
+                    color: 'hsl(var(--k-muted-foreground))',
                   }}
                 >
                   <div>
@@ -756,7 +756,7 @@ function OverviewTab() {
                   <div
                     style={{
                       fontSize: '0.75rem',
-                      color: 'hsl(var(--p-muted-foreground))',
+                      color: 'hsl(var(--k-muted-foreground))',
                       marginTop: '0.25rem',
                     }}
                   >
@@ -1210,7 +1210,7 @@ function OverviewTab() {
                               style={{
                                 marginLeft: '0.5rem',
                                 fontSize: '0.75rem',
-                                color: 'hsl(var(--p-muted-foreground))',
+                                color: 'hsl(var(--k-muted-foreground))',
                               }}
                             >
                               {transaction.date}
@@ -1595,7 +1595,7 @@ function TransactionsTab() {
                           <div
                             style={{
                               fontSize: '0.875rem',
-                              color: 'hsl(var(--p-muted-foreground))',
+                              color: 'hsl(var(--k-muted-foreground))',
                             }}
                           >
                             ${preset.amount} • {preset.category}
@@ -2109,7 +2109,7 @@ function TransactionsTab() {
                     left: '0.75rem',
                     top: '50%',
                     transform: 'translateY(-50%)',
-                    color: 'hsl(var(--p-muted-foreground))',
+                    color: 'hsl(var(--k-muted-foreground))',
                   }}
                 >
                   $
@@ -2585,7 +2585,7 @@ function TransactionsTab() {
                         <span
                           style={{
                             fontSize: '0.75rem',
-                            color: 'hsl(var(--p-muted-foreground))',
+                            color: 'hsl(var(--k-muted-foreground))',
                           }}
                         >
                           {transaction.date}
@@ -2776,7 +2776,7 @@ function TransactionsTab() {
           <h3>Transaction Timeline</h3>
           <div
             style={{
-              borderLeft: '2px solid hsl(var(--p-border))',
+              borderLeft: '2px solid hsl(var(--k-border))',
               paddingLeft: '2rem',
               marginTop: '1rem',
             }}
@@ -2832,7 +2832,7 @@ function TransactionsTab() {
                           <div
                             style={{
                               fontSize: '0.875rem',
-                              color: 'hsl(var(--p-muted-foreground))',
+                              color: 'hsl(var(--k-muted-foreground))',
                             }}
                           >
                             {transaction.date} • {transaction.category}
@@ -3050,7 +3050,7 @@ function GoalsTab() {
                   <h3>Quick Start Templates</h3>
                   <p
                     style={{
-                      color: 'hsl(var(--p-muted-foreground))',
+                      color: 'hsl(var(--k-muted-foreground))',
                       marginBottom: '2rem',
                     }}
                   >
@@ -3093,7 +3093,7 @@ function GoalsTab() {
                           style={{
                             margin: '0 0 0.5rem 0',
                             fontSize: '0.875rem',
-                            color: 'hsl(var(--p-muted-foreground))',
+                            color: 'hsl(var(--k-muted-foreground))',
                           }}
                         >
                           {template.description}
@@ -3419,7 +3419,7 @@ function GoalsTab() {
                     left: '0.75rem',
                     top: '50%',
                     transform: 'translateY(-50%)',
-                    color: 'hsl(var(--p-muted-foreground))',
+                    color: 'hsl(var(--k-muted-foreground))',
                   }}
                 >
                   $
@@ -3450,7 +3450,7 @@ function GoalsTab() {
                     left: '0.75rem',
                     top: '50%',
                     transform: 'translateY(-50%)',
-                    color: 'hsl(var(--p-muted-foreground))',
+                    color: 'hsl(var(--k-muted-foreground))',
                   }}
                 >
                   $
@@ -3956,7 +3956,7 @@ function GoalsTab() {
                                 color:
                                   daysLeft < 30
                                     ? '#ef4444'
-                                    : 'hsl(var(--p-muted-foreground))',
+                                    : 'hsl(var(--k-muted-foreground))',
                               }}
                             >
                               {daysLeft > 0
@@ -4121,7 +4121,7 @@ function GoalsTab() {
                           <div
                             style={{
                               fontSize: '0.875rem',
-                              color: 'hsl(var(--p-muted-foreground))',
+                              color: 'hsl(var(--k-muted-foreground))',
                             }}
                           >
                             {progress.toFixed(1)}% complete
@@ -4395,7 +4395,7 @@ function CommandPalette({open, onClose}: {open: boolean; onClose: () => void}) {
         <div
           style={{
             padding: '1rem',
-            borderBottom: '1px solid hsl(var(--p-border))',
+            borderBottom: '1px solid hsl(var(--k-border))',
           }}
         >
           <Input
@@ -4413,7 +4413,7 @@ function CommandPalette({open, onClose}: {open: boolean; onClose: () => void}) {
                 style={{
                   padding: '2rem',
                   textAlign: 'center',
-                  color: 'hsl(var(--p-muted-foreground))',
+                  color: 'hsl(var(--k-muted-foreground))',
                 }}
               >
                 No commands found
@@ -4432,7 +4432,7 @@ function CommandPalette({open, onClose}: {open: boolean; onClose: () => void}) {
                   }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.backgroundColor =
-                      'hsl(var(--p-muted))')
+                      'hsl(var(--k-muted))')
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.backgroundColor = 'transparent')
@@ -4628,7 +4628,7 @@ export default function Dashboard() {
                         key={notif.id}
                         style={{
                           padding: '0.75rem',
-                          border: '1px solid hsl(var(--p-border))',
+                          border: '1px solid hsl(var(--k-border))',
                           borderRadius: '0.375rem',
                           cursor: 'pointer',
                         }}
@@ -4649,7 +4649,7 @@ export default function Dashboard() {
                             <div
                               style={{
                                 fontSize: '0.75rem',
-                                color: 'hsl(var(--p-muted-foreground))',
+                                color: 'hsl(var(--k-muted-foreground))',
                                 marginTop: '0.25rem',
                               }}
                             >
@@ -4658,7 +4658,7 @@ export default function Dashboard() {
                             <div
                               style={{
                                 fontSize: '0.75rem',
-                                color: 'hsl(var(--p-muted-foreground))',
+                                color: 'hsl(var(--k-muted-foreground))',
                                 marginTop: '0.25rem',
                               }}
                             >
@@ -4925,8 +4925,8 @@ export default function Dashboard() {
       {/* Breadcrumb Navigation */}
       <div
         style={{
-          backgroundColor: 'hsl(var(--p-card))',
-          borderBottom: '1px solid hsl(var(--p-border))',
+          backgroundColor: 'hsl(var(--k-card))',
+          borderBottom: '1px solid hsl(var(--k-border))',
           padding: '0.5rem 2rem',
         }}
       >
@@ -5195,7 +5195,7 @@ export default function Dashboard() {
                 style={{
                   marginTop: 'auto',
                   padding: '1rem',
-                  borderTop: '1px solid hsl(var(--p-border))',
+                  borderTop: '1px solid hsl(var(--k-border))',
                 }}
               >
                 <Alert style={{padding: '0.75rem'}}>
@@ -5219,7 +5219,7 @@ export default function Dashboard() {
                     <div
                       style={{
                         fontSize: '0.75rem',
-                        color: 'hsl(var(--p-muted-foreground))',
+                        color: 'hsl(var(--k-muted-foreground))',
                       }}
                     >
                       Press ⌘K to open the command palette and navigate faster!

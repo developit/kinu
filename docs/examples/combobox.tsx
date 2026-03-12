@@ -1,4 +1,4 @@
-import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
+import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 
 export function Demo() {
   return (

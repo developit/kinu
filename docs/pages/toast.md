@@ -1,12 +1,12 @@
 # Toast
 
-The toast system lives in `pui/lib/toast`. It consists of two exports:
+The toast system lives in `kinu/lib/toast`. It consists of two exports:
 
 - `ToastContainer` — a component you render once near the root to host toast elements.
 - `toast.show(content, options)` — a helper that dispatches a global event to display a toast.
 
 ```tsx
-import {ToastContainer, toast} from 'pui';
+import {ToastContainer, toast} from 'kinu';
 
 export function App() {
   return (
@@ -35,15 +35,15 @@ application without prop drilling.
 
 ### Styling
 
-Toast markup uses `[p="toast" *]` attributes. Override them in your app to change layout or colors:
+Toast markup uses `[k="toast" *]` attributes. Override them in your app to change layout or colors:
 
 ```css
-[p="toast"] {
-  background: hsl(var(--p-background));
-  border: 1px solid hsl(var(--p-border));
+[k="toast"] {
+  background: hsl(var(--k-background));
+  border: 1px solid hsl(var(--k-border));
 }
 
-[p="toast"][data-closing] {
+[k="toast"][data-closing] {
   opacity: 0;
   transform: translateY(8px);
 }

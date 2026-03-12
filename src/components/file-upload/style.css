@@ -1,26 +1,26 @@
 @import "../../variables.css";
 
-[p="file-upload"] {
+[k="file-upload"] {
   font: inherit;
   font-size: 0.875rem;
 }
 
-[p="file-upload"]::file-selector-button {
+[k="file-upload"]::file-selector-button {
   margin-right: 0.75rem;
   padding: 0.25rem 0.75rem;
-  border: 1px solid hsl(var(--p-input));
-  border-radius: var(--p-radius);
-  background-color: hsl(var(--p-background));
+  border: 1px solid hsl(var(--k-input));
+  border-radius: var(--k-radius);
+  background-color: hsl(var(--k-background));
   font: inherit;
   font-weight: 500;
   cursor: pointer;
 }
 
-[p="file-upload"]::file-selector-button:hover {
-  background-color: hsl(var(--p-accent));
+[k="file-upload"]::file-selector-button:hover {
+  background-color: hsl(var(--k-accent));
 }
 
-[p="file-upload"]:disabled {
+[k="file-upload"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

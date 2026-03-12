@@ -1,4 +1,4 @@
-import {ColorPicker} from 'pui';
+import {ColorPicker} from 'kinu';
 
 export function Demo() {
   return <ColorPicker />;

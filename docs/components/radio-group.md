@@ -5,7 +5,7 @@ Container that styles a set of native radio inputs.
 ## Usage
 
 ```tsx
-import {Radio, RadioGroup} from 'pui';
+import {Radio, RadioGroup} from 'kinu';
 
 <RadioGroup>
   <Radio name="plan" value="basic" />
@@ -17,8 +17,8 @@ import {Radio, RadioGroup} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| RadioGroup | Radio group | `<div p="radio-group">` |
-| Radio | Radio input | `<input p="radio">` |
+| RadioGroup | Radio group | `<div k="radio-group">` |
+| Radio | Radio input | `<input k="radio">` |
 
 ## Props
 

@@ -11,7 +11,7 @@ export const Toggle = createSimpleComponent<'button', ToggleOwnProps>(
     },
     onClickCapture(e: MouseEvent) {
       const el = e.currentTarget as HTMLButtonElement;
-      el.closest('[p="toggle-group"]')
+      el.closest('[k="toggle-group"]')
         ?.querySelector('[aria-pressed]')
         ?.removeAttribute('aria-pressed');
       el.hasAttribute('aria-pressed')

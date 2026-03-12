@@ -1,13 +1,13 @@
 @import "../../variables.css";
 
-[p="aspect-ratio"] {
+[k="aspect-ratio"] {
   position: relative;
   width: 100%;
   --ratio: 1 / 1;
   aspect-ratio: var(--ratio);
 }
 
-[p="aspect-ratio"] > * {
+[k="aspect-ratio"] > * {
   position: absolute;
   inset: 0;
   width: 100%;

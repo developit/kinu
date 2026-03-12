@@ -1,4 +1,4 @@
-import {Resizable} from 'pui';
+import {Resizable} from 'kinu';
 
 export function Demo() {
   return (

@@ -71,7 +71,7 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
   // close other dropdowns
   for (const el of Array.from(
     document.querySelectorAll<HTMLDialogElement>(
-      '[p="dropdown-content"],[p="popover-content"]',
+      '[k="dropdown-content"],[k="popover-content"]',
     ),
   )) {
     if (!el.contains(target)) {

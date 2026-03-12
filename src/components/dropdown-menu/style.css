@@ -1,30 +1,30 @@
 @import "../../variables.css";
 @import "../popover/style.css";
 
-[p="dropdown-content"] {
+[k="dropdown-content"] {
   left: 0;
   --tf-x: 0;
   min-width: max(13.5rem, 100%);
 }
-[p="dropdown-content"][to="left"] {
+[k="dropdown-content"][to="left"] {
   left: auto;
   right: 0;
   --tf-x: 0;
   min-width: max(13.5rem, 100%);
 }
 
-[p="dropdown-content"],
-[p="context-menu"],
-[p="combobox-list"] {
-  border-radius: calc(var(--p-radius) + 0.25rem);
-  border-color: hsl(var(--p-border));
+[k="dropdown-content"],
+[k="context-menu"],
+[k="combobox-list"] {
+  border-radius: calc(var(--k-radius) + 0.25rem);
+  border-color: hsl(var(--k-border));
   padding: 0.5rem;
   box-shadow: 0 14px 30px rgb(0 0 0 / 0.14);
 }
 
-[p="dropdown-menu-item"],
-[p="context-menu-item"],
-[p="combobox-option"] {
+[k="dropdown-menu-item"],
+[k="context-menu-item"],
+[k="combobox-option"] {
   appearance: none;
   display: flex;
   align-items: center;
@@ -32,7 +32,7 @@
   width: 100%;
   background: none;
   border: none;
-  border-radius: calc(var(--p-radius) - 0.125rem);
+  border-radius: calc(var(--k-radius) - 0.125rem);
   text-align: left;
   padding: 0.5rem 0.75rem;
   min-height: 2.375rem;
@@ -48,8 +48,8 @@
   &:hover,
   &:focus-visible,
   &[selected] {
-    background-color: hsl(var(--p-primary));
-    color: hsl(var(--p-primary-foreground));
+    background-color: hsl(var(--k-primary));
+    color: hsl(var(--k-primary-foreground));
   }
 
   &[disabled],
@@ -59,59 +59,59 @@
   }
 }
 
-[p="dropdown-menu-item"][shortcut]::after,
-[p="context-menu-item"][shortcut]::after,
-[p="combobox-option"][shortcut]::after {
+[k="dropdown-menu-item"][shortcut]::after,
+[k="context-menu-item"][shortcut]::after,
+[k="combobox-option"][shortcut]::after {
   content: attr(shortcut);
   margin-left: auto;
-  color: hsl(var(--p-muted-foreground));
+  color: hsl(var(--k-muted-foreground));
   letter-spacing: 0.02em;
 }
 
-[p="dropdown-menu-item"][shortcut]:hover::after,
-[p="dropdown-menu-item"][shortcut]:focus-visible::after,
-[p="dropdown-menu-item"][selected]::after,
-[p="context-menu-item"][shortcut]:hover::after,
-[p="context-menu-item"][shortcut]:focus-visible::after,
-[p="context-menu-item"][selected]::after,
-[p="combobox-option"][shortcut]:hover::after,
-[p="combobox-option"][shortcut]:focus-visible::after,
-[p="combobox-option"][selected]::after {
+[k="dropdown-menu-item"][shortcut]:hover::after,
+[k="dropdown-menu-item"][shortcut]:focus-visible::after,
+[k="dropdown-menu-item"][selected]::after,
+[k="context-menu-item"][shortcut]:hover::after,
+[k="context-menu-item"][shortcut]:focus-visible::after,
+[k="context-menu-item"][selected]::after,
+[k="combobox-option"][shortcut]:hover::after,
+[k="combobox-option"][shortcut]:focus-visible::after,
+[k="combobox-option"][selected]::after {
   color: inherit;
   opacity: 0.85;
 }
 
-[p="dropdown-menu-item"][destructive],
-[p="context-menu-item"][destructive],
-[p="combobox-option"][destructive] {
-  color: hsl(var(--p-destructive));
+[k="dropdown-menu-item"][destructive],
+[k="context-menu-item"][destructive],
+[k="combobox-option"][destructive] {
+  color: hsl(var(--k-destructive));
 }
 
-[p="dropdown-content"] hr,
-[p="context-menu"] hr,
-[p="combobox-list"] hr,
-[p="dropdown-content"] [role="separator"],
-[p="context-menu"] [role="separator"],
-[p="combobox-list"] [role="separator"],
-[p="dropdown-content"] [p="separator"],
-[p="context-menu"] [p="separator"],
-[p="combobox-list"] [p="separator"] {
+[k="dropdown-content"] hr,
+[k="context-menu"] hr,
+[k="combobox-list"] hr,
+[k="dropdown-content"] [role="separator"],
+[k="context-menu"] [role="separator"],
+[k="combobox-list"] [role="separator"],
+[k="dropdown-content"] [k="separator"],
+[k="context-menu"] [k="separator"],
+[k="combobox-list"] [k="separator"] {
   border: 0;
-  border-top: 1px solid hsl(var(--p-border));
+  border-top: 1px solid hsl(var(--k-border));
   height: 0;
   margin: 0.5rem 0.25rem;
 }
 
 
-@supports (position-anchor: --p-trigger) {
-  [p="dropdown-content"] {
+@supports (position-anchor: --k-trigger) {
+  [k="dropdown-content"] {
     left: anchor(left);
     right: auto;
     --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 
-  [p="dropdown-content"][to="left"] {
+  [k="dropdown-content"][to="left"] {
     left: auto;
     right: anchor(right);
     --tf-x: 0;

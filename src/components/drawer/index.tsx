@@ -19,7 +19,7 @@ export function Drawer({id: idProp, children}: DrawerOwnProps) {
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <div p="drawer">{children}</div>
+      <div k="drawer">{children}</div>
     </IdCtx.Provider>
   );
 }
@@ -42,7 +42,7 @@ export function DrawerContent({
   ...props
 }: DrawerContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="drawer-content" id={id ?? ctx} {...props} />;
+  return <dialog k="drawer-content" id={id ?? ctx} {...props} />;
 }
 
 export function DrawerClose({

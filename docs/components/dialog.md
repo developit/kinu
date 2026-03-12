@@ -5,7 +5,7 @@ Composable modal built on the native `<dialog>` element.
 ## Usage
 
 ```tsx
-import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
+import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 
 <Dialog>
   <DialogTrigger><Button>Open</Button></DialogTrigger>
@@ -20,7 +20,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 | --- | --- | --- |
 | Dialog | Modal overlay | — |
 | DialogTrigger | Dialog trigger | — |
-| DialogContent | Dialog content | `<dialog p="dialog-content">` |
+| DialogContent | Dialog content | `<dialog k="dialog-content">` |
 | DialogClose | Close button | — |
 
 ## Props

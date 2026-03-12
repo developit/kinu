@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="breadcrumb-list"] {
+[k="breadcrumb-list"] {
   list-style: none;
   display: flex;
   gap: 0.25rem;
@@ -8,20 +8,20 @@
   margin: 0;
 }
 
-[p="breadcrumb-item"]::after {
+[k="breadcrumb-item"]::after {
   content: '/';
   padding: 0 0.25rem;
 }
 
-[p="breadcrumb-item"]:last-child::after {
+[k="breadcrumb-item"]:last-child::after {
   content: none;
 }
 
-[p="breadcrumb-link"] {
+[k="breadcrumb-link"] {
   color: inherit;
   text-decoration: none;
 }
 
-[p="breadcrumb-link"]:hover {
+[k="breadcrumb-link"]:hover {
   text-decoration: underline;
 }

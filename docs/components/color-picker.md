@@ -5,7 +5,7 @@ Styled color swatch input that opens the native OS color picker.
 ## Usage
 
 ```tsx
-import {ColorPicker} from 'pui';
+import {ColorPicker} from 'kinu';
 
 <ColorPicker />
 ```
@@ -14,7 +14,7 @@ import {ColorPicker} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ColorPicker | Color input | `<input p="color-picker">` |
+| ColorPicker | Color input | `<input k="color-picker">` |
 
 ## Props
 

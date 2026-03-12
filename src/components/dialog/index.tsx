@@ -38,7 +38,7 @@ export function DialogContent({
   ...props
 }: DialogContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="dialog-content" id={id ?? ctx} {...props} />;
+  return <dialog k="dialog-content" id={id ?? ctx} {...props} />;
 }
 
 export function DialogClose({

@@ -5,7 +5,7 @@ Animated shimmer placeholder for loading states.
 ## Usage
 
 ```tsx
-import {Skeleton} from 'pui';
+import {Skeleton} from 'kinu';
 
 <Skeleton style={{height: "1.5rem"}} />
 ```
@@ -14,7 +14,7 @@ import {Skeleton} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Skeleton | Content placeholder | `<div p="skeleton">` |
+| Skeleton | Content placeholder | `<div k="skeleton">` |
 
 ## Notes
 

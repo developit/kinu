@@ -1,10 +1,10 @@
 {
-  "name": "pui",
+  "name": "kinu",
   "version": "0.1.0",
   "description": "Performance-focused Preact UI toolkit",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/developit/pui.git"
+    "url": "git+https://github.com/developit/kinu.git"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -54,7 +54,7 @@
     "preact",
     "ui",
     "ui-toolkit",
-    "pui"
+    "kinu"
   ],
   "author": "Jason Miller (http://developit.dev)",
   "license": "MIT",

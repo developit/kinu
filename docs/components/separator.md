@@ -5,7 +5,7 @@ Semantic horizontal or vertical divider.
 ## Usage
 
 ```tsx
-import {Separator} from 'pui';
+import {Separator} from 'kinu';
 
 <Separator />
 ```
@@ -14,7 +14,7 @@ import {Separator} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Separator | Divider | `<div p="separator">` |
+| Separator | Divider | `<div k="separator">` |
 
 ## Notes
 

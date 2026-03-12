@@ -5,7 +5,7 @@ Native file input with a styled button for selecting local files.
 ## Usage
 
 ```tsx
-import {FileUpload} from 'pui';
+import {FileUpload} from 'kinu';
 
 <FileUpload />
 ```
@@ -14,7 +14,7 @@ import {FileUpload} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| FileUpload | File input | `<input p="file-upload">` |
+| FileUpload | File input | `<input k="file-upload">` |
 
 ## Props
 

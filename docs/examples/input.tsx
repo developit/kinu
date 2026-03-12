@@ -1,4 +1,4 @@
-import {Input} from 'pui';
+import {Input} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

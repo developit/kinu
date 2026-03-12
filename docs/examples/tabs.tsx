@@ -1,4 +1,4 @@
-import {Tab, TabList, TabPanel} from 'pui';
+import {Tab, TabList, TabPanel} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

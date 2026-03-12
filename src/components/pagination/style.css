@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="pagination-list"] {
+[k="pagination-list"] {
   list-style: none;
   display: flex;
   gap: 0.25rem;
@@ -8,20 +8,20 @@
   margin: 0;
 }
 
-[p="pagination-link"] {
+[k="pagination-link"] {
   background: none;
-  border: 1px solid hsl(var(--p-border));
-  border-radius: var(--p-radius);
+  border: 1px solid hsl(var(--k-border));
+  border-radius: var(--k-radius);
   padding: 0.25rem 0.5rem;
   cursor: pointer;
 }
 
-[p="pagination-link"]:hover {
-  background-color: hsl(var(--p-muted));
+[k="pagination-link"]:hover {
+  background-color: hsl(var(--k-muted));
 }
 
-[p="pagination-link"][aria-current="page"] {
-  background-color: hsl(var(--p-primary));
-  color: hsl(var(--p-primary-foreground));
-  border-color: hsl(var(--p-primary));
+[k="pagination-link"][aria-current="page"] {
+  background-color: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+  border-color: hsl(var(--k-primary));
 }

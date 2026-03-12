@@ -5,7 +5,7 @@ Styled native `<select>` element with size variants.
 ## Usage
 
 ```tsx
-import {Select} from 'pui';
+import {Select} from 'kinu';
 
 <Select>
   <option>One</option>
@@ -16,7 +16,7 @@ import {Select} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Select | Dropdown selection | `<select p="select">` |
+| Select | Dropdown selection | `<select k="select">` |
 
 ## Props
 

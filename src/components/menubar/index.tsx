@@ -12,8 +12,8 @@ export const MenubarItem = createSimpleComponent<'button', MenubarItemOwnProps>(
   {
     onMouseEnterCapture(e) {
       const el = e.currentTarget
-        .closest('[p="menubar"]')
-        ?.querySelector<HTMLDialogElement>('[p="dropdown-content"][open]');
+        .closest('[k="menubar"]')
+        ?.querySelector<HTMLDialogElement>('[k="dropdown-content"][open]');
       if (el) e.currentTarget.click();
     },
   },

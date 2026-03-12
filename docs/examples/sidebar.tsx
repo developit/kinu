@@ -1,4 +1,4 @@
-import {Sidebar} from 'pui';
+import {Sidebar} from 'kinu';
 
 export function Demo() {
   return (
@@ -7,7 +7,7 @@ export function Demo() {
         position: 'relative',
         contain: 'strict',
         height: '400px',
-        border: '1px solid hsl(var(--p-border))',
+        border: '1px solid hsl(var(--k-border))',
         borderRadius: '0.5rem',
         overflow: 'hidden',
       }}
@@ -19,7 +19,7 @@ export function Demo() {
             alignItems: 'center',
             gap: '0.75rem',
             padding: '0.5rem',
-            borderBottom: '1px solid hsl(var(--p-border))',
+            borderBottom: '1px solid hsl(var(--k-border))',
             marginBottom: '0.5rem',
           }}
         >
@@ -27,12 +27,12 @@ export function Demo() {
             style={{
               width: '2rem',
               height: '2rem',
-              backgroundColor: 'hsl(var(--p-foreground))',
+              backgroundColor: 'hsl(var(--k-foreground))',
               borderRadius: '0.375rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: 'hsl(var(--p-background))',
+              color: 'hsl(var(--k-background))',
               fontWeight: '600',
             }}
           >
@@ -45,7 +45,7 @@ export function Demo() {
             <div
               style={{
                 fontSize: '0.75rem',
-                color: 'hsl(var(--p-muted-foreground))',
+                color: 'hsl(var(--k-muted-foreground))',
               }}
             >
               Component Library
@@ -74,7 +74,7 @@ export function Demo() {
           style={{
             marginTop: 'auto',
             padding: '1rem 0',
-            borderTop: '1px solid hsl(var(--p-border))',
+            borderTop: '1px solid hsl(var(--k-border))',
           }}
         >
           <div
@@ -92,7 +92,7 @@ export function Demo() {
                 width: '2rem',
                 height: '2rem',
                 borderRadius: '50%',
-                backgroundColor: 'hsl(var(--p-muted))',
+                backgroundColor: 'hsl(var(--k-muted))',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -108,7 +108,7 @@ export function Demo() {
               <div
                 style={{
                   fontSize: '0.75rem',
-                  color: 'hsl(var(--p-muted-foreground))',
+                  color: 'hsl(var(--k-muted-foreground))',
                 }}
               >
                 john@example.com
@@ -124,13 +124,13 @@ export function Demo() {
           padding: '1rem',
           height: '100%',
           boxSizing: 'border-box',
-          backgroundColor: 'hsl(var(--p-muted) / 0.1)',
+          backgroundColor: 'hsl(var(--k-muted) / 0.1)',
         }}
       >
         <div
           style={{
             fontSize: '0.875rem',
-            color: 'hsl(var(--p-muted-foreground))',
+            color: 'hsl(var(--k-muted-foreground))',
             marginBottom: '0.5rem',
           }}
         >
@@ -138,7 +138,7 @@ export function Demo() {
         </div>
         <div
           style={{
-            color: 'hsl(var(--p-muted-foreground))',
+            color: 'hsl(var(--k-muted-foreground))',
             fontSize: '0.875rem',
           }}
         >

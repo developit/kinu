@@ -3,7 +3,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-} from 'pui';
+} from 'kinu';
 
 export function Demo() {
   return (

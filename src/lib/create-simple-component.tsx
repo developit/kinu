@@ -22,7 +22,7 @@ export function createSimpleComponent<
 ) {
   type Props = Omit<JSX.IntrinsicElements[T], keyof P> &
     P & {
-      p?: never; // Don't allow overriding the p attribute
+      k?: never; // Don't allow overriding the k attribute
       ref?: Ref<HTMLElementTagNameMap[T]>;
     };
 
@@ -56,7 +56,7 @@ export function createSimpleComponent<
       normalizedProps.ref =
         this.$_ref || (this.$_ref = proxyRef.bind(fwdRef || props.ref as any) as any);
     }
-    (normalizedProps as any).p = name;
+    (normalizedProps as any).k = name;
     const resolvedTag = typeof tag === 'function' ? tag(props) : tag;
     return h(resolvedTag, normalizedProps);
   });

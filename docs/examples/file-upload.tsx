@@ -1,4 +1,4 @@
-import {FileUpload} from 'pui';
+import {FileUpload} from 'kinu';
 
 export function Demo() {
   return <FileUpload />;

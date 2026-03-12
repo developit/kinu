@@ -5,7 +5,7 @@ Styled progress meter with determinate and indeterminate states.
 ## Usage
 
 ```tsx
-import {Progress} from 'pui';
+import {Progress} from 'kinu';
 
 <Progress value={60} max={100} />
 ```
@@ -14,7 +14,7 @@ import {Progress} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Progress | Loading indicator | `<progress p="progress">` |
+| Progress | Loading indicator | `<progress k="progress">` |
 
 ## Props
 

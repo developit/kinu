@@ -1,11 +1,11 @@
-import {ScrollArea} from 'pui';
+import {ScrollArea} from 'kinu';
 
 export function Demo() {
   return (
     <ScrollArea
       style={{
         height: '100px',
-        border: '1px solid hsl(var(--p-border))',
+        border: '1px solid hsl(var(--k-border))',
         padding: '0.5rem',
       }}
     >

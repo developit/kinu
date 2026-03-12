@@ -54,11 +54,13 @@ export const CarouselItem = createSimpleComponent<'div', CarouselItemOwnProps>(
 
 export function CarouselPrevious({
   children,
+  commandFor: _commandFor,
+  command: _command,
   ...props
 }: CarouselPreviousOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
   const id = useContext(IdCtx);
   return (
-    <button p="carousel-previous" command="--prev" commandfor={id} {...props}>
+    <button {...props} k="carousel-previous" command="--prev" commandfor={id ?? undefined}>
       {children}
     </button>
   );
@@ -66,11 +68,13 @@ export function CarouselPrevious({
 
 export function CarouselNext({
   children,
+  commandFor: _commandFor,
+  command: _command,
   ...props
 }: CarouselNextOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
   const id = useContext(IdCtx);
   return (
-    <button p="carousel-next" command="--next" commandfor={id} {...props}>
+    <button {...props} k="carousel-next" command="--next" commandfor={id ?? undefined}>
       {children}
     </button>
   );
