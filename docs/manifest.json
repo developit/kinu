@@ -423,6 +423,33 @@
     "description": "Styled date input that shares the same foundation as Calendar."
   },
   {
+    "slug": "file-upload",
+    "title": "File Upload",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 8,
+    "file": "components/file-upload.md",
+    "description": "Native file input with a styled button for selecting local files."
+  },
+  {
+    "slug": "time-picker",
+    "title": "Time Picker",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 9,
+    "file": "components/time-picker.md",
+    "description": "Styled time input that shares the same foundation as Date Picker."
+  },
+  {
+    "slug": "color-picker",
+    "title": "Color Picker",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 7,
+    "file": "components/color-picker.md",
+    "description": "Styled color swatch input that opens the native OS color picker."
+  },
+  {
     "slug": "sheet",
     "title": "Sheet",
     "section": "Components",

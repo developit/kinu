@@ -231,6 +231,35 @@ export default [
     ]
   },
   {
+    slug: 'file-upload',
+    title: 'File Upload',
+    section: 'Components',
+    category: 'Data Input',
+    order: 8,
+    folder: 'file-upload',
+    description: 'Native file input with a styled button for selecting local files.',
+    usage: '<FileUpload accept="image/*" />',
+    notes: [
+      'Sets type="file" for you and forwards all native input props.',
+      'Use the accept prop to restrict selectable file types.',
+      'Use capture="user" or capture="environment" to invoke the camera on mobile.'
+    ]
+  },
+  {
+    slug: 'color-picker',
+    title: 'Color Picker',
+    section: 'Components',
+    category: 'Data Input',
+    order: 7,
+    folder: 'color-picker',
+    description: 'Styled color swatch input that opens the native OS color picker.',
+    usage: '<ColorPicker />',
+    notes: [
+      'Sets type="color" for you and forwards all native input props.',
+      'Pairs naturally with `Input` inside an `InputGroup` to show an editable hex value alongside the swatch.',
+    ]
+  },
+  {
     slug: 'date-picker',
     title: 'Date Picker',
     section: 'Components',
@@ -242,6 +271,20 @@ export default [
     notes: [
       'Sets type="date" for you and forwards all native input props.',
       'Pairs nicely with popovers if you need a custom calendar shell.'
+    ]
+  },
+  {
+    slug: 'time-picker',
+    title: 'Time Picker',
+    section: 'Components',
+    category: 'Data Input',
+    order: 9,
+    folder: 'time-picker',
+    description: 'Styled time input that shares the same foundation as Date Picker.',
+    usage: '<TimePicker />',
+    notes: [
+      'Sets type="time" for you and forwards all native input props.',
+      'Use the step prop to constrain selectable intervals, e.g. step={1800} for 30-minute increments.',
     ]
   },
   {
