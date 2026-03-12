@@ -1,2 +1,0 @@
-import{u as e}from"./main-B4ZKpyme.js";function h(){return e("div",{children:[e("h1",{children:"h1 Heading"}),e("h2",{children:"h2 Heading"}),e("p",{children:"Paragraph text."})]})}const n="<h1>h1 Heading</h1>",d={Demo:h,code:n};export{h as Demo,n as code,d as default};
-//# sourceMappingURL=typography-CDLUOEqs.js.map
