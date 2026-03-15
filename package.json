@@ -28,6 +28,9 @@
   "scripts": {
     "build": "vite build",
     "build:demo": "cd demo && pnpm build",
+    "docs": "node scripts/generate-docs.mjs",
+    "docs:llms": "node scripts/generate-llms-txt.mjs",
+    "docs:all": "node scripts/generate-docs.mjs && node scripts/generate-llms-txt.mjs",
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
     "test": "vitest run",

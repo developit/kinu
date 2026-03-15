@@ -259,10 +259,10 @@ function MyApp() {
                 <a href="/linear">Linear</a> and <a href="/chat">Chat</a> demos
               </li>
               <li>
-                <strong>Complete API Reference:</strong> View comprehensive
-                component documentation in our{' '}
-                <a href="/llms.txt">llms.txt reference</a> - perfect for LLMs
-                and developers
+                <strong>LLM Reference:</strong>{' '}
+                <a href="/llms.txt">llms.txt</a> (quick reference) and{' '}
+                <a href="/llms-full.txt">llms-full.txt</a> (exhaustive API) —
+                machine-readable docs for coding agents
               </li>
               <li>
                 <strong>GitHub Repository:</strong> Contribute and report issues

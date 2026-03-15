@@ -18,6 +18,7 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
       - run: pnpm install
+      - run: pnpm run docs:all
       - run: pnpm run build
         working-directory: demo
       - name: Deploy to GitHub Pages

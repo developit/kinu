@@ -1,0 +1,2487 @@
+# Kinu – Comprehensive LLM Reference
+
+> This is the exhaustive reference for Kinu, a performance-focused Preact UI component library.
+> For a concise quick-reference, see llms.txt.
+
+## Table of Contents
+
+1. [Architecture & Philosophy](#architecture--philosophy)
+2. [Installation & Setup](#installation--setup)
+3. [Component Factory Pattern](#component-factory-pattern)
+4. [Shared Types (BaseProps)](#shared-types-baseprops)
+5. [Design Tokens](#design-tokens)
+6. [Theming & Dark Mode](#theming--dark-mode)
+7. [Command Attributes](#command-attributes)
+8. [Typography](#typography)
+9. [Base Styles](#base-styles)
+10. [Component Reference](#component-reference)
+11. [Toast System](#toast-system)
+12. [CSS Selector Patterns](#css-selector-patterns)
+13. [Complete Import Map](#complete-import-map)
+14. [Accessibility Patterns](#accessibility-patterns)
+15. [Integration Examples](#integration-examples)
+
+## Architecture & Philosophy
+
+Kinu is a constraint-driven collection of Preact components that enhance native HTML instead of
+replacing it. Every component forwards props to the underlying HTML element, keeping semantics,
+accessibility, and native performance. CSS drives state, variants, and animation; JavaScript only
+wires up what the platform cannot express on its own.
+
+### Core Principles
+
+- **Platform first** — Components wrap native elements (`<button>`, `<dialog>`, `<details>`, `<input>`)
+- **CSS as logic** — Props map to attributes; selectors read them. No runtime prop filtering.
+- **Tiny runtime** — ~1.2 KB JS + ~6 KB CSS. No router, store, or theme engine.
+- **Composable primitives** — Complex widgets stitch together smaller building blocks.
+- **Tree-shakeable** — Import only what you need from the `kinu` package.
+
+### How Components Render
+
+`<Button variant="secondary" />` outputs `<button k="button" variant="secondary" />`.
+The `k` attribute is the CSS hook. All other props pass through to the native element.
+TypeScript knows the exact HTML attributes available for each component.
+
+## Installation & Setup
+
+```bash
+pnpm add kinu    # or: npm install kinu
+```
+
+Peer dependency: `preact@^10.26.8`
+
+```ts
+// 1. Import stylesheet once at app entry:
+import 'kinu/style.css';
+
+// 2. Import components as needed:
+import { Button, Card, Input, Dialog } from 'kinu';
+
+// 3. Types are also exported:
+import type { ButtonProps, ButtonVariant } from 'kinu';
+```
+
+Package exports:
+- `kinu` → `dist/index.js` (ES module) + `dist/index.d.ts` (types)
+- `kinu/style.css` → `dist/index.css` (all component styles)
+
+## Component Factory Pattern
+
+Most components are created via `createSimpleComponent(name, tag, defaultProps?, refCallback?)`:
+
+```ts
+// This sets k="card" on a <div> and merges defaultProps
+const Card = createSimpleComponent('card', 'div');
+const Input = createSimpleComponent('input', 'input', { type: 'text' });
+```
+
+The factory:
+1. Sets `k={name}` on the rendered element for CSS targeting
+2. Resolves the HTML tag (static string or dynamic function)
+3. Merges default props via prototype chain (zero allocation)
+4. Forwards refs with optional cleanup callbacks
+5. Sets `displayName` for devtools
+
+## Shared Types (BaseProps)
+
+```typescript
+interface BaseProps {
+  command?: 'show-modal' | 'close' | 'show-popover' | 'hide-popover' | 'toggle-popover' | `--${string}` | null;
+  commandFor?: string | null;
+  children?: ComponentChildren;
+}
+
+interface RequiredChildrenProps extends BaseProps {
+  children: ComponentChildren;
+}
+```
+
+Component prop types follow the pattern:
+- `FooOwnProps` — custom kinu props (variant, size, etc.)
+- `FooProps` = `FooOwnProps & Omit<JSX.IntrinsicElements[tag], keyof FooOwnProps>`
+- This means every native HTML attribute for the base element is supported.
+
+## Design Tokens
+
+All tokens use the `--k-` prefix. Color values are space-separated HSL triplets
+used as `hsl(var(--k-primary))`.
+
+### Light Theme Defaults
+
+| Token | Default Value | Purpose |
+| --- | --- | --- |
+| `--k-background` | `0 0% 100%` | Page background |
+| `--k-foreground` | `222.2 84% 4.9%` | Default text color |
+| `--k-card` | `0 0% 100%` | Card surface |
+| `--k-card-foreground` | `222.2 84% 4.9%` | Card text |
+| `--k-popover` | `0 0% 100%` | Popover/dialog surface |
+| `--k-popover-foreground` | `222.2 84% 4.9%` | Popover text |
+| `--k-sidebar` | `0 0% 98%` | Sidebar surface |
+| `--k-primary` | `222.2 47.4% 11.2%` | Primary action color |
+| `--k-primary-foreground` | `210 40% 98%` | Text on primary |
+| `--k-primary-hover` | `222.2 47.4% 8.2%` | Primary hover state |
+| `--k-secondary` | `210 40% 96%` | Secondary action color |
+| `--k-secondary-foreground` | `222.2 84% 4.9%` | Text on secondary |
+| `--k-secondary-hover` | `210 40% 92%` | Secondary hover state |
+| `--k-muted` | `210 40% 96%` | Muted backgrounds |
+| `--k-muted-foreground` | `215.4 16.3% 46.9%` | Muted text |
+| `--k-accent` | `210 40% 95%` | Accent highlights |
+| `--k-accent-foreground` | `222.2 84% 4.9%` | Text on accent |
+| `--k-destructive` | `0 84.2% 60.2%` | Destructive action color |
+| `--k-destructive-foreground` | `210 40% 98%` | Text on destructive |
+| `--k-destructive-hover` | `0 84.2% 50.2%` | Destructive hover state |
+| `--k-border` | `214.3 31.8% 91.4%` | Default border color |
+| `--k-input` | `214.3 31.8% 91.4%` | Input border color |
+| `--k-ring` | `222.2 84% 4.9%` | Focus ring color |
+| `--k-radius` | `0.5rem` | Default border radius |
+| `--k-ease-fallback` | `cubic-bezier(0.4, 0, 0.2, 1)` | Fallback easing curve |
+| `--k-ease-out` | `var(--k-ease-fallback)` | Standard ease-out curve |
+| `--k-ease-elastic` | `var(--k-ease-fallback)` | Elastic animation curve |
+| `--k-ease-spring` | `var(--k-ease-fallback)` | Spring animation curve |
+| `--k-ease-out` | `linear(
+    0,
+    0.012 0.9%,
+    0.049 2%,
+  ...` | Standard ease-out curve |
+| `--k-ease-out` | `linear(
+    0,
+    0.402 7.4%,
+    0.711 15.3%,...` | Standard ease-out curve |
+| `--k-ease-elastic` | `linear(
+    0,
+    0.007 1.2%,
+    0.027 2.5%,
+...` | Elastic animation curve |
+| `--k-ease-spring` | `linear(
+    0,
+    -0.012 8.8%,
+    -0.081 25.4...` | Spring animation curve |
+| `--k-ease` | `var(--k-ease-out)` | Main animation easing (alias) |
+
+### Dark Mode Tokens
+
+Applied via `@media (prefers-color-scheme: dark)` or `.dark` class:
+
+```css
+[data-theme="dark"], .dark {
+  --k-background: 222.2 50% 7%;
+  --k-foreground: 210 40% 98%;
+  --k-primary: 210 40% 98%;
+  --k-primary-foreground: 222.2 47.4% 11.2%;
+  /* ... all tokens have dark variants */
+}
+```
+
+## Theming & Dark Mode
+
+Override tokens at root or within a scope:
+
+```css
+:root {
+  --k-radius: 0.625rem;
+  --k-primary: 221 83% 53%;
+}
+
+[data-theme="dark"] {
+  --k-background: 224 71% 4%;
+}
+```
+
+Toggle dark mode in JS:
+
+```ts
+document.documentElement.dataset.theme = 'dark';
+document.documentElement.classList.toggle('dark');
+```
+
+Custom component variants via CSS:
+
+```css
+[k="button"][variant="brand"] {
+  background-color: hsl(var(--brand));
+}
+```
+
+## Command Attributes
+
+Kinu uses a lightweight polyfill for the HTML Command API to declaratively control dialogs:
+
+```tsx
+<button command="show-modal" commandFor="my-dialog">Open</button>
+<dialog id="my-dialog">Content</dialog>
+```
+
+### Available Commands
+
+| Command | Effect |
+| --- | --- |
+| `show-modal` | Calls `showModal()` on target dialog |
+| `show` | Calls `show()` on target dialog (non-modal) |
+| `close` | Closes the target dialog |
+| `show-popover` | Shows a popover |
+| `hide-popover` | Hides a popover |
+| `toggle-popover` | Toggles a popover |
+| `--custom` | Fires a CustomEvent on the target |
+
+The polyfill auto-installs when any dialog/dropdown/sheet component renders.
+Commands dispatch as CustomEvents (`kinu-command`) for interception.
+
+## Typography
+
+Typography is CSS-only — use native HTML elements with `k` attributes:
+
+```html
+<h1 k="h1">Page title</h1>
+<p k="lead">Intro paragraph</p>
+<p k="muted">Secondary text</p>
+<p k="small">Fine print</p>
+```
+
+Available typography attributes: `k="h1"` through `k="h4"`, `k="lead"`, `k="muted"`, `k="small"`.
+
+## Base Styles
+
+`kinu/style.css` includes:
+- Modern CSS reset (box-sizing, typography smoothing, dialog/backdrop defaults)
+- Design tokens for light/dark themes as `--k-*` custom properties
+- All component selectors keyed off the `k` attribute
+
+Import once before custom overrides:
+
+```ts
+import 'kinu/style.css';
+```
+
+## Component Reference
+
+### Actions
+
+#### Button
+
+Button component that forwards props to `<button>` or `<a>` when href is provided.
+
+**Source:** `src/components/button/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Button` | `(composite)` | `k="button"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `ButtonVariant` | 'default' | Visual style variant. |
+| `size` | `ButtonSize` | 'md' | Size preset for the button. |
+| `loading` | `boolean` | — | Shows a pending state and disables interactions. |
+| `href` | `string` | — | When provided, renders the Button as an anchor element. |
+| `target` | `string | undefined | null` | — | Target for anchor elements. |
+| `rel` | `string | undefined | null` | — | Relationship between the current page and the linked resource. |
+| `onClick` | `(event: MouseEvent) => void | null` | — | Click handler for the button. |
+| `disabled` | `boolean` | — | Disables interactions and applies disabled styling. |
+| `type` | `string | undefined | null` | — | Button type attribute. |
+
+**Usage:**
+
+```tsx
+import {Button} from 'kinu';
+
+<Button variant="outline">Action</Button>
+```
+
+**Notes:**
+- Use the loading attribute to reflect pending state without extra handlers.
+- Supports size attributes (sm, md, lg, icon) controlled purely with CSS.
+
+---
+
+#### Dialog
+
+Composable modal built on the native `<dialog>` element.
+
+**Source:** `src/components/dialog/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Dialog` | `(composite)` | `—` |
+| `DialogTrigger` | `(composite)` | `—` |
+| `DialogContent` | `(composite)` | `—` |
+| `DialogClose` | `(composite)` | `—` |
+
+**Compound access:**
+- `Dialog.Trigger` = `DialogTrigger`
+- `Dialog.Content` = `DialogContent`
+- `Dialog.Close` = `DialogClose`
+
+**Props:**
+
+*DialogOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the dialog. If not provided, one will be auto-generated. |
+
+*DialogContentOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Override the auto-generated dialog ID. |
+
+**Usage:**
+
+```tsx
+import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
+
+<Dialog>
+  <DialogTrigger><Button>Open</Button></DialogTrigger>
+  <DialogContent>Modal body</DialogContent>
+  <DialogClose><Button>Close</Button></DialogClose>
+</Dialog>
+```
+
+**Notes:**
+- Relies on command attributes instead of portal gymnastics.
+- Dialog.Content forwards all native `<dialog>` props.
+
+---
+
+#### Alert Dialog
+
+Alias of Dialog with alert-focused styling defaults.
+
+**Source:** `src/components/alert-dialog/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `AlertDialog` | `(composite)` | `—` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the dialog. If not provided, one will be auto-generated. |
+
+**Usage:**
+
+```tsx
+import {AlertDialog} from 'kinu';
+
+<AlertDialog>
+  <AlertDialog.Trigger>Delete</AlertDialog.Trigger>
+  <AlertDialog.Content>Confirm action</AlertDialog.Content>
+</AlertDialog>
+```
+
+**Notes:**
+- Re-exports Dialog so you get Trigger, Content, Close, and other helpers.
+- Use when you want dialog markup that communicates a destructive decision.
+
+---
+
+#### Drawer
+
+Bottom sheet style overlay with trigger and close helpers.
+
+**Source:** `src/components/drawer/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Drawer` | `(composite)` | `—` |
+| `DrawerTrigger` | `(composite)` | `—` |
+| `DrawerContent` | `(composite)` | `—` |
+| `DrawerClose` | `(composite)` | `—` |
+
+**Compound access:**
+- `Drawer.Trigger` = `DrawerTrigger`
+- `Drawer.Content` = `DrawerContent`
+- `Drawer.Close` = `DrawerClose`
+
+**Props:**
+
+*DrawerOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the drawer dialog. If not provided, one will be auto-generated. |
+
+*DrawerContentOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Override the auto-generated dialog ID. |
+
+**Usage:**
+
+```tsx
+import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'kinu';
+
+<Drawer>
+  <DrawerTrigger><Button>Open</Button></DrawerTrigger>
+  <DrawerContent>Content</DrawerContent>
+  <DrawerClose><Button>Close</Button></DrawerClose>
+</Drawer>
+```
+
+**Notes:**
+- Positions content with CSS variables so you can change direction.
+- Attach Drawer.Close to any element that should dismiss.
+
+---
+
+#### Dropdown Menu
+
+Command-driven dropdown built on top of `<dialog>`.
+
+**Source:** `src/components/dropdown-menu/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `DropdownMenu` | `(composite)` | `—` |
+| `DropdownMenuTrigger` | `(composite)` | `—` |
+| `DropdownMenuContent` | `(composite)` | `—` |
+| `DropdownMenuItem` | `(composite)` | `k="dropdown-menu-item"` |
+
+**Props:**
+
+*DropdownMenuOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the dropdown content. If not provided, one will be auto-generated. |
+
+*DropdownMenuContentOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Override the auto-generated dialog ID. |
+| `command` | `string` | 'close' | Command dispatched when the dialog receives the command event. |
+| `commandFor` | `string` | — | Target dialog identifier for the command dispatch. |
+| `to` | `"left"` | — | Align the menu panel to the trigger's left or right edge. |
+
+*DropdownMenuItemOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `href` | `string` | — | When provided, renders the item as an anchor element. |
+| `selected` | `boolean` | — | Marks the item as selected for styling. |
+| `shortcut` | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| `destructive` | `boolean` | — | Applies destructive styling to the item. |
+
+**Usage:**
+
+```tsx
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from 'kinu';
+
+<DropdownMenu>
+  <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Item</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+**Notes:**
+- Menu items render as `<button>` elements by default.
+- Automatically closes when an item dispatches the close command.
+
+---
+
+#### Context Menu
+
+Right-click context menu powered by the native dialog element.
+
+**Source:** `src/components/context-menu/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `ContextMenuTrigger` | `(composite)` | `—` |
+| `ContextMenu` | `(composite)` | `—` |
+| `ContextMenuContent` | `(composite)` | `—` |
+| `ContextMenuItem` | `<button>` | `k="context-menu-item"` |
+
+**Props:**
+
+*ContextMenuOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the context menu dialog. If not provided, one will be auto-generated. |
+
+*ContextMenuContentOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Override the auto-generated dialog ID. |
+
+*ContextMenuItemOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `boolean` | — | Marks the item as selected for styling. |
+| `shortcut` | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| `destructive` | `boolean` | — | Applies destructive styling to the item. |
+
+*Also accepts all native `<button>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from 'kinu';
+
+<ContextMenu>
+  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>Copy</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+**Notes:**
+- Installs the commands polyfill when rendered.
+- Menu content is focus-trapped via `<dialog>`.
+
+---
+
+#### Sheet
+
+Side or bottom sheet overlay with directional variants.
+
+**Source:** `src/components/sheet/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Sheet` | `(composite)` | `—` |
+| `SheetTrigger` | `(composite)` | `—` |
+| `SheetContent` | `(composite)` | `—` |
+| `SheetClose` | `(composite)` | `—` |
+
+**Compound access:**
+- `Sheet.Trigger` = `SheetTrigger`
+- `Sheet.Content` = `SheetContent`
+- `Sheet.Close` = `SheetClose`
+
+**Props:**
+
+*SheetOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the sheet dialog. If not provided, one will be auto-generated. |
+
+*SheetContentOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Override the auto-generated dialog ID. |
+
+**Usage:**
+
+```tsx
+import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'kinu';
+
+<Sheet>
+  <SheetTrigger><Button>Open</Button></SheetTrigger>
+  <SheetContent side="right">Panel</SheetContent>
+  <SheetClose><Button>Close</Button></SheetClose>
+</Sheet>
+```
+
+**Notes:**
+- Control the slide direction with the side attribute on SheetContent.
+- SheetClose attaches the close command to any child element.
+
+---
+
+### Data Display
+
+#### Badge
+
+Tiny inline status indicator with multiple tone variants.
+
+**Source:** `src/components/badge/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Badge` | `<span>` | `k="badge"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `BadgeVariant` | 'default' | Visual style variant. |
+
+*Also accepts all native `<span>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Badge} from 'kinu';
+
+<Badge variant="secondary">New</Badge>
+```
+
+---
+
+#### Accordion
+
+Disclosure built on the native `<details>` element with smooth open and close animation.
+
+**Source:** `src/components/accordion/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Accordion` | `<details>` | `k="accordion"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | — | Controls the open state of the details element. |
+
+*Also accepts all native `<details>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Accordion} from 'kinu';
+
+<Accordion open>
+  <summary>Details</summary>
+  <p>Hidden content</p>
+</Accordion>
+```
+
+**Notes:**
+- Forwards every native `<details>` attribute so you can control open state.
+- Provide your own `<summary>` element to define the trigger.
+
+---
+
+#### Avatar
+
+Styled `<img>` avatar that falls back to initials from the alt text.
+
+**Source:** `src/components/avatar/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Avatar` | `(composite)` | `—` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `src` | `string` | — | Image source for the avatar. |
+| `alt` | `string` | — | Alt text used by the image and for fallback initials. |
+| `children` | `element.children` | — | Fallback initials or text rendered via the alt attribute. |
+| `size` | `AvatarSize` | — | Size preset for the avatar. |
+
+**Usage:**
+
+```tsx
+import {Avatar} from 'kinu';
+
+<Avatar alt="JM" src="/user.jpg" />
+```
+
+**Notes:**
+- Uses the alt attribute content as a CSS-rendered fallback when the image fails.
+- Override dimensions in CSS if you need sizes other than the 2rem default.
+
+---
+
+#### Card
+
+Surface container with padding, border, and typography defaults.
+
+**Source:** `src/components/card/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Card` | `<div>` | `k="card"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `padding` | `CardPadding` | 'md' | Padding preset for the card content. |
+
+*Also accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Card} from 'kinu';
+
+<Card>
+  <h3>Title</h3>
+  <p>Content</p>
+</Card>
+```
+
+**Notes:**
+- Wraps a `<div>` and exposes padding/variant control via attributes.
+
+---
+
+#### Collapsible
+
+Minimal hide/show container built on `<details>` without default markers.
+
+**Source:** `src/components/collapsible/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Collapsible` | `<details>` | `k="collapsible"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` | — | Controls the open state of the details element. |
+
+*Also accepts all native `<details>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Collapsible} from 'kinu';
+
+<Collapsible open summary="Trigger">Hidden content</Collapsible>
+```
+
+**Notes:**
+- Expose the open attribute for controlled usage.
+- Great for FAQs when you want custom trigger markup.
+
+---
+
+#### Table
+
+Table wrapper with zebra striping and compact density.
+
+**Source:** `src/components/table/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Table` | `<table>` | `k="table"` |
+
+*Accepts all native `<table>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Table} from 'kinu';
+
+<Table>
+  <thead>...</thead>
+  <tbody>...</tbody>
+</Table>
+```
+
+**Notes:**
+- Uses native `<table>` markup so semantics stay intact.
+- Supports sticky headers via CSS attribute toggles.
+
+---
+
+#### Tree
+
+Composable tree view built from native `<details>` and `<summary>` primitives.
+
+**Source:** `src/components/tree/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Tree` | `(composite)` | `—` |
+
+**Usage:**
+
+```tsx
+import {Tree} from 'kinu';
+
+<Tree>
+  <Tree.Group open>
+    <Tree.GroupLabel>src</Tree.GroupLabel>
+    <Tree.GroupItems>
+      <Tree.Item>index.ts</Tree.Item>
+    </Tree.GroupItems>
+  </Tree.Group>
+</Tree>
+```
+
+**Notes:**
+- State is native via the `open` attribute on `Tree.Group`.
+- Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.
+
+---
+
+#### Skeleton
+
+Animated shimmer placeholder for loading states.
+
+**Source:** `src/components/skeleton/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Skeleton` | `<div>` | `k="skeleton"` |
+
+*Accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Skeleton} from 'kinu';
+
+<Skeleton style={{height: "1.5rem"}} />
+```
+
+**Notes:**
+- Wraps a `<div>` so you can size it however you want.
+- Use data-rounded to switch to pill skeletons.
+
+---
+
+#### Carousel
+
+Scroll snapping carousel with previous/next helpers.
+
+**Source:** `src/components/carousel/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Carousel` | `(composite)` | `—` |
+| `CarouselContent` | `(composite)` | `—` |
+| `CarouselItem` | `<div>` | `k="carousel-item"` |
+| `CarouselPrevious` | `(composite)` | `—` |
+| `CarouselNext` | `(composite)` | `—` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the carousel content. If not provided, one will be auto-generated. |
+
+**Usage:**
+
+```tsx
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from 'kinu';
+
+<Carousel>
+  <CarouselContent>
+    <CarouselItem>Slide</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+```
+
+**Notes:**
+- Leverages CSS scroll snap for buttery momentum.
+- Content remains fully declarative.
+
+---
+
+#### Hover Card
+
+Delayed hover preview card with trigger/content primitives.
+
+**Source:** `src/components/hover-card/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `HoverCard` | `<div>` | `k="hover-card"` |
+| `HoverCardTrigger` | `<span>` | `k="hover-card-trigger"` |
+| `HoverCardContent` | `<div>` | `k="hover-card-content"` |
+
+*Accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {HoverCard, HoverCardContent, HoverCardTrigger} from 'kinu';
+
+<HoverCard>
+  <HoverCardTrigger>Hover me</HoverCardTrigger>
+  <HoverCardContent>Details</HoverCardContent>
+</HoverCard>
+```
+
+**Notes:**
+- Uses CSS-only timers for opening and closing.
+- Content positioning is handled via data attributes.
+
+---
+
+### Data Input
+
+#### Input
+
+Text input with size, tone, and invalid states handled in CSS.
+
+**Source:** `src/components/input/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Input` | `<input>` | `k="input"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `InputSize` | 'md' | Size preset for the input field. |
+| `invalid` | `boolean` | — | Marks the input as invalid for styling purposes. |
+| `value` | `string | number | readonly string[] | undefined` | — | Input value. |
+| `type` | `string | undefined` | — | Input type attribute. |
+| `placeholder` | `string` | — | Placeholder text for the input. |
+| `onInput` | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
+| `onBlur` | `(event: FocusEvent) => void` | — | Blur handler. |
+| `onFocus` | `(event: FocusEvent) => void` | — | Focus handler. |
+| `disabled` | `boolean` | — | Disables interactions and applies disabled styling. |
+| `name` | `string` | — | Input name attribute used for form submissions. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Input} from 'kinu';
+
+<Input placeholder="Email" type="email" />
+```
+
+**Notes:**
+- Wraps the native `<input>` element so forms behave as expected.
+- Supports size="sm" and size="lg" for compact or spacious layouts.
+
+---
+
+#### Checkbox
+
+Accessible checkbox input with custom visuals.
+
+**Source:** `src/components/checkbox/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Checkbox` | `<input>` | `k="checkbox"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | — | Controls the checked state. |
+| `data-state` | `"indeterminate"` | — | Marks the checkbox as indeterminate for styling. |
+| `onChange` | `(event: Event) => void` | — | Change handler for the checkbox. |
+| `disabled` | `boolean` | — | Disable the checkbox. |
+| `name` | `string` | — | Input name used for form submissions. |
+| `value` | `string | number | readonly string[] | undefined` | — | Input value used for form submissions. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Checkbox} from 'kinu';
+
+<Checkbox checked aria-label="Accept" />
+```
+
+**Notes:**
+- Wraps `<input type="checkbox">` so forms just work.
+- Supports data-state="indeterminate" styling for tri-state usage.
+
+---
+
+#### Input Group
+
+Compact fieldset wrapper for joined controls like input and button rows.
+
+**Source:** `src/components/input-group/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `InputGroup` | `<fieldset>` | `k="input-group"` |
+
+*Accepts all native `<fieldset>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {InputGroup} from 'kinu';
+
+<InputGroup>
+  <Input placeholder="Search" />
+  <Button variant="outline">Go</Button>
+</InputGroup>
+```
+
+**Notes:**
+- Uses CSS-only border and radius joining for grouped controls.
+- Works with both kinu primitives and native form elements.
+
+---
+
+#### Radio Group
+
+Container that styles a set of native radio inputs.
+
+**Source:** `src/components/radio-group/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `RadioGroup` | `<div>` | `k="radio-group"` |
+| `Radio` | `<input>` | `k="radio"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | — | Controls the checked state. |
+| `name` | `string` | — | Radio group name. |
+| `value` | `string | number | readonly string[] | undefined` | — | Radio value used for form submissions. |
+| `onChange` | `(event: Event) => void` | — | Change handler for the radio. |
+| `disabled` | `boolean` | — | Disable the radio input. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Radio, RadioGroup} from 'kinu';
+
+<RadioGroup>
+  <Radio name="plan" value="basic" />
+  <Radio name="plan" value="pro" />
+</RadioGroup>
+```
+
+**Notes:**
+- Radio renders an `<input type="radio">` so browser form behavior stays intact.
+- Use the native name/value model or controlled props to manage selection.
+
+---
+
+#### Select
+
+Styled native `<select>` element with size variants.
+
+**Source:** `src/components/select/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Select` | `<select>` | `k="select"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string | number | readonly string[] | undefined` | — | Current selected value. |
+| `onChange` | `(event: Event) => void` | — | Change handler for controlled selects. |
+| `disabled` | `boolean` | — | Disable the select input. |
+| `multiple` | `boolean` | — | Native multiple selection toggle. |
+| `size` | `number` | — | Number of visible options when using native size. |
+
+*Also accepts all native `<select>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Select} from 'kinu';
+
+<Select>
+  <option>One</option>
+</Select>
+```
+
+**Notes:**
+- Leverages the platform picker on touch devices.
+- Supports native multiple and size attributes.
+
+---
+
+#### Slider
+
+Range input with CSS-driven track and thumb styling.
+
+**Source:** `src/components/slider/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Slider` | `<input>` | `k="slider"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `min` | `number` | — | Minimum slider value. |
+| `max` | `number` | — | Maximum slider value. |
+| `value` | `number` | — | Current slider value. |
+| `step` | `number` | — | Step granularity for the slider. |
+| `onInput` | `(event: InputEvent) => void` | — | Change handler for the slider input. |
+| `disabled` | `boolean` | — | Disable the slider. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Slider} from 'kinu';
+
+<Slider min={0} max={100} value={50} />
+```
+
+**Notes:**
+- Wraps `<input type="range">` for seamless form integration.
+- Supports data-orientation for vertical sliders.
+
+---
+
+#### Calendar
+
+Styled wrapper around the native `<input type="date">` element.
+
+**Source:** `src/components/calendar/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Calendar` | `<input>` | `k="calendar"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string | number | readonly string[] | undefined` | — | Current date value. |
+| `onChange` | `(event: Event) => void` | — | Change handler for date input. |
+| `disabled` | `boolean` | — | Disable the input. |
+| `name` | `string` | — | Input name used for form submissions. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Calendar} from 'kinu';
+
+<Calendar />
+```
+
+**Notes:**
+- Forwards every standard input attribute, defaulting type to "date".
+- Uses the browser's native date picker UI for accessibility and localisation.
+
+---
+
+#### Switch
+
+Accessible toggle switch built from a checkbox input.
+
+**Source:** `src/components/switch/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Switch` | `<input>` | `k="switch"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | — | Controls the checked state. |
+| `onChange` | `(event: Event) => void` | — | Change handler for the switch. |
+| `disabled` | `boolean` | — | Disable the switch. |
+| `name` | `string` | — | Input name used for form submissions. |
+| `value` | `string | number | readonly string[] | undefined` | — | Input value used for form submissions. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Switch} from 'kinu';
+
+<Switch checked />
+```
+
+**Notes:**
+- It is just a checkbox under the hood so forms stay in sync.
+- Use aria-label or pair with `<Label>` for accessible naming.
+
+---
+
+#### Combobox
+
+Autocomplete input with trigger, list, and option primitives.
+
+**Source:** `src/components/combobox/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `ComboboxInput` | `<input>` | `k="combobox-input"` |
+| `ComboboxList` | `<dialog>` | `k="combobox-list"` |
+| `ComboboxOption` | `<button>` | `k="combobox-option"` |
+| `Combobox` | `(composite)` | `—` |
+
+**Props:**
+
+*ComboboxInputOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string | number | readonly string[] | undefined` | — | Input value for controlled usage. |
+| `placeholder` | `string` | — | Placeholder text for the input. |
+| `onInput` | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
+| `disabled` | `boolean` | — | Disable the input. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+*ComboboxOptionOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `boolean` | — | Marks the option as selected for styling. |
+| `shortcut` | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| `destructive` | `boolean` | — | Applies destructive styling to the option. |
+
+*Also accepts all native `<button>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
+
+<Combobox>
+  <ComboboxInput placeholder="Search" />
+  <ComboboxList>
+    <ComboboxOption>One</ComboboxOption>
+  </ComboboxList>
+</Combobox>
+```
+
+**Notes:**
+- Uses command/commandFor attributes for disclosure logic.
+- Keep option counts manageable for usability.
+
+---
+
+#### Color Picker
+
+Styled color swatch input that opens the native OS color picker.
+
+**Source:** `src/components/color-picker/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `ColorPicker` | `<input>` | `k="color-picker"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string | number | readonly string[] | undefined` | — | Current color value as a hex string (e.g. "#ff0000"). |
+| `onChange` | `(event: Event) => void` | — | Change handler for the color input. |
+| `disabled` | `boolean` | — | Disable the input. |
+| `name` | `string` | — | Input name used for form submissions. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {ColorPicker} from 'kinu';
+
+<ColorPicker />
+```
+
+**Notes:**
+- Sets type="color" for you and forwards all native input props.
+- Pairs naturally with `Input` inside an `InputGroup` to show an editable hex value alongside the swatch.
+
+---
+
+#### File Upload
+
+Native file input with a styled button for selecting local files.
+
+**Source:** `src/components/file-upload/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `FileUpload` | `<input>` | `k="file-upload"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onChange` | `(event: Event) => void` | — | Change handler called when the user selects files. |
+| `accept` | `string` | — | Allowed file types as MIME types or extensions (e.g. "image/*" or ".pdf"). |
+| `multiple` | `boolean` | — | Allow selecting multiple files. |
+| `disabled` | `boolean` | — | Disable the input. |
+| `name` | `string` | — | Input name used for form submissions. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {FileUpload} from 'kinu';
+
+<FileUpload accept="image/*" />
+```
+
+**Notes:**
+- Sets type="file" for you and forwards all native input props.
+- Use the accept prop to restrict selectable file types.
+- Use capture="user" or capture="environment" to invoke the camera on mobile.
+
+---
+
+#### Date Picker
+
+Styled date input that shares the same foundation as Calendar.
+
+**Source:** `src/components/date-picker/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `DatePicker` | `<input>` | `k="date-picker"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string | number | readonly string[] | undefined` | — | Current date value. |
+| `onChange` | `(event: Event) => void` | — | Change handler for date input. |
+| `disabled` | `boolean` | — | Disable the input. |
+| `name` | `string` | — | Input name used for form submissions. |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {DatePicker} from 'kinu';
+
+<DatePicker />
+```
+
+**Notes:**
+- Sets type="date" for you and forwards all native input props.
+- Pairs nicely with popovers if you need a custom calendar shell.
+
+---
+
+#### Time Picker
+
+Styled time input that shares the same foundation as Date Picker.
+
+**Source:** `src/components/time-picker/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `TimePicker` | `<input>` | `k="time-picker"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string | number | readonly string[] | undefined` | — | Current time value in HH:MM or HH:MM:SS format. |
+| `onChange` | `(event: Event) => void` | — | Change handler for time input. |
+| `disabled` | `boolean` | — | Disable the input. |
+| `name` | `string` | — | Input name used for form submissions. |
+| `step` | `number` | 60 | Granularity of the time value in seconds.
+Common values: 60 (1 min), 900 (15 min), 1800 (30 min). |
+
+*Also accepts all native `<input>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {TimePicker} from 'kinu';
+
+<TimePicker />
+```
+
+**Notes:**
+- Sets type="time" for you and forwards all native input props.
+- Use the step prop to constrain selectable intervals, e.g. step={1800} for 30-minute increments.
+
+---
+
+#### Label
+
+Typography-aligned label component for form controls.
+
+**Source:** `src/components/label/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Label` | `<label>` | `k="label"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `htmlFor` | `string` | — | ID of the form element this label describes. |
+
+*Also accepts all native `<label>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Label} from 'kinu';
+
+<Label htmlFor="name">Name</Label>
+```
+
+**Notes:**
+- Wraps the native `<label>` element and forwards htmlFor.
+- Pair with controls to provide accessible names.
+
+---
+
+#### Textarea
+
+Text area with matching input styling, variants, and sizes.
+
+**Source:** `src/components/textarea/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Textarea` | `<textarea>` | `k="textarea"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `rows` | `number` | — | Number of visible text rows. |
+| `placeholder` | `string` | — | Placeholder text for the textarea. |
+| `value` | `string | number | readonly string[] | undefined` | — | Textarea value. |
+| `onInput` | `(event: InputEvent) => void` | — | Change handler for controlled textareas. |
+| `disabled` | `boolean` | — | Disables interactions and applies disabled styling. |
+
+*Also accepts all native `<textarea>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Textarea} from 'kinu';
+
+<Textarea rows={4} placeholder="Write here" />
+```
+
+**Notes:**
+- Wraps the native `<textarea>` for full form support.
+- Use the resize attribute to control user resizing.
+
+---
+
+#### Toggle
+
+ARIA-pressed aware button for on/off interactions.
+
+**Source:** `src/components/toggle/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Toggle` | `<button>` | `k="toggle"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `pressed` | `boolean` | — | Controls the pressed state and maps to `aria-pressed` on the DOM element. |
+| `onClick` | `(event: MouseEvent) => void` | — | Click handler for toggling state. |
+| `disabled` | `boolean` | — | Disable the toggle. |
+
+*Also accepts all native `<button>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Toggle} from 'kinu';
+
+<Toggle pressed={value}>Bold</Toggle>
+```
+
+**Notes:**
+- Wraps `<button>` so keyboard support comes for free.
+- Use the `pressed` prop for state; it maps to `aria-pressed` on the DOM.
+
+---
+
+#### Toggle Group
+
+Container that lets Toggle buttons coordinate pressed state.
+
+**Source:** `src/components/toggle-group/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `ToggleGroup` | `<div>` | `k="toggle-group"` |
+
+*Accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {ToggleGroup} from 'kinu';
+
+<ToggleGroup>
+  <Toggle>Bold</Toggle>
+  <Toggle>Italic</Toggle>
+</ToggleGroup>
+```
+
+**Notes:**
+- Each Toggle toggles aria-pressed and clears other toggles in the same group.
+- Pass props like disabled or value straight to the underlying `<button>`.
+
+---
+
+### Feedback
+
+#### Alert
+
+Inline status message with tone variants.
+
+**Source:** `src/components/alert/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Alert` | `<div>` | `k="alert"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"destructive"` | 'default' | Visual style variant. |
+
+*Also accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Alert} from 'kinu';
+
+<Alert variant="default">Heads up!</Alert>
+```
+
+**Notes:**
+- Renders a `<div>` so you can include any markup you need.
+
+---
+
+#### Tooltip
+
+Hover/focus tooltip with placement attributes and CSS timing.
+
+**Source:** `src/components/tooltip/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Tooltip` | `<span>` | `k="tooltip"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | — | Tooltip text provided via the title attribute. |
+| `side` | `"left" | "right" | "top" | "bottom"` | — | The direction the tooltip should open towards. |
+
+*Also accepts all native `<span>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Tooltip} from 'kinu';
+
+<Tooltip text="Info"><Button>Hover</Button></Tooltip>
+```
+
+**Notes:**
+- Uses data attributes for fade transitions.
+- Position via the placement attribute without extra JS.
+
+---
+
+#### Spinner
+
+Inline loading indicator for compact pending states.
+
+**Source:** `src/components/spinner/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Spinner` | `<span>` | `k="spinner"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `SpinnerSize` | — | Size preset for the spinner. |
+| `type` | `SpinnerType` | — | Visual style preset for the spinner. |
+| `variant` | `SpinnerVariant` | — | Optional semantic color override. Defaults to inherited text color. |
+
+*Also accepts all native `<span>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Spinner} from 'kinu';
+
+<Spinner aria-label="Loading" />
+```
+
+**Notes:**
+- Wraps a <span> and animates purely in CSS.
+- Supports size="sm" and size="lg" attributes for dense or prominent loading states.
+
+---
+
+#### Progress
+
+Styled progress meter with determinate and indeterminate states.
+
+**Source:** `src/components/progress/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Progress` | `<progress>` | `k="progress"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | — | Current progress value. |
+| `max` | `number` | — | Maximum progress value. |
+| `data-state` | `"indeterminate"` | — | Marks the progress as indeterminate for styling. |
+
+*Also accepts all native `<progress>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Progress} from 'kinu';
+
+<Progress value={60} max={100} />
+```
+
+**Notes:**
+- Wraps the native `<progress>` element for semantics.
+- Use the data-state attribute for indeterminate styling.
+
+---
+
+### Layout
+
+#### Aspect Ratio
+
+Maintains responsive boxes at a fixed ratio using pure CSS.
+
+**Source:** `src/components/aspect-ratio/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `AspectRatio` | `(composite)` | `—` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ratio` | `string` | — | Aspect ratio expressed as a CSS ratio string (e.g. "16 / 9"). |
+
+**Usage:**
+
+```tsx
+import {AspectRatio} from 'kinu';
+
+<AspectRatio ratio="16 / 9">
+  <img src="..." alt="Video thumbnail" />
+</AspectRatio>
+```
+
+**Notes:**
+- Wraps a `<div>` that defines the ratio using a CSS custom property.
+
+---
+
+#### Popover
+
+Lightweight popover using native dialog with trigger/content primitives.
+
+**Source:** `src/components/popover/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Popover` | `(composite)` | `—` |
+| `PopoverTrigger` | `(composite)` | `—` |
+| `PopoverContent` | `(composite)` | `—` |
+| `PopoverClose` | `(composite)` | `—` |
+
+**Props:**
+
+*PopoverOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the popover content. If not provided, one will be auto-generated. |
+
+*PopoverContentOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Override the auto-generated dialog ID. |
+
+**Usage:**
+
+```tsx
+import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'kinu';
+
+<Popover>
+  <PopoverTrigger><Button>Open</Button></PopoverTrigger>
+  <PopoverContent>Content</PopoverContent>
+  <PopoverClose><Button>Close</Button></PopoverClose>
+</Popover>
+```
+
+**Notes:**
+- Control placement with the placement attribute on PopoverContent.
+- Stays declarative thanks to the commands polyfill.
+
+---
+
+#### Scroll Area
+
+Overflow wrapper with custom scrollbars and shadow indicators.
+
+**Source:** `src/components/scroll-area/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `ScrollArea` | `<div>` | `k="scroll-area"` |
+
+*Accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {ScrollArea} from 'kinu';
+
+<ScrollArea style={{height: '200px'}}><div>Long content</div></ScrollArea>
+```
+
+**Notes:**
+- Applies scroll shadows using CSS masks.
+- Forwards native overflow attributes for flexibility.
+
+---
+
+#### Resizable
+
+Resizable container that exposes native CSS handles.
+
+**Source:** `src/components/resizable/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Resizable` | `<div>` | `k="resizable"` |
+
+*Accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Resizable} from 'kinu';
+
+<Resizable style={{width: "20rem", height: "12rem"}} />
+```
+
+**Notes:**
+- Wraps a `<div>` with resize: both so the browser handles drag gestures.
+- Perfect for scratchpads, preview panes, or demos where users adjust size.
+
+---
+
+#### Separator
+
+Semantic horizontal or vertical divider.
+
+**Source:** `src/components/separator/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Separator` | `<div>` | `k="separator"` |
+
+*Accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Separator} from 'kinu';
+
+<Separator />
+```
+
+**Notes:**
+- Rendered as a `<div>` so you can set orientation via attribute.
+- Use decorative when the separator is purely visual.
+
+---
+
+#### Sidebar
+
+Responsive sidebar dialog that collapses on mobile.
+
+**Source:** `src/components/sidebar/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `SidebarTrigger` | `<button>` | `k="sidebar-trigger"` |
+| `Sidebar` | `<dialog>` | `k="sidebar"` |
+
+**Props:**
+
+*SidebarTriggerOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `commandFor` | `string` | — | Target sidebar ID to control. |
+
+*Also accepts all native `<button>` HTML attributes.*
+
+*SidebarOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Optional ID for the sidebar dialog. |
+
+*Also accepts all native `<dialog>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Sidebar, SidebarTrigger} from 'kinu';
+
+<Sidebar id="app-sidebar">
+  <nav>...</nav>
+</Sidebar>
+<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>
+```
+
+**Notes:**
+- Renders a `<dialog>` so it can slide in as a modal on small screens.
+- SidebarTrigger toggles the hidden/open state with the command attribute.
+
+---
+
+### Navigation
+
+#### Tabs
+
+TabList, Tab, and TabPanel wrappers using aria attributes.
+
+**Source:** `src/components/tabs/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `TabList` | `<div>` | `k="tablist"` |
+| `Tab` | `<button>` | `k="tab"` |
+| `TabPanel` | `<div>` | `k="tab-panel"` |
+
+**Props:**
+
+*TabOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `aria-selected` | `boolean | "true" | "false"` | — | Marks the tab as selected. |
+| `disabled` | `boolean` | — | Disable tab interactions. |
+
+*Also accepts all native `<button>` HTML attributes.*
+
+*TabPanelOwnProps:*
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hidden` | `boolean` | — | Hide the panel when inactive. |
+
+*Also accepts all native `<div>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Tab, TabList, TabPanel} from 'kinu';
+
+<TabList role="tablist">
+  <Tab role="tab" aria-selected="true">Account</Tab>
+  <Tab role="tab" aria-selected="false">Password</Tab>
+</TabList>
+<TabPanel role="tabpanel">Account settings</TabPanel>
+```
+
+**Notes:**
+- Control selection state by toggling aria-selected.
+- TabPanel toggles the hidden attribute so CSS handles transitions.
+
+---
+
+#### Breadcrumb
+
+Composable breadcrumb trail built from list primitives.
+
+**Source:** `src/components/breadcrumb/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Breadcrumb` | `<nav>` | `k="breadcrumb"` |
+| `BreadcrumbList` | `<ol>` | `k="breadcrumb-list"` |
+| `BreadcrumbItem` | `<li>` | `k="breadcrumb-item"` |
+| `BreadcrumbLink` | `<a>` | `k="breadcrumb-link"` |
+
+*Accepts all native `<nav>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'kinu';
+
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+**Notes:**
+- Ships structural wrappers so you can supply router-aware links.
+- Uses semantic list markup for accessibility.
+
+---
+
+#### Navigation Menu
+
+Composable navigation with list, item, and link helpers.
+
+**Source:** `src/components/navigation-menu/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `NavigationMenu` | `<nav>` | `k="navigation-menu"` |
+| `NavigationMenuList` | `<ul>` | `k="navigation-menu-list"` |
+| `NavigationMenuItem` | `<li>` | `k="navigation-menu-item"` |
+| `NavigationMenuLink` | `<a>` | `k="navigation-menu-link"` |
+
+*Accepts all native `<nav>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList} from 'kinu';
+
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+**Notes:**
+- Zero runtime state; rely on CSS for active styling.
+- Ideal for top-level navigation bars.
+
+---
+
+#### Menubar
+
+Horizontal command bar composed of styled buttons.
+
+**Source:** `src/components/menubar/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Menubar` | `<nav>` | `k="menubar"` |
+| `MenubarItem` | `<button>` | `k="menubar-item"` |
+
+*Accepts all native `<nav>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Menubar, MenubarItem} from 'kinu';
+
+<Menubar>
+  <MenubarItem>File</MenubarItem>
+</Menubar>
+```
+
+**Notes:**
+- Pairs nicely with dropdowns for nested menus.
+
+---
+
+#### Pagination
+
+Semantic pagination list with previous/next helpers.
+
+**Source:** `src/components/pagination/index.tsx`
+
+**Exports:**
+
+| Export | Renders As | k Attribute |
+| --- | --- | --- |
+| `Pagination` | `<nav>` | `k="pagination"` |
+| `PaginationList` | `<ul>` | `k="pagination-list"` |
+| `PaginationItem` | `<li>` | `k="pagination-item"` |
+| `PaginationLink` | `<button>` | `k="pagination-link"` |
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `aria-current` | `boolean | "page" | "true" | "false"` | — | Marks the current page for styling. |
+
+*Also accepts all native `<button>` HTML attributes.*
+
+**Usage:**
+
+```tsx
+import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'kinu';
+
+<Pagination>
+  <PaginationList>
+    <PaginationItem><PaginationLink aria-current="page">1</PaginationLink></PaginationItem>
+  </PaginationList>
+</Pagination>
+```
+
+**Notes:**
+- Renders `<nav>` and list markup for accessibility.
+- Use aria-current on the active page link.
+
+---
+
+## Toast System
+
+Imperative notification API — not a component with props, but an event-driven system.
+
+```tsx
+import { toast, ToastContainer } from 'kinu';
+
+// Render once near app root:
+<ToastContainer />
+
+// Show toasts from anywhere:
+toast.show('Settings saved');
+toast.show('File uploaded', {
+  title: 'Success',
+  icon: '✅',
+  action: <button onClick={undo}>Undo</button>,
+  duration: 4000
+});
+```
+
+### ToastOptions Interface
+
+```typescript
+interface ToastOptions {
+  title?: ComponentChild;    // Title above toast body
+  icon?: ComponentChild;     // Icon element
+  action?: ComponentChild;   // Action button
+  duration?: number;         // Auto-dismiss delay (default: 3000ms)
+}
+
+interface ToastApi {
+  show(content: ComponentChild, options?: ToastOptions): void;
+}
+```
+
+### Toast CSS Hooks
+
+```css
+[k="toast"] { }                 /* Base toast */
+[k="toast"][data-mounted] { }    /* Entrance animation */
+[k="toast"][data-closing] { }    /* Exit animation */
+```
+
+Max 3 toasts visible at once. Staggered entrance animations. DOM-event-driven (no prop drilling).
+
+## CSS Selector Patterns
+
+All components style via `[k="name"]` attribute selectors:
+
+```css
+/* Target a component */
+[k="button"] { }
+
+/* Variant */
+[k="button"][variant="secondary"] { }
+[k="badge"][variant="destructive"] { }
+
+/* Size */
+[k="button"][size="sm"] { }
+[k="input"][size="lg"] { }
+
+/* Boolean state */
+[k="button"][loading] { opacity: 0.6; }
+[k="button"][disabled] { }
+[k="input"][invalid] { }
+
+/* ARIA state */
+[k="tab"][aria-selected="true"] { }
+[k="toggle"][aria-pressed="true"] { }
+
+/* Combined */
+[k="button"][variant="destructive"][size="lg"] { }
+```
+
+### Component → k Attribute Map
+
+| Component | k Value(s) |
+| --- | --- |
+| Button | `button` |
+| DropdownMenuItem | `dropdown-menu-item` |
+| ContextMenuItem | `context-menu-item` |
+| Badge | `badge` |
+| Accordion | `accordion` |
+| Card | `card` |
+| Collapsible | `collapsible` |
+| Table | `table` |
+| Skeleton | `skeleton` |
+| CarouselItem | `carousel-item` |
+| HoverCard | `hover-card` |
+| HoverCardTrigger | `hover-card-trigger` |
+| HoverCardContent | `hover-card-content` |
+| Input | `input` |
+| Checkbox | `checkbox` |
+| InputGroup | `input-group` |
+| RadioGroup | `radio-group` |
+| Radio | `radio` |
+| Select | `select` |
+| Slider | `slider` |
+| Calendar | `calendar` |
+| Switch | `switch` |
+| ComboboxInput | `combobox-input` |
+| ComboboxList | `combobox-list` |
+| ComboboxOption | `combobox-option` |
+| ColorPicker | `color-picker` |
+| FileUpload | `file-upload` |
+| DatePicker | `date-picker` |
+| TimePicker | `time-picker` |
+| Label | `label` |
+| Textarea | `textarea` |
+| Toggle | `toggle` |
+| ToggleGroup | `toggle-group` |
+| Alert | `alert` |
+| Tooltip | `tooltip` |
+| Spinner | `spinner` |
+| Progress | `progress` |
+| ScrollArea | `scroll-area` |
+| Resizable | `resizable` |
+| Separator | `separator` |
+| SidebarTrigger | `sidebar-trigger` |
+| Sidebar | `sidebar` |
+| TabList | `tablist` |
+| Tab | `tab` |
+| TabPanel | `tab-panel` |
+| Breadcrumb | `breadcrumb` |
+| BreadcrumbList | `breadcrumb-list` |
+| BreadcrumbItem | `breadcrumb-item` |
+| BreadcrumbLink | `breadcrumb-link` |
+| NavigationMenu | `navigation-menu` |
+| NavigationMenuList | `navigation-menu-list` |
+| NavigationMenuItem | `navigation-menu-item` |
+| NavigationMenuLink | `navigation-menu-link` |
+| Menubar | `menubar` |
+| MenubarItem | `menubar-item` |
+| Pagination | `pagination` |
+| PaginationList | `pagination-list` |
+| PaginationItem | `pagination-item` |
+| PaginationLink | `pagination-link` |
+
+## Complete Import Map
+
+```tsx
+// Components
+import {
+  Accordion, Alert, AlertDialog, AspectRatio,
+  Avatar, Badge, Breadcrumb, BreadcrumbItem,
+  BreadcrumbLink, BreadcrumbList, Button, Calendar,
+  Card, Carousel, CarouselContent, CarouselItem,
+  CarouselNext, CarouselPrevious, Checkbox, Collapsible,
+  ColorPicker, Combobox, ComboboxInput, ComboboxList,
+  ComboboxOption, ContextMenu, ContextMenuContent, ContextMenuItem,
+  ContextMenuTrigger, DatePicker, Dialog, DialogClose,
+  DialogContent, DialogTrigger, Drawer, DrawerClose,
+  DrawerContent, DrawerTrigger, DropdownMenu, DropdownMenuContent,
+  DropdownMenuItem, DropdownMenuTrigger, FileUpload, HoverCard,
+  HoverCardContent, HoverCardTrigger, Input, InputGroup,
+  Label, Menubar, MenubarItem, NavigationMenu,
+  NavigationMenuItem, NavigationMenuLink, NavigationMenuList, Pagination,
+  PaginationItem, PaginationLink, PaginationList, Popover,
+  PopoverClose, PopoverContent, PopoverTrigger, Progress,
+  Radio, RadioGroup, Resizable, ScrollArea,
+  Select, Separator, Sheet, SheetClose,
+  SheetContent, SheetTrigger, Sidebar, SidebarTrigger,
+  Skeleton, Slider, Spinner, Switch,
+  Tab, TabList, TabPanel, Table,
+  Textarea, TimePicker, ToastContainer, Toggle,
+  ToggleGroup, Tooltip, Tree, toast
+} from 'kinu';
+
+// Types (each component exports FooProps, FooOwnProps, and variant types)
+import type { ButtonProps, ButtonOwnProps, ButtonVariant, ButtonSize } from 'kinu';
+import type { DialogProps, DialogContentProps, DialogTriggerProps } from 'kinu';
+import type { ToastOptions, ToastApi } from 'kinu';
+// ... pattern: {ComponentName}Props, {ComponentName}OwnProps
+```
+
+## Accessibility Patterns
+
+### Keyboard Navigation
+- All interactive components support keyboard navigation
+- Overlays (Dialog, Sheet, Drawer, DropdownMenu) trap focus and close on Escape
+- TabList supports arrow-key navigation between tabs
+- DropdownMenu/ContextMenu support arrow-key item navigation
+
+### ARIA Best Practices
+```tsx
+// Always label form controls:
+<Label htmlFor="email">Email</Label>
+<Input id="email" type="email" required />
+
+// Tabs need roles and aria-selected:
+<TabList role="tablist">
+  <Tab role="tab" aria-selected="true">Active</Tab>
+</TabList>
+<TabPanel role="tabpanel">Content</TabPanel>
+
+// Toggle uses aria-pressed automatically:
+<Toggle pressed={isBold}>Bold</Toggle>
+
+// Spinners and loading states:
+<Spinner aria-label="Loading" />
+<Button loading disabled>Saving...</Button>
+
+// Pagination current page:
+<PaginationLink aria-current="page">1</PaginationLink>
+```
+
+## Integration Examples
+
+### Login Form
+
+```tsx
+import { Button, Card, Input, Label, toast, ToastContainer } from 'kinu';
+
+function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <>
+      <form onSubmit={(e) => { e.preventDefault(); toast.show("Logged in!"); }}>
+        <Card>
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" type="email" value={email} onInput={(e) => setEmail(e.currentTarget.value)} required />
+          <Label htmlFor="pw">Password</Label>
+          <Input id="pw" type="password" value={password} onInput={(e) => setPassword(e.currentTarget.value)} required />
+          <Button type="submit">Sign In</Button>
+        </Card>
+      </form>
+      <ToastContainer />
+    </>
+  );
+}
+```
+
+### Dashboard with Sidebar
+
+```tsx
+import { Sidebar, SidebarTrigger, NavigationMenu, NavigationMenuList,
+  NavigationMenuItem, NavigationMenuLink, Card, Progress, ToastContainer } from 'kinu';
+
+function Dashboard() {
+  return (
+    <div style={{ display: "flex" }}>
+      <Sidebar id="main-sidebar">
+        <nav>
+          <a href="/dashboard" aria-current="page">Dashboard</a>
+          <a href="/users">Users</a>
+          <a href="/settings">Settings</a>
+        </nav>
+      </Sidebar>
+      <main>
+        <SidebarTrigger commandFor="main-sidebar">☰</SidebarTrigger>
+        <Card><Progress value={75} max={100} /></Card>
+      </main>
+      <ToastContainer />
+    </div>
+  );
+}
+```
+
+### Dialog with Form
+
+```tsx
+import { Dialog, Button, Input, Label } from 'kinu';
+
+function EditDialog() {
+  return (
+    <Dialog>
+      <Dialog.Trigger><Button>Edit Profile</Button></Dialog.Trigger>
+      <Dialog.Content>
+        <h3>Edit Profile</h3>
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" placeholder="Your name" />
+        <Dialog.Close><Button variant="outline">Cancel</Button></Dialog.Close>
+        <Button type="submit">Save</Button>
+      </Dialog.Content>
+    </Dialog>
+  );
+}
+```
+
+### Dropdown with Actions
+
+```tsx
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, Button } from 'kinu';
+
+function ActionsMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger><Button variant="outline">Actions</Button></DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={() => console.log("edit")}>Edit</DropdownMenuItem>
+        <DropdownMenuItem shortcut="⌘D">Duplicate</DropdownMenuItem>
+        <DropdownMenuItem destructive>Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+### Data Table
+
+```tsx
+import { Table, Badge, Button, Card } from 'kinu';
+
+function UsersTable({ users }) {
+  return (
+    <Card>
+      <Table>
+        <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          {users.map(u => (
+            <tr key={u.id}>
+              <td>{u.name}</td>
+              <td><Badge variant={u.active ? undefined : "secondary"}>{u.active ? "Active" : "Inactive"}</Badge></td>
+              <td><Button size="sm" variant="ghost">Edit</Button></td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Card>
+  );
+}
+```
+
+---
+
+*Generated from source by `scripts/generate-llms-txt.mjs`.*
