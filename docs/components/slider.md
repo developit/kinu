@@ -5,7 +5,7 @@ Range input with CSS-driven track and thumb styling.
 ## Usage
 
 ```tsx
-import {Slider} from 'pui';
+import {Slider} from 'kinu';
 
 <Slider min={0} max={100} value={50} />
 ```

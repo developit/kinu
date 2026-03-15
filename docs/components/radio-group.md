@@ -5,7 +5,7 @@ Container that styles a set of native radio inputs.
 ## Usage
 
 ```tsx
-import {Radio, RadioGroup} from 'pui';
+import {Radio, RadioGroup} from 'kinu';
 
 <RadioGroup>
   <Radio name="plan" value="basic" />

@@ -53,7 +53,7 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
   const target = e.target as Element;
 
   // close on backdrop click
-  if (target.localName === 'dialog' && target.getAttribute('p')) {
+  if (target.localName === 'dialog' && target.getAttribute('k')) {
     const {clientX, clientY} = e;
     const {left, right, top, bottom} = target.getBoundingClientRect();
     if (
@@ -71,7 +71,7 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
   // close other dropdowns
   for (const el of Array.from(
     document.querySelectorAll<HTMLDialogElement>(
-      '[p="dropdown-content"],[p="popover-content"]',
+      '[k="dropdown-content"],[k="popover-content"]',
     ),
   )) {
     if (!el.contains(target)) {
@@ -90,15 +90,15 @@ export function installMenuShortcuts() {
 
 function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   const el = elementTarget(e.target!);
-  let dialog = el.closest('dialog[p]');
+  let dialog = el.closest('dialog[k]');
   let useFocus = true;
   if (!dialog) {
-    dialog = el.parentNode!.querySelector('dialog[p][open]');
+    dialog = el.parentNode!.querySelector('dialog[k][open]');
     useFocus = false;
   }
   if (!dialog) return;
   const selected = dialog.querySelector<HTMLElement>(
-    useFocus ? '[p]:focus' : '[p][selected]',
+    useFocus ? '[k]:focus' : '[k][selected]',
   );
   // emulate button enter key behavior for pseudo-focused selection
   if (e.key === 'Enter' && !useFocus) {
@@ -110,13 +110,13 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   if (!dir) return;
   e.preventDefault();
   if (!selected) {
-    const items = dialog.querySelectorAll<HTMLElement>('button[p],[p][tabindex]');
+    const items = dialog.querySelectorAll<HTMLElement>('button[k],[k][tabindex]');
     const item = items[dir > 0 ? 0 : items.length - 1];
     if (useFocus) item?.focus();
     else item?.toggleAttribute('selected', true);
     return;
   }
-  const type = selected.getAttribute('p');
+  const type = selected.getAttribute('k');
   if (!selected) return;
   let next = selected;
   while (
@@ -124,7 +124,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
       dir > 0 ? 'nextElementSibling' : 'previousElementSibling'
     ] as HTMLElement)
   ) {
-    if (next.getAttribute('p') !== type) continue;
+    if (next.getAttribute('k') !== type) continue;
     if (useFocus) next.focus();
     else {
       selected.toggleAttribute('selected', false);

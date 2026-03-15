@@ -1,4 +1,4 @@
-import {Button, Spinner, Toggle, ToggleGroup} from 'pui';
+import {Button, Spinner, Toggle, ToggleGroup} from 'kinu';
 import {useState} from 'preact/hooks';
 
 const types = [
@@ -59,8 +59,8 @@ export function Demo() {
               justifyContent: 'center',
               gap: '0.5rem',
               padding: '0.75rem 0.5rem',
-              border: '1px solid hsl(var(--p-border))',
-              borderRadius: 'var(--p-radius)',
+              border: '1px solid hsl(var(--k-border))',
+              borderRadius: 'var(--k-radius)',
             }}
           >
             {type === 'default' ? (

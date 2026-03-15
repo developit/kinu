@@ -5,7 +5,7 @@ Bottom sheet style overlay with trigger and close helpers.
 ## Usage
 
 ```tsx
-import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'pui';
+import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'kinu';
 
 <Drawer>
   <DrawerTrigger><Button>Open</Button></DrawerTrigger>

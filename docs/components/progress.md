@@ -5,7 +5,7 @@ Styled progress meter with determinate and indeterminate states.
 ## Usage
 
 ```tsx
-import {Progress} from 'pui';
+import {Progress} from 'kinu';
 
 <Progress value={60} max={100} />
 ```

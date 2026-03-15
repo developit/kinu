@@ -1,11 +1,11 @@
-import {AspectRatio} from 'pui';
+import {AspectRatio} from 'kinu';
 
 export function Demo() {
   return (
     <AspectRatio
       ratio={16 / 9}
       style={{
-        backgroundColor: 'hsl(var(--p-muted))',
+        backgroundColor: 'hsl(var(--k-muted))',
         borderRadius: '0.5rem',
         display: 'flex',
         alignItems: 'center',

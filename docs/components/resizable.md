@@ -5,7 +5,7 @@ Resizable container that exposes native CSS handles.
 ## Usage
 
 ```tsx
-import {Resizable} from 'pui';
+import {Resizable} from 'kinu';
 
 <Resizable style={{width: "20rem", height: "12rem"}} />
 ```

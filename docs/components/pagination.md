@@ -5,7 +5,7 @@ Semantic pagination list with previous/next helpers.
 ## Usage
 
 ```tsx
-import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
+import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'kinu';
 
 <Pagination>
   <PaginationList>

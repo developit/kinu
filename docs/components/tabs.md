@@ -5,7 +5,7 @@ TabList, Tab, and TabPanel wrappers using aria attributes.
 ## Usage
 
 ```tsx
-import {Tab, TabList, TabPanel} from 'pui';
+import {Tab, TabList, TabPanel} from 'kinu';
 
 <TabList role="tablist">
   <Tab role="tab" aria-selected="true">Account</Tab>

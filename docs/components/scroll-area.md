@@ -5,7 +5,7 @@ Overflow wrapper with custom scrollbars and shadow indicators.
 ## Usage
 
 ```tsx
-import {ScrollArea} from 'pui';
+import {ScrollArea} from 'kinu';
 
 <ScrollArea style={{height: '200px'}}><div>Long content</div></ScrollArea>
 ```

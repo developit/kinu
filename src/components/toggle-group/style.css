@@ -1,26 +1,26 @@
 @import "../../variables.css";
 
-[p="toggle-group"] {
+[k="toggle-group"] {
   display: inline-flex;
   gap: 0;
 }
 
-[p="toggle-group"] > [p="toggle"]:not(:first-child) {
+[k="toggle-group"] > [k="toggle"]:not(:first-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-[p="toggle-group"] > [p="toggle"]:not(:last-child) {
+[k="toggle-group"] > [k="toggle"]:not(:last-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-[p="toggle-group"] > [p="toggle"] + [p="toggle"] {
+[k="toggle-group"] > [k="toggle"] + [k="toggle"] {
   margin-left: -1px;
 }
 
-[p="toggle-group"] > [p="toggle"][aria-pressed="true"],
-[p="toggle-group"] > [p="toggle"]:focus-visible {
+[k="toggle-group"] > [k="toggle"][aria-pressed="true"],
+[k="toggle-group"] > [k="toggle"]:focus-visible {
   position: relative;
   z-index: 1;
 }

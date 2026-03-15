@@ -5,7 +5,7 @@ Styled `<img>` avatar that falls back to initials from the alt text.
 ## Usage
 
 ```tsx
-import {Avatar} from 'pui';
+import {Avatar} from 'kinu';
 
 <Avatar alt="JM" src="/user.jpg" />
 ```

@@ -1,4 +1,4 @@
-import {Label, Textarea} from 'pui';
+import {Label, Textarea} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

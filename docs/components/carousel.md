@@ -5,7 +5,7 @@ Scroll snapping carousel with previous/next helpers.
 ## Usage
 
 ```tsx
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from 'pui';
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from 'kinu';
 
 <Carousel>
   <CarouselContent>

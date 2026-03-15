@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'preact/hooks';
-import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'pui';
+import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'kinu';
 
-const CUSTOM_THEME_STORAGE_KEY = 'pui-custom-theme';
-const CUSTOM_THEME_STYLE_ID = 'pui-custom-style';
+const CUSTOM_THEME_STORAGE_KEY = 'kinu-custom-theme';
+const CUSTOM_THEME_STYLE_ID = 'kinu-custom-style';
 
 /* ── hex→HSL helper ───────────────────────────────────────── */
 function hexToHsl(hex: string): [number, number, number] {
@@ -111,25 +111,25 @@ function generateCSS(settings: ThemeSettings): string {
   const lines = [
     '/* Light mode */',
     ':root {',
-    `  --p-primary: ${hsl(accent.light.step9)};`,
-    `  --p-primary-hover: ${hsl(accent.light.step10)};`,
-    `  --p-primary-foreground: ${fgLight};`,
-    `  --p-ring: ${hsl(accent.light.step8)};`,
-    `  --p-accent: ${hsl(accent.light.step3)};`,
-    `  --p-accent-foreground: ${hsl(accent.light.step11)};`,
-    `  --p-foreground: ${hsl(gray.light.step12)};`,
-    `  --p-card-foreground: ${hsl(gray.light.step12)};`,
-    `  --p-popover-foreground: ${hsl(gray.light.step12)};`,
-    `  --p-secondary-foreground: ${hsl(gray.light.step12)};`,
-    `  --p-muted-foreground: ${hsl(gray.light.step11)};`,
-    `  --p-border: ${hsl(gray.light.step6)};`,
-    `  --p-input: ${hsl(gray.light.step6)};`,
-    `  --p-muted: ${hsl(gray.light.step3)};`,
-    `  --p-secondary: ${hsl(gray.light.step3)};`,
-    `  --p-background: ${hsl(gray.light.step1)};`,
-    `  --p-card: ${hsl(gray.light.step1)};`,
-    `  --p-popover: ${hsl(gray.light.step1)};`,
-    `  --p-radius: ${radius};`,
+    `  --k-primary: ${hsl(accent.light.step9)};`,
+    `  --k-primary-hover: ${hsl(accent.light.step10)};`,
+    `  --k-primary-foreground: ${fgLight};`,
+    `  --k-ring: ${hsl(accent.light.step8)};`,
+    `  --k-accent: ${hsl(accent.light.step3)};`,
+    `  --k-accent-foreground: ${hsl(accent.light.step11)};`,
+    `  --k-foreground: ${hsl(gray.light.step12)};`,
+    `  --k-card-foreground: ${hsl(gray.light.step12)};`,
+    `  --k-popover-foreground: ${hsl(gray.light.step12)};`,
+    `  --k-secondary-foreground: ${hsl(gray.light.step12)};`,
+    `  --k-muted-foreground: ${hsl(gray.light.step11)};`,
+    `  --k-border: ${hsl(gray.light.step6)};`,
+    `  --k-input: ${hsl(gray.light.step6)};`,
+    `  --k-muted: ${hsl(gray.light.step3)};`,
+    `  --k-secondary: ${hsl(gray.light.step3)};`,
+    `  --k-background: ${hsl(gray.light.step1)};`,
+    `  --k-card: ${hsl(gray.light.step1)};`,
+    `  --k-popover: ${hsl(gray.light.step1)};`,
+    `  --k-radius: ${radius};`,
   ];
 
   if (scale !== 1) {
@@ -144,24 +144,24 @@ function generateCSS(settings: ThemeSettings): string {
   lines.push('@media (prefers-color-scheme: dark) {');
   lines.push('  :root {');
   lines.push('    color-scheme: dark;');
-  lines.push(`    --p-primary: ${hsl(accent.dark.step9)};`);
-  lines.push(`    --p-primary-hover: ${hsl(accent.dark.step10)};`);
-  lines.push(`    --p-primary-foreground: ${fgDark};`);
-  lines.push(`    --p-ring: ${hsl(accent.dark.step9)};`);
-  lines.push(`    --p-accent: ${hsl(accent.dark.step3)};`);
-  lines.push(`    --p-accent-foreground: ${hsl(accent.dark.step11)};`);
-  lines.push(`    --p-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`    --p-card-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`    --p-popover-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`    --p-secondary-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`    --p-muted-foreground: ${hsl(gray.dark.step11)};`);
-  lines.push(`    --p-border: ${hsl(gray.dark.step6)};`);
-  lines.push(`    --p-input: ${hsl(gray.dark.step6)};`);
-  lines.push(`    --p-muted: ${hsl(gray.dark.step3)};`);
-  lines.push(`    --p-secondary: ${hsl(gray.dark.step3)};`);
-  lines.push(`    --p-background: ${hsl(gray.dark.step1)};`);
-  lines.push(`    --p-card: ${hsl(gray.dark.step1)};`);
-  lines.push(`    --p-popover: ${hsl(gray.dark.step1)};`);
+  lines.push(`    --k-primary: ${hsl(accent.dark.step9)};`);
+  lines.push(`    --k-primary-hover: ${hsl(accent.dark.step10)};`);
+  lines.push(`    --k-primary-foreground: ${fgDark};`);
+  lines.push(`    --k-ring: ${hsl(accent.dark.step9)};`);
+  lines.push(`    --k-accent: ${hsl(accent.dark.step3)};`);
+  lines.push(`    --k-accent-foreground: ${hsl(accent.dark.step11)};`);
+  lines.push(`    --k-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`    --k-card-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`    --k-popover-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`    --k-secondary-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`    --k-muted-foreground: ${hsl(gray.dark.step11)};`);
+  lines.push(`    --k-border: ${hsl(gray.dark.step6)};`);
+  lines.push(`    --k-input: ${hsl(gray.dark.step6)};`);
+  lines.push(`    --k-muted: ${hsl(gray.dark.step3)};`);
+  lines.push(`    --k-secondary: ${hsl(gray.dark.step3)};`);
+  lines.push(`    --k-background: ${hsl(gray.dark.step1)};`);
+  lines.push(`    --k-card: ${hsl(gray.dark.step1)};`);
+  lines.push(`    --k-popover: ${hsl(gray.dark.step1)};`);
   lines.push('  }');
   lines.push('}');
   lines.push('');
@@ -170,24 +170,24 @@ function generateCSS(settings: ThemeSettings): string {
   lines.push('/* Dark mode (explicit) */');
   lines.push('.dark {');
   lines.push('  color-scheme: dark;');
-  lines.push(`  --p-primary: ${hsl(accent.dark.step9)};`);
-  lines.push(`  --p-primary-hover: ${hsl(accent.dark.step10)};`);
-  lines.push(`  --p-primary-foreground: ${fgDark};`);
-  lines.push(`  --p-ring: ${hsl(accent.dark.step9)};`);
-  lines.push(`  --p-accent: ${hsl(accent.dark.step3)};`);
-  lines.push(`  --p-accent-foreground: ${hsl(accent.dark.step11)};`);
-  lines.push(`  --p-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`  --p-card-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`  --p-popover-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`  --p-secondary-foreground: ${hsl(gray.dark.step12)};`);
-  lines.push(`  --p-muted-foreground: ${hsl(gray.dark.step11)};`);
-  lines.push(`  --p-border: ${hsl(gray.dark.step6)};`);
-  lines.push(`  --p-input: ${hsl(gray.dark.step6)};`);
-  lines.push(`  --p-muted: ${hsl(gray.dark.step3)};`);
-  lines.push(`  --p-secondary: ${hsl(gray.dark.step3)};`);
-  lines.push(`  --p-background: ${hsl(gray.dark.step1)};`);
-  lines.push(`  --p-card: ${hsl(gray.dark.step1)};`);
-  lines.push(`  --p-popover: ${hsl(gray.dark.step1)};`);
+  lines.push(`  --k-primary: ${hsl(accent.dark.step9)};`);
+  lines.push(`  --k-primary-hover: ${hsl(accent.dark.step10)};`);
+  lines.push(`  --k-primary-foreground: ${fgDark};`);
+  lines.push(`  --k-ring: ${hsl(accent.dark.step9)};`);
+  lines.push(`  --k-accent: ${hsl(accent.dark.step3)};`);
+  lines.push(`  --k-accent-foreground: ${hsl(accent.dark.step11)};`);
+  lines.push(`  --k-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`  --k-card-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`  --k-popover-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`  --k-secondary-foreground: ${hsl(gray.dark.step12)};`);
+  lines.push(`  --k-muted-foreground: ${hsl(gray.dark.step11)};`);
+  lines.push(`  --k-border: ${hsl(gray.dark.step6)};`);
+  lines.push(`  --k-input: ${hsl(gray.dark.step6)};`);
+  lines.push(`  --k-muted: ${hsl(gray.dark.step3)};`);
+  lines.push(`  --k-secondary: ${hsl(gray.dark.step3)};`);
+  lines.push(`  --k-background: ${hsl(gray.dark.step1)};`);
+  lines.push(`  --k-card: ${hsl(gray.dark.step1)};`);
+  lines.push(`  --k-popover: ${hsl(gray.dark.step1)};`);
   lines.push('}');
 
   return lines.join('\n');
@@ -251,8 +251,8 @@ function Swatch({color, selected, onClick, label}: {
         height: '1.5rem',
         borderRadius: '50%',
         backgroundColor: color,
-        border: selected ? '2px solid hsl(var(--p-foreground))' : '2px solid transparent',
-        outline: selected ? '2px solid hsl(var(--p-background))' : 'none',
+        border: selected ? '2px solid hsl(var(--k-foreground))' : '2px solid transparent',
+        outline: selected ? '2px solid hsl(var(--k-background))' : 'none',
         cursor: 'pointer',
         padding: 0,
         flexShrink: 0,
@@ -410,8 +410,8 @@ export function ThemeCustomizer() {
             <pre style={{
               fontSize: '0.6875rem',
               fontFamily: 'monospace',
-              background: 'hsl(var(--p-muted))',
-              borderRadius: 'var(--p-radius)',
+              background: 'hsl(var(--k-muted))',
+              borderRadius: 'var(--k-radius)',
               padding: '0.5rem',
               margin: '0.5rem 0 0',
               overflow: 'auto',

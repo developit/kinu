@@ -5,7 +5,7 @@ Horizontal command bar composed of styled buttons.
 ## Usage
 
 ```tsx
-import {Menubar, MenubarItem} from 'pui';
+import {Menubar, MenubarItem} from 'kinu';
 
 <Menubar>
   <MenubarItem>File</MenubarItem>

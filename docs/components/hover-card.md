@@ -5,7 +5,7 @@ Delayed hover preview card with trigger/content primitives.
 ## Usage
 
 ```tsx
-import {HoverCard, HoverCardContent, HoverCardTrigger} from 'pui';
+import {HoverCard, HoverCardContent, HoverCardTrigger} from 'kinu';
 
 <HoverCard>
   <HoverCardTrigger>Hover me</HoverCardTrigger>

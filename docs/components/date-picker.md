@@ -5,7 +5,7 @@ Styled date input that shares the same foundation as Calendar.
 ## Usage
 
 ```tsx
-import {DatePicker} from 'pui';
+import {DatePicker} from 'kinu';
 
 <DatePicker />
 ```

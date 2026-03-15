@@ -5,7 +5,7 @@ Side or bottom sheet overlay with directional variants.
 ## Usage
 
 ```tsx
-import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
+import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'kinu';
 
 <Sheet>
   <SheetTrigger><Button>Open</Button></SheetTrigger>

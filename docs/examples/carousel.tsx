@@ -4,7 +4,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from 'pui';
+} from 'kinu';
 
 export function Demo() {
   return (

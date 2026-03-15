@@ -5,7 +5,7 @@ Semantic horizontal or vertical divider.
 ## Usage
 
 ```tsx
-import {Separator} from 'pui';
+import {Separator} from 'kinu';
 
 <Separator />
 ```

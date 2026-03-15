@@ -5,7 +5,7 @@ Responsive sidebar dialog that collapses on mobile.
 ## Usage
 
 ```tsx
-import {Sidebar, SidebarTrigger} from 'pui';
+import {Sidebar, SidebarTrigger} from 'kinu';
 
 <Sidebar id="app-sidebar">
   <nav>...</nav>

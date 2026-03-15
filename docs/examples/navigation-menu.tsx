@@ -3,7 +3,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from 'pui';
+} from 'kinu';
 
 export function Demo() {
   return (

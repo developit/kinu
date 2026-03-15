@@ -5,7 +5,7 @@ Styled wrapper around the native `<input type="date">` element.
 ## Usage
 
 ```tsx
-import {Calendar} from 'pui';
+import {Calendar} from 'kinu';
 
 <Calendar />
 ```

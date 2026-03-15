@@ -13,7 +13,7 @@ export default defineConfig({
     }),
   ],
   // Use the repository name for asset paths when deployed to GitHub Pages
-  //base: '/pui/',
+  //base: '/kinu/',
   build: {
     modulePreload: false,
     cssCodeSplit: false,
@@ -21,8 +21,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      pui: resolve(__dirname, '..'),
-      'pui-docs': resolve(__dirname, '../docs'),
+      kinu: resolve(__dirname, '..'),
+      'kinu-docs': resolve(__dirname, '../docs'),
     },
     conditions: ['source', ...defaultClientConditions],
   },

@@ -5,7 +5,7 @@ Tiny inline status indicator with multiple tone variants.
 ## Usage
 
 ```tsx
-import {Badge} from 'pui';
+import {Badge} from 'kinu';
 
 <Badge variant="secondary">New</Badge>
 ```

@@ -5,7 +5,7 @@ Disclosure built on the native `<details>` element with smooth open and close an
 ## Usage
 
 ```tsx
-import {Accordion} from 'pui';
+import {Accordion} from 'kinu';
 
 <Accordion open>
   <summary>Details</summary>

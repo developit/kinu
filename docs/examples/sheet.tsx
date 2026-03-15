@@ -1,4 +1,4 @@
-import {Button, Sheet, SheetClose, SheetContent, SheetTrigger} from 'pui';
+import {Button, Sheet, SheetClose, SheetContent, SheetTrigger} from 'kinu';
 
 export function Demo() {
   return (

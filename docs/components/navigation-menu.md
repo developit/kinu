@@ -5,7 +5,7 @@ Composable navigation with list, item, and link helpers.
 ## Usage
 
 ```tsx
-import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList} from 'pui';
+import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList} from 'kinu';
 
 <NavigationMenu>
   <NavigationMenuList>

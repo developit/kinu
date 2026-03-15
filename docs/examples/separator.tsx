@@ -1,4 +1,4 @@
-import {Separator} from 'pui';
+import {Separator} from 'kinu';
 
 export function Demo() {
   return (

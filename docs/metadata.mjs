@@ -1,7 +1,7 @@
 export default [
   {
     slug: 'overview',
-    title: 'PUI Overview',
+    title: 'Kinu Overview',
     section: 'Foundations',
     category: 'Introduction',
     order: 1,
@@ -328,7 +328,7 @@ export default [
 </InputGroup>`,
     notes: [
       'Uses CSS-only border and radius joining for grouped controls.',
-      'Works with both PUI primitives and native form elements.'
+      'Works with both Kinu primitives and native form elements.'
     ]
   },
   {

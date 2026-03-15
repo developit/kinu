@@ -1,4 +1,4 @@
-import {Button, Dialog} from 'pui';
+import {Button, Dialog} from 'kinu';
 
 export function Demo() {
   return (
@@ -11,7 +11,7 @@ export function Demo() {
         <p
           style={{
             margin: '0 0 1rem 0',
-            color: 'hsl(var(--p-muted-foreground))',
+            color: 'hsl(var(--k-muted-foreground))',
           }}
         >
           This is a native HTML5 dialog element with minimal styling and

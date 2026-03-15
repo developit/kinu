@@ -5,7 +5,7 @@ Table wrapper with zebra striping and compact density.
 ## Usage
 
 ```tsx
-import {Table} from 'pui';
+import {Table} from 'kinu';
 
 <Table>
   <thead>...</thead>

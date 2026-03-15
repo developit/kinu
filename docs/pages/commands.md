@@ -1,7 +1,7 @@
 # Command Attributes
 
 Many interactive components rely on a lightweight command polyfill that mirrors the proposed HTML `command`/`commandfor`
-attributes. When you render `<Dialog.Trigger>` or `<DropdownMenuTrigger>`, PUI adds these attributes so the browser can open the
+attributes. When you render `<Dialog.Trigger>` or `<DropdownMenuTrigger>`, Kinu adds these attributes so the browser can open the
 corresponding `<dialog>` element without extra wiring. The polyfill follows the [HTML Command API draft on MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCommandElement),
 bridging support until browsers ship the attribute natively.
 
@@ -33,7 +33,7 @@ overlays, so there is no separate setup step.
 Commands dispatch as CustomEvents so you can intercept them if you need custom behavior:
 
 ```ts
-document.addEventListener('pui-command', (event) => {
+document.addEventListener('kinu-command', (event) => {
   // event.detail: {command: string, target: HTMLElement}
 });
 ```

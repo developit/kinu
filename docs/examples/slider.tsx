@@ -1,4 +1,4 @@
-import {Label, Slider} from 'pui';
+import {Label, Slider} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

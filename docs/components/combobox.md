@@ -5,7 +5,7 @@ Autocomplete input with trigger, list, and option primitives.
 ## Usage
 
 ```tsx
-import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
+import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 
 <Combobox>
   <ComboboxInput placeholder="Search" />

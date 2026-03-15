@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   toast,
-} from 'pui';
+} from 'kinu';
 
 function logText(e: MouseEvent | string) {
   const text =

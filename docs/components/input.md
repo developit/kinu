@@ -5,7 +5,7 @@ Text input with size, tone, and invalid states handled in CSS.
 ## Usage
 
 ```tsx
-import {Input} from 'pui';
+import {Input} from 'kinu';
 
 <Input placeholder="Email" type="email" />
 ```

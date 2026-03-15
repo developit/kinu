@@ -1,6 +1,6 @@
 # Architecture Overview
 
-This document explains the technical architecture and design decisions behind PUI.
+This document explains the technical architecture and design decisions behind Kinu.
 
 ## Project Structure
 
@@ -34,16 +34,16 @@ demo/               # Demo application
 ```tsx
 export const Button = createSimpleComponent('button', 'button');
 // <Button variant="outline" size="lg" loading />
-// Renders: <button p="button" variant="outline" size="lg" loading />
+// Renders: <button k="button" variant="outline" size="lg" loading />
 ```
 
 ### CSS-Driven Logic
 ```css
-[p="button"] {
+[k="button"] {
   /* Base styles + default variant */
 }
 
-[p="button"][variant="outline"] {
+[k="button"][variant="outline"] {
   /* Override delta only */
 }
 ```

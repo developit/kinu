@@ -4,7 +4,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
   toast,
-} from 'pui';
+} from 'kinu';
 
 function logText(e: MouseEvent | string) {
   const text =
@@ -21,7 +21,7 @@ export function Demo() {
           style={{
             width: '200px',
             height: '100px',
-            background: 'hsl(var(--p-muted))',
+            background: 'hsl(var(--k-muted))',
           }}
         >
           Right-click me

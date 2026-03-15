@@ -5,7 +5,7 @@ Lightweight popover using native dialog with trigger/content primitives.
 ## Usage
 
 ```tsx
-import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
+import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'kinu';
 
 <Popover>
   <PopoverTrigger><Button>Open</Button></PopoverTrigger>

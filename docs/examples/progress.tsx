@@ -1,4 +1,4 @@
-import {Progress} from 'pui';
+import {Progress} from 'kinu';
 import {useEffect, useState} from 'preact/hooks';
 
 export function Demo() {

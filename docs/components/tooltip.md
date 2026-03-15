@@ -5,7 +5,7 @@ Hover/focus tooltip with placement attributes and CSS timing.
 ## Usage
 
 ```tsx
-import {Tooltip} from 'pui';
+import {Tooltip} from 'kinu';
 
 <Tooltip text="Info"><Button>Hover</Button></Tooltip>
 ```

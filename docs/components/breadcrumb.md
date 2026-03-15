@@ -5,7 +5,7 @@ Composable breadcrumb trail built from list primitives.
 ## Usage
 
 ```tsx
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'kinu';
 
 <Breadcrumb>
   <BreadcrumbList>

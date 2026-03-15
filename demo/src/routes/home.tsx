@@ -14,7 +14,7 @@ import {
   Slider,
   Checkbox,
   Label,
-} from 'pui';
+} from 'kinu';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
 
@@ -28,7 +28,7 @@ export default function Home() {
         <div class="hero-content">
           <div class="hero-text">
             <h1>
-              Build beautiful UIs with <span class="highlight">PUI</span>
+              Build beautiful UIs with <span class="highlight">Kinu</span>
             </h1>
             <p class="hero-subtitle">
               A lightweight <strong>5kB</strong> component library that
@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       <section class="why-preact-ui">
-        <h2>Why developers choose PUI</h2>
+        <h2>Why developers choose Kinu</h2>
         <div class="benefits-grid">
           <div class="benefit">
             <div class="benefit-icon">🪶</div>
@@ -123,7 +123,7 @@ export default function Home() {
       <section class="real-world">
         <h2>Built for real applications</h2>
         <p class="real-world-subtitle">
-          From simple forms to complex dashboards, PUI scales with your needs
+          From simple forms to complex dashboards, Kinu scales with your needs
         </p>
         <div class="demo-links">
           <Button href="/linear" variant="secondary" size="lg">

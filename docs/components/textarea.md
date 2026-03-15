@@ -5,7 +5,7 @@ Text area with matching input styling, variants, and sizes.
 ## Usage
 
 ```tsx
-import {Textarea} from 'pui';
+import {Textarea} from 'kinu';
 
 <Textarea rows={4} placeholder="Write here" />
 ```

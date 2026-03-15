@@ -1,4 +1,4 @@
-import {Label, Select} from 'pui';
+import {Label, Select} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

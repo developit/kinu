@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="input-group"] {
+[k="input-group"] {
   display: flex;
   align-items: stretch;
   border: none;
@@ -8,49 +8,49 @@
   margin: 0;
 }
 
-[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], input, textarea, select) {
+[k="input-group"] > :is([k="input"], [k="textarea"], [k="select"], input, textarea, select) {
   flex: 1;
 }
 
-[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], [p="button"], input, textarea, select, button) {
+[k="input-group"] > :is([k="input"], [k="textarea"], [k="select"], [k="button"], input, textarea, select, button) {
   border-radius: 0;
 }
 
-[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], input, textarea, select):not(:last-child) {
+[k="input-group"] > :is([k="input"], [k="textarea"], [k="select"], input, textarea, select):not(:last-child) {
   border-inline-end: 0;
 }
 
-[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], [p="button"], input, textarea, select, button):first-child {
-  border-start-start-radius: var(--p-radius);
-  border-end-start-radius: var(--p-radius);
+[k="input-group"] > :is([k="input"], [k="textarea"], [k="select"], [k="button"], input, textarea, select, button):first-child {
+  border-start-start-radius: var(--k-radius);
+  border-end-start-radius: var(--k-radius);
 }
 
-[p="input-group"] > :is([p="input"], [p="textarea"], [p="select"], [p="button"], input, textarea, select, button):last-child {
-  border-start-end-radius: var(--p-radius);
-  border-end-end-radius: var(--p-radius);
+[k="input-group"] > :is([k="input"], [k="textarea"], [k="select"], [k="button"], input, textarea, select, button):last-child {
+  border-start-end-radius: var(--k-radius);
+  border-end-end-radius: var(--k-radius);
 }
 
-[p="input-group"] > legend {
+[k="input-group"] > legend {
   float: inline-start;
   display: inline-flex;
   align-items: center;
   padding: 0 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
-  color: hsl(var(--p-muted-foreground));
-  background-color: hsl(var(--p-muted));
-  border: 1px solid hsl(var(--p-input));
+  color: hsl(var(--k-muted-foreground));
+  background-color: hsl(var(--k-muted));
+  border: 1px solid hsl(var(--k-input));
   border-inline-end: none;
-  border-start-start-radius: var(--p-radius);
-  border-end-start-radius: var(--p-radius);
+  border-start-start-radius: var(--k-radius);
+  border-end-start-radius: var(--k-radius);
 }
 
-[p="input-group"]:has(> :is([p="input"], [p="textarea"], [p="select"]):focus-visible):not(:has(> :is([p="input"], [p="textarea"], [p="select"]) ~ :is([p="input"], [p="textarea"], [p="select"]))) {
-  box-shadow: 0 0 0 2px hsl(var(--p-ring));
-  border-radius: var(--p-radius);
+[k="input-group"]:has(> :is([k="input"], [k="textarea"], [k="select"]):focus-visible):not(:has(> :is([k="input"], [k="textarea"], [k="select"]) ~ :is([k="input"], [k="textarea"], [k="select"]))) {
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+  border-radius: var(--k-radius);
 }
 
-[p="input-group"]:has(> :is([p="input"], [p="textarea"], [p="select"]):focus-visible):not(:has(> :is([p="input"], [p="textarea"], [p="select"]) ~ :is([p="input"], [p="textarea"], [p="select"]))) > :is([p="input"], [p="textarea"], [p="select"]):focus-visible {
+[k="input-group"]:has(> :is([k="input"], [k="textarea"], [k="select"]):focus-visible):not(:has(> :is([k="input"], [k="textarea"], [k="select"]) ~ :is([k="input"], [k="textarea"], [k="select"]))) > :is([k="input"], [k="textarea"], [k="select"]):focus-visible {
   box-shadow: none;
-  border-color: hsl(var(--p-input));
+  border-color: hsl(var(--k-input));
 }

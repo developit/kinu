@@ -5,7 +5,7 @@ Typography-aligned label component for form controls.
 ## Usage
 
 ```tsx
-import {Label} from 'pui';
+import {Label} from 'kinu';
 
 <Label htmlFor="name">Name</Label>
 ```

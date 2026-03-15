@@ -5,7 +5,7 @@ Surface container with padding, border, and typography defaults.
 ## Usage
 
 ```tsx
-import {Card} from 'pui';
+import {Card} from 'kinu';
 
 <Card>
   <h3>Title</h3>

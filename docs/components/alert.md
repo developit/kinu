@@ -5,7 +5,7 @@ Inline status message with tone variants.
 ## Usage
 
 ```tsx
-import {Alert} from 'pui';
+import {Alert} from 'kinu';
 
 <Alert variant="default">Heads up!</Alert>
 ```

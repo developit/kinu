@@ -1,4 +1,4 @@
-import {Alert} from 'pui';
+import {Alert} from 'kinu';
 
 export function Demo() {
   return (

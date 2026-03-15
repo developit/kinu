@@ -1,17 +1,17 @@
 # Typography
 
-Typography in PUI is delivered as CSS utility classes rather than components. Import the stylesheet once and use native HTML
+Typography in Kinu is delivered as CSS utility classes rather than components. Import the stylesheet once and use native HTML
 elements for headings, paragraphs, and muted text.
 
 ```ts
-import 'pui/components/typography/style.css';
+import 'kinu/components/typography/style.css';
 ```
 
 The stylesheet defines attribute selectors and utility classes such as:
 
-- `[p="lead"]` — larger paragraph text for intros.
-- `[p="muted"]` — subdued foreground color for secondary text.
-- `[p="small"]` — small print text.
+- `[k="lead"]` — larger paragraph text for intros.
+- `[k="muted"]` — subdued foreground color for secondary text.
+- `[k="small"]` — small print text.
 
 Because the CSS targets attributes, you can opt in without extra JavaScript:
 

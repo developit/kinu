@@ -20,7 +20,7 @@ function handleContextMenu(e: MouseEvent) {
   const el = e.currentTarget as HTMLElement;
   if (lastAnchor) lastAnchor.style.anchorName = '';
   lastAnchor = el;
-  el.style.anchorName = '--p-context-menu';
+  el.style.anchorName = '--k-context-menu';
   const target = el.ownerDocument.getElementById(
     el.getAttribute('commandfor')!,
   ) as HTMLDialogElement;
@@ -28,10 +28,10 @@ function handleContextMenu(e: MouseEvent) {
   const doc = el.ownerDocument;
   const win = doc.defaultView;
   if (!win) return;
-  target.style.setProperty('--p-context-menu-client-x', `${e.clientX}px`);
-  target.style.setProperty('--p-context-menu-client-y', `${e.clientY}px`);
-  target.style.setProperty('--p-context-menu-client-right', `${win.innerWidth - e.clientX}px`);
-  target.style.setProperty('--p-context-menu-client-bottom', `${win.innerHeight - e.clientY}px`);
+  target.style.setProperty('--k-context-menu-client-x', `${e.clientX}px`);
+  target.style.setProperty('--k-context-menu-client-y', `${e.clientY}px`);
+  target.style.setProperty('--k-context-menu-client-right', `${win.innerWidth - e.clientX}px`);
+  target.style.setProperty('--k-context-menu-client-bottom', `${win.innerHeight - e.clientY}px`);
   target.showModal();
 }
 
@@ -65,7 +65,7 @@ export function ContextMenuContent({
   const ctx = useContext(IdCtx);
   return (
     <dialog
-      p="context-menu"
+      k="context-menu"
       id={id ?? ctx}
       onClickCapture={click}
       onContextMenuCapture={click}

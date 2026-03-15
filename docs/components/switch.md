@@ -5,7 +5,7 @@ Accessible toggle switch built from a checkbox input.
 ## Usage
 
 ```tsx
-import {Switch} from 'pui';
+import {Switch} from 'kinu';
 
 <Switch checked />
 ```

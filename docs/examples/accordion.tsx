@@ -1,4 +1,4 @@
-import {Accordion} from 'pui';
+import {Accordion} from 'kinu';
 
 export function Demo() {
   return (

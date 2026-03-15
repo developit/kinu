@@ -30,7 +30,7 @@ function analyzeExports(sourceFile, sourceText) {
       for (const decl of node.declarationList.declarations) {
         if (!ts.isIdentifier(decl.name)) continue;
         const name = decl.name.text;
-        const info = {name, kind: 'function', pNames: new Set(), elementMap: new Map()};
+        const info = {name, kind: 'function', kNames: new Set(), elementMap: new Map()};
         if (decl.initializer) {
           if (
             ts.isCallExpression(decl.initializer) &&
@@ -39,7 +39,7 @@ function analyzeExports(sourceFile, sourceText) {
           ) {
             info.kind = 'simple';
             const args = decl.initializer.arguments;
-            if (args[0] && ts.isStringLiteral(args[0])) info.pNames.add(args[0].text);
+            if (args[0] && ts.isStringLiteral(args[0])) info.kNames.add(args[0].text);
             if (args[1]) {
               if (ts.isStringLiteral(args[1])) info.tag = args[1].text;
               else info.dynamicTag = args[1].getText(sourceFile);
@@ -58,7 +58,7 @@ function analyzeExports(sourceFile, sourceText) {
         for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
           const element = match[1];
           const pName = match[2];
-          info.pNames.add(pName);
+          info.kNames.add(pName);
           info.elementMap.set(pName, element);
         }
         exports.push(info);
@@ -67,7 +67,7 @@ function analyzeExports(sourceFile, sourceText) {
       const info = {
         name: node.name.text,
         kind: 'function',
-        pNames: new Set(),
+        kNames: new Set(),
         elementMap: new Map(),
       };
       const text = node.getText(sourceFile);
@@ -75,7 +75,7 @@ function analyzeExports(sourceFile, sourceText) {
       for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
         const element = match[1];
         const pName = match[2];
-        info.pNames.add(pName);
+        info.kNames.add(pName);
         info.elementMap.set(pName, element);
       }
       exports.push(info);
@@ -103,12 +103,12 @@ function describeExport(exp) {
   }
   const parts = [];
   if (exp.kind === 'simple') {
-    if (exp.tag) parts.push(`Wraps \`<${exp.tag}>\` and sets \`p="${[...exp.pNames].join(', ')}"\`.`);
+    if (exp.tag) parts.push(`Wraps \`<${exp.tag}>\` and sets \`k="${[...exp.kNames].join(', ')}"\`.`);
     else if (exp.dynamicTag) parts.push(`Resolves the underlying element at runtime using \`${exp.dynamicTag}\`.`);
-    else parts.push(`Styled wrapper that sets \`p="${[...exp.pNames].join(', ')}"\`.`);
+    else parts.push(`Styled wrapper that sets \`k="${[...exp.kNames].join(', ')}"\`.`);
   } else {
-    if (exp.pNames.size > 0) {
-      parts.push(`Renders markup that includes \`p="${[...exp.pNames].join(', ')}"\`.`);
+    if (exp.kNames.size > 0) {
+      parts.push(`Renders markup that includes \`k="${[...exp.kNames].join(', ')}"\`.`);
     } else {
       parts.push('Custom component implemented in the source file.');
     }
@@ -359,18 +359,18 @@ async function generateComponentDoc(entry) {
   const exportRows = exports.map((exp) => {
     // Rendered HTML column
     let renderedHtml = '—';
-    if (exp.kind === 'simple' && exp.tag && exp.pNames.size) {
-      renderedHtml = '`<' + exp.tag + ' p="' + [...exp.pNames].join(' ') + '">`';
+    if (exp.kind === 'simple' && exp.tag && exp.kNames.size) {
+      renderedHtml = '`<' + exp.tag + ' k="' + [...exp.kNames].join(' ') + '">`';
     } else if (exp.kind === 'alias' && exp.aliasTarget) {
       renderedHtml = `Alias of ${exp.aliasTarget}`;
-    } else if (exp.pNames.size) {
+    } else if (exp.kNames.size) {
       // Use elementMap to get the actual element name
-      const pName = [...exp.pNames][0];
+      const pName = [...exp.kNames][0];
       const element = exp.elementMap?.get(pName);
       if (element) {
-        renderedHtml = '`<' + element + ' p="' + [...exp.pNames].join(' ') + '">`';
+        renderedHtml = '`<' + element + ' k="' + [...exp.kNames].join(' ') + '">`';
       } else {
-        renderedHtml = '`p="' + [...exp.pNames].join(' ') + '"`';
+        renderedHtml = '`k="' + [...exp.kNames].join(' ') + '"`';
       }
     }
 
@@ -384,7 +384,7 @@ async function generateComponentDoc(entry) {
 
   const usageSnippet = entry.usage ?? `<${exports[0]?.name ?? entry.title.replace(/\s+/g, '')} />`;
   const importNames = exports.map((exp) => exp.name).sort();
-  const importLine = importNames.length ? `import {${importNames.join(', ')}} from 'pui';` : `import {${entry.title}} from 'pui';`;
+  const importLine = importNames.length ? `import {${importNames.join(', ')}} from 'kinu';` : `import {${entry.title}} from 'kinu';`;
 
   const lines = [];
   lines.push(`# ${entry.title}`);

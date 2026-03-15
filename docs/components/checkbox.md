@@ -5,7 +5,7 @@ Accessible checkbox input with custom visuals.
 ## Usage
 
 ```tsx
-import {Checkbox} from 'pui';
+import {Checkbox} from 'kinu';
 
 <Checkbox checked aria-label="Accept" />
 ```

@@ -1,14 +1,14 @@
 /* Basic reset for components to ensure consistent behavior */
-[p] {
+[k] {
   box-sizing: border-box;
 }
 
-[p]:before,
-[p]:after {
+[k]:before,
+[k]:after {
   box-sizing: border-box;
 }
 
 /* Remove tap highlight from interactive elements */
-:where([p], a, button, input, select, textarea, summary) {
+:where([k], a, button, input, select, textarea, summary) {
   -webkit-tap-highlight-color: transparent;
 }

@@ -1,4 +1,4 @@
-import {Table} from 'pui';
+import {Table} from 'kinu';
 
 export function Demo() {
   return (

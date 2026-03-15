@@ -5,7 +5,7 @@ Right-click context menu powered by the native dialog element.
 ## Usage
 
 ```tsx
-import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from 'pui';
+import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from 'kinu';
 
 <ContextMenu>
   <ContextMenuTrigger>Right click this area</ContextMenuTrigger>

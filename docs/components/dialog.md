@@ -5,7 +5,7 @@ Composable modal built on the native `<dialog>` element.
 ## Usage
 
 ```tsx
-import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
+import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 
 <Dialog>
   <DialogTrigger><Button>Open</Button></DialogTrigger>

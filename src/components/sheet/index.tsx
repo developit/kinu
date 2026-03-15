@@ -19,7 +19,7 @@ export function Sheet({id: idProp, children}: SheetOwnProps) {
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <div p="sheet">{children}</div>
+      <div k="sheet">{children}</div>
     </IdCtx.Provider>
   );
 }
@@ -42,7 +42,7 @@ export function SheetContent({
   ...props
 }: SheetContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="sheet-content" id={id || ctx} {...props} />;
+  return <dialog k="sheet-content" id={id || ctx} {...props} />;
 }
 
 export function SheetClose({
