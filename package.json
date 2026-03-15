@@ -6,13 +6,10 @@
     "type": "git",
     "url": "git+https://github.com/developit/kinu.git"
   },
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "type": "module",
   "types": "./dist/index.d.ts",
-  "x-sideEffects": [
-    "src/lib/commands.ts"
-  ],
   "exports": {
     ".": {
       "style": "./dist/index.css",
