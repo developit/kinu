@@ -8,6 +8,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
 const componentsDir = path.join(projectRoot, 'src', 'components');
 const docsComponentsDir = path.join(projectRoot, 'docs', 'components');
+const docsPagesDir = path.join(projectRoot, 'docs', 'pages');
+const llmsOutputPath = path.join(projectRoot, 'docs', 'llms.txt');
+const demoLlmsOutputPath = path.join(projectRoot, 'demo', 'public', 'llms.txt');
 
 const sectionWeights = new Map([
   ['Foundations', 0],
@@ -453,15 +456,146 @@ async function generateComponentDoc(entry) {
   lines.push('');
 
   await fs.writeFile(path.join(docsComponentsDir, `${entry.slug}.md`), lines.join('\n'));
+
+  return {
+    entry,
+    exports,
+    propSections,
+    attachments,
+    importLine,
+    usageSnippet,
+  };
+}
+
+function formatEnhancedElement(exp) {
+  if (exp.kind === 'simple' && exp.tag) return `<${exp.tag}>`;
+  if (exp.elementMap?.size) return [...exp.elementMap.values()].map((element) => `<${element}>`).join(', ');
+  if (exp.kind === 'alias' && exp.aliasTarget) return `Alias of ${exp.aliasTarget}`;
+  return 'Custom composition (see source)';
+}
+
+function buildLlmsDocument(componentDocs) {
+  const lines = [];
+  lines.push('# kinu LLM Coding Reference');
+  lines.push('');
+  lines.push('This file is a machine-friendly, exhaustive reference for coding agents using kinu. It focuses on what each component enhances, what it is for, and which props are specific to kinu beyond native HTML attributes.');
+  lines.push('');
+  lines.push('## Core model');
+  lines.push('');
+  lines.push('- kinu components are thin wrappers over semantic HTML and platform primitives.');
+  lines.push('- Components forward native attributes directly whenever possible.');
+  lines.push('- Styling and states are primarily CSS-driven using `p="..."` attribute selectors.');
+  lines.push('- When a component enhances `<button>`, `<input>`, `<dialog>`, etc, assume native props/events are also valid unless explicitly overridden.');
+  lines.push('');
+  lines.push('## Package import');
+  lines.push('');
+  lines.push('```tsx');
+  lines.push("import {Button, Input, Dialog} from 'kinu';");
+  lines.push('```');
+  lines.push('');
+  lines.push('## Component index');
+  lines.push('');
+
+  for (const doc of componentDocs) {
+    const {entry, exports} = doc;
+    const exportNames = exports.map((exp) => exp.name).join(', ');
+    lines.push(`- **${entry.title}** (slug: \`${entry.slug}\`) — ${entry.description ?? 'Component'} Exports: ${exportNames || 'None detected'}.`);
+  }
+
+  for (const doc of componentDocs) {
+    const {entry, exports, propSections, attachments, importLine, usageSnippet} = doc;
+    lines.push('');
+    lines.push(`## ${entry.title}`);
+    lines.push('');
+    lines.push(`- **Purpose:** ${entry.description ?? 'Component.'}`);
+    if (entry.notes?.length) lines.push(`- **Notes:** ${entry.notes.join(' ')}`);
+    lines.push(`- **Primary source:** \`src/components/${entry.folder ?? entry.slug}/index.tsx\``);
+    lines.push('');
+    lines.push('### Usage');
+    lines.push('');
+    lines.push('```tsx');
+    lines.push(importLine);
+    lines.push('');
+    lines.push(usageSnippet);
+    lines.push('```');
+    lines.push('');
+    lines.push('### Exports and enhanced HTML');
+    lines.push('');
+    lines.push('| Export | Purpose | Enhanced HTML element(s) |');
+    lines.push('| --- | --- | --- |');
+    for (const exp of exports) {
+      lines.push(`| ${exp.name} | ${getComponentDescription(exp.name, entry)} | ${formatEnhancedElement(exp)} |`);
+    }
+
+    if (propSections.length) {
+      lines.push('');
+      lines.push('### kinu-specific props');
+      lines.push('');
+      lines.push('Native HTML props are also supported according to the enhanced element type.');
+      lines.push('');
+      for (const section of propSections) {
+        lines.push(`#### ${section.name}`);
+        lines.push('');
+        lines.push('| Prop | Type | Default | Description |');
+        lines.push('| --- | --- | --- | --- |');
+        for (const prop of section.props) {
+          lines.push(`| ${prop.name} | \`${prop.type}\` | ${prop.default} | ${prop.doc} |`);
+        }
+        lines.push('');
+      }
+    }
+
+    if (attachments.length) {
+      lines.push('### Static helpers / attached members');
+      lines.push('');
+      for (const attachment of attachments) {
+        lines.push(`- \`${attachment.owner}.${attachment.property} = ${attachment.target}\``);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push('## Foundations');
+  lines.push('');
+  lines.push('- `docs/pages/overview.md`: high-level architecture and design goals.');
+  lines.push('- `docs/pages/theming.md`: token model and theming strategy.');
+  lines.push('- `docs/pages/commands.md`: command attributes used by interactive wrappers.');
+  lines.push('- `docs/pages/base-styles.md`: opinionated base CSS and reset assumptions.');
+  lines.push('');
+
+  return lines.join('\n') + '\n';
+}
+
+async function generateLlmsLandingPage() {
+  const lines = [
+    '# LLM Integration Reference',
+    '',
+    'Need a single, exhaustive document for coding agents? Download the generated `llms.txt` file.',
+    '',
+    '- [Download `llms.txt`](/llms.txt)',
+    '- Generated from `scripts/generate-docs.mjs` so it stays in sync with component source and prop types.',
+    '',
+    '## Why this exists',
+    '',
+    '- Gives agents a high-signal map of every component, export, and prop.',
+    '- Includes the enhanced HTML element type for each export to infer supported native attributes.',
+    '- Captures kinu-specific props from `types.ts` while preserving native DOM assumptions.',
+    '',
+  ];
+
+  await fs.mkdir(docsPagesDir, {recursive: true});
+  await fs.writeFile(path.join(docsPagesDir, 'llms.md'), lines.join('\n'));
 }
 
 async function build() {
   await fs.mkdir(docsComponentsDir, {recursive: true});
   const manifest = [];
+  const componentDocs = [];
 
   for (const entry of metadata) {
     if (entry.folder) {
-      await generateComponentDoc(entry);
+      const componentDoc = await generateComponentDoc(entry);
+      componentDocs.push(componentDoc);
       manifest.push({
         slug: entry.slug,
         title: entry.title,
@@ -496,6 +630,12 @@ async function build() {
     path.join(projectRoot, 'docs', 'manifest.json'),
     JSON.stringify(manifest, null, 2) + '\n',
   );
+
+  const llmsText = buildLlmsDocument(componentDocs);
+  await fs.writeFile(llmsOutputPath, llmsText);
+  await fs.mkdir(path.dirname(demoLlmsOutputPath), {recursive: true});
+  await fs.writeFile(demoLlmsOutputPath, llmsText);
+  await generateLlmsLandingPage();
 }
 
 build().catch((err) => {

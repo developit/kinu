@@ -33,7 +33,8 @@
     "test": "vitest run",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "docs:generate": "node scripts/generate-docs.mjs"
   },
   "peerDependencies": {
     "preact": "^10.26.8"

@@ -694,6 +694,14 @@ export default [
     ]
   },
   {
+    slug: 'llms',
+    title: 'LLM Integration Reference',
+    section: 'Foundations',
+    category: 'Introduction',
+    order: 4,
+    file: 'pages/llms.md'
+  },
+  {
     slug: 'typography',
     title: 'Typography',
     section: 'Foundations',
