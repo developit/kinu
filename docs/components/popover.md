@@ -18,9 +18,9 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Popover | Floating content | `<span k="popover">` |
+| Popover | Floating content | — |
 | PopoverTrigger | Popover trigger | — |
-| PopoverContent | Popover content | `<dialog k="popover-content">` |
+| PopoverContent | Popover content | — |
 | PopoverClose | Component | — |
 
 ## Props

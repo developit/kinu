@@ -20,7 +20,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 | --- | --- | --- |
 | Dialog | Modal overlay | — |
 | DialogTrigger | Dialog trigger | — |
-| DialogContent | Dialog content | `<dialog k="dialog-content">` |
+| DialogContent | Dialog content | — |
 | DialogClose | Close button | — |
 
 ## Props

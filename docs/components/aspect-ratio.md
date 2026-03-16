@@ -16,7 +16,7 @@ import {AspectRatio} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| AspectRatio | Ratio container | `<div k="aspect-ratio">` |
+| AspectRatio | Ratio container | — |
 
 ## Props
 

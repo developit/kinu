@@ -23,8 +23,8 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 | Carousel | Image slider | — |
 | CarouselContent | Slider content | — |
 | CarouselItem | Slide item | `<div k="carousel-item">` |
-| CarouselPrevious | Previous button | `<button k="carousel-previous">` |
-| CarouselNext | Next button | `<button k="carousel-next">` |
+| CarouselPrevious | Previous button | — |
+| CarouselNext | Next button | — |
 
 ## Props
 

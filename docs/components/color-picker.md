@@ -14,13 +14,13 @@ import {ColorPicker} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ColorPicker | Color input | `<input k="color-picker">` |
+| ColorPicker | Component | `<input k="color-picker">` |
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| value | `string` | — | Current color as a hex string (e.g. `"#ff0000"`). |
+| value | `string | number | readonly string[] | undefined` | — | Current color value as a hex string (e.g. "#ff0000"). |
 | onChange | `(event: Event) => void` | — | Change handler for the color input. |
 | disabled | `boolean` | — | Disable the input. |
 | name | `string` | — | Input name used for form submissions. |
