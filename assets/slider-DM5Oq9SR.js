@@ -1,2 +1,0 @@
-import{d as t,u as e}from"./main-3DTJg-GO.js";import{L as n,S as r}from"./style-BhV-nVvT.js";function d(){const[l,i]=t(50);return e("div",{style:{display:"flex",flexDirection:"column",gap:"1rem"},children:[e(n,{children:["Value: ",l]}),e(r,{min:0,max:100,value:l,onInput:a=>i(Number(a.target.value))}),e(r,{min:0,max:100,value:25,disabled:!0})]})}const m="<Slider min={0} max={100} />",u={Demo:d,code:m};export{d as Demo,m as code,u as default};
-//# sourceMappingURL=slider-DM5Oq9SR.js.map
