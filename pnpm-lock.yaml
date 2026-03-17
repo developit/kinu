@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  preact-iso:
-    hash: 31c2b960587eae1e08093f90069c9e0adbe5d60bd3cc34f007d919ae343ad974
-    path: patches/preact-iso.patch
-
 importers:
 
   .:
@@ -63,7 +58,7 @@ importers:
         version: 10.26.9
       preact-iso:
         specifier: ^2.11.0
-        version: 2.11.0(patch_hash=31c2b960587eae1e08093f90069c9e0adbe5d60bd3cc34f007d919ae343ad974)(preact-render-to-string@6.5.13(preact@10.26.9))(preact@10.26.9)
+        version: 2.11.0(preact-render-to-string@6.5.13(preact@10.26.9))(preact@10.26.9)
     devDependencies:
       '@preact/preset-vite':
         specifier: ^2.10.1
@@ -2333,7 +2328,7 @@ snapshots:
 
   preact-forwardref@0.2.0: {}
 
-  preact-iso@2.11.0(patch_hash=31c2b960587eae1e08093f90069c9e0adbe5d60bd3cc34f007d919ae343ad974)(preact-render-to-string@6.5.13(preact@10.26.9))(preact@10.26.9):
+  preact-iso@2.11.0(preact-render-to-string@6.5.13(preact@10.26.9))(preact@10.26.9):
     dependencies:
       preact: 10.26.9
       preact-render-to-string: 6.5.13(preact@10.26.9)
