@@ -1,5 +1,5 @@
 {
-  "name": "@developit/kinu",
+  "name": "kinu",
   "version": "0.1.1",
   "description": "Performance-focused Preact UI toolkit",
   "repository": {
