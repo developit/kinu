@@ -14,11 +14,11 @@ A hyper-minimal UI toolkit that feels like a Preact UI toolkit, but is actually 
 
 _Default unbranded style:_
 
-<img src="demo/public/kinu-light.png" width="790">
+<img src="https://raw.githubusercontent.com/developit/kinu/refs/heads/main/demo/public/kinu-light.png" width="790">
 
 _Purple-tinted rounded style in dark mode:_
 
-<img src="demo/public/kinu-dark.png" width="772">
+<img src="https://raw.githubusercontent.com/developit/kinu/refs/heads/main/demo/public/kinu-dark.png" width="772">
 
 ## Quick Start
 
