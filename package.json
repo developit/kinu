@@ -1,7 +1,7 @@
 {
   "name": "kinu",
   "version": "0.1.1",
-  "description": "Performance-focused Preact UI toolkit",
+  "description": "Preact UI toolkit. 10x smaller than you think. Intuitive for humans+LLMs.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/developit/kinu.git"
