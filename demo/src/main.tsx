@@ -43,7 +43,7 @@ export function App({url}: {url?: string}) {
         <Router onLoadStart={loadStart} onLoadEnd={loadEnd}>
           <Route path="/" component={Home} />
           <Route path="/getting-started" component={GettingStarted} />
-          <Route path="/docs/:slug?" component={Docs} remount />
+          <Route path="/docs/:slug?" component={Docs} />
           <Route path="/linear" component={Linear} />
           <Route path="/chat" component={Chat} />
           <Route path="/player" component={Player} />

@@ -55,11 +55,6 @@
   ],
   "author": "Jason Miller (http://developit.dev)",
   "license": "MIT",
-  "pnpm": {
-    "patchedDependencies": {
-      "preact-iso": "patches/preact-iso.patch"
-    }
-  },
   "publishConfig": {
     "access": "public",
     "provenance": true

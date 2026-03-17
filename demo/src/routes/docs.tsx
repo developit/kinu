@@ -113,7 +113,7 @@ export default function Docs() {
   const DocsContent = createLazyComponent(slug);
   return (
     <DocsLayout>
-      <DocsContent />
+      <DocsContent key={slug} />
     </DocsLayout>
   );
 }
