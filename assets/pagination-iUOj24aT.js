@@ -1,2 +1,0 @@
-import{u as n}from"./main-CnlGxWi6.js";import{ak as r,al as i,am as a,an as t}from"./style-Dp33Tzov.js";function o(){return n(t,{children:n(r,{children:[n(i,{children:n(a,{"aria-current":"page",children:"1"})}),n(i,{children:n(a,{children:"2"})}),n(i,{children:n(a,{children:"3"})})]})})}const e="<Pagination>...</Pagination>",l={Demo:o,code:e};export{o as Demo,e as code,l as default};
-//# sourceMappingURL=pagination-iUOj24aT.js.map
