@@ -1,0 +1,5 @@
+---
+"kinu": patch
+---
+
+README updates
