@@ -1,18 +1,24 @@
-# kinu - Performance-Focused Preact UI Toolkit
+# [kinu](https://kinu.sh) - Preact UI toolkit, 10x smaller than you think.
 
-A minimal, constraint-driven UI toolkit that enhances HTML instead of replacing it. Built for developers who value performance, simplicity, and the web platform.
+A hyper-minimal UI toolkit that feels like a Preact UI toolkit, but is actually progressively enhanced HTML. Where other UI toolkits implement logic and mappings in JS, Kinu does it all in CSS for maximal efficiency. Built for developers who value performance, simplicity, and the web platform.
 
 ## Why kinu?
 
 - **🚀 Tiny Bundle**: ~5KB JS + ~6KB CSS for all components
-- **⚡ Zero Re-renders**: No state, direct DOM reactions via native `commandFor` (with fallback)
-- **🌐 Platform-Native**: Uses `<dialog>`, form validation, CSS custom properties
-- **📦 Tree-Shakeable**: Import only what you use
-- **🎨 Beautiful by Default**: Carefully crafted design system
+- **⚡ Zero Re-renders**: No state, direct DOM reactions via native `commandFor` (polyfill included!)
+- **🌐 Platform-Native**: Uses `<dialog>`, anchor positioning, form validation, etc
+- **📦 Tree-Shakeable**: Import only what you use (though at 5kb who cares)
+- **🎨 Beautiful and themeable**: Override styles for components or define your own
 
-## Screenshot
+## Screenshots
 
-<img src="demo/public/kinu-1.png" width="784">
+_Default unbranded style:_
+
+<img src="demo/public/kinu-light.png" width="790">
+
+_Purple-tinted rounded style in dark mode:_
+
+<img src="demo/public/kinu-dark.png" width="772">
 
 ## Quick Start
 
@@ -46,7 +52,7 @@ function App() {
 
 ## Live Demo
 
-Check out the [live demo](https://kinu-demo.netlify.app) to see all components in action.
+Check out the [live demo](https://kinu.sh) to see all components in action.
 
 ## Documentation
 
