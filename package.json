@@ -1,6 +1,6 @@
 {
   "name": "kinu",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Preact UI toolkit. 10x smaller than you think. Intuitive for humans+LLMs.",
   "repository": {
     "type": "git",
