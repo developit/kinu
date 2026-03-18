@@ -252,7 +252,7 @@ function MyApp() {
             <ul>
               <li>
                 <strong>Component Examples:</strong> See all components in
-                action on the <a href="/components">Components page</a>
+                action on the <a href="/docs">Components page</a>
               </li>
               <li>
                 <strong>Real-world Demos:</strong> Check out our{' '}
