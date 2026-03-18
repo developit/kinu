@@ -5,7 +5,7 @@ export function Demo() {
   const [radio, setRadio] = useState('option1');
   return (
     <RadioGroup>
-      <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+      <div style={{display: 'flex', alignItems: 'center'}}>
         <Radio
           id="option1"
           name="options"
@@ -13,9 +13,9 @@ export function Demo() {
           checked={radio === 'option1'}
           onInput={() => setRadio('option1')}
         />
-        <Label htmlFor="option1">Option 1</Label>
+        <Label htmlFor="option1" style={{paddingInlineStart: '0.5rem'}}>Option 1</Label>
       </div>
-      <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+      <div style={{display: 'flex', alignItems: 'center'}}>
         <Radio
           id="option2"
           name="options"
@@ -23,9 +23,9 @@ export function Demo() {
           checked={radio === 'option2'}
           onInput={() => setRadio('option2')}
         />
-        <Label htmlFor="option2">Option 2</Label>
+        <Label htmlFor="option2" style={{paddingInlineStart: '0.5rem'}}>Option 2</Label>
       </div>
-      <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+      <div style={{display: 'flex', alignItems: 'center'}}>
         <Radio
           id="option3"
           name="options"
@@ -33,7 +33,7 @@ export function Demo() {
           checked={radio === 'option3'}
           onInput={() => setRadio('option3')}
         />
-        <Label htmlFor="option3">Option 3</Label>
+        <Label htmlFor="option3" style={{paddingInlineStart: '0.5rem'}}>Option 3</Label>
       </div>
     </RadioGroup>
   );
