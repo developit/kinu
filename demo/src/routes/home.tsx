@@ -135,7 +135,7 @@ export default function Home() {
           <Button href="/player" variant="secondary" size="lg">
             🎵 Music Player
           </Button>
-          <Button variant="outline" href="https://github.com/">
+          <Button variant="outline" href="https://github.com/developit/kinu">
             GitHub
           </Button>
         </div>
