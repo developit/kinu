@@ -31,7 +31,7 @@ export function Nav({
           <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <DropdownMenu id="nav-demos">
+          <DropdownMenu>
             <DropdownMenuTrigger>
               <NavigationMenuLink href="#">Demos</NavigationMenuLink>
             </DropdownMenuTrigger>

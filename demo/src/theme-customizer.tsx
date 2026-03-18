@@ -304,7 +304,7 @@ export function ThemeCustomizer() {
   };
 
   return (
-    <Dialog id="theme-customizer">
+    <Dialog>
       <Dialog.Trigger>
         <Tooltip title="Theme" side="bottom">
           <Button variant="secondary" size="icon">

@@ -1,5 +1,6 @@
 import {type JSX, createContext} from 'preact';
-import {useId, useContext} from 'preact/hooks';
+import {useContext} from 'preact/hooks';
+import {useId} from '../../lib/use-id';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installDialogsDropdowns} from '../../lib/commands';

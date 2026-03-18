@@ -1,5 +1,6 @@
 import {createContext} from 'preact';
-import {useId, useContext} from 'preact/hooks';
+import {useContext} from 'preact/hooks';
+import {useId} from '../../lib/use-id';
 import {applyPropsToChildren} from '../../lib/children';
 import {installCommands} from '../../lib/commands';
 import type {
