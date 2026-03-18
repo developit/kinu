@@ -290,7 +290,7 @@ function FormDemo() {
               if (errors.agreed) setErrors({...errors, agreed: undefined});
             }}
           />
-          <Label htmlFor="demo-agree">I agree to the terms</Label>
+          <Label htmlFor="demo-agree" style={{paddingInlineStart: '0.5rem'}}>I agree to the terms</Label>
         </div>
         {errors.agreed && <div class="error-message">{errors.agreed}</div>}
       </div>
