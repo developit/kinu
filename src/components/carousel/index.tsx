@@ -1,6 +1,5 @@
 import {createContext} from 'preact';
-import {useContext} from 'preact/hooks';
-import {useId} from '../../lib/use-id';
+import {useId, useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installCommands} from '../../lib/commands';
 import type {

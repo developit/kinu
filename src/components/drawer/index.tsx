@@ -1,6 +1,5 @@
 import {createContext} from 'preact';
-import {useContext} from 'preact/hooks';
-import {useId} from '../../lib/use-id';
+import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import type {
