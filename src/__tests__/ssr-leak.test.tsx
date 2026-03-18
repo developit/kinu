@@ -1,85 +1,32 @@
 import {describe, expect, it} from 'vitest';
-import {h, options, createContext} from 'preact';
-import {useId, useContext, useState, useRef} from 'preact/hooks';
-import {renderToStringAsync} from 'preact-render-to-string';
+import {useId} from 'preact/hooks';
+import renderToString from 'preact-render-to-string';
 
-// Track every useId call
-const origRender = options.__r;
-const useIdCalls: string[] = [];
-
-function TrackedUseId(label: string) {
+function Comp() {
   const id = useId();
-  useIdCalls.push(`${label}: ${id}`);
-  return id;
+  return <div id={id}>test</div>;
 }
 
-const IdCtx = createContext<string | undefined>(undefined);
+describe('SSR useId counter', () => {
+  it('does not leak between renderToString calls', () => {
+    const html1 = renderToString(
+      <div>
+        <Comp />
+        <Comp />
+      </div>,
+    );
+    const ids1 = html1.match(/id="[^"]+"/g);
 
-function DropdownMenu({children}: {children?: any}) {
-  const id = TrackedUseId('DropdownMenu');
-  return h(IdCtx.Provider, {value: id}, h('span', null, children));
-}
+    const html2 = renderToString(
+      <div>
+        <Comp />
+        <Comp />
+      </div>,
+    );
+    const ids2 = html2.match(/id="[^"]+"/g);
 
-function Dialog({children}: {children?: any}) {
-  const id = TrackedUseId('Dialog');
-  return h(IdCtx.Provider, {value: id}, children);
-}
-
-function Nav() {
-  return h('nav', null,
-    h(DropdownMenu, null, 'Demos'),
-    h(Dialog, null, 'Theme')
-  );
-}
-
-function DocsLayout({children}: {children?: any}) {
-  return h('div', null, h(Nav, null), children);
-}
-
-function Content() {
-  return h(Dialog, null, 'Content dialog');
-}
-
-// Simulate lazy loading with suspend/resume
-function lazyLike(load: () => Promise<any>) {
-  let p: Promise<any> | undefined, c: any;
-  const LazyComp = (props: any) => {
-    const [, update] = useState(0);
-    const r = useRef(c);
-    if (!p) p = load().then(m => { c = m.default || m; });
-    if (c !== undefined) return h(c, props);
-    if (!r.current) r.current = p.then(() => update(1));
-    throw p;
-  };
-  return LazyComp;
-}
-
-describe('SSR useId with lazy loading', () => {
-  it('lazy docs page', async () => {
-    useIdCalls.length = 0;
-    
-    const LazyContent = lazyLike(async () => ({ default: Content }));
-    
-    function DocsPage() {
-      return h(DocsLayout, null, h(LazyContent, {key: 'test'}));
-    }
-    
-    const html = await renderToStringAsync(h(DocsPage, null));
-    const ids = html.match(/id="P[^"]+"/g);
-    console.log('Lazy docs page IDs:', ids);
-    console.log('useId call order:', useIdCalls);
-  });
-  
-  it('non-lazy docs page', async () => {
-    useIdCalls.length = 0;
-    
-    function DocsPage() {
-      return h(DocsLayout, null, h(Content, null));
-    }
-    
-    const html = await renderToStringAsync(h(DocsPage, null));
-    const ids = html.match(/id="P[^"]+"/g);
-    console.log('Non-lazy docs page IDs:', ids);
-    console.log('useId call order:', useIdCalls);
+    // Each renderToString call should start from P0-0
+    expect(ids1).toEqual(['id="P0-0"', 'id="P0-1"']);
+    expect(ids2).toEqual(['id="P0-0"', 'id="P0-1"']);
   });
 });
