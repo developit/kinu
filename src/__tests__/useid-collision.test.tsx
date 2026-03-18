@@ -112,7 +112,7 @@ describe('useId collision after hydration + navigation', () => {
 
     // Render SSR HTML, then offset the IDs to simulate counter mismatch
     const ssrHtml = renderToString(h(App, null));
-    const offsetHtml = ssrHtml.replace(/P0-(\d+)/g, (_: string, n: string) => `P0-${Number(n) + 2}`);
+    const offsetHtml = ssrHtml.replace(/P0-(\d+)/g, (_match: string, n: string) => `P0-${Number(n) + 2}`);
     container.innerHTML = offsetHtml;
 
     // Hydrate (client counter starts at 0, but DOM has P0-2+)
@@ -152,7 +152,7 @@ describe('useId collision after hydration + navigation', () => {
     // Render SSR with explicit IDs
     const ssrHtml = renderToString(h(App, null));
     // Even if we offset the auto-generated IDs, the explicit ones stay fixed
-    const offsetHtml = ssrHtml.replace(/P0-(\d+)/g, (_: string, n: string) => `P0-${Number(n) + 2}`);
+    const offsetHtml = ssrHtml.replace(/P0-(\d+)/g, (_match: string, n: string) => `P0-${Number(n) + 2}`);
     container.innerHTML = offsetHtml;
 
     hydrate(h(App, null), container);
