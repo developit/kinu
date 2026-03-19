@@ -12,10 +12,8 @@ export function Nav({
         {left}
         <a href="/" class="atelier-logo">Kinu</a>
         <div class="atelier-links">
-          <a href="/docs" class="atelier-link">Collections</a>
-          <a href="/docs/overview" class="atelier-link">Philosophy</a>
-          <a href="/getting-started" class="atelier-link">Atelier</a>
-          <a href="/docs/commands" class="atelier-link">Archive</a>
+          <a href="/docs" class="atelier-link">Docs</a>
+          <a href="/linear" class="atelier-link">Demos</a>
         </div>
         <div class="nav-actions">
           <Button href="/getting-started">Get Started</Button>

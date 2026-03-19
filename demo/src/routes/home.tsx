@@ -28,10 +28,8 @@ export default function Home() {
         <div class="atelier-nav-inner">
           <a href="/" class="atelier-logo">Kinu</a>
           <div class="atelier-links">
-            <a href="/docs" class="atelier-link is-active">Collections</a>
-            <a href="/docs/overview" class="atelier-link">Philosophy</a>
-            <a href="/getting-started" class="atelier-link">Atelier</a>
-            <a href="/docs/commands" class="atelier-link">Archive</a>
+            <a href="/docs" class="atelier-link">Docs</a>
+            <a href="/linear" class="atelier-link">Demos</a>
           </div>
           <Button href="/getting-started">Get Started</Button>
         </div>
