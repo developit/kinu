@@ -280,158 +280,42 @@ body .task-item {
   }
 }
 
+.section-subtitle {
+  font-family: var(--kinu-font-body);
+  font-size: 1.125rem;
+  color: hsl(var(--k-muted-foreground));
+  margin: 1rem 0 0 0;
+  max-width: 40rem;
+}
+
 .lab-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 1.5rem;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .lab-grid {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-/* Task orchestrator */
-.task-card {
-  background: hsl(var(--kinu-surface-lowest));
-  padding: 2.5rem;
-  border-left: 4px solid hsl(var(--k-primary));
-  position: relative;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-}
-
-.task-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
-}
-
-.task-card-title {
-  font-family: var(--kinu-font-label);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: hsl(var(--k-muted-foreground));
-  margin: 0;
-}
-
-.task-card-dots {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.task-card-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-}
-
-.task-card-dot.active {
-  background: hsl(var(--k-primary));
-}
-
-.task-card-dot.inactive {
-  background: hsl(var(--kinu-outline-variant));
-}
-
-.task-list-items {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 32rem;
-}
-
-.task-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-  border-bottom: 1px solid hsl(var(--kinu-outline-variant) / 0.3);
-}
-
-.task-row-left {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.task-name {
-  font-size: 1.125rem;
+.lab-card {
   font-family: var(--kinu-font-body);
+}
+
+.lab-card-title {
+  font-family: var(--kinu-font-headline);
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem 0;
   color: hsl(var(--k-foreground));
 }
 
-.task-name.muted {
+.lab-card-desc {
   color: hsl(var(--k-muted-foreground));
-}
-
-.task-priority {
-  font-size: 10px;
-  font-family: var(--kinu-font-label);
-  text-transform: uppercase;
-}
-
-.task-priority.high {
-  color: hsl(var(--k-primary));
-  font-weight: 700;
-}
-
-.task-priority.med,
-.task-priority.low {
-  color: hsl(var(--k-muted-foreground));
-}
-
-/* System parameters */
-.params-card {
-  background: hsl(var(--kinu-surface-highest));
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px solid hsl(var(--kinu-outline-variant) / 0.2);
-}
-
-.params-title {
-  font-family: var(--kinu-font-label);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: hsl(var(--k-muted-foreground));
-  margin: 0 0 3rem 0;
-}
-
-.params-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-.param-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.param-label-row {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--kinu-font-label);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: hsl(var(--k-foreground));
-}
-
-.param-value {
-  color: hsl(var(--k-primary));
-  font-weight: 700;
-}
-
-/* Full-width button within params card */
-.params-controls [k="button"] {
-  width: 100%;
+  font-size: 0.875rem;
+  margin: 0 0 1.5rem 0;
 }
 
 /* ── Architecture Section ────────────────────────────────────────── */
@@ -531,12 +415,13 @@ body .task-item {
   background: hsl(var(--kinu-surface-low));
   padding: 4px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .arch-image-bg {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   background:
     repeating-linear-gradient(
       0deg,
@@ -746,55 +631,6 @@ body .task-item {
   color: hsl(var(--k-foreground));
   margin: 1.5rem 0 0 0;
   line-height: 1.6;
-}
-
-/* ── Showcase Section ────────────────────────────────────────────── */
-
-.showcase-section {
-  background: hsl(var(--k-background));
-  padding: 8rem 2rem;
-}
-
-@media (min-width: 1024px) {
-  .showcase-section {
-    padding: 8rem 6rem;
-  }
-}
-
-.showcase-inner {
-  max-width: 1536px;
-  margin: 0 auto;
-}
-
-.showcase-subtitle {
-  font-family: var(--kinu-font-body);
-  font-size: 1.125rem;
-  color: hsl(var(--k-muted-foreground));
-  margin: -3rem 0 3rem 0;
-  text-wrap: balance;
-}
-
-.showcase-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-.showcase-card {
-  font-family: var(--kinu-font-body);
-}
-
-.showcase-card h3 {
-  margin: 0 0 0.5rem 0;
-  font-family: var(--kinu-font-headline);
-  font-size: 1.25rem;
-  font-weight: 400;
-}
-
-.showcase-card-desc {
-  color: hsl(var(--k-muted-foreground));
-  margin: 0 0 1.5rem 0;
-  font-size: 0.875rem;
 }
 
 /* ── Demo component styles ── */
@@ -1117,8 +953,7 @@ body .task-item {
   }
 
   .lab-section,
-  .features-section,
-  .showcase-section {
+  .features-section {
     padding: 4rem 1rem;
   }
 
@@ -1141,10 +976,6 @@ body .task-item {
 
   .atelier-main {
     padding-top: 5rem;
-  }
-
-  .showcase-grid {
-    grid-template-columns: 1fr;
   }
 
   .cta-section {

@@ -73,43 +73,27 @@ export default function Home() {
             <div class="section-header">
               <span class="section-label">Laboratory</span>
               <h2 class="section-title">The Technical Workspace</h2>
+              <p class="section-subtitle">Interactive demos showcasing real-world usage—all powered by just 5kB of JavaScript</p>
             </div>
             <div class="lab-grid">
-              <TaskOrchestrator />
-              <SystemParameters />
-            </div>
-          </div>
-        </section>
-
-        {/* ── Showcase ── */}
-        <section class="showcase-section">
-          <div class="showcase-inner">
-            <div class="section-header">
-              <span class="section-label">Components</span>
-              <h2 class="section-title">See it in action</h2>
-            </div>
-            <p class="showcase-subtitle">
-              Interactive demos showcasing real-world usage—all powered by just 5kB of JavaScript
-            </p>
-            <div class="showcase-grid">
-              <Card class="showcase-card">
-                <h3>Form Controls</h3>
-                <p class="showcase-card-desc">Accessible forms with validation feedback</p>
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Form Controls</h3>
+                <p class="lab-card-desc">Accessible forms with validation feedback</p>
                 <FormDemo />
               </Card>
-              <Card class="showcase-card">
-                <h3>Data Visualization</h3>
-                <p class="showcase-card-desc">Progress tracking and interactive displays</p>
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Data Visualization</h3>
+                <p class="lab-card-desc">Progress tracking and interactive displays</p>
                 <DataDemo />
               </Card>
-              <Card class="showcase-card">
-                <h3>Settings Panel</h3>
-                <p class="showcase-card-desc">Toggle switches and user preferences</p>
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Settings Panel</h3>
+                <p class="lab-card-desc">Toggle switches and user preferences</p>
                 <SettingsDemo />
               </Card>
-              <Card class="showcase-card">
-                <h3>Notifications</h3>
-                <p class="showcase-card-desc">Toast messages and alert dialogs</p>
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Notifications</h3>
+                <p class="lab-card-desc">Toast messages and alert dialogs</p>
                 <NotificationDemo />
               </Card>
             </div>
@@ -322,94 +306,6 @@ function HeroDemo() {
         </Tooltip>
       </div>
     </Card>
-  );
-}
-
-/* ── Task Orchestrator (real Kinu components) ── */
-function TaskOrchestrator() {
-  const [tasks, setTasks] = useState([
-    {id: 1, text: 'Initialize technical shader pipeline', completed: true, priority: 'High'},
-    {id: 2, text: 'Calibrate silk-layer density', completed: false, priority: 'Med'},
-    {id: 3, text: 'Finalize atelier documentation', completed: false, priority: 'Low'},
-  ]);
-
-  const toggleTask = (id: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? {...task, completed: !task.completed} : task,
-      ),
-    );
-  };
-
-  return (
-    <div class="task-card">
-      <div class="task-card-header">
-        <h3 class="task-card-title">Task Orchestrator</h3>
-        <div class="task-card-dots">
-          <div class="task-card-dot active" />
-          <div class="task-card-dot inactive" />
-        </div>
-      </div>
-      <div class="task-list-items">
-        {tasks.map((task) => (
-          <div class="task-row" key={task.id}>
-            <Label class="task-row-left">
-              <Checkbox
-                checked={task.completed}
-                onInput={() => toggleTask(task.id)}
-              />
-              <span class={`task-name${task.completed ? '' : ' muted'}`}>
-                {task.text}
-              </span>
-            </Label>
-            <span class={`task-priority ${task.priority.toLowerCase()}`}>
-              {task.priority}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ── System Parameters (real Kinu Slider + Button) ── */
-function SystemParameters() {
-  const [blur, setBlur] = useState(64);
-  const [freq, setFreq] = useState(32);
-
-  return (
-    <div class="params-card">
-      <h3 class="params-title">System Parameters</h3>
-      <div class="params-controls">
-        <div class="param-group">
-          <div class="param-label-row">
-            <span>Atmospheric Blur</span>
-            <span class="param-value">{blur}%</span>
-          </div>
-          <Slider
-            min={0}
-            max={100}
-            value={blur}
-            onInput={(e) => setBlur(Number((e.target as HTMLInputElement).value))}
-          />
-        </div>
-        <div class="param-group">
-          <div class="param-label-row">
-            <span>Data Frequency</span>
-            <span class="param-value">{Math.round(freq * 0.375)}hz</span>
-          </div>
-          <Slider
-            min={0}
-            max={100}
-            value={freq}
-            onInput={(e) => setFreq(Number((e.target as HTMLInputElement).value))}
-          />
-        </div>
-        <Button onClick={() => toast.show('Build deployed successfully!', {title: 'Deployed', icon: '🚀'})}>
-          Deploy Build
-        </Button>
-      </div>
-    </div>
   );
 }
 
