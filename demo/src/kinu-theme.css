@@ -64,6 +64,100 @@
   color-scheme: light;
 }
 
+/*
+ * Dark mode — warm dark variant of the atelier palette.
+ * Must override both the media query and .dark class from variables.css.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:root {
+    color-scheme: dark;
+    --k-background: 40 10% 10%;           /* warm near-black */
+    --k-foreground: 40 20% 90%;
+    --k-card: 40 8% 13%;
+    --k-card-foreground: 40 20% 90%;
+    --k-popover: 40 8% 13%;
+    --k-popover-foreground: 40 20% 90%;
+    --k-sidebar: 40 8% 12%;
+
+    --k-primary: 152 20% 65%;             /* lighter green for dark bg */
+    --k-primary-foreground: 40 10% 10%;
+    --k-primary-hover: 152 20% 55%;
+
+    --k-secondary: 40 8% 18%;
+    --k-secondary-foreground: 40 20% 85%;
+    --k-secondary-hover: 40 8% 24%;
+
+    --k-muted: 40 8% 16%;
+    --k-muted-foreground: 40 10% 60%;
+
+    --k-accent: 40 8% 18%;
+    --k-accent-foreground: 40 20% 90%;
+
+    --k-destructive: 0 62.8% 45%;
+    --k-destructive-foreground: 40 20% 95%;
+    --k-destructive-hover: 0 62.8% 55%;
+
+    --k-border: 40 6% 22%;
+    --k-input: 40 6% 22%;
+    --k-ring: 152 20% 65%;
+
+    --kinu-primary-dim: 152 15% 50%;
+    --kinu-surface-low: 40 8% 12%;
+    --kinu-surface: 40 10% 10%;
+    --kinu-surface-high: 40 8% 15%;
+    --kinu-surface-highest: 40 6% 20%;
+    --kinu-surface-lowest: 40 8% 11%;
+    --kinu-outline: 40 4% 45%;
+    --kinu-outline-variant: 40 6% 25%;
+    --kinu-inverse-surface: 40 20% 90%;
+    --kinu-on-surface-variant: 40 6% 60%;
+  }
+}
+
+.dark {
+  color-scheme: dark;
+  --k-background: 40 10% 10%;
+  --k-foreground: 40 20% 90%;
+  --k-card: 40 8% 13%;
+  --k-card-foreground: 40 20% 90%;
+  --k-popover: 40 8% 13%;
+  --k-popover-foreground: 40 20% 90%;
+  --k-sidebar: 40 8% 12%;
+
+  --k-primary: 152 20% 65%;
+  --k-primary-foreground: 40 10% 10%;
+  --k-primary-hover: 152 20% 55%;
+
+  --k-secondary: 40 8% 18%;
+  --k-secondary-foreground: 40 20% 85%;
+  --k-secondary-hover: 40 8% 24%;
+
+  --k-muted: 40 8% 16%;
+  --k-muted-foreground: 40 10% 60%;
+
+  --k-accent: 40 8% 18%;
+  --k-accent-foreground: 40 20% 90%;
+
+  --k-destructive: 0 62.8% 45%;
+  --k-destructive-foreground: 40 20% 95%;
+  --k-destructive-hover: 0 62.8% 55%;
+
+  --k-border: 40 6% 22%;
+  --k-input: 40 6% 22%;
+  --k-ring: 152 20% 65%;
+
+  --kinu-primary-dim: 152 15% 50%;
+  --kinu-surface-low: 40 8% 12%;
+  --kinu-surface: 40 10% 10%;
+  --kinu-surface-high: 40 8% 15%;
+  --kinu-surface-highest: 40 6% 20%;
+  --kinu-surface-lowest: 40 8% 11%;
+  --kinu-outline: 40 4% 45%;
+  --kinu-outline-variant: 40 6% 25%;
+  --kinu-inverse-surface: 40 20% 90%;
+  --kinu-on-surface-variant: 40 6% 60%;
+}
+
 /* Selection */
 ::selection {
   background: hsl(var(--k-primary));

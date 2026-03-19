@@ -112,12 +112,12 @@ export default function Home() {
               </p>
               <div class="arch-stats">
                 <div class="arch-stat">
-                  <div class="arch-stat-value">0.3ms</div>
-                  <div class="arch-stat-label">Runtime Latency</div>
+                  <div class="arch-stat-value">~5kB</div>
+                  <div class="arch-stat-label">JS + CSS Total</div>
                 </div>
                 <div class="arch-stat">
-                  <div class="arch-stat-value">No-Dep</div>
-                  <div class="arch-stat-label">External Weight</div>
+                  <div class="arch-stat-value">0</div>
+                  <div class="arch-stat-label">Dependencies</div>
                 </div>
               </div>
             </div>
