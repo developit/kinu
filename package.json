@@ -28,6 +28,7 @@
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
     "test": "vitest run",
+    "prepublishOnly": "pnpm run build",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish"
