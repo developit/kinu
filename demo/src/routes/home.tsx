@@ -83,8 +83,8 @@ export default function Home() {
             </p>
             <div class="philosophy-stats">
               <div class="stat-block">
-                <span class="stat-value">0.8kb</span>
-                <span class="stat-label">Gzipped Core</span>
+                <span class="stat-value">5kb</span>
+                <span class="stat-label">Gzipped</span>
               </div>
               <div class="stat-block">
                 <span class="stat-value">&lt;1ms</span>
@@ -147,34 +147,38 @@ export default function Home() {
                   <span />
                 </div>
               </div>
-              <pre class="code-panel-code">{`<Kinu.Button
-  variant="fluid"
-  size="xl"
-  onClick={deploy}
->
+              <pre class="code-panel-code">{`<Button variant="outline" size="lg">
   Redefine Everything
-</Kinu.Button>
+</Button>
 
-<Kinu.Dialog open={isOpen} onDismiss={close}>
-  <Kinu.Header>Confirm Action</Kinu.Header>
-</Kinu.Dialog>`}</pre>
+<Dialog>
+  <Dialog.Trigger>
+    <Button>Open</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    Confirm action?
+  </Dialog.Content>
+</Dialog>`}</pre>
             </div>
 
             <div class="code-panel code-panel-dark">
               <div class="code-panel-header">
-                <span class="code-panel-label muted">Native Output</span>
+                <span class="code-panel-label muted">Rendered DOM</span>
                 <div class="code-panel-dots dark">
                   <span />
                   <span />
                   <span />
                 </div>
               </div>
-              <pre class="code-panel-code">{`<button class="kn-btn kn-fluid kn-xl">
+              <pre class="code-panel-code">{`<button k="button" variant="outline"
+  size="lg">
   Redefine Everything
 </button>
 
-<dialog open class="kn-dialog">
-  <header>Confirm Action</header>
+<button k="button" commandfor=":r0:"
+  command="show-modal">Open</button>
+<dialog k="dialog-content" id=":r0:">
+  Confirm action?
 </dialog>`}</pre>
             </div>
           </div>
