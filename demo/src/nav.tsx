@@ -18,12 +18,12 @@ export function Nav({
   return (
     <NavigationMenu class={className ?? 'home-nav'}>
       {left}
-      <a href="/" class="nav-logo">KINU</a>
+      <a href="/" class="nav-logo">
+        KINU
+      </a>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/docs">
-            The Atelier
-          </NavigationMenuLink>
+          <NavigationMenuLink href="/docs">The Atelier</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink href="/getting-started">
@@ -57,7 +57,9 @@ export function Nav({
       </NavigationMenuList>
       <div class="nav-actions">
         <ThemeCustomizer />
-        <a href="/getting-started" class="nav-cta">Get Started</a>
+        <a href="/getting-started" class="nav-cta">
+          Get Started
+        </a>
       </div>
     </NavigationMenu>
   );

@@ -1,4 +1,21 @@
-import {Button, ToastContainer, Slider, Checkbox} from 'kinu';
+import {
+  Button,
+  Card,
+  Input,
+  Badge,
+  Alert,
+  Progress,
+  Switch,
+  Tooltip,
+  Avatar,
+  Dialog,
+  toast,
+  ToastContainer,
+  Slider,
+  Checkbox,
+  Label,
+} from 'kinu';
+import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
 
 export default function Home() {
@@ -7,30 +24,35 @@ export default function Home() {
       <ToastContainer />
       <Nav />
 
-      {/* ── Hero Section ── */}
+      {/* Hero Section */}
       <section class="hero-section">
         <div class="hero-bg-glow" aria-hidden="true" />
         <div class="hero-inner">
           <h1 class="hero-title">
-            Preact UI toolkit.{' '}
+            Preact UI toolkit.
             <br />
             <span class="hero-accent">10x smaller</span> than you think.
           </h1>
           <p class="hero-tagline">Intuitive for humans + LLMs</p>
           <div class="hero-desc-wrap">
             <p class="hero-description">
-              Kinu: The Japanese word for silk. An ultra-thin, consistent
-              layer of styling and ergonomics. Performance as a product
-              feature, not an after-thought.
+              Kinu: The Japanese word for silk. An ultra-thin, consistent layer
+              of styling and ergonomics. Performance as a product feature, not
+              an after-thought.
             </p>
           </div>
           <div class="hero-buttons">
-            <a href="/getting-started" class="btn-pill btn-dark">
+            <Button href="/getting-started" size="lg" class="btn-pill btn-dark">
               Start Building
-            </a>
-            <a href="/docs" class="btn-pill btn-outline-light">
+            </Button>
+            <Button
+              href="/docs"
+              variant="outline"
+              size="lg"
+              class="btn-pill btn-outline-light"
+            >
               View Benchmarks
-            </a>
+            </Button>
           </div>
         </div>
 
@@ -45,17 +67,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Philosophy Section (dark) ── */}
+      {/* Philosophy Section (dark) */}
       <section class="philosophy-section">
         <div class="philosophy-grid">
           <div class="philosophy-text">
             <h2 class="philosophy-heading">
-              Constraint-Driven<br />Innovation.
+              Constraint-Driven
+              <br />
+              Innovation.
             </h2>
             <p class="philosophy-body">
-              We believe the best experiences aren't built by adding more,
-              but by refining what's essential. Kinu follows the 80/20 rule:
-              20% of the primitives solve 80% of the UI challenges.
+              We believe the best experiences aren't built by adding more, but
+              by refining what's essential. Kinu follows the 80/20 rule: 20% of
+              the primitives solve 80% of the UI challenges.
             </p>
             <div class="philosophy-stats">
               <div class="stat-block">
@@ -80,7 +104,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Frictionless Primitives ── */}
+      {/* Frictionless Primitives */}
       <section class="primitives-section">
         <div class="primitives-inner">
           <div class="primitives-header">
@@ -88,76 +112,41 @@ export default function Home() {
             <h2 class="section-heading">Frictionless Primitives</h2>
           </div>
           <div class="primitives-grid">
-            {/* Slider Card */}
-            <div class="primitive-card">
+            <Card class="primitive-card">
               <div class="primitive-demo">
-                <div class="demo-slider-wrap">
-                  <div class="demo-slider-track">
-                    <div class="demo-slider-fill" style="width:66%" />
-                    <div class="demo-slider-thumb" style="left:66%" />
-                  </div>
-                  <div class="demo-slider-labels">
-                    <span>Intensity</span>
-                    <span>68%</span>
-                  </div>
-                </div>
+                <SliderDemo />
               </div>
               <h3 class="primitive-title">Fluid Sliders</h3>
               <p class="primitive-desc">
-                Sub-pixel precision with zero input lag. Built on native range inputs.
+                Sub-pixel precision with zero input lag. Built on native range
+                inputs.
               </p>
-            </div>
+            </Card>
 
-            {/* Todo Card */}
-            <div class="primitive-card">
+            <Card class="primitive-card">
               <div class="primitive-demo">
-                <div class="demo-todo-list">
-                  <div class="demo-todo-item done">
-                    <div class="demo-todo-check checked">
-                      <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                    <span class="demo-todo-text line-through">Initialize workspace</span>
-                  </div>
-                  <div class="demo-todo-item active">
-                    <div class="demo-todo-check checked">
-                      <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 6l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                    <span class="demo-todo-text bold">Refine layout hierarchy</span>
-                  </div>
-                  <div class="demo-todo-item">
-                    <div class="demo-todo-check" />
-                    <span class="demo-todo-text">Deploy to production</span>
-                  </div>
-                </div>
+                <TodoDemo />
               </div>
               <h3 class="primitive-title">Optimistic Lists</h3>
               <p class="primitive-desc">
                 Instant feedback loops with built-in state synchronization.
               </p>
-            </div>
+            </Card>
 
-            {/* Buttons Card */}
-            <div class="primitive-card">
+            <Card class="primitive-card">
               <div class="primitive-demo">
-                <div class="demo-buttons-stack">
-                  <button class="demo-btn-primary" type="button">
-                    Primary Action
-                  </button>
-                  <button class="demo-btn-ghost" type="button">
-                    Ghost Variant
-                  </button>
-                </div>
+                <ButtonDemo />
               </div>
               <h3 class="primitive-title">Tactile Interactions</h3>
               <p class="primitive-desc">
                 Carefully tuned spring physics for every click and hover state.
               </p>
-            </div>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* ── HTML as First-Class Citizen ── */}
+      {/* HTML as First-Class Citizen */}
       <section class="native-section">
         <div class="native-inner">
           <div class="native-header">
@@ -170,12 +159,13 @@ export default function Home() {
             </p>
           </div>
           <div class="code-comparison">
-            {/* Kinu Code */}
             <div class="code-panel code-panel-light">
               <div class="code-panel-header">
                 <span class="code-panel-label primary">Kinu Approach</span>
                 <div class="code-panel-dots">
-                  <span /><span /><span />
+                  <span />
+                  <span />
+                  <span />
                 </div>
               </div>
               <pre class="code-panel-code">{`<Kinu.Button
@@ -191,12 +181,13 @@ export default function Home() {
 </Kinu.Dialog>`}</pre>
             </div>
 
-            {/* Native Output */}
             <div class="code-panel code-panel-dark">
               <div class="code-panel-header">
                 <span class="code-panel-label muted">Native Output</span>
                 <div class="code-panel-dots dark">
-                  <span /><span /><span />
+                  <span />
+                  <span />
+                  <span />
                 </div>
               </div>
               <pre class="code-panel-code">{`<button class="kn-btn kn-fluid kn-xl">
@@ -211,19 +202,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CTA Section ── */}
+      {/* CTA Section */}
       <section class="cta-section">
         <div class="cta-glow" aria-hidden="true" />
         <div class="cta-inner">
           <h2 class="cta-heading">Redefine Everything.</h2>
           <p class="cta-body">The web was meant to feel this smooth.</p>
           <div class="cta-buttons">
-            <a
-              href="https://github.com/nicebui/kinu"
+            <Button
+              href="https://github.com/developit/kinu"
               class="btn-pill btn-white"
             >
               Clone the Repo
-            </a>
+            </Button>
             <a href="/docs" class="cta-link">
               Read the philosophy
             </a>
@@ -231,7 +222,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Footer ── */}
+      {/* Footer */}
       <footer class="site-footer">
         <div class="footer-inner">
           <div class="footer-brand">
@@ -241,13 +232,78 @@ export default function Home() {
             </span>
           </div>
           <div class="footer-links">
-            <a href="#">Twitter</a>
-            <a href="https://github.com/nicebui/kinu">GitHub</a>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+            <a href="https://twitter.com">Twitter</a>
+            <a href="https://github.com/developit/kinu">GitHub</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function SliderDemo() {
+  const [value, setValue] = useState(68);
+  return (
+    <div class="demo-slider-wrap">
+      <Slider
+        min={0}
+        max={100}
+        value={value}
+        onInput={(e) => setValue(Number((e.target as HTMLInputElement).value))}
+      />
+      <div class="demo-slider-labels">
+        <span>Intensity</span>
+        <span>{value}%</span>
+      </div>
+    </div>
+  );
+}
+
+function TodoDemo() {
+  const [tasks, setTasks] = useState([
+    {id: 1, text: 'Initialize workspace', completed: true},
+    {id: 2, text: 'Refine layout hierarchy', completed: true},
+    {id: 3, text: 'Deploy to production', completed: false},
+  ]);
+
+  const toggleTask = (id: number) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? {...task, completed: !task.completed} : task,
+      ),
+    );
+  };
+
+  return (
+    <div class="demo-todo-list">
+      {tasks.map((task) => (
+        <Label key={task.id} class="demo-todo-item">
+          <Checkbox
+            checked={task.completed}
+            onInput={() => toggleTask(task.id)}
+          />
+          <span
+            class={`demo-todo-text ${task.completed ? 'line-through' : ''}`}
+          >
+            {task.text}
+          </span>
+        </Label>
+      ))}
+    </div>
+  );
+}
+
+function ButtonDemo() {
+  return (
+    <div class="demo-buttons-stack">
+      <Button
+        onClick={() => toast.show('Action triggered!', {title: 'Primary'})}
+      >
+        Primary Action
+      </Button>
+      <Button variant="outline">Ghost Variant</Button>
     </div>
   );
 }

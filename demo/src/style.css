@@ -532,19 +532,6 @@ body .home-nav + * {
   gap: 2rem;
 }
 
-.primitive-card {
-  padding: 2.5rem;
-  background: #fff;
-  border-radius: 1.5rem;
-  border: 1px solid #f5f5f4;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition: box-shadow 300ms ease;
-}
-
-.primitive-card:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
 .primitive-demo {
   height: 10rem;
   display: flex;
@@ -576,39 +563,6 @@ body .home-nav + * {
   gap: 1.5rem;
 }
 
-.demo-slider-track {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  background: #f5f5f4;
-  border-radius: 9999px;
-}
-
-.demo-slider-fill {
-  position: absolute;
-  height: 100%;
-  background: hsl(var(--k-primary));
-  border-radius: 9999px;
-}
-
-.demo-slider-thumb {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 1.5rem;
-  height: 1.5rem;
-  background: #fff;
-  border: 2px solid hsl(var(--k-primary));
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-  transition: transform 200ms ease;
-}
-
-.demo-slider-thumb:hover {
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
 .demo-slider-labels {
   display: flex;
   justify-content: space-between;
@@ -634,27 +588,6 @@ body .home-nav + * {
   cursor: pointer;
 }
 
-.demo-todo-check {
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 0.25rem;
-  border: 1px solid #e7e5e4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: border-color 200ms ease;
-  color: hsl(var(--k-primary));
-}
-
-.demo-todo-item:hover .demo-todo-check {
-  border-color: hsl(var(--k-primary));
-}
-
-.demo-todo-check.checked {
-  border: 2px solid hsl(var(--k-primary));
-}
-
 .demo-todo-text {
   font-size: 0.875rem;
   color: #57534e;
@@ -665,11 +598,6 @@ body .home-nav + * {
   color: #a8a29e;
 }
 
-.demo-todo-text.bold {
-  font-weight: 500;
-  color: #292524;
-}
-
 /* Button demo */
 .demo-buttons-stack {
   display: flex;
@@ -678,46 +606,22 @@ body .home-nav + * {
   width: 100%;
 }
 
-.demo-btn-primary {
+.demo-buttons-stack [k="button"] {
   width: 100%;
-  padding: 0.75rem;
-  background: hsl(var(--k-primary));
-  color: #fff;
-  font-family: var(--font-label);
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: filter 200ms ease, transform 100ms ease;
 }
 
-.demo-btn-primary:hover {
-  filter: brightness(1.1);
+/* Primitive card overrides for Kinu components */
+.primitive-card[k="card"] {
+  padding: 2.5rem;
+  background: #fff;
+  border-radius: 1.5rem;
+  border: 1px solid #f5f5f4;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 300ms ease;
 }
 
-.demo-btn-primary:active {
-  transform: scale(0.95);
-}
-
-.demo-btn-ghost {
-  width: 100%;
-  padding: 0.75rem;
-  background: #fafaf9;
-  color: #1c1917;
-  font-family: var(--font-label);
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  border: 1px solid #e7e5e4;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background 200ms ease;
-}
-
-.demo-btn-ghost:hover {
-  background: #f5f5f4;
+.primitive-card[k="card"]:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════════
