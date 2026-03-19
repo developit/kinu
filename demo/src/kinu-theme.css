@@ -1,0 +1,74 @@
+/*
+ * Kinu Theme: The Technical Atelier
+ *
+ * An editorial, warm, earthy theme inspired by high-end fashion ateliers.
+ * Overrides default Kinu CSS Custom Properties with a refined palette.
+ */
+
+:root {
+  /* Base colors - warm parchment tones */
+  --k-background: 43 33% 95.5%;       /* #f7f5f0 */
+  --k-foreground: 75 6% 14%;          /* #242521 */
+  --k-card: 36 38% 98%;               /* #fcfbf9 */
+  --k-card-foreground: 75 6% 14%;
+  --k-popover: 36 38% 98%;
+  --k-popover-foreground: 75 6% 14%;
+  --k-sidebar: 38 30% 93%;
+
+  /* Primary - deep forest green */
+  --k-primary: 165 27% 24%;           /* #2c4c44 */
+  --k-primary-foreground: 0 0% 100%;
+  --k-primary-hover: 165 27% 18%;
+
+  /* Secondary - warm stone */
+  --k-secondary: 36 21% 89%;          /* #e9e5df */
+  --k-secondary-foreground: 90 2% 34%;
+  --k-secondary-hover: 36 21% 84%;
+
+  /* Muted - subtle warmth */
+  --k-muted: 38 30% 93%;              /* #f2eee7 */
+  --k-muted-foreground: 30 5% 41%;    /* #6e6a64 */
+
+  /* Accent - warm highlight */
+  --k-accent: 37 20% 87%;             /* #e5e0d8 */
+  --k-accent-foreground: 75 6% 14%;
+
+  /* Destructive - keep standard red */
+  --k-destructive: 0 84.2% 60.2%;
+  --k-destructive-foreground: 0 0% 100%;
+  --k-destructive-hover: 0 84.2% 50.2%;
+
+  /* Border and input - warm outline */
+  --k-border: 37 12% 80%;             /* #d3cec6 */
+  --k-input: 37 12% 80%;
+  --k-ring: 165 27% 24%;
+
+  /* Radius - editorial square */
+  --k-radius: 0.25rem;
+
+  /* ── Extended atelier tokens ── */
+  --kinu-primary-dim: 132 10% 59%;          /* #8da191 */
+  --kinu-surface-low: 38 30% 93%;           /* #f2eee7 */
+  --kinu-surface: 43 33% 95.5%;             /* #f7f5f0 */
+  --kinu-surface-high: 36 24% 91%;          /* #ede9e2 */
+  --kinu-surface-highest: 37 20% 87%;       /* #e5e0d8 */
+  --kinu-surface-lowest: 36 38% 98%;        /* #fcfbf9 */
+  --kinu-outline: 90 2% 48%;                /* #7a7c78 */
+  --kinu-outline-variant: 37 12% 80%;       /* #d3cec6 */
+  --kinu-inverse-surface: 70 5% 16%;        /* #2d2d2a */
+  --kinu-on-surface-variant: 90 2% 34%;     /* #585a56 */
+
+  /* Fonts */
+  --kinu-font-headline: 'Newsreader', 'Georgia', serif;
+  --kinu-font-body: 'Manrope', system-ui, sans-serif;
+  --kinu-font-label: 'Manrope', system-ui, sans-serif;
+
+  font-family: var(--kinu-font-body);
+  color-scheme: light;
+}
+
+/* Selection */
+::selection {
+  background: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+}

@@ -16,45 +16,21 @@ export function Nav({
   left,
 }: {class?: string; left?: ComponentChildren}) {
   return (
-    <NavigationMenu class={className ?? 'home-nav'}>
-      {left}
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/">Home</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/getting-started">
-            Get&nbsp;Started
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <NavigationMenuLink href="#">Demos</NavigationMenuLink>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent to="left">
-              <DropdownMenuItem as="a" href="/linear">
-                Linear Demo
-              </DropdownMenuItem>
-              <DropdownMenuItem as="a" href="/chat">
-                Chat Demo
-              </DropdownMenuItem>
-              <DropdownMenuItem as="a" href="/player">
-                Music Demo
-              </DropdownMenuItem>
-              <DropdownMenuItem as="a" href="/dashboard">
-                Dashboard Demo
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-      <div class="nav-actions">
-        <ThemeCustomizer />
+    <nav class={`atelier-nav ${className ?? ''}`}>
+      <div class="atelier-nav-inner">
+        {left}
+        <a href="/" class="atelier-logo">Kinu</a>
+        <div class="atelier-links">
+          <a href="/docs" class="atelier-link">Collections</a>
+          <a href="/docs/overview" class="atelier-link">Philosophy</a>
+          <a href="/getting-started" class="atelier-link">Atelier</a>
+          <a href="/docs/commands" class="atelier-link">Archive</a>
+        </div>
+        <div class="nav-actions">
+          <a href="/getting-started" class="atelier-cta-btn">Get Started</a>
+          <ThemeCustomizer />
+        </div>
       </div>
-    </NavigationMenu>
+    </nav>
   );
 }
