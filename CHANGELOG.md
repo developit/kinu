@@ -1,5 +1,11 @@
 # kinu
 
+## 0.1.4
+
+### Patch Changes
+
+- ded0741: fix broken build
+
 ## 0.1.3
 
 ### Patch Changes
