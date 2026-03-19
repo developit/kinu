@@ -1,8 +1,28 @@
 import '../homepage.css';
+import {
+  Button,
+  Card,
+  Input,
+  Badge,
+  Alert,
+  Progress,
+  Switch,
+  Tooltip,
+  Avatar,
+  Dialog,
+  toast,
+  ToastContainer,
+  Slider,
+  Checkbox,
+  Label,
+} from 'kinu';
+import {useState} from 'preact/hooks';
 
 export default function Home() {
   return (
     <div class="home">
+      <ToastContainer />
+
       {/* ── Navigation ── */}
       <nav class="atelier-nav">
         <div class="atelier-nav-inner">
@@ -32,27 +52,17 @@ export default function Home() {
               <p class="hero-subtitle">
                 Intuitive for humans+LLMs. A high-performance architecture wrapped in an editorial shell.
               </p>
+              <div class="hero-actions">
+                <Button href="/getting-started" size="lg">
+                  Get Started
+                </Button>
+                <Button href="/docs" variant="outline" size="lg">
+                  Browse Components
+                </Button>
+              </div>
             </div>
             <div class="hero-visual">
-              <div class="hero-display">
-                <div class="hero-display-glow silk-glow" />
-                <div class="hero-display-grid earthy-grid" />
-                <div class="hero-display-frame">
-                  <div class="hero-display-header">
-                    <span class="hero-display-label">System: Active</span>
-                    <iconify-icon icon="material-symbols:terminal" class="hero-display-icon" />
-                  </div>
-                  <div class="hero-display-footer">
-                    <div class="hero-display-bar">
-                      <div class="hero-display-bar-fill" />
-                    </div>
-                    <span class="hero-display-meta">0.082kb Gzipped Payload</span>
-                  </div>
-                </div>
-              </div>
-              <div class="hero-badge">
-                <span class="hero-badge-text">Revision 4.02</span>
-              </div>
+              <HeroDemo />
             </div>
           </div>
         </section>
@@ -65,63 +75,43 @@ export default function Home() {
               <h2 class="section-title">The Technical Workspace</h2>
             </div>
             <div class="lab-grid">
-              {/* Task orchestrator */}
-              <div class="task-card">
-                <div class="task-card-header">
-                  <h3 class="task-card-title">Task Orchestrator</h3>
-                  <div class="task-card-dots">
-                    <div class="task-card-dot active" />
-                    <div class="task-card-dot inactive" />
-                  </div>
-                </div>
-                <div class="task-list-items">
-                  <div class="task-row">
-                    <div class="task-row-left">
-                      <div class="task-checkbox checked">
-                        <div class="task-checkbox-inner" />
-                      </div>
-                      <span class="task-name">Initialize technical shader pipeline</span>
-                    </div>
-                    <span class="task-priority high">High</span>
-                  </div>
-                  <div class="task-row">
-                    <div class="task-row-left">
-                      <div class="task-checkbox" />
-                      <span class="task-name muted">Calibrate silk-layer density</span>
-                    </div>
-                    <span class="task-priority med">Med</span>
-                  </div>
-                  <div class="task-row">
-                    <div class="task-row-left">
-                      <div class="task-checkbox" />
-                      <span class="task-name muted">Finalize atelier documentation</span>
-                    </div>
-                    <span class="task-priority low">Low</span>
-                  </div>
-                </div>
-              </div>
+              <TaskOrchestrator />
+              <SystemParameters />
+            </div>
+          </div>
+        </section>
 
-              {/* System parameters */}
-              <div class="params-card">
-                <h3 class="params-title">System Parameters</h3>
-                <div class="params-controls">
-                  <div class="param-group">
-                    <div class="param-label-row">
-                      <span>Atmospheric Blur</span>
-                      <span class="param-value">64%</span>
-                    </div>
-                    <input type="range" class="param-slider" min="0" max="100" value="64" />
-                  </div>
-                  <div class="param-group">
-                    <div class="param-label-row">
-                      <span>Data Frequency</span>
-                      <span class="param-value">12hz</span>
-                    </div>
-                    <input type="range" class="param-slider" min="0" max="100" value="32" />
-                  </div>
-                  <button class="deploy-btn" type="button">Deploy Build</button>
-                </div>
-              </div>
+        {/* ── Showcase ── */}
+        <section class="showcase-section">
+          <div class="showcase-inner">
+            <div class="section-header">
+              <span class="section-label">Components</span>
+              <h2 class="section-title">See it in action</h2>
+            </div>
+            <p class="showcase-subtitle">
+              Interactive demos showcasing real-world usage—all powered by just 5kB of JavaScript
+            </p>
+            <div class="showcase-grid">
+              <Card class="showcase-card">
+                <h3>Form Controls</h3>
+                <p class="showcase-card-desc">Accessible forms with validation feedback</p>
+                <FormDemo />
+              </Card>
+              <Card class="showcase-card">
+                <h3>Data Visualization</h3>
+                <p class="showcase-card-desc">Progress tracking and interactive displays</p>
+                <DataDemo />
+              </Card>
+              <Card class="showcase-card">
+                <h3>Settings Panel</h3>
+                <p class="showcase-card-desc">Toggle switches and user preferences</p>
+                <SettingsDemo />
+              </Card>
+              <Card class="showcase-card">
+                <h3>Notifications</h3>
+                <p class="showcase-card-desc">Toast messages and alert dialogs</p>
+                <NotificationDemo />
+              </Card>
             </div>
           </div>
         </section>
@@ -168,13 +158,11 @@ export default function Home() {
         {/* ── Features Grid ── */}
         <section class="features-section">
           <div class="features-grid">
-            {/* Large card */}
             <div class="feature-card-large">
               <iconify-icon icon="material-symbols:hub" class="feature-card-large-icon" />
               <h3>Semantic Interoperability</h3>
               <p>Kinu is built to be read by both humans and LLMs, ensuring your codebase remains future-proof in the age of AI-assisted development.</p>
             </div>
-            {/* Primary accent card */}
             <div class="feature-card-primary">
               <iconify-icon icon="material-symbols:bolt" class="feature-card-primary-icon" style="font-variation-settings: 'FILL' 1;" />
               <div>
@@ -182,7 +170,6 @@ export default function Home() {
                 <p>Deploy sophisticated UI patterns in minutes, not weeks.</p>
               </div>
             </div>
-            {/* Bottom cards */}
             <div class="feature-card-sm">
               <h3>01. Modular</h3>
               <p>Extensible core components designed for infinite customization.</p>
@@ -196,6 +183,28 @@ export default function Home() {
               <p>Optimized VDOM diffing for buttery smooth 60fps animations.</p>
             </div>
           </div>
+        </section>
+
+        {/* ── CTA ── */}
+        <section class="cta-section">
+          <Card class="cta-card" padding="lg">
+            <h2>Built for real applications</h2>
+            <p>From simple forms to complex dashboards, kinu scales with your needs</p>
+            <div class="cta-links">
+              <Button href="/linear" variant="secondary" size="lg">
+                Linear Dashboard
+              </Button>
+              <Button href="/chat" variant="secondary" size="lg">
+                Chat Application
+              </Button>
+              <Button href="/player" variant="secondary" size="lg">
+                Music Player
+              </Button>
+              <Button variant="outline" href="https://github.com/nicehash-developit/kinu">
+                GitHub
+              </Button>
+            </div>
+          </Card>
         </section>
       </main>
 
@@ -222,7 +231,7 @@ export default function Home() {
           <div class="footer-newsletter">
             <h4>Newsletter</h4>
             <div class="footer-input-wrapper">
-              <input type="email" class="footer-email-input" placeholder="Email Address" />
+              <Input type="email" class="footer-email-input" placeholder="Email Address" />
               <button class="footer-submit-btn" type="button" aria-label="Subscribe">
                 <iconify-icon icon="material-symbols:arrow-forward" />
               </button>
@@ -233,6 +242,342 @@ export default function Home() {
           <p class="footer-copyright">&copy; 2024 Kinu Technical Atelier. All rights reserved.</p>
         </div>
       </footer>
+    </div>
+  );
+}
+
+/* ── Hero Demo ── */
+function HeroDemo() {
+  const [tasks, setTasks] = useState([
+    {id: 1, text: 'Design new landing page', completed: true},
+    {id: 2, text: 'Implement user authentication', completed: true},
+    {id: 3, text: 'Add payment processing', completed: false},
+    {id: 4, text: 'Write documentation', completed: false},
+  ]);
+  const [newTask, setNewTask] = useState('');
+
+  const completedCount = tasks.filter((t) => t.completed).length;
+  const progress = (completedCount / tasks.length) * 100;
+
+  const toggleTask = (id: number) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? {...task, completed: !task.completed} : task,
+      ),
+    );
+  };
+
+  const addTask = () => {
+    if (!newTask.trim()) return;
+    setTasks((prev) => [
+      ...prev,
+      {id: Date.now(), text: newTask, completed: false},
+    ]);
+    setNewTask('');
+  };
+
+  return (
+    <Card class="hero-demo-card">
+      <div class="hero-demo-header">
+        <Avatar>JD</Avatar>
+        <div>
+          <div class="demo-title">Project Dashboard</div>
+          <Badge variant={progress === 100 ? undefined : 'secondary'}>
+            {completedCount}/{tasks.length} Complete
+          </Badge>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-label">Overall Progress</div>
+        <Progress value={progress} max={100} />
+        <div class="progress-text">{Math.round(progress)}%</div>
+      </div>
+
+      <div class="task-list">
+        {tasks.map((task) => (
+          <Label key={task.id} class="task-item">
+            <Checkbox
+              checked={task.completed}
+              onInput={() => toggleTask(task.id)}
+            />
+            <span class={task.completed ? 'task-completed' : ''}>
+              {task.text}
+            </span>
+          </Label>
+        ))}
+      </div>
+
+      <div class="add-task">
+        <Input
+          placeholder="Add new task..."
+          value={newTask}
+          onInput={(e) => setNewTask((e.target as HTMLInputElement).value)}
+          onKeyPress={(e) => e.key === 'Enter' && addTask()}
+        />
+        <Tooltip title="Add task">
+          <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
+            +
+          </Button>
+        </Tooltip>
+      </div>
+    </Card>
+  );
+}
+
+/* ── Task Orchestrator (real Kinu components) ── */
+function TaskOrchestrator() {
+  const [tasks, setTasks] = useState([
+    {id: 1, text: 'Initialize technical shader pipeline', completed: true, priority: 'High'},
+    {id: 2, text: 'Calibrate silk-layer density', completed: false, priority: 'Med'},
+    {id: 3, text: 'Finalize atelier documentation', completed: false, priority: 'Low'},
+  ]);
+
+  const toggleTask = (id: number) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? {...task, completed: !task.completed} : task,
+      ),
+    );
+  };
+
+  return (
+    <div class="task-card">
+      <div class="task-card-header">
+        <h3 class="task-card-title">Task Orchestrator</h3>
+        <div class="task-card-dots">
+          <div class="task-card-dot active" />
+          <div class="task-card-dot inactive" />
+        </div>
+      </div>
+      <div class="task-list-items">
+        {tasks.map((task) => (
+          <div class="task-row" key={task.id}>
+            <Label class="task-row-left">
+              <Checkbox
+                checked={task.completed}
+                onInput={() => toggleTask(task.id)}
+              />
+              <span class={`task-name${task.completed ? '' : ' muted'}`}>
+                {task.text}
+              </span>
+            </Label>
+            <span class={`task-priority ${task.priority.toLowerCase()}`}>
+              {task.priority}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── System Parameters (real Kinu Slider + Button) ── */
+function SystemParameters() {
+  const [blur, setBlur] = useState(64);
+  const [freq, setFreq] = useState(32);
+
+  return (
+    <div class="params-card">
+      <h3 class="params-title">System Parameters</h3>
+      <div class="params-controls">
+        <div class="param-group">
+          <div class="param-label-row">
+            <span>Atmospheric Blur</span>
+            <span class="param-value">{blur}%</span>
+          </div>
+          <Slider
+            min={0}
+            max={100}
+            value={blur}
+            onInput={(e) => setBlur(Number((e.target as HTMLInputElement).value))}
+          />
+        </div>
+        <div class="param-group">
+          <div class="param-label-row">
+            <span>Data Frequency</span>
+            <span class="param-value">{Math.round(freq * 0.375)}hz</span>
+          </div>
+          <Slider
+            min={0}
+            max={100}
+            value={freq}
+            onInput={(e) => setFreq(Number((e.target as HTMLInputElement).value))}
+          />
+        </div>
+        <Button onClick={() => toast.show('Build deployed successfully!', {title: 'Deployed', icon: '🚀'})}>
+          Deploy Build
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Form Demo ── */
+function FormDemo() {
+  const [name, setName] = useState('');
+  const [agreed, setAgreed] = useState(false);
+  const [errors, setErrors] = useState<{name?: string; agreed?: string}>({});
+
+  const validate = () => {
+    const newErrors: {name?: string; agreed?: string} = {};
+    if (!name.trim()) newErrors.name = 'Name is required';
+    if (!agreed) newErrors.agreed = 'You must agree to continue';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validate()) {
+      toast.show('Form submitted successfully!', {title: 'Success', icon: '✅'});
+    }
+  };
+
+  return (
+    <div class="demo-form">
+      <div class="form-field">
+        <Label htmlFor="demo-name">Full Name</Label>
+        <Input
+          id="demo-name"
+          placeholder="Enter your name"
+          value={name}
+          onInput={(e) => {
+            setName((e.target as HTMLInputElement).value);
+            if (errors.name) setErrors({...errors, name: undefined});
+          }}
+        />
+        {errors.name && <div class="error-message">{errors.name}</div>}
+      </div>
+      <div class="form-field">
+        <div class="checkbox-field">
+          <Checkbox
+            id="demo-agree"
+            checked={agreed}
+            onInput={(e) => {
+              setAgreed((e.target as HTMLInputElement).checked);
+              if (errors.agreed) setErrors({...errors, agreed: undefined});
+            }}
+          />
+          <Label htmlFor="demo-agree">I agree to the terms</Label>
+        </div>
+        {errors.agreed && <div class="error-message">{errors.agreed}</div>}
+      </div>
+      <Button onClick={handleSubmit}>Submit</Button>
+    </div>
+  );
+}
+
+/* ── Data Demo ── */
+function DataDemo() {
+  const [value, setValue] = useState(65);
+
+  return (
+    <div class="data-demo">
+      <div class="metric">
+        <div class="metric-label">System Performance</div>
+        <div class="metric-value">{Math.round(value)}%</div>
+      </div>
+      <Progress value={value} max={100} />
+      <div class="demo-controls">
+        <Slider
+          min={0}
+          max={100}
+          value={value}
+          onInput={(e) => setValue(Number((e.target as HTMLInputElement).value))}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ── Settings Demo ── */
+function SettingsDemo() {
+  const [notifications, setNotifications] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
+  const [volume, setVolume] = useState(75);
+
+  return (
+    <div class="settings-demo">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Push Notifications</div>
+          <div class="setting-desc">Receive updates and alerts</div>
+        </div>
+        <Switch
+          checked={notifications}
+          onInput={(e) => setNotifications((e.target as HTMLInputElement).checked)}
+        />
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Dark Mode</div>
+          <div class="setting-desc">Use dark theme</div>
+        </div>
+        <Switch
+          checked={darkMode}
+          onInput={(e) => setDarkMode((e.target as HTMLInputElement).checked)}
+        />
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Volume</div>
+          <div class="setting-desc">{volume}%</div>
+        </div>
+        <Slider
+          min={0}
+          max={100}
+          value={volume}
+          onInput={(e) => setVolume(Number((e.target as HTMLInputElement).value))}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ── Notification Demo ── */
+function NotificationDemo() {
+  return (
+    <div class="notification-demo">
+      <div class="demo-buttons">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => toast.show('Task completed!', {title: 'Success', icon: '✅'})}
+        >
+          Success Toast
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => toast.show('Connection lost', {title: 'Warning', icon: '⚠️'})}
+        >
+          Warning Toast
+        </Button>
+      </div>
+      <Alert>
+        <strong>Tip:</strong> Click the buttons above to see toast notifications in action.
+      </Alert>
+      <Dialog>
+        <Dialog.Trigger>
+          <Button variant="outline" size="sm">
+            Open Dialog
+          </Button>
+        </Dialog.Trigger>
+        <Dialog.Content>
+          <h3>Confirm Action</h3>
+          <p>Are you sure you want to continue?</p>
+          <div class="dialog-actions">
+            <Dialog.Close>
+              <Button variant="outline">Cancel</Button>
+            </Dialog.Close>
+            <Dialog.Close>
+              <Button onClick={() => toast.show('Action confirmed!')}>
+                Confirm
+              </Button>
+            </Dialog.Close>
+          </div>
+        </Dialog.Content>
+      </Dialog>
     </div>
   );
 }
