@@ -104,43 +104,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Frictionless Primitives */}
+      {/* Interactive Primitives */}
       <section class="primitives-section">
         <div class="primitives-inner">
           <div class="primitives-header">
             <span class="section-eyebrow">The Atelier</span>
-            <h2 class="section-heading">Frictionless Primitives</h2>
+            <h2 class="section-heading">Go ahead — try them.</h2>
           </div>
           <div class="primitives-grid">
             <Card class="primitive-card">
-              <div class="primitive-demo">
-                <SliderDemo />
-              </div>
-              <h3 class="primitive-title">Fluid Sliders</h3>
-              <p class="primitive-desc">
-                Sub-pixel precision with zero input lag. Built on native range
-                inputs.
-              </p>
+              <SliderDemo />
             </Card>
-
             <Card class="primitive-card">
-              <div class="primitive-demo">
-                <TodoDemo />
-              </div>
-              <h3 class="primitive-title">Optimistic Lists</h3>
-              <p class="primitive-desc">
-                Instant feedback loops with built-in state synchronization.
-              </p>
+              <TodoDemo />
             </Card>
-
             <Card class="primitive-card">
-              <div class="primitive-demo">
-                <ButtonDemo />
-              </div>
-              <h3 class="primitive-title">Tactile Interactions</h3>
-              <p class="primitive-desc">
-                Carefully tuned spring physics for every click and hover state.
-              </p>
+              <ButtonDemo />
             </Card>
           </div>
         </div>

@@ -87,6 +87,9 @@
     --k-muted-foreground: 25 6% 60%;
     --k-accent: 30 8% 15%;
     --k-accent-foreground: 40 20% 93%;
+    --k-destructive: 0 63% 31%;
+    --k-destructive-foreground: 40 20% 93%;
+    --k-destructive-hover: 0 63% 40%;
     --k-border: 30 8% 18%;
     --k-input: 30 8% 18%;
     --k-ring: 133 20% 65%;
@@ -112,6 +115,9 @@
   --k-muted-foreground: 25 6% 60%;
   --k-accent: 30 8% 15%;
   --k-accent-foreground: 40 20% 93%;
+  --k-destructive: 0 63% 31%;
+  --k-destructive-foreground: 40 20% 93%;
+  --k-destructive-hover: 0 63% 40%;
   --k-border: 30 8% 18%;
   --k-input: 30 8% 18%;
   --k-ring: 133 20% 65%;
