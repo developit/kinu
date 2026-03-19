@@ -70,10 +70,7 @@
   color: hsl(var(--k-primary-foreground));
 }
 
-/* ── Editorial button styling ── */
+/* ── Theme font for buttons ── */
 [k="button"] {
   font-family: var(--kinu-font-label);
-  font-size: 0.6875rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }

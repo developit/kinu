@@ -82,6 +82,14 @@
   border-bottom: 1px solid hsl(var(--k-primary));
 }
 
+/* Editorial uppercase button style — applied only to nav + hero */
+.atelier-nav [k="button"],
+.hero-actions [k="button"] {
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 /* ── Main content ────────────────────────────────────────────────── */
 
 .atelier-main {
