@@ -46,12 +46,12 @@ export default function Home() {
               Start Building
             </Button>
             <Button
-              href="/docs"
+              href="/docs/button"
               variant="outline"
               size="lg"
               class="btn-pill btn-outline-light"
             >
-              View Benchmarks
+              View Components
             </Button>
           </div>
         </div>

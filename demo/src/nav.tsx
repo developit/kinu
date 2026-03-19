@@ -23,15 +23,12 @@ export function Nav({
       </a>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/docs">The Atelier</NavigationMenuLink>
+          <NavigationMenuLink href="/docs">Components</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink href="/getting-started">
-            Benchmarks
+            Getting Started
           </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <DropdownMenu>
