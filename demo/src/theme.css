@@ -3,11 +3,15 @@
  *
  * A warm, refined palette inspired by Japanese silk craft.
  * Sage green primary, cream surfaces, serif typography accents.
+ *
+ * Uses :root:root to ensure these overrides always beat the
+ * base :root in variables.css, even when component CSS is
+ * injected later (e.g. during Vite dev HMR).
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
-:root {
+:root:root {
   /* Surface: warm cream #fbf9f2 */
   --k-background: 47 53% 96.7%;
   --k-foreground: 24 10% 10%;
@@ -68,7 +72,7 @@
 
 /* Dark mode overrides */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:root {
     color-scheme: dark;
     --k-background: 30 10% 8%;
     --k-foreground: 40 20% 93%;
