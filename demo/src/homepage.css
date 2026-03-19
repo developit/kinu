@@ -82,31 +82,6 @@
   border-bottom: 1px solid hsl(var(--k-primary));
 }
 
-.atelier-cta-btn {
-  background: hsl(var(--k-primary));
-  color: hsl(var(--k-primary-foreground));
-  padding: 0.5rem 1.5rem;
-  font-family: var(--kinu-font-label);
-  font-size: 0.6875rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  transition: all 150ms;
-  text-decoration: none;
-  display: inline-block;
-  line-height: 1.5;
-}
-
-.atelier-cta-btn:hover {
-  background: hsl(var(--k-primary-hover));
-}
-
-.atelier-cta-btn:active {
-  transform: scale(0.95);
-  opacity: 0.8;
-}
-
 /* ── Main content ────────────────────────────────────────────────── */
 
 .atelier-main {
@@ -454,13 +429,9 @@ body .task-item {
   font-weight: 700;
 }
 
-/* Style real Kinu Button within params card to be full-width */
+/* Full-width button within params card */
 .params-controls [k="button"] {
   width: 100%;
-  font-family: var(--kinu-font-label);
-  font-size: 0.6875rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 /* ── Architecture Section ────────────────────────────────────────── */

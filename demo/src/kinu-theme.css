@@ -43,9 +43,6 @@
   --k-input: 37 12% 80%;
   --k-ring: 165 27% 24%;
 
-  /* Radius - editorial square */
-  --k-radius: 0.25rem;
-
   /* ── Extended atelier tokens ── */
   --kinu-primary-dim: 132 10% 59%;          /* #8da191 */
   --kinu-surface-low: 38 30% 93%;           /* #f2eee7 */
@@ -71,4 +68,12 @@
 ::selection {
   background: hsl(var(--k-primary));
   color: hsl(var(--k-primary-foreground));
+}
+
+/* ── Editorial button styling ── */
+[k="button"] {
+  font-family: var(--kinu-font-label);
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }

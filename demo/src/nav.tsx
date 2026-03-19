@@ -1,14 +1,5 @@
 import type {ComponentChildren} from 'preact';
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from 'kinu';
+import {Button} from 'kinu';
 import {ThemeCustomizer} from './theme-customizer.tsx';
 
 export function Nav({
@@ -27,7 +18,7 @@ export function Nav({
           <a href="/docs/commands" class="atelier-link">Archive</a>
         </div>
         <div class="nav-actions">
-          <a href="/getting-started" class="atelier-cta-btn">Get Started</a>
+          <Button href="/getting-started">Get Started</Button>
           <ThemeCustomizer />
         </div>
       </div>

@@ -33,7 +33,7 @@ export default function Home() {
             <a href="/getting-started" class="atelier-link">Atelier</a>
             <a href="/docs/commands" class="atelier-link">Archive</a>
           </div>
-          <a href="/getting-started" class="atelier-cta-btn">Get Started</a>
+          <Button href="/getting-started">Get Started</Button>
         </div>
       </nav>
 
@@ -159,28 +159,28 @@ export default function Home() {
         <section class="features-section">
           <div class="features-grid">
             <div class="feature-card-large">
-              <iconify-icon icon="material-symbols:hub" class="feature-card-large-icon" />
-              <h3>Semantic Interoperability</h3>
-              <p>Kinu is built to be read by both humans and LLMs, ensuring your codebase remains future-proof in the age of AI-assisted development.</p>
+              <iconify-icon icon="material-symbols:code" class="feature-card-large-icon" />
+              <h3>HTML Commands, Not Event Handlers</h3>
+              <p>Dialogs open, menus toggle, and drawers close using the proposed HTML <code>command</code>/<code>commandfor</code> attributes. No event handlers, no re-renders—just declarative markup.</p>
             </div>
             <div class="feature-card-primary">
               <iconify-icon icon="material-symbols:bolt" class="feature-card-primary-icon" style="font-variation-settings: 'FILL' 1;" />
               <div>
-                <h3>Instant Velocity</h3>
-                <p>Deploy sophisticated UI patterns in minutes, not weeks.</p>
+                <h3>~5kB Total</h3>
+                <p>50+ components in ~5kB JS + CSS. Every prop forwards directly to the DOM—no runtime filtering, no abstraction tax.</p>
               </div>
             </div>
             <div class="feature-card-sm">
-              <h3>01. Modular</h3>
-              <p>Extensible core components designed for infinite customization.</p>
+              <h3>01. Platform-Native</h3>
+              <p>Real <code>&lt;dialog&gt;</code>, real <code>&lt;progress&gt;</code>, real form validation. Kinu wraps native HTML instead of rebuilding it.</p>
             </div>
             <div class="feature-card-sm">
-              <h3>02. Accessible</h3>
-              <p>WAI-ARIA compliance baked into every primitive element.</p>
+              <h3>02. CSS-Driven</h3>
+              <p>Variants, sizes, and states are HTML attributes read by CSS selectors. No runtime branching—instant first paint.</p>
             </div>
             <div class="feature-card-sm">
-              <h3>03. Performant</h3>
-              <p>Optimized VDOM diffing for buttery smooth 60fps animations.</p>
+              <h3>03. AI-Readable</h3>
+              <p>Props forward directly to the DOM as attributes. What you write in JSX is what renders in HTML—transparent to humans and LLMs alike.</p>
             </div>
           </div>
         </section>
