@@ -1,5 +1,11 @@
 import type {ComponentChildren} from 'preact';
-import {Button} from 'kinu';
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from 'kinu';
 import {ThemeCustomizer} from './theme-customizer.tsx';
 
 export function Nav({
@@ -9,11 +15,31 @@ export function Nav({
   return (
     <nav class={`atelier-nav ${className ?? ''}`}>
       <div class="atelier-nav-inner">
-        {left}
-        <a href="/" class="atelier-logo">Kinu</a>
+        <div class="nav-left">
+          {left}
+          <a href="/" class="atelier-logo">Kinu</a>
+        </div>
         <div class="atelier-links">
           <a href="/docs" class="atelier-link">Docs</a>
-          <a href="/linear" class="atelier-link">Demos</a>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <button type="button" class="atelier-link">Demos</button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem as="a" href="/linear">
+                Linear Demo
+              </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/chat">
+                Chat Demo
+              </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/player">
+                Music Demo
+              </DropdownMenuItem>
+              <DropdownMenuItem as="a" href="/dashboard">
+                Dashboard Demo
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div class="nav-actions">
           <Button href="/getting-started">Get Started</Button>

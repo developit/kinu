@@ -116,13 +116,6 @@ pre.code-block {
   max-width: 100%;
 }
 
-/* Nav actions */
-.nav-actions {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
 /* Legacy compat: content after nav gets top padding */
 body .atelier-nav + * {
   margin-top: 5rem;

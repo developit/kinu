@@ -40,6 +40,14 @@
   margin: 0 auto;
 }
 
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
 .atelier-logo {
   font-size: 1.5rem;
   font-family: var(--kinu-font-headline);
@@ -61,6 +69,14 @@
   }
 }
 
+.nav-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+
 .atelier-link {
   font-family: var(--kinu-font-label);
   font-size: 0.6875rem;
@@ -70,6 +86,10 @@
   color: hsl(var(--k-muted-foreground));
   font-weight: 500;
   transition: color 300ms;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .atelier-link:hover {

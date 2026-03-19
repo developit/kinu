@@ -15,6 +15,10 @@ import {
   Slider,
   Checkbox,
   Label,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from 'kinu';
 import {useState} from 'preact/hooks';
 
@@ -26,12 +30,34 @@ export default function Home() {
       {/* ── Navigation ── */}
       <nav class="atelier-nav">
         <div class="atelier-nav-inner">
-          <a href="/" class="atelier-logo">Kinu</a>
+          <div class="nav-left">
+            <a href="/" class="atelier-logo">Kinu</a>
+          </div>
           <div class="atelier-links">
             <a href="/docs" class="atelier-link">Docs</a>
-            <a href="/linear" class="atelier-link">Demos</a>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <button type="button" class="atelier-link">Demos</button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem as="a" href="/linear">
+                  Linear Demo
+                </DropdownMenuItem>
+                <DropdownMenuItem as="a" href="/chat">
+                  Chat Demo
+                </DropdownMenuItem>
+                <DropdownMenuItem as="a" href="/player">
+                  Music Demo
+                </DropdownMenuItem>
+                <DropdownMenuItem as="a" href="/dashboard">
+                  Dashboard Demo
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          <Button href="/getting-started">Get Started</Button>
+          <div class="nav-actions">
+            <Button href="/getting-started">Get Started</Button>
+          </div>
         </div>
       </nav>
 
