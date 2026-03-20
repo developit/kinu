@@ -20,7 +20,6 @@ export function Nav({
           <a href="/" class="atelier-logo">Kinu</a>
         </div>
         <div class="atelier-links">
-          <a href="/docs" class="atelier-link">Docs</a>
           <DropdownMenu>
             <DropdownMenuTrigger>
               <button type="button" class="atelier-link">Demos</button>
@@ -42,6 +41,7 @@ export function Nav({
           </DropdownMenu>
         </div>
         <div class="nav-actions">
+          <Button href="/docs" variant="ghost">Docs</Button>
           <Button href="/getting-started">Get Started</Button>
           <ThemeCustomizer />
         </div>

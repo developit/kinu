@@ -721,8 +721,9 @@ body .task-item {
   gap: 1.5rem;
 }
 
-.setting-item {
+.settings-demo .setting-item {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;

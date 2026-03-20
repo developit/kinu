@@ -34,7 +34,6 @@ export default function Home() {
             <a href="/" class="atelier-logo">Kinu</a>
           </div>
           <div class="atelier-links">
-            <a href="/docs" class="atelier-link">Docs</a>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <button type="button" class="atelier-link">Demos</button>
@@ -56,6 +55,7 @@ export default function Home() {
             </DropdownMenu>
           </div>
           <div class="nav-actions">
+            <Button href="/docs" variant="ghost">Docs</Button>
             <Button href="/getting-started">Get Started</Button>
           </div>
         </div>
@@ -137,7 +137,7 @@ export default function Home() {
               <div class="arch-stats">
                 <div class="arch-stat">
                   <div class="arch-stat-value">~5kB</div>
-                  <div class="arch-stat-label">JS + CSS Total</div>
+                  <div class="arch-stat-label">JS Total</div>
                 </div>
                 <div class="arch-stat">
                   <div class="arch-stat-value">0</div>
@@ -174,8 +174,8 @@ export default function Home() {
             <div class="feature-card-primary">
               <iconify-icon icon="material-symbols:bolt" class="feature-card-primary-icon" style="font-variation-settings: 'FILL' 1;" />
               <div>
-                <h3>~5kB Total</h3>
-                <p>50+ components in ~5kB JS + CSS. Every prop forwards directly to the DOM—no runtime filtering, no abstraction tax.</p>
+                <h3>~5kB JS</h3>
+                <p>50+ components in ~5kB of JavaScript. Every prop forwards directly to the DOM—no runtime filtering, no abstraction tax.</p>
               </div>
             </div>
             <div class="feature-card-sm">
