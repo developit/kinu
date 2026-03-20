@@ -79,16 +79,17 @@ export default function Home() {
               Facade.
             </h2>
             <p class="philosophy-body">
-              Every component renders to the semantic HTML element you'd write by
-              hand. A {'<Button>'} becomes a {'<button>'}. A {'<Dialog>'} becomes
-              a {'<dialog>'}. Kinu just adds a single <code>k</code> attribute
-              for styling and wires up native platform APIs like{' '}
-              <code>commandfor</code> so you don't have to.
+              Kinu offers the ergonomics of a heavy toolkit with the weight of a
+              whisper. By mapping directly to native HTML elements and platform
+              APIs, entire layers of the conventional UI toolkit rendering
+              process are simply bypassed. No virtual DOM diffing for dialogs. No
+              synthetic event systems for forms. The fastest code is the code
+              that never runs.
             </p>
             <div class="philosophy-stats">
               <div class="stat-block">
-                <span class="stat-value">~5kb</span>
-                <span class="stat-label">JS + CSS Total</span>
+                <span class="stat-value">~5kB</span>
+                <span class="stat-label">JS Total</span>
               </div>
               <div class="stat-block">
                 <span class="stat-value">0</span>
@@ -230,7 +231,10 @@ export default function Home() {
           <div class="footer-brand">
             <span class="footer-logo">KINU</span>
             <span class="footer-copy">
-              &copy; {new Date().getFullYear()} Kinu. MIT License.
+              Built by{' '}
+              <a href="https://github.com/developit" class="footer-author">
+                developit
+              </a>
             </span>
           </div>
           <div class="footer-links">
@@ -268,10 +272,23 @@ function TodoDemo() {
     setNewTask('');
   };
 
+  const completed = tasks.filter((t) => t.completed).length;
+
   return (
     <div class="demo-todo-list">
+      <div class="demo-todo-progress">
+        <div class="demo-feedback-row">
+          <span class="demo-control-hint">
+            {completed} of {tasks.length} complete
+          </span>
+          <Badge variant="outline">
+            {Math.round((completed / tasks.length) * 100)}%
+          </Badge>
+        </div>
+        <Progress value={completed} max={tasks.length} />
+      </div>
       {tasks.map((task) => (
-        <Label key={task.id} class="demo-todo-item">
+        <label key={task.id} class="demo-todo-item">
           <Checkbox
             checked={task.completed}
             onInput={() => toggleTask(task.id)}
@@ -281,7 +298,7 @@ function TodoDemo() {
           >
             {task.text}
           </span>
-        </Label>
+        </label>
       ))}
       <Separator />
       <div class="demo-todo-add">
@@ -317,7 +334,7 @@ function ControlsDemo() {
         onInput={(e) => setVolume(Number((e.target as HTMLInputElement).value))}
       />
       <Separator />
-      <Label class="demo-switch-row">
+      <label class="demo-switch-row">
         <div>
           <div class="demo-control-label">Dark mode</div>
           <div class="demo-control-hint">Use dark theme</div>
@@ -326,8 +343,8 @@ function ControlsDemo() {
           checked={darkMode}
           onChange={() => setDarkMode(!darkMode)}
         />
-      </Label>
-      <Label class="demo-switch-row">
+      </label>
+      <label class="demo-switch-row">
         <div>
           <div class="demo-control-label">Notifications</div>
           <div class="demo-control-hint">Push alerts</div>
@@ -336,7 +353,7 @@ function ControlsDemo() {
           checked={notifications}
           onChange={() => setNotifications(!notifications)}
         />
-      </Label>
+      </label>
     </div>
   );
 }
