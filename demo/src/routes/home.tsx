@@ -14,6 +14,7 @@ import {
   Slider,
   Checkbox,
   Label,
+  Separator,
 } from 'kinu';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
@@ -36,9 +37,9 @@ export default function Home() {
           <p class="hero-tagline">Intuitive for humans + LLMs</p>
           <div class="hero-desc-wrap">
             <p class="hero-description">
-              Kinu: The Japanese word for silk. An ultra-thin, consistent layer
-              of styling and ergonomics. Performance as a product feature, not
-              an after-thought.
+              Kinu: The Japanese word for silk. An ultra-thin layer of styling
+              and ergonomics over native HTML. Zero dependencies, zero runtime
+              overhead, zero wrapper divs.
             </p>
           </div>
           <div class="hero-buttons">
@@ -67,28 +68,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Philosophy Section (dark) */}
+      {/* Architecture Section (dark) */}
       <section class="philosophy-section">
         <div class="philosophy-grid">
           <div class="philosophy-text">
+            <span class="section-eyebrow philosophy-eyebrow">Architecture</span>
             <h2 class="philosophy-heading">
-              Constraint-Driven
+              A Clever
               <br />
-              Innovation.
+              Facade.
             </h2>
             <p class="philosophy-body">
-              We believe the best experiences aren't built by adding more, but
-              by refining what's essential. Kinu follows the 80/20 rule: 20% of
-              the primitives solve 80% of the UI challenges.
+              Every component renders to the semantic HTML element you'd write by
+              hand. A {'<Button>'} becomes a {'<button>'}. A {'<Dialog>'} becomes
+              a {'<dialog>'}. Kinu just adds a single <code>k</code> attribute
+              for styling and wires up native platform APIs like{' '}
+              <code>commandfor</code> so you don't have to.
             </p>
             <div class="philosophy-stats">
               <div class="stat-block">
-                <span class="stat-value">5kb</span>
-                <span class="stat-label">Gzipped</span>
+                <span class="stat-value">~5kb</span>
+                <span class="stat-label">JS + CSS Total</span>
               </div>
               <div class="stat-block">
-                <span class="stat-value">&lt;1ms</span>
-                <span class="stat-label">Time to Interactive</span>
+                <span class="stat-value">0</span>
+                <span class="stat-label">Dependencies</span>
               </div>
             </div>
           </div>
@@ -108,18 +112,29 @@ export default function Home() {
       <section class="primitives-section">
         <div class="primitives-inner">
           <div class="primitives-header">
-            <span class="section-eyebrow">The Atelier</span>
+            <span class="section-eyebrow">Components</span>
             <h2 class="section-heading">Go ahead — try them.</h2>
+            <p class="section-subhead">
+              Every component below is live. Interact with them, inspect the DOM,
+              check the network tab. What you see is what ships.
+            </p>
           </div>
           <div class="primitives-grid">
             <Card class="primitive-card">
-              <SliderDemo />
-            </Card>
-            <Card class="primitive-card">
+              <span class="demo-card-label">Task List</span>
               <TodoDemo />
             </Card>
             <Card class="primitive-card">
+              <span class="demo-card-label">Controls</span>
+              <ControlsDemo />
+            </Card>
+            <Card class="primitive-card">
+              <span class="demo-card-label">Actions</span>
               <ButtonDemo />
+            </Card>
+            <Card class="primitive-card">
+              <span class="demo-card-label">Feedback</span>
+              <FeedbackDemo />
             </Card>
           </div>
         </div>
@@ -133,8 +148,10 @@ export default function Home() {
               <em>HTML</em> as a First-Class Citizen
             </h2>
             <p class="native-subhead">
-              Kinu doesn't reinvent the wheel; it completes it. We use native
-              semantic elements with a thin veneer of elegance.
+              Kinu doesn't reinvent the wheel; it completes it. Your components
+              render to native semantic elements with a single attribute for
+              styling. No div soup, no synthetic event system, no runtime
+              overhead.
             </p>
           </div>
           <div class="code-comparison">
@@ -189,8 +206,10 @@ export default function Home() {
       <section class="cta-section">
         <div class="cta-glow" aria-hidden="true" />
         <div class="cta-inner">
-          <h2 class="cta-heading">Redefine Everything.</h2>
-          <p class="cta-body">The web was meant to feel this smooth.</p>
+          <h2 class="cta-heading">Ship less. Do more.</h2>
+          <p class="cta-body">
+            50+ components. Native HTML output. One tiny dependency.
+          </p>
           <div class="cta-buttons">
             <Button
               href="https://github.com/developit/kinu"
@@ -199,7 +218,7 @@ export default function Home() {
               Clone the Repo
             </Button>
             <a href="/docs" class="cta-link">
-              Read the philosophy
+              Browse components
             </a>
           </div>
         </div>
@@ -211,14 +230,13 @@ export default function Home() {
           <div class="footer-brand">
             <span class="footer-logo">KINU</span>
             <span class="footer-copy">
-              &copy; 2024 Kinu Technical Atelier. Constraint-Driven Excellence.
+              &copy; {new Date().getFullYear()} Kinu. MIT License.
             </span>
           </div>
           <div class="footer-links">
-            <a href="https://twitter.com">Twitter</a>
             <a href="https://github.com/developit/kinu">GitHub</a>
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
+            <a href="/docs">Components</a>
+            <a href="/getting-started">Getting Started</a>
           </div>
         </div>
       </footer>
@@ -226,30 +244,14 @@ export default function Home() {
   );
 }
 
-function SliderDemo() {
-  const [value, setValue] = useState(68);
-  return (
-    <div class="demo-slider-wrap">
-      <Slider
-        min={0}
-        max={100}
-        value={value}
-        onInput={(e) => setValue(Number((e.target as HTMLInputElement).value))}
-      />
-      <div class="demo-slider-labels">
-        <span>Intensity</span>
-        <span>{value}%</span>
-      </div>
-    </div>
-  );
-}
-
 function TodoDemo() {
   const [tasks, setTasks] = useState([
-    {id: 1, text: 'Initialize workspace', completed: true},
-    {id: 2, text: 'Refine layout hierarchy', completed: true},
-    {id: 3, text: 'Deploy to production', completed: false},
+    {id: 1, text: 'Install kinu', completed: true},
+    {id: 2, text: 'Import components', completed: true},
+    {id: 3, text: 'Ship to production', completed: false},
+    {id: 4, text: 'Celebrate', completed: false},
   ]);
+  const [newTask, setNewTask] = useState('');
 
   const toggleTask = (id: number) => {
     setTasks((prev) =>
@@ -257,6 +259,13 @@ function TodoDemo() {
         task.id === id ? {...task, completed: !task.completed} : task,
       ),
     );
+  };
+
+  const addTask = () => {
+    const text = newTask.trim();
+    if (!text) return;
+    setTasks((prev) => [...prev, {id: Date.now(), text, completed: false}]);
+    setNewTask('');
   };
 
   return (
@@ -274,6 +283,60 @@ function TodoDemo() {
           </span>
         </Label>
       ))}
+      <Separator />
+      <div class="demo-todo-add">
+        <Input
+          placeholder="Add a task..."
+          value={newTask}
+          onInput={(e) => setNewTask((e.target as HTMLInputElement).value)}
+          onKeyDown={(e) => e.key === 'Enter' && addTask()}
+        />
+        <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
+          Add
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function ControlsDemo() {
+  const [volume, setVolume] = useState(68);
+  const [darkMode, setDarkMode] = useState(false);
+  const [notifications, setNotifications] = useState(true);
+
+  return (
+    <div class="demo-controls">
+      <div class="demo-control-row">
+        <Label class="demo-control-label">Volume</Label>
+        <div class="demo-control-value">{volume}%</div>
+      </div>
+      <Slider
+        min={0}
+        max={100}
+        value={volume}
+        onInput={(e) => setVolume(Number((e.target as HTMLInputElement).value))}
+      />
+      <Separator />
+      <Label class="demo-switch-row">
+        <div>
+          <div class="demo-control-label">Dark mode</div>
+          <div class="demo-control-hint">Use dark theme</div>
+        </div>
+        <Switch
+          checked={darkMode}
+          onChange={() => setDarkMode(!darkMode)}
+        />
+      </Label>
+      <Label class="demo-switch-row">
+        <div>
+          <div class="demo-control-label">Notifications</div>
+          <div class="demo-control-hint">Push alerts</div>
+        </div>
+        <Switch
+          checked={notifications}
+          onChange={() => setNotifications(!notifications)}
+        />
+      </Label>
     </div>
   );
 }
@@ -282,11 +345,56 @@ function ButtonDemo() {
   return (
     <div class="demo-buttons-stack">
       <Button
-        onClick={() => toast.show('Action triggered!', {title: 'Primary'})}
+        onClick={() => toast.show('Deployed to production.', {title: 'Success'})}
       >
         Primary Action
       </Button>
-      <Button variant="outline">Ghost Variant</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+    </div>
+  );
+}
+
+function FeedbackDemo() {
+  const [progress, setProgress] = useState(62);
+
+  return (
+    <div class="demo-feedback">
+      <div class="demo-feedback-row">
+        <span class="demo-control-label">Upload progress</span>
+        <Badge variant="outline">{progress}%</Badge>
+      </div>
+      <Progress value={progress} max={100} />
+      <div class="demo-feedback-buttons">
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setProgress(Math.max(0, progress - 10))}
+        >
+          -10
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setProgress(Math.min(100, progress + 10))}
+        >
+          +10
+        </Button>
+        <Button
+          size="sm"
+          onClick={() => {
+            setProgress(100);
+            toast.show('Upload complete!');
+          }}
+        >
+          Complete
+        </Button>
+      </div>
+      <Separator />
+      <Alert>
+        All components render to native HTML elements.
+      </Alert>
     </div>
   );
 }
