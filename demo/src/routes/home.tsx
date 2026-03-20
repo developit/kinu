@@ -218,36 +218,18 @@ export default function Home() {
 
       {/* ── Footer ── */}
       <footer class="atelier-footer">
-        <div class="footer-grid">
+        <div class="footer-inner">
           <div class="footer-brand">
-            <div class="footer-logo">Kinu</div>
+            <a href="/" class="footer-logo">Kinu</a>
             <p class="footer-tagline">
-              Engineering the digital atelier. <br /> Precise. Silent. Performance-first.
+              A Preact UI toolkit. ~5kB of JavaScript, zero dependencies, native HTML semantics.
             </p>
           </div>
-          <div class="footer-column">
-            <h4>Craft</h4>
-            <a href="/docs/overview">Philosophy</a>
+          <div class="footer-links">
             <a href="/docs">Documentation</a>
-            <a href="https://github.com/nicehash-developit/kinu">Community</a>
+            <a href="/getting-started">Get Started</a>
+            <a href="https://github.com/nicehash-developit/kinu">GitHub</a>
           </div>
-          <div class="footer-column">
-            <h4>Legal</h4>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-          </div>
-          <div class="footer-newsletter">
-            <h4>Newsletter</h4>
-            <div class="footer-input-wrapper">
-              <Input type="email" class="footer-email-input" placeholder="Email Address" />
-              <button class="footer-submit-btn" type="button" aria-label="Subscribe">
-                <iconify-icon icon="material-symbols:arrow-forward" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p class="footer-copyright">&copy; 2024 Kinu Technical Atelier. All rights reserved.</p>
         </div>
       </footer>
     </div>
