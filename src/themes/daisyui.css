@@ -1,0 +1,201 @@
+/*
+  Kinu × daisyUI adapter (compiled)
+  ---------------------------------
+  Source file consumed by Tailwind CLI during library build.
+  The published CSS in dist/themes/daisyui.css is precompiled and requires
+  no Tailwind in consumer apps.
+*/
+
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+@source inline("btn btn-primary btn-secondary btn-error btn-ghost btn-link btn-outline btn-sm btn-lg btn-square card card-body input input-sm input-lg textarea select select-sm select-lg checkbox radio toggle range label badge badge-primary badge-secondary badge-error badge-outline alert alert-error progress tabs tabs-box tab tab-active menu menu-horizontal menu-vertical join join-item link table divider breadcrumb avatar avatar-placeholder skeleton loading loading-spinner");
+
+@layer components {
+  [k="button"] {
+    @apply btn btn-primary;
+  }
+
+  [k="button"][variant="secondary"] {
+    @apply btn-secondary;
+  }
+
+  [k="button"][variant="destructive"] {
+    @apply btn-error;
+  }
+
+  [k="button"][variant="ghost"] {
+    @apply btn-ghost;
+  }
+
+  [k="button"][variant="link"] {
+    @apply btn-link;
+  }
+
+  [k="button"][variant="outline"] {
+    @apply btn-outline;
+  }
+
+  [k="button"][size="sm"] {
+    @apply btn-sm;
+  }
+
+  [k="button"][size="lg"] {
+    @apply btn-lg;
+  }
+
+  [k="button"][size="icon"] {
+    @apply btn-square;
+  }
+
+  [k="card"] {
+    @apply card bg-base-100 border border-base-300 shadow-sm;
+  }
+
+  [k="input"] {
+    @apply input;
+  }
+
+  [k="input"][size="sm"] {
+    @apply input-sm;
+  }
+
+  [k="input"][size="lg"] {
+    @apply input-lg;
+  }
+
+  [k="textarea"] {
+    @apply textarea;
+  }
+
+  [k="select"] {
+    @apply select;
+  }
+
+  [k="select"][size="sm"] {
+    @apply select-sm;
+  }
+
+  [k="select"][size="lg"] {
+    @apply select-lg;
+  }
+
+  [k="checkbox"] {
+    @apply checkbox;
+  }
+
+  [k="radio"] {
+    @apply radio;
+  }
+
+  [k="switch"],
+  [k="toggle"] {
+    @apply toggle;
+  }
+
+  [k="slider"] {
+    @apply range;
+  }
+
+  [k="label"] {
+    @apply label;
+  }
+
+  [k="badge"] {
+    @apply badge badge-primary;
+  }
+
+  [k="badge"][variant="secondary"] {
+    @apply badge-secondary;
+  }
+
+  [k="badge"][variant="destructive"] {
+    @apply badge-error;
+  }
+
+  [k="badge"][variant="outline"] {
+    @apply badge-outline;
+  }
+
+  [k="alert"] {
+    @apply alert;
+  }
+
+  [k="alert"][variant="destructive"] {
+    @apply alert-error;
+  }
+
+  [k="progress"] {
+    @apply progress;
+  }
+
+  [k="tablist"] {
+    @apply tabs tabs-box;
+  }
+
+  [k="tab"] {
+    @apply tab;
+  }
+
+  [k="tab"][aria-selected="true"] {
+    @apply bg-base-100 text-base-content;
+  }
+
+  [k="table"] {
+    @apply table;
+  }
+
+  [k="separator"] {
+    @apply divider;
+  }
+
+  [k="breadcrumb-list"] {
+    @apply flex items-center gap-2 text-sm;
+  }
+
+  [k="breadcrumb-link"] {
+    @apply link link-hover;
+  }
+
+  [k="avatar"] {
+    @apply inline-flex overflow-hidden rounded-full;
+  }
+
+  [k="skeleton"] {
+    @apply skeleton;
+  }
+
+  [k="spinner"] {
+    @apply loading loading-spinner;
+  }
+
+  [k="menubar"],
+  [k="navigation-menu-list"],
+  [k="dropdown-content"],
+  [k="context-menu"],
+  [k="combobox-list"],
+  [k="tree"],
+  [k="pagination-list"] {
+    @apply menu bg-base-100 rounded-box border border-base-300;
+  }
+
+  [k="menubar-item"],
+  [k="navigation-menu-link"],
+  [k="dropdown-menu-item"],
+  [k="context-menu-item"],
+  [k="combobox-option"],
+  [k="tree-label"],
+  [k="pagination-link"] {
+    @apply rounded-field;
+  }
+
+  [k="input-group"] {
+    @apply join;
+  }
+
+  [k="input-group"] > [k] {
+    @apply join-item;
+  }
+}

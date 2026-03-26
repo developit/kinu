@@ -50,6 +50,24 @@ function App() {
 }
 ```
 
+
+## daisyUI Adapter Theme (No Tailwind Required)
+
+If you already use daisyUI theme variables, you can make Kinu components inherit them:
+
+```tsx
+import 'kinu/style.css';
+import 'kinu/themes/daisyui.css';
+```
+
+Then set any daisyUI theme on a container (or `<html>`):
+
+```html
+<html data-theme="night">
+```
+
+The adapter is authored with real daisyUI component classes (`btn`, `input`, `select`, `badge`, `alert`, `tabs`, etc.) and shipped as a precompiled CSS file. Consumers only import `kinu/themes/daisyui.css` and can use daisyUI `[data-theme]` themes without installing Tailwind.
+
 ## Live Demo
 
 Check out the [live demo](https://kinu.sh) to see all components in action.

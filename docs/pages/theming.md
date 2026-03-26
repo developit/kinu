@@ -65,3 +65,16 @@ Animation curves live in `--k-ease` and related tokens. Adjust them globally or 
 
 When you need reduced motion support, respect the `prefers-reduced-motion` media query and reduce durations or disable
 animations in your overrides.
+
+## daisyUI Adapter (Tailwind-free)
+
+Kinu ships a daisyUI adapter stylesheet at `kinu/themes/daisyui.css`. Import it after `kinu/style.css`:
+
+```ts
+import 'kinu/style.css';
+import 'kinu/themes/daisyui.css';
+```
+
+The adapter is authored against real daisyUI component classes (`btn`, `input`, `textarea`, `select`, `badge`, `alert`, `progress`, `tabs`, etc.) and compiled during Kinu's build with Tailwind + daisyUI. The published `kinu/themes/daisyui.css` is already processed, so consumers do **not** need Tailwind or `@apply` in their app.
+
+Set `[data-theme]` (for example `night`, `cupcake`, `business`) and Kinu components will pick up daisyUI's generated theme values/styles through the adapter selectors.
