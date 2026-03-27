@@ -6,7 +6,7 @@ const CUSTOM_THEME_STYLE_ID = 'kinu-custom-style';
 const STYLE_ENGINE_STORAGE_KEY = 'kinu-style-engine';
 const DAISY_THEME_STORAGE_KEY = 'kinu-daisy-theme';
 const DAISY_ADAPTER_STYLE_ID = 'kinu-daisyui-adapter';
-const DAISY_ADAPTER_HREF = new URL('../../dist/themes/daisyui.css', import.meta.url).href;
+const DAISY_ADAPTER_HREF = new URL('./daisyui-adapter.css', import.meta.url).href;
 const DAISY_THEMES = ['night', 'cupcake', 'business', 'nord', 'retro'] as const;
 
 type StyleEngine = 'kinu' | 'daisyui';
