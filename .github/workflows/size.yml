@@ -18,9 +18,15 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
       - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          build-script: 'build'
+          comment-key: 'dist'
           pattern: 'dist/**/*.{js,css}'
+      - uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          build-script: 'bench:size'
+          comment-key: 'bench-size'
+          pattern: 'benchmarks/size/.tmp/**/*.{js,css}'
