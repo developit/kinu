@@ -27,6 +27,8 @@
     "build:demo": "cd demo && pnpm build",
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
+    "bench:size": "node benchmarks/size/run.mjs",
+    "build:size": "pnpm build && pnpm bench:size",
     "test": "vitest run",
     "prepublishOnly": "pnpm run build",
     "changeset": "changeset",
