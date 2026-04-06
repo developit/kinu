@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-04-02T21:06:53.940Z
+Generated at: 2026-04-03T15:25:44.497Z
 
 | Scenario | Raw (KiB) | Gzip (KiB) | Brotli (KiB) |
 | --- | ---: | ---: | ---: |
