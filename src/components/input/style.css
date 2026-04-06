@@ -13,7 +13,7 @@
   transition-duration: 150ms;
 
   /* Default size */
-  height: 2.5rem;
+  height: var(--k-size-md);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
@@ -45,7 +45,7 @@
 
 /* Size: sm */
 [k="input"][size="sm"] {
-  height: 2.25rem;
+  height: var(--k-size-sm);
   border-radius: calc(var(--k-radius) - 2px);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -54,7 +54,7 @@
 
 /* Size: lg */
 [k="input"][size="lg"] {
-  height: 2.75rem;
+  height: var(--k-size-lg);
   padding-left: 1rem;
   padding-right: 1rem;
 }
