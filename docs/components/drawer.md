@@ -18,9 +18,9 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Drawer | Slide-out panel | `<div k="drawer">` |
+| Drawer | Slide-out panel | — |
 | DrawerTrigger | Drawer trigger | — |
-| DrawerContent | Drawer content | `<dialog k="drawer-content">` |
+| DrawerContent | Drawer content | — |
 | DrawerClose | Close button | — |
 
 ## Props

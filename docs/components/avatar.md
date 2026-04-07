@@ -14,7 +14,7 @@ import {Avatar} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Avatar | User profile image | `<img k="avatar">` |
+| Avatar | User profile image | — |
 
 ## Props
 
