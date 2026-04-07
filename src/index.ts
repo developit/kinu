@@ -75,7 +75,7 @@ export {AspectRatio} from './components/aspect-ratio';
 export type {AspectRatioProps, AspectRatioOwnProps} from './components/aspect-ratio/types';
 export {ScrollArea} from './components/scroll-area';
 export type {ScrollAreaProps, ScrollAreaOwnProps} from './components/scroll-area/types';
-export {Popover, PopoverTrigger, PopoverContent} from './components/popover';
+export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,
   PopoverOwnProps,
