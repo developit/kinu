@@ -39,8 +39,10 @@ function commandClickHandler(e: MouseEvent) {
 
   const method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
   if (method === 'show') {
-    const event = new Event('beforetoggle', {cancelable: true, bubbles: true});
-    event.newState = 'open';
+    const event = Object.assign(
+      new Event('beforetoggle', {cancelable: true, bubbles: true}),
+      {newState: 'open'},
+    );
     if (!target.dispatchEvent(event)) return;
   }
   (target as any)[method]?.();

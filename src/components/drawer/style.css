@@ -1,6 +1,7 @@
 @import "../../variables.css";
 
-[k="drawer-content"] {
+[k="drawer-content"],
+[k="popover-content"][mobile="drawer"] {
   border: none;
   padding: 1rem;
   margin: 0;
@@ -20,17 +21,20 @@
     overlay 300ms allow-discrete;
 }
 
-[k="drawer-content"][open] {
+[k="drawer-content"][open],
+[k="popover-content"][mobile="drawer"][open] {
   transform: translateY(0);
 }
 
 @starting-style {
-  [k="drawer-content"][open] {
+  [k="drawer-content"][open],
+  [k="popover-content"][mobile="drawer"][open] {
     transform: translateY(100%);
   }
 }
 
-[k="drawer-content"]::backdrop {
+[k="drawer-content"]::backdrop,
+[k="popover-content"][mobile="drawer"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(1px);
   overscroll-behavior: contain;
@@ -43,12 +47,14 @@
     overlay 300ms allow-discrete;
 }
 
-[k="drawer-content"][open]::backdrop {
+[k="drawer-content"][open]::backdrop,
+[k="popover-content"][mobile="drawer"][open]::backdrop {
   opacity: 1;
 }
 
 @starting-style {
-  [k="drawer-content"][open]::backdrop {
+  [k="drawer-content"][open]::backdrop,
+  [k="popover-content"][mobile="drawer"][open]::backdrop {
     opacity: 0;
   }
 }

@@ -8,6 +8,7 @@ import type {
   PopoverContentOwnProps,
   PopoverCloseOwnProps,
 } from './types';
+import '../drawer/style.css';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
