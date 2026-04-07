@@ -1,5 +1,6 @@
 import {
   Button,
+  DropdownMenuItem,
   Popover,
   PopoverClose,
   PopoverContent,
@@ -48,40 +49,16 @@ export function Demo() {
           <Button variant="outline">Adaptive ↕</Button>
         </PopoverTrigger>
         <PopoverContent mobile="drawer">
-          <div style={{padding: '1rem'}}>
-            <p style={{margin: '0 0 0.5rem', fontWeight: 500}}>
+          <div style={{padding: '0.5rem'}}>
+            <p style={{margin: '0.5rem 0.5rem 0.75rem', fontWeight: 500}}>
               Pick a color
             </p>
-            <p style={{margin: '0 0 0.75rem', fontSize: '0.8125rem', opacity: 0.7}}>
-              Popover on desktop, drawer on mobile.
-            </p>
             <Separator />
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.25rem',
-                padding: '0.5rem 0',
-              }}
-            >
-              {['Red', 'Orange', 'Green', 'Blue', 'Purple'].map((color) => (
-                <button
-                  k="dropdown-item"
-                  key={color}
-                  style={{
-                    all: 'unset',
-                    padding: '0.5rem',
-                    borderRadius: 'var(--k-radius)',
-                    cursor: 'pointer',
-                    fontSize: '0.875rem',
-                  }}
-                >
-                  {color}
-                </button>
-              ))}
-            </div>
+            {['Red', 'Orange', 'Green', 'Blue', 'Purple'].map((color) => (
+              <DropdownMenuItem key={color}>{color}</DropdownMenuItem>
+            ))}
             <Separator />
-            <div style={{paddingTop: '0.5rem'}}>
+            <div style={{padding: '0.25rem'}}>
               <PopoverClose>
                 <Button variant="outline" size="sm" style={{width: '100%'}}>
                   Done
