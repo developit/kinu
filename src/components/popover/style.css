@@ -1,15 +1,9 @@
 @import "../../variables.css";
 
 [k="popover"],
-[k="dropdown"] {
-  position: relative;
-  display: inline-block;
-  overflow: visible;
-}
-
-[k="popover"],
 [k="dropdown"],
 [k="combobox"] {
+  display: contents;
   anchor-scope: --k-trigger;
 }
 
