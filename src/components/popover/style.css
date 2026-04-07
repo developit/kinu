@@ -128,10 +128,12 @@
 }
 
 /* Adaptive popover → drawer on mobile (base drawer styles via drawer/style.css) */
-[k="popover-content"][mobile="drawer"] {
-  --modal: 1;
-  max-height: 70dvh;
-  border-radius: var(--k-radius) var(--k-radius) 0 0;
+@media (max-width: 640px) {
+  [k="popover-content"][mobile="drawer"] {
+    --modal: 1;
+    max-height: 70dvh;
+    border-radius: var(--k-radius) var(--k-radius) 0 0;
+  }
 }
 
 /* Disable anchor positioning in mobile-drawer mode */

@@ -14,7 +14,7 @@ export function Demo() {
         <PopoverTrigger>
           <Button variant="outline">Dimensions</Button>
         </PopoverTrigger>
-        <PopoverContent style={{width: '16rem'}}>
+        <PopoverContent>
           <div style={{padding: '1rem'}}>
             <p style={{margin: '0 0 0.75rem', fontWeight: 500}}>
               Set dimensions
@@ -47,7 +47,7 @@ export function Demo() {
         <PopoverTrigger>
           <Button variant="outline">Adaptive ↕</Button>
         </PopoverTrigger>
-        <PopoverContent mobile="drawer" style={{width: '18rem'}}>
+        <PopoverContent mobile="drawer">
           <div style={{padding: '1rem'}}>
             <p style={{margin: '0 0 0.5rem', fontWeight: 500}}>
               Pick a color
