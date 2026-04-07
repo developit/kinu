@@ -38,11 +38,9 @@ function commandClickHandler(e: MouseEvent) {
   }
 
   const method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-  if (method === 'show' || method === 'showModal') {
-    const event = Object.assign(
-      new Event('beforetoggle', {cancelable: true, bubbles: true}),
-      {newState: 'open', oldState: 'closed'},
-    );
+  if (method === 'show') {
+    const event = new Event('beforetoggle', {cancelable: true, bubbles: true});
+    event.newState = 'open';
     if (!target.dispatchEvent(event)) return;
   }
   (target as any)[method]?.();
@@ -53,16 +51,16 @@ export function installAdaptiveCommands() {
   if (adaptiveInstalled) return;
   if (typeof document === 'undefined') return;
   adaptiveInstalled = true;
-  let allowToggle = 0;
+  let allowToggle: boolean;
   addEventListener('beforetoggle', (e: Event) => {
     const te = e as ToggleEvent;
     if (allowToggle || te.newState !== 'open') return;
     const el = e.target as HTMLDialogElement;
     if (!getComputedStyle(el).getPropertyValue('--modal')) return;
     e.preventDefault();
-    allowToggle++;
+    allowToggle = true;
     el.showModal();
-    allowToggle--;
+    allowToggle = false;
   });
 }
 
