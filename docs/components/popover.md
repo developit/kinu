@@ -18,9 +18,9 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Popover | Floating content | `<span k="popover">` |
+| Popover | Floating content | — |
 | PopoverTrigger | Popover trigger | — |
-| PopoverContent | Popover content | `<dialog k="popover-content">` |
+| PopoverContent | Popover content | — |
 | PopoverClose | Component | — |
 
 ## Props
@@ -36,10 +36,13 @@ import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'kinu';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | id | `string` | — | Override the auto-generated dialog ID. |
+| mobile | `"drawer"` | — | When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+while keeping popover behavior on larger screens. |
 
 ## Notes
 
 - Control placement with the placement attribute on PopoverContent.
+- Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).
 - Stays declarative thanks to the commands polyfill.
 
 ---
