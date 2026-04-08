@@ -1,6 +1,8 @@
 import {
   Button,
   DropdownMenuItem,
+  Input,
+  Label,
   Popover,
   PopoverClose,
   PopoverContent,
@@ -16,29 +18,13 @@ export function Demo() {
           <Button variant="outline">Dimensions</Button>
         </PopoverTrigger>
         <PopoverContent>
-          <div style={{padding: '1rem'}}>
-            <p style={{margin: '0 0 0.75rem', fontWeight: 500}}>
-              Set dimensions
-            </p>
-            <div
-              style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem'}}
-            >
-              <label style={{fontSize: '0.8125rem'}}>
-                Width
-                <input
-                  k="input"
-                  value="320"
-                  style={{marginTop: '0.25rem', width: '100%'}}
-                />
-              </label>
-              <label style={{fontSize: '0.8125rem'}}>
-                Height
-                <input
-                  k="input"
-                  value="240"
-                  style={{marginTop: '0.25rem', width: '100%'}}
-                />
-              </label>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem'}}>
+            <p style={{margin: 0, fontWeight: 500}}>Set dimensions</p>
+            <div style={{display: 'grid', gridTemplateColumns: 'auto 1fr', alignItems: 'center', gap: '0.5rem 0.75rem'}}>
+              <Label htmlFor="pop-w">Width</Label>
+              <Input id="pop-w" type="number" value="320" size="sm" />
+              <Label htmlFor="pop-h">Height</Label>
+              <Input id="pop-h" type="number" value="240" size="sm" />
             </div>
           </div>
         </PopoverContent>
