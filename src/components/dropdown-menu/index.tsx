@@ -1,17 +1,16 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {createSimpleComponent} from '../../lib/create-simple-component';
 import {
   installCommands,
   installDialogsDropdowns,
   installMenuShortcuts,
 } from '../../lib/commands';
+import {Item} from '../item';
 import type {
   DropdownMenuOwnProps,
   DropdownMenuTriggerOwnProps,
   DropdownMenuContentOwnProps,
-  DropdownMenuItemOwnProps,
 } from './types';
 import './style.css';
 
@@ -63,7 +62,7 @@ export function DropdownMenuContent({
   );
 }
 
-export const DropdownMenuItem = createSimpleComponent<
-  'button' | 'a',
-  DropdownMenuItemOwnProps
->('dropdown-menu-item', (props) => (props.href ? 'a' : 'button'));
+/** @deprecated Use `Item` instead. */
+export const DropdownMenuItem = Item;
+
+Object.assign(DropdownMenu, {Item});

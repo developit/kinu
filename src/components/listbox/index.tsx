@@ -1,11 +1,11 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts} from '../../lib/commands';
 import {filterItems} from '../../lib/filter';
+import {Item} from '../item';
 import type {
   ListboxOwnProps,
   ListboxInputOwnProps,
   ListboxListOwnProps,
-  ListboxOptionOwnProps,
 } from './types';
 import './style.css';
 
@@ -26,7 +26,7 @@ export const ListboxInput = createSimpleComponent<'input', ListboxInputOwnProps>
     function onInput() {
       const items = el
         .closest('[k="listbox"]')
-        ?.querySelectorAll<HTMLElement>('[k="listbox-option"]');
+        ?.querySelectorAll<HTMLElement>('[k="item"]');
       if (items) filterItems(el.value, items, false, false);
     }
     el.addEventListener('input', onInput);
@@ -39,19 +39,20 @@ export const ListboxList = createSimpleComponent<'div', ListboxListOwnProps>(
   'div',
 );
 
-export const ListboxOption = createSimpleComponent<
-  'button',
-  ListboxOptionOwnProps
->('listbox-option', 'button', {tabIndex: -1});
+/** @deprecated Use `Item` instead. */
+export const ListboxOption = Item;
 
 type ListboxComponent = typeof ListboxBase & {
   Input: typeof ListboxInput;
   List: typeof ListboxList;
-  Option: typeof ListboxOption;
+  Item: typeof Item;
+  /** @deprecated Use `Item` or `Listbox.Item` instead. */
+  Option: typeof Item;
 };
 
 export const Listbox: ListboxComponent = Object.assign(ListboxBase, {
   Input: ListboxInput,
   List: ListboxList,
-  Option: ListboxOption,
+  Item,
+  Option: Item,
 });

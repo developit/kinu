@@ -136,6 +136,21 @@ export default [
     ]
   },
   {
+    slug: 'item',
+    title: 'Item',
+    section: 'Components',
+    category: 'Actions',
+    order: 0,
+    folder: 'item',
+    description: 'Generic selectable item for lists, menus, comboboxes, and more.',
+    usage: '<Item selected>Inbox</Item>',
+    notes: [
+      'Renders as <button> by default, or <a> when href is provided.',
+      'The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.',
+      'Also available as .Item on parent components (e.g. DropdownMenu.Item).'
+    ]
+  },
+  {
     slug: 'button',
     title: 'Button',
     section: 'Components',

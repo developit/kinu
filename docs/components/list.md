@@ -1,16 +1,16 @@
 # List
 
-Interactive selectable list. ListItem shares styling with DropdownMenuItem and ComboboxOption.
+Interactive selectable list. Items are the generic `Item` component — the same one used in DropdownMenu, Combobox, and everywhere else.
 
 ## Usage
 
 ```tsx
-import {List, ListItem} from 'kinu';
+import {Item, List} from 'kinu';
 
 <List>
-  <ListItem selected>Inbox</ListItem>
-  <ListItem>Drafts</ListItem>
-  <ListItem>Sent</ListItem>
+  <Item selected>Inbox</Item>
+  <Item>Drafts</Item>
+  <Item>Sent</Item>
 </List>
 ```
 
@@ -19,8 +19,7 @@ import {List, ListItem} from 'kinu';
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
 | List | List container | `<div k="list">` |
-| ListItem | Selectable item | `<button k="list-item">` or `<a k="list-item">` |
-| List.Item | Alias of ListItem | — |
+| List.Item | Alias of Item | `<button k="item">` or `<a k="item">` |
 
 ## Props
 
@@ -30,22 +29,15 @@ import {List, ListItem} from 'kinu';
 | --- | --- | --- | --- |
 | variant | `"nav"` | — | Uses accent colors for hover/focus/selected instead of primary. |
 
-### ListItemProps
+### Item Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| href | `string` | — | When provided, renders the item as an anchor element. |
-| selected | `boolean` | — | Marks the item as selected for styling. |
-| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
-| destructive | `boolean` | — | Applies destructive styling to the item. |
+See the [Item](/docs/item) docs for the full prop reference.
 
 ## Notes
 
-- Items render as `<button>` by default, or `<a>` when `href` is provided.
 - Selected items automatically use the foreground color as background with contrast-aware text — works in both light and dark mode.
 - Use `variant="nav"` on the List for sidebar-style navigation with softer accent hover colors.
 - Supports keyboard navigation with arrow keys when focused.
-- Uses the same item styles as DropdownMenuItem and ComboboxOption.
 
 ---
 

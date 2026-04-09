@@ -1,4 +1,4 @@
-import {Listbox, ListboxInput, ListboxList, ListboxOption, Separator} from 'kinu';
+import {Item, Listbox, ListboxInput, ListboxList} from 'kinu';
 import {useState} from 'preact/hooks';
 
 const fruits = ['Apple', 'Banana', 'Cherry', 'Dragonfruit', 'Elderberry', 'Fig'];
@@ -10,13 +10,13 @@ export function Demo() {
       <ListboxInput placeholder="Search fruits..." />
       <ListboxList>
         {fruits.map((fruit) => (
-          <ListboxOption
+          <Item
             key={fruit}
             selected={selected === fruit}
             onClick={() => setSelected(fruit)}
           >
             {fruit}
-          </ListboxOption>
+          </Item>
         ))}
       </ListboxList>
     </Listbox>
@@ -26,9 +26,9 @@ export function Demo() {
 export const code = `<Listbox>
   <ListboxInput placeholder="Search fruits..." />
   <ListboxList>
-    <ListboxOption selected={sel === 'Apple'} onClick={() => setSel('Apple')}>
+    <Item selected={sel === 'Apple'} onClick={() => setSel('Apple')}>
       Apple
-    </ListboxOption>
+    </Item>
   </ListboxList>
 </Listbox>`;
 

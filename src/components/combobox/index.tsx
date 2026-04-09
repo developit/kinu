@@ -1,11 +1,11 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts} from '../../lib/commands';
 import {filterItems} from '../../lib/filter';
+import {Item} from '../item';
 import type {
   ComboboxOwnProps,
   ComboboxInputOwnProps,
   ComboboxListOwnProps,
-  ComboboxOptionOwnProps,
 } from './types';
 import './style.css';
 
@@ -43,7 +43,7 @@ export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProp
 
     function filter(select?: boolean) {
       const items = getList().querySelectorAll<HTMLElement>(
-        '[k="combobox-option"]',
+        '[k="item"]',
       );
       filterItems(el.value, items, select);
     }
@@ -67,40 +67,37 @@ export const ComboboxList = createSimpleComponent<'dialog', ComboboxListOwnProps
   'dialog',
   {
     onMouseDown: (e) => e.preventDefault(),
-    onClick: (e) => e.currentTarget.close(),
+    onClick: (e) => {
+      const item = (e.target as Element).closest?.('[k="item"]');
+      if (item) {
+        e.preventDefault();
+        const combobox = e.currentTarget.closest('[k="combobox"]');
+        const input = combobox?.querySelector<HTMLInputElement>('[k="combobox-input"]');
+        if (input) {
+          input.value = (item as HTMLButtonElement).value || item.textContent || '';
+          input.dispatchEvent(new Event('input', {bubbles: true}));
+          input.focus();
+        }
+      }
+      e.currentTarget.close();
+    },
   },
 );
 
-export const ComboboxOption = createSimpleComponent<
-  'button',
-  ComboboxOptionOwnProps
->(
-  'combobox-option',
-  'button',
-  {
-    tabIndex: -1,
-  },
-  (el: HTMLButtonElement) => {
-    function select(e: MouseEvent) {
-      e.preventDefault();
-      const input = document.activeElement as HTMLInputElement;
-      input.value = el.textContent || '';
-      input.dispatchEvent(new Event('input', {bubbles: true}));
-      input.focus();
-    }
-    el.addEventListener('click', select);
-    return () => el.removeEventListener('click', select);
-  },
-);
+/** @deprecated Use `Item` instead. */
+export const ComboboxOption = Item;
 
 type ComboboxComponent = typeof ComboboxBase & {
   Input: typeof ComboboxInput;
   List: typeof ComboboxList;
-  Option: typeof ComboboxOption;
+  Item: typeof Item;
+  /** @deprecated Use `Item` or `Combobox.Item` instead. */
+  Option: typeof Item;
 };
 
 export const Combobox: ComboboxComponent = Object.assign(ComboboxBase, {
   Input: ComboboxInput,
   List: ComboboxList,
-  Option: ComboboxOption,
+  Item,
+  Option: Item,
 });

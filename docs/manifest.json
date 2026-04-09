@@ -45,6 +45,15 @@
     "description": ""
   },
   {
+    "slug": "item",
+    "title": "Item",
+    "section": "Components",
+    "category": "Actions",
+    "order": 0,
+    "file": "components/item.md",
+    "description": "Generic selectable item for lists, menus, comboboxes, and more."
+  },
+  {
     "slug": "button",
     "title": "Button",
     "section": "Components",

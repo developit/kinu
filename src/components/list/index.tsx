@@ -1,6 +1,7 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts} from '../../lib/commands';
-import type {ListOwnProps, ListItemOwnProps} from './types';
+import {Item} from '../item';
+import type {ListOwnProps} from './types';
 import './style.css';
 
 const ListBase = createSimpleComponent<'div', ListOwnProps>(
@@ -12,15 +13,13 @@ const ListBase = createSimpleComponent<'div', ListOwnProps>(
   },
 );
 
-export const ListItem = createSimpleComponent<'button' | 'a', ListItemOwnProps>(
-  'list-item',
-  (props) => (props.href ? 'a' : 'button'),
-);
+/** @deprecated Use `Item` instead. */
+export const ListItem = Item;
 
 type ListComponent = typeof ListBase & {
-  Item: typeof ListItem;
+  Item: typeof Item;
 };
 
 export const List: ListComponent = Object.assign(ListBase, {
-  Item: ListItem,
+  Item,
 });

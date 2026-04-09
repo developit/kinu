@@ -1,4 +1,4 @@
-import {List, ListItem, Separator} from 'kinu';
+import {Item, List, Separator} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {
@@ -6,43 +6,43 @@ export function Demo() {
   return (
     <div style={{display: 'flex', gap: '2rem', flexWrap: 'wrap'}}>
       <List style={{width: '14rem'}}>
-        <ListItem selected={selected === 'inbox'} onClick={() => setSelected('inbox')}>
+        <Item selected={selected === 'inbox'} onClick={() => setSelected('inbox')}>
           Inbox
-        </ListItem>
-        <ListItem selected={selected === 'drafts'} onClick={() => setSelected('drafts')}>
+        </Item>
+        <Item selected={selected === 'drafts'} onClick={() => setSelected('drafts')}>
           Drafts
-        </ListItem>
-        <ListItem selected={selected === 'sent'} onClick={() => setSelected('sent')}>
+        </Item>
+        <Item selected={selected === 'sent'} onClick={() => setSelected('sent')}>
           Sent
-        </ListItem>
+        </Item>
         <Separator />
-        <ListItem selected={selected === 'trash'} onClick={() => setSelected('trash')} destructive>
+        <Item selected={selected === 'trash'} onClick={() => setSelected('trash')} destructive>
           Trash
-        </ListItem>
+        </Item>
       </List>
       <List variant="nav" style={{width: '14rem'}}>
-        <ListItem selected={selected === 'inbox'} onClick={() => setSelected('inbox')}>
+        <Item selected={selected === 'inbox'} onClick={() => setSelected('inbox')}>
           Inbox
-        </ListItem>
-        <ListItem selected={selected === 'drafts'} onClick={() => setSelected('drafts')}>
+        </Item>
+        <Item selected={selected === 'drafts'} onClick={() => setSelected('drafts')}>
           Drafts
-        </ListItem>
-        <ListItem selected={selected === 'sent'} onClick={() => setSelected('sent')}>
+        </Item>
+        <Item selected={selected === 'sent'} onClick={() => setSelected('sent')}>
           Sent
-        </ListItem>
+        </Item>
       </List>
     </div>
   );
 }
 
 export const code = `<List>
-  <ListItem selected>Inbox</ListItem>
-  <ListItem>Drafts</ListItem>
+  <Item selected>Inbox</Item>
+  <Item>Drafts</Item>
 </List>
 
 <List variant="nav">
-  <ListItem selected>Inbox</ListItem>
-  <ListItem>Drafts</ListItem>
+  <Item selected>Inbox</Item>
+  <Item>Drafts</Item>
 </List>`;
 
 export default {Demo, code};

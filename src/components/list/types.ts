@@ -12,28 +12,5 @@ export interface ListOwnProps extends BaseProps {
 export type ListProps = ListOwnProps &
   Omit<JSX.IntrinsicElements['div'], keyof ListOwnProps>;
 
-export interface ListItemOwnProps extends BaseProps {
-  /**
-   * When provided, renders the item as an anchor element.
-   */
-  href?: string;
-
-  /**
-   * Marks the item as selected for styling.
-   */
-  selected?: boolean;
-
-  /**
-   * Optional shortcut hint rendered on the trailing edge.
-   */
-  shortcut?: string;
-
-  /**
-   * Applies destructive styling to the item.
-   */
-  destructive?: boolean;
-}
-
-export type ListItemProps = ListItemOwnProps &
-  Omit<JSX.IntrinsicElements['button'], keyof ListItemOwnProps> &
-  Omit<JSX.IntrinsicElements['a'], keyof ListItemOwnProps>;
+// Backward compat re-exports from unified Item types
+export type {ListItemOwnProps, ListItemProps} from '../item/types';

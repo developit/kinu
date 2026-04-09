@@ -100,7 +100,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   }
   if (!container) return;
   const selected = container.querySelector<HTMLElement>(
-    useFocus ? '[k]:focus' : '[k][selected]',
+    useFocus ? '[k="item"]:focus' : '[k="item"][selected]',
   );
   // emulate button enter key behavior for pseudo-focused selection
   if (e.key === 'Enter' && !useFocus) {
@@ -112,7 +112,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   if (!dir) return;
   e.preventDefault();
   if (!selected) {
-    const items = container.querySelectorAll<HTMLElement>('button[k],[k][tabindex]');
+    const items = container.querySelectorAll<HTMLElement>('[k="item"]');
     const item = items[dir > 0 ? 0 : items.length - 1];
     if (useFocus) item?.focus();
     else item?.toggleAttribute('selected', true);

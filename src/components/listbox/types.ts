@@ -30,28 +30,11 @@ export interface ListboxInputOwnProps {
 
 export interface ListboxListOwnProps extends BaseProps {}
 
-export interface ListboxOptionOwnProps extends BaseProps {
-  /**
-   * Marks the option as selected for styling.
-   */
-  selected?: boolean;
-
-  /**
-   * Optional shortcut hint rendered on the trailing edge.
-   */
-  shortcut?: string;
-
-  /**
-   * Applies destructive styling to the option.
-   */
-  destructive?: boolean;
-}
-
 export type ListboxInputProps = ListboxInputOwnProps &
   Omit<JSX.IntrinsicElements['input'], keyof ListboxInputOwnProps>;
 
 export type ListboxListProps = ListboxListOwnProps &
   Omit<JSX.IntrinsicElements['div'], keyof ListboxListOwnProps>;
 
-export type ListboxOptionProps = ListboxOptionOwnProps &
-  Omit<JSX.IntrinsicElements['button'], keyof ListboxOptionOwnProps>;
+// Backward compat re-exports from unified Item types
+export type {ListboxItemOwnProps as ListboxOptionOwnProps, ListboxItemProps as ListboxOptionProps} from '../item/types';
