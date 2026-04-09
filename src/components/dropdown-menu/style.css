@@ -24,7 +24,9 @@
 
 [k="dropdown-menu-item"],
 [k="context-menu-item"],
-[k="combobox-option"] {
+[k="combobox-option"],
+[k="list-item"],
+[k="listbox-option"] {
   appearance: none;
   display: flex;
   align-items: center;
@@ -61,7 +63,9 @@
 
 [k="dropdown-menu-item"][shortcut]::after,
 [k="context-menu-item"][shortcut]::after,
-[k="combobox-option"][shortcut]::after {
+[k="combobox-option"][shortcut]::after,
+[k="list-item"][shortcut]::after,
+[k="listbox-option"][shortcut]::after {
   content: attr(shortcut);
   margin-left: auto;
   color: hsl(var(--k-muted-foreground));
@@ -76,26 +80,37 @@
 [k="context-menu-item"][selected]::after,
 [k="combobox-option"][shortcut]:hover::after,
 [k="combobox-option"][shortcut]:focus-visible::after,
-[k="combobox-option"][selected]::after {
+[k="combobox-option"][selected]::after,
+[k="list-item"][shortcut]:hover::after,
+[k="list-item"][shortcut]:focus-visible::after,
+[k="list-item"][selected]::after,
+[k="listbox-option"][shortcut]:hover::after,
+[k="listbox-option"][shortcut]:focus-visible::after,
+[k="listbox-option"][selected]::after {
   color: inherit;
   opacity: 0.85;
 }
 
 [k="dropdown-menu-item"][destructive],
 [k="context-menu-item"][destructive],
-[k="combobox-option"][destructive] {
+[k="combobox-option"][destructive],
+[k="list-item"][destructive],
+[k="listbox-option"][destructive] {
   color: hsl(var(--k-destructive));
 }
 
 [k="dropdown-content"] hr,
 [k="context-menu"] hr,
 [k="combobox-list"] hr,
+[k="listbox-list"] hr,
 [k="dropdown-content"] [role="separator"],
 [k="context-menu"] [role="separator"],
 [k="combobox-list"] [role="separator"],
+[k="listbox-list"] [role="separator"],
 [k="dropdown-content"] [k="separator"],
 [k="context-menu"] [k="separator"],
-[k="combobox-list"] [k="separator"] {
+[k="combobox-list"] [k="separator"],
+[k="listbox-list"] [k="separator"] {
   border: 0;
   border-top: 1px solid hsl(var(--k-border));
   height: 0;

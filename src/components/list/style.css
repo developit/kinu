@@ -1,0 +1,15 @@
+@import "../../variables.css";
+
+[k="list"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+/* nav variant: accent colors instead of primary (matches sidebar link styling) */
+[k="list"][variant="nav"] > [k="list-item"]:hover,
+[k="list"][variant="nav"] > [k="list-item"]:focus-visible,
+[k="list"][variant="nav"] > [k="list-item"][selected] {
+  background-color: hsl(var(--k-accent));
+  color: hsl(var(--k-accent-foreground));
+}

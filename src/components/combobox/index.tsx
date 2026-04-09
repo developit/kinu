@@ -1,5 +1,6 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts} from '../../lib/commands';
+import {filterItems} from '../../lib/filter';
 import type {
   ComboboxOwnProps,
   ComboboxInputOwnProps,
@@ -41,21 +42,10 @@ export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProp
     }
 
     function filter(select?: boolean) {
-      const value = el.value.toLowerCase();
       const items = getList().querySelectorAll<HTMLElement>(
         '[k="combobox-option"]',
       );
-      let hit = false;
-      for (const item of items) {
-        const match = item.textContent!.toLowerCase().includes(value);
-        item.removeAttribute('selected');
-        const visible = select || match;
-        item.style.display = visible ? '' : 'none';
-        if ((select ? match : visible) && !hit) {
-          item.toggleAttribute('selected', true);
-          hit = true;
-        }
-      }
+      filterItems(el.value, items, select);
     }
 
     el.addEventListener('input', onInputFocusClick);

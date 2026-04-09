@@ -1,0 +1,57 @@
+@import "../../variables.css";
+
+[k="chip"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: calc(var(--k-radius) - 2px);
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  border: 1px solid transparent;
+  background-color: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+}
+
+[k="chip"][variant="secondary"] {
+  background-color: hsl(var(--k-secondary));
+  color: hsl(var(--k-secondary-foreground));
+}
+
+[k="chip"][variant="destructive"] {
+  background-color: hsl(var(--k-destructive));
+  color: hsl(var(--k-destructive-foreground));
+}
+
+[k="chip"][variant="outline"] {
+  border-color: hsl(var(--k-border));
+  background-color: transparent;
+  color: hsl(var(--k-foreground));
+}
+
+[k="chip-button"] {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: -0.125rem -0.25rem -0.125rem 0;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+  font: inherit;
+  line-height: 1;
+  border-radius: 2px;
+}
+
+[k="chip-button"]:hover {
+  opacity: 1;
+}
+
+[k="chip-button"]:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 1px;
+}

@@ -115,6 +115,9 @@ export const Button = createSimpleComponent('button', 'button');
 - **NavigationMenu**: Complex nav menu
 - **Pagination**: Page controls
 - **Combobox**: Input with suggestions
+- **List**: Interactive selectable list
+- **Listbox**: Non-modal filterable list (inline command palette)
+- **Chip**: Badge with icon button
 - **ContextMenu**: Right-click menu
 - **Drawer**: Bottom sliding panel
 - **DropdownMenu**: Triggered action list
