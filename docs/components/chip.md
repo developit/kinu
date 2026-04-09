@@ -9,7 +9,7 @@ import {Chip, ChipButton} from 'kinu';
 
 <Chip>
   React
-  <Chip.Button onClick={onRemove}>x</Chip.Button>
+  <Chip.Button onClick={onRemove}>×</Chip.Button>
 </Chip>
 ```
 
@@ -28,6 +28,7 @@ import {Chip, ChipButton} from 'kinu';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | variant | `ChipVariant` | 'default' | Visual style variant. |
+| selected | `boolean` | — | Marks the chip as selected for styling. |
 
 ### ChipButtonProps
 
@@ -37,16 +38,18 @@ All standard `<button>` props are forwarded.
 
 | Variant | Description |
 | --- | --- |
-| (default) | Primary background with primary foreground text. |
-| secondary | Secondary muted background. |
+| (default) | Secondary muted background. |
+| primary | Primary background with primary foreground text. |
 | destructive | Destructive red background. |
 | outline | Transparent background with border. |
 
 ## Notes
 
 - Chip.Button fires standard click events. No custom events.
+- Chip.Button automatically spans the full height and hugs the rounded edge.
+- Place Chip.Button as the first or last child — border radius adjusts automatically.
+- Use `selected` to mark a chip as active (consistent with menu items).
 - Zero JS logic. Pure CSS component.
-- Use for tag inputs, filter chips, or removable selections.
 
 ---
 

@@ -27,7 +27,7 @@ export const ListboxInput = createSimpleComponent<'input', ListboxInputOwnProps>
       const items = el
         .closest('[k="listbox"]')
         ?.querySelectorAll<HTMLElement>('[k="listbox-option"]');
-      if (items) filterItems(el.value, items);
+      if (items) filterItems(el.value, items, false, false);
     }
     el.addEventListener('input', onInput);
     return () => el.removeEventListener('input', onInput);

@@ -1,17 +1,23 @@
 import {Listbox, ListboxInput, ListboxList, ListboxOption, Separator} from 'kinu';
+import {useState} from 'preact/hooks';
+
+const fruits = ['Apple', 'Banana', 'Cherry', 'Dragonfruit', 'Elderberry', 'Fig'];
 
 export function Demo() {
+  const [selected, setSelected] = useState<string | null>(null);
   return (
     <Listbox style={{width: '16rem'}}>
       <ListboxInput placeholder="Search fruits..." />
       <ListboxList>
-        <ListboxOption>Apple</ListboxOption>
-        <ListboxOption>Banana</ListboxOption>
-        <ListboxOption>Cherry</ListboxOption>
-        <Separator />
-        <ListboxOption>Dragonfruit</ListboxOption>
-        <ListboxOption>Elderberry</ListboxOption>
-        <ListboxOption>Fig</ListboxOption>
+        {fruits.map((fruit) => (
+          <ListboxOption
+            key={fruit}
+            selected={selected === fruit}
+            onClick={() => setSelected(fruit)}
+          >
+            {fruit}
+          </ListboxOption>
+        ))}
       </ListboxList>
     </Listbox>
   );
@@ -20,9 +26,9 @@ export function Demo() {
 export const code = `<Listbox>
   <ListboxInput placeholder="Search fruits..." />
   <ListboxList>
-    <ListboxOption>Apple</ListboxOption>
-    <ListboxOption>Banana</ListboxOption>
-    <ListboxOption>Cherry</ListboxOption>
+    <ListboxOption selected={sel === 'Apple'} onClick={() => setSel('Apple')}>
+      Apple
+    </ListboxOption>
   </ListboxList>
 </Listbox>`;
 

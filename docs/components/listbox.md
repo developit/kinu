@@ -50,6 +50,8 @@ import {Listbox, ListboxInput, ListboxList, ListboxOption} from 'kinu';
 
 ## Notes
 
+- Selection state is developer-controlled — set `selected` on options yourself via `onClick`.
+- Filtering only shows/hides options; it does not change selection.
 - Shares filtering logic with Combobox via the `filterItems` utility.
 - Unlike Combobox, the list is always visible (no dialog/popover).
 - Arrow keys navigate options while the input is focused.

@@ -1,13 +1,18 @@
 import type {JSX} from 'preact';
 import type {BaseProps} from '../../types/component-props';
 
-export type ChipVariant = 'secondary' | 'destructive' | 'outline';
+export type ChipVariant = 'primary' | 'destructive' | 'outline';
 
 export interface ChipOwnProps extends BaseProps {
   /**
    * Visual variant for the chip.
    */
   variant?: ChipVariant;
+
+  /**
+   * Marks the chip as selected for styling.
+   */
+  selected?: boolean;
 }
 
 export type ChipProps = ChipOwnProps &

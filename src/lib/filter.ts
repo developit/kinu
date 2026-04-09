@@ -1,20 +1,22 @@
 /**
- * Filter a list of items by text match, hiding non-matches and selecting the first match.
+ * Filter a list of items by text match, hiding non-matches.
+ * When autoSelect is true (default), clears selection and selects the first match.
  * Used by both Combobox and Listbox.
  */
 export function filterItems(
   value: string,
   items: NodeListOf<HTMLElement> | HTMLElement[],
   showAll?: boolean,
+  autoSelect = true,
 ) {
   const query = value.toLowerCase();
   let hit = false;
   for (const item of items) {
     const match = item.textContent!.toLowerCase().includes(query);
-    item.removeAttribute('selected');
+    if (autoSelect) item.removeAttribute('selected');
     const visible = showAll || match;
     item.style.display = visible ? '' : 'none';
-    if ((showAll ? match : visible) && !hit) {
+    if (autoSelect && (showAll ? match : visible) && !hit) {
       item.toggleAttribute('selected', true);
       hit = true;
     }

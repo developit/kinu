@@ -114,10 +114,11 @@ export default [
     order: 0,
     folder: 'chip',
     description: 'Badge-like label with an optional inline action button.',
-    usage: '<Chip>Tag<Chip.Button onClick={remove}>x</Chip.Button></Chip>',
+    usage: '<Chip>Tag<Chip.Button onClick={remove}>×</Chip.Button></Chip>',
     notes: [
       'Chip.Button fires standard click events with no custom event wiring.',
-      'Shares variant styles with Badge: secondary, destructive, and outline.'
+      'Use the selected attribute to mark a chip as active.',
+      'Chip.Button automatically spans the full height and hugs the rounded edge.'
     ]
   },
   {
@@ -240,6 +241,7 @@ export default [
     description: 'Non-modal filterable list for inline search and selection.',
     usage: `<Listbox>\n  <ListboxInput placeholder="Filter..." />\n  <ListboxList>\n    <ListboxOption>Apple</ListboxOption>\n  </ListboxList>\n</Listbox>`,
     notes: [
+      'Selection is developer-controlled via the selected attribute on options.',
       'Shares filtering logic with Combobox via the filterItems utility.',
       'Unlike Combobox, the list is always visible with no dialog or popover.',
       'Compose with Dialog to build a command palette.'

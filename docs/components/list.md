@@ -42,6 +42,7 @@ import {List, ListItem} from 'kinu';
 ## Notes
 
 - Items render as `<button>` by default, or `<a>` when `href` is provided.
+- Selected items automatically use the foreground color as background with contrast-aware text — works in both light and dark mode.
 - Use `variant="nav"` on the List for sidebar-style navigation with softer accent hover colors.
 - Supports keyboard navigation with arrow keys when focused.
 - Uses the same item styles as DropdownMenuItem and ComboboxOption.

@@ -5,29 +5,29 @@ const initial = ['React', 'Preact', 'Vue', 'Svelte'];
 
 export function Demo() {
   const [tags, setTags] = useState(initial);
+  const [active, setActive] = useState<string | null>(null);
   return (
-    <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap'}}>
+    <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center'}}>
       {tags.map((tag) => (
-        <Chip key={tag}>
+        <Chip key={tag} selected={active === tag} onClick={() => setActive(active === tag ? null : tag)}>
           {tag}
-          <ChipButton onClick={() => setTags(tags.filter((t) => t !== tag))}>
-            x
-          </ChipButton>
+          <Chip.Button onClick={(e: MouseEvent) => { e.stopPropagation(); setTags(tags.filter((t) => t !== tag)); }}>
+            ×
+          </Chip.Button>
         </Chip>
       ))}
-      <Chip variant="secondary">TypeScript</Chip>
-      <Chip variant="destructive">Deprecated</Chip>
-      <Chip variant="outline">Draft</Chip>
+      <Chip variant="primary">Primary</Chip>
+      <Chip variant="destructive">Destructive</Chip>
+      <Chip variant="outline">Outline</Chip>
     </div>
   );
 }
 
-export const code = `<Chip>
+export const code = `<Chip selected>
   React
-  <ChipButton onClick={onRemove}>x</ChipButton>
+  <Chip.Button onClick={onRemove}>×</Chip.Button>
 </Chip>
-<Chip variant="secondary">TypeScript</Chip>
-<Chip variant="destructive">Deprecated</Chip>
-<Chip variant="outline">Draft</Chip>`;
+<Chip variant="primary">Primary</Chip>
+<Chip variant="outline">Outline</Chip>`;
 
 export default {Demo, code};
