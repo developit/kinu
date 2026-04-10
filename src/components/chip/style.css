@@ -63,34 +63,36 @@
   border-color: transparent;
 }
 
-/* Tighter edge padding when a button is adjacent to that edge */
-[k="chip"]:has(> [k="chip-button"]:last-child) {
-  padding-right: 0.25rem;
-}
-[k="chip"]:has(> [k="chip-button"]:first-child) {
-  padding-left: 0.25rem;
-}
-
-/* Chip button: small circular icon button inline with text */
+/* Chip button: full-height circular icon button flush to the chip edge */
 [k="chip-button"] {
   appearance: none;
   background: hsl(0 0% 0% / 0.15);
   border: none;
   padding: 0;
-  margin: 0;
   cursor: pointer;
   color: inherit;
   font: inherit;
   font-size: 1em;
   line-height: 1;
-  width: 1.125rem;
-  height: 1.125rem;
+  align-self: stretch;
+  aspect-ratio: 1;
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
   transition: background-color 150ms;
+  margin-block: calc(-0.25rem - 1px);
+}
+
+/* Button at the end: pull outward on the right */
+[k="chip-button"]:last-child {
+  margin-right: calc(-0.75rem - 1px);
+}
+
+/* Button at the start: pull outward on the left */
+[k="chip-button"]:first-child {
+  margin-left: calc(-0.75rem - 1px);
 }
 
 [k="chip-button"]:hover {
