@@ -74,23 +74,25 @@
   font: inherit;
   font-size: 1em;
   line-height: 1;
-  align-self: stretch;
-  aspect-ratio: 1;
+  /* Match the chip's full border-box height: line-height (1rem) + vertical padding (0.5rem) + border (2px) */
+  width: calc(1.5rem + 2px);
+  height: calc(1.5rem + 2px);
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
   transition: background-color 150ms;
+  /* Cancel chip's vertical padding + border so the button fills full chip height */
   margin-block: calc(-0.25rem - 1px);
 }
 
-/* Button at the end: pull outward on the right */
+/* Button at the end: pull outward on the right only */
 [k="chip-button"]:last-child {
   margin-right: calc(-0.75rem - 1px);
 }
 
-/* Button at the start: pull outward on the left */
+/* Button at the start: pull outward on the left only */
 [k="chip-button"]:first-child {
   margin-left: calc(-0.75rem - 1px);
 }
