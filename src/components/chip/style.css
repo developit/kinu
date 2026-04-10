@@ -83,16 +83,19 @@
   justify-content: center;
   border-radius: 9999px;
   transition: background-color 150ms;
+  margin-block: calc(-0.25rem - 1px);
 }
 
 /* Button at the end: pull outward on the right only */
 [k="chip-button"]:last-child {
   margin-right: calc(-0.75rem - 1px);
+  margin-left: calc(0.75rem + 1px);
 }
 
 /* Button at the start: pull outward on the left only */
 [k="chip-button"]:first-child {
   margin-left: calc(-0.75rem - 1px);
+  margin-right: calc(0.75rem + 1px);
 }
 
 [k="chip-button"]:hover {
