@@ -11,7 +11,7 @@ body [k="context-menu"] {
   margin: 0;
   max-inline-size: calc(100vw - 0.5rem);
   max-block-size: calc(100dvh - 0.5rem);
-  overflow: auto;
+  overflow: hidden auto;
 }
 
 @position-try --k-context-menu-right-top {
@@ -43,4 +43,6 @@ body [k="context-menu"] {
 
 [k="context-menu"]::backdrop {
   opacity: 0;
+  overscroll-behavior: contain;
+  overflow: hidden;
 }

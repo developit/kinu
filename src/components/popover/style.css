@@ -52,6 +52,7 @@
   pointer-events: auto;
   opacity: 1;
   transform: translateX(var(--tf-x)) scale(1);
+  overscroll-behavior: contain;
 }
 
 @starting-style {
