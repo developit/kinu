@@ -19,6 +19,12 @@ export interface PopoverContentOwnProps {
    * Override the auto-generated dialog ID.
    */
   id?: string;
+
+  /**
+   * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+   * while keeping popover behavior on larger screens.
+   */
+  mobile?: 'drawer';
 }
 
 export interface PopoverCloseOwnProps extends BaseProps {

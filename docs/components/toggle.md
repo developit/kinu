@@ -20,6 +20,7 @@ import {Toggle} from 'kinu';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| size | `"sm" | "md" | "lg"` | 'md' | Size preset for the toggle. |
 | pressed | `boolean` | — | Controls the pressed state and maps to `aria-pressed` on the DOM element. |
 | onClick | `(event: MouseEvent) => void` | — | Click handler for toggling state. |
 | disabled | `boolean` | — | Disable the toggle. |

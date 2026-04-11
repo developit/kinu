@@ -19,10 +19,10 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| DropdownMenu | Dropdown menu | `<span k="dropdown">` |
+| DropdownMenu | Dropdown menu | — |
 | DropdownMenuTrigger | Menu trigger | — |
-| DropdownMenuContent | Menu content | `<dialog k="dropdown-content">` |
-| DropdownMenuItem | Menu item | `k="dropdown-menu-item"` |
+| DropdownMenuContent | Menu content | — |
+| DropdownMenuItem | Menu item | `p="dropdown-menu-item"` |
 
 ## Props
 
