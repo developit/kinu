@@ -12,11 +12,16 @@ export const ChipButton = createSimpleComponent<'span', ChipButtonOwnProps>(
   {
     role: 'button',
     'aria-hidden': 'true',
-    onClickCapture: (e: MouseEvent) => {
-      // Prevent the chip's main click handler from firing when the button
-      // (e.g. a remove affordance) is clicked.
+  },
+  (el: HTMLSpanElement) => {
+    // Attached via addEventListener so it runs AFTER the user's onClick prop
+    // (Preact applies prop listeners before invoking refs). Prevents the
+    // Chip's main click handler from also firing when the button is clicked.
+    function stop(e: MouseEvent) {
       e.stopPropagation();
-    },
+    }
+    el.addEventListener('click', stop);
+    return () => el.removeEventListener('click', stop);
   },
 );
 
