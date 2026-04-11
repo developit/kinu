@@ -1,13 +1,13 @@
 # Chip
 
-Badge-like label with an optional inline action button.
+Clickable pill label with an optional inline action affordance (typically for remove).
 
 ## Usage
 
 ```tsx
-import {Chip, ChipButton} from 'kinu';
+import {Chip} from 'kinu';
 
-<Chip>
+<Chip onClick={toggle}>
   React
   <Chip.Button onClick={onRemove}>×</Chip.Button>
 </Chip>
@@ -17,8 +17,8 @@ import {Chip, ChipButton} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Chip | Chip container | `<span k="chip">` |
-| ChipButton | Inline action button | `<button k="chip-button">` |
+| Chip | Chip container | `<button k="chip">` |
+| ChipButton | Inline action affordance | `<span k="chip-button" role="button">` |
 | Chip.Button | Alias of ChipButton | — |
 
 ## Props
@@ -27,12 +27,14 @@ import {Chip, ChipButton} from 'kinu';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| variant | `ChipVariant` | 'default' | Visual style variant. |
+| variant | `ChipVariant` | — | Visual style variant. |
 | selected | `boolean` | — | Marks the chip as selected for styling. |
+
+All standard `<button>` props are forwarded.
 
 ### ChipButtonProps
 
-All standard `<button>` props are forwarded.
+All standard `<span>` props are forwarded. `onClick` works via event bubbling.
 
 ## Variants
 
@@ -45,11 +47,11 @@ All standard `<button>` props are forwarded.
 
 ## Notes
 
-- Chip.Button fires standard click events. No custom events.
-- Chip.Button automatically spans the full height and hugs the rounded edge.
-- Place Chip.Button as the first or last child — border radius adjusts automatically.
-- Use `selected` to mark a chip as active (consistent with menu items).
-- Zero JS logic. Pure CSS component.
+- Chip renders as a real `<button>`, so it gets native keyboard activation (Enter/Space), focus ring, and accessible button role for free.
+- Chip.Button renders as a `<span>` so it can be nested inside Chip's `<button>` without breaking HTML validity (nested `<button>` elements would be reparented by the HTML parser).
+- Chip.Button's click events bubble to Chip, but the component installs a default `onClickCapture` that calls `stopPropagation()`, so clicking the button fires only its own `onClick` — not the Chip's.
+- Chip.Button is not independently focusable by default. If you need keyboard access to a remove action, add `tabIndex={0}` and a `keydown` handler yourself, or handle Backspace on the Chip itself.
+- Chip.Button uses `aria-hidden="true"` so screen readers read only the Chip's button text, not the `×` glyph.
 
 ---
 

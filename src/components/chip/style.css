@@ -1,11 +1,13 @@
 @import "../../variables.css";
 
 [k="chip"] {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   border-radius: 9999px;
   padding: 0.25rem 0.75rem;
+  font: inherit;
   font-size: 0.75rem;
   line-height: 1rem;
   font-weight: 600;
@@ -21,6 +23,11 @@
 
 [k="chip"]:hover {
   background-color: hsl(var(--k-secondary-hover));
+}
+
+[k="chip"]:focus-visible {
+  outline: 2px solid hsl(var(--k-ring));
+  outline-offset: 2px;
 }
 
 [k="chip"][selected] {
@@ -67,14 +74,7 @@
 
 /* Chip button: small inline circular icon respecting chip padding + gap */
 [k="chip-button"] {
-  appearance: none;
   background: hsl(0 0% 0% / 0.15);
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  color: inherit;
-  font: inherit;
   font-size: 1em;
   line-height: normal;
   width: 1.5em;
@@ -89,11 +89,6 @@
 
 [k="chip-button"]:hover {
   background: hsl(0 0% 0% / 0.28);
-}
-
-[k="chip-button"]:focus-visible {
-  outline: 2px solid hsl(var(--k-ring));
-  outline-offset: 1px;
 }
 
 @media (prefers-color-scheme: dark) {
