@@ -15,6 +15,7 @@
   border: 1px solid transparent;
   background-color: hsl(var(--k-secondary));
   color: hsl(var(--k-secondary-foreground));
+  cursor: pointer;
 }
 
 [k="chip"]:hover {
