@@ -1,3 +1,15 @@
+// Make kinu <button> elements feel like native app controls by suppressing
+// the browser context menu. Components rendered as anchors (e.g. Button with
+// href, BreadcrumbLink, NavigationMenuLink) keep their native right-click
+// menu for link accessibility. Explicit ContextMenu triggers are unaffected:
+// their own handler runs first and opens the context menu dialog as usual.
+if (typeof document !== 'undefined') {
+  addEventListener('contextmenu', (e: MouseEvent) => {
+    const target = e.target as Element | null;
+    if (target?.closest?.('button[k]')) e.preventDefault();
+  });
+}
+
 let commandsInstalled: boolean;
 
 export function installCommands() {

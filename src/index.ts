@@ -1,3 +1,4 @@
+import './base.css';
 import './lib/commands';
 export {Badge} from './components/badge';
 export type {
