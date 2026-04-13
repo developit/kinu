@@ -1,3 +1,4 @@
+import './base.css';
 import './lib/commands';
 export {Item} from './components/item';
 export type {
