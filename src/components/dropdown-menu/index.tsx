@@ -5,7 +5,6 @@ import {createSimpleComponent} from '../../lib/create-simple-component';
 import {
   installCommands,
   installDialogsDropdowns,
-  installMenuShortcuts,
 } from '../../lib/commands';
 import type {
   DropdownMenuOwnProps,
@@ -20,7 +19,6 @@ const IdCtx = createContext<string | undefined>(undefined);
 export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   installCommands();
   installDialogsDropdowns();
-  installMenuShortcuts();
   const gen = useId();
   const id = idProp ?? gen;
   return (
