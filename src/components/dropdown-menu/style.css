@@ -21,6 +21,7 @@
   border-color: hsl(var(--k-border));
   padding: 0.5rem;
   box-shadow: 0 14px 30px rgb(0 0 0 / 0.14);
+  overflow: hidden auto;
 }
 
 [k="dropdown-content"] hr,

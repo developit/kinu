@@ -484,6 +484,7 @@ export default [
     usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n  <PopoverClose><Button>Close</Button></PopoverClose>\n</Popover>`,
     notes: [
       'Control placement with the placement attribute on PopoverContent.',
+      'Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).',
       'Stays declarative thanks to the commands polyfill.'
     ]
   },
