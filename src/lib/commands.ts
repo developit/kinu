@@ -105,57 +105,74 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
   }
 }
 
-let menuShortcutsInstalled: boolean;
-export function installMenuShortcuts() {
-  if (menuShortcutsInstalled) return;
-  if (typeof document === 'undefined') return;
-  menuShortcutsInstalled = true;
-  addEventListener('keydown', handleMenuShortcutsKeydown);
+// Spatial arrow-key navigation. Ray-cast from the focused element's edge in the
+// arrow direction via elementFromPoint(); focus whatever focusable we hit.
+// An adjacent open kinu dialog with a [selected] child flips on pseudo-focus
+// (the virtual cursor moves [selected] instead of real focus — e.g. Combobox).
+const DIRS: Record<string, [number, number]> = {
+  ArrowLeft: [-1, 0],
+  ArrowRight: [1, 0],
+  ArrowUp: [0, -1],
+  ArrowDown: [0, 1],
+};
+const FOCUSABLE = 'a[href],button,input,select,textarea,[tabindex]';
+// Inputs where arrows have native meaning (caret/value)
+const NATIVE_ARROWS =
+  'input:not([type=button]):not([type=checkbox]):not([type=submit]):not([type=reset]),textarea,select';
+
+function handleArrowKey(e: KeyboardEvent) {
+  if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+  const active = document.activeElement as HTMLElement | null;
+  if (!active || active === document.body) return;
+
+  let dialog = active.closest<HTMLElement>('dialog[k][open]');
+  let pseudo: HTMLElement | null = null;
+  if (!dialog) {
+    dialog =
+      active.parentElement?.querySelector<HTMLElement>('dialog[k][open]') ?? null;
+    pseudo = dialog?.querySelector<HTMLElement>('[k][selected]') ?? null;
+  }
+
+  if (e.key === 'Enter' && pseudo) {
+    e.preventDefault();
+    pseudo.click();
+    return;
+  }
+
+  const d = DIRS[e.key];
+  if (!d) return;
+  if (!pseudo) {
+    if (!active.closest('[k]')) return;
+    if (active.isContentEditable || active.matches(NATIVE_ARROWS)) return;
+  }
+
+  const ref = pseudo || active;
+  const r = ref.getBoundingClientRect();
+  const [dx, dy] = d;
+  let x = r.left + r.width / 2 + dx * (r.width / 2 + 1);
+  let y = r.top + r.height / 2 + dy * (r.height / 2 + 1);
+  const {innerWidth: W, innerHeight: H} = window;
+
+  while (x >= 0 && y >= 0 && x < W && y < H) {
+    const target = (document.elementFromPoint(x, y) as Element | null)
+      ?.closest<HTMLElement>(FOCUSABLE);
+    if (target && target !== ref && !target.hasAttribute('disabled')) {
+      if (pseudo && !dialog!.contains(target)) return;
+      e.preventDefault();
+      if (pseudo) {
+        pseudo.removeAttribute('selected');
+        target.setAttribute('selected', '');
+        target.scrollIntoView({block: 'nearest'});
+      } else {
+        target.focus();
+      }
+      return;
+    }
+    x += dx * 8;
+    y += dy * 8;
+  }
 }
 
-function handleMenuShortcutsKeydown(e: KeyboardEvent) {
-  const el = elementTarget(e.target!);
-  let dialog = el.closest('dialog[k]');
-  let useFocus = true;
-  if (!dialog) {
-    dialog = el.parentNode!.querySelector('dialog[k][open]');
-    useFocus = false;
-  }
-  if (!dialog) return;
-  const selected = dialog.querySelector<HTMLElement>(
-    useFocus ? '[k]:focus' : '[k][selected]',
-  );
-  // emulate button enter key behavior for pseudo-focused selection
-  if (e.key === 'Enter' && !useFocus) {
-    e.preventDefault();
-    selected?.click();
-    return;
-  }
-  const dir = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
-  if (!dir) return;
-  e.preventDefault();
-  if (!selected) {
-    const items = dialog.querySelectorAll<HTMLElement>('button[k],[k][tabindex]');
-    const item = items[dir > 0 ? 0 : items.length - 1];
-    if (useFocus) item?.focus();
-    else item?.toggleAttribute('selected', true);
-    return;
-  }
-  const type = selected.getAttribute('k');
-  if (!selected) return;
-  let next = selected;
-  while (
-    (next = next[
-      dir > 0 ? 'nextElementSibling' : 'previousElementSibling'
-    ] as HTMLElement)
-  ) {
-    if (next.getAttribute('k') !== type) continue;
-    if (useFocus) next.focus();
-    else {
-      selected.toggleAttribute('selected', false);
-      next!.toggleAttribute('selected', true);
-    }
-    e.preventDefault();
-    break;
-  }
+if (typeof document !== 'undefined') {
+  addEventListener('keydown', handleArrowKey);
 }

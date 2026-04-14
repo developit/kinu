@@ -1,5 +1,4 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
-import {installMenuShortcuts} from '../../lib/commands';
 import type {
   ComboboxOwnProps,
   ComboboxInputOwnProps,
@@ -11,10 +10,6 @@ import './style.css';
 const ComboboxBase = createSimpleComponent<'span', ComboboxOwnProps>(
   'combobox',
   'span',
-  {},
-  () => {
-    installMenuShortcuts();
-  },
 );
 
 export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProps>(
