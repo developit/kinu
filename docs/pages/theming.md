@@ -65,3 +65,33 @@ Animation curves live in `--k-ease` and related tokens. Adjust them globally or 
 
 When you need reduced motion support, respect the `prefers-reduced-motion` media query and reduce durations or disable
 animations in your overrides.
+
+## Control Scaling
+
+The `--k-scale` token is a unitless multiplier for interactive control dimensions (buttons, inputs, selects, switches,
+checkboxes, etc.). The default is `1`. Components reference derived size tokens `--k-size-sm`, `--k-size-md`, and
+`--k-size-lg` which incorporate the scale:
+
+```css
+:root {
+  --k-scale: 0.9;  /* compact controls, normal text */
+}
+```
+
+Because `--k-scale` is a CSS custom property, you can scope it to any container:
+
+```css
+.compact-sidebar { --k-scale: 0.85; }
+.spacious-hero   { --k-scale: 1.1; }
+```
+
+This is independent of `font-size`—text stays at whatever size you set, while control dimensions scale separately. You
+can also override the derived tokens directly if you need full control:
+
+```css
+:root {
+  --k-size-sm: 2rem;
+  --k-size-md: 2.25rem;
+  --k-size-lg: 2.5rem;
+}
+```

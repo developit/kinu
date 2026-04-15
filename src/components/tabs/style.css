@@ -6,7 +6,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.25rem;
+  height: var(--k-size-sm);
   width: fit-content;
   background: hsl(var(--k-muted));
   color: hsl(var(--k-muted-foreground));

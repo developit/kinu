@@ -134,6 +134,7 @@ function generateCSS(settings: ThemeSettings): string {
 
   if (scale !== 1) {
     lines.push(`  font-size: ${scale * 100}%;`);
+    lines.push(`  --k-scale: ${scale};`);
   }
 
   lines.push('}');

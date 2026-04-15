@@ -39,6 +39,14 @@
   /* Radius */
   --k-radius: 0.5rem;
 
+  /* Control scale multiplier (unitless) */
+  --k-scale: 1;
+
+  /* Derived control sizes */
+  --k-size-sm: calc(2.25rem * var(--k-scale));
+  --k-size-md: calc(2.5rem * var(--k-scale));
+  --k-size-lg: calc(2.75rem * var(--k-scale));
+
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
   --k-ease-elastic: var(--k-ease-fallback);

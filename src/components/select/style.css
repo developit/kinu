@@ -6,7 +6,7 @@
   border-radius: var(--k-radius);
   border: 1px solid hsl(var(--k-input));
   background-color: hsl(var(--k-background));
-  height: 2.5rem;
+  height: var(--k-size-md);
   padding-left: 0.75rem;
   padding-right: 2rem;
   font-size: 0.875rem;

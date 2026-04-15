@@ -8,7 +8,7 @@
   background-color: hsl(var(--k-background));
   font: inherit;
   font-size: 0.875rem;
-  min-height: 2.5rem;
+  min-height: var(--k-size-md);
   padding: 0.5rem 0.75rem;
   resize: vertical;
   transition-property: color, background-color, border-color, box-shadow;

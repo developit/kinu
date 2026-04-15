@@ -2,8 +2,8 @@
 
 [k="color-picker"] {
   appearance: none;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--k-size-md);
+  height: var(--k-size-md);
   padding: 0.25rem;
   border: 1px solid hsl(var(--k-input));
   border-radius: var(--k-radius);
