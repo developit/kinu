@@ -1,13 +1,12 @@
 import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
-import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installDialogsDropdowns} from '../../lib/commands';
+import {Item} from '../item';
 import type {
   ContextMenuOwnProps,
   ContextMenuTriggerOwnProps,
   ContextMenuContentOwnProps,
-  ContextMenuItemOwnProps,
 } from './types';
 import './style.css';
 
@@ -74,7 +73,7 @@ export function ContextMenuContent({
   );
 }
 
-export const ContextMenuItem = createSimpleComponent<
-  'button',
-  ContextMenuItemOwnProps
->('context-menu-item', 'button', {tabIndex: 0});
+/** @deprecated Use `Item` instead. */
+export const ContextMenuItem = Item;
+
+Object.assign(ContextMenu, {Item});

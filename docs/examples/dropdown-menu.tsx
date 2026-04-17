@@ -1,8 +1,8 @@
 import {
   Button,
+  Item,
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
   toast,
 } from 'kinu';
@@ -22,15 +22,15 @@ export function Demo() {
           <Button variant="outline">Actions ▼</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => logText('Edit clicked')}>
+          <Item onClick={() => logText('Edit clicked')}>
             Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => logText('Copy clicked')}>
+          </Item>
+          <Item onClick={() => logText('Copy clicked')}>
             Copy
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => logText('Delete clicked')}>
+          </Item>
+          <Item onClick={() => logText('Delete clicked')}>
             Delete
-          </DropdownMenuItem>
+          </Item>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

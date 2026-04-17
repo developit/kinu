@@ -115,15 +115,17 @@ export function installMenuShortcuts() {
 
 function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   const el = elementTarget(e.target!);
-  let dialog = el.closest('dialog[k]');
+  let container = el.closest('dialog[k]') || el.closest('[k="list"]');
   let useFocus = true;
-  if (!dialog) {
-    dialog = el.parentNode!.querySelector('dialog[k][open]');
+  if (!container) {
+    container = el.parentNode!.querySelector('dialog[k][open]')
+      || el.closest('[k="listbox"]')?.querySelector('[k="listbox-list"]')
+      || null;
     useFocus = false;
   }
-  if (!dialog) return;
-  const selected = dialog.querySelector<HTMLElement>(
-    useFocus ? '[k]:focus' : '[k][selected]',
+  if (!container) return;
+  const selected = container.querySelector<HTMLElement>(
+    useFocus ? '[k="item"]:focus' : '[k="item"][selected]',
   );
   // emulate button enter key behavior for pseudo-focused selection
   if (e.key === 'Enter' && !useFocus) {
@@ -135,7 +137,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   if (!dir) return;
   e.preventDefault();
   if (!selected) {
-    const items = dialog.querySelectorAll<HTMLElement>('button[k],[k][tabindex]');
+    const items = container.querySelectorAll<HTMLElement>('[k="item"]');
     const item = items[dir > 0 ? 0 : items.length - 1];
     if (useFocus) item?.focus();
     else item?.toggleAttribute('selected', true);

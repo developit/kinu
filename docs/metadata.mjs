@@ -107,6 +107,21 @@ export default [
     usage: '<Badge variant="secondary">New</Badge>'
   },
   {
+    slug: 'chip',
+    title: 'Chip',
+    section: 'Components',
+    category: 'Data Display',
+    order: 0,
+    folder: 'chip',
+    description: 'Badge-like label with an optional inline action button.',
+    usage: '<Chip>Tag<Chip.Button onClick={remove}>×</Chip.Button></Chip>',
+    notes: [
+      'Chip.Button fires standard click events with no custom event wiring.',
+      'Use the selected attribute to mark a chip as active.',
+      'Chip.Button automatically spans the full height and hugs the rounded edge.'
+    ]
+  },
+  {
     slug: 'breadcrumb',
     title: 'Breadcrumb',
     section: 'Components',
@@ -118,6 +133,21 @@ export default [
     notes: [
       'Ships structural wrappers so you can supply router-aware links.',
       'Uses semantic list markup for accessibility.'
+    ]
+  },
+  {
+    slug: 'item',
+    title: 'Item',
+    section: 'Components',
+    category: 'Actions',
+    order: 0,
+    folder: 'item',
+    description: 'Generic selectable item for lists, menus, comboboxes, and more.',
+    usage: '<Item selected>Inbox</Item>',
+    notes: [
+      'Renders as <button> by default, or <a> when href is provided.',
+      'The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.',
+      'Also available as .Item on parent components (e.g. DropdownMenu.Item).'
     ]
   },
   {
@@ -214,6 +244,22 @@ export default [
     notes: [
       'Uses command/commandFor attributes for disclosure logic.',
       'Keep option counts manageable for usability.'
+    ]
+  },
+  {
+    slug: 'listbox',
+    title: 'Listbox',
+    section: 'Components',
+    category: 'Data Input',
+    order: 7,
+    folder: 'listbox',
+    description: 'Non-modal filterable list for inline search and selection.',
+    usage: `<Listbox>\n  <ListboxInput placeholder="Filter..." />\n  <ListboxList>\n    <ListboxOption>Apple</ListboxOption>\n  </ListboxList>\n</Listbox>`,
+    notes: [
+      'Selection is developer-controlled via the selected attribute on options.',
+      'Shares filtering logic with Combobox via the filterItems utility.',
+      'Unlike Combobox, the list is always visible with no dialog or popover.',
+      'Compose with Dialog to build a command palette.'
     ]
   },
   {
@@ -636,6 +682,21 @@ export default [
     notes: [
       'Control selection state by toggling aria-selected.',
       'TabPanel toggles the hidden attribute so CSS handles transitions.'
+    ]
+  },
+  {
+    slug: 'list',
+    title: 'List',
+    section: 'Components',
+    category: 'Navigation',
+    order: 1,
+    folder: 'list',
+    description: 'Interactive selectable list with shared item styling.',
+    usage: `<List>\n  <ListItem selected>Inbox</ListItem>\n  <ListItem>Drafts</ListItem>\n</List>`,
+    notes: [
+      'Items render as `<button>` by default, or `<a>` when href is provided.',
+      'Use variant="nav" for sidebar-style navigation with softer accent colors.',
+      'Shares the same item styles as DropdownMenuItem and ComboboxOption.'
     ]
   },
   {

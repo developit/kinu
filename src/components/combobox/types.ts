@@ -30,29 +30,11 @@ export interface ComboboxInputOwnProps {
 
 export interface ComboboxListOwnProps extends BaseProps {}
 
-export interface ComboboxOptionOwnProps extends BaseProps {
-
-  /**
-   * Marks the option as selected for styling.
-   */
-  selected?: boolean;
-
-  /**
-   * Optional shortcut hint rendered on the trailing edge.
-   */
-  shortcut?: string;
-
-  /**
-   * Applies destructive styling to the option.
-   */
-  destructive?: boolean;
-}
-
 export type ComboboxInputProps = ComboboxInputOwnProps &
   Omit<JSX.IntrinsicElements['input'], keyof ComboboxInputOwnProps>;
 
 export type ComboboxListProps = ComboboxListOwnProps &
   Omit<JSX.IntrinsicElements['dialog'], keyof ComboboxListOwnProps>;
 
-export type ComboboxOptionProps = ComboboxOptionOwnProps &
-  Omit<JSX.IntrinsicElements['button'], keyof ComboboxOptionOwnProps>;
+// Backward compat re-exports from unified Item types
+export type {ComboboxItemOwnProps as ComboboxOptionOwnProps, ComboboxItemProps as ComboboxOptionProps} from '../item/types';

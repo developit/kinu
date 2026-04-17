@@ -45,6 +45,15 @@
     "description": ""
   },
   {
+    "slug": "item",
+    "title": "Item",
+    "section": "Components",
+    "category": "Actions",
+    "order": 0,
+    "file": "components/item.md",
+    "description": "Generic selectable item for lists, menus, comboboxes, and more."
+  },
+  {
     "slug": "button",
     "title": "Button",
     "section": "Components",
@@ -61,6 +70,15 @@
     "order": 0,
     "file": "components/badge.md",
     "description": "Tiny inline status indicator with multiple tone variants."
+  },
+  {
+    "slug": "chip",
+    "title": "Chip",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 0,
+    "file": "components/chip.md",
+    "description": "Badge-like label with an optional inline action button."
   },
   {
     "slug": "accordion",
@@ -124,6 +142,15 @@
     "order": 1,
     "file": "components/tabs.md",
     "description": "TabList, Tab, and TabPanel wrappers using aria attributes."
+  },
+  {
+    "slug": "list",
+    "title": "List",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 1,
+    "file": "components/list.md",
+    "description": "Interactive selectable list with shared item styling."
   },
   {
     "slug": "collapsible",
@@ -412,6 +439,15 @@
     "order": 7,
     "file": "components/combobox.md",
     "description": "Autocomplete input with trigger, list, and option primitives."
+  },
+  {
+    "slug": "listbox",
+    "title": "Listbox",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 7,
+    "file": "components/listbox.md",
+    "description": "Non-modal filterable list for inline search and selection."
   },
   {
     "slug": "hover-card",

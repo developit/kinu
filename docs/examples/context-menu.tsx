@@ -1,7 +1,7 @@
 import {
+  Item,
   ContextMenu,
   ContextMenuContent,
-  ContextMenuItem,
   ContextMenuTrigger,
   toast,
 } from 'kinu';
@@ -28,11 +28,11 @@ export function Demo() {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem onClick={() => logText('Cut')}>Cut</ContextMenuItem>
-        <ContextMenuItem onClick={() => logText('Copy')}>Copy</ContextMenuItem>
-        <ContextMenuItem onClick={() => logText('Paste')}>
+        <Item onClick={() => logText('Cut')}>Cut</Item>
+        <Item onClick={() => logText('Copy')}>Copy</Item>
+        <Item onClick={() => logText('Paste')}>
           Paste
-        </ContextMenuItem>
+        </Item>
       </ContextMenuContent>
     </ContextMenu>
   );

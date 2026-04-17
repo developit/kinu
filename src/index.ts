@@ -1,5 +1,20 @@
 import './base.css';
 import './lib/commands';
+export {Item} from './components/item';
+export type {
+  ItemProps,
+  ItemOwnProps,
+  DropdownMenuItemProps,
+  DropdownMenuItemOwnProps,
+  ContextMenuItemProps,
+  ContextMenuItemOwnProps,
+  ComboboxItemProps,
+  ComboboxItemOwnProps,
+  ListboxItemProps,
+  ListboxItemOwnProps,
+  ListItemProps,
+  ListItemOwnProps,
+} from './components/item/types';
 export {Badge} from './components/badge';
 export type {
   BadgeProps,
@@ -206,8 +221,6 @@ export type {
   ContextMenuTriggerOwnProps,
   ContextMenuContentProps,
   ContextMenuContentOwnProps,
-  ContextMenuItemProps,
-  ContextMenuItemOwnProps,
 } from './components/context-menu/types';
 export {
   Drawer,
@@ -238,8 +251,6 @@ export type {
   DropdownMenuTriggerOwnProps,
   DropdownMenuContentProps,
   DropdownMenuContentOwnProps,
-  DropdownMenuItemProps,
-  DropdownMenuItemOwnProps,
 } from './components/dropdown-menu/types';
 export {
   HoverCard,
@@ -300,4 +311,31 @@ export type {
   TreeItemProps,
   TreeItemOwnProps,
 } from './components/tree/types';
+export {List, ListItem} from './components/list';
+export type {
+  ListProps,
+  ListOwnProps,
+} from './components/list/types';
+export {
+  Listbox,
+  ListboxInput,
+  ListboxList,
+  ListboxOption,
+} from './components/listbox';
+export type {
+  ListboxProps,
+  ListboxOwnProps,
+  ListboxInputProps,
+  ListboxInputOwnProps,
+  ListboxListProps,
+  ListboxListOwnProps,
+} from './components/listbox/types';
+export {Chip, ChipButton} from './components/chip';
+export type {
+  ChipProps,
+  ChipOwnProps,
+  ChipVariant,
+  ChipButtonProps,
+  ChipButtonOwnProps,
+} from './components/chip/types';
 export * from './components/typography';
