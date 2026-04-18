@@ -70,12 +70,13 @@ function analyzeExports(sourceFile, sourceText) {
     return info;
   }
 
-  function addSyntheticExport(name) {
+  function addSyntheticExport(name, owner, property) {
     if (exports.some((e) => e.name === name)) return;
     const localDecl = localDecls.get(name);
     if (!localDecl) return;
     const info = buildInfoFromDecl(name, localDecl);
     info.synthetic = true;
+    info.displayName = `${owner}.${property}`;
     exports.push(info);
   }
 
@@ -99,7 +100,7 @@ function analyzeExports(sourceFile, sourceText) {
       const propName = prop.name.text;
       const targetName = prop.initializer.text;
       attachments.push({owner: ownerName, property: propName, target: targetName});
-      addSyntheticExport(targetName);
+      addSyntheticExport(targetName, ownerName, propName);
     }
   }
 
@@ -137,7 +138,7 @@ function analyzeExports(sourceFile, sourceText) {
         const property = expr.left.name.getText(sourceFile);
         const target = expr.right.getText(sourceFile);
         attachments.push({owner, property, target});
-        if (ts.isIdentifier(expr.right)) addSyntheticExport(expr.right.text);
+        if (ts.isIdentifier(expr.right)) addSyntheticExport(expr.right.text, owner, property);
       }
     }
   });
@@ -431,13 +432,19 @@ async function generateComponentDoc(entry) {
 
     // Description - use a shortened version from entry description or component name
     const description = getComponentDescription(exp.name, entry);
+    const displayName = exp.displayName ?? exp.name;
 
-    return `| ${exp.name} | ${description} | ${renderedHtml} |`;
+    return `| ${displayName} | ${description} | ${renderedHtml} |`;
   });
 
-  const attachmentRows = attachments.map((item) => `- \`${item.owner}.${item.property} = ${item.target}\``);
+  const syntheticTargets = new Set(
+    exports.filter((exp) => exp.synthetic).map((exp) => exp.name),
+  );
+  const attachmentRows = attachments
+    .filter((item) => !syntheticTargets.has(item.target))
+    .map((item) => `- \`${item.owner}.${item.property} = ${item.target}\``);
 
-  const usageSnippet = entry.usage ?? `<${exports[0]?.name ?? entry.title.replace(/\s+/g, '')} />`;
+  const usageSnippet = entry.usage ?? `<${exports[0]?.displayName ?? exports[0]?.name ?? entry.title.replace(/\s+/g, '')} />`;
   const importNames = exports.filter((exp) => !exp.synthetic).map((exp) => exp.name).sort();
   const importLine = importNames.length ? `import {${importNames.join(', ')}} from 'kinu';` : `import {${entry.title}} from 'kinu';`;
 
@@ -466,7 +473,7 @@ async function generateComponentDoc(entry) {
   }
   const propSections = exports
     .map((exp) => ({
-      name: exp.name,
+      name: exp.displayName ?? exp.name,
       props: propDocs.get(exp.name) || [],
     }))
     .filter((section) => section.props.length > 0);

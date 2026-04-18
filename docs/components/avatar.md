@@ -15,7 +15,7 @@ import {Avatar} from 'kinu';
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
 | Avatar | User profile image | — |
-| AvatarGroup | Stacked avatar group | `<div k="avatar-group">` |
+| Avatar.Group | Stacked avatar group | `<div k="avatar-group">` |
 
 ## Props
 
@@ -25,10 +25,6 @@ import {Avatar} from 'kinu';
 | alt | `string` | — | Alt text used by the image and for fallback initials. |
 | children | `element.children` | — | Fallback initials or text rendered via the alt attribute. |
 | size | `AvatarSize` | — | Size preset for the avatar. |
-
-### Static Shortcuts
-
-- `Avatar.Group = AvatarGroup`
 
 ## Notes
 
