@@ -334,6 +334,10 @@ function getComponentDescription(componentName, entry) {
     DrawerContent: 'Drawer content',
     DrawerClose: 'Close button',
     SidebarTrigger: 'Sidebar toggle',
+    Kbd: 'Keyboard key',
+    Empty: 'Empty state placeholder',
+    Field: 'Form field group',
+    OTPInput: 'One-time code input',
   };
 
   return descriptions[componentName] || 'Component';

@@ -22,7 +22,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 | DropdownMenu | Dropdown menu | — |
 | DropdownMenuTrigger | Menu trigger | — |
 | DropdownMenuContent | Menu content | — |
-| DropdownMenuItem | Menu item | `p="dropdown-menu-item"` |
+| DropdownMenuItem | Menu item | Alias of Item |
 
 ## Props
 
@@ -40,20 +40,14 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 | command | `string` | 'close' | Command dispatched when the dialog receives the command event. |
 | commandFor | `string` | — | Target dialog identifier for the command dispatch. |
 | to | `"left"` | — | Align the menu panel to the trigger's left or right edge. |
-
-### DropdownMenuItemProps
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| href | `string` | — | When provided, renders the item as an anchor element. |
-| selected | `boolean` | — | Marks the item as selected for styling. |
-| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
-| destructive | `boolean` | — | Applies destructive styling to the item. |
+| mobile | `"drawer"` | — | When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+while keeping menu behavior on larger screens. |
 
 ## Notes
 
 - Menu items render as `<button>` elements by default.
 - Automatically closes when an item dispatches the close command.
+- Set `mobile="drawer"` on `DropdownMenuContent` to adapt to a bottom-sheet on narrow viewports (≤640px).
 
 ---
 

@@ -54,8 +54,11 @@ export default [
     order: 1,
     folder: 'alert',
     description: 'Inline status message with tone variants.',
-    usage: '<Alert variant="default">Heads up!</Alert>',
-    notes: ['Renders a `<div>` so you can include any markup you need.']
+    usage: '<Alert variant="info">Heads up!</Alert>',
+    notes: [
+      'Renders a `<div>` so you can include any markup you need.',
+      'Supports `destructive`, `info`, `success`, and `warning` tone variants.'
+    ]
   },
   {
     slug: 'alert-dialog',
@@ -93,7 +96,8 @@ export default [
     usage: '<Avatar alt="JM" src="/user.jpg" />',
     notes: [
       'Uses the alt attribute content as a CSS-rendered fallback when the image fails.',
-      'Override dimensions in CSS if you need sizes other than the 2rem default.'
+      'Override dimensions in CSS if you need sizes other than the 2rem default.',
+      'Wrap several avatars in `<Avatar.Group>` to get the overlapping stacked layout.'
     ]
   },
   {
@@ -273,7 +277,8 @@ export default [
     usage: `<ContextMenu>\n  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
     notes: [
       'Installs the commands polyfill when rendered.',
-      'Menu content is focus-trapped via `<dialog>`.'
+      'Menu content is focus-trapped via `<dialog>`.',
+      'Set `mobile="drawer"` on `ContextMenuContent` to render as a bottom-sheet on narrow viewports (≤640px).'
     ]
   },
   {
@@ -344,7 +349,8 @@ export default [
     usage: `<Dialog>\n  <DialogTrigger><Button>Open</Button></DialogTrigger>\n  <DialogContent>Modal body</DialogContent>\n  <DialogClose><Button>Close</Button></DialogClose>\n</Dialog>`,
     notes: [
       'Relies on command attributes instead of portal gymnastics.',
-      'Dialog.Content forwards all native `<dialog>` props.'
+      'Dialog.Content forwards all native `<dialog>` props.',
+      'For React-controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal via the `beforetoggle` hook, and the browser\'s `close` event drives the state-sync callback.'
     ]
   },
   {
@@ -372,7 +378,8 @@ export default [
     usage: `<DropdownMenu>\n  <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Item</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`,
     notes: [
       'Menu items render as `<button>` elements by default.',
-      'Automatically closes when an item dispatches the close command.'
+      'Automatically closes when an item dispatches the close command.',
+      'Set `mobile="drawer"` on `DropdownMenuContent` to adapt to a bottom-sheet on narrow viewports (≤640px).'
     ]
   },
   {
@@ -770,6 +777,66 @@ export default [
     category: 'Feedback',
     order: 5,
     file: 'pages/toast.md'
+  },
+  {
+    slug: 'kbd',
+    title: 'Kbd',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'kbd',
+    description: 'Styled `<kbd>` wrapper for keyboard shortcut glyphs.',
+    usage: '<Kbd>⌘</Kbd> <Kbd>K</Kbd>',
+    notes: [
+      'Wraps the native `<kbd>` element so semantics stay intact.',
+      'Pairs naturally with `Item`\'s `shortcut` prop or any inline label.'
+    ]
+  },
+  {
+    slug: 'empty',
+    title: 'Empty',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'empty',
+    description: 'Centered placeholder for no-data / no-results states.',
+    usage: `<Empty>\n  <h3>No results</h3>\n  <p>Try a different search.</p>\n</Empty>`,
+    notes: [
+      'Centers heading, body text, and optional actions in a flex column.',
+      'Headings inherit the foreground color; body text defaults to muted foreground.'
+    ]
+  },
+  {
+    slug: 'field',
+    title: 'Field',
+    section: 'Components',
+    category: 'Data Input',
+    order: 0,
+    folder: 'field',
+    description: 'Layout wrapper that groups a label, control, description, and error message.',
+    usage: `<Field>\n  <Field.Label>\n    Email\n    <Input type="email" required />\n  </Field.Label>\n  <Field.Description>We'll never share it</Field.Description>\n  <Field.Error>Please enter a valid email</Field.Error>\n</Field>`,
+    notes: [
+      'Nests the control inside `Field.Label` so native `<label>` implicit association handles pairing — no `id`/`htmlFor` plumbing needed.',
+      '`Field.Label` is an alias of `Label`, so the regular label styles and props apply.',
+      '`:has(:invalid)` turns the label destructive when any descendant control fails validation.',
+      '`Field.Error` renders with `role="alert"` so assistive tech announces it when shown.'
+    ]
+  },
+  {
+    slug: 'otp-input',
+    title: 'OTP Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 2,
+    folder: 'otp',
+    description: 'Single `<input>` styled as N segmented one-time-code cells.',
+    usage: `<OTPInput maxLength={6} style={{'--k-otp-len': 6}} />`,
+    notes: [
+      'Sets `type="text"`, `inputMode="numeric"`, and `autoComplete="one-time-code"` — iOS SMS autofill, paste, and password managers just work.',
+      'The visual cell count is driven by the `--k-otp-len` CSS variable (defaults to 6). Set it to match your `maxLength`.',
+      'Override `--k-otp-cell` (defaults to `2.5rem`) to resize the individual cells.',
+      'Use a `pattern` attribute (e.g. `pattern="\\\\d{6}"`) to tie validation into the `:invalid` border style.'
+    ]
   },
   {
     slug: 'tree',
