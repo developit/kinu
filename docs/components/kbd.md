@@ -7,7 +7,7 @@ Styled `<kbd>` wrapper for keyboard shortcut glyphs.
 ```tsx
 import {Kbd} from 'kinu';
 
-<Kbd>⌘</Kbd> <Kbd>K</Kbd>
+<Kbd>⌘K</Kbd>
 ```
 
 ## Exports
@@ -19,7 +19,8 @@ import {Kbd} from 'kinu';
 ## Notes
 
 - Wraps the native `<kbd>` element so semantics stay intact.
-- Pairs naturally with `Item`'s `shortcut` prop or any inline label.
+- Combine multiple keys in a single `<Kbd>` (e.g. `⌘S`) to render them as one keycap.
+- Pairs naturally with `Item` rows — drop a `<Kbd style={{marginLeft: 'auto'}}>` inside an item to show the shortcut on the trailing edge.
 
 ---
 

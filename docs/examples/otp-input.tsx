@@ -4,11 +4,9 @@ import {useState} from 'preact/hooks';
 export function Demo() {
   const [code, setCode] = useState('');
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+    <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '20rem'}}>
       <OTPInput
         maxLength={6}
-        pattern="\d{6}"
-        style={{'--k-otp-len': 6} as any}
         value={code}
         onInput={(e: Event) =>
           setCode((e.target as HTMLInputElement).value.replace(/\D/g, ''))
@@ -22,6 +20,6 @@ export function Demo() {
   );
 }
 
-export const code = `<OTPInput maxLength={6} style={{'--k-otp-len': 6}} />`;
+export const code = `<OTPInput maxLength={6} />`;
 
 export default {Demo, code};

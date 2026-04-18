@@ -7,7 +7,7 @@ Single `<input>` styled as N segmented one-time-code cells.
 ```tsx
 import {OTPInput} from 'kinu';
 
-<OTPInput maxLength={6} style={{'--k-otp-len': 6}} />
+<OTPInput maxLength={6} />
 ```
 
 ## Exports
@@ -18,10 +18,9 @@ import {OTPInput} from 'kinu';
 
 ## Notes
 
-- Sets `type="text"`, `inputMode="numeric"`, and `autoComplete="one-time-code"` — iOS SMS autofill, paste, and password managers just work.
-- The visual cell count is driven by the `--k-otp-len` CSS variable (defaults to 6). Set it to match your `maxLength`.
-- Override `--k-otp-cell` (defaults to `2.5rem`) to resize the individual cells.
-- Use a `pattern` attribute (e.g. `pattern="\\d{6}"`) to tie validation into the `:invalid` border style.
+- Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\d*"` — iOS SMS autofill, paste, and password managers just work.
+- The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.
+- Set `width` (or wrap in a sized container) to control the overall input size; cells distribute evenly across that width.
 
 ---
 

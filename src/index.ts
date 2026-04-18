@@ -81,8 +81,14 @@ export {Slider} from './components/slider';
 export type {SliderProps, SliderOwnProps} from './components/slider/types';
 export {Separator} from './components/separator';
 export type {SeparatorProps, SeparatorOwnProps} from './components/separator/types';
-export {Avatar} from './components/avatar';
-export type {AvatarProps, AvatarOwnProps, AvatarSize} from './components/avatar/types';
+export {Avatar, AvatarGroup} from './components/avatar';
+export type {
+  AvatarProps,
+  AvatarOwnProps,
+  AvatarSize,
+  AvatarGroupProps,
+  AvatarGroupOwnProps,
+} from './components/avatar/types';
 export {Toggle} from './components/toggle';
 export type {ToggleProps, ToggleOwnProps} from './components/toggle/types';
 export {ToggleGroup} from './components/toggle-group';

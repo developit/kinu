@@ -1,9 +1,8 @@
 @import "../../variables.css";
 
 [k="otp"] {
-  --k-otp-cell: 2.5rem;
-  width: calc(var(--k-otp-len, 6) * var(--k-otp-cell));
-  height: var(--k-otp-cell);
+  --k-otp-len: attr(maxlength type(<number>), 4);
+  --k-otp-cell: calc(100% / var(--k-otp-len));
   padding: 0;
   border: 1px solid hsl(var(--k-input));
   border-radius: var(--k-radius);
@@ -14,10 +13,12 @@
       hsl(var(--k-input)) var(--k-otp-cell) calc(var(--k-otp-cell) + 1px)
     )
     hsl(var(--k-background));
-  font: 600 1.125rem ui-monospace, monospace;
+  font: 600 200% ui-monospace, monospace;
   color: hsl(var(--k-foreground));
-  letter-spacing: calc(var(--k-otp-cell) - 1ch);
-  text-indent: calc((var(--k-otp-cell) - 1ch) / 2);
+  text-overflow: clip;
+  text-justify: inter-character;
+  text-align-last: justify;
+  padding-inline: calc((var(--k-otp-cell) - 1ch) / 2);
 }
 
 [k="otp"]:focus-visible {

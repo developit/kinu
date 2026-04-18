@@ -786,10 +786,11 @@ export default [
     order: 3,
     folder: 'kbd',
     description: 'Styled `<kbd>` wrapper for keyboard shortcut glyphs.',
-    usage: '<Kbd>⌘</Kbd> <Kbd>K</Kbd>',
+    usage: '<Kbd>⌘K</Kbd>',
     notes: [
       'Wraps the native `<kbd>` element so semantics stay intact.',
-      'Pairs naturally with `Item`\'s `shortcut` prop or any inline label.'
+      'Combine multiple keys in a single `<Kbd>` (e.g. `⌘S`) to render them as one keycap.',
+      "Pairs naturally with `Item` rows — drop a `<Kbd style={{marginLeft: 'auto'}}>` inside an item to show the shortcut on the trailing edge."
     ]
   },
   {
@@ -830,12 +831,11 @@ export default [
     order: 2,
     folder: 'otp',
     description: 'Single `<input>` styled as N segmented one-time-code cells.',
-    usage: `<OTPInput maxLength={6} style={{'--k-otp-len': 6}} />`,
+    usage: '<OTPInput maxLength={6} />',
     notes: [
-      'Sets `type="text"`, `inputMode="numeric"`, and `autoComplete="one-time-code"` — iOS SMS autofill, paste, and password managers just work.',
-      'The visual cell count is driven by the `--k-otp-len` CSS variable (defaults to 6). Set it to match your `maxLength`.',
-      'Override `--k-otp-cell` (defaults to `2.5rem`) to resize the individual cells.',
-      'Use a `pattern` attribute (e.g. `pattern="\\\\d{6}"`) to tie validation into the `:invalid` border style.'
+      'Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\\\d*"` — iOS SMS autofill, paste, and password managers just work.',
+      'The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.',
+      'Set `width` (or wrap in a sized container) to control the overall input size; cells distribute evenly across that width.'
     ]
   },
   {

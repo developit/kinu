@@ -5,7 +5,7 @@ Styled `<img>` avatar that falls back to initials from the alt text.
 ## Usage
 
 ```tsx
-import {Avatar} from 'kinu';
+import {Avatar, AvatarGroup} from 'kinu';
 
 <Avatar alt="JM" src="/user.jpg" />
 ```
@@ -14,6 +14,7 @@ import {Avatar} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
+| AvatarGroup | Stacked avatar group | `<div k="avatar-group">` |
 | Avatar | User profile image | — |
 
 ## Props
@@ -24,6 +25,10 @@ import {Avatar} from 'kinu';
 | alt | `string` | — | Alt text used by the image and for fallback initials. |
 | children | `element.children` | — | Fallback initials or text rendered via the alt attribute. |
 | size | `AvatarSize` | — | Size preset for the avatar. |
+
+### Static Shortcuts
+
+- `Avatar.Group = AvatarGroup`
 
 ## Notes
 

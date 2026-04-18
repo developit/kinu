@@ -4,28 +4,22 @@ export function Demo() {
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
       <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-        Press <Kbd>⌘</Kbd> <Kbd>K</Kbd> to open the command palette.
+        Press <Kbd>⌘K</Kbd> to open the command palette.
       </div>
       <List style={{maxWidth: '20rem'}}>
         <Item>
           Save
-          <span style={{marginLeft: 'auto', display: 'flex', gap: '0.25rem'}}>
-            <Kbd>⌘</Kbd>
-            <Kbd>S</Kbd>
-          </span>
+          <Kbd style={{marginLeft: 'auto'}}>⌘S</Kbd>
         </Item>
         <Item>
           Undo
-          <span style={{marginLeft: 'auto', display: 'flex', gap: '0.25rem'}}>
-            <Kbd>⌘</Kbd>
-            <Kbd>Z</Kbd>
-          </span>
+          <Kbd style={{marginLeft: 'auto'}}>⌘Z</Kbd>
         </Item>
       </List>
     </div>
   );
 }
 
-export const code = `<Kbd>⌘</Kbd> <Kbd>K</Kbd>`;
+export const code = `<Kbd>⌘K</Kbd>`;
 
 export default {Demo, code};

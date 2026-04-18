@@ -338,6 +338,7 @@ function getComponentDescription(componentName, entry) {
     Empty: 'Empty state placeholder',
     Field: 'Form field group',
     OTPInput: 'One-time code input',
+    AvatarGroup: 'Stacked avatar group',
   };
 
   return descriptions[componentName] || 'Component';

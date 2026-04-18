@@ -7,9 +7,12 @@ function AvatarBase({children, alt, ...props}: AvatarProps) {
   return <img k="avatar" alt={String(fallback)} {...props} />;
 }
 
-const AvatarGroup = createSimpleComponent<'div', AvatarGroupOwnProps>(
+export const AvatarGroup = createSimpleComponent<'div', AvatarGroupOwnProps>(
   'avatar-group',
   'div',
 );
 
-export const Avatar = Object.assign(AvatarBase, {Group: AvatarGroup});
+type AvatarComponent = typeof AvatarBase & {Group: typeof AvatarGroup};
+
+export const Avatar = AvatarBase as AvatarComponent;
+Avatar.Group = AvatarGroup;

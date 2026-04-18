@@ -6,8 +6,9 @@ export const OTPInput = createSimpleComponent<'input', OTPInputOwnProps>(
   'otp',
   'input',
   {
-    type: 'text',
+    type: 'password',
     inputMode: 'numeric',
     autoComplete: 'one-time-code',
+    pattern: '\\d*',
   },
 );
