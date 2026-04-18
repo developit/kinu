@@ -33,6 +33,12 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 | onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
 | disabled | `boolean` | — | Disable the input. |
 
+### Static Shortcuts
+
+- `Combobox.Input = ComboboxInput`
+- `Combobox.List = ComboboxList`
+- `Combobox.Option = Item`
+
 ## Notes
 
 - Uses command/commandFor attributes for disclosure logic.

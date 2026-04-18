@@ -33,6 +33,12 @@ import {Listbox, ListboxInput, ListboxList, ListboxOption} from 'kinu';
 | onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
 | disabled | `boolean` | — | Disable the input. |
 
+### Static Shortcuts
+
+- `Listbox.Input = ListboxInput`
+- `Listbox.List = ListboxList`
+- `Listbox.Option = Item`
+
 ## Notes
 
 - Selection is developer-controlled via the selected attribute on options.

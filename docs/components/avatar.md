@@ -5,7 +5,7 @@ Styled `<img>` avatar that falls back to initials from the alt text.
 ## Usage
 
 ```tsx
-import {Avatar, AvatarGroup} from 'kinu';
+import {Avatar} from 'kinu';
 
 <Avatar alt="JM" src="/user.jpg" />
 ```
@@ -14,8 +14,8 @@ import {Avatar, AvatarGroup} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| AvatarGroup | Stacked avatar group | `<div k="avatar-group">` |
 | Avatar | User profile image | — |
+| AvatarGroup | Stacked avatar group | `<div k="avatar-group">` |
 
 ## Props
 

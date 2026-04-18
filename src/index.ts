@@ -81,7 +81,7 @@ export {Slider} from './components/slider';
 export type {SliderProps, SliderOwnProps} from './components/slider/types';
 export {Separator} from './components/separator';
 export type {SeparatorProps, SeparatorOwnProps} from './components/separator/types';
-export {Avatar, AvatarGroup} from './components/avatar';
+export {Avatar} from './components/avatar';
 export type {
   AvatarProps,
   AvatarOwnProps,

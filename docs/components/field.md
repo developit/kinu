@@ -22,6 +22,13 @@ import {Field} from 'kinu';
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
 | Field | Form field group | — |
+| FieldDescription | Supporting helper text | `<div k="field-description">` |
+| FieldError | Validation error message | `<div k="field-error">` |
+
+### Static Shortcuts
+
+- `Field.Description = FieldDescription`
+- `Field.Error = FieldError`
 
 ## Notes
 

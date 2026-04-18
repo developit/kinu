@@ -22,6 +22,31 @@ import {Tree} from 'kinu';
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
 | Tree | Tree view | — |
+| TreeGroup | Tree branch | `<details k="tree-item">` |
+| TreeGroupLabel | Branch label | `<summary k="tree-label">` |
+| TreeGroupItems | Branch items | `<div k="tree-group">` |
+| TreeItem | Tree leaf | `<button k="tree-leaf">` |
+
+## Props
+
+### TreeGroupProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| open | `boolean` | — | Controls the open state of the tree group. |
+
+### TreeItemProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| disabled | `boolean` | — | Disable tree item interactions. |
+
+### Static Shortcuts
+
+- `Tree.Group = TreeGroup`
+- `Tree.GroupLabel = TreeGroupLabel`
+- `Tree.GroupItems = TreeGroupItems`
+- `Tree.Item = TreeItem`
 
 ## Notes
 

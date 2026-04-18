@@ -24,44 +24,92 @@ function sectionRank(section) {
 function analyzeExports(sourceFile, sourceText) {
   const exports = [];
   const attachments = [];
+  const localDecls = new Map();
+
+  // First pass: index every top-level `const NAME = ...` (exported or not) so
+  // we can resolve attached sub-components back to their definitions.
+  sourceFile.forEachChild((node) => {
+    if (ts.isVariableStatement(node)) {
+      for (const decl of node.declarationList.declarations) {
+        if (ts.isIdentifier(decl.name) && decl.initializer) {
+          localDecls.set(decl.name.text, decl);
+        }
+      }
+    }
+  });
+
+  function buildInfoFromDecl(name, decl) {
+    const info = {name, kind: 'function', pNames: new Set(), elementMap: new Map()};
+    if (decl.initializer) {
+      if (
+        ts.isCallExpression(decl.initializer) &&
+        ts.isIdentifier(decl.initializer.expression) &&
+        decl.initializer.expression.text === 'createSimpleComponent'
+      ) {
+        info.kind = 'simple';
+        const args = decl.initializer.arguments;
+        if (args[0] && ts.isStringLiteral(args[0])) info.pNames.add(args[0].text);
+        if (args[1]) {
+          if (ts.isStringLiteral(args[1])) info.tag = args[1].text;
+          else info.dynamicTag = args[1].getText(sourceFile);
+        }
+        if (args[2]) info.defaultProps = args[2].getText(sourceFile);
+        if (args[3]) info.hasRefCallback = true;
+      } else if (ts.isIdentifier(decl.initializer)) {
+        info.kind = 'alias';
+        info.aliasTarget = decl.initializer.text;
+      }
+    }
+    const text = decl.initializer ? decl.initializer.getText(sourceFile) : '';
+    for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
+      const element = match[1];
+      const pName = match[2];
+      info.pNames.add(pName);
+      info.elementMap.set(pName, element);
+    }
+    return info;
+  }
+
+  function addSyntheticExport(name) {
+    if (exports.some((e) => e.name === name)) return;
+    const localDecl = localDecls.get(name);
+    if (!localDecl) return;
+    const info = buildInfoFromDecl(name, localDecl);
+    info.synthetic = true;
+    exports.push(info);
+  }
+
+  function processObjectAssignAttachments(ownerName, initializer) {
+    if (
+      !ts.isCallExpression(initializer) ||
+      !ts.isPropertyAccessExpression(initializer.expression) ||
+      !ts.isIdentifier(initializer.expression.expression) ||
+      initializer.expression.expression.text !== 'Object' ||
+      !ts.isIdentifier(initializer.expression.name) ||
+      initializer.expression.name.text !== 'assign'
+    ) return;
+    const [, attachArg] = initializer.arguments;
+    if (!attachArg || !ts.isObjectLiteralExpression(attachArg)) return;
+    for (const prop of attachArg.properties) {
+      if (
+        !ts.isPropertyAssignment(prop) ||
+        !ts.isIdentifier(prop.name) ||
+        !ts.isIdentifier(prop.initializer)
+      ) continue;
+      const propName = prop.name.text;
+      const targetName = prop.initializer.text;
+      attachments.push({owner: ownerName, property: propName, target: targetName});
+      addSyntheticExport(targetName);
+    }
+  }
 
   sourceFile.forEachChild(function visit(node) {
     if (ts.isVariableStatement(node) && node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)) {
       for (const decl of node.declarationList.declarations) {
         if (!ts.isIdentifier(decl.name)) continue;
         const name = decl.name.text;
-        const info = {name, kind: 'function', pNames: new Set(), elementMap: new Map()};
-        if (decl.initializer) {
-          if (
-            ts.isCallExpression(decl.initializer) &&
-            ts.isIdentifier(decl.initializer.expression) &&
-            decl.initializer.expression.text === 'createSimpleComponent'
-          ) {
-            info.kind = 'simple';
-            const args = decl.initializer.arguments;
-            if (args[0] && ts.isStringLiteral(args[0])) info.pNames.add(args[0].text);
-            if (args[1]) {
-              if (ts.isStringLiteral(args[1])) info.tag = args[1].text;
-              else info.dynamicTag = args[1].getText(sourceFile);
-            }
-            if (args[2]) info.defaultProps = args[2].getText(sourceFile);
-            if (args[3]) info.hasRefCallback = true;
-          } else if (ts.isIdentifier(decl.initializer)) {
-            info.kind = 'alias';
-            info.aliasTarget = decl.initializer.text;
-          } else {
-            info.kind = 'function';
-          }
-        }
-        const text = decl.initializer ? decl.initializer.getText(sourceFile) : '';
-        // Extract element name along with p attribute
-        for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
-          const element = match[1];
-          const pName = match[2];
-          info.pNames.add(pName);
-          info.elementMap.set(pName, element);
-        }
-        exports.push(info);
+        exports.push(buildInfoFromDecl(name, decl));
+        if (decl.initializer) processObjectAssignAttachments(name, decl.initializer);
       }
     } else if (ts.isFunctionDeclaration(node) && node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword) && node.name) {
       const info = {
@@ -71,7 +119,6 @@ function analyzeExports(sourceFile, sourceText) {
         elementMap: new Map(),
       };
       const text = node.getText(sourceFile);
-      // Extract element name along with p attribute
       for (const match of text.matchAll(/<(\w+)[^>]*\bp\s*=\s*["']([^"']+)["']/g)) {
         const element = match[1];
         const pName = match[2];
@@ -90,6 +137,7 @@ function analyzeExports(sourceFile, sourceText) {
         const property = expr.left.name.getText(sourceFile);
         const target = expr.right.getText(sourceFile);
         attachments.push({owner, property, target});
+        if (ts.isIdentifier(expr.right)) addSyntheticExport(expr.right.text);
       }
     }
   });
@@ -337,6 +385,8 @@ function getComponentDescription(componentName, entry) {
     Kbd: 'Keyboard key',
     Empty: 'Empty state placeholder',
     Field: 'Form field group',
+    FieldDescription: 'Supporting helper text',
+    FieldError: 'Validation error message',
     OTPInput: 'One-time code input',
     AvatarGroup: 'Stacked avatar group',
   };
@@ -388,7 +438,7 @@ async function generateComponentDoc(entry) {
   const attachmentRows = attachments.map((item) => `- \`${item.owner}.${item.property} = ${item.target}\``);
 
   const usageSnippet = entry.usage ?? `<${exports[0]?.name ?? entry.title.replace(/\s+/g, '')} />`;
-  const importNames = exports.map((exp) => exp.name).sort();
+  const importNames = exports.filter((exp) => !exp.synthetic).map((exp) => exp.name).sort();
   const importLine = importNames.length ? `import {${importNames.join(', ')}} from 'kinu';` : `import {${entry.title}} from 'kinu';`;
 
   const lines = [];
