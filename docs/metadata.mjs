@@ -835,7 +835,7 @@ export default [
     notes: [
       'Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\\\d*"` — iOS SMS autofill, paste, and password managers just work.',
       'The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.',
-      'Set `width` (or wrap in a sized container) to control the overall input size; cells distribute evenly across that width.'
+      'Each cell is `--k-otp-cell` wide (defaults to `2.5rem`); total input width is `maxLength × --k-otp-cell`. Override the variable to resize.'
     ]
   },
   {

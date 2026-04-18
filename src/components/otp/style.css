@@ -1,24 +1,27 @@
 @import "../../variables.css";
 
 [k="otp"] {
+  --k-otp-cell: 2.5rem;
   --k-otp-len: attr(maxlength type(<number>), 4);
-  --k-otp-cell: calc(100% / var(--k-otp-len));
-  padding: 0;
+  height: var(--k-otp-cell);
+  width: calc(var(--k-otp-len) * var(--k-otp-cell));
+  letter-spacing: calc(var(--k-otp-cell) - 1ch);
   border: 1px solid hsl(var(--k-input));
   border-radius: var(--k-radius);
   background:
     repeating-linear-gradient(
       to right,
-      transparent 0 var(--k-otp-cell),
-      hsl(var(--k-input)) var(--k-otp-cell) calc(var(--k-otp-cell) + 1px)
+      transparent 0 calc(var(--k-otp-cell) - 1px),
+      hsl(var(--k-input)) var(--k-otp-cell) var(--k-otp-cell)
     )
     hsl(var(--k-background));
-  font: 600 200% ui-monospace, monospace;
+  background-position: 0.3em 0;
+  font: 600 2em ui-monospace, monospace;
   color: hsl(var(--k-foreground));
   text-overflow: clip;
-  text-justify: inter-character;
-  text-align-last: justify;
-  padding-inline: calc((var(--k-otp-cell) - 1ch) / 2);
+  padding-left: 0.6em;
+  box-sizing: content-box;
+  -webkit-text-stroke-width: thick;
 }
 
 [k="otp"]:focus-visible {
