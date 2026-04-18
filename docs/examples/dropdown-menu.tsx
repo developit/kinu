@@ -22,21 +22,37 @@ export function Demo() {
           <Button variant="outline">Actions ▼</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <Item onClick={() => logText('Edit clicked')}>
-            Edit
-          </Item>
-          <Item onClick={() => logText('Copy clicked')}>
-            Copy
-          </Item>
-          <Item onClick={() => logText('Delete clicked')}>
-            Delete
-          </Item>
+          <Item onClick={() => logText('Edit clicked')}>Edit</Item>
+          <Item onClick={() => logText('Copy clicked')}>Copy</Item>
+          <Item onClick={() => logText('Delete clicked')}>Delete</Item>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button variant="outline">Adaptive ↕</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent mobile="drawer">
+          <Item onClick={() => logText('Profile')}>Profile</Item>
+          <Item onClick={() => logText('Settings')}>Settings</Item>
+          <Item onClick={() => logText('Billing')}>Billing</Item>
+          <Item onClick={() => logText('Sign out')}>Sign out</Item>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
   );
 }
 
-export const code = `<DropdownMenu>...</DropdownMenu>`;
+export const code = `{/* Standard menu */}
+<DropdownMenu>
+  <DropdownMenuTrigger><Button>Actions</Button></DropdownMenuTrigger>
+  <DropdownMenuContent>...</DropdownMenuContent>
+</DropdownMenu>
+
+{/* Adaptive: menu on desktop, drawer on mobile */}
+<DropdownMenu>
+  <DropdownMenuTrigger><Button>Adaptive</Button></DropdownMenuTrigger>
+  <DropdownMenuContent mobile="drawer">...</DropdownMenuContent>
+</DropdownMenu>`;
 
 export default {Demo, code};
