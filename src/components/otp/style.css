@@ -1,0 +1,30 @@
+@import "../../variables.css";
+
+[k="otp"] {
+  --k-otp-cell: 2.5rem;
+  width: calc(var(--k-otp-len, 6) * var(--k-otp-cell));
+  height: var(--k-otp-cell);
+  padding: 0;
+  border: 1px solid hsl(var(--k-input));
+  border-radius: var(--k-radius);
+  background:
+    repeating-linear-gradient(
+      to right,
+      transparent 0 var(--k-otp-cell),
+      hsl(var(--k-input)) var(--k-otp-cell) calc(var(--k-otp-cell) + 1px)
+    )
+    hsl(var(--k-background));
+  font: 600 1.125rem ui-monospace, monospace;
+  color: hsl(var(--k-foreground));
+  letter-spacing: calc(var(--k-otp-cell) - 1ch);
+  text-indent: calc((var(--k-otp-cell) - 1ch) / 2);
+}
+
+[k="otp"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+}
+
+[k="otp"]:invalid {
+  border-color: hsl(var(--k-destructive));
+}

@@ -4,7 +4,7 @@ import type {BaseProps} from '../../types/component-props';
 /**
  * Visual variants supported by Alert.
  */
-export type AlertVariant = 'destructive';
+export type AlertVariant = 'destructive' | 'info' | 'success' | 'warning';
 
 export interface AlertOwnProps extends BaseProps {
   /**

@@ -17,6 +17,12 @@ export interface ContextMenuContentOwnProps {
    * Override the auto-generated dialog ID.
    */
   id?: string;
+
+  /**
+   * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+   * while keeping context-menu behavior on larger screens.
+   */
+  mobile?: 'drawer';
 }
 
 export type ContextMenuTriggerProps = ContextMenuTriggerOwnProps &

@@ -3,6 +3,7 @@ import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {
   installCommands,
+  installAdaptiveCommands,
   installDialogsDropdowns,
   installMenuShortcuts,
 } from '../../lib/commands';
@@ -18,6 +19,7 @@ const IdCtx = createContext<string | undefined>(undefined);
 
 export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   installCommands();
+  installAdaptiveCommands();
   installDialogsDropdowns();
   installMenuShortcuts();
   const gen = useId();
