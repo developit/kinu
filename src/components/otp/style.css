@@ -21,7 +21,6 @@
   text-overflow: clip;
   padding-left: 0.6em;
   box-sizing: content-box;
-  -webkit-text-stroke-width: thick;
 }
 
 [k="otp"]:focus-visible {
