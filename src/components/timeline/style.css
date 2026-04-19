@@ -1,0 +1,50 @@
+@import "../../variables.css";
+
+[k="timeline"] {
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+[k="timeline"]::before {
+  content: "";
+  position: absolute;
+  left: 0.3125rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background-color: hsl(var(--k-border));
+}
+
+[k="timeline-entry"] {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: hsl(var(--k-foreground));
+}
+
+[k="timeline-entry"]::before {
+  content: "";
+  position: absolute;
+  left: -1.0625rem;
+  top: 0.375rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--k-muted-foreground));
+  box-shadow: 0 0 0 2px hsl(var(--k-background));
+}
+
+[k="timeline-entry"][time]::after {
+  content: attr(time);
+  margin-left: auto;
+  padding-left: 0.5rem;
+  color: hsl(var(--k-muted-foreground));
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}

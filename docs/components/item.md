@@ -14,9 +14,12 @@ import {Item} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Item | Component | `p="item"` |
+| Item | Selectable row | — |
+| Item.Field | Form-control row | `<label k="item">` |
 
 ## Props
+
+### ItemProps
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -25,11 +28,18 @@ import {Item} from 'kinu';
 | shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
 | destructive | `boolean` | — | Applies destructive styling to the item. |
 
+### Item.FieldProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| selected | `boolean` | — | Marks the row as selected for styling. |
+
 ## Notes
 
-- Renders as <button> by default, or <a> when href is provided.
+- Renders as `<button>` by default, or `<a>` when href is provided.
 - The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.
-- Also available as .Item on parent components (e.g. DropdownMenu.Item).
+- Also available as `.Item` on parent components (e.g. `DropdownMenu.Item`).
+- `<Item.Field>` renders as `<label>` so the whole row acts as the click target for a nested form control — drop a `<Checkbox>`, `<Switch>`, `<Radio>`, `<Input>`, `<Slider>`, etc. inside it.
 
 ---
 

@@ -333,6 +333,15 @@
     "description": "Animated shimmer placeholder for loading states."
   },
   {
+    "slug": "timeline",
+    "title": "Timeline",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 4,
+    "file": "components/timeline.md",
+    "description": "Vertical sequence of events with connecting line + dot markers."
+  },
+  {
     "slug": "select",
     "title": "Select",
     "section": "Components",

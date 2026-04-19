@@ -27,6 +27,16 @@ export type ItemProps = ItemOwnProps &
   Omit<JSX.IntrinsicElements['button'], keyof ItemOwnProps> &
   Omit<JSX.IntrinsicElements['a'], keyof ItemOwnProps>;
 
+export interface ItemFieldOwnProps extends BaseProps {
+  /**
+   * Marks the row as selected for styling.
+   */
+  selected?: boolean;
+}
+
+export type ItemFieldProps = ItemFieldOwnProps &
+  Omit<JSX.IntrinsicElements['label'], keyof ItemFieldOwnProps>;
+
 // Context-specific interfaces: same runtime component, narrowed docs surface.
 
 /** Item used inside a DropdownMenu. */

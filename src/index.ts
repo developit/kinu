@@ -4,6 +4,8 @@ export {Item} from './components/item';
 export type {
   ItemProps,
   ItemOwnProps,
+  ItemFieldProps,
+  ItemFieldOwnProps,
   DropdownMenuItemProps,
   DropdownMenuItemOwnProps,
   ContextMenuItemProps,
@@ -319,6 +321,13 @@ export type {
 } from './components/field/types';
 export {OTPInput} from './components/otp';
 export type {OTPInputProps, OTPInputOwnProps} from './components/otp/types';
+export {Timeline} from './components/timeline';
+export type {
+  TimelineProps,
+  TimelineOwnProps,
+  TimelineEntryProps,
+  TimelineEntryOwnProps,
+} from './components/timeline/types';
 export {Tree} from './components/tree';
 export type {
   TreeRootProps,

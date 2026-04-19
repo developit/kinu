@@ -149,9 +149,10 @@ export default [
     description: 'Generic selectable item for lists, menus, comboboxes, and more.',
     usage: '<Item selected>Inbox</Item>',
     notes: [
-      'Renders as <button> by default, or <a> when href is provided.',
+      'Renders as `<button>` by default, or `<a>` when href is provided.',
       'The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.',
-      'Also available as .Item on parent components (e.g. DropdownMenu.Item).'
+      'Also available as `.Item` on parent components (e.g. `DropdownMenu.Item`).',
+      '`<Item.Field>` renders as `<label>` so the whole row acts as the click target for a nested form control — drop a `<Checkbox>`, `<Switch>`, `<Radio>`, `<Input>`, `<Slider>`, etc. inside it.'
     ]
   },
   {
@@ -836,6 +837,21 @@ export default [
       'Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\\\d*"` — iOS SMS autofill, paste, and password managers just work.',
       'The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.',
       'Each cell is `--k-otp-cell` wide (defaults to `2.5rem`); total input width is `maxLength × --k-otp-cell`. Override the variable to resize.'
+    ]
+  },
+  {
+    slug: 'timeline',
+    title: 'Timeline',
+    section: 'Components',
+    category: 'Data Display',
+    order: 4,
+    folder: 'timeline',
+    description: 'Vertical sequence of events with connecting line + dot markers.',
+    usage: `<Timeline>\n  <Timeline.Entry time="2h ago">Jason pushed 3 commits</Timeline.Entry>\n  <Timeline.Entry time="yesterday">Merged #234</Timeline.Entry>\n</Timeline>`,
+    notes: [
+      'Renders as `<ol>` + `<li>` so activity feeds and audit logs stay semantic.',
+      'The connecting line is drawn by a single `::before` on the list, so it scales with entry count without `:last-child` juggling.',
+      'Set a `time` prop on an entry to render a trailing timestamp via `content: attr(time)`; pass any string — "2h ago", "Mar 14", "08:12", etc.'
     ]
   },
   {

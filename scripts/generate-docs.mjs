@@ -291,6 +291,7 @@ function extractPropsFromTypes(typesPath) {
 function getComponentDescription(componentName, entry) {
   // Simple component-name-to-description mapping
   const descriptions = {
+    Item: 'Selectable row',
     Badge: 'Inline status indicator',
     Button: 'Interactive action control',
     Card: 'Surface container',
@@ -390,6 +391,9 @@ function getComponentDescription(componentName, entry) {
     FieldError: 'Validation error message',
     OTPInput: 'One-time code input',
     AvatarGroup: 'Stacked avatar group',
+    Timeline: 'Timeline container',
+    TimelineEntry: 'Timeline event',
+    ItemField: 'Form-control row',
   };
 
   return descriptions[componentName] || 'Component';
