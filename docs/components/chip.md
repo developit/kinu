@@ -5,7 +5,7 @@ Badge-like label with an optional inline action button.
 ## Usage
 
 ```tsx
-import {Chip, ChipButton} from 'kinu';
+import {Chip} from 'kinu';
 
 <Chip>Tag<Chip.Button onClick={remove}>×</Chip.Button></Chip>
 ```
@@ -14,8 +14,8 @@ import {Chip, ChipButton} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ChipButton | Component | `<span k="chip-button">` |
 | Chip | Component | — |
+| Chip.Button | Component | `<span k="chip-button">` |
 
 ## Props
 
@@ -23,10 +23,6 @@ import {Chip, ChipButton} from 'kinu';
 | --- | --- | --- | --- |
 | variant | `ChipVariant` | — | Visual variant for the chip. |
 | selected | `boolean` | — | Marks the chip as selected for styling. |
-
-### Static Shortcuts
-
-- `Chip.Button = ChipButton`
 
 ## Notes
 

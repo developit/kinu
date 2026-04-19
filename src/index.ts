@@ -60,6 +60,8 @@ export {Tooltip} from './components/tooltip';
 export type {TooltipProps, TooltipOwnProps} from './components/tooltip/types';
 export {Progress} from './components/progress';
 export type {ProgressProps, ProgressOwnProps} from './components/progress/types';
+export {ProgressRing} from './components/progress-ring';
+export type {ProgressRingProps, ProgressRingOwnProps} from './components/progress-ring/types';
 export {Skeleton} from './components/skeleton';
 export type {SkeletonProps, SkeletonOwnProps} from './components/skeleton/types';
 export {Switch} from './components/switch';

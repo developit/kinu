@@ -297,6 +297,15 @@
     "description": "Styled progress meter with determinate and indeterminate states."
   },
   {
+    "slug": "progress-ring",
+    "title": "Progress Ring",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 3,
+    "file": "components/progress-ring.md",
+    "description": "Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask."
+  },
+  {
     "slug": "scroll-area",
     "title": "Scroll Area",
     "section": "Components",

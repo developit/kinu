@@ -5,11 +5,11 @@ Interactive selectable list with shared item styling.
 ## Usage
 
 ```tsx
-import {List, ListItem} from 'kinu';
+import {List} from 'kinu';
 
 <List>
-  <ListItem selected>Inbox</ListItem>
-  <ListItem>Drafts</ListItem>
+  <List.Item selected>Inbox</List.Item>
+  <List.Item>Drafts</List.Item>
 </List>
 ```
 
@@ -17,7 +17,6 @@ import {List, ListItem} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ListItem | Component | Alias of Item |
 | List | Component | — |
 
 ## Props
@@ -26,6 +25,10 @@ import {List, ListItem} from 'kinu';
 | --- | --- | --- | --- |
 | variant | `"nav"` | — | Visual variant for the list.
 - `nav`: Uses accent colors for hover/focus/selected (sidebar-style). |
+
+### Static Shortcuts
+
+- `List.Item = Item`
 
 ## Notes
 

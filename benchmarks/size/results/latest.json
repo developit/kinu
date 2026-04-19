@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-04-18T03:47:21.975Z",
+  "generatedAt": "2026-04-19T19:30:40.336Z",
   "results": [
     {
       "id": "one-component",
       "label": "One component (Button)",
-      "raw": 6315,
-      "gzip": 1761,
-      "brotli": 1512
+      "raw": 6356,
+      "gzip": 1773,
+      "brotli": 1526
     },
     {
       "id": "few-components",
       "label": "A few components (Button + Input + Dialog + Popover + Tabs)",
-      "raw": 14542,
-      "gzip": 3321,
-      "brotli": 2890
+      "raw": 14583,
+      "gzip": 3335,
+      "brotli": 2904
     },
     {
       "id": "nearly-all-components",
       "label": "Nearly all components (namespace import)",
-      "raw": 66881,
-      "gzip": 13470,
-      "brotli": 11837
+      "raw": 68967,
+      "gzip": 13934,
+      "brotli": 12215
     }
   ]
 }

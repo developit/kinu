@@ -1,0 +1,53 @@
+@import "../../variables.css";
+
+@property --p {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+[k="progress-ring"] {
+  --k-progress-ring-size: 2.5rem;
+  --k-progress-ring-thickness: 0.25rem;
+  --p: calc(attr(value type(<number>), 0) / attr(max type(<number>), 100));
+  display: inline-block;
+  width: var(--k-progress-ring-size);
+  height: var(--k-progress-ring-size);
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      hsl(var(--k-primary)) calc(var(--p) * 360deg),
+      hsl(var(--k-secondary)) 0
+    );
+  -webkit-mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--k-progress-ring-thickness) - 1px),
+    #000 calc(100% - var(--k-progress-ring-thickness))
+  );
+          mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--k-progress-ring-thickness) - 1px),
+    #000 calc(100% - var(--k-progress-ring-thickness))
+  );
+  transition: --p 300ms var(--k-ease);
+}
+
+[k="progress-ring"][size="sm"] {
+  --k-progress-ring-size: 1.5rem;
+  --k-progress-ring-thickness: 0.1875rem;
+}
+
+[k="progress-ring"][size="lg"] {
+  --k-progress-ring-size: 4rem;
+  --k-progress-ring-thickness: 0.375rem;
+}
+
+/* No value attribute → indeterminate (matches native <progress> semantics) */
+[k="progress-ring"]:not([value]) {
+  --p: 0.25;
+  animation: k-progress-ring-spin 1s linear infinite;
+}
+
+@keyframes k-progress-ring-spin {
+  to { transform: rotate(360deg); }
+}

@@ -511,6 +511,21 @@ export default [
     ]
   },
   {
+    slug: 'progress-ring',
+    title: 'Progress Ring',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'progress-ring',
+    description: 'Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask.',
+    usage: '<ProgressRing value={60} max={100} />',
+    notes: [
+      'Pure CSS: uses typed `attr()` to read `value`/`max` directly from the DOM (Chrome 133+, Safari 18.4+, Firefox 140+).',
+      'Omit `value` (or pass `undefined`) to render an indeterminate spinning ring, matching native `<progress>` semantics.',
+      'Override `--k-progress-ring-size` and `--k-progress-ring-thickness` to customise dimensions.'
+    ]
+  },
+  {
     slug: 'radio-group',
     title: 'Radio Group',
     section: 'Components',
