@@ -692,7 +692,7 @@ export default [
     order: 1,
     folder: 'list',
     description: 'Interactive selectable list with shared item styling.',
-    usage: `<List>\n  <ListItem selected>Inbox</ListItem>\n  <ListItem>Drafts</ListItem>\n</List>`,
+    usage: `<List>\n  <List.Item selected>Inbox</List.Item>\n  <List.Item>Drafts</List.Item>\n</List>`,
     notes: [
       'Items render as `<button>` by default, or `<a>` when href is provided.',
       'Use variant="nav" for sidebar-style navigation with softer accent colors.',

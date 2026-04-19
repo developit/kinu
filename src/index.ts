@@ -311,7 +311,7 @@ export type {
   TreeItemProps,
   TreeItemOwnProps,
 } from './components/tree/types';
-export {List, ListItem} from './components/list';
+export {List} from './components/list';
 export type {
   ListProps,
   ListOwnProps,
@@ -330,7 +330,7 @@ export type {
   ListboxListProps,
   ListboxListOwnProps,
 } from './components/listbox/types';
-export {Chip, ChipButton} from './components/chip';
+export {Chip} from './components/chip';
 export type {
   ChipProps,
   ChipOwnProps,

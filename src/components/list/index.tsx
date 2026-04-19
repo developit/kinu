@@ -13,13 +13,9 @@ const ListBase = createSimpleComponent<'div', ListOwnProps>(
   },
 );
 
-/** @deprecated Use `Item` instead. */
-export const ListItem = Item;
-
 type ListComponent = typeof ListBase & {
   Item: typeof Item;
 };
 
-export const List: ListComponent = Object.assign(ListBase, {
-  Item,
-});
+export const List = ListBase as ListComponent;
+List.Item = Item;

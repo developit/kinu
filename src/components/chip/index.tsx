@@ -8,7 +8,7 @@ function stop(e: MouseEvent) {
   e.stopPropagation();
 }
 
-export const ChipButton = createSimpleComponent<'span', ChipButtonOwnProps>(
+const ChipButton = createSimpleComponent<'span', ChipButtonOwnProps>(
   'chip-button',
   'span',
   {
