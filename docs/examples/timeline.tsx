@@ -3,25 +3,35 @@ import {Timeline} from 'kinu';
 export function Demo() {
   return (
     <Timeline style={{maxWidth: '28rem'}}>
-      <Timeline.Entry time="2h ago">
+      <Timeline.Entry>
         Jason pushed 3 commits to <code>main</code>.
+        <time>2h ago</time>
       </Timeline.Entry>
-      <Timeline.Entry time="5h ago">
+      <Timeline.Entry>
         CI passed on #234.
+        <time>5h ago</time>
       </Timeline.Entry>
-      <Timeline.Entry time="yesterday">
+      <Timeline.Entry>
         Merged <strong>Add Timeline component</strong>.
+        <time>yesterday</time>
       </Timeline.Entry>
-      <Timeline.Entry time="Mar 14">
+      <Timeline.Entry>
         Released <code>v0.2.0</code>.
+        <time dateTime="2024-03-14">Mar 14</time>
       </Timeline.Entry>
     </Timeline>
   );
 }
 
 export const code = `<Timeline>
-  <Timeline.Entry time="2h ago">Jason pushed 3 commits</Timeline.Entry>
-  <Timeline.Entry time="yesterday">Merged #234</Timeline.Entry>
+  <Timeline.Entry>
+    Jason pushed 3 commits
+    <time>2h ago</time>
+  </Timeline.Entry>
+  <Timeline.Entry>
+    Merged #234
+    <time>yesterday</time>
+  </Timeline.Entry>
 </Timeline>`;
 
 export default {Demo, code};

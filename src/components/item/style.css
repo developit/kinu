@@ -24,8 +24,7 @@
   &:hover,
   &:focus-visible,
   &[selected] {
-    background-color: hsl(var(--k-primary));
-    color: hsl(var(--k-primary-foreground));
+    background-color: hsl(var(--k-primary-soft));
   }
 
   &[disabled],
@@ -40,13 +39,6 @@
   margin-left: auto;
   color: hsl(var(--k-muted-foreground));
   letter-spacing: 0.02em;
-}
-
-[k="item"][shortcut]:hover::after,
-[k="item"][shortcut]:focus-visible::after,
-[k="item"][selected]::after {
-  color: inherit;
-  opacity: 0.85;
 }
 
 [k="item"][destructive] {
