@@ -733,7 +733,8 @@ export default [
     usage: '<Textarea rows={4} placeholder="Write here" />',
     notes: [
       'Wraps the native `<textarea>` for full form support.',
-      'Use the resize attribute to control user resizing.'
+      'Use the resize attribute to control user resizing.',
+      'Pass `autosize` to let the textarea grow with its content via native `field-sizing: content`. Supported in Chromium and Firefox; gracefully falls back to the fixed-height default elsewhere.'
     ]
   },
   {
