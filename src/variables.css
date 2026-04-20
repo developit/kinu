@@ -32,6 +32,14 @@
   --k-destructive-foreground: 210 40% 98%;
   --k-destructive-hover: 0 84.2% 50.2%;
 
+  /* Semantic status colors (shared by alert, status, meter) */
+  --k-success: 142 71% 45%;
+  --k-success-foreground: 0 0% 100%;
+  --k-warning: 38 92% 50%;
+  --k-warning-foreground: 0 0% 100%;
+  --k-info: 217 91% 60%;
+  --k-info-foreground: 0 0% 100%;
+
   /* Border and input */
   --k-border: 214.3 31.8% 91.4%;
   --k-input: 214.3 31.8% 91.4%;

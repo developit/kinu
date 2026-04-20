@@ -14,16 +14,16 @@
 }
 
 [k="alert"][variant="info"] {
-  background-color: hsl(217 91% 60%);
-  color: #fff;
+  background-color: hsl(var(--k-info));
+  color: hsl(var(--k-info-foreground));
 }
 
 [k="alert"][variant="success"] {
-  background-color: hsl(142 71% 45%);
-  color: #fff;
+  background-color: hsl(var(--k-success));
+  color: hsl(var(--k-success-foreground));
 }
 
 [k="alert"][variant="warning"] {
-  background-color: hsl(38 92% 50%);
-  color: #fff;
+  background-color: hsl(var(--k-warning));
+  color: hsl(var(--k-warning-foreground));
 }
