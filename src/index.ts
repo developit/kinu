@@ -378,4 +378,6 @@ export type {
 } from './components/status/types';
 export {Meter} from './components/meter';
 export type {MeterProps, MeterOwnProps} from './components/meter/types';
+export {Prose} from './components/prose';
+export type {ProseProps, ProseOwnProps} from './components/prose/types';
 export * from './components/typography';

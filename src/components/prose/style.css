@@ -1,0 +1,63 @@
+@import "../../variables.css";
+
+[k="prose"] {
+  --k-prose-spacing: 1em;
+  --k-prose-font: inherit;
+  --k-prose-heading-weight: 600;
+  font-family: var(--k-prose-font);
+  line-height: 1.6;
+}
+
+[k="prose"] > :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: var(--k-prose-heading-weight);
+  line-height: 1.2;
+  margin-block: calc(var(--k-prose-spacing) * 1.5) var(--k-prose-spacing);
+}
+
+[k="prose"] > :is(p, ul, ol, blockquote, pre) {
+  margin-block: var(--k-prose-spacing);
+}
+
+[k="prose"] :is(ul, ol) {
+  padding-inline-start: 1.5em;
+}
+
+[k="prose"] a {
+  color: hsl(var(--k-primary));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+[k="prose"] code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: hsl(var(--k-muted));
+  padding: 0.125em 0.375em;
+  border-radius: calc(var(--k-radius) - 0.25rem);
+}
+
+[k="prose"] pre {
+  overflow-x: auto;
+  background: hsl(var(--k-muted));
+  padding: 0.75em 1em;
+  border-radius: var(--k-radius);
+}
+
+[k="prose"] pre code {
+  background: none;
+  padding: 0;
+}
+
+[k="prose"] blockquote {
+  border-inline-start: 3px solid hsl(var(--k-border));
+  padding-inline-start: 1em;
+  color: hsl(var(--k-muted-foreground));
+}
+
+[k="prose"] :first-child {
+  margin-block-start: 0;
+}
+
+[k="prose"] :last-child {
+  margin-block-end: 0;
+}

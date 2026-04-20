@@ -396,6 +396,7 @@ function getComponentDescription(componentName, entry) {
     ItemField: 'Form-control row',
     Status: 'Status indicator',
     Meter: 'Measurement gauge',
+    Prose: 'Typography wrapper',
   };
 
   return descriptions[componentName] || 'Component';

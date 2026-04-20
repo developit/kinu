@@ -405,6 +405,15 @@
     "description": "Bottom sheet style overlay with trigger and close helpers."
   },
   {
+    "slug": "prose",
+    "title": "Prose",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 5,
+    "file": "components/prose.md",
+    "description": "Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies)."
+  },
+  {
     "slug": "slider",
     "title": "Slider",
     "section": "Components",

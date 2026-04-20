@@ -913,5 +913,20 @@ export default [
       'Forwards every native `<meter>` attribute.',
       'Fill color reflects the value range: primary when in the optimum band, warning in the suboptimum band, destructive outside.'
     ]
+  },
+  {
+    slug: 'prose',
+    title: 'Prose',
+    section: 'Components',
+    category: 'Data Display',
+    order: 5,
+    folder: 'prose',
+    description: 'Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies).',
+    usage: '<Prose><h1>Title</h1><p>Body...</p></Prose>',
+    notes: [
+      'Tune spacing, font, and heading weight via CSS variables: `--k-prose-spacing`, `--k-prose-font`, `--k-prose-heading-weight`.',
+      'Only styles direct and nested standard elements; does not touch Kinu components used inside.',
+      'First/last child margins are zeroed so the wrapper can drop into any layout without margin collapse.'
+    ]
   }
 ];
