@@ -7,7 +7,7 @@ Inline status indicator with a colored dot prefix.
 ```tsx
 import {Status} from 'kinu';
 
-<Status tone="online">Online</Status>
+<Status tone="success">Online</Status>
 ```
 
 ## Exports
@@ -25,7 +25,7 @@ import {Status} from 'kinu';
 ## Notes
 
 - Wraps a `<span>` and renders the dot via `::before` so any inline layout works.
-- Tones: `online`, `away`, `offline`, `busy`. Omit the tone for a neutral muted dot.
+- Tones mirror the semantic color tokens: `success`, `warning`, `info`, `destructive`. Omit the tone for a neutral muted dot.
 
 ---
 

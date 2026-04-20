@@ -894,10 +894,10 @@ export default [
     order: 4,
     folder: 'status',
     description: 'Inline status indicator with a colored dot prefix.',
-    usage: '<Status tone="online">Online</Status>',
+    usage: '<Status tone="success">Online</Status>',
     notes: [
       'Wraps a `<span>` and renders the dot via `::before` so any inline layout works.',
-      'Tones: `online`, `away`, `offline`, `busy`. Omit the tone for a neutral muted dot.'
+      'Tones mirror the semantic color tokens: `success`, `warning`, `info`, `destructive`. Omit the tone for a neutral muted dot.'
     ]
   },
   {

@@ -16,7 +16,7 @@
   background-color: hsl(var(--k-muted-foreground));
 }
 
-[k="status"][tone="online"]::before  { background-color: hsl(var(--k-success)); }
-[k="status"][tone="away"]::before    { background-color: hsl(var(--k-warning)); }
-[k="status"][tone="offline"]::before { background-color: hsl(var(--k-muted-foreground)); }
-[k="status"][tone="busy"]::before    { background-color: hsl(var(--k-destructive)); }
+[k="status"][tone="success"]::before     { background-color: hsl(var(--k-success)); }
+[k="status"][tone="warning"]::before     { background-color: hsl(var(--k-warning)); }
+[k="status"][tone="info"]::before        { background-color: hsl(var(--k-info)); }
+[k="status"][tone="destructive"]::before { background-color: hsl(var(--k-destructive)); }
