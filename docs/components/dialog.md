@@ -48,6 +48,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 - Relies on command attributes instead of portal gymnastics.
 - Dialog.Content forwards all native `<dialog>` props.
 - For React-controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal via the `beforetoggle` hook, and the browser's `close` event drives the state-sync callback.
+- For URL-routable dialog state (shareable, back-button friendly), give `Dialog.Content` an `id` and link to it with `<a href="#confirm">Open</a>`. The native `:target` pseudo-class means the dialog open state survives refresh and is part of browser history. No Kinu code required.
 
 ---
 

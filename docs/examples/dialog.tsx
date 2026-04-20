@@ -59,6 +59,32 @@ export function Demo() {
           </div>
         </Dialog.Content>
       </Dialog>
+
+      <Dialog>
+        <a href="#confirm-delete">
+          <Button variant="outline">Open via link (#confirm-delete)</Button>
+        </a>
+        <Dialog.Content id="confirm-delete">
+          <h3 style={{margin: '0 0 1rem 0'}}>URL-routable</h3>
+          <p
+            style={{
+              margin: '0 0 1rem 0',
+              color: 'hsl(var(--k-muted-foreground))',
+            }}
+          >
+            This variant uses the native <code>:target</code> pseudo-class.
+            Open it via the link above and reload — the dialog stays open
+            because the URL hash is part of the page state.
+          </p>
+          <div
+            style={{display: 'flex', gap: '0.5rem', justifyContent: 'flex-end'}}
+          >
+            <a href="#">
+              <Button>Close</Button>
+            </a>
+          </div>
+        </Dialog.Content>
+      </Dialog>
     </div>
   );
 }
@@ -72,6 +98,12 @@ export const code = `{/* Declarative (command-based) */}
 {/* React-controlled */}
 <Dialog.Content open={open} onClose={() => setOpen(false)}>
   ...
-</Dialog.Content>`;
+</Dialog.Content>
+
+{/* URL-routable via :target */}
+<Dialog>
+  <a href="#confirm-delete"><Button>Open</Button></a>
+  <Dialog.Content id="confirm-delete">...</Dialog.Content>
+</Dialog>`;
 
 export default {Demo, code};
