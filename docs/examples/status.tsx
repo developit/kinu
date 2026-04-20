@@ -18,7 +18,8 @@ export function Demo() {
         <Status pulse variant="info">Recording</Status>
       </div>
 
-      {/* Bare dot — no label. Provide aria-label for screen readers. */}
+      {/* Bare dot — aria-label is announced to screen readers AND
+          shown as a tooltip on hover/focus. */}
       <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
         <Status variant="success" aria-label="Online" />
         <Status variant="warning" aria-label="Away" />
@@ -40,7 +41,8 @@ export const code = `{/* With a label */}
 <Status variant="success">Online</Status>
 <Status pulse variant="success">Live</Status>
 
-{/* Bare dot — no children. Provide aria-label for a11y. */}
+{/* Bare dot — aria-label drives both screen-reader text AND
+    the on-hover tooltip, so sighted users see what SR users hear. */}
 <Status variant="success" aria-label="Online" />
 
 {/* Dot and gap scale with surrounding font-size (em-based). */}
