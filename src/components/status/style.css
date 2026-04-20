@@ -17,10 +17,10 @@
   background-color: currentColor;
 }
 
-[k="status"][tone="success"]::before     { color: hsl(var(--k-success)); }
-[k="status"][tone="warning"]::before     { color: hsl(var(--k-warning)); }
-[k="status"][tone="info"]::before        { color: hsl(var(--k-info)); }
-[k="status"][tone="destructive"]::before { color: hsl(var(--k-destructive)); }
+[k="status"][variant="success"]::before     { color: hsl(var(--k-success)); }
+[k="status"][variant="warning"]::before     { color: hsl(var(--k-warning)); }
+[k="status"][variant="info"]::before        { color: hsl(var(--k-info)); }
+[k="status"][variant="destructive"]::before { color: hsl(var(--k-destructive)); }
 
 [k="status"][pulse]::before {
   animation: k-status-pulse 1.5s var(--k-ease-out) infinite;

@@ -374,7 +374,7 @@ export {Status} from './components/status';
 export type {
   StatusProps,
   StatusOwnProps,
-  StatusTone,
+  StatusVariant,
 } from './components/status/types';
 export {Meter} from './components/meter';
 export type {MeterProps, MeterOwnProps} from './components/meter/types';
