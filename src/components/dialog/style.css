@@ -1,6 +1,7 @@
 @import "../../variables.css";
 
 [k="dialog-content"] {
+  --modal: 1;
   border: none;
   border-radius: var(--k-radius);
   background-color: hsl(var(--k-background));

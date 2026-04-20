@@ -21,12 +21,10 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 | --- | --- | --- |
 | ComboboxInput | Search input | `<input k="combobox-input">` |
 | ComboboxList | Results list | `<dialog k="combobox-list">` |
-| ComboboxOption | Result option | `<button k="combobox-option">` |
+| ComboboxOption | Result option | Alias of Item |
 | Combobox | Autocomplete input | — |
 
 ## Props
-
-### ComboboxInputProps
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -35,13 +33,11 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 | onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
 | disabled | `boolean` | — | Disable the input. |
 
-### ComboboxOptionProps
+### Static Shortcuts
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| selected | `boolean` | — | Marks the option as selected for styling. |
-| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
-| destructive | `boolean` | — | Applies destructive styling to the option. |
+- `Combobox.Input = ComboboxInput`
+- `Combobox.List = ComboboxList`
+- `Combobox.Option = Item`
 
 ## Notes
 

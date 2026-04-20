@@ -1,0 +1,79 @@
+@import "../../variables.css";
+
+@property --p {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+[k="progress-ring"] {
+  --k-progress-ring-size: 2.5rem;
+  --k-progress-ring-thickness: 0.25rem;
+  --k-progress-ring-color: currentColor;
+  --k-progress-ring-track: hsl(var(--k-muted-foreground) / 0.25);
+  --p: calc(attr(value type(<number>), 0) / attr(max type(<number>), 100));
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  width: var(--k-progress-ring-size);
+  height: var(--k-progress-ring-size);
+  border: 0;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      var(--k-progress-ring-color) calc(var(--p) * 360deg),
+      var(--k-progress-ring-track) 0
+    );
+  -webkit-mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--k-progress-ring-thickness) - 1px),
+    #000 calc(100% - var(--k-progress-ring-thickness))
+  );
+          mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--k-progress-ring-thickness) - 1px),
+    #000 calc(100% - var(--k-progress-ring-thickness))
+  );
+  transition: --p 300ms var(--k-ease);
+}
+
+[k="progress-ring"]::-webkit-progress-bar,
+[k="progress-ring"]::-webkit-progress-value {
+  background: transparent;
+}
+
+[k="progress-ring"]::-moz-progress-bar {
+  background: transparent;
+}
+
+[k="progress-ring"][size="sm"] {
+  --k-progress-ring-size: 1.5rem;
+  --k-progress-ring-thickness: 0.1875rem;
+}
+
+[k="progress-ring"][size="lg"] {
+  --k-progress-ring-size: 4rem;
+  --k-progress-ring-thickness: 0.375rem;
+}
+
+[k="progress-ring"][variant="primary"] {
+  --k-progress-ring-color: hsl(var(--k-primary));
+}
+
+[k="progress-ring"][variant="secondary"] {
+  --k-progress-ring-color: hsl(var(--k-muted-foreground));
+}
+
+[k="progress-ring"][variant="destructive"] {
+  --k-progress-ring-color: hsl(var(--k-destructive));
+}
+
+/* Native indeterminate state (no `value` attribute) */
+[k="progress-ring"]:indeterminate {
+  --p: 0.25;
+  animation: k-progress-ring-spin 1s linear infinite;
+}
+
+@keyframes k-progress-ring-spin {
+  to { transform: rotate(360deg); }
+}

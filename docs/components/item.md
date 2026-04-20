@@ -1,6 +1,6 @@
 # Item
 
-Generic selectable item used across all list-like containers: List, Listbox, DropdownMenu, ContextMenu, and Combobox.
+Generic selectable item for lists, menus, comboboxes, and more.
 
 ## Usage
 
@@ -8,36 +8,38 @@ Generic selectable item used across all list-like containers: List, Listbox, Dro
 import {Item} from 'kinu';
 
 <Item selected>Inbox</Item>
-<Item href="/settings">Settings</Item>
-<Item shortcut="⌘K">Command Palette</Item>
-<Item destructive>Delete</Item>
 ```
 
 ## Exports
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Item | Selectable item | `<button k="item">` or `<a k="item">` |
-
-Also available as `.Item` on parent components: `List.Item`, `Listbox.Item`, `DropdownMenu.Item`, `ContextMenu.Item`, `Combobox.Item`.
+| Item | Selectable row | — |
+| Item.Field | Form-control row | `<label k="item">` |
 
 ## Props
+
+### ItemProps
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | href | `string` | — | When provided, renders the item as an anchor element. |
 | selected | `boolean` | — | Marks the item as selected for styling. |
-| shortcut | `string` | — | Shortcut hint rendered on the trailing edge via CSS `::after`. |
-| destructive | `boolean` | — | Applies destructive (red) styling to the item. |
-| value | `string` | — | Native button value attribute. Used by Combobox to get the selection value. |
+| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
+| destructive | `boolean` | — | Applies destructive styling to the item. |
+
+### Item.FieldProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| selected | `boolean` | — | Marks the row as selected for styling. |
 
 ## Notes
 
-- Renders as `<button>` by default, or `<a>` when `href` is provided.
-- The same component works in every context — the parent container determines the styling and behavior.
-- The `shortcut` attribute is pure CSS (no JS), rendered via `::after`.
-- Keyboard navigation (arrow keys, Enter) is handled by the parent container.
-- In a List, selected items use foreground/background contrast. In menus, they use primary color.
+- Renders as `<button>` by default, or `<a>` when href is provided.
+- The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.
+- Also available as `.Item` on parent components (e.g. `DropdownMenu.Item`).
+- `<Item.Field>` renders as `<label>` so the whole row acts as the click target for a nested form control — drop a `<Checkbox>`, `<Switch>`, `<Radio>`, `<Input>`, `<Slider>`, etc. inside it.
 
 ---
 

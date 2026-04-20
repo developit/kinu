@@ -4,6 +4,8 @@ export {Item} from './components/item';
 export type {
   ItemProps,
   ItemOwnProps,
+  ItemFieldProps,
+  ItemFieldOwnProps,
   DropdownMenuItemProps,
   DropdownMenuItemOwnProps,
   ContextMenuItemProps,
@@ -58,6 +60,8 @@ export {Tooltip} from './components/tooltip';
 export type {TooltipProps, TooltipOwnProps} from './components/tooltip/types';
 export {Progress} from './components/progress';
 export type {ProgressProps, ProgressOwnProps} from './components/progress/types';
+export {ProgressRing} from './components/progress-ring';
+export type {ProgressRingProps, ProgressRingOwnProps} from './components/progress-ring/types';
 export {Skeleton} from './components/skeleton';
 export type {SkeletonProps, SkeletonOwnProps} from './components/skeleton/types';
 export {Switch} from './components/switch';
@@ -82,7 +86,13 @@ export type {SliderProps, SliderOwnProps} from './components/slider/types';
 export {Separator} from './components/separator';
 export type {SeparatorProps, SeparatorOwnProps} from './components/separator/types';
 export {Avatar} from './components/avatar';
-export type {AvatarProps, AvatarOwnProps, AvatarSize} from './components/avatar/types';
+export type {
+  AvatarProps,
+  AvatarOwnProps,
+  AvatarSize,
+  AvatarGroupProps,
+  AvatarGroupOwnProps,
+} from './components/avatar/types';
 export {Toggle} from './components/toggle';
 export type {ToggleProps, ToggleOwnProps} from './components/toggle/types';
 export {ToggleGroup} from './components/toggle-group';
@@ -298,6 +308,28 @@ export {Spinner} from './components/spinner';
 export type {SpinnerProps, SpinnerOwnProps, SpinnerSize, SpinnerType, SpinnerVariant} from './components/spinner/types';
 export {InputGroup} from './components/input-group';
 export type {InputGroupProps, InputGroupOwnProps} from './components/input-group/types';
+export {Kbd} from './components/kbd';
+export type {KbdProps, KbdOwnProps} from './components/kbd/types';
+export {Empty} from './components/empty';
+export type {EmptyProps, EmptyOwnProps} from './components/empty/types';
+export {Field} from './components/field';
+export type {
+  FieldProps,
+  FieldOwnProps,
+  FieldDescriptionProps,
+  FieldDescriptionOwnProps,
+  FieldErrorProps,
+  FieldErrorOwnProps,
+} from './components/field/types';
+export {OTPInput} from './components/otp';
+export type {OTPInputProps, OTPInputOwnProps} from './components/otp/types';
+export {Timeline} from './components/timeline';
+export type {
+  TimelineProps,
+  TimelineOwnProps,
+  TimelineEntryProps,
+  TimelineEntryOwnProps,
+} from './components/timeline/types';
 export {Tree} from './components/tree';
 export type {
   TreeRootProps,

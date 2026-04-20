@@ -45,15 +45,6 @@
     "description": ""
   },
   {
-    "slug": "item",
-    "title": "Item",
-    "section": "Components",
-    "category": "Actions",
-    "order": 0,
-    "file": "components/item.md",
-    "description": "Generic selectable item for lists, menus, comboboxes, and more."
-  },
-  {
     "slug": "button",
     "title": "Button",
     "section": "Components",
@@ -61,6 +52,15 @@
     "order": 0,
     "file": "components/button.md",
     "description": "Button component that forwards props to `<button>` or `<a>` when href is provided."
+  },
+  {
+    "slug": "item",
+    "title": "Item",
+    "section": "Components",
+    "category": "Actions",
+    "order": 0,
+    "file": "components/item.md",
+    "description": "Generic selectable item for lists, menus, comboboxes, and more."
   },
   {
     "slug": "badge",
@@ -79,6 +79,15 @@
     "order": 0,
     "file": "components/chip.md",
     "description": "Badge-like label with an optional inline action button."
+  },
+  {
+    "slug": "field",
+    "title": "Field",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 0,
+    "file": "components/field.md",
+    "description": "Layout wrapper that groups a label, control, description, and error message."
   },
   {
     "slug": "accordion",
@@ -135,15 +144,6 @@
     "description": "Hover/focus tooltip with placement attributes and CSS timing."
   },
   {
-    "slug": "tabs",
-    "title": "Tabs",
-    "section": "Components",
-    "category": "Navigation",
-    "order": 1,
-    "file": "components/tabs.md",
-    "description": "TabList, Tab, and TabPanel wrappers using aria attributes."
-  },
-  {
     "slug": "list",
     "title": "List",
     "section": "Components",
@@ -151,6 +151,15 @@
     "order": 1,
     "file": "components/list.md",
     "description": "Interactive selectable list with shared item styling."
+  },
+  {
+    "slug": "tabs",
+    "title": "Tabs",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 1,
+    "file": "components/tabs.md",
+    "description": "TabList, Tab, and TabPanel wrappers using aria attributes."
   },
   {
     "slug": "collapsible",
@@ -187,6 +196,15 @@
     "order": 2,
     "file": "components/input-group.md",
     "description": "Compact fieldset wrapper for joined controls like input and button rows."
+  },
+  {
+    "slug": "otp-input",
+    "title": "OTP Input",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 2,
+    "file": "components/otp-input.md",
+    "description": "Single `<input>` styled as N segmented one-time-code cells."
   },
   {
     "slug": "spinner",
@@ -234,6 +252,24 @@
     "description": "Composable modal built on the native `<dialog>` element."
   },
   {
+    "slug": "empty",
+    "title": "Empty",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 3,
+    "file": "components/empty.md",
+    "description": "Centered placeholder for no-data / no-results states."
+  },
+  {
+    "slug": "kbd",
+    "title": "Kbd",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 3,
+    "file": "components/kbd.md",
+    "description": "Styled `<kbd>` wrapper for keyboard shortcut glyphs."
+  },
+  {
     "slug": "tree",
     "title": "Tree",
     "section": "Components",
@@ -259,6 +295,15 @@
     "order": 3,
     "file": "components/progress.md",
     "description": "Styled progress meter with determinate and indeterminate states."
+  },
+  {
+    "slug": "progress-ring",
+    "title": "Progress Ring",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 3,
+    "file": "components/progress-ring.md",
+    "description": "Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask."
   },
   {
     "slug": "scroll-area",
@@ -295,6 +340,15 @@
     "order": 4,
     "file": "components/skeleton.md",
     "description": "Animated shimmer placeholder for loading states."
+  },
+  {
+    "slug": "timeline",
+    "title": "Timeline",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 4,
+    "file": "components/timeline.md",
+    "description": "Vertical sequence of events with connecting line + dot markers."
   },
   {
     "slug": "select",

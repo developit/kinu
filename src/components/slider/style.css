@@ -9,6 +9,7 @@
   appearance: none;
   outline: none;
   font-size: 1rem;
+  touch-action: pan-y;
 }
 [k="slider"]:disabled {
   --o: 0.5;

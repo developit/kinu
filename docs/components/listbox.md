@@ -1,17 +1,16 @@
 # Listbox
 
-Non-modal filterable list for inline search and selection. Like Combobox but always visible.
+Non-modal filterable list for inline search and selection.
 
 ## Usage
 
 ```tsx
-import {Item, Listbox, ListboxInput, ListboxList} from 'kinu';
+import {Listbox, ListboxInput, ListboxList, ListboxOption} from 'kinu';
 
 <Listbox>
   <ListboxInput placeholder="Filter..." />
   <ListboxList>
-    <Item>Apple</Item>
-    <Item>Banana</Item>
+    <ListboxOption>Apple</ListboxOption>
   </ListboxList>
 </Listbox>
 ```
@@ -20,14 +19,12 @@ import {Item, Listbox, ListboxInput, ListboxList} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Listbox | Outer container | `<div k="listbox">` |
-| ListboxInput | Filter input | `<input k="listbox-input">` |
-| ListboxList | Options container | `<div k="listbox-list">` |
-| Listbox.Item | Alias of Item | `<button k="item">` |
+| ListboxInput | Component | `<input k="listbox-input">` |
+| ListboxList | Component | `<div k="listbox-list">` |
+| ListboxOption | Component | Alias of Item |
+| Listbox | Component | — |
 
 ## Props
-
-### ListboxInputProps
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -36,17 +33,17 @@ import {Item, Listbox, ListboxInput, ListboxList} from 'kinu';
 | onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
 | disabled | `boolean` | — | Disable the input. |
 
-### Item Props
+### Static Shortcuts
 
-See the [Item](/docs/item) docs for the full prop reference.
+- `Listbox.Input = ListboxInput`
+- `Listbox.List = ListboxList`
+- `Listbox.Option = Item`
 
 ## Notes
 
-- Selection state is developer-controlled — set `selected` on items yourself via `onClick`.
-- Filtering only shows/hides items; it does not change selection.
-- Shares filtering logic with Combobox via the `filterItems` utility.
-- Unlike Combobox, the list is always visible (no dialog/popover).
-- Arrow keys navigate items while the input is focused.
+- Selection is developer-controlled via the selected attribute on options.
+- Shares filtering logic with Combobox via the filterItems utility.
+- Unlike Combobox, the list is always visible with no dialog or popover.
 - Compose with Dialog to build a command palette.
 
 ---

@@ -54,8 +54,11 @@ export default [
     order: 1,
     folder: 'alert',
     description: 'Inline status message with tone variants.',
-    usage: '<Alert variant="default">Heads up!</Alert>',
-    notes: ['Renders a `<div>` so you can include any markup you need.']
+    usage: '<Alert variant="info">Heads up!</Alert>',
+    notes: [
+      'Renders a `<div>` so you can include any markup you need.',
+      'Supports `destructive`, `info`, `success`, and `warning` tone variants.'
+    ]
   },
   {
     slug: 'alert-dialog',
@@ -93,7 +96,8 @@ export default [
     usage: '<Avatar alt="JM" src="/user.jpg" />',
     notes: [
       'Uses the alt attribute content as a CSS-rendered fallback when the image fails.',
-      'Override dimensions in CSS if you need sizes other than the 2rem default.'
+      'Override dimensions in CSS if you need sizes other than the 2rem default.',
+      'Wrap several avatars in `<Avatar.Group>` to get the overlapping stacked layout.'
     ]
   },
   {
@@ -145,9 +149,10 @@ export default [
     description: 'Generic selectable item for lists, menus, comboboxes, and more.',
     usage: '<Item selected>Inbox</Item>',
     notes: [
-      'Renders as <button> by default, or <a> when href is provided.',
+      'Renders as `<button>` by default, or `<a>` when href is provided.',
       'The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.',
-      'Also available as .Item on parent components (e.g. DropdownMenu.Item).'
+      'Also available as `.Item` on parent components (e.g. `DropdownMenu.Item`).',
+      '`<Item.Field>` renders as `<label>` so the whole row acts as the click target for a nested form control — drop a `<Checkbox>`, `<Switch>`, `<Radio>`, `<Input>`, `<Slider>`, etc. inside it.'
     ]
   },
   {
@@ -273,7 +278,8 @@ export default [
     usage: `<ContextMenu>\n  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
     notes: [
       'Installs the commands polyfill when rendered.',
-      'Menu content is focus-trapped via `<dialog>`.'
+      'Menu content is focus-trapped via `<dialog>`.',
+      'Set `mobile="drawer"` on `ContextMenuContent` to render as a bottom-sheet on narrow viewports (≤640px).'
     ]
   },
   {
@@ -344,7 +350,8 @@ export default [
     usage: `<Dialog>\n  <DialogTrigger><Button>Open</Button></DialogTrigger>\n  <DialogContent>Modal body</DialogContent>\n  <DialogClose><Button>Close</Button></DialogClose>\n</Dialog>`,
     notes: [
       'Relies on command attributes instead of portal gymnastics.',
-      'Dialog.Content forwards all native `<dialog>` props.'
+      'Dialog.Content forwards all native `<dialog>` props.',
+      'For React-controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal via the `beforetoggle` hook, and the browser\'s `close` event drives the state-sync callback.'
     ]
   },
   {
@@ -372,7 +379,8 @@ export default [
     usage: `<DropdownMenu>\n  <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Item</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`,
     notes: [
       'Menu items render as `<button>` elements by default.',
-      'Automatically closes when an item dispatches the close command.'
+      'Automatically closes when an item dispatches the close command.',
+      'Set `mobile="drawer"` on `DropdownMenuContent` to adapt to a bottom-sheet on narrow viewports (≤640px).'
     ]
   },
   {
@@ -500,6 +508,21 @@ export default [
     notes: [
       'Wraps the native `<progress>` element for semantics.',
       'Use the data-state attribute for indeterminate styling.'
+    ]
+  },
+  {
+    slug: 'progress-ring',
+    title: 'Progress Ring',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'progress-ring',
+    description: 'Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask.',
+    usage: '<ProgressRing value={60} max={100} />',
+    notes: [
+      'Pure CSS: uses typed `attr()` to read `value`/`max` directly from the DOM (Chrome 133+, Safari 18.4+, Firefox 140+).',
+      'Omit `value` (or pass `undefined`) to render an indeterminate spinning ring, matching native `<progress>` semantics.',
+      'Override `--k-progress-ring-size` and `--k-progress-ring-thickness` to customise dimensions.'
     ]
   },
   {
@@ -770,6 +793,81 @@ export default [
     category: 'Feedback',
     order: 5,
     file: 'pages/toast.md'
+  },
+  {
+    slug: 'kbd',
+    title: 'Kbd',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'kbd',
+    description: 'Styled `<kbd>` wrapper for keyboard shortcut glyphs.',
+    usage: '<Kbd>⌘K</Kbd>',
+    notes: [
+      'Wraps the native `<kbd>` element so semantics stay intact.',
+      'Combine multiple keys in a single `<Kbd>` (e.g. `⌘S`) to render them as one keycap.',
+      "Pairs naturally with `Item` rows — drop a `<Kbd style={{marginLeft: 'auto'}}>` inside an item to show the shortcut on the trailing edge."
+    ]
+  },
+  {
+    slug: 'empty',
+    title: 'Empty',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'empty',
+    description: 'Centered placeholder for no-data / no-results states.',
+    usage: `<Empty>\n  <h3>No results</h3>\n  <p>Try a different search.</p>\n</Empty>`,
+    notes: [
+      'Centers heading, body text, and optional actions in a flex column.',
+      'Headings inherit the foreground color; body text defaults to muted foreground.'
+    ]
+  },
+  {
+    slug: 'field',
+    title: 'Field',
+    section: 'Components',
+    category: 'Data Input',
+    order: 0,
+    folder: 'field',
+    description: 'Layout wrapper that groups a label, control, description, and error message.',
+    usage: `<Field>\n  <Field.Label>\n    Email\n    <Input type="email" required />\n  </Field.Label>\n  <Field.Description>We'll never share it</Field.Description>\n  <Field.Error>Please enter a valid email</Field.Error>\n</Field>`,
+    notes: [
+      'Nests the control inside `Field.Label` so native `<label>` implicit association handles pairing — no `id`/`htmlFor` plumbing needed.',
+      '`Field.Label` is an alias of `Label`, so the regular label styles and props apply.',
+      '`:has(:invalid)` turns the label destructive when any descendant control fails validation.',
+      '`Field.Error` renders with `role="alert"` so assistive tech announces it when shown.'
+    ]
+  },
+  {
+    slug: 'otp-input',
+    title: 'OTP Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 2,
+    folder: 'otp',
+    description: 'Single `<input>` styled as N segmented one-time-code cells.',
+    usage: '<OTPInput maxLength={6} />',
+    notes: [
+      'Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\\\d*"` — iOS SMS autofill, paste, and password managers just work.',
+      'The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.',
+      'Each cell is `--k-otp-cell` wide (defaults to `2.5rem`); total input width is `maxLength × --k-otp-cell`. Override the variable to resize.'
+    ]
+  },
+  {
+    slug: 'timeline',
+    title: 'Timeline',
+    section: 'Components',
+    category: 'Data Display',
+    order: 4,
+    folder: 'timeline',
+    description: 'Vertical sequence of events with connecting line + dot markers.',
+    usage: `<Timeline>\n  <Timeline.Entry>\n    Jason pushed 3 commits\n    <time>2h ago</time>\n  </Timeline.Entry>\n</Timeline>`,
+    notes: [
+      'Renders as `<ol>` + `<li>` so activity feeds and audit logs stay semantic.',
+      'Dot and connector line are both drawn on each entry from one `--k-timeline-x` variable (the dot radius), so they can\'t drift out of alignment.',
+      'Drop a native `<time>` element inside an entry for the trailing timestamp — add `dateTime="..."` for machine-readable semantics.'
+    ]
   },
   {
     slug: 'tree',

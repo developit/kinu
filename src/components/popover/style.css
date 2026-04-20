@@ -130,7 +130,9 @@
 
 /* Adaptive popover → drawer on mobile */
 @media (max-width: 640px) {
-  [k="popover-content"][mobile="drawer"] {
+  [k="popover-content"][mobile="drawer"],
+  [k="dropdown-content"][mobile="drawer"],
+  [k="context-menu"][mobile="drawer"] {
     --modal: 1;
     border: none;
     padding: 1rem;
@@ -154,7 +156,9 @@
       overlay 300ms allow-discrete;
   }
 
-  [k="popover-content"][mobile="drawer"][open] {
+  [k="popover-content"][mobile="drawer"][open],
+  [k="dropdown-content"][mobile="drawer"][open],
+  [k="context-menu"][mobile="drawer"][open] {
     transform: translateY(0);
     opacity: 1;
   }
@@ -164,8 +168,20 @@
       transform: translateY(100%);
     }
   }
+  @starting-style {
+    [k="dropdown-content"][mobile="drawer"][open] {
+      transform: translateY(100%);
+    }
+  }
+  @starting-style {
+    [k="context-menu"][mobile="drawer"][open] {
+      transform: translateY(100%);
+    }
+  }
 
-  [k="popover-content"][mobile="drawer"]::backdrop {
+  [k="popover-content"][mobile="drawer"]::backdrop,
+  [k="dropdown-content"][mobile="drawer"]::backdrop,
+  [k="context-menu"][mobile="drawer"]::backdrop {
     background-color: rgb(0 0 0 / 0.8);
     backdrop-filter: blur(1px);
     overscroll-behavior: contain;
@@ -178,7 +194,9 @@
       overlay 300ms allow-discrete;
   }
 
-  [k="popover-content"][mobile="drawer"][open]::backdrop {
+  [k="popover-content"][mobile="drawer"][open]::backdrop,
+  [k="dropdown-content"][mobile="drawer"][open]::backdrop,
+  [k="context-menu"][mobile="drawer"][open]::backdrop {
     opacity: 1;
   }
 
@@ -187,12 +205,24 @@
       opacity: 0;
     }
   }
+  @starting-style {
+    [k="dropdown-content"][mobile="drawer"][open]::backdrop {
+      opacity: 0;
+    }
+  }
+  @starting-style {
+    [k="context-menu"][mobile="drawer"][open]::backdrop {
+      opacity: 0;
+    }
+  }
 }
 
 /* Disable anchor positioning in mobile-drawer mode */
 @supports (position-anchor: --k-trigger) and (position-try-fallbacks: --k-menu-right-top) {
   @media (max-width: 640px) {
-    [k="popover-content"][mobile="drawer"] {
+    [k="popover-content"][mobile="drawer"],
+    [k="dropdown-content"][mobile="drawer"],
+    [k="context-menu"][mobile="drawer"] {
       position: fixed;
       position-anchor: unset;
       position-try-fallbacks: unset;

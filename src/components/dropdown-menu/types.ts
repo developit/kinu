@@ -33,6 +33,12 @@ export interface DropdownMenuContentOwnProps {
    * Align the menu panel to the trigger's left or right edge.
    */
   to?: 'left';
+
+  /**
+   * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+   * while keeping menu behavior on larger screens.
+   */
+  mobile?: 'drawer';
 }
 
 export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
