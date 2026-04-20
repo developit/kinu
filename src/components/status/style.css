@@ -31,33 +31,3 @@
   from { box-shadow: 0 0 0 0    currentColor; }
   to   { box-shadow: 0 0 0 0.5em transparent; }
 }
-
-/* Dot-only form: show aria-label as a tooltip on hover/focus so sighted
- * users see what screen readers hear. Gated by :empty so a labeled
- * <Status>…</Status> doesn't get a redundant tooltip. */
-[k="status"][aria-label]:empty::after {
-  content: attr(aria-label);
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  transform: translate(-50%, -0.25rem);
-  background-color: hsl(var(--k-foreground));
-  color: hsl(var(--k-background));
-  padding: 0.25rem 0.5rem;
-  border-radius: calc(var(--k-radius) - 2px);
-  font-size: 0.75rem;
-  line-height: 1rem;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  display: none;
-  transition:
-    opacity 150ms var(--k-ease-out),
-    display 150ms allow-discrete;
-  z-index: 10;
-}
-
-[k="status"][aria-label]:empty:is(:hover, :focus-visible)::after {
-  display: block;
-  opacity: 1;
-}
