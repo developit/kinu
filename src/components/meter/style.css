@@ -1,0 +1,39 @@
+@import "../../variables.css";
+
+[k="meter"] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 0.5rem;
+  border: none;
+  border-radius: var(--k-radius);
+  background-color: hsl(var(--k-secondary));
+  overflow: hidden;
+}
+
+[k="meter"]::-webkit-meter-bar {
+  background: hsl(var(--k-secondary));
+  border: none;
+  border-radius: var(--k-radius);
+}
+
+[k="meter"]::-webkit-meter-optimum-value {
+  background: hsl(var(--k-primary));
+}
+[k="meter"]::-webkit-meter-suboptimum-value {
+  background: hsl(var(--k-warning));
+}
+[k="meter"]::-webkit-meter-even-less-good-value {
+  background: hsl(var(--k-destructive));
+}
+
+[k="meter"]:-moz-meter-optimum::-moz-meter-bar {
+  background: hsl(var(--k-primary));
+}
+[k="meter"]:-moz-meter-sub-optimum::-moz-meter-bar {
+  background: hsl(var(--k-warning));
+}
+[k="meter"]:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+  background: hsl(var(--k-destructive));
+}

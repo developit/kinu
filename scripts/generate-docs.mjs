@@ -395,6 +395,7 @@ function getComponentDescription(componentName, entry) {
     TimelineEntry: 'Timeline event',
     ItemField: 'Form-control row',
     Status: 'Status indicator',
+    Meter: 'Measurement gauge',
   };
 
   return descriptions[componentName] || 'Component';

@@ -899,5 +899,19 @@ export default [
       'Wraps a `<span>` and renders the dot via `::before` so any inline layout works.',
       'Tones: `online`, `away`, `offline`, `busy`. Omit the tone for a neutral muted dot.'
     ]
+  },
+  {
+    slug: 'meter',
+    title: 'Meter',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'meter',
+    description: 'Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary).',
+    usage: '<Meter value={0.7} min={0} max={1} low={0.3} high={0.8} optimum={0.9} />',
+    notes: [
+      'Forwards every native `<meter>` attribute.',
+      'Fill color reflects the value range: primary when in the optimum band, warning in the suboptimum band, destructive outside.'
+    ]
   }
 ];

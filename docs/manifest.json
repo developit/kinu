@@ -288,6 +288,15 @@
     "description": "Container that styles a set of native radio inputs."
   },
   {
+    "slug": "meter",
+    "title": "Meter",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 3,
+    "file": "components/meter.md",
+    "description": "Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary)."
+  },
+  {
     "slug": "progress",
     "title": "Progress",
     "section": "Components",
