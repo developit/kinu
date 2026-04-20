@@ -14,7 +14,7 @@ import {ProgressRing} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ProgressRing | Component | `<div k="progress-ring">` |
+| ProgressRing | Component | `<progress k="progress-ring">` |
 
 ## Props
 

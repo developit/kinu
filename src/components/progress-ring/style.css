@@ -12,9 +12,12 @@
   --k-progress-ring-color: currentColor;
   --k-progress-ring-track: hsl(var(--k-muted-foreground) / 0.25);
   --p: calc(attr(value type(<number>), 0) / attr(max type(<number>), 100));
+  appearance: none;
+  -webkit-appearance: none;
   display: inline-block;
   width: var(--k-progress-ring-size);
   height: var(--k-progress-ring-size);
+  border: 0;
   border-radius: 50%;
   background:
     conic-gradient(
@@ -32,6 +35,15 @@
     #000 calc(100% - var(--k-progress-ring-thickness))
   );
   transition: --p 300ms var(--k-ease);
+}
+
+[k="progress-ring"]::-webkit-progress-bar,
+[k="progress-ring"]::-webkit-progress-value {
+  background: transparent;
+}
+
+[k="progress-ring"]::-moz-progress-bar {
+  background: transparent;
 }
 
 [k="progress-ring"][size="sm"] {
@@ -56,8 +68,8 @@
   --k-progress-ring-color: hsl(var(--k-destructive));
 }
 
-/* No value attribute → indeterminate (matches native <progress> semantics) */
-[k="progress-ring"]:not([value]) {
+/* Native indeterminate state (no `value` attribute) */
+[k="progress-ring"]:indeterminate {
   --p: 0.25;
   animation: k-progress-ring-spin 1s linear infinite;
 }

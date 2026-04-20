@@ -25,4 +25,4 @@ export interface ProgressRingOwnProps {
 }
 
 export type ProgressRingProps = ProgressRingOwnProps &
-  Omit<JSX.IntrinsicElements['div'], keyof ProgressRingOwnProps>;
+  Omit<JSX.IntrinsicElements['progress'], keyof ProgressRingOwnProps>;
