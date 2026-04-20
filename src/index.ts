@@ -370,4 +370,10 @@ export type {
   ChipButtonProps,
   ChipButtonOwnProps,
 } from './components/chip/types';
+export {Status} from './components/status';
+export type {
+  StatusProps,
+  StatusOwnProps,
+  StatusTone,
+} from './components/status/types';
 export * from './components/typography';

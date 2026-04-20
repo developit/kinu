@@ -342,6 +342,15 @@
     "description": "Animated shimmer placeholder for loading states."
   },
   {
+    "slug": "status",
+    "title": "Status",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 4,
+    "file": "components/status.md",
+    "description": "Inline status indicator with a colored dot prefix."
+  },
+  {
     "slug": "timeline",
     "title": "Timeline",
     "section": "Components",

@@ -394,6 +394,7 @@ function getComponentDescription(componentName, entry) {
     Timeline: 'Timeline container',
     TimelineEntry: 'Timeline event',
     ItemField: 'Form-control row',
+    Status: 'Status indicator',
   };
 
   return descriptions[componentName] || 'Component';

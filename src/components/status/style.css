@@ -1,0 +1,22 @@
+@import "../../variables.css";
+
+[k="status"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  color: hsl(var(--k-foreground));
+}
+
+[k="status"]::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--k-muted-foreground));
+}
+
+[k="status"][tone="online"]::before  { background-color: hsl(var(--k-success)); }
+[k="status"][tone="away"]::before    { background-color: hsl(var(--k-warning)); }
+[k="status"][tone="offline"]::before { background-color: hsl(var(--k-muted-foreground)); }
+[k="status"][tone="busy"]::before    { background-color: hsl(var(--k-destructive)); }
