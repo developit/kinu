@@ -5,6 +5,8 @@ export type StatusTone = 'success' | 'warning' | 'info' | 'destructive';
 
 export interface StatusOwnProps extends BaseProps {
   tone?: StatusTone;
+  /** Animate the dot with a pulsing "ping" ring. */
+  pulse?: boolean;
 }
 
 export type StatusProps = StatusOwnProps &

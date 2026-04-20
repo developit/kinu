@@ -1,6 +1,6 @@
 # Status
 
-Inline status indicator with a colored dot prefix.
+Inline status indicator with a colored dot prefix, usable with or without a label.
 
 ## Usage
 
@@ -21,11 +21,14 @@ import {Status} from 'kinu';
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | tone | `StatusTone` | — | — |
+| pulse | `boolean` | — | Animate the dot with a pulsing "ping" ring. |
 
 ## Notes
 
-- Wraps a `<span>` and renders the dot via `::before` so any inline layout works.
+- Dual-purpose: render with children for a dot + label, or without children for a bare dot. When used as a bare dot, supply `aria-label` so screen readers have something to announce.
 - Tones mirror the semantic color tokens: `success`, `warning`, `info`, `destructive`. Omit the tone for a neutral muted dot.
+- The dot and gap are sized in `em`, so everything scales with the surrounding font-size — drop a Status inside a heading or a small footer and it follows.
+- Pass `pulse` to animate a "ping" ring for live/loading states. Honors `prefers-reduced-motion` via the base stylesheet.
 
 ---
 

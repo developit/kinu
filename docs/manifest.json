@@ -357,7 +357,7 @@
     "category": "Data Display",
     "order": 4,
     "file": "components/status.md",
-    "description": "Inline status indicator with a colored dot prefix."
+    "description": "Inline status indicator with a colored dot prefix, usable with or without a label."
   },
   {
     "slug": "timeline",
