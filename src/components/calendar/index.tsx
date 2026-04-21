@@ -1,10 +1,7 @@
-import {createSimpleComponent} from '../../lib/create-simple-component';
 import {useState} from 'preact/hooks';
 import './style.css';
 
 const pad = (n: number) => String(n).padStart(2, '0');
-
-const CalendarRoot = createSimpleComponent('calendar', 'div');
 
 function dateStr(d: Date) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -35,7 +32,7 @@ export function Calendar({defaultValue = new Date()}: {defaultValue?: Date} = {}
   };
 
   return (
-    <CalendarRoot>
+    <div k="calendar">
       <input type="hidden" data-date value={date} />
       <div>
         <button onClick={() => nav(-1)}>←</button>
@@ -56,6 +53,6 @@ export function Calendar({defaultValue = new Date()}: {defaultValue?: Date} = {}
           );
         })}
       </div>
-    </CalendarRoot>
+    </div>
   );
 }
