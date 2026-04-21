@@ -54,8 +54,6 @@ export function installAdaptiveCommands() {
   if (typeof document === 'undefined') return;
   adaptiveInstalled = true;
   let allowToggle: boolean;
-  // Covers the command-system / .show() path: an element with --modal: 1
-  // about to open non-modally gets promoted to showModal().
   addEventListener('beforetoggle', (e: Event) => {
     const te = e as ToggleEvent;
     if (allowToggle || te.newState !== 'open') return;
@@ -65,26 +63,6 @@ export function installAdaptiveCommands() {
     allowToggle = true;
     el.showModal();
     allowToggle = false;
-  });
-  // Setting the `open` attribute directly (e.g., Preact reconciling
-  // <Dialog.Content open={state} />) does not fire beforetoggle, so the
-  // listener above can't catch controlled state transitions. Observe the
-  // attribute instead: add → showModal(), remove → close().
-  new MutationObserver((ms) => {
-    for (const m of ms) {
-      const el = m.target as HTMLDialogElement;
-      if (el.localName !== 'dialog') continue;
-      if (!getComputedStyle(el).getPropertyValue('--modal')) continue;
-      const modal = el.matches(':modal');
-      if (el.open && !modal) {
-        el.open = false;
-        el.showModal();
-      } else if (!el.open && modal) el.close();
-    }
-  }).observe(document, {
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['open'],
   });
 }
 
