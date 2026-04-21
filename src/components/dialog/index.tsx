@@ -42,8 +42,6 @@ export function DialogContent({
   id,
   ...props
 }: DialogContentOwnProps & JSX.IntrinsicElements['dialog']) {
-  installAdaptiveCommands();
-  installDialogsDropdowns();
   const ctx = useContext(IdCtx);
   return <dialog k="dialog-content" id={id ?? ctx} {...props} />;
 }
