@@ -27,12 +27,6 @@
   overscroll-behavior: contain;
 }
 
-[k="dialog-content"]:target {
-  display: flex;
-  opacity: 1;
-  transform: scale(1);
-}
-
 @starting-style {
   [k="dialog-content"][open] {
     opacity: 0;

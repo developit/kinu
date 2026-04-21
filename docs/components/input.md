@@ -14,7 +14,7 @@ import {Input} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Input | Text input field | — |
+| Input | Text input field | `<input k="input">` |
 
 ## Props
 
