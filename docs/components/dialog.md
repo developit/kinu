@@ -5,35 +5,50 @@ Composable modal built on the native `<dialog>` element.
 ## Usage
 
 ```tsx
-import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
+import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 
 <Dialog>
-  <Dialog.Trigger><Button>Open</Button></Dialog.Trigger>
-  <Dialog.Content>Modal body</Dialog.Content>
-  <Dialog.Close><Button>Close</Button></Dialog.Close>
+  <DialogTrigger><Button>Open</Button></DialogTrigger>
+  <DialogContent>Modal body</DialogContent>
+  <DialogClose><Button>Close</Button></DialogClose>
 </Dialog>
 ```
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Dialog | — | Context wrapper that connects trigger, content, and close helpers. |
-| DialogTrigger | — | Decorator that opens the dialog when its child is activated. |
-| DialogContent | `<dialog>` | Dialog element that renders the modal surface. |
-| DialogClose | — | Decorator that closes the dialog when its child is activated. |
+| Dialog | Modal overlay | — |
+| DialogTrigger | Dialog trigger | — |
+| DialogContent | Dialog content | — |
+| DialogClose | Close button | — |
 
-## Attributes
+## Props
 
-| Export | Attribute | Values | Notes |
+### DialogProps
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| DialogContent | open | boolean | Reflects whether the element is expanded. |
+| id | `string` | — | Optional ID for the dialog. If not provided, one will be auto-generated. |
+
+### DialogContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Override the auto-generated dialog ID. |
+
+### Static Shortcuts
+
+- `Dialog.Trigger = DialogTrigger`
+- `Dialog.Content = DialogContent`
+- `Dialog.Close = DialogClose`
 
 ## Notes
 
 - Relies on command attributes instead of portal gymnastics.
 - Dialog.Content forwards all native `<dialog>` props.
+- For controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal by a small internal hook, and the browser's `close` event drives the state-sync callback.
 
 ---
 
-<source-ref src="src/components/dialog/index.tsx"></source-ref>
+_Source: `src/components/dialog/index.tsx`

@@ -5,14 +5,25 @@ Styled date input that shares the same foundation as Calendar.
 ## Usage
 
 ```tsx
-import {DatePicker} from 'pui';
+import {DatePicker} from 'kinu';
 
 <DatePicker />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| DatePicker | Date input | `<input k="date-picker">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `string | number | readonly string[] | undefined` | — | Current date value. |
+| onChange | `(event: Event) => void` | — | Change handler for date input. |
+| disabled | `boolean` | — | Disable the input. |
+| name | `string` | — | Input name used for form submissions. |
 
 ## Notes
 
@@ -21,4 +32,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/date-picker/index.tsx"></source-ref>
+_Source: `src/components/date-picker/index.tsx`

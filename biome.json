@@ -23,13 +23,15 @@
         "noUnknownProperty": "off"
       },
       "complexity": {
-        "noForEach": "warn"
+        "noForEach": "warn",
+        "useOptionalChain": "off"
       },
       "style": {
         "noParameterAssign": "off",
         "useTemplate": "off",
         "noUnusedTemplateLiteral": "off",
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "useNumberNamespace": "off"
       },
       "suspicious": {
         "noAssignInExpressions": "off",

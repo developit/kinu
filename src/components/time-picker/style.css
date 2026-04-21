@@ -1,0 +1,7 @@
+@import "../../variables.css";
+
+[k="time-picker"] {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid hsl(var(--k-input));
+  border-radius: var(--k-radius);
+}

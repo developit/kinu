@@ -1,4 +1,4 @@
-import {AlertDialog, Button} from 'pui';
+import {AlertDialog, Button} from 'kinu';
 
 export function Demo() {
   return (

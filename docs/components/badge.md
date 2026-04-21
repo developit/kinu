@@ -5,21 +5,23 @@ Tiny inline status indicator with multiple tone variants.
 ## Usage
 
 ```tsx
-import {Badge} from 'pui';
+import {Badge} from 'kinu';
 
 <Badge variant="secondary">New</Badge>
 ```
 
-## Attributes
+## Exports
 
-| Export | Attribute | Values | Notes |
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Badge | Inline status indicator | `<span k="badge">` |
+
+## Props
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Badge | variant | secondary | destructive | outline | Visual style variant selector. |
-
-## Notes
-
-- Renders a `<span>` and forwards standard inline attributes.
+| variant | `BadgeVariant` | 'default' | Visual style variant. |
 
 ---
 
-<source-ref src="src/components/badge/index.tsx"></source-ref>
+_Source: `src/components/badge/index.tsx`

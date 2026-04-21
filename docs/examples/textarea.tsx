@@ -1,4 +1,4 @@
-import {Label, Textarea} from 'pui';
+import {Label, Textarea} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {
@@ -14,11 +14,13 @@ export function Demo() {
           setMessage((e.target as HTMLTextAreaElement).value)
         }
       />
+      <Textarea autosize placeholder="Grows as you type..." />
       <Textarea placeholder="Disabled textarea" disabled />
     </div>
   );
 }
 
-export const code = `<Textarea placeholder="Enter your message..." />`;
+export const code = `<Textarea placeholder="Enter your message..." />
+<Textarea autosize placeholder="Grows as you type..." />`;
 
 export default {Demo, code};

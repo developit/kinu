@@ -1,31 +1,61 @@
-import {Table} from 'pui';
+import {Table} from 'kinu';
 
 export function Demo() {
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td>
-          <td>john@example.com</td>
-          <td>Admin</td>
-        </tr>
-        <tr>
-          <td>Jane Smith</td>
-          <td>jane@example.com</td>
-          <td>User</td>
-        </tr>
-      </tbody>
-    </Table>
+    <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
+      <Table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>john@example.com</td>
+            <td>Admin</td>
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>jane@example.com</td>
+            <td>User</td>
+          </tr>
+        </tbody>
+      </Table>
+
+      <div style={{maxHeight: '12rem', overflow: 'auto'}}>
+        <Table sticky>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({length: 12}, (_, i) => (
+              <tr key={i}>
+                <td>User {i + 1}</td>
+                <td>user{i + 1}@example.com</td>
+                <td>{i % 3 === 0 ? 'Admin' : 'User'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    </div>
   );
 }
 
-export const code = `<Table>...</Table>`;
+export const code = `<Table>...</Table>
+
+<div style={{maxHeight: '12rem', overflow: 'auto'}}>
+  <Table sticky>
+    <thead>...</thead>
+    <tbody>...</tbody>
+  </Table>
+</div>`;
 
 export default {Demo, code};

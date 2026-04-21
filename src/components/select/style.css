@@ -1,11 +1,11 @@
 @import "../../variables.css";
 
-[p="select"] {
+[k="select"] {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--p-radius);
-  border: 1px solid hsl(var(--p-input));
-  background-color: hsl(var(--p-background));
+  border-radius: var(--k-radius);
+  border: 1px solid hsl(var(--k-input));
+  background-color: hsl(var(--k-background));
   height: 2.5rem;
   padding-left: 0.75rem;
   padding-right: 2rem;
@@ -19,12 +19,12 @@
   background-position: right 0.5rem center;
 }
 
-[p="select"]:focus-visible {
+[k="select"]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
 }
 
-[p="select"]:disabled {
+[k="select"]:disabled {
   opacity: 0.5;
   pointer-events: none;
 }

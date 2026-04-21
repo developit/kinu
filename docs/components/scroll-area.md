@@ -5,14 +5,16 @@ Overflow wrapper with custom scrollbars and shadow indicators.
 ## Usage
 
 ```tsx
-import {ScrollArea} from 'pui';
+import {ScrollArea} from 'kinu';
 
 <ScrollArea style={{height: '200px'}}><div>Long content</div></ScrollArea>
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| ScrollArea | Scrollable area | `<div k="scroll-area">` |
 
 ## Notes
 
@@ -21,4 +23,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/scroll-area/index.tsx"></source-ref>
+_Source: `src/components/scroll-area/index.tsx`

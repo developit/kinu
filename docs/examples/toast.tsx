@@ -1,4 +1,4 @@
-import {Button, Menubar, toast} from 'pui';
+import {Button, Menubar, toast} from 'kinu';
 
 export function Demo() {
   return (

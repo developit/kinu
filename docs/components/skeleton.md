@@ -5,14 +5,16 @@ Animated shimmer placeholder for loading states.
 ## Usage
 
 ```tsx
-import {Skeleton} from 'pui';
+import {Skeleton} from 'kinu';
 
 <Skeleton style={{height: "1.5rem"}} />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Skeleton | Content placeholder | `<div k="skeleton">` |
 
 ## Notes
 
@@ -21,4 +23,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/skeleton/index.tsx"></source-ref>
+_Source: `src/components/skeleton/index.tsx`

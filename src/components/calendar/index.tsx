@@ -46,11 +46,11 @@ export function Calendar({defaultValue = new Date()}: {defaultValue?: Date} = {}
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d) => <div key={d}>{d}</div>)}
       </div>
       <div>
-        {grid.map(([gd, m], i) => {
+        {grid.map(([gd, m]) => {
           const d = new Date(dy, dm - 1 + m, gd);
           const ds = dateStr(d);
           return (
-            <button key={i} p="calendar-day" onClick={() => setDate(ds)} aria-current={ds === today ? 'date' : undefined} aria-selected={ds === date ? 'true' : 'false'}>
+            <button key={ds} k="calendar-day" onClick={() => setDate(ds)} aria-current={ds === today ? 'date' : undefined} aria-selected={ds === date ? 'true' : 'false'}>
               {gd}
             </button>
           );

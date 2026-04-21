@@ -5,16 +5,22 @@ Minimal hide/show container built on `<details>` without default markers.
 ## Usage
 
 ```tsx
-import {Collapsible} from 'pui';
+import {Collapsible} from 'kinu';
 
 <Collapsible open summary="Trigger">Hidden content</Collapsible>
 ```
 
-## Attributes
+## Exports
 
-| Export | Attribute | Values | Notes |
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Collapsible | Collapsible content | `<details k="collapsible">` |
+
+## Props
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Collapsible | open | boolean | Reflects whether the element is expanded. |
+| open | `boolean` | — | Controls the open state of the details element. |
 
 ## Notes
 
@@ -23,4 +29,4 @@ import {Collapsible} from 'pui';
 
 ---
 
-<source-ref src="src/components/collapsible/index.tsx"></source-ref>
+_Source: `src/components/collapsible/index.tsx`

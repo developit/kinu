@@ -1,15 +1,19 @@
-import {type ComponentChildren, createContext} from 'preact';
+import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installCommands} from '../../lib/commands';
+import type {
+  CarouselOwnProps,
+  CarouselContentOwnProps,
+  CarouselItemOwnProps,
+  CarouselPreviousOwnProps,
+  CarouselNextOwnProps,
+} from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function Carousel({
-  id: idProp,
-  children,
-}: {id?: string; children: ComponentChildren}) {
+export function Carousel({id: idProp, children}: CarouselOwnProps) {
   installCommands();
   const id = idProp ?? useId();
 
@@ -20,7 +24,7 @@ export function Carousel({
   );
 }
 
-const CarouselContentRoot = createSimpleComponent(
+const CarouselContentRoot = createSimpleComponent<'div', CarouselContentOwnProps>(
   'carousel',
   'div',
   {},
@@ -38,22 +42,25 @@ const CarouselContentRoot = createSimpleComponent(
   },
 );
 
-export function CarouselContent({children}: {children: ComponentChildren}) {
+export function CarouselContent({children}: CarouselContentOwnProps) {
   const id = useContext(IdCtx);
   return <CarouselContentRoot id={id}>{children}</CarouselContentRoot>;
 }
 
-export const CarouselItem = createSimpleComponent('carousel-item', 'div');
+export const CarouselItem = createSimpleComponent<'div', CarouselItemOwnProps>(
+  'carousel-item',
+  'div',
+);
 
 export function CarouselPrevious({
   children,
+  commandFor: _commandFor,
+  command: _command,
   ...props
-}: {
-  children: ComponentChildren;
-} & preact.JSX.HTMLAttributes<HTMLButtonElement>) {
+}: CarouselPreviousOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
   const id = useContext(IdCtx);
   return (
-    <button p="carousel-previous" command="--prev" commandfor={id} {...props}>
+    <button {...props} k="carousel-previous" command="--prev" commandfor={id ?? undefined}>
       {children}
     </button>
   );
@@ -61,13 +68,13 @@ export function CarouselPrevious({
 
 export function CarouselNext({
   children,
+  commandFor: _commandFor,
+  command: _command,
   ...props
-}: {
-  children: ComponentChildren;
-} & preact.JSX.HTMLAttributes<HTMLButtonElement>) {
+}: CarouselNextOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
   const id = useContext(IdCtx);
   return (
-    <button p="carousel-next" command="--next" commandfor={id} {...props}>
+    <button {...props} k="carousel-next" command="--next" commandfor={id ?? undefined}>
       {children}
     </button>
   );

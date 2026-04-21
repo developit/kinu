@@ -5,7 +5,7 @@ Scroll snapping carousel with previous/next helpers.
 ## Usage
 
 ```tsx
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from 'pui';
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from 'kinu';
 
 <Carousel>
   <CarouselContent>
@@ -18,17 +18,19 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Carousel | `<div>` | Context provider that wires carousel commands and layout. |
-| CarouselContent | `<div>` | Scrollable container that applies snap behavior to slides. |
-| CarouselItem | `<div>` | Individual slide panel inside the carousel. |
-| CarouselPrevious | `<button>` | Button that scrolls to the previous slide. |
-| CarouselNext | `<button>` | Button that scrolls to the next slide. |
+| Carousel | Image slider | — |
+| CarouselContent | Slider content | — |
+| CarouselItem | Slide item | `<div k="carousel-item">` |
+| CarouselPrevious | Previous button | — |
+| CarouselNext | Next button | — |
 
-## Attributes
+## Props
 
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the carousel content. If not provided, one will be auto-generated. |
 
 ## Notes
 
@@ -37,4 +39,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/carousel/index.tsx"></source-ref>
+_Source: `src/components/carousel/index.tsx`

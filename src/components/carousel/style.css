@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="carousel"] {
+[k="carousel"] {
   position: relative;
   display: flex;
   overflow-x: auto;
@@ -12,11 +12,11 @@
   -ms-overflow-style: none;
 }
 
-[p="carousel"]::-webkit-scrollbar {
+[k="carousel"]::-webkit-scrollbar {
   display: none;
 }
 
-[p="carousel-item"] {
+[k="carousel-item"] {
   flex: 0 0 100%;
   scroll-snap-align: start;
   display: flex;
@@ -24,8 +24,8 @@
   justify-content: center;
 }
 
-[p="carousel-previous"],
-[p="carousel-next"] {
+[k="carousel-previous"],
+[k="carousel-next"] {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -39,15 +39,15 @@
   z-index: 1;
 }
 
-[p="carousel-previous"]:hover,
-[p="carousel-next"]:hover {
+[k="carousel-previous"]:hover,
+[k="carousel-next"]:hover {
   background: rgba(0, 0, 0, 0.7);
 }
 
-[p="carousel-previous"] {
+[k="carousel-previous"] {
   left: 0.5rem;
 }
 
-[p="carousel-next"] {
+[k="carousel-next"] {
   right: 0.5rem;
 }

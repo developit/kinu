@@ -1,6 +1,6 @@
 @import "../../variables.css";
 
-[p="calendar"] {
+[k="calendar"] {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -12,14 +12,14 @@
   width: fit-content;
 }
 
-[p="calendar"] > div:nth-of-type(1) {
+[k="calendar"] > div:nth-of-type(1) {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
 
-[p="calendar"] > div:nth-of-type(1) > button {
+[k="calendar"] > div:nth-of-type(1) > button {
   appearance: none;
   background: none;
   border: 1px solid transparent;
@@ -31,17 +31,17 @@
   transition: background-color 0.15s, color 0.15s;
 }
 
-[p="calendar"] > div:nth-of-type(1) > button:hover {
+[k="calendar"] > div:nth-of-type(1) > button:hover {
   background-color: hsl(var(--p-accent));
   color: hsl(var(--p-accent-foreground));
 }
 
-[p="calendar"] > div:nth-of-type(1) > button:focus-visible {
+[k="calendar"] > div:nth-of-type(1) > button:focus-visible {
   outline: 1px solid hsl(var(--p-ring));
   box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.5);
 }
 
-[p="calendar"] > div:nth-of-type(1) > div {
+[k="calendar"] > div:nth-of-type(1) > div {
   font-weight: 500;
   font-size: 0.9375rem;
   min-width: 10rem;
@@ -49,14 +49,14 @@
   color: hsl(var(--p-foreground));
 }
 
-[p="calendar"] > div:nth-of-type(2) {
+[k="calendar"] > div:nth-of-type(2) {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.25rem;
   margin-bottom: 0.5rem;
 }
 
-[p="calendar"] > div:nth-of-type(2) > div {
+[k="calendar"] > div:nth-of-type(2) > div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,13 +68,13 @@
   letter-spacing: 0.5px;
 }
 
-[p="calendar"] > div:nth-of-type(3) {
+[k="calendar"] > div:nth-of-type(3) {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.25rem;
 }
 
-[p="calendar-day"] {
+[k="calendar-day"] {
   appearance: none;
   background: hsl(var(--p-background));
   border: 1px solid hsl(var(--p-border));
@@ -91,23 +91,23 @@
   transition: background-color 0.15s, color 0.15s, border-color 0.15s;
 }
 
-[p="calendar-day"]:hover {
+[k="calendar-day"]:hover {
   background-color: hsl(var(--p-accent));
   border-color: hsl(var(--p-accent));
 }
 
-[p="calendar-day"]:focus-visible {
+[k="calendar-day"]:focus-visible {
   outline: 1px solid hsl(var(--p-ring));
   box-shadow: 0 0 0 3px hsl(var(--p-ring) / 0.5);
 }
 
-[p="calendar-day"][aria-current="date"] {
+[k="calendar-day"][aria-current="date"] {
   border-color: hsl(var(--p-primary));
   color: hsl(var(--p-primary));
   font-weight: 600;
 }
 
-[p="calendar-day"][aria-selected="true"] {
+[k="calendar-day"][aria-selected="true"] {
   background-color: hsl(var(--p-primary));
   color: hsl(var(--p-primary-foreground));
   border-color: hsl(var(--p-primary));

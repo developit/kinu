@@ -5,7 +5,7 @@ Disclosure built on the native `<details>` element with smooth open and close an
 ## Usage
 
 ```tsx
-import {Accordion} from 'pui';
+import {Accordion} from 'kinu';
 
 <Accordion open>
   <summary>Details</summary>
@@ -13,17 +13,24 @@ import {Accordion} from 'pui';
 </Accordion>
 ```
 
-## Attributes
+## Exports
 
-| Export | Attribute | Values | Notes |
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Accordion | Collapsible section | `<details k="accordion">` |
+
+## Props
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Accordion | open | boolean | Reflects whether the element is expanded. |
+| open | `boolean` | — | Controls the open state of the details element. |
 
 ## Notes
 
 - Forwards every native `<details>` attribute so you can control open state.
 - Provide your own `<summary>` element to define the trigger.
+- Pass the same `name` to multiple accordions to make them mutually exclusive — only one can be open at a time in a group (HTML 2024 `<details name>`).
 
 ---
 
-<source-ref src="src/components/accordion/index.tsx"></source-ref>
+_Source: `src/components/accordion/index.tsx`

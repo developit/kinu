@@ -1,4 +1,4 @@
-import {Toggle, ToggleGroup} from 'pui';
+import {Toggle, ToggleGroup} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

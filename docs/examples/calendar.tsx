@@ -1,4 +1,4 @@
-import {Calendar} from 'pui';
+import {Calendar} from 'kinu';
 import {useRef, useState} from 'preact/hooks';
 
 export function Demo() {

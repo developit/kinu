@@ -1,44 +1,45 @@
 @import "../../variables.css";
 
-[p="radio-group"] {
+[k="radio-group"] {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
 
-[p="radio"] {
+[k="radio"] {
   appearance: none;
+  margin: 0;
   width: 1rem;
   height: 1rem;
   border-radius: 9999px;
-  border: 1px solid hsl(var(--p-input));
-  background-color: hsl(var(--p-background));
+  border: 1px solid hsl(var(--k-input));
+  background-color: hsl(var(--k-background));
   display: inline-grid;
   place-content: center;
   cursor: pointer;
   transition: border-color 150ms cubic-bezier(0.4,0,0.2,1);
 }
 
-[p="radio"]::before {
+[k="radio"]::before {
   content: "";
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 9999px;
-  background-color: hsl(var(--p-primary));
+  background-color: hsl(var(--k-primary));
   transform: scale(0);
   transition: transform 150ms cubic-bezier(0.4,0,0.2,1);
 }
 
-[p="radio"]:checked::before {
+[k="radio"]:checked::before {
   transform: scale(1);
 }
 
-[p="radio"]:focus-visible {
+[k="radio"]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
 }
 
-[p="radio"]:disabled {
+[k="radio"]:disabled {
   opacity: 0.5;
   pointer-events: none;
 }

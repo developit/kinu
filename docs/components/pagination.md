@@ -5,7 +5,7 @@ Semantic pagination list with previous/next helpers.
 ## Usage
 
 ```tsx
-import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
+import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'kinu';
 
 <Pagination>
   <PaginationList>
@@ -16,18 +16,18 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Pagination | `<nav>` | Navigation landmark announcing the pagination controls. |
-| PaginationList | `<ul>` | Unordered list that arranges pagination items. |
-| PaginationItem | `<li>` | List item wrapper for each pagination control. |
-| PaginationLink | `<button>` | Button styled as a pagination link. |
+| Pagination | Page navigation | `<nav k="pagination">` |
+| PaginationList | Page list | `<ul k="pagination-list">` |
+| PaginationItem | Page item | `<li k="pagination-item">` |
+| PaginationLink | Page link | `<button k="pagination-link">` |
 
-## Attributes
+## Props
 
-| Export | Attribute | Values | Notes |
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| PaginationLink | aria-current | page | Forwarded attribute used by the component styling. |
+| aria-current | `boolean | "page" | "true" | "false"` | — | Marks the current page for styling. |
 
 ## Notes
 
@@ -36,4 +36,4 @@ import {Pagination, PaginationItem, PaginationLink, PaginationList} from 'pui';
 
 ---
 
-<source-ref src="src/components/pagination/index.tsx"></source-ref>
+_Source: `src/components/pagination/index.tsx`

@@ -5,28 +5,37 @@ TabList, Tab, and TabPanel wrappers using aria attributes.
 ## Usage
 
 ```tsx
-import {Tab, TabList, TabPanel} from 'pui';
+import {Tab, TabList, TabPanel} from 'kinu';
 
-<TabList>
-  <Tab aria-selected>Tab</Tab>
+<TabList role="tablist">
+  <Tab role="tab" aria-selected="true">Account</Tab>
+  <Tab role="tab" aria-selected="false">Password</Tab>
 </TabList>
-<TabPanel>Panel</TabPanel>
+<TabPanel role="tabpanel">Account settings</TabPanel>
 ```
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| TabList | `<div>` | Container that groups related tabs. |
-| Tab | `<button>` | Button that selects a tab panel. |
-| TabPanel | `<div>` | Panel that displays the active tab content. |
+| TabList | Tab container | `<div k="tablist">` |
+| Tab | Tab trigger | `<button k="tab">` |
+| TabPanel | Tab content | `<div k="tab-panel">` |
 
-## Attributes
+## Props
 
-| Export | Attribute | Values | Notes |
+### TabProps
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Tab | aria-selected | true | Forwarded attribute used by the component styling. |
-| Tab | disabled | boolean | Forwarded attribute used by the component styling. |
+| aria-selected | `boolean | "true" | "false"` | — | Marks the tab as selected. |
+| disabled | `boolean` | — | Disable tab interactions. |
+
+### TabPanelProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| hidden | `boolean` | — | Hide the panel when inactive. |
 
 ## Notes
 
@@ -35,4 +44,4 @@ import {Tab, TabList, TabPanel} from 'pui';
 
 ---
 
-<source-ref src="src/components/tabs/index.tsx"></source-ref>
+_Source: `src/components/tabs/index.tsx`

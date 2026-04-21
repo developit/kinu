@@ -5,16 +5,24 @@ Maintains responsive boxes at a fixed ratio using pure CSS.
 ## Usage
 
 ```tsx
-import {AspectRatio} from 'pui';
+import {AspectRatio} from 'kinu';
 
 <AspectRatio ratio="16 / 9">
   <img src="..." alt="Video thumbnail" />
 </AspectRatio>
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| AspectRatio | Ratio container | — |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| ratio | `string` | — | Aspect ratio expressed as a CSS ratio string (e.g. "16 / 9"). |
 
 ## Notes
 
@@ -22,4 +30,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/aspect-ratio/index.tsx"></source-ref>
+_Source: `src/components/aspect-ratio/index.tsx`

@@ -5,14 +5,27 @@ Accessible checkbox input with custom visuals.
 ## Usage
 
 ```tsx
-import {Checkbox} from 'pui';
+import {Checkbox} from 'kinu';
 
 <Checkbox checked aria-label="Accept" />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Checkbox | Selection control | `<input k="checkbox">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| checked | `boolean` | — | Controls the checked state. |
+| data-state | `"indeterminate"` | — | Marks the checkbox as indeterminate for styling. |
+| onChange | `(event: Event) => void` | — | Change handler for the checkbox. |
+| disabled | `boolean` | — | Disable the checkbox. |
+| name | `string` | — | Input name used for form submissions. |
+| value | `string | number | readonly string[] | undefined` | — | Input value used for form submissions. |
 
 ## Notes
 
@@ -21,4 +34,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/checkbox/index.tsx"></source-ref>
+_Source: `src/components/checkbox/index.tsx`

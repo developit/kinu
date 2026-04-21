@@ -5,22 +5,31 @@ ARIA-pressed aware button for on/off interactions.
 ## Usage
 
 ```tsx
-import {Toggle} from 'pui';
+import {Toggle} from 'kinu';
 
-<Toggle aria-pressed={value}>Bold</Toggle>
+<Toggle pressed={value}>Bold</Toggle>
 ```
 
-## Attributes
+## Exports
 
-| Export | Attribute | Values | Notes |
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Toggle | Toggle button | `<button k="toggle">` |
+
+## Props
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Toggle | aria-pressed | true | Forwarded attribute used by the component styling. |
+| size | `"sm" | "md" | "lg"` | 'md' | Size preset for the toggle. |
+| pressed | `boolean` | — | Controls the pressed state and maps to `aria-pressed` on the DOM element. |
+| onClick | `(event: MouseEvent) => void` | — | Click handler for toggling state. |
+| disabled | `boolean` | — | Disable the toggle. |
 
 ## Notes
 
 - Wraps `<button>` so keyboard support comes for free.
-- Style pressed state using the aria-pressed attribute selectors.
+- Use the `pressed` prop for state; it maps to `aria-pressed` on the DOM.
 
 ---
 
-<source-ref src="src/components/toggle/index.tsx"></source-ref>
+_Source: `src/components/toggle/index.tsx`

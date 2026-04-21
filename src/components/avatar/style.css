@@ -1,25 +1,37 @@
 @import "../../variables.css";
 
-[p="avatar"] {
+[k="avatar"] {
   display: inline-block;
   width: 2rem;
   height: 2rem;
   border-radius: 9999px;
   object-fit: cover;
-  background-color: hsl(var(--p-muted));
+  background-color: hsl(var(--k-muted));
   font-size: 0.01em;
   position: relative;
   overflow: hidden;
 }
 
-[p="avatar"]:after {
+[k="avatar-group"] {
+  display: inline-flex;
+}
+
+[k="avatar-group"] > [k="avatar"] {
+  outline: 2px solid hsl(var(--k-background));
+}
+
+[k="avatar-group"] > [k="avatar"]:not(:first-child) {
+  margin-inline-start: -0.5rem;
+}
+
+[k="avatar"]:after {
   position: absolute;
   display: block;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: hsl(var(--p-muted));
+  background-color: hsl(var(--k-muted));
   font-size: 100em;
   display: flex;
   align-items: center;

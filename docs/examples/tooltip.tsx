@@ -1,4 +1,4 @@
-import {Button, Tooltip} from 'pui';
+import {Button, Tooltip} from 'kinu';
 
 export function Demo() {
   return (

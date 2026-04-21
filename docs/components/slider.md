@@ -5,14 +5,27 @@ Range input with CSS-driven track and thumb styling.
 ## Usage
 
 ```tsx
-import {Slider} from 'pui';
+import {Slider} from 'kinu';
 
 <Slider min={0} max={100} value={50} />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Slider | Range input | `<input k="slider">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| min | `number` | — | Minimum slider value. |
+| max | `number` | — | Maximum slider value. |
+| value | `number` | — | Current slider value. |
+| step | `number` | — | Step granularity for the slider. |
+| onInput | `(event: InputEvent) => void` | — | Change handler for the slider input. |
+| disabled | `boolean` | — | Disable the slider. |
 
 ## Notes
 
@@ -21,4 +34,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/slider/index.tsx"></source-ref>
+_Source: `src/components/slider/index.tsx`

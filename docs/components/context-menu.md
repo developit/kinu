@@ -5,10 +5,10 @@ Right-click context menu powered by the native dialog element.
 ## Usage
 
 ```tsx
-import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from 'pui';
+import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} from 'kinu';
 
 <ContextMenu>
-  <ContextMenuTrigger>Open</ContextMenuTrigger>
+  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>
   <ContextMenuContent>
     <ContextMenuItem>Copy</ContextMenuItem>
   </ContextMenuContent>
@@ -17,22 +17,35 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ContextMenuTrigger | — | Decorator that equips its child with right-click menu behavior. |
-| ContextMenu | — | Context provider that coordinates trigger and content. |
-| ContextMenuContent | `<dialog>` | Dialog that renders the contextual menu surface. |
-| ContextMenuItem | `<button>` | Button-style command inside the context menu. |
+| ContextMenuTrigger | Menu trigger | — |
+| ContextMenu | Right-click menu | — |
+| ContextMenuContent | Menu content | — |
+| ContextMenuItem | Menu item | Alias of Item |
 
-## Attributes
+## Props
 
-Inherits all native attributes from `<button>`. No additional styling attributes are required.
+### ContextMenuProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the context menu dialog. If not provided, one will be auto-generated. |
+
+### ContextMenuContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Override the auto-generated dialog ID. |
+| mobile | `"drawer"` | — | When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+while keeping context-menu behavior on larger screens. |
 
 ## Notes
 
 - Installs the commands polyfill when rendered.
 - Menu content is focus-trapped via `<dialog>`.
+- Set `mobile="drawer"` on `ContextMenuContent` to render as a bottom-sheet on narrow viewports (≤640px).
 
 ---
 
-<source-ref src="src/components/context-menu/index.tsx"></source-ref>
+_Source: `src/components/context-menu/index.tsx`

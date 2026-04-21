@@ -1,28 +1,32 @@
-import {type ComponentChildren, createContext} from 'preact';
+import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {createSimpleComponent} from '../../lib/create-simple-component';
 import {
   installCommands,
+  installAdaptiveCommands,
   installDialogsDropdowns,
   installMenuShortcuts,
 } from '../../lib/commands';
+import {Item} from '../item';
+import type {
+  DropdownMenuOwnProps,
+  DropdownMenuTriggerOwnProps,
+  DropdownMenuContentOwnProps,
+} from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function DropdownMenu({
-  id: idProp,
-  children,
-}: {id?: string; children: ComponentChildren}) {
+export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   installCommands();
+  installAdaptiveCommands();
   installDialogsDropdowns();
   installMenuShortcuts();
   const gen = useId();
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <span p="dropdown">{children}</span>
+      <span k="dropdown">{children}</span>
     </IdCtx.Provider>
   );
 }
@@ -30,11 +34,12 @@ export function DropdownMenu({
 export function DropdownMenuTrigger({
   children,
   ...props
-}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+}: DropdownMenuTriggerOwnProps &
+  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
-    commandfor: id,
+    commandFor: id,
     command: 'show',
   });
 }
@@ -42,26 +47,24 @@ export function DropdownMenuTrigger({
 export function DropdownMenuContent({
   id,
   command = 'close',
-  commandfor,
+  commandFor,
   ...props
-}: Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor'> & {
-  command?: string;
-  commandfor?: string;
-}) {
+}: DropdownMenuContentOwnProps &
+  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor' | 'commandFor'>) {
   const ctx = useContext(IdCtx);
   const resolvedId = id ?? ctx;
   return (
     <dialog
-      p="dropdown-content"
+      k="dropdown-content"
       id={resolvedId}
       command={command}
-      commandfor={commandfor ?? resolvedId}
+      commandFor={commandFor ?? resolvedId}
       {...props}
     />
   );
 }
 
-export const DropdownMenuItem = createSimpleComponent(
-  'dropdown-menu-item',
-  (props: any) => (props.href ? 'a' : 'button'),
-);
+/** @deprecated Use `Item` instead. */
+export const DropdownMenuItem = Item;
+
+Object.assign(DropdownMenu, {Item});

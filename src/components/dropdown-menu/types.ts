@@ -1,0 +1,51 @@
+import type {JSX} from 'preact';
+import type {BaseProps, RequiredChildrenProps} from '../../types/component-props';
+
+export interface DropdownMenuOwnProps extends RequiredChildrenProps {
+  /**
+   * Optional ID for the dropdown content. If not provided, one will be auto-generated.
+   */
+  id?: string;
+}
+
+export type DropdownMenuProps = DropdownMenuOwnProps;
+
+export interface DropdownMenuTriggerOwnProps extends BaseProps {}
+
+export interface DropdownMenuContentOwnProps {
+  /**
+   * Override the auto-generated dialog ID.
+   */
+  id?: string;
+
+  /**
+   * Command dispatched when the dialog receives the command event.
+   * @default 'close'
+   */
+  command?: string;
+
+  /**
+   * Target dialog identifier for the command dispatch.
+   */
+  commandFor?: string;
+
+  /**
+   * Align the menu panel to the trigger's left or right edge.
+   */
+  to?: 'left';
+
+  /**
+   * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+   * while keeping menu behavior on larger screens.
+   */
+  mobile?: 'drawer';
+}
+
+export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
+  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>;
+
+export type DropdownMenuContentProps = DropdownMenuContentOwnProps &
+  Omit<JSX.IntrinsicElements['dialog'], keyof DropdownMenuContentOwnProps>;
+
+// Backward compat re-exports from unified Item types
+export type {DropdownMenuItemOwnProps, DropdownMenuItemProps} from '../item/types';

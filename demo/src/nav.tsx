@@ -8,7 +8,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from 'pui';
+} from 'kinu';
+import {ThemeCustomizer} from './theme-customizer.tsx';
 
 export function Nav({
   class: className,
@@ -23,7 +24,7 @@ export function Nav({
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink href="/getting-started">
-            Getting Started
+            Get&nbsp;Started
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -51,6 +52,9 @@ export function Nav({
           </DropdownMenu>
         </NavigationMenuItem>
       </NavigationMenuList>
+      <div class="nav-actions">
+        <ThemeCustomizer />
+      </div>
     </NavigationMenu>
   );
 }

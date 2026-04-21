@@ -1,4 +1,4 @@
-import {Button, toast} from 'pui';
+import {Button, toast} from 'kinu';
 import {useState} from 'preact/hooks';
 
 function logText(e: MouseEvent | string) {

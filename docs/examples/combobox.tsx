@@ -1,13 +1,13 @@
-import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
+import {Combobox, ComboboxInput, ComboboxList, Item} from 'kinu';
 
 export function Demo() {
   return (
     <Combobox>
       <ComboboxInput />
       <ComboboxList>
-        <ComboboxOption>Apple</ComboboxOption>
-        <ComboboxOption>Banana</ComboboxOption>
-        <ComboboxOption>Orange</ComboboxOption>
+        <Item>Apple</Item>
+        <Item>Banana</Item>
+        <Item>Orange</Item>
       </ComboboxList>
     </Combobox>
   );

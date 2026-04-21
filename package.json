@@ -1,14 +1,15 @@
 {
-  "name": "pui",
-  "version": "0.1.0",
-  "description": "Performance-focused Preact UI toolkit",
+  "name": "kinu",
+  "version": "0.1.4",
+  "description": "Preact UI toolkit. 10x smaller than you think. Intuitive for humans+LLMs.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/developit/kinu.git"
+  },
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "type": "module",
   "types": "./dist/index.d.ts",
-  "x-sideEffects": [
-    "src/lib/commands.ts"
-  ],
   "exports": {
     ".": {
       "style": "./dist/index.css",
@@ -22,20 +23,28 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && tsc --noEmit false --outDir dist",
     "build:demo": "cd demo && pnpm build",
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
-    "test": "vitest run"
+    "bench:size": "node benchmarks/size/run.mjs",
+    "build:size": "pnpm build && pnpm bench:size",
+    "test": "vitest run",
+    "prepublishOnly": "pnpm run build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
   },
   "peerDependencies": {
     "preact": "^10.26.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.29.8",
     "@preact/preset-vite": "^2.10.1",
     "@types/node": "^22.15.30",
     "preact": "^10.26.9",
+    "preact-forwardref": "^0.2.0",
     "preact-render-to-string": "^6.5.11",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
@@ -45,13 +54,12 @@
     "preact",
     "ui",
     "ui-toolkit",
-    "pui"
+    "kinu"
   ],
   "author": "Jason Miller (http://developit.dev)",
   "license": "MIT",
-  "pnpm": {
-    "patchedDependencies": {
-      "preact-iso": "patches/preact-iso.patch"
-    }
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

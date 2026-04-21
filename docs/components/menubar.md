@@ -5,7 +5,7 @@ Horizontal command bar composed of styled buttons.
 ## Usage
 
 ```tsx
-import {Menubar, MenubarItem} from 'pui';
+import {Menubar, MenubarItem} from 'kinu';
 
 <Menubar>
   <MenubarItem>File</MenubarItem>
@@ -14,14 +14,10 @@ import {Menubar, MenubarItem} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Menubar | `<nav>` | Navigation container for top-level application commands. |
-| MenubarItem | `<button>` | Button representing a command within the menubar. |
-
-## Attributes
-
-Inherits all native attributes from `<nav>`. No additional styling attributes are required.
+| Menubar | Horizontal menu | `<nav k="menubar">` |
+| MenubarItem | Menu item | `<button k="menubar-item">` |
 
 ## Notes
 
@@ -29,4 +25,4 @@ Inherits all native attributes from `<nav>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/menubar/index.tsx"></source-ref>
+_Source: `src/components/menubar/index.tsx`

@@ -5,34 +5,45 @@ Autocomplete input with trigger, list, and option primitives.
 ## Usage
 
 ```tsx
-import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
+import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 
-<Combobox value={value} onChange={setValue}>
-  <ComboboxInput />
+<Combobox>
+  <ComboboxInput placeholder="Search" />
   <ComboboxList>
-    <ComboboxOption value="1">One</ComboboxOption>
+    <ComboboxOption>One</ComboboxOption>
   </ComboboxList>
 </Combobox>
 ```
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Combobox | `<span>` | Root wrapper that provides context for the input, list, and options. |
-| ComboboxInput | `<input>` | Text field that filters and toggles the option list. |
-| ComboboxList | `<dialog>` | Dialog surface that displays the available options. |
-| ComboboxOption | `<button>` | Button representing a selectable option. |
+| ComboboxInput | Search input | `<input k="combobox-input">` |
+| ComboboxList | Results list | `<dialog k="combobox-list">` |
+| ComboboxOption | Result option | Alias of Item |
+| Combobox | Autocomplete input | — |
 
-## Attributes
+## Props
 
-Inherits all native attributes from `<span>`. No additional styling attributes are required.
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `string | number | readonly string[] | undefined` | — | Input value for controlled usage. |
+| placeholder | `string` | — | Placeholder text for the input. |
+| onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
+| disabled | `boolean` | — | Disable the input. |
+
+### Static Shortcuts
+
+- `Combobox.Input = ComboboxInput`
+- `Combobox.List = ComboboxList`
+- `Combobox.Option = Item`
 
 ## Notes
 
-- Uses command/commandfor attributes for disclosure logic.
+- Uses command/commandFor attributes for disclosure logic.
 - Keep option counts manageable for usability.
 
 ---
 
-<source-ref src="src/components/combobox/index.tsx"></source-ref>
+_Source: `src/components/combobox/index.tsx`

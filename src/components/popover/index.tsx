@@ -1,21 +1,26 @@
-import {type ComponentChildren, createContext} from 'preact';
+import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {installCommands} from '../../lib/commands';
+import {installCommands, installAdaptiveCommands, installDialogsDropdowns} from '../../lib/commands';
+import type {
+  PopoverOwnProps,
+  PopoverTriggerOwnProps,
+  PopoverContentOwnProps,
+  PopoverCloseOwnProps,
+} from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function Popover({
-  id: idProp,
-  children,
-}: {id?: string; children: ComponentChildren}) {
+export function Popover({id: idProp, children}: PopoverOwnProps) {
   installCommands();
+  installAdaptiveCommands();
+  installDialogsDropdowns();
   const gen = useId();
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <span p="popover">{children}</span>
+      <span k="popover">{children}</span>
     </IdCtx.Provider>
   );
 }
@@ -23,7 +28,8 @@ export function Popover({
 export function PopoverTrigger({
   children,
   ...props
-}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+}: PopoverTriggerOwnProps &
+  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
@@ -36,7 +42,7 @@ export function PopoverTrigger({
 //   'click',
 //   (e: MouseEvent) => {
 //     const dialogs = new Set(
-//       Array.from(document.querySelectorAll('[p="popover-content"]')),
+//       Array.from(document.querySelectorAll('[k="popover-content"]')),
 //     );
 //     let el = e.target as Node | null;
 //     while (el) {
@@ -51,15 +57,16 @@ export function PopoverTrigger({
 export function PopoverContent({
   id,
   ...props
-}: JSX.IntrinsicElements['dialog']) {
+}: PopoverContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="popover-content" id={id ?? ctx} {...props} />;
+  return <dialog k="popover-content" id={id ?? ctx} {...props} />;
 }
 
 export function PopoverClose({
   children,
   ...props
-}: JSX.ElementChildrenAttribute & preact.JSX.HTMLAttributes<HTMLElement>) {
+}: PopoverCloseOwnProps &
+  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,

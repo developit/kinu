@@ -1,4 +1,5 @@
 import {h, type JSX, type RefObject, type Component} from 'preact';
+import {forwardRef} from './forwardref';
 
 type RefCallbackWithCleanup<T> = (el: T) => (() => void) | void;
 type RefCallback<T> = ((el: T | null) => void) | ((el: T) => () => void);
@@ -12,17 +13,20 @@ declare global {
 
 export function createSimpleComponent<
   T extends keyof HTMLElementTagNameMap & keyof JSX.IntrinsicElements,
+  P extends object = Record<string, never>,
 >(
   name: string,
-  tag: T | ((props: any) => T) = 'div' as T,
+  tag: T | ((props: P & JSX.IntrinsicElements[T]) => T) = 'div' as T,
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
   ref?: RefCallbackWithCleanup<HTMLElementTagNameMap[T]>,
 ) {
-  type Props = JSX.IntrinsicElements[T] & {
-    p?: never; // Don't allow overriding the p attribute
-    ref?: Ref<T>;
-    [key: string]: any; // allow custom attributes for styling
-  };
+  type Props = Omit<JSX.IntrinsicElements[T], keyof P> &
+    P & {
+      k?: never; // Don't allow overriding the k attribute
+      ref?: Ref<HTMLElementTagNameMap[T]>;
+    };
+
+  const defaultDescriptors = Object.getOwnPropertyDescriptors(defaultProps || {});
 
   function proxyRef(
     this: Ref<HTMLElementTagNameMap[T]>,
@@ -40,17 +44,22 @@ export function createSimpleComponent<
     };
   }
 
-  function Wrap(this: ComponentInstance, props: Props) {
+  const Wrap = forwardRef<HTMLElementTagNameMap[T], Props>(function Wrap(this: ComponentInstance, props, fwdRef) {
     let normalizedProps = props;
     if (defaultProps || ref) {
-      normalizedProps = Object.assign({}, defaultProps || {}, props);
+      const propsWithDefaults = Object.create(props, defaultDescriptors);
+      normalizedProps = Object.assign(
+        {},
+        propsWithDefaults,
+        props,
+      );
       normalizedProps.ref =
-        this.$_ref || (this.$_ref = proxyRef.bind(props.ref as any) as any);
+        this.$_ref || (this.$_ref = proxyRef.bind(fwdRef || props.ref as any) as any);
     }
-    (normalizedProps as any).p = name;
+    (normalizedProps as any).k = name;
     const resolvedTag = typeof tag === 'function' ? tag(props) : tag;
     return h(resolvedTag, normalizedProps);
-  }
+  });
 
   Wrap.displayName = name;
   return Wrap;

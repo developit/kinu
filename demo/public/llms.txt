@@ -1,10 +1,10 @@
-# PUI (Preact UI) Component Library Documentation
+# kinu (Preact UI) Component Library Documentation
 
-PUI is a lightweight, modern UI component library built for Preact that provides a comprehensive set of accessible, customizable components with minimal JavaScript and a CSS-based styling system.
+kinu is a lightweight, modern UI component library built for Preact that provides a comprehensive set of accessible, customizable components with minimal JavaScript and a CSS-based styling system.
 
 ## Architecture Overview
 
-PUI is primarily a pass-through from JSX to semantic HTML that attaches `[p="component-name"]` attributes to elements for styling and behavior. The `p` stands for `pui` and contains the PUI component name. CSS uses these attributes to style components without JavaScript, and delegated event handlers use them for features like keyboard navigation.
+kinu is primarily a pass-through from JSX to semantic HTML that attaches `[k="component-name"]` attributes to elements for styling and behavior. The `p` stands for `kinu` and contains the kinu component name. CSS uses these attributes to style components without JavaScript, and delegated event handlers use them for features like keyboard navigation.
 
 ### Core Philosophy
 - **Minimal JavaScript**: Components use native HTML elements with minimal JavaScript for enhanced functionality
@@ -426,7 +426,7 @@ Renders as: `<div>`
 #### Toggle & ToggleGroup
 Renders as: `<button>` (Toggle), `<div>` (ToggleGroup)
 ```tsx
-<Toggle pressed={pressed} onPressedChange={setPPressed}>Bold</Toggle>
+<Toggle pressed={pressed} onClick={() => setPressed((v) => !v)}>Bold</Toggle>
 <Toggle disabled>Disabled</Toggle>
 
 <ToggleGroup type="multiple" value={values} onValueChange={setValues}>
@@ -505,7 +505,7 @@ Renders as: `<dialog>` (Sidebar), `<button>` (SidebarTrigger)
 #### Toast API
 ```tsx
 // Import toast and ToastContainer
-import { toast, ToastContainer } from 'pui';
+import { toast, ToastContainer } from 'kinu';
 
 // Basic toast
 toast.show('Hello world!');
@@ -537,9 +537,9 @@ interface ToastOptions {
 ### CSS Attribute Selectors
 All components use a `p` attribute for CSS targeting:
 ```css
-[p="button"] { /* Button styles */ }
-[p="button"][variant="secondary"] { /* Secondary button */ }
-[p="input"][disabled] { /* Disabled input */ }
+[k="button"] { /* Button styles */ }
+[k="button"][variant="secondary"] { /* Secondary button */ }
+[k="input"][disabled] { /* Disabled input */ }
 ```
 
 ### Variants & States
@@ -558,7 +558,7 @@ Components accept custom attributes and styles:
 
 ## HTML Commands Integration
 
-PUI leverages HTML's built-in [commands feature](https://developer.chrome.com/blog/command-and-commandfor) with a lightweight polyfill. Commands enable declarative interactions between elements using `command` and `commandfor` attributes:
+kinu leverages HTML's built-in [commands feature](https://developer.chrome.com/blog/command-and-commandfor) with a lightweight polyfill. Commands enable declarative interactions between elements using `command` and `commandfor` attributes:
 
 ```tsx
 // Command triggers
@@ -647,7 +647,7 @@ Many components use compound patterns for flexibility:
 - Use semantic HTML structure with proper ARIA attributes
 - Handle loading and error states appropriately
 - Use the toast system for user feedback
-- Style with CSS attribute selectors: `[p="component-name"]`
+- Style with CSS attribute selectors: `[k="component-name"]`
 - Leverage variant attributes and CSS custom properties for theming
 
 ## Integration Examples
@@ -732,4 +732,4 @@ function Dashboard() {
 }
 ```
 
-This documentation provides a comprehensive overview of the PUI component library, including all component interfaces, usage patterns, and best practices for building modern web applications with Preact.
+This documentation provides a comprehensive overview of the kinu component library, including all component interfaces, usage patterns, and best practices for building modern web applications with Preact.

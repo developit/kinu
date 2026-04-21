@@ -1,4 +1,4 @@
-import {Card} from 'pui';
+import {Card} from 'kinu';
 import {DocsLayout} from '../app';
 import {fallbackEntry} from '../docs-data';
 import {useLocation} from 'preact-iso';

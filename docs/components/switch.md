@@ -5,14 +5,26 @@ Accessible toggle switch built from a checkbox input.
 ## Usage
 
 ```tsx
-import {Switch} from 'pui';
+import {Switch} from 'kinu';
 
 <Switch checked />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Switch | Toggle control | `<input k="switch">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| checked | `boolean` | — | Controls the checked state. |
+| onChange | `(event: Event) => void` | — | Change handler for the switch. |
+| disabled | `boolean` | — | Disable the switch. |
+| name | `string` | — | Input name used for form submissions. |
+| value | `string | number | readonly string[] | undefined` | — | Input value used for form submissions. |
 
 ## Notes
 
@@ -21,4 +33,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/switch/index.tsx"></source-ref>
+_Source: `src/components/switch/index.tsx`

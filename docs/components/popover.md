@@ -5,34 +5,46 @@ Lightweight popover using native dialog with trigger/content primitives.
 ## Usage
 
 ```tsx
-import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'pui';
+import {Popover, PopoverClose, PopoverContent, PopoverTrigger} from 'kinu';
 
 <Popover>
   <PopoverTrigger><Button>Open</Button></PopoverTrigger>
   <PopoverContent>Content</PopoverContent>
+  <PopoverClose><Button>Close</Button></PopoverClose>
 </Popover>
 ```
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Popover | `<span>` | Context wrapper that wires the trigger and popover content. |
-| PopoverTrigger | — | Decorator that opens the popover when its child is activated. |
-| PopoverContent | `<dialog>` | Dialog element that renders the popover surface. |
-| PopoverClose | — | Decorator that closes the popover for its child control. |
+| Popover | Floating content | — |
+| PopoverTrigger | Popover trigger | — |
+| PopoverContent | Popover content | — |
+| PopoverClose | Component | — |
 
-## Attributes
+## Props
 
-| Export | Attribute | Values | Notes |
+### PopoverProps
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| PopoverContent | open | boolean | Reflects whether the element is expanded. |
+| id | `string` | — | Optional ID for the popover content. If not provided, one will be auto-generated. |
+
+### PopoverContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Override the auto-generated dialog ID. |
+| mobile | `"drawer"` | — | When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+while keeping popover behavior on larger screens. |
 
 ## Notes
 
 - Control placement with the placement attribute on PopoverContent.
+- Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).
 - Stays declarative thanks to the commands polyfill.
 
 ---
 
-<source-ref src="src/components/popover/index.tsx"></source-ref>
+_Source: `src/components/popover/index.tsx`

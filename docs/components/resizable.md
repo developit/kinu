@@ -5,14 +5,16 @@ Resizable container that exposes native CSS handles.
 ## Usage
 
 ```tsx
-import {Resizable} from 'pui';
+import {Resizable} from 'kinu';
 
 <Resizable style={{width: "20rem", height: "12rem"}} />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<div>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Resizable | Resizable panel | `<div k="resizable">` |
 
 ## Notes
 
@@ -21,4 +23,4 @@ Inherits all native attributes from `<div>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/resizable/index.tsx"></source-ref>
+_Source: `src/components/resizable/index.tsx`

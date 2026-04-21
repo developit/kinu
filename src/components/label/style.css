@@ -1,10 +1,10 @@
 @import "../../variables.css";
 
-[p="label"] {
+[k="label"] {
   display: inline-block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: hsl(var(--p-foreground));
+  color: hsl(var(--k-foreground));
   cursor: pointer;
   user-select: none;
 }

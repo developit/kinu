@@ -1,7 +1,7 @@
 export default [
   {
     slug: 'overview',
-    title: 'PUI Overview',
+    title: 'kinu Overview',
     section: 'Foundations',
     category: 'Introduction',
     order: 1,
@@ -35,15 +35,16 @@ export default [
     slug: 'accordion',
     title: 'Accordion',
     section: 'Components',
-    category: 'Disclosure',
+    category: 'Data Display',
     order: 1,
     folder: 'accordion',
     description:
-      'Disclosure built on the native <details> element with smooth open and close animation.',
+      'Disclosure built on the native `<details>` element with smooth open and close animation.',
     usage: `<Accordion open>\n  <summary>Details</summary>\n  <p>Hidden content</p>\n</Accordion>`,
     notes: [
-      'Forwards every native <details> attribute so you can control open state.',
-      'Provide your own <summary> element to define the trigger.'
+      'Forwards every native `<details>` attribute so you can control open state.',
+      'Provide your own `<summary>` element to define the trigger.',
+      'Pass the same `name` to multiple accordions to make them mutually exclusive — only one can be open at a time in a group (HTML 2024 `<details name>`).'
     ]
   },
   {
@@ -54,14 +55,17 @@ export default [
     order: 1,
     folder: 'alert',
     description: 'Inline status message with tone variants.',
-    usage: '<Alert variant="default">Heads up!</Alert>',
-    notes: ['Renders a <div> so you can include any markup you need.']
+    usage: '<Alert variant="info">Heads up!</Alert>',
+    notes: [
+      'Renders a `<div>` so you can include any markup you need.',
+      'Supports `destructive`, `info`, `success`, and `warning` tone variants.'
+    ]
   },
   {
     slug: 'alert-dialog',
     title: 'Alert Dialog',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Actions',
     order: 4,
     folder: 'alert-dialog',
     description: 'Alias of Dialog with alert-focused styling defaults.',
@@ -80,7 +84,7 @@ export default [
     folder: 'aspect-ratio',
     description: 'Maintains responsive boxes at a fixed ratio using pure CSS.',
     usage: `<AspectRatio ratio="16 / 9">\n  <img src="..." alt="Video thumbnail" />\n</AspectRatio>`,
-    notes: ['Wraps a <div> that defines the ratio using a CSS custom property.']
+    notes: ['Wraps a `<div>` that defines the ratio using a CSS custom property.']
   },
   {
     slug: 'avatar',
@@ -89,23 +93,38 @@ export default [
     category: 'Data Display',
     order: 1,
     folder: 'avatar',
-    description: 'Styled <img> avatar that falls back to initials from the alt text.',
+    description: 'Styled `<img>` avatar that falls back to initials from the alt text.',
     usage: '<Avatar alt="JM" src="/user.jpg" />',
     notes: [
       'Uses the alt attribute content as a CSS-rendered fallback when the image fails.',
-      'Override dimensions in CSS if you need sizes other than the 2rem default.'
+      'Override dimensions in CSS if you need sizes other than the 2rem default.',
+      'Wrap several avatars in `<Avatar.Group>` to get the overlapping stacked layout.'
     ]
   },
   {
     slug: 'badge',
     title: 'Badge',
     section: 'Components',
-    category: 'Feedback',
+    category: 'Data Display',
     order: 0,
     folder: 'badge',
     description: 'Tiny inline status indicator with multiple tone variants.',
-    usage: '<Badge variant="secondary">New</Badge>',
-    notes: ['Renders a <span> and forwards standard inline attributes.']
+    usage: '<Badge variant="secondary">New</Badge>'
+  },
+  {
+    slug: 'chip',
+    title: 'Chip',
+    section: 'Components',
+    category: 'Data Display',
+    order: 0,
+    folder: 'chip',
+    description: 'Badge-like label with an optional inline action button.',
+    usage: '<Chip>Tag<Chip.Button onClick={remove}>×</Chip.Button></Chip>',
+    notes: [
+      'Chip.Button fires standard click events with no custom event wiring.',
+      'Use the selected attribute to mark a chip as active.',
+      'Chip.Button automatically spans the full height and hugs the rounded edge.'
+    ]
   },
   {
     slug: 'breadcrumb',
@@ -122,14 +141,30 @@ export default [
     ]
   },
   {
+    slug: 'item',
+    title: 'Item',
+    section: 'Components',
+    category: 'Actions',
+    order: 0,
+    folder: 'item',
+    description: 'Generic selectable item for lists, menus, comboboxes, and more.',
+    usage: '<Item selected>Inbox</Item>',
+    notes: [
+      'Renders as `<button>` by default, or `<a>` when href is provided.',
+      'The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.',
+      'Also available as `.Item` on parent components (e.g. `DropdownMenu.Item`).',
+      '`<Item.Field>` renders as `<label>` so the whole row acts as the click target for a nested form control — drop a `<Checkbox>`, `<Switch>`, `<Radio>`, `<Input>`, `<Slider>`, etc. inside it.'
+    ]
+  },
+  {
     slug: 'button',
     title: 'Button',
     section: 'Components',
-    category: 'Forms',
+    category: 'Actions',
     order: 0,
     folder: 'button',
     description:
-      'Button component that forwards props to <button> or <a> when href is provided.',
+      'Button component that forwards props to `<button>` or `<a>` when href is provided.',
     usage: '<Button variant="outline">Action</Button>',
     notes: [
       'Use the loading attribute to reflect pending state without extra handlers.',
@@ -140,10 +175,10 @@ export default [
     slug: 'calendar',
     title: 'Calendar',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 6,
     folder: 'calendar',
-    description: 'Styled wrapper around the native <input type="date"> element.',
+    description: 'Styled wrapper around the native `<input type="date">` element.',
     usage: '<Calendar />',
     notes: [
       'Forwards every standard input attribute, defaulting type to "date".',
@@ -154,18 +189,18 @@ export default [
     slug: 'card',
     title: 'Card',
     section: 'Components',
-    category: 'Layout',
+    category: 'Data Display',
     order: 1,
     folder: 'card',
     description: 'Surface container with padding, border, and typography defaults.',
     usage: `<Card>\n  <h3>Title</h3>\n  <p>Content</p>\n</Card>`,
-    notes: ['Wraps a <div> and exposes padding/variant control via attributes.']
+    notes: ['Wraps a `<div>` and exposes padding/variant control via attributes.']
   },
   {
     slug: 'carousel',
     title: 'Carousel',
     section: 'Components',
-    category: 'Navigation',
+    category: 'Data Display',
     order: 6,
     folder: 'carousel',
     description: 'Scroll snapping carousel with previous/next helpers.',
@@ -179,13 +214,13 @@ export default [
     slug: 'checkbox',
     title: 'Checkbox',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 2,
     folder: 'checkbox',
     description: 'Accessible checkbox input with custom visuals.',
     usage: '<Checkbox checked aria-label="Accept" />',
     notes: [
-      'Wraps <input type="checkbox"> so forms just work.',
+      'Wraps `<input type="checkbox">` so forms just work.',
       'Supports data-state="indeterminate" styling for tri-state usage.'
     ]
   },
@@ -193,10 +228,10 @@ export default [
     slug: 'collapsible',
     title: 'Collapsible',
     section: 'Components',
-    category: 'Disclosure',
+    category: 'Data Display',
     order: 2,
     folder: 'collapsible',
-    description: 'Minimal hide/show container built on <details> without default markers.',
+    description: 'Minimal hide/show container built on `<details>` without default markers.',
     usage: '<Collapsible open summary="Trigger">Hidden content</Collapsible>',
     notes: [
       'Expose the open attribute for controlled usage.',
@@ -207,35 +242,81 @@ export default [
     slug: 'combobox',
     title: 'Combobox',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 7,
     folder: 'combobox',
     description: 'Autocomplete input with trigger, list, and option primitives.',
-    usage: `<Combobox value={value} onChange={setValue}>\n  <ComboboxInput />\n  <ComboboxList>\n    <ComboboxOption value="1">One</ComboboxOption>\n  </ComboboxList>\n</Combobox>`,
+    usage: `<Combobox>\n  <ComboboxInput placeholder="Search" />\n  <ComboboxList>\n    <ComboboxOption>One</ComboboxOption>\n  </ComboboxList>\n</Combobox>`,
     notes: [
-      'Uses command/commandfor attributes for disclosure logic.',
+      'Uses command/commandFor attributes for disclosure logic.',
       'Keep option counts manageable for usability.'
+    ]
+  },
+  {
+    slug: 'listbox',
+    title: 'Listbox',
+    section: 'Components',
+    category: 'Data Input',
+    order: 7,
+    folder: 'listbox',
+    description: 'Non-modal filterable list for inline search and selection.',
+    usage: `<Listbox>\n  <ListboxInput placeholder="Filter..." />\n  <ListboxList>\n    <ListboxOption>Apple</ListboxOption>\n  </ListboxList>\n</Listbox>`,
+    notes: [
+      'Selection is developer-controlled via the selected attribute on options.',
+      'Shares filtering logic with Combobox via the filterItems utility.',
+      'Unlike Combobox, the list is always visible with no dialog or popover.',
+      'Compose with Dialog to build a command palette.'
     ]
   },
   {
     slug: 'context-menu',
     title: 'Context Menu',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Actions',
     order: 7,
     folder: 'context-menu',
     description: 'Right-click context menu powered by the native dialog element.',
-    usage: `<ContextMenu>\n  <ContextMenuTrigger>Open</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
+    usage: `<ContextMenu>\n  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
     notes: [
       'Installs the commands polyfill when rendered.',
-      'Menu content is focus-trapped via <dialog>.'
+      'Menu content is focus-trapped via `<dialog>`.',
+      'Set `mobile="drawer"` on `ContextMenuContent` to render as a bottom-sheet on narrow viewports (≤640px).'
+    ]
+  },
+  {
+    slug: 'file-upload',
+    title: 'File Upload',
+    section: 'Components',
+    category: 'Data Input',
+    order: 8,
+    folder: 'file-upload',
+    description: 'Native file input with a styled button for selecting local files.',
+    usage: '<FileUpload accept="image/*" />',
+    notes: [
+      'Sets type="file" for you and forwards all native input props.',
+      'Use the accept prop to restrict selectable file types.',
+      'Use capture="user" or capture="environment" to invoke the camera on mobile.'
+    ]
+  },
+  {
+    slug: 'color-picker',
+    title: 'Color Picker',
+    section: 'Components',
+    category: 'Data Input',
+    order: 7,
+    folder: 'color-picker',
+    description: 'Styled color swatch input that opens the native OS color picker.',
+    usage: '<ColorPicker />',
+    notes: [
+      'Sets type="color" for you and forwards all native input props.',
+      'Pairs naturally with `Input` inside an `InputGroup` to show an editable hex value alongside the swatch.',
     ]
   },
   {
     slug: 'date-picker',
     title: 'Date Picker',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 8,
     folder: 'date-picker',
     description: 'Styled date input that shares the same foundation as Calendar.',
@@ -246,28 +327,43 @@ export default [
     ]
   },
   {
+    slug: 'time-picker',
+    title: 'Time Picker',
+    section: 'Components',
+    category: 'Data Input',
+    order: 9,
+    folder: 'time-picker',
+    description: 'Styled time input that shares the same foundation as Date Picker.',
+    usage: '<TimePicker />',
+    notes: [
+      'Sets type="time" for you and forwards all native input props.',
+      'Use the step prop to constrain selectable intervals, e.g. step={1800} for 30-minute increments.',
+    ]
+  },
+  {
     slug: 'dialog',
     title: 'Dialog',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Actions',
     order: 3,
     folder: 'dialog',
-    description: 'Composable modal built on the native <dialog> element.',
-    usage: `<Dialog>\n  <Dialog.Trigger><Button>Open</Button></Dialog.Trigger>\n  <Dialog.Content>Modal body</Dialog.Content>\n  <Dialog.Close><Button>Close</Button></Dialog.Close>\n</Dialog>`,
+    description: 'Composable modal built on the native `<dialog>` element.',
+    usage: `<Dialog>\n  <DialogTrigger><Button>Open</Button></DialogTrigger>\n  <DialogContent>Modal body</DialogContent>\n  <DialogClose><Button>Close</Button></DialogClose>\n</Dialog>`,
     notes: [
       'Relies on command attributes instead of portal gymnastics.',
-      'Dialog.Content forwards all native <dialog> props.'
+      'Dialog.Content forwards all native `<dialog>` props.',
+      'For controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal by a small internal hook, and the browser\'s `close` event drives the state-sync callback.'
     ]
   },
   {
     slug: 'drawer',
     title: 'Drawer',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Actions',
     order: 5,
     folder: 'drawer',
     description: 'Bottom sheet style overlay with trigger and close helpers.',
-    usage: `<Drawer>\n  <DrawerTrigger>Open</DrawerTrigger>\n  <DrawerContent>Content</DrawerContent>\n</Drawer>`,
+    usage: `<Drawer>\n  <DrawerTrigger><Button>Open</Button></DrawerTrigger>\n  <DrawerContent>Content</DrawerContent>\n  <DrawerClose><Button>Close</Button></DrawerClose>\n</Drawer>`,
     notes: [
       'Positions content with CSS variables so you can change direction.',
       'Attach Drawer.Close to any element that should dismiss.'
@@ -277,21 +373,22 @@ export default [
     slug: 'dropdown-menu',
     title: 'Dropdown Menu',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Actions',
     order: 6,
     folder: 'dropdown-menu',
-    description: 'Command-driven dropdown built on top of <dialog>.',
+    description: 'Command-driven dropdown built on top of `<dialog>`.',
     usage: `<DropdownMenu>\n  <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Item</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`,
     notes: [
-      'Menu items render as <button> elements by default.',
-      'Automatically closes when an item dispatches the close command.'
+      'Menu items render as `<button>` elements by default.',
+      'Automatically closes when an item dispatches the close command.',
+      'Set `mobile="drawer"` on `DropdownMenuContent` to adapt to a bottom-sheet on narrow viewports (≤640px).'
     ]
   },
   {
     slug: 'hover-card',
     title: 'Hover Card',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Data Display',
     order: 8,
     folder: 'hover-card',
     description: 'Delayed hover preview card with trigger/content primitives.',
@@ -305,13 +402,13 @@ export default [
     slug: 'input',
     title: 'Input',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 1,
     folder: 'input',
     description: 'Text input with size, tone, and invalid states handled in CSS.',
     usage: '<Input placeholder="Email" type="email" />',
     notes: [
-      'Wraps the native <input> element so forms behave as expected.',
+      'Wraps the native `<input>` element so forms behave as expected.',
       'Supports size="sm" and size="lg" for compact or spacious layouts.'
     ]
   },
@@ -319,7 +416,7 @@ export default [
     slug: 'input-group',
     title: 'Input Group',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 2,
     folder: 'input-group',
     description: 'Compact fieldset wrapper for joined controls like input and button rows.',
@@ -329,20 +426,20 @@ export default [
 </InputGroup>`,
     notes: [
       'Uses CSS-only border and radius joining for grouped controls.',
-      'Works with both PUI primitives and native form elements.'
+      'Works with both kinu primitives and native form elements.'
     ]
   },
   {
     slug: 'label',
     title: 'Label',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 9,
     folder: 'label',
     description: 'Typography-aligned label component for form controls.',
     usage: '<Label htmlFor="name">Name</Label>',
     notes: [
-      'Wraps the native <label> element and forwards htmlFor.',
+      'Wraps the native `<label>` element and forwards htmlFor.',
       'Pair with controls to provide accessible names.'
     ]
   },
@@ -381,7 +478,7 @@ export default [
     description: 'Semantic pagination list with previous/next helpers.',
     usage: `<Pagination>\n  <PaginationList>\n    <PaginationItem><PaginationLink aria-current="page">1</PaginationLink></PaginationItem>\n  </PaginationList>\n</Pagination>`,
     notes: [
-      'Renders <nav> and list markup for accessibility.',
+      'Renders `<nav>` and list markup for accessibility.',
       'Use aria-current on the active page link.'
     ]
   },
@@ -389,13 +486,14 @@ export default [
     slug: 'popover',
     title: 'Popover',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Layout',
     order: 2,
     folder: 'popover',
     description: 'Lightweight popover using native dialog with trigger/content primitives.',
-    usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n</Popover>`,
+    usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n  <PopoverClose><Button>Close</Button></PopoverClose>\n</Popover>`,
     notes: [
       'Control placement with the placement attribute on PopoverContent.',
+      'Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).',
       'Stays declarative thanks to the commands polyfill.'
     ]
   },
@@ -409,21 +507,36 @@ export default [
     description: 'Styled progress meter with determinate and indeterminate states.',
     usage: '<Progress value={60} max={100} />',
     notes: [
-      'Wraps the native <progress> element for semantics.',
+      'Wraps the native `<progress>` element for semantics.',
       'Use the data-state attribute for indeterminate styling.'
+    ]
+  },
+  {
+    slug: 'progress-ring',
+    title: 'Progress Ring',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'progress-ring',
+    description: 'Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask.',
+    usage: '<ProgressRing value={60} max={100} />',
+    notes: [
+      'Pure CSS: uses typed `attr()` to read `value`/`max` directly from the DOM (Chrome 133+, Safari 18.4+, Firefox 140+).',
+      'Omit `value` (or pass `undefined`) to render an indeterminate spinning ring, matching native `<progress>` semantics.',
+      'Override `--k-progress-ring-size` and `--k-progress-ring-thickness` to customise dimensions.'
     ]
   },
   {
     slug: 'radio-group',
     title: 'Radio Group',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 3,
     folder: 'radio-group',
     description: 'Container that styles a set of native radio inputs.',
     usage: `<RadioGroup>\n  <Radio name="plan" value="basic" />\n  <Radio name="plan" value="pro" />\n</RadioGroup>`,
     notes: [
-      'Radio renders an <input type="radio"> so browser form behavior stays intact.',
+      'Radio renders an `<input type="radio">` so browser form behavior stays intact.',
       'Use the native name/value model or controlled props to manage selection.'
     ]
   },
@@ -437,7 +550,7 @@ export default [
     description: 'Resizable container that exposes native CSS handles.',
     usage: '<Resizable style={{width: "20rem", height: "12rem"}} />',
     notes: [
-      'Wraps a <div> with resize: both so the browser handles drag gestures.',
+      'Wraps a `<div>` with resize: both so the browser handles drag gestures.',
       'Perfect for scratchpads, preview panes, or demos where users adjust size.'
     ]
   },
@@ -459,10 +572,10 @@ export default [
     slug: 'select',
     title: 'Select',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 4,
     folder: 'select',
-    description: 'Styled native <select> element with size variants.',
+    description: 'Styled native `<select>` element with size variants.',
     usage: `<Select>\n  <option>One</option>\n</Select>`,
     notes: [
       'Leverages the platform picker on touch devices.',
@@ -479,7 +592,7 @@ export default [
     description: 'Semantic horizontal or vertical divider.',
     usage: '<Separator />',
     notes: [
-      'Rendered as a <div> so you can set orientation via attribute.',
+      'Rendered as a `<div>` so you can set orientation via attribute.',
       'Use decorative when the separator is purely visual.'
     ]
   },
@@ -487,11 +600,11 @@ export default [
     slug: 'sheet',
     title: 'Sheet',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Actions',
     order: 9,
     folder: 'sheet',
     description: 'Side or bottom sheet overlay with directional variants.',
-    usage: `<Sheet side="right">\n  <SheetTrigger>Open</SheetTrigger>\n  <SheetContent>Panel</SheetContent>\n</Sheet>`,
+    usage: `<Sheet>\n  <SheetTrigger><Button>Open</Button></SheetTrigger>\n  <SheetContent side="right">Panel</SheetContent>\n  <SheetClose><Button>Close</Button></SheetClose>\n</Sheet>`,
     notes: [
       'Control the slide direction with the side attribute on SheetContent.',
       'SheetClose attaches the close command to any child element.'
@@ -505,9 +618,9 @@ export default [
     order: 6,
     folder: 'sidebar',
     description: 'Responsive sidebar dialog that collapses on mobile.',
-    usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandfor="app-sidebar">Toggle</SidebarTrigger>`,
+    usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>`,
     notes: [
-      'Renders a <dialog> so it can slide in as a modal on small screens.',
+      'Renders a `<dialog>` so it can slide in as a modal on small screens.',
       'SidebarTrigger toggles the hidden/open state with the command attribute.'
     ]
   },
@@ -529,13 +642,13 @@ export default [
     slug: 'skeleton',
     title: 'Skeleton',
     section: 'Components',
-    category: 'Feedback',
+    category: 'Data Display',
     order: 4,
     folder: 'skeleton',
     description: 'Animated shimmer placeholder for loading states.',
     usage: '<Skeleton style={{height: "1.5rem"}} />',
     notes: [
-      'Wraps a <div> so you can size it however you want.',
+      'Wraps a `<div>` so you can size it however you want.',
       'Use data-rounded to switch to pill skeletons.'
     ]
   },
@@ -543,13 +656,13 @@ export default [
     slug: 'slider',
     title: 'Slider',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 5,
     folder: 'slider',
     description: 'Range input with CSS-driven track and thumb styling.',
     usage: '<Slider min={0} max={100} value={50} />',
     notes: [
-      'Wraps <input type="range"> for seamless form integration.',
+      'Wraps `<input type="range">` for seamless form integration.',
       'Supports data-orientation for vertical sliders.'
     ]
   },
@@ -557,14 +670,14 @@ export default [
     slug: 'switch',
     title: 'Switch',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 6,
     folder: 'switch',
     description: 'Accessible toggle switch built from a checkbox input.',
     usage: '<Switch checked />',
     notes: [
       'It is just a checkbox under the hood so forms stay in sync.',
-      'Use aria-label or pair with <Label> for accessible naming.'
+      'Use aria-label or pair with `<Label>` for accessible naming.'
     ]
   },
   {
@@ -577,8 +690,8 @@ export default [
     description: 'Table wrapper with zebra striping and compact density.',
     usage: `<Table>\n  <thead>...</thead>\n  <tbody>...</tbody>\n</Table>`,
     notes: [
-      'Uses native <table> markup so semantics stay intact.',
-      'Supports sticky headers via CSS attribute toggles.'
+      'Uses native `<table>` markup so semantics stay intact.',
+      'Pass `sticky` to make `<thead>` cells stick to the top of the nearest scroll container. Wrap the table in a scrollable element (e.g. `<div style={{maxHeight: \'12rem\', overflow: \'auto\'}}>`) so the header has somewhere to stick relative to.'
     ]
   },
   {
@@ -589,59 +702,75 @@ export default [
     order: 1,
     folder: 'tabs',
     description: 'TabList, Tab, and TabPanel wrappers using aria attributes.',
-    usage: `<TabList>\n  <Tab aria-selected>Tab</Tab>\n</TabList>\n<TabPanel>Panel</TabPanel>`,
+    usage: `<TabList role="tablist">\n  <Tab role="tab" aria-selected="true">Account</Tab>\n  <Tab role="tab" aria-selected="false">Password</Tab>\n</TabList>\n<TabPanel role="tabpanel">Account settings</TabPanel>`,
     notes: [
       'Control selection state by toggling aria-selected.',
       'TabPanel toggles the hidden attribute so CSS handles transitions.'
     ]
   },
   {
+    slug: 'list',
+    title: 'List',
+    section: 'Components',
+    category: 'Navigation',
+    order: 1,
+    folder: 'list',
+    description: 'Interactive selectable list with shared item styling.',
+    usage: `<List>\n  <List.Item selected>Inbox</List.Item>\n  <List.Item>Drafts</List.Item>\n</List>`,
+    notes: [
+      'Items render as `<button>` by default, or `<a>` when href is provided.',
+      'Use variant="nav" for sidebar-style navigation with softer accent colors.',
+      'Shares the same item styles as DropdownMenuItem and ComboboxOption.'
+    ]
+  },
+  {
     slug: 'textarea',
     title: 'Textarea',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 10,
     folder: 'textarea',
     description: 'Text area with matching input styling, variants, and sizes.',
     usage: '<Textarea rows={4} placeholder="Write here" />',
     notes: [
-      'Wraps the native <textarea> for full form support.',
-      'Use the resize attribute to control user resizing.'
+      'Wraps the native `<textarea>` for full form support.',
+      'Use the resize attribute to control user resizing.',
+      'Pass `autosize` to let the textarea grow with its content via native `field-sizing: content`. Supported in Chromium and Firefox; gracefully falls back to the fixed-height default elsewhere.'
     ]
   },
   {
     slug: 'toggle',
     title: 'Toggle',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 11,
     folder: 'toggle',
     description: 'ARIA-pressed aware button for on/off interactions.',
-    usage: '<Toggle aria-pressed={value}>Bold</Toggle>',
+    usage: '<Toggle pressed={value}>Bold</Toggle>',
     notes: [
-      'Wraps <button> so keyboard support comes for free.',
-      'Style pressed state using the aria-pressed attribute selectors.'
+      'Wraps `<button>` so keyboard support comes for free.',
+      'Use the `pressed` prop for state; it maps to `aria-pressed` on the DOM.'
     ]
   },
   {
     slug: 'toggle-group',
     title: 'Toggle Group',
     section: 'Components',
-    category: 'Forms',
+    category: 'Data Input',
     order: 12,
     folder: 'toggle-group',
     description: 'Container that lets Toggle buttons coordinate pressed state.',
     usage: `<ToggleGroup>\n  <Toggle>Bold</Toggle>\n  <Toggle>Italic</Toggle>\n</ToggleGroup>`,
     notes: [
       'Each Toggle toggles aria-pressed and clears other toggles in the same group.',
-      'Pass props like disabled or value straight to the underlying <button>.'
+      'Pass props like disabled or value straight to the underlying `<button>`.'
     ]
   },
   {
     slug: 'tooltip',
     title: 'Tooltip',
     section: 'Components',
-    category: 'Overlay',
+    category: 'Feedback',
     order: 1,
     folder: 'tooltip',
     description: 'Hover/focus tooltip with placement attributes and CSS timing.',
@@ -654,8 +783,8 @@ export default [
   {
     slug: 'typography',
     title: 'Typography',
-    section: 'Components',
-    category: 'Data Display',
+    section: 'Foundations',
+    category: 'Styling',
     order: 0,
     file: 'pages/typography.md'
   },
@@ -666,5 +795,139 @@ export default [
     category: 'Feedback',
     order: 5,
     file: 'pages/toast.md'
+  },
+  {
+    slug: 'kbd',
+    title: 'Kbd',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'kbd',
+    description: 'Styled `<kbd>` wrapper for keyboard shortcut glyphs.',
+    usage: '<Kbd>⌘K</Kbd>',
+    notes: [
+      'Wraps the native `<kbd>` element so semantics stay intact.',
+      'Combine multiple keys in a single `<Kbd>` (e.g. `⌘S`) to render them as one keycap.',
+      "Pairs naturally with `Item` rows — drop a `<Kbd style={{marginLeft: 'auto'}}>` inside an item to show the shortcut on the trailing edge."
+    ]
+  },
+  {
+    slug: 'empty',
+    title: 'Empty',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'empty',
+    description: 'Centered placeholder for no-data / no-results states.',
+    usage: `<Empty>\n  <h3>No results</h3>\n  <p>Try a different search.</p>\n</Empty>`,
+    notes: [
+      'Centers heading, body text, and optional actions in a flex column.',
+      'Headings inherit the foreground color; body text defaults to muted foreground.'
+    ]
+  },
+  {
+    slug: 'field',
+    title: 'Field',
+    section: 'Components',
+    category: 'Data Input',
+    order: 0,
+    folder: 'field',
+    description: 'Layout wrapper that groups a label, control, description, and error message.',
+    usage: `<Field>\n  <Field.Label>\n    Email\n    <Input type="email" required />\n  </Field.Label>\n  <Field.Description>We'll never share it</Field.Description>\n  <Field.Error>Please enter a valid email</Field.Error>\n</Field>`,
+    notes: [
+      'Nests the control inside `Field.Label` so native `<label>` implicit association handles pairing — no `id`/`htmlFor` plumbing needed.',
+      '`Field.Label` is an alias of `Label`, so the regular label styles and props apply.',
+      '`:has(:invalid)` turns the label destructive when any descendant control fails validation.',
+      '`Field.Error` renders with `role="alert"` so assistive tech announces it when shown.'
+    ]
+  },
+  {
+    slug: 'otp-input',
+    title: 'OTP Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 2,
+    folder: 'otp',
+    description: 'Single `<input>` styled as N segmented one-time-code cells.',
+    usage: '<OTPInput maxLength={6} />',
+    notes: [
+      'Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\\\d*"` — iOS SMS autofill, paste, and password managers just work.',
+      'The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.',
+      'Each cell is `--k-otp-cell` wide (defaults to `2.5rem`); total input width is `maxLength × --k-otp-cell`. Override the variable to resize.'
+    ]
+  },
+  {
+    slug: 'timeline',
+    title: 'Timeline',
+    section: 'Components',
+    category: 'Data Display',
+    order: 4,
+    folder: 'timeline',
+    description: 'Vertical sequence of events with connecting line + dot markers.',
+    usage: `<Timeline>\n  <Timeline.Entry>\n    Jason pushed 3 commits\n    <time>2h ago</time>\n  </Timeline.Entry>\n</Timeline>`,
+    notes: [
+      'Renders as `<ol>` + `<li>` so activity feeds and audit logs stay semantic.',
+      'Dot and connector line are both drawn on each entry from one `--k-timeline-x` variable (the dot radius), so they can\'t drift out of alignment.',
+      'Drop a native `<time>` element inside an entry for the trailing timestamp — add `dateTime="..."` for machine-readable semantics.'
+    ]
+  },
+  {
+    slug: 'tree',
+    title: 'Tree',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'tree',
+    description: 'Composable tree view built from native `<details>` and `<summary>` primitives.',
+    usage: `<Tree>\n  <Tree.Group open>\n    <Tree.GroupLabel>src</Tree.GroupLabel>\n    <Tree.GroupItems>\n      <Tree.Item>index.ts</Tree.Item>\n    </Tree.GroupItems>\n  </Tree.Group>\n</Tree>`,
+    notes: [
+      'State is native via the `open` attribute on `Tree.Group`.',
+      'Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.'
+    ]
+  },
+  {
+    slug: 'status',
+    title: 'Status',
+    section: 'Components',
+    category: 'Data Display',
+    order: 4,
+    folder: 'status',
+    description: 'Inline status indicator with a colored dot prefix, usable with or without a label.',
+    usage: '<Status variant="success">Online</Status>',
+    notes: [
+      'Dual-purpose: render with children for a dot + label, or without children for a bare dot. When used as a bare dot, supply `aria-label` so screen readers have something to announce — the same text is revealed as a tooltip on hover/focus so sighted users get it too.',
+      'Variants mirror the semantic color tokens and match `Alert`: `success`, `warning`, `info`, `destructive`. Omit the variant for a neutral muted dot.',
+      'The dot and gap are sized in `em`, so everything scales with the surrounding font-size — drop a Status inside a heading or a small footer and it follows.',
+      'Pass `pulse` to animate a "ping" ring for live/loading states. Honors `prefers-reduced-motion` via the base stylesheet.'
+    ]
+  },
+  {
+    slug: 'meter',
+    title: 'Meter',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'meter',
+    description: 'Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary).',
+    usage: '<Meter value={0.7} min={0} max={1} low={0.3} high={0.8} optimum={0.9} />',
+    notes: [
+      'Forwards every native `<meter>` attribute.',
+      'Fill color reflects the value range: primary when in the optimum band, warning in the suboptimum band, destructive outside.'
+    ]
+  },
+  {
+    slug: 'prose',
+    title: 'Prose',
+    section: 'Components',
+    category: 'Data Display',
+    order: 5,
+    folder: 'prose',
+    description: 'Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies).',
+    usage: '<Prose><h1>Title</h1><p>Body...</p></Prose>',
+    notes: [
+      'Tune spacing, font, and heading weight via CSS variables: `--k-prose-spacing`, `--k-prose-font`, `--k-prose-heading-weight`.',
+      'Only styles direct and nested standard elements; does not touch Kinu components used inside.',
+      'First/last child margins are zeroed so the wrapper can drop into any layout without margin collapse.'
+    ]
   }
 ];

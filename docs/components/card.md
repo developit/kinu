@@ -5,7 +5,7 @@ Surface container with padding, border, and typography defaults.
 ## Usage
 
 ```tsx
-import {Card} from 'pui';
+import {Card} from 'kinu';
 
 <Card>
   <h3>Title</h3>
@@ -13,11 +13,17 @@ import {Card} from 'pui';
 </Card>
 ```
 
-## Attributes
+## Exports
 
-| Export | Attribute | Values | Notes |
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Card | Surface container | `<div k="card">` |
+
+## Props
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Card | padding | none | sm | lg | Forwarded attribute used by the component styling. |
+| padding | `CardPadding` | 'md' | Padding preset for the card content. |
 
 ## Notes
 
@@ -25,4 +31,4 @@ import {Card} from 'pui';
 
 ---
 
-<source-ref src="src/components/card/index.tsx"></source-ref>
+_Source: `src/components/card/index.tsx`

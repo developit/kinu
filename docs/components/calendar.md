@@ -5,14 +5,25 @@ Styled wrapper around the native `<input type="date">` element.
 ## Usage
 
 ```tsx
-import {Calendar} from 'pui';
+import {Calendar} from 'kinu';
 
 <Calendar />
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<input>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Calendar | Date picker | `<input k="calendar">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `string | number | readonly string[] | undefined` | — | Current date value. |
+| onChange | `(event: Event) => void` | — | Change handler for date input. |
+| disabled | `boolean` | — | Disable the input. |
+| name | `string` | — | Input name used for form submissions. |
 
 ## Notes
 
@@ -21,4 +32,4 @@ Inherits all native attributes from `<input>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/calendar/index.tsx"></source-ref>
+_Source: `src/components/calendar/index.tsx`

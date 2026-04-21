@@ -5,7 +5,7 @@ Composable breadcrumb trail built from list primitives.
 ## Usage
 
 ```tsx
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'kinu';
 
 <Breadcrumb>
   <BreadcrumbList>
@@ -16,16 +16,12 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from 'pui';
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Breadcrumb | `<nav>` | Navigation landmark that wraps the breadcrumb trail. |
-| BreadcrumbList | `<ol>` | Ordered list container for breadcrumb items. |
-| BreadcrumbItem | `<li>` | List item wrapper for each breadcrumb. |
-| BreadcrumbLink | `<a>` | Link element for navigating to a breadcrumb target. |
-
-## Attributes
-
-Inherits all native attributes from `<nav>`. No additional styling attributes are required.
+| Breadcrumb | Navigation trail | `<nav k="breadcrumb">` |
+| BreadcrumbList | Trail container | `<ol k="breadcrumb-list">` |
+| BreadcrumbItem | Trail item | `<li k="breadcrumb-item">` |
+| BreadcrumbLink | Trail link | `<a k="breadcrumb-link">` |
 
 ## Notes
 
@@ -34,4 +30,4 @@ Inherits all native attributes from `<nav>`. No additional styling attributes ar
 
 ---
 
-<source-ref src="src/components/breadcrumb/index.tsx"></source-ref>
+_Source: `src/components/breadcrumb/index.tsx`

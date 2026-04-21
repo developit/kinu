@@ -1,0 +1,17 @@
+@import "../../variables.css";
+
+[k="empty"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  gap: 0.5rem;
+  color: hsl(var(--k-muted-foreground));
+}
+
+[k="empty"] > :is(h1, h2, h3, h4, h5, h6) {
+  color: hsl(var(--k-foreground));
+  font-weight: 600;
+}

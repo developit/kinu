@@ -1,20 +1,32 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts} from '../../lib/commands';
+import {filterItems} from '../../lib/filter';
+import {Item} from '../item';
+import type {
+  ComboboxOwnProps,
+  ComboboxInputOwnProps,
+  ComboboxListOwnProps,
+} from './types';
 import './style.css';
 
-const ComboboxBase = createSimpleComponent('combobox', 'span', {}, () => {
-  installMenuShortcuts();
-});
+const ComboboxBase = createSimpleComponent<'span', ComboboxOwnProps>(
+  'combobox',
+  'span',
+  {},
+  () => {
+    installMenuShortcuts();
+  },
+);
 
-export const ComboboxInput = createSimpleComponent(
+export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProps>(
   'combobox-input',
   'input',
   {},
   (el: HTMLInputElement) => {
     const getList = () =>
       el
-        .closest('[p="combobox"]')
-        ?.querySelector<HTMLDialogElement>('[p="combobox-list"]')!;
+        .closest('[k="combobox"]')
+        ?.querySelector<HTMLDialogElement>('[k="combobox-list"]')!;
 
     function onInputFocusClick(e: Event) {
       filter(e.type !== 'input');
@@ -30,21 +42,10 @@ export const ComboboxInput = createSimpleComponent(
     }
 
     function filter(select?: boolean) {
-      const value = el.value.toLowerCase();
       const items = getList().querySelectorAll<HTMLElement>(
-        '[p="combobox-option"]',
+        '[k="item"]',
       );
-      let hit = false;
-      for (const item of items) {
-        const match = item.textContent!.toLowerCase().includes(value);
-        item.removeAttribute('selected');
-        const visible = select || match;
-        item.style.display = visible ? '' : 'none';
-        if ((select ? match : visible) && !hit) {
-          item.toggleAttribute('selected', true);
-          hit = true;
-        }
-      }
+      filterItems(el.value, items, select);
     }
 
     el.addEventListener('input', onInputFocusClick);
@@ -61,38 +62,42 @@ export const ComboboxInput = createSimpleComponent(
   },
 );
 
-export const ComboboxList = createSimpleComponent('combobox-list', 'dialog', {
-  onMouseDown: (e) => e.preventDefault(),
-  onClick: (e) => e.currentTarget.close(),
-});
-
-export const ComboboxOption = createSimpleComponent(
-  'combobox-option',
-  'button',
+export const ComboboxList = createSimpleComponent<'dialog', ComboboxListOwnProps>(
+  'combobox-list',
+  'dialog',
   {
-    tabIndex: -1,
-  },
-  (el: HTMLButtonElement) => {
-    function select(e: MouseEvent) {
-      e.preventDefault();
-      const input = document.activeElement as HTMLInputElement;
-      input.value = el.textContent || '';
-      input.dispatchEvent(new Event('input', {bubbles: true}));
-      input.focus();
-    }
-    el.addEventListener('click', select);
-    return () => el.removeEventListener('click', select);
+    onMouseDown: (e) => e.preventDefault(),
+    onClick: (e) => {
+      const item = (e.target as Element).closest?.('[k="item"]');
+      if (item) {
+        e.preventDefault();
+        const combobox = e.currentTarget.closest('[k="combobox"]');
+        const input = combobox?.querySelector<HTMLInputElement>('[k="combobox-input"]');
+        if (input) {
+          input.value = (item as HTMLButtonElement).value || item.textContent || '';
+          input.dispatchEvent(new Event('input', {bubbles: true}));
+          input.focus();
+        }
+      }
+      e.currentTarget.close();
+    },
   },
 );
+
+/** @deprecated Use `Item` instead. */
+export const ComboboxOption = Item;
 
 type ComboboxComponent = typeof ComboboxBase & {
   Input: typeof ComboboxInput;
   List: typeof ComboboxList;
-  Option: typeof ComboboxOption;
+  Item: typeof Item;
+  /** @deprecated Use `Item` or `Combobox.Item` instead. */
+  Option: typeof Item;
 };
 
 export const Combobox: ComboboxComponent = Object.assign(ComboboxBase, {
   Input: ComboboxInput,
   List: ComboboxList,
-  Option: ComboboxOption,
+  Item,
+  Option: Item,
 });

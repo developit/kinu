@@ -5,16 +5,23 @@ Hover/focus tooltip with placement attributes and CSS timing.
 ## Usage
 
 ```tsx
-import {Tooltip} from 'pui';
+import {Tooltip} from 'kinu';
 
 <Tooltip text="Info"><Button>Hover</Button></Tooltip>
 ```
 
-## Attributes
+## Exports
 
-| Export | Attribute | Values | Notes |
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Tooltip | Hover hint | `<span k="tooltip">` |
+
+## Props
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Tooltip | title | boolean | Forwarded attribute used by the component styling. |
+| title | `string` | — | Tooltip text provided via the title attribute. |
+| side | `"left" | "right" | "top" | "bottom"` | — | The direction the tooltip should open towards. |
 
 ## Notes
 
@@ -23,4 +30,4 @@ import {Tooltip} from 'pui';
 
 ---
 
-<source-ref src="src/components/tooltip/index.tsx"></source-ref>
+_Source: `src/components/tooltip/index.tsx`

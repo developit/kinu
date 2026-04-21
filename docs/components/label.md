@@ -5,14 +5,22 @@ Typography-aligned label component for form controls.
 ## Usage
 
 ```tsx
-import {Label} from 'pui';
+import {Label} from 'kinu';
 
 <Label htmlFor="name">Name</Label>
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<label>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Label | Form field label | `<label k="label">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| htmlFor | `string` | — | ID of the form element this label describes. |
 
 ## Notes
 
@@ -21,4 +29,4 @@ Inherits all native attributes from `<label>`. No additional styling attributes 
 
 ---
 
-<source-ref src="src/components/label/index.tsx"></source-ref>
+_Source: `src/components/label/index.tsx`

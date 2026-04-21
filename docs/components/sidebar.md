@@ -5,28 +5,34 @@ Responsive sidebar dialog that collapses on mobile.
 ## Usage
 
 ```tsx
-import {Sidebar, SidebarTrigger} from 'pui';
+import {Sidebar, SidebarTrigger} from 'kinu';
 
 <Sidebar id="app-sidebar">
   <nav>...</nav>
 </Sidebar>
-<SidebarTrigger commandfor="app-sidebar">Toggle</SidebarTrigger>
+<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>
 ```
 
 ## Exports
 
-| Name | DOM element | Description |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| SidebarTrigger | `<button>` | Button that toggles a sidebar dialog. |
-| Sidebar | `<dialog>` | Dialog element that displays the responsive sidebar. |
+| SidebarTrigger | Sidebar toggle | `<button k="sidebar-trigger">` |
+| Sidebar | Side navigation | `<dialog k="sidebar">` |
 
-## Attributes
+## Props
 
-| Export | Attribute | Values | Notes |
+### SidebarTriggerProps
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Sidebar | aria-current | page | Forwarded attribute used by the component styling. |
-| Sidebar | hidden | boolean | Forwarded attribute used by the component styling. |
-| Sidebar | open | boolean | Reflects whether the element is expanded. |
+| commandFor | `string` | — | Target sidebar ID to control. |
+
+### SidebarProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | `string` | — | Optional ID for the sidebar dialog. |
 
 ## Notes
 
@@ -35,4 +41,4 @@ import {Sidebar, SidebarTrigger} from 'pui';
 
 ---
 
-<source-ref src="src/components/sidebar/index.tsx"></source-ref>
+_Source: `src/components/sidebar/index.tsx`

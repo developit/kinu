@@ -5,21 +5,28 @@ Inline status message with tone variants.
 ## Usage
 
 ```tsx
-import {Alert} from 'pui';
+import {Alert} from 'kinu';
 
-<Alert variant="default">Heads up!</Alert>
+<Alert variant="info">Heads up!</Alert>
 ```
 
-## Attributes
+## Exports
 
-| Export | Attribute | Values | Notes |
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Alert | Status message | `<div k="alert">` |
+
+## Props
+
+| Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| Alert | variant | destructive | Visual style variant selector. |
+| variant | `AlertVariant` | 'default' | Visual style variant. |
 
 ## Notes
 
 - Renders a `<div>` so you can include any markup you need.
+- Supports `destructive`, `info`, `success`, and `warning` tone variants.
 
 ---
 
-<source-ref src="src/components/alert/index.tsx"></source-ref>
+_Source: `src/components/alert/index.tsx`

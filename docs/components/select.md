@@ -5,16 +5,28 @@ Styled native `<select>` element with size variants.
 ## Usage
 
 ```tsx
-import {Select} from 'pui';
+import {Select} from 'kinu';
 
 <Select>
   <option>One</option>
 </Select>
 ```
 
-## Attributes
+## Exports
 
-Inherits all native attributes from `<select>`. No additional styling attributes are required.
+| Name | Description | Rendered HTML |
+| --- | --- | --- |
+| Select | Dropdown selection | `<select k="select">` |
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `string | number | readonly string[] | undefined` | — | Current selected value. |
+| onChange | `(event: Event) => void` | — | Change handler for controlled selects. |
+| disabled | `boolean` | — | Disable the select input. |
+| multiple | `boolean` | — | Native multiple selection toggle. |
+| size | `number` | — | Number of visible options when using native size. |
 
 ## Notes
 
@@ -23,4 +35,4 @@ Inherits all native attributes from `<select>`. No additional styling attributes
 
 ---
 
-<source-ref src="src/components/select/index.tsx"></source-ref>
+_Source: `src/components/select/index.tsx`

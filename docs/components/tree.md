@@ -5,33 +5,41 @@ Composable tree view built from native `<details>` and `<summary>` primitives.
 ## Usage
 
 ```tsx
-import {Tree} from 'pui';
+import {Tree} from 'kinu';
 
 <Tree>
   <Tree.Group open>
     <Tree.GroupLabel>src</Tree.GroupLabel>
     <Tree.GroupItems>
       <Tree.Item>index.ts</Tree.Item>
-      <Tree.Group>
-        <Tree.GroupLabel>components</Tree.GroupLabel>
-        <Tree.GroupItems>
-          <Tree.Item>button.tsx</Tree.Item>
-        </Tree.GroupItems>
-      </Tree.Group>
     </Tree.GroupItems>
   </Tree.Group>
 </Tree>
 ```
 
-## Members
+## Exports
 
-| Member | Element | Notes |
+| Name | Description | Rendered HTML |
 | --- | --- | --- |
-| `Tree` | `div` | Root container for tree nodes. |
-| `Tree.Group` | `details` | Expandable branch group. |
-| `Tree.GroupLabel` | `summary` | Branch trigger/label row. |
-| `Tree.GroupItems` | `div` | Nested container for group content. |
-| `Tree.Item` | `button` | Terminal row/action item. |
+| Tree | Tree view | — |
+| Tree.Group | Tree branch | `<details k="tree-item">` |
+| Tree.GroupLabel | Branch label | `<summary k="tree-label">` |
+| Tree.GroupItems | Branch items | `<div k="tree-group">` |
+| Tree.Item | Tree leaf | `<button k="tree-leaf">` |
+
+## Props
+
+### Tree.GroupProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| open | `boolean` | — | Controls the open state of the tree group. |
+
+### Tree.ItemProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| disabled | `boolean` | — | Disable tree item interactions. |
 
 ## Notes
 
@@ -40,4 +48,4 @@ import {Tree} from 'pui';
 
 ---
 
-<source-ref src="src/components/tree/index.tsx"></source-ref>
+_Source: `src/components/tree/index.tsx`

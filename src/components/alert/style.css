@@ -1,14 +1,29 @@
 @import "../../variables.css";
 
-[p="alert"] {
-  border-radius: var(--p-radius);
-  border: 1px solid hsl(var(--p-border));
+[k="alert"] {
+  border-radius: var(--k-radius);
+  border: 1px solid hsl(var(--k-border));
   padding: 1rem;
-  background-color: hsl(var(--p-muted));
-  color: hsl(var(--p-foreground));
+  background-color: hsl(var(--k-muted));
+  color: hsl(var(--k-foreground));
 }
 
-[p="alert"][variant="destructive"] {
-  background-color: hsl(var(--p-destructive));
-  color: hsl(var(--p-destructive-foreground));
+[k="alert"][variant="destructive"] {
+  background-color: hsl(var(--k-destructive));
+  color: hsl(var(--k-destructive-foreground));
+}
+
+[k="alert"][variant="info"] {
+  background-color: hsl(var(--k-info));
+  color: hsl(var(--k-info-foreground));
+}
+
+[k="alert"][variant="success"] {
+  background-color: hsl(var(--k-success));
+  color: hsl(var(--k-success-foreground));
+}
+
+[k="alert"][variant="warning"] {
+  background-color: hsl(var(--k-warning));
+  color: hsl(var(--k-warning-foreground));
 }
