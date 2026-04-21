@@ -288,6 +288,15 @@
     "description": "Container that styles a set of native radio inputs."
   },
   {
+    "slug": "meter",
+    "title": "Meter",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 3,
+    "file": "components/meter.md",
+    "description": "Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary)."
+  },
+  {
     "slug": "progress",
     "title": "Progress",
     "section": "Components",
@@ -342,6 +351,15 @@
     "description": "Animated shimmer placeholder for loading states."
   },
   {
+    "slug": "status",
+    "title": "Status",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 4,
+    "file": "components/status.md",
+    "description": "Inline status indicator with a colored dot prefix, usable with or without a label."
+  },
+  {
     "slug": "timeline",
     "title": "Timeline",
     "section": "Components",
@@ -385,6 +403,15 @@
     "order": 5,
     "file": "components/drawer.md",
     "description": "Bottom sheet style overlay with trigger and close helpers."
+  },
+  {
+    "slug": "prose",
+    "title": "Prose",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 5,
+    "file": "components/prose.md",
+    "description": "Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies)."
   },
   {
     "slug": "slider",

@@ -68,3 +68,14 @@ label[k] {
     user-select: auto;
   }
 }
+
+/* Honor the user's "Reduce motion" OS preference, scoped to kinu elements
+ * so consumer-app animations are untouched. */
+@media (prefers-reduced-motion: reduce) {
+  [k],
+  [k]::before,
+  [k]::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

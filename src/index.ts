@@ -370,4 +370,14 @@ export type {
   ChipButtonProps,
   ChipButtonOwnProps,
 } from './components/chip/types';
+export {Status} from './components/status';
+export type {
+  StatusProps,
+  StatusOwnProps,
+  StatusVariant,
+} from './components/status/types';
+export {Meter} from './components/meter';
+export type {MeterProps, MeterOwnProps} from './components/meter/types';
+export {Prose} from './components/prose';
+export type {ProseProps, ProseOwnProps} from './components/prose/types';
 export * from './components/typography';

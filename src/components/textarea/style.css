@@ -29,3 +29,8 @@
 [k="textarea"]::placeholder {
   color: hsl(var(--k-muted-foreground));
 }
+
+[k="textarea"][autosize] {
+  field-sizing: content;
+  resize: none;
+}

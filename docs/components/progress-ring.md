@@ -22,7 +22,7 @@ import {ProgressRing} from 'kinu';
 | --- | --- | --- | --- |
 | value | `number` | — | Current progress value. Omit (or pass `undefined`) to render as indeterminate. |
 | max | `number` | — | Maximum progress value. Defaults to 100. |
-| size | `"sm"` | `"lg"` | — | Preset size. |
+| size | `"sm" | "lg"` | — | Preset size. |
 | variant | `ProgressRingVariant` | — | Optional semantic color override. Defaults to inherited text color. |
 
 ## Notes

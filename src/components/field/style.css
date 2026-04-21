@@ -5,7 +5,7 @@
   gap: 0.375rem;
 }
 
-[k="field"]:has(:invalid) [k="label"] {
+[k="field"]:has(:user-invalid) [k="label"] {
   color: hsl(var(--k-destructive));
 }
 

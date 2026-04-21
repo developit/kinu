@@ -28,6 +28,6 @@
   box-shadow: 0 0 0 2px hsl(var(--k-ring));
 }
 
-[k="otp"]:invalid {
+[k="otp"]:user-invalid {
   border-color: hsl(var(--k-destructive));
 }

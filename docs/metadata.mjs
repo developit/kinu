@@ -43,7 +43,8 @@ export default [
     usage: `<Accordion open>\n  <summary>Details</summary>\n  <p>Hidden content</p>\n</Accordion>`,
     notes: [
       'Forwards every native `<details>` attribute so you can control open state.',
-      'Provide your own `<summary>` element to define the trigger.'
+      'Provide your own `<summary>` element to define the trigger.',
+      'Pass the same `name` to multiple accordions to make them mutually exclusive — only one can be open at a time in a group (HTML 2024 `<details name>`).'
     ]
   },
   {
@@ -351,7 +352,7 @@ export default [
     notes: [
       'Relies on command attributes instead of portal gymnastics.',
       'Dialog.Content forwards all native `<dialog>` props.',
-      'For React-controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal via the `beforetoggle` hook, and the browser\'s `close` event drives the state-sync callback.'
+      'For controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal by a small internal hook, and the browser\'s `close` event drives the state-sync callback.'
     ]
   },
   {
@@ -690,7 +691,7 @@ export default [
     usage: `<Table>\n  <thead>...</thead>\n  <tbody>...</tbody>\n</Table>`,
     notes: [
       'Uses native `<table>` markup so semantics stay intact.',
-      'Supports sticky headers via CSS attribute toggles.'
+      'Pass `sticky` to make `<thead>` cells stick to the top of the nearest scroll container. Wrap the table in a scrollable element (e.g. `<div style={{maxHeight: \'12rem\', overflow: \'auto\'}}>`) so the header has somewhere to stick relative to.'
     ]
   },
   {
@@ -733,7 +734,8 @@ export default [
     usage: '<Textarea rows={4} placeholder="Write here" />',
     notes: [
       'Wraps the native `<textarea>` for full form support.',
-      'Use the resize attribute to control user resizing.'
+      'Use the resize attribute to control user resizing.',
+      'Pass `autosize` to let the textarea grow with its content via native `field-sizing: content`. Supported in Chromium and Firefox; gracefully falls back to the fixed-height default elsewhere.'
     ]
   },
   {
@@ -881,6 +883,51 @@ export default [
     notes: [
       'State is native via the `open` attribute on `Tree.Group`.',
       'Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.'
+    ]
+  },
+  {
+    slug: 'status',
+    title: 'Status',
+    section: 'Components',
+    category: 'Data Display',
+    order: 4,
+    folder: 'status',
+    description: 'Inline status indicator with a colored dot prefix, usable with or without a label.',
+    usage: '<Status variant="success">Online</Status>',
+    notes: [
+      'Dual-purpose: render with children for a dot + label, or without children for a bare dot. When used as a bare dot, supply `aria-label` so screen readers have something to announce — the same text is revealed as a tooltip on hover/focus so sighted users get it too.',
+      'Variants mirror the semantic color tokens and match `Alert`: `success`, `warning`, `info`, `destructive`. Omit the variant for a neutral muted dot.',
+      'The dot and gap are sized in `em`, so everything scales with the surrounding font-size — drop a Status inside a heading or a small footer and it follows.',
+      'Pass `pulse` to animate a "ping" ring for live/loading states. Honors `prefers-reduced-motion` via the base stylesheet.'
+    ]
+  },
+  {
+    slug: 'meter',
+    title: 'Meter',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'meter',
+    description: 'Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary).',
+    usage: '<Meter value={0.7} min={0} max={1} low={0.3} high={0.8} optimum={0.9} />',
+    notes: [
+      'Forwards every native `<meter>` attribute.',
+      'Fill color reflects the value range: primary when in the optimum band, warning in the suboptimum band, destructive outside.'
+    ]
+  },
+  {
+    slug: 'prose',
+    title: 'Prose',
+    section: 'Components',
+    category: 'Data Display',
+    order: 5,
+    folder: 'prose',
+    description: 'Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies).',
+    usage: '<Prose><h1>Title</h1><p>Body...</p></Prose>',
+    notes: [
+      'Tune spacing, font, and heading weight via CSS variables: `--k-prose-spacing`, `--k-prose-font`, `--k-prose-heading-weight`.',
+      'Only styles direct and nested standard elements; does not touch Kinu components used inside.',
+      'First/last child margins are zeroed so the wrapper can drop into any layout without margin collapse.'
     ]
   }
 ];
