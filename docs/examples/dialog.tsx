@@ -38,7 +38,7 @@ export function Demo() {
           Controlled ({open ? 'open' : 'closed'})
         </Button>
         <Dialog.Content open={open} onClose={() => setOpen(false)}>
-          <h3 style={{margin: '0 0 1rem 0'}}>React-controlled</h3>
+          <h3 style={{margin: '0 0 1rem 0'}}>Controlled</h3>
           <p
             style={{
               margin: '0 0 1rem 0',
@@ -69,7 +69,7 @@ export const code = `{/* Declarative (command-based) */}
   <Dialog.Content>...</Dialog.Content>
 </Dialog>
 
-{/* React-controlled */}
+{/* Controlled */}
 <Dialog.Content open={open} onClose={() => setOpen(false)}>
   ...
 </Dialog.Content>`;
