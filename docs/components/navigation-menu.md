@@ -5,7 +5,7 @@ Composable navigation with list, item, and link helpers.
 ## Usage
 
 ```tsx
-import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList} from 'pui';
+import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList} from 'kinu';
 
 <NavigationMenu>
   <NavigationMenuList>
@@ -20,10 +20,10 @@ import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuLi
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| NavigationMenu | Menu container | `<nav p="navigation-menu">` |
-| NavigationMenuList | Menu list | `<ul p="navigation-menu-list">` |
-| NavigationMenuItem | Menu item | `<li p="navigation-menu-item">` |
-| NavigationMenuLink | Menu link | `<a p="navigation-menu-link">` |
+| NavigationMenu | Menu container | `<nav k="navigation-menu">` |
+| NavigationMenuList | Menu list | `<ul k="navigation-menu-list">` |
+| NavigationMenuItem | Menu item | `<li k="navigation-menu-item">` |
+| NavigationMenuLink | Menu link | `<a k="navigation-menu-link">` |
 
 ## Notes
 

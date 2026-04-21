@@ -5,7 +5,7 @@ Scroll snapping carousel with previous/next helpers.
 ## Usage
 
 ```tsx
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from 'pui';
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from 'kinu';
 
 <Carousel>
   <CarouselContent>
@@ -22,9 +22,9 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 | --- | --- | --- |
 | Carousel | Image slider | — |
 | CarouselContent | Slider content | — |
-| CarouselItem | Slide item | `<div p="carousel-item">` |
-| CarouselPrevious | Previous button | `<button p="carousel-previous">` |
-| CarouselNext | Next button | `<button p="carousel-next">` |
+| CarouselItem | Slide item | `<div k="carousel-item">` |
+| CarouselPrevious | Previous button | — |
+| CarouselNext | Next button | — |
 
 ## Props
 

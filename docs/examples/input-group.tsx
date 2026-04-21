@@ -1,4 +1,4 @@
-import {Button, Input, InputGroup, Select} from 'pui';
+import {Button, Input, InputGroup, Select} from 'kinu';
 
 export function Demo() {
   return (

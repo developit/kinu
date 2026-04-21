@@ -1,4 +1,4 @@
-import {Tree} from 'pui';
+import {Tree} from 'kinu';
 
 export function Demo() {
   return (

@@ -1,7 +1,14 @@
 import './style.css';
 import './iconify.d.ts';
-import {render} from 'preact';
-import {LocationProvider, Router, Route, lazy, ErrorBoundary} from 'preact-iso';
+import {
+  LocationProvider,
+  Router,
+  Route,
+  lazy,
+  ErrorBoundary,
+  hydrate,
+  prerender as ssr,
+} from 'preact-iso';
 import 'iconify-icon';
 
 const Home = lazy(() => import('./routes/home.tsx'));
@@ -21,9 +28,6 @@ function setViewportVars() {
   document.documentElement.style.setProperty('--vh-offset', offset + 'px');
 }
 
-setViewportVars();
-window.visualViewport?.addEventListener('resize', setViewportVars);
-
 function loadStart() {
   document.body.classList.add('loading');
 }
@@ -32,19 +36,38 @@ function loadEnd() {
   document.body.classList.remove('loading');
 }
 
-render(
-  <LocationProvider>
-    <ErrorBoundary>
-      <Router onLoadStart={loadStart} onLoadEnd={loadEnd}>
-        <Route path="/" component={Home} />
-        <Route path="/getting-started" component={GettingStarted} />
-        <Route path="/docs/:slug?" component={Docs} remount />
-        <Route path="/linear" component={Linear} />
-        <Route path="/chat" component={Chat} />
-        <Route path="/player" component={Player} />
-        <Route path="/dashboard" component={Dashboard} />
-      </Router>
-    </ErrorBoundary>
-  </LocationProvider>,
-  document.getElementById('app')!,
-);
+export function App({url}: {url?: string}) {
+  return (
+    <LocationProvider url={url}>
+      <ErrorBoundary>
+        <Router onLoadStart={loadStart} onLoadEnd={loadEnd}>
+          <Route path="/" component={Home} />
+          <Route path="/getting-started" component={GettingStarted} />
+          <Route path="/docs/:slug?" component={Docs} />
+          <Route path="/linear" component={Linear} />
+          <Route path="/chat" component={Chat} />
+          <Route path="/player" component={Player} />
+          <Route path="/dashboard" component={Dashboard} />
+        </Router>
+      </ErrorBoundary>
+    </LocationProvider>
+  );
+}
+
+export async function prerender(data: {url: string}) {
+  const result = await ssr(<App url={data.url} />);
+  const links = new Set(
+    [...result.links].filter((link) => !/\.[a-z0-9]+(?:$|[?#])/i.test(link)),
+  );
+
+  return {
+    ...result,
+    links,
+  };
+}
+
+if (typeof window !== 'undefined') {
+  setViewportVars();
+  window.visualViewport?.addEventListener('resize', setViewportVars);
+  hydrate(<App />, document.getElementById('app')!);
+}

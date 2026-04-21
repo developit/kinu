@@ -5,7 +5,7 @@ Compact fieldset wrapper for joined controls like input and button rows.
 ## Usage
 
 ```tsx
-import {InputGroup} from 'pui';
+import {InputGroup} from 'kinu';
 
 <InputGroup>
   <Input placeholder="Search" />
@@ -17,12 +17,12 @@ import {InputGroup} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| InputGroup | Input group | `<fieldset p="input-group">` |
+| InputGroup | Input group | `<fieldset k="input-group">` |
 
 ## Notes
 
 - Uses CSS-only border and radius joining for grouped controls.
-- Works with both PUI primitives and native form elements.
+- Works with both kinu primitives and native form elements.
 
 ---
 

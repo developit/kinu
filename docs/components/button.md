@@ -5,7 +5,7 @@ Button component that forwards props to `<button>` or `<a>` when href is provide
 ## Usage
 
 ```tsx
-import {Button} from 'pui';
+import {Button} from 'kinu';
 
 <Button variant="outline">Action</Button>
 ```

@@ -33,32 +33,13 @@ export interface DropdownMenuContentOwnProps {
    * Align the menu panel to the trigger's left or right edge.
    */
   to?: 'left';
+
+  /**
+   * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+   * while keeping menu behavior on larger screens.
+   */
+  mobile?: 'drawer';
 }
-
-export interface DropdownMenuItemOwnProps extends BaseProps {
-  /**
-   * When provided, renders the item as an anchor element.
-   */
-  href?: string;
-
-  /**
-   * Marks the item as selected for styling.
-   */
-  selected?: boolean;
-
-  /**
-   * Optional shortcut hint rendered on the trailing edge.
-   */
-  shortcut?: string;
-
-  /**
-   * Applies destructive styling to the item.
-   */
-  destructive?: boolean;
-}
-
-export interface DropdownMenuSubTriggerOwnProps
-  extends Omit<DropdownMenuItemOwnProps, 'href'> {}
 
 export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
   JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>;
@@ -66,9 +47,15 @@ export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
 export type DropdownMenuContentProps = DropdownMenuContentOwnProps &
   Omit<JSX.IntrinsicElements['dialog'], keyof DropdownMenuContentOwnProps>;
 
-export type DropdownMenuItemProps = DropdownMenuItemOwnProps &
-  Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuItemOwnProps> &
-  Omit<JSX.IntrinsicElements['a'], keyof DropdownMenuItemOwnProps>;
+export interface DropdownMenuSubTriggerOwnProps extends BaseProps {
+  /**
+   * Applies destructive styling to the submenu trigger.
+   */
+  destructive?: boolean;
+}
 
 export type DropdownMenuSubTriggerProps = DropdownMenuSubTriggerOwnProps &
   Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuSubTriggerOwnProps>;
+
+// Backward compat re-exports from unified Item types
+export type {DropdownMenuItemOwnProps, DropdownMenuItemProps} from '../item/types';

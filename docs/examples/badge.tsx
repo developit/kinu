@@ -1,4 +1,4 @@
-import {Badge} from 'pui';
+import {Badge} from 'kinu';
 
 export function Demo() {
   return (

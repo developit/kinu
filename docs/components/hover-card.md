@@ -5,7 +5,7 @@ Delayed hover preview card with trigger/content primitives.
 ## Usage
 
 ```tsx
-import {HoverCard, HoverCardContent, HoverCardTrigger} from 'pui';
+import {HoverCard, HoverCardContent, HoverCardTrigger} from 'kinu';
 
 <HoverCard>
   <HoverCardTrigger>Hover me</HoverCardTrigger>
@@ -17,9 +17,9 @@ import {HoverCard, HoverCardContent, HoverCardTrigger} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| HoverCard | Hover preview | `<div p="hover-card">` |
-| HoverCardTrigger | Hover target | `<span p="hover-card-trigger">` |
-| HoverCardContent | Preview content | `<div p="hover-card-content">` |
+| HoverCard | Hover preview | `<div k="hover-card">` |
+| HoverCardTrigger | Hover target | `<span k="hover-card-trigger">` |
+| HoverCardContent | Preview content | `<div k="hover-card-content">` |
 
 ## Notes
 

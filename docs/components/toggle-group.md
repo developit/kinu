@@ -5,7 +5,7 @@ Container that lets Toggle buttons coordinate pressed state.
 ## Usage
 
 ```tsx
-import {ToggleGroup} from 'pui';
+import {ToggleGroup} from 'kinu';
 
 <ToggleGroup>
   <Toggle>Bold</Toggle>
@@ -17,7 +17,7 @@ import {ToggleGroup} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ToggleGroup | Toggle group | `<div p="toggle-group">` |
+| ToggleGroup | Toggle group | `<div k="toggle-group">` |
 
 ## Notes
 

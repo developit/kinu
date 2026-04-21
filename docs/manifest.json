@@ -10,7 +10,7 @@
   },
   {
     "slug": "overview",
-    "title": "PUI Overview",
+    "title": "kinu Overview",
     "section": "Foundations",
     "category": "Introduction",
     "order": 1,
@@ -54,6 +54,15 @@
     "description": "Button component that forwards props to `<button>` or `<a>` when href is provided."
   },
   {
+    "slug": "item",
+    "title": "Item",
+    "section": "Components",
+    "category": "Actions",
+    "order": 0,
+    "file": "components/item.md",
+    "description": "Generic selectable item for lists, menus, comboboxes, and more."
+  },
+  {
     "slug": "badge",
     "title": "Badge",
     "section": "Components",
@@ -61,6 +70,24 @@
     "order": 0,
     "file": "components/badge.md",
     "description": "Tiny inline status indicator with multiple tone variants."
+  },
+  {
+    "slug": "chip",
+    "title": "Chip",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 0,
+    "file": "components/chip.md",
+    "description": "Badge-like label with an optional inline action button."
+  },
+  {
+    "slug": "field",
+    "title": "Field",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 0,
+    "file": "components/field.md",
+    "description": "Layout wrapper that groups a label, control, description, and error message."
   },
   {
     "slug": "accordion",
@@ -117,6 +144,15 @@
     "description": "Hover/focus tooltip with placement attributes and CSS timing."
   },
   {
+    "slug": "list",
+    "title": "List",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 1,
+    "file": "components/list.md",
+    "description": "Interactive selectable list with shared item styling."
+  },
+  {
     "slug": "tabs",
     "title": "Tabs",
     "section": "Components",
@@ -160,6 +196,15 @@
     "order": 2,
     "file": "components/input-group.md",
     "description": "Compact fieldset wrapper for joined controls like input and button rows."
+  },
+  {
+    "slug": "otp-input",
+    "title": "OTP Input",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 2,
+    "file": "components/otp-input.md",
+    "description": "Single `<input>` styled as N segmented one-time-code cells."
   },
   {
     "slug": "spinner",
@@ -207,6 +252,24 @@
     "description": "Composable modal built on the native `<dialog>` element."
   },
   {
+    "slug": "empty",
+    "title": "Empty",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 3,
+    "file": "components/empty.md",
+    "description": "Centered placeholder for no-data / no-results states."
+  },
+  {
+    "slug": "kbd",
+    "title": "Kbd",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 3,
+    "file": "components/kbd.md",
+    "description": "Styled `<kbd>` wrapper for keyboard shortcut glyphs."
+  },
+  {
     "slug": "tree",
     "title": "Tree",
     "section": "Components",
@@ -225,6 +288,15 @@
     "description": "Container that styles a set of native radio inputs."
   },
   {
+    "slug": "meter",
+    "title": "Meter",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 3,
+    "file": "components/meter.md",
+    "description": "Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary)."
+  },
+  {
     "slug": "progress",
     "title": "Progress",
     "section": "Components",
@@ -232,6 +304,15 @@
     "order": 3,
     "file": "components/progress.md",
     "description": "Styled progress meter with determinate and indeterminate states."
+  },
+  {
+    "slug": "progress-ring",
+    "title": "Progress Ring",
+    "section": "Components",
+    "category": "Feedback",
+    "order": 3,
+    "file": "components/progress-ring.md",
+    "description": "Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask."
   },
   {
     "slug": "scroll-area",
@@ -270,6 +351,24 @@
     "description": "Animated shimmer placeholder for loading states."
   },
   {
+    "slug": "status",
+    "title": "Status",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 4,
+    "file": "components/status.md",
+    "description": "Inline status indicator with a colored dot prefix, usable with or without a label."
+  },
+  {
+    "slug": "timeline",
+    "title": "Timeline",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 4,
+    "file": "components/timeline.md",
+    "description": "Vertical sequence of events with connecting line + dot markers."
+  },
+  {
     "slug": "select",
     "title": "Select",
     "section": "Components",
@@ -304,6 +403,15 @@
     "order": 5,
     "file": "components/drawer.md",
     "description": "Bottom sheet style overlay with trigger and close helpers."
+  },
+  {
+    "slug": "prose",
+    "title": "Prose",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 5,
+    "file": "components/prose.md",
+    "description": "Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies)."
   },
   {
     "slug": "slider",
@@ -396,6 +504,15 @@
     "description": "Right-click context menu powered by the native dialog element."
   },
   {
+    "slug": "color-picker",
+    "title": "Color Picker",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 7,
+    "file": "components/color-picker.md",
+    "description": "Styled color swatch input that opens the native OS color picker."
+  },
+  {
     "slug": "combobox",
     "title": "Combobox",
     "section": "Components",
@@ -403,6 +520,15 @@
     "order": 7,
     "file": "components/combobox.md",
     "description": "Autocomplete input with trigger, list, and option primitives."
+  },
+  {
+    "slug": "listbox",
+    "title": "Listbox",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 7,
+    "file": "components/listbox.md",
+    "description": "Non-modal filterable list for inline search and selection."
   },
   {
     "slug": "hover-card",
@@ -423,6 +549,15 @@
     "description": "Styled date input that shares the same foundation as Calendar."
   },
   {
+    "slug": "file-upload",
+    "title": "File Upload",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 8,
+    "file": "components/file-upload.md",
+    "description": "Native file input with a styled button for selecting local files."
+  },
+  {
     "slug": "sheet",
     "title": "Sheet",
     "section": "Components",
@@ -439,6 +574,15 @@
     "order": 9,
     "file": "components/label.md",
     "description": "Typography-aligned label component for form controls."
+  },
+  {
+    "slug": "time-picker",
+    "title": "Time Picker",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 9,
+    "file": "components/time-picker.md",
+    "description": "Styled time input that shares the same foundation as Date Picker."
   },
   {
     "slug": "textarea",

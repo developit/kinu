@@ -5,7 +5,7 @@ Maintains responsive boxes at a fixed ratio using pure CSS.
 ## Usage
 
 ```tsx
-import {AspectRatio} from 'pui';
+import {AspectRatio} from 'kinu';
 
 <AspectRatio ratio="16 / 9">
   <img src="..." alt="Video thumbnail" />
@@ -16,7 +16,7 @@ import {AspectRatio} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| AspectRatio | Ratio container | `<div p="aspect-ratio">` |
+| AspectRatio | Ratio container | — |
 
 ## Props
 

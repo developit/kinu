@@ -1,4 +1,4 @@
-import {Button} from 'pui';
+import {Button} from 'kinu';
 
 export function Demo() {
   return (

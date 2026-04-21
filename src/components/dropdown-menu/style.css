@@ -1,178 +1,81 @@
 @import "../../variables.css";
 @import "../popover/style.css";
+@import "../item/style.css";
 
-[p="dropdown-content"] {
+[k="dropdown-content"] {
   left: 0;
   --tf-x: 0;
   min-width: max(13.5rem, 100%);
-  overflow: visible;
 }
-[p="dropdown-content"][to="left"] {
+[k="dropdown-content"][to="left"] {
   left: auto;
   right: 0;
   --tf-x: 0;
   min-width: max(13.5rem, 100%);
 }
 
-[p="dropdown-content"],
-[p="context-menu"],
-[p="combobox-list"] {
-  border-radius: calc(var(--p-radius) + 0.25rem);
-  border-color: hsl(var(--p-border));
+[k="dropdown-content"],
+[k="context-menu"],
+[k="combobox-list"] {
+  border-radius: calc(var(--k-radius) + 0.25rem);
+  border-color: hsl(var(--k-border));
   padding: 0.5rem;
   box-shadow: 0 14px 30px rgb(0 0 0 / 0.14);
+  overflow: hidden auto;
 }
 
-[p="dropdown-menu-item"],
-[p="dropdown-submenu-trigger"],
-[p="context-menu-item"],
-[p="combobox-option"] {
-  appearance: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  background: none;
-  border: none;
-  border-radius: calc(var(--p-radius) - 0.125rem);
-  text-align: left;
-  padding: 0.5rem 0.75rem;
-  min-height: 2.375rem;
-  white-space: nowrap;
-  font: inherit;
-  font-size: 1.05rem;
-  line-height: 1.2;
-  cursor: pointer;
-  color: inherit;
-  text-decoration: none;
-  outline: none;
-
-  &:hover,
-  &:focus-visible,
-  &[selected] {
-    background-color: hsl(var(--p-primary));
-    color: hsl(var(--p-primary-foreground));
-  }
-
-  &[disabled],
-  &:disabled {
-    opacity: 0.45;
-    pointer-events: none;
-  }
-}
-
-[p="dropdown-submenu-trigger"]::after {
-  content: "›";
-  margin-left: auto;
-  opacity: 0.7;
-}
-
-[p="dropdown-menu-item"][shortcut]::after,
-[p="context-menu-item"][shortcut]::after,
-[p="combobox-option"][shortcut]::after {
-  content: attr(shortcut);
-  margin-left: auto;
-  color: hsl(var(--p-muted-foreground));
-  letter-spacing: 0.02em;
-}
-
-[p="dropdown-menu-item"][shortcut]:hover::after,
-[p="dropdown-menu-item"][shortcut]:focus-visible::after,
-[p="dropdown-menu-item"][selected]::after,
-[p="context-menu-item"][shortcut]:hover::after,
-[p="context-menu-item"][shortcut]:focus-visible::after,
-[p="context-menu-item"][selected]::after,
-[p="combobox-option"][shortcut]:hover::after,
-[p="combobox-option"][shortcut]:focus-visible::after,
-[p="combobox-option"][selected]::after {
-  color: inherit;
-  opacity: 0.85;
-}
-
-[p="dropdown-menu-item"][destructive],
-[p="dropdown-submenu-trigger"][destructive],
-[p="context-menu-item"][destructive],
-[p="combobox-option"][destructive] {
-  color: hsl(var(--p-destructive));
-}
-
-[p="dropdown-content"] hr,
-[p="context-menu"] hr,
-[p="combobox-list"] hr,
-[p="dropdown-content"] [role="separator"],
-[p="context-menu"] [role="separator"],
-[p="combobox-list"] [role="separator"],
-[p="dropdown-content"] [p="separator"],
-[p="context-menu"] [p="separator"],
-[p="combobox-list"] [p="separator"] {
+[k="dropdown-content"] hr,
+[k="context-menu"] hr,
+[k="combobox-list"] hr,
+[k="listbox-list"] hr,
+[k="dropdown-content"] [role="separator"],
+[k="context-menu"] [role="separator"],
+[k="combobox-list"] [role="separator"],
+[k="listbox-list"] [role="separator"],
+[k="dropdown-content"] [k="separator"],
+[k="context-menu"] [k="separator"],
+[k="combobox-list"] [k="separator"],
+[k="listbox-list"] [k="separator"] {
   border: 0;
-  border-top: 1px solid hsl(var(--p-border));
+  border-top: 1px solid hsl(var(--k-border));
   height: 0;
   margin: 0.5rem 0.25rem;
 }
 
 
-[p="dropdown-content"] [p="dropdown"] {
-  display: block;
+/* Submenu trigger arrow indicator */
+[k="item"][submenu]::after {
+  content: "›";
+  margin-left: auto;
+  opacity: 0.7;
 }
 
-[p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"] {
-  position: fixed;
-  --p-submenu-y-offset: 0.375rem;
-  position-anchor: --p-trigger;
-  top: 0;
-  left: calc(100% - 0.25rem);
-  right: auto;
-  margin: 0;
-  z-index: 11;
+@position-try --k-submenu-left {
+  left: auto;
+  right: anchor(left);
+  top: anchor(top);
+  inset-block-start: anchor(top);
 }
 
-  [p="dropdown-content"] {
+@supports (position-anchor: --k-trigger) {
+  [k="dropdown-content"] {
     left: anchor(left);
     right: auto;
     --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 
-  [p="dropdown-content"][to="left"] {
+  [k="dropdown-content"][to="left"] {
     left: auto;
     right: anchor(right);
     --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 
-  [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"] {
-    left: clamp(0.5rem, anchor(right), calc(100vw - 13.5rem - 0.5rem));
+  [k="dropdown-content"] [k="dropdown"] > [k="dropdown-content"] {
+    inset-block-start: anchor(top);
+    left: anchor(right);
     right: auto;
-    top: clamp(0.5rem, calc(anchor(top) + var(--p-submenu-y-offset)), calc(100dvh - 24rem - 0.5rem));
-    bottom: auto;
-    min-width: max(13.5rem, anchor-size(width));
-    max-inline-size: min(24rem, calc(100vw - 1rem));
-    max-block-size: min(24rem, calc(100dvh - 1rem));
-    overflow: visible;
-    margin: 0;
-
-    /* Diagnostic: disable animation transforms for nested submenus so
-       position-try-fallback behavior can be verified in isolation.
-       Revert by removing this override block. */
-    /* transform: translateX(var(--tf-x)) scale(1); */
-    transform: none;
-    /* transition:
-      opacity 200ms var(--p-ease),
-      transform 200ms var(--p-ease),
-      display 200ms allow-discrete,
-      overlay 200ms allow-discrete; */
-    transition: none;
-  }
-
-
-/* Diagnostic: neutralize @starting-style only for nested submenus while
-   testing anchor + try-fallback interaction. Revert by removing this block.
-@starting-style {
-  [p="dropdown-content"] [p="dropdown"] > [p="dropdown-content"][open] {
-    opacity: 1;
-    transform: none;
+    position-try-fallbacks: --k-submenu-left;
   }
 }
-*/
-

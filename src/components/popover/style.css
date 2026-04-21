@@ -1,39 +1,32 @@
 @import "../../variables.css";
 
-[p="popover"],
-[p="dropdown"] {
-  position: relative;
-  display: inline-block;
-  overflow: visible;
+[k="popover"],
+[k="dropdown"],
+[k="combobox"] {
+  display: contents;
+  anchor-scope: --k-trigger;
 }
 
-[p="popover"],
-[p="dropdown"],
-[p="combobox"] {
-  anchor-scope: --p-trigger;
+[k="popover"] > [commandfor],
+[k="dropdown"] > [commandfor],
+[k="combobox"] > [k="combobox-input"] {
+  anchor-name: --k-trigger;
 }
 
-[p="popover"] > :not(dialog)[commandfor],
-[p="dropdown"] > :not(dialog)[commandfor],
-[p="combobox"] > [p="combobox-input"] {
-  anchor-name: --p-trigger;
-}
-
-[p="popover-content"],
-[p="dropdown-content"],
-[p="context-menu"],
-[p="combobox-list"] {
+[k="popover-content"],
+[k="dropdown-content"],
+[k="context-menu"],
+[k="combobox-list"] {
   position: absolute;
-  display: none;
   top: 100%;
   left: 50%;
   --tf-x: -50%;
   min-width: 100%;
   transform-origin: top center;
-  background-color: hsl(var(--p-popover));
-  color: hsl(var(--p-popover-foreground));
-  border-radius: var(--p-radius);
-  border: 1px solid hsl(var(--p-border));
+  background-color: hsl(var(--k-popover));
+  color: hsl(var(--k-popover-foreground));
+  border-radius: var(--k-radius);
+  border: 1px solid hsl(var(--k-border));
   padding: 0;
   /* padding: 0.5rem; */
   margin: 0.25rem 0 0;
@@ -42,36 +35,42 @@
   opacity: 0;
   transform: translateX(var(--tf-x)) scale(0.94);
   transition:
-    opacity 200ms var(--p-ease),
-    transform 200ms var(--p-ease),
+    opacity 200ms var(--k-ease),
+    transform 200ms var(--k-ease),
     display 200ms allow-discrete,
     overlay 200ms allow-discrete;
   z-index: 10;
   outline: none;
 }
 
-[p="popover-content"][open],
-[p="dropdown-content"][open],
-[p="context-menu"][open],
-[p="combobox-list"][open] {
-  display: inline-block;
+[k="popover-content"]:not([open]),
+[k="dropdown-content"]:not([open]),
+[k="context-menu"]:not([open]),
+[k="combobox-list"]:not([open]) {
+  display: none;
+}
+
+[k="popover-content"][open],
+[k="dropdown-content"][open],
+[k="context-menu"][open],
+[k="combobox-list"][open] {
   pointer-events: auto;
   opacity: 1;
   transform: translateX(var(--tf-x)) scale(1);
+  overscroll-behavior: contain;
 }
 
-/* Diagnostic: temporarily disabled to test anchor/try-fallback behavior.
 @starting-style {
-  [p="popover-content"][open],
-  [p="dropdown-content"][open],
-  [p="context-menu"][open],
-  [p="combobox-list"][open] {
+  [k="popover-content"][open],
+  [k="dropdown-content"][open],
+  [k="context-menu"][open],
+  [k="combobox-list"][open] {
     opacity: 0;
     transform: translateX(var(--tf-x)) scale(0.94);
   }
 }
-*/
-@position-try --p-menu-right-top {
+
+@position-try --k-menu-right-top {
   left: auto;
   right: anchor(right);
   top: anchor(bottom);
@@ -79,7 +78,7 @@
   margin: 0.25rem 0 0;
 }
 
-@position-try --p-menu-left-bottom {
+@position-try --k-menu-left-bottom {
   left: anchor(left);
   right: auto;
   top: auto;
@@ -87,7 +86,7 @@
   margin: 0 0 0.25rem;
 }
 
-@position-try --p-menu-right-bottom {
+@position-try --k-menu-right-bottom {
   left: auto;
   right: anchor(right);
   top: auto;
@@ -95,11 +94,12 @@
   margin: 0 0 0.25rem;
 }
 
-  [p="popover-content"],
-  [p="dropdown-content"],
-  [p="combobox-list"] {
+@supports (position-anchor: --k-trigger) and (position-try-fallbacks: --k-menu-right-top) {
+  [k="popover-content"],
+  [k="dropdown-content"],
+  [k="combobox-list"] {
     position: fixed;
-    position-anchor: --p-trigger;
+    position-anchor: --k-trigger;
     left: anchor(left);
     right: auto;
     top: anchor(bottom);
@@ -109,21 +109,127 @@
     max-inline-size: min(24rem, calc(100vw - 1rem));
     max-block-size: min(24rem, calc(100dvh - 1rem));
     overflow: auto;
-    position-try-fallbacks: --p-menu-right-top, --p-menu-left-bottom, --p-menu-right-bottom;
+    position-try-fallbacks: --k-menu-right-top, --k-menu-left-bottom, --k-menu-right-bottom;
   }
 
-  [p="popover-content"] {
+  [k="popover-content"] {
     --tf-x: 0;
     min-width: anchor-size(width);
   }
 
-  [p="dropdown-content"] {
+  [k="dropdown-content"] {
     --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
   }
 
-  [p="combobox-list"] {
+  [k="combobox-list"] {
     --tf-x: 0;
     min-width: anchor-size(width);
   }
+}
 
+/* Adaptive popover → drawer on mobile */
+@media (max-width: 640px) {
+  [k="popover-content"][mobile="drawer"],
+  [k="dropdown-content"][mobile="drawer"],
+  [k="context-menu"][mobile="drawer"] {
+    --modal: 1;
+    border: none;
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+    max-width: 100vw;
+    min-width: 0;
+    max-height: 70dvh;
+    border-radius: var(--k-radius) var(--k-radius) 0 0;
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    background-color: hsl(var(--k-background));
+    overscroll-behavior: contain;
+    transform: translateY(100%);
+    transform-origin: bottom center;
+    transition:
+      transform 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
+  }
+
+  [k="popover-content"][mobile="drawer"][open],
+  [k="dropdown-content"][mobile="drawer"][open],
+  [k="context-menu"][mobile="drawer"][open] {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  @starting-style {
+    [k="popover-content"][mobile="drawer"][open] {
+      transform: translateY(100%);
+    }
+  }
+  @starting-style {
+    [k="dropdown-content"][mobile="drawer"][open] {
+      transform: translateY(100%);
+    }
+  }
+  @starting-style {
+    [k="context-menu"][mobile="drawer"][open] {
+      transform: translateY(100%);
+    }
+  }
+
+  [k="popover-content"][mobile="drawer"]::backdrop,
+  [k="dropdown-content"][mobile="drawer"]::backdrop,
+  [k="context-menu"][mobile="drawer"]::backdrop {
+    background-color: rgb(0 0 0 / 0.8);
+    backdrop-filter: blur(1px);
+    overscroll-behavior: contain;
+    overflow: auto;
+    scrollbar-width: none;
+    opacity: 0;
+    transition:
+      opacity 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
+  }
+
+  [k="popover-content"][mobile="drawer"][open]::backdrop,
+  [k="dropdown-content"][mobile="drawer"][open]::backdrop,
+  [k="context-menu"][mobile="drawer"][open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    [k="popover-content"][mobile="drawer"][open]::backdrop {
+      opacity: 0;
+    }
+  }
+  @starting-style {
+    [k="dropdown-content"][mobile="drawer"][open]::backdrop {
+      opacity: 0;
+    }
+  }
+  @starting-style {
+    [k="context-menu"][mobile="drawer"][open]::backdrop {
+      opacity: 0;
+    }
+  }
+}
+
+/* Disable anchor positioning in mobile-drawer mode */
+@supports (position-anchor: --k-trigger) and (position-try-fallbacks: --k-menu-right-top) {
+  @media (max-width: 640px) {
+    [k="popover-content"][mobile="drawer"],
+    [k="dropdown-content"][mobile="drawer"],
+    [k="context-menu"][mobile="drawer"] {
+      position: fixed;
+      position-anchor: unset;
+      position-try-fallbacks: unset;
+      left: 0;
+      right: 0;
+      top: auto;
+      bottom: 0;
+    }
+  }
+}

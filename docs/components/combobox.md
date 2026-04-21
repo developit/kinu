@@ -5,7 +5,7 @@ Autocomplete input with trigger, list, and option primitives.
 ## Usage
 
 ```tsx
-import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
+import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 
 <Combobox>
   <ComboboxInput placeholder="Search" />
@@ -19,14 +19,12 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| ComboboxInput | Search input | `<input p="combobox-input">` |
-| ComboboxList | Results list | `<dialog p="combobox-list">` |
-| ComboboxOption | Result option | `<button p="combobox-option">` |
+| ComboboxInput | Search input | `<input k="combobox-input">` |
+| ComboboxList | Results list | `<dialog k="combobox-list">` |
+| ComboboxOption | Result option | Alias of Item |
 | Combobox | Autocomplete input | — |
 
 ## Props
-
-### ComboboxInputProps
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -35,13 +33,11 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'pui';
 | onInput | `(event: InputEvent) => void` | — | Change handler for controlled inputs. |
 | disabled | `boolean` | — | Disable the input. |
 
-### ComboboxOptionProps
+### Static Shortcuts
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| selected | `boolean` | — | Marks the option as selected for styling. |
-| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
-| destructive | `boolean` | — | Applies destructive styling to the option. |
+- `Combobox.Input = ComboboxInput`
+- `Combobox.List = ComboboxList`
+- `Combobox.Option = Item`
 
 ## Notes
 

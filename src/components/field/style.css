@@ -1,0 +1,20 @@
+@import "../../variables.css";
+
+[k="field"] {
+  display: grid;
+  gap: 0.375rem;
+}
+
+[k="field"]:has(:user-invalid) [k="label"] {
+  color: hsl(var(--k-destructive));
+}
+
+[k="field-description"] {
+  font-size: 0.8125rem;
+  color: hsl(var(--k-muted-foreground));
+}
+
+[k="field-error"] {
+  font-size: 0.8125rem;
+  color: hsl(var(--k-destructive));
+}

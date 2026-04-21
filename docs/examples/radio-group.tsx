@@ -1,4 +1,4 @@
-import {Label, Radio, RadioGroup} from 'pui';
+import {Label, Radio, RadioGroup} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

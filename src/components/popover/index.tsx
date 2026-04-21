@@ -1,7 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {installCommands} from '../../lib/commands';
+import {installCommands, installAdaptiveCommands, installDialogsDropdowns} from '../../lib/commands';
 import type {
   PopoverOwnProps,
   PopoverTriggerOwnProps,
@@ -14,11 +14,13 @@ const IdCtx = createContext<string | undefined>(undefined);
 
 export function Popover({id: idProp, children}: PopoverOwnProps) {
   installCommands();
+  installAdaptiveCommands();
+  installDialogsDropdowns();
   const gen = useId();
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <span p="popover">{children}</span>
+      <span k="popover">{children}</span>
     </IdCtx.Provider>
   );
 }
@@ -40,7 +42,7 @@ export function PopoverTrigger({
 //   'click',
 //   (e: MouseEvent) => {
 //     const dialogs = new Set(
-//       Array.from(document.querySelectorAll('[p="popover-content"]')),
+//       Array.from(document.querySelectorAll('[k="popover-content"]')),
 //     );
 //     let el = e.target as Node | null;
 //     while (el) {
@@ -57,7 +59,7 @@ export function PopoverContent({
   ...props
 }: PopoverContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="popover-content" id={id ?? ctx} {...props} />;
+  return <dialog k="popover-content" id={id ?? ctx} {...props} />;
 }
 
 export function PopoverClose({

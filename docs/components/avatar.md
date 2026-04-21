@@ -5,7 +5,7 @@ Styled `<img>` avatar that falls back to initials from the alt text.
 ## Usage
 
 ```tsx
-import {Avatar} from 'pui';
+import {Avatar} from 'kinu';
 
 <Avatar alt="JM" src="/user.jpg" />
 ```
@@ -14,7 +14,8 @@ import {Avatar} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Avatar | User profile image | `<img p="avatar">` |
+| Avatar | User profile image | — |
+| Avatar.Group | Stacked avatar group | `<div k="avatar-group">` |
 
 ## Props
 
@@ -29,6 +30,7 @@ import {Avatar} from 'pui';
 
 - Uses the alt attribute content as a CSS-rendered fallback when the image fails.
 - Override dimensions in CSS if you need sizes other than the 2rem default.
+- Wrap several avatars in `<Avatar.Group>` to get the overlapping stacked layout.
 
 ---
 

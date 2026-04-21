@@ -16,7 +16,7 @@ export const SidebarTrigger = createSimpleComponent<
       while (node) {
         const commandFor = el.getAttribute('commandfor');
         const sidebar = (node as Element).querySelector?.<HTMLDialogElement>(
-          commandFor ? `#${commandFor}` : '[p="sidebar"]',
+          commandFor ? `#${commandFor}` : '[k="sidebar"]',
         );
         if (sidebar) {
           if (getComputedStyle(sidebar).getPropertyValue('--modal')) {

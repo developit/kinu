@@ -17,9 +17,9 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSubTrigger,
-} from 'pui';
+  Item,
+} from 'kinu';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
 
@@ -33,7 +33,7 @@ export default function Home() {
         <div class="hero-content">
           <div class="hero-text">
             <h1>
-              Build beautiful UIs with <span class="highlight">PUI</span>
+              Build beautiful UIs with <span class="highlight">kinu</span>
             </h1>
             <p class="hero-subtitle">
               A lightweight <strong>5kB</strong> component library that
@@ -80,20 +80,20 @@ export default function Home() {
             <SettingsDemo />
           </Card>
           <Card class="showcase-demo">
-            <h3>Notifications</h3>
-            <p>Toast messages and alert dialogs</p>
-            <NotificationDemo />
-          </Card>
-          <Card class="showcase-demo">
             <h3>Nested Menus</h3>
             <p>Nested dialog submenus with command-driven triggers</p>
             <NestedDropdownDemo />
+          </Card>
+          <Card class="showcase-demo">
+            <h3>Notifications</h3>
+            <p>Toast messages and alert dialogs</p>
+            <NotificationDemo />
           </Card>
         </div>
       </section>
 
       <section class="why-preact-ui">
-        <h2>Why developers choose PUI</h2>
+        <h2>Why developers choose kinu</h2>
         <div class="benefits-grid">
           <div class="benefit">
             <div class="benefit-icon">🪶</div>
@@ -133,7 +133,7 @@ export default function Home() {
       <section class="real-world">
         <h2>Built for real applications</h2>
         <p class="real-world-subtitle">
-          From simple forms to complex dashboards, PUI scales with your needs
+          From simple forms to complex dashboards, kinu scales with your needs
         </p>
         <div class="demo-links">
           <Button href="/linear" variant="secondary" size="lg">
@@ -145,7 +145,7 @@ export default function Home() {
           <Button href="/player" variant="secondary" size="lg">
             🎵 Music Player
           </Button>
-          <Button variant="outline" href="https://github.com/">
+          <Button variant="outline" href="https://github.com/developit/kinu">
             GitHub
           </Button>
         </div>
@@ -445,27 +445,27 @@ function NestedDropdownDemo() {
         <Button variant="outline">Open menu</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>New File</DropdownMenuItem>
+        <Item>New File</Item>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <DropdownMenuSubTrigger>Share</DropdownMenuSubTrigger>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>Email Link</DropdownMenuItem>
-            <DropdownMenuItem>Copy Invite</DropdownMenuItem>
+            <Item>Email Link</Item>
+            <Item>Copy Invite</Item>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <DropdownMenuSubTrigger>Permissions</DropdownMenuSubTrigger>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>Can view</DropdownMenuItem>
-                <DropdownMenuItem>Can comment</DropdownMenuItem>
-                <DropdownMenuItem>Can edit</DropdownMenuItem>
+                <Item>Can view</Item>
+                <Item>Can comment</Item>
+                <Item>Can edit</Item>
               </DropdownMenuContent>
             </DropdownMenu>
           </DropdownMenuContent>
         </DropdownMenu>
-        <DropdownMenuItem destructive>Delete</DropdownMenuItem>
+        <Item destructive>Delete</Item>
       </DropdownMenuContent>
     </DropdownMenu>
   );

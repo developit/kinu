@@ -1,4 +1,4 @@
-import {Button, Collapsible} from 'pui';
+import {Button, Collapsible} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {

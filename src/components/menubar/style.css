@@ -1,11 +1,11 @@
 @import "../../variables.css";
 
-[p="menubar"] {
+[k="menubar"] {
   display: flex;
   gap: 0.5rem;
 }
 
-[p="menubar-item"] {
+[k="menubar-item"] {
   background: none;
   border: none;
   padding: 0.25rem 0.5rem;
@@ -14,6 +14,6 @@
   color: inherit;
 }
 
-[p="menubar-item"]:hover {
-  background-color: hsl(var(--p-muted));
+[k="menubar-item"]:hover {
+  background-color: hsl(var(--k-muted));
 }

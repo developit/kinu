@@ -1,21 +1,21 @@
 @import "../../variables.css";
 
-[p="hover-card"] {
+[k="hover-card"] {
   position: relative;
   display: inline-block;
 }
 
-[p="hover-card-content"] {
+[k="hover-card-content"] {
   position: absolute;
   top: 100%;
   left: 50%;
   width: max-content;
   transform: translateX(-50%) scale(0.95);
   transform-origin: top center;
-  background-color: hsl(var(--p-popover));
-  color: hsl(var(--p-popover-foreground));
-  border-radius: var(--p-radius);
-  border: 1px solid hsl(var(--p-border));
+  background-color: hsl(var(--k-popover));
+  color: hsl(var(--k-popover-foreground));
+  border-radius: var(--k-radius);
+  border: 1px solid hsl(var(--k-border));
   padding: 0.5rem;
   margin-top: 0.25rem;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
@@ -26,7 +26,7 @@
   z-index: 10;
 }
 
-[p="hover-card"]:hover > [p="hover-card-content"] {
+[k="hover-card"]:hover > [k="hover-card-content"] {
   opacity: 1;
   pointer-events: auto;
   transform: translateX(-50%) scale(1);

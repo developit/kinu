@@ -5,7 +5,7 @@ ARIA-pressed aware button for on/off interactions.
 ## Usage
 
 ```tsx
-import {Toggle} from 'pui';
+import {Toggle} from 'kinu';
 
 <Toggle pressed={value}>Bold</Toggle>
 ```
@@ -14,12 +14,13 @@ import {Toggle} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Toggle | Toggle button | `<button p="toggle">` |
+| Toggle | Toggle button | `<button k="toggle">` |
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| size | `"sm" | "md" | "lg"` | 'md' | Size preset for the toggle. |
 | pressed | `boolean` | — | Controls the pressed state and maps to `aria-pressed` on the DOM element. |
 | onClick | `(event: MouseEvent) => void` | — | Click handler for toggling state. |
 | disabled | `boolean` | — | Disable the toggle. |

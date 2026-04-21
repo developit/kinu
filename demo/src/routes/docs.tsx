@@ -1,4 +1,4 @@
-import {Card} from 'pui';
+import {Card} from 'kinu';
 import {DocsLayout} from '../app';
 import {getEntryBySlug, loadDocContent, loadExample} from '../docs-data';
 import {useRoute} from 'preact-iso';
@@ -113,7 +113,7 @@ export default function Docs() {
   const DocsContent = createLazyComponent(slug);
   return (
     <DocsLayout>
-      <DocsContent />
+      <DocsContent key={slug} />
     </DocsLayout>
   );
 }

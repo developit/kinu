@@ -11,11 +11,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "paths": {
-      "pui": ["./src"],
-      "pui-docs/*": ["./docs/*"]
+      "kinu": ["./src"],
+      "kinu-docs/*": ["./docs/*"]
     },
     /* Linting */
     "strict": true,

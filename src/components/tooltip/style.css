@@ -1,23 +1,26 @@
 @import "../../variables.css";
 
-[p="tooltip"] {
+[k="tooltip"] {
   position: relative;
   display: inline-flex;
 }
 
-[p="tooltip"][title]::after {
-  content: attr(title);
+[k="tooltip"][title]::after { content: attr(title); }
+[k="status"][aria-label]:empty::after { content: attr(aria-label); }
+
+[k="tooltip"][title]::after,
+[k="status"][aria-label]:empty::after {
   position: absolute;
   left: 50%;
   bottom: 100%;
-  --p-tl: -50%;
-  --p-tt: 0%;
-  --p-to: -0.25rem;
-  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to)));
-  background-color: hsl(var(--p-foreground));
-  color: hsl(var(--p-background));
+  --k-tl: -50%;
+  --k-tt: 0%;
+  --k-to: -0.25rem;
+  transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to)));
+  background-color: hsl(var(--k-foreground));
+  color: hsl(var(--k-background));
   padding: 0.25rem 0.5rem;
-  border-radius: calc(var(--p-radius) - 2px);
+  border-radius: calc(var(--k-radius) - 2px);
   font-size: 0.75rem;
   line-height: 1rem;
   white-space: nowrap;
@@ -31,37 +34,41 @@
   z-index: 10;
 }
 
-[p="tooltip"][side="bottom"][title]::after {
+[k="tooltip"][side="bottom"][title]::after {
   bottom: auto;
   top: 100%;
-  --p-to: 0.25rem;
+  --k-to: 0.25rem;
 }
-[p="tooltip"][side="left"][title]::after {
+[k="tooltip"][side="left"][title]::after {
   top: 50%;
   left: 0;
-  --p-tt: -50%;
-  --p-tl: -100%;
-  --p-to: 0;
+  --k-tt: -50%;
+  --k-tl: -100%;
+  --k-to: 0;
 }
-[p="tooltip"][side="right"][title]::after {
+[k="tooltip"][side="right"][title]::after {
   top: 50%;
   left: 100%;
-  --p-tt: -50%;
-  --p-tl: 0;
-  --p-to: 0;
+  --k-tt: -50%;
+  --k-tl: 0;
+  --k-to: 0;
 }
 
-[p="tooltip"][title]:hover::after,
-[p="tooltip"][title]:focus::after {
+[k="tooltip"][title]:hover::after,
+[k="tooltip"][title]:focus::after,
+[k="status"][aria-label]:empty:hover::after,
+[k="status"][aria-label]:empty:focus-visible::after {
   display: block;
   opacity: 1;
-  transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to) * 2));
+  transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to) * 2));
 }
 
 @starting-style {
-  [p="tooltip"][title]:hover::after,
-  [p="tooltip"][title]:focus::after {
+  [k="tooltip"][title]:hover::after,
+  [k="tooltip"][title]:focus::after,
+  [k="status"][aria-label]:empty:hover::after,
+  [k="status"][aria-label]:empty:focus-visible::after {
     opacity: 0;
-    transform: translate(var(--p-tl), calc(var(--p-tt) + var(--p-to)));
+    transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to)));
   }
 }

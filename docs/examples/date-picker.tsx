@@ -1,4 +1,4 @@
-import {DatePicker} from 'pui';
+import {DatePicker} from 'kinu';
 
 export function Demo() {
   return <DatePicker />;

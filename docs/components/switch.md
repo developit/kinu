@@ -5,7 +5,7 @@ Accessible toggle switch built from a checkbox input.
 ## Usage
 
 ```tsx
-import {Switch} from 'pui';
+import {Switch} from 'kinu';
 
 <Switch checked />
 ```
@@ -14,7 +14,7 @@ import {Switch} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Switch | Toggle control | `<input p="switch">` |
+| Switch | Toggle control | `<input k="switch">` |
 
 ## Props
 

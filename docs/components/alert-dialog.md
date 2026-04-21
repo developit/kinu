@@ -5,7 +5,7 @@ Alias of Dialog with alert-focused styling defaults.
 ## Usage
 
 ```tsx
-import {AlertDialog} from 'pui';
+import {AlertDialog} from 'kinu';
 
 <AlertDialog>
   <AlertDialog.Trigger>Delete</AlertDialog.Trigger>

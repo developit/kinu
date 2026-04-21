@@ -12,7 +12,8 @@ export type ButtonVariant =
   | 'outline'
   | 'secondary'
   | 'ghost'
-  | 'link';
+  | 'link'
+  | 'input';
 
 /**
  * Size presets supported by Button.

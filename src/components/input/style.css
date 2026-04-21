@@ -1,11 +1,11 @@
 @import "../../variables.css";
 
-[p="input"] {
+[k="input"] {
   display: flex;
   width: 100%;
-  border-radius: var(--p-radius);
-  border: 1px solid hsl(var(--p-input));
-  background-color: hsl(var(--p-background));
+  border-radius: var(--k-radius);
+  border: 1px solid hsl(var(--k-input));
+  background-color: hsl(var(--k-background));
   font: inherit;
   font-size: 0.875rem;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
@@ -18,42 +18,42 @@
   padding-right: 0.75rem;
 }
 
-[p="input"]:focus-visible {
+[k="input"]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--p-ring));
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
 }
 
-[p="input"]:disabled {
+[k="input"]:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-[p="input"]::placeholder {
-  color: hsl(var(--p-muted-foreground));
+[k="input"]::placeholder {
+  color: hsl(var(--k-muted-foreground));
 }
 
-/* Invalid state - uses HTML5 validation or explicit invalid attribute */
-[p="input"]:invalid,
-[p="input"][invalid] {
-  border-color: hsl(var(--p-destructive));
+/* Invalid state - post-interaction (blur/submit) via :user-invalid, or explicit invalid attribute */
+[k="input"]:user-invalid,
+[k="input"][invalid] {
+  border-color: hsl(var(--k-destructive));
 }
 
-[p="input"]:invalid:focus-visible,
-[p="input"][invalid]:focus-visible {
-  box-shadow: 0 0 0 2px hsl(var(--p-destructive));
+[k="input"]:user-invalid:focus-visible,
+[k="input"][invalid]:focus-visible {
+  box-shadow: 0 0 0 2px hsl(var(--k-destructive));
 }
 
 /* Size: sm */
-[p="input"][size="sm"] {
+[k="input"][size="sm"] {
   height: 2.25rem;
-  border-radius: calc(var(--p-radius) - 2px);
+  border-radius: calc(var(--k-radius) - 2px);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-size: 0.8125rem;
 }
 
 /* Size: lg */
-[p="input"][size="lg"] {
+[k="input"][size="lg"] {
   height: 2.75rem;
   padding-left: 1rem;
   padding-right: 1rem;

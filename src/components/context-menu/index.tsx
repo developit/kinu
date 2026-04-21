@@ -1,13 +1,12 @@
 import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
-import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installDialogsDropdowns} from '../../lib/commands';
+import {Item} from '../item';
 import type {
   ContextMenuOwnProps,
   ContextMenuTriggerOwnProps,
   ContextMenuContentOwnProps,
-  ContextMenuItemOwnProps,
 } from './types';
 import './style.css';
 
@@ -20,7 +19,7 @@ function handleContextMenu(e: MouseEvent) {
   const el = e.currentTarget as HTMLElement;
   if (lastAnchor) lastAnchor.style.anchorName = '';
   lastAnchor = el;
-  el.style.anchorName = '--p-context-menu';
+  el.style.anchorName = '--k-context-menu';
   const target = el.ownerDocument.getElementById(
     el.getAttribute('commandfor')!,
   ) as HTMLDialogElement;
@@ -28,10 +27,10 @@ function handleContextMenu(e: MouseEvent) {
   const doc = el.ownerDocument;
   const win = doc.defaultView;
   if (!win) return;
-  target.style.setProperty('--p-context-menu-client-x', `${e.clientX}px`);
-  target.style.setProperty('--p-context-menu-client-y', `${e.clientY}px`);
-  target.style.setProperty('--p-context-menu-client-right', `${win.innerWidth - e.clientX}px`);
-  target.style.setProperty('--p-context-menu-client-bottom', `${win.innerHeight - e.clientY}px`);
+  target.style.setProperty('--k-context-menu-client-x', `${e.clientX}px`);
+  target.style.setProperty('--k-context-menu-client-y', `${e.clientY}px`);
+  target.style.setProperty('--k-context-menu-client-right', `${win.innerWidth - e.clientX}px`);
+  target.style.setProperty('--k-context-menu-client-bottom', `${win.innerHeight - e.clientY}px`);
   target.showModal();
 }
 
@@ -65,7 +64,7 @@ export function ContextMenuContent({
   const ctx = useContext(IdCtx);
   return (
     <dialog
-      p="context-menu"
+      k="context-menu"
       id={id ?? ctx}
       onClickCapture={click}
       onContextMenuCapture={click}
@@ -74,7 +73,7 @@ export function ContextMenuContent({
   );
 }
 
-export const ContextMenuItem = createSimpleComponent<
-  'button',
-  ContextMenuItemOwnProps
->('context-menu-item', 'button', {tabIndex: 0});
+/** @deprecated Use `Item` instead. */
+export const ContextMenuItem = Item;
+
+Object.assign(ContextMenu, {Item});

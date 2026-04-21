@@ -5,7 +5,7 @@ Accessible checkbox input with custom visuals.
 ## Usage
 
 ```tsx
-import {Checkbox} from 'pui';
+import {Checkbox} from 'kinu';
 
 <Checkbox checked aria-label="Accept" />
 ```
@@ -14,7 +14,7 @@ import {Checkbox} from 'pui';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Checkbox | Selection control | `<input p="checkbox">` |
+| Checkbox | Selection control | `<input k="checkbox">` |
 
 ## Props
 

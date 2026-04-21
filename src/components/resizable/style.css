@@ -1,10 +1,10 @@
 @import "../../variables.css";
 
-[p="resizable"] {
+[k="resizable"] {
   resize: both;
   overflow: auto;
-  border: 1px solid hsl(var(--p-border));
-  border-radius: var(--p-radius);
+  border: 1px solid hsl(var(--k-border));
+  border-radius: var(--k-radius);
   padding: 1rem;
   min-width: 2rem;
   min-height: 2rem;

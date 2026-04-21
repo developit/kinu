@@ -1,4 +1,4 @@
-import {Avatar, Button, Input} from 'pui';
+import {Avatar, Button, Input} from 'kinu';
 import type {JSX} from 'preact';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';

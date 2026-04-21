@@ -1,4 +1,4 @@
-import {Calendar} from 'pui';
+import {Calendar} from 'kinu';
 
 export function Demo() {
   return <Calendar />;

@@ -4,14 +4,15 @@ import {applyPropsToChildren} from '../../lib/children';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {
   installCommands,
+  installAdaptiveCommands,
   installDialogsDropdowns,
   installMenuShortcuts,
 } from '../../lib/commands';
+import {Item} from '../item';
 import type {
   DropdownMenuOwnProps,
   DropdownMenuTriggerOwnProps,
   DropdownMenuContentOwnProps,
-  DropdownMenuItemOwnProps,
   DropdownMenuSubTriggerOwnProps,
 } from './types';
 import './style.css';
@@ -20,13 +21,14 @@ const IdCtx = createContext<string | undefined>(undefined);
 
 export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   installCommands();
+  installAdaptiveCommands();
   installDialogsDropdowns();
   installMenuShortcuts();
   const gen = useId();
   const id = idProp ?? gen;
   return (
     <IdCtx.Provider value={id}>
-      <span p="dropdown">{children}</span>
+      <span k="dropdown">{children}</span>
     </IdCtx.Provider>
   );
 }
@@ -39,7 +41,7 @@ export function DropdownMenuTrigger({
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
     ...props,
-    commandfor: id,
+    commandFor: id,
     command: 'show',
   });
 }
@@ -50,32 +52,26 @@ export function DropdownMenuContent({
   commandFor,
   ...props
 }: DropdownMenuContentOwnProps &
-  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor'>) {
+  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor' | 'commandFor'>) {
   const ctx = useContext(IdCtx);
   const resolvedId = id ?? ctx;
   return (
     <dialog
-      p="dropdown-content"
+      k="dropdown-content"
       id={resolvedId}
       command={command}
-      commandfor={commandFor ?? resolvedId}
+      commandFor={commandFor ?? resolvedId}
       {...props}
     />
   );
 }
 
-export const DropdownMenuItem = createSimpleComponent<
-  'button' | 'a',
-  DropdownMenuItemOwnProps
->('dropdown-menu-item', (props) => (props.href ? 'a' : 'button'));
-
-function submenuPointerEnter(e: PointerEvent) {
-  (e.currentTarget as HTMLElement).click();
-}
+/** @deprecated Use `Item` instead. */
+export const DropdownMenuItem = Item;
 
 export const DropdownMenuSubTrigger = createSimpleComponent<
   'button',
   DropdownMenuSubTriggerOwnProps
->('dropdown-submenu-trigger', 'button', {
-  onPointerEnter: submenuPointerEnter,
-});
+>('item', 'button', {submenu: ''} as any);
+
+Object.assign(DropdownMenu, {Item});

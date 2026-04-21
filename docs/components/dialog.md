@@ -5,7 +5,7 @@ Composable modal built on the native `<dialog>` element.
 ## Usage
 
 ```tsx
-import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
+import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 
 <Dialog>
   <DialogTrigger><Button>Open</Button></DialogTrigger>
@@ -20,7 +20,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 | --- | --- | --- |
 | Dialog | Modal overlay | — |
 | DialogTrigger | Dialog trigger | — |
-| DialogContent | Dialog content | `<dialog p="dialog-content">` |
+| DialogContent | Dialog content | — |
 | DialogClose | Close button | — |
 
 ## Props
@@ -47,6 +47,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'pui';
 
 - Relies on command attributes instead of portal gymnastics.
 - Dialog.Content forwards all native `<dialog>` props.
+- For controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal by a small internal hook, and the browser's `close` event drives the state-sync callback.
 
 ---
 

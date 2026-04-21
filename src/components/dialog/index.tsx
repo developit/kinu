@@ -1,7 +1,11 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {installCommands, installDialogsDropdowns} from '../../lib/commands';
+import {
+  installAdaptiveCommands,
+  installCommands,
+  installDialogsDropdowns,
+} from '../../lib/commands';
 import type {
   DialogOwnProps,
   DialogTriggerOwnProps,
@@ -24,6 +28,7 @@ export function DialogTrigger({
 }: DialogTriggerOwnProps &
   JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
   installCommands();
+  installAdaptiveCommands();
   installDialogsDropdowns();
   const id = useContext(IdCtx);
   return applyPropsToChildren(children, {
@@ -38,7 +43,7 @@ export function DialogContent({
   ...props
 }: DialogContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog p="dialog-content" id={id ?? ctx} {...props} />;
+  return <dialog k="dialog-content" id={id ?? ctx} {...props} />;
 }
 
 export function DialogClose({

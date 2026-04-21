@@ -1,4 +1,4 @@
-import {Checkbox, Label} from 'pui';
+import {Checkbox, Label} from 'kinu';
 import {useState} from 'preact/hooks';
 
 export function Demo() {
