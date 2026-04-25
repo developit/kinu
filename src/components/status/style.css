@@ -1,0 +1,33 @@
+@import "../../variables.css";
+
+[k="status"] {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.875rem;
+  color: hsl(var(--k-foreground));
+}
+
+[k="status"]::before {
+  content: "";
+  width: 0.625em;
+  height: 0.625em;
+  border-radius: 9999px;
+  color: hsl(var(--k-muted-foreground));
+  background-color: currentColor;
+}
+
+[k="status"][variant="success"]::before     { color: hsl(var(--k-success)); }
+[k="status"][variant="warning"]::before     { color: hsl(var(--k-warning)); }
+[k="status"][variant="info"]::before        { color: hsl(var(--k-info)); }
+[k="status"][variant="destructive"]::before { color: hsl(var(--k-destructive)); }
+
+[k="status"][pulse]::before {
+  animation: k-status-pulse 1.5s var(--k-ease-out) infinite;
+}
+
+@keyframes k-status-pulse {
+  from { box-shadow: 0 0 0 0    currentColor; }
+  to   { box-shadow: 0 0 0 0.5em transparent; }
+}

@@ -38,7 +38,32 @@ function commandClickHandler(e: MouseEvent) {
   }
 
   const method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  if (method === 'show') {
+    const event = Object.assign(
+      new Event('beforetoggle', {cancelable: true, bubbles: true}),
+      {newState: 'open'},
+    );
+    if (!target.dispatchEvent(event)) return;
+  }
   (target as any)[method]?.();
+}
+
+let adaptiveInstalled: boolean;
+export function installAdaptiveCommands() {
+  if (adaptiveInstalled) return;
+  if (typeof document === 'undefined') return;
+  adaptiveInstalled = true;
+  let allowToggle: boolean;
+  addEventListener('beforetoggle', (e: Event) => {
+    const te = e as ToggleEvent;
+    if (allowToggle || te.newState !== 'open') return;
+    const el = e.target as HTMLDialogElement;
+    if (!getComputedStyle(el).getPropertyValue('--modal')) return;
+    e.preventDefault();
+    allowToggle = true;
+    el.showModal();
+    allowToggle = false;
+  });
 }
 
 let dialogsDropdownsInstalled: boolean;
@@ -90,15 +115,17 @@ export function installMenuShortcuts() {
 
 function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   const el = elementTarget(e.target!);
-  let dialog = el.closest('dialog[k]');
+  let container = el.closest('dialog[k]') || el.closest('[k="list"]');
   let useFocus = true;
-  if (!dialog) {
-    dialog = el.parentNode!.querySelector('dialog[k][open]');
+  if (!container) {
+    container = el.parentNode!.querySelector('dialog[k][open]')
+      || el.closest('[k="listbox"]')?.querySelector('[k="listbox-list"]')
+      || null;
     useFocus = false;
   }
-  if (!dialog) return;
-  const selected = dialog.querySelector<HTMLElement>(
-    useFocus ? '[k]:focus' : '[k][selected]',
+  if (!container) return;
+  const selected = container.querySelector<HTMLElement>(
+    useFocus ? '[k="item"]:focus' : '[k="item"][selected]',
   );
   // emulate button enter key behavior for pseudo-focused selection
   if (e.key === 'Enter' && !useFocus) {
@@ -110,7 +137,7 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   if (!dir) return;
   e.preventDefault();
   if (!selected) {
-    const items = dialog.querySelectorAll<HTMLElement>('button[k],[k][tabindex]');
+    const items = container.querySelectorAll<HTMLElement>('[k="item"]');
     const item = items[dir > 0 ? 0 : items.length - 1];
     if (useFocus) item?.focus();
     else item?.toggleAttribute('selected', true);

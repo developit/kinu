@@ -21,8 +21,8 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 | --- | --- | --- |
 | ContextMenuTrigger | Menu trigger | — |
 | ContextMenu | Right-click menu | — |
-| ContextMenuContent | Menu content | `<dialog k="context-menu">` |
-| ContextMenuItem | Menu item | `<button k="context-menu-item">` |
+| ContextMenuContent | Menu content | — |
+| ContextMenuItem | Menu item | Alias of Item |
 
 ## Props
 
@@ -37,19 +37,14 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | id | `string` | — | Override the auto-generated dialog ID. |
-
-### ContextMenuItemProps
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| selected | `boolean` | — | Marks the item as selected for styling. |
-| shortcut | `string` | — | Optional shortcut hint rendered on the trailing edge. |
-| destructive | `boolean` | — | Applies destructive styling to the item. |
+| mobile | `"drawer"` | — | When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+while keeping context-menu behavior on larger screens. |
 
 ## Notes
 
 - Installs the commands polyfill when rendered.
 - Menu content is focus-trapped via `<dialog>`.
+- Set `mobile="drawer"` on `ContextMenuContent` to render as a bottom-sheet on narrow viewports (≤640px).
 
 ---
 

@@ -12,3 +12,70 @@
 :where([k], a, button, input, select, textarea, summary) {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Disable the iOS long-press callout on kinu <button> elements so they feel
+ * like native app controls. Button-like components rendered as anchors
+ * (e.g. <Button href>) intentionally retain the native callout so right-click
+ * / long-press actions like "Copy link" stay accessible. */
+button[k] {
+  -webkit-touch-callout: none;
+}
+
+/* Prevent text selection on non-input components that don't house inputs,
+ * for a native desktop/mobile app feel. Inputs and content-housing
+ * containers (card, dialog, drawer, popover, sheet, table, tree, carousel,
+ * combobox, hover-card, sidebar, etc.) are intentionally omitted so their
+ * inner text and form content remain selectable. */
+:where(
+  button[k],
+  label[k],
+  [k="alert"],
+  [k="avatar"],
+  [k="badge"],
+  [k="breadcrumb"],
+  [k="breadcrumb-list"],
+  [k="breadcrumb-item"],
+  [k="breadcrumb-link"],
+  [k="dropdown-menu-item"],
+  [k="menubar"],
+  [k="navigation-menu"],
+  [k="navigation-menu-list"],
+  [k="navigation-menu-item"],
+  [k="navigation-menu-link"],
+  [k="pagination"],
+  [k="pagination-list"],
+  [k="pagination-item"],
+  [k="progress"],
+  [k="separator"],
+  [k="skeleton"],
+  [k="spinner"],
+  [k="tablist"],
+  [k="toast-container"],
+  [k="toast-icon"],
+  [k="toggle-group"],
+  [k="tooltip"],
+  [k="tree-label"]
+) {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Keep inputs/textareas inside labels selectable. */
+label[k] {
+  & input,
+  & textarea {
+    -webkit-user-select: auto;
+    user-select: auto;
+  }
+}
+
+/* Honor the user's "Reduce motion" OS preference, scoped to kinu elements
+ * so consumer-app animations are untouched. */
+@media (prefers-reduced-motion: reduce) {
+  [k],
+  [k]::before,
+  [k]::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

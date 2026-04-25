@@ -43,7 +43,8 @@ export default [
     usage: `<Accordion open>\n  <summary>Details</summary>\n  <p>Hidden content</p>\n</Accordion>`,
     notes: [
       'Forwards every native `<details>` attribute so you can control open state.',
-      'Provide your own `<summary>` element to define the trigger.'
+      'Provide your own `<summary>` element to define the trigger.',
+      'Pass the same `name` to multiple accordions to make them mutually exclusive — only one can be open at a time in a group (HTML 2024 `<details name>`).'
     ]
   },
   {
@@ -54,8 +55,11 @@ export default [
     order: 1,
     folder: 'alert',
     description: 'Inline status message with tone variants.',
-    usage: '<Alert variant="default">Heads up!</Alert>',
-    notes: ['Renders a `<div>` so you can include any markup you need.']
+    usage: '<Alert variant="info">Heads up!</Alert>',
+    notes: [
+      'Renders a `<div>` so you can include any markup you need.',
+      'Supports `destructive`, `info`, `success`, and `warning` tone variants.'
+    ]
   },
   {
     slug: 'alert-dialog',
@@ -93,7 +97,8 @@ export default [
     usage: '<Avatar alt="JM" src="/user.jpg" />',
     notes: [
       'Uses the alt attribute content as a CSS-rendered fallback when the image fails.',
-      'Override dimensions in CSS if you need sizes other than the 2rem default.'
+      'Override dimensions in CSS if you need sizes other than the 2rem default.',
+      'Wrap several avatars in `<Avatar.Group>` to get the overlapping stacked layout.'
     ]
   },
   {
@@ -107,6 +112,21 @@ export default [
     usage: '<Badge variant="secondary">New</Badge>'
   },
   {
+    slug: 'chip',
+    title: 'Chip',
+    section: 'Components',
+    category: 'Data Display',
+    order: 0,
+    folder: 'chip',
+    description: 'Badge-like label with an optional inline action button.',
+    usage: '<Chip>Tag<Chip.Button onClick={remove}>×</Chip.Button></Chip>',
+    notes: [
+      'Chip.Button fires standard click events with no custom event wiring.',
+      'Use the selected attribute to mark a chip as active.',
+      'Chip.Button automatically spans the full height and hugs the rounded edge.'
+    ]
+  },
+  {
     slug: 'breadcrumb',
     title: 'Breadcrumb',
     section: 'Components',
@@ -118,6 +138,22 @@ export default [
     notes: [
       'Ships structural wrappers so you can supply router-aware links.',
       'Uses semantic list markup for accessibility.'
+    ]
+  },
+  {
+    slug: 'item',
+    title: 'Item',
+    section: 'Components',
+    category: 'Actions',
+    order: 0,
+    folder: 'item',
+    description: 'Generic selectable item for lists, menus, comboboxes, and more.',
+    usage: '<Item selected>Inbox</Item>',
+    notes: [
+      'Renders as `<button>` by default, or `<a>` when href is provided.',
+      'The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.',
+      'Also available as `.Item` on parent components (e.g. `DropdownMenu.Item`).',
+      '`<Item.Field>` renders as `<label>` so the whole row acts as the click target for a nested form control — drop a `<Checkbox>`, `<Switch>`, `<Radio>`, `<Input>`, `<Slider>`, etc. inside it.'
     ]
   },
   {
@@ -217,6 +253,22 @@ export default [
     ]
   },
   {
+    slug: 'listbox',
+    title: 'Listbox',
+    section: 'Components',
+    category: 'Data Input',
+    order: 7,
+    folder: 'listbox',
+    description: 'Non-modal filterable list for inline search and selection.',
+    usage: `<Listbox>\n  <ListboxInput placeholder="Filter..." />\n  <ListboxList>\n    <ListboxOption>Apple</ListboxOption>\n  </ListboxList>\n</Listbox>`,
+    notes: [
+      'Selection is developer-controlled via the selected attribute on options.',
+      'Shares filtering logic with Combobox via the filterItems utility.',
+      'Unlike Combobox, the list is always visible with no dialog or popover.',
+      'Compose with Dialog to build a command palette.'
+    ]
+  },
+  {
     slug: 'context-menu',
     title: 'Context Menu',
     section: 'Components',
@@ -227,7 +279,8 @@ export default [
     usage: `<ContextMenu>\n  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Copy</ContextMenuItem>\n  </ContextMenuContent>\n</ContextMenu>`,
     notes: [
       'Installs the commands polyfill when rendered.',
-      'Menu content is focus-trapped via `<dialog>`.'
+      'Menu content is focus-trapped via `<dialog>`.',
+      'Set `mobile="drawer"` on `ContextMenuContent` to render as a bottom-sheet on narrow viewports (≤640px).'
     ]
   },
   {
@@ -298,7 +351,8 @@ export default [
     usage: `<Dialog>\n  <DialogTrigger><Button>Open</Button></DialogTrigger>\n  <DialogContent>Modal body</DialogContent>\n  <DialogClose><Button>Close</Button></DialogClose>\n</Dialog>`,
     notes: [
       'Relies on command attributes instead of portal gymnastics.',
-      'Dialog.Content forwards all native `<dialog>` props.'
+      'Dialog.Content forwards all native `<dialog>` props.',
+      'For controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal by a small internal hook, and the browser\'s `close` event drives the state-sync callback.'
     ]
   },
   {
@@ -326,7 +380,8 @@ export default [
     usage: `<DropdownMenu>\n  <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Item</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`,
     notes: [
       'Menu items render as `<button>` elements by default.',
-      'Automatically closes when an item dispatches the close command.'
+      'Automatically closes when an item dispatches the close command.',
+      'Set `mobile="drawer"` on `DropdownMenuContent` to adapt to a bottom-sheet on narrow viewports (≤640px).'
     ]
   },
   {
@@ -438,6 +493,7 @@ export default [
     usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n  <PopoverClose><Button>Close</Button></PopoverClose>\n</Popover>`,
     notes: [
       'Control placement with the placement attribute on PopoverContent.',
+      'Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).',
       'Stays declarative thanks to the commands polyfill.'
     ]
   },
@@ -453,6 +509,21 @@ export default [
     notes: [
       'Wraps the native `<progress>` element for semantics.',
       'Use the data-state attribute for indeterminate styling.'
+    ]
+  },
+  {
+    slug: 'progress-ring',
+    title: 'Progress Ring',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'progress-ring',
+    description: 'Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask.',
+    usage: '<ProgressRing value={60} max={100} />',
+    notes: [
+      'Pure CSS: uses typed `attr()` to read `value`/`max` directly from the DOM (Chrome 133+, Safari 18.4+, Firefox 140+).',
+      'Omit `value` (or pass `undefined`) to render an indeterminate spinning ring, matching native `<progress>` semantics.',
+      'Override `--k-progress-ring-size` and `--k-progress-ring-thickness` to customise dimensions.'
     ]
   },
   {
@@ -620,7 +691,7 @@ export default [
     usage: `<Table>\n  <thead>...</thead>\n  <tbody>...</tbody>\n</Table>`,
     notes: [
       'Uses native `<table>` markup so semantics stay intact.',
-      'Supports sticky headers via CSS attribute toggles.'
+      'Pass `sticky` to make `<thead>` cells stick to the top of the nearest scroll container. Wrap the table in a scrollable element (e.g. `<div style={{maxHeight: \'12rem\', overflow: \'auto\'}}>`) so the header has somewhere to stick relative to.'
     ]
   },
   {
@@ -638,6 +709,21 @@ export default [
     ]
   },
   {
+    slug: 'list',
+    title: 'List',
+    section: 'Components',
+    category: 'Navigation',
+    order: 1,
+    folder: 'list',
+    description: 'Interactive selectable list with shared item styling.',
+    usage: `<List>\n  <List.Item selected>Inbox</List.Item>\n  <List.Item>Drafts</List.Item>\n</List>`,
+    notes: [
+      'Items render as `<button>` by default, or `<a>` when href is provided.',
+      'Use variant="nav" for sidebar-style navigation with softer accent colors.',
+      'Shares the same item styles as DropdownMenuItem and ComboboxOption.'
+    ]
+  },
+  {
     slug: 'textarea',
     title: 'Textarea',
     section: 'Components',
@@ -648,7 +734,8 @@ export default [
     usage: '<Textarea rows={4} placeholder="Write here" />',
     notes: [
       'Wraps the native `<textarea>` for full form support.',
-      'Use the resize attribute to control user resizing.'
+      'Use the resize attribute to control user resizing.',
+      'Pass `autosize` to let the textarea grow with its content via native `field-sizing: content`. Supported in Chromium and Firefox; gracefully falls back to the fixed-height default elsewhere.'
     ]
   },
   {
@@ -710,6 +797,81 @@ export default [
     file: 'pages/toast.md'
   },
   {
+    slug: 'kbd',
+    title: 'Kbd',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'kbd',
+    description: 'Styled `<kbd>` wrapper for keyboard shortcut glyphs.',
+    usage: '<Kbd>⌘K</Kbd>',
+    notes: [
+      'Wraps the native `<kbd>` element so semantics stay intact.',
+      'Combine multiple keys in a single `<Kbd>` (e.g. `⌘S`) to render them as one keycap.',
+      "Pairs naturally with `Item` rows — drop a `<Kbd style={{marginLeft: 'auto'}}>` inside an item to show the shortcut on the trailing edge."
+    ]
+  },
+  {
+    slug: 'empty',
+    title: 'Empty',
+    section: 'Components',
+    category: 'Data Display',
+    order: 3,
+    folder: 'empty',
+    description: 'Centered placeholder for no-data / no-results states.',
+    usage: `<Empty>\n  <h3>No results</h3>\n  <p>Try a different search.</p>\n</Empty>`,
+    notes: [
+      'Centers heading, body text, and optional actions in a flex column.',
+      'Headings inherit the foreground color; body text defaults to muted foreground.'
+    ]
+  },
+  {
+    slug: 'field',
+    title: 'Field',
+    section: 'Components',
+    category: 'Data Input',
+    order: 0,
+    folder: 'field',
+    description: 'Layout wrapper that groups a label, control, description, and error message.',
+    usage: `<Field>\n  <Field.Label>\n    Email\n    <Input type="email" required />\n  </Field.Label>\n  <Field.Description>We'll never share it</Field.Description>\n  <Field.Error>Please enter a valid email</Field.Error>\n</Field>`,
+    notes: [
+      'Nests the control inside `Field.Label` so native `<label>` implicit association handles pairing — no `id`/`htmlFor` plumbing needed.',
+      '`Field.Label` is an alias of `Label`, so the regular label styles and props apply.',
+      '`:has(:invalid)` turns the label destructive when any descendant control fails validation.',
+      '`Field.Error` renders with `role="alert"` so assistive tech announces it when shown.'
+    ]
+  },
+  {
+    slug: 'otp-input',
+    title: 'OTP Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 2,
+    folder: 'otp',
+    description: 'Single `<input>` styled as N segmented one-time-code cells.',
+    usage: '<OTPInput maxLength={6} />',
+    notes: [
+      'Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\\\d*"` — iOS SMS autofill, paste, and password managers just work.',
+      'The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.',
+      'Each cell is `--k-otp-cell` wide (defaults to `2.5rem`); total input width is `maxLength × --k-otp-cell`. Override the variable to resize.'
+    ]
+  },
+  {
+    slug: 'timeline',
+    title: 'Timeline',
+    section: 'Components',
+    category: 'Data Display',
+    order: 4,
+    folder: 'timeline',
+    description: 'Vertical sequence of events with connecting line + dot markers.',
+    usage: `<Timeline>\n  <Timeline.Entry>\n    Jason pushed 3 commits\n    <time>2h ago</time>\n  </Timeline.Entry>\n</Timeline>`,
+    notes: [
+      'Renders as `<ol>` + `<li>` so activity feeds and audit logs stay semantic.',
+      'Dot and connector line are both drawn on each entry from one `--k-timeline-x` variable (the dot radius), so they can\'t drift out of alignment.',
+      'Drop a native `<time>` element inside an entry for the trailing timestamp — add `dateTime="..."` for machine-readable semantics.'
+    ]
+  },
+  {
     slug: 'tree',
     title: 'Tree',
     section: 'Components',
@@ -721,6 +883,51 @@ export default [
     notes: [
       'State is native via the `open` attribute on `Tree.Group`.',
       'Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.'
+    ]
+  },
+  {
+    slug: 'status',
+    title: 'Status',
+    section: 'Components',
+    category: 'Data Display',
+    order: 4,
+    folder: 'status',
+    description: 'Inline status indicator with a colored dot prefix, usable with or without a label.',
+    usage: '<Status variant="success">Online</Status>',
+    notes: [
+      'Dual-purpose: render with children for a dot + label, or without children for a bare dot. When used as a bare dot, supply `aria-label` so screen readers have something to announce — the same text is revealed as a tooltip on hover/focus so sighted users get it too.',
+      'Variants mirror the semantic color tokens and match `Alert`: `success`, `warning`, `info`, `destructive`. Omit the variant for a neutral muted dot.',
+      'The dot and gap are sized in `em`, so everything scales with the surrounding font-size — drop a Status inside a heading or a small footer and it follows.',
+      'Pass `pulse` to animate a "ping" ring for live/loading states. Honors `prefers-reduced-motion` via the base stylesheet.'
+    ]
+  },
+  {
+    slug: 'meter',
+    title: 'Meter',
+    section: 'Components',
+    category: 'Feedback',
+    order: 3,
+    folder: 'meter',
+    description: 'Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary).',
+    usage: '<Meter value={0.7} min={0} max={1} low={0.3} high={0.8} optimum={0.9} />',
+    notes: [
+      'Forwards every native `<meter>` attribute.',
+      'Fill color reflects the value range: primary when in the optimum band, warning in the suboptimum band, destructive outside.'
+    ]
+  },
+  {
+    slug: 'prose',
+    title: 'Prose',
+    section: 'Components',
+    category: 'Data Display',
+    order: 5,
+    folder: 'prose',
+    description: 'Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies).',
+    usage: '<Prose><h1>Title</h1><p>Body...</p></Prose>',
+    notes: [
+      'Tune spacing, font, and heading weight via CSS variables: `--k-prose-spacing`, `--k-prose-font`, `--k-prose-heading-weight`.',
+      'Only styles direct and nested standard elements; does not touch Kinu components used inside.',
+      'First/last child margins are zeroed so the wrapper can drop into any layout without margin collapse.'
     ]
   }
 ];

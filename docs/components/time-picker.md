@@ -14,22 +14,23 @@ import {TimePicker} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| TimePicker | Time input | `<input k="time-picker">` |
+| TimePicker | Component | `<input k="time-picker">` |
 
 ## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| value | `string \| number \| readonly string[] \| undefined` | — | Current time value in HH:MM or HH:MM:SS format. |
+| value | `string | number | readonly string[] | undefined` | — | Current time value in HH:MM or HH:MM:SS format. |
 | onChange | `(event: Event) => void` | — | Change handler for time input. |
 | disabled | `boolean` | — | Disable the input. |
 | name | `string` | — | Input name used for form submissions. |
-| step | `number` | — | Granularity in seconds. Common values: 60 (1 min), 900 (15 min), 1800 (30 min). |
+| step | `number` | 60 | Granularity of the time value in seconds.
+Common values: 60 (1 min), 900 (15 min), 1800 (30 min). |
 
 ## Notes
 
 - Sets type="time" for you and forwards all native input props.
-- Use `step` to constrain selectable intervals, e.g. `step={1800}` for 30-minute increments.
+- Use the step prop to constrain selectable intervals, e.g. step={1800} for 30-minute increments.
 
 ---
 

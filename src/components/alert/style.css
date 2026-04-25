@@ -12,3 +12,18 @@
   background-color: hsl(var(--k-destructive));
   color: hsl(var(--k-destructive-foreground));
 }
+
+[k="alert"][variant="info"] {
+  background-color: hsl(var(--k-info));
+  color: hsl(var(--k-info-foreground));
+}
+
+[k="alert"][variant="success"] {
+  background-color: hsl(var(--k-success));
+  color: hsl(var(--k-success-foreground));
+}
+
+[k="alert"][variant="warning"] {
+  background-color: hsl(var(--k-warning));
+  color: hsl(var(--k-warning-foreground));
+}

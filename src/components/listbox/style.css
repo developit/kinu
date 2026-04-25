@@ -1,0 +1,30 @@
+@import "../../variables.css";
+
+[k="listbox"] {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid hsl(var(--k-border));
+  border-radius: calc(var(--k-radius) + 0.25rem);
+  overflow: hidden;
+}
+
+[k="listbox-input"] {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-bottom: 1px solid hsl(var(--k-border));
+  background-color: hsl(var(--k-background));
+  font: inherit;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+[k="listbox-input"]:focus-visible {
+  box-shadow: inset 0 -2px 0 hsl(var(--k-ring));
+}
+
+[k="listbox-list"] {
+  padding: 0.5rem;
+  overflow-y: auto;
+}

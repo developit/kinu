@@ -6,13 +6,11 @@ export interface DropdownMenuOwnProps extends RequiredChildrenProps {
    * Optional ID for the dropdown content. If not provided, one will be auto-generated.
    */
   id?: string;
-
 }
 
 export type DropdownMenuProps = DropdownMenuOwnProps;
 
-export interface DropdownMenuTriggerOwnProps extends BaseProps {
-}
+export interface DropdownMenuTriggerOwnProps extends BaseProps {}
 
 export interface DropdownMenuContentOwnProps {
   /**
@@ -35,29 +33,12 @@ export interface DropdownMenuContentOwnProps {
    * Align the menu panel to the trigger's left or right edge.
    */
   to?: 'left';
-}
-
-export interface DropdownMenuItemOwnProps extends BaseProps {
 
   /**
-   * When provided, renders the item as an anchor element.
+   * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
+   * while keeping menu behavior on larger screens.
    */
-  href?: string;
-
-  /**
-   * Marks the item as selected for styling.
-   */
-  selected?: boolean;
-
-  /**
-   * Optional shortcut hint rendered on the trailing edge.
-   */
-  shortcut?: string;
-
-  /**
-   * Applies destructive styling to the item.
-   */
-  destructive?: boolean;
+  mobile?: 'drawer';
 }
 
 export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
@@ -66,6 +47,5 @@ export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
 export type DropdownMenuContentProps = DropdownMenuContentOwnProps &
   Omit<JSX.IntrinsicElements['dialog'], keyof DropdownMenuContentOwnProps>;
 
-export type DropdownMenuItemProps = DropdownMenuItemOwnProps &
-  Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuItemOwnProps> &
-  Omit<JSX.IntrinsicElements['a'], keyof DropdownMenuItemOwnProps>;
+// Backward compat re-exports from unified Item types
+export type {DropdownMenuItemOwnProps, DropdownMenuItemProps} from '../item/types';

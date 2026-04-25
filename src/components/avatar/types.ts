@@ -30,3 +30,8 @@ export interface AvatarOwnProps extends BaseProps {
 
 export type AvatarProps = AvatarOwnProps &
   Omit<JSX.IntrinsicElements['img'], keyof AvatarOwnProps>;
+
+export interface AvatarGroupOwnProps extends BaseProps {}
+
+export type AvatarGroupProps = AvatarGroupOwnProps &
+  Omit<JSX.IntrinsicElements['div'], keyof AvatarGroupOwnProps>;

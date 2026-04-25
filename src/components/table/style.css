@@ -16,3 +16,10 @@
   background-color: hsl(var(--k-muted));
   text-align: left;
 }
+
+[k="table"][sticky] thead th {
+  position: sticky;
+  top: 0;
+  background-color: hsl(var(--k-background));
+  z-index: 1;
+}

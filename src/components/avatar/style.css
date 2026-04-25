@@ -12,6 +12,18 @@
   overflow: hidden;
 }
 
+[k="avatar-group"] {
+  display: inline-flex;
+}
+
+[k="avatar-group"] > [k="avatar"] {
+  outline: 2px solid hsl(var(--k-background));
+}
+
+[k="avatar-group"] > [k="avatar"]:not(:first-child) {
+  margin-inline-start: -0.5rem;
+}
+
 [k="avatar"]:after {
   position: absolute;
   display: block;

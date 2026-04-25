@@ -32,13 +32,13 @@
   color: hsl(var(--k-muted-foreground));
 }
 
-/* Invalid state - uses HTML5 validation or explicit invalid attribute */
-[k="input"]:invalid,
+/* Invalid state - post-interaction (blur/submit) via :user-invalid, or explicit invalid attribute */
+[k="input"]:user-invalid,
 [k="input"][invalid] {
   border-color: hsl(var(--k-destructive));
 }
 
-[k="input"]:invalid:focus-visible,
+[k="input"]:user-invalid:focus-visible,
 [k="input"][invalid]:focus-visible {
   box-shadow: 0 0 0 2px hsl(var(--k-destructive));
 }

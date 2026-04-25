@@ -18,9 +18,9 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Sheet | Overlay panel | `<div k="sheet">` |
+| Sheet | Overlay panel | — |
 | SheetTrigger | Sheet trigger | — |
-| SheetContent | Sheet content | `<dialog k="sheet-content">` |
+| SheetContent | Sheet content | — |
 | SheetClose | Close button | — |
 
 ## Props

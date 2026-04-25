@@ -112,6 +112,19 @@
   text-decoration: none;
 }
 
+/* Variant: input */
+[k="button"][variant="input"] {
+  border: 1px solid hsl(var(--k-input));
+  background-color: hsl(var(--k-background));
+  color: hsl(var(--k-foreground));
+  font-weight: 400;
+  justify-content: flex-start;
+}
+
+[k="button"][variant="input"]:hover {
+  border-color: hsl(var(--k-ring));
+}
+
 /* Size: sm */
 [k="button"][size="sm"] {
   height: 2.25rem;

@@ -20,7 +20,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 | --- | --- | --- |
 | Dialog | Modal overlay | — |
 | DialogTrigger | Dialog trigger | — |
-| DialogContent | Dialog content | `<dialog k="dialog-content">` |
+| DialogContent | Dialog content | — |
 | DialogClose | Close button | — |
 
 ## Props
@@ -47,6 +47,7 @@ import {Dialog, DialogClose, DialogContent, DialogTrigger} from 'kinu';
 
 - Relies on command attributes instead of portal gymnastics.
 - Dialog.Content forwards all native `<dialog>` props.
+- For controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal by a small internal hook, and the browser's `close` event drives the state-sync callback.
 
 ---
 

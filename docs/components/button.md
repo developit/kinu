@@ -14,7 +14,7 @@ import {Button} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Button | Interactive action control | `k="button"` |
+| Button | Interactive action control | `p="button"` |
 
 ## Props
 
