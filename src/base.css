@@ -1,3 +1,5 @@
+@import "./variables.css";
+
 /* Basic reset for components to ensure consistent behavior */
 [k] {
   box-sizing: border-box;
@@ -67,6 +69,29 @@ label[k] {
     -webkit-user-select: auto;
     user-select: auto;
   }
+}
+
+/* Opt-in scrollable behaviour with kinu's themed scrollbars. Apply to any
+ * kinu component (or wrap with <ScrollArea>) by adding the `scrollable`
+ * attribute. Wrapped in :where() so component-level overflow strategies
+ * (e.g. popover-content's overflow-y:auto / overflow-x:hidden) still win. */
+:where([k][scrollable], [k="scroll-area"]) {
+  overflow: auto;
+}
+
+:where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+:where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb {
+  background: content-box hsl(var(--k-foreground) / 0.15);
+  border: 3px solid transparent;
+  border-radius: 999px;
+}
+
+:where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb:hover {
+  background: content-box hsl(var(--k-foreground) / 0.25);
 }
 
 /* Honor the user's "Reduce motion" OS preference, scoped to kinu elements
