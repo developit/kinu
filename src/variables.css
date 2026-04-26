@@ -45,6 +45,17 @@
   --k-input: 214.3 31.8% 91.4%;
   --k-ring: 222.2 84% 4.9%;
 
+  /* Glass (frosted floating surfaces) */
+  --k-glass-bg: var(--k-popover) / 0.72;
+  --k-glass-border: 0 0% 100% / 0.6;
+  --k-glass-highlight: 0 0% 100% / 0.5;
+  --k-glass-shadow: 0 0% 0% / 0.18;
+  --k-glass-blur: blur(10px) saturate(160%);
+
+  /* Backdrop veil for modals (dialog/sheet/drawer) */
+  --k-veil-bg: var(--k-background) / 0.45;
+  --k-veil-blur: blur(16px) saturate(140%);
+
   /* Radius */
   --k-radius: 0.5rem;
 
@@ -163,6 +174,13 @@
     --k-border: 217.2 32.6% 17.5%;
     --k-input: 217.2 32.6% 17.5%;
     --k-ring: 212.7 26.8% 83.9%;
+
+    /* Glass + veil */
+    --k-glass-bg: var(--k-popover) / 0.62;
+    --k-glass-border: 0 0% 100% / 0.08;
+    --k-glass-highlight: 0 0% 100% / 0.06;
+    --k-glass-shadow: 0 0% 0% / 0.5;
+    --k-veil-bg: var(--k-background) / 0.5;
   }
 }
 
@@ -204,4 +222,11 @@
   --k-border: 217.2 32.6% 17.5%;
   --k-input: 217.2 32.6% 17.5%;
   --k-ring: 212.7 26.8% 83.9%;
+
+  /* Glass + veil */
+  --k-glass-bg: var(--k-popover) / 0.62;
+  --k-glass-border: 0 0% 100% / 0.08;
+  --k-glass-highlight: 0 0% 100% / 0.06;
+  --k-glass-shadow: 0 0% 0% / 0.5;
+  --k-veil-bg: var(--k-background) / 0.5;
 }
