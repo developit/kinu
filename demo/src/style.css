@@ -2,23 +2,83 @@
 @import "../../src/variables.css";
 @import "../../src/base.css";
 
+/* ─────────────────────────────────────────────────────────────────────────
+ * Kinu brand identity — sage/cream theme applied site-wide to the docs/demo.
+ * Overrides the library's default monochrome tokens at :root (the library
+ * file itself stays untouched). Components pick up these tokens automatically.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Sage primary on warm cream surfaces */
+  --k-background: 47 53% 96.7%;
+  --k-foreground: 24 10% 10%;
+  --k-card: 0 0% 100%;
+  --k-card-foreground: 24 10% 10%;
+  --k-popover: 0 0% 100%;
+  --k-popover-foreground: 24 10% 10%;
+  --k-sidebar: 44 38% 93.5%;
+  --k-primary: 133 11% 33%;
+  --k-primary-foreground: 0 0% 100%;
+  --k-primary-hover: 133 11% 27%;
+  --k-secondary: 40 18% 94%;
+  --k-secondary-foreground: 24 10% 10%;
+  --k-secondary-hover: 40 18% 89%;
+  --k-muted: 40 18% 94%;
+  --k-muted-foreground: 25 4% 44%;
+  --k-accent: 40 18% 94%;
+  --k-accent-foreground: 24 10% 10%;
+  --k-border: 30 9% 90%;
+  --k-input: 30 9% 90%;
+  --k-ring: 133 11% 33%;
+
+  /* Brand typography stack */
+  --kh-font-sans: 'Public Sans', system-ui, -apple-system, sans-serif;
+  --kh-font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --kh-font-label: 'Manrope', 'Public Sans', system-ui, sans-serif;
+  --kh-font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  /* Brand-only palette extensions used by dark sections + silk art */
+  --kh-dark-band: #1f2c24;
+  --kh-dark-band-soft: #2c3d31;
+  --kh-cream: #fbf9f2;
+  --kh-cream-muted: #c9c2a8;
+  --kh-silk-bg: #3f5246;
+}
+
+.dark {
+  --k-background: 30 10% 8%;
+  --k-foreground: 40 20% 93%;
+  --k-card: 30 10% 6%;
+  --k-card-foreground: 40 20% 93%;
+  --k-popover: 30 10% 6%;
+  --k-popover-foreground: 40 20% 93%;
+  --k-sidebar: 30 10% 9%;
+  --k-primary: 133 20% 65%;
+  --k-primary-foreground: 30 10% 6%;
+  --k-primary-hover: 133 20% 55%;
+  --k-secondary: 30 8% 15%;
+  --k-secondary-foreground: 40 20% 93%;
+  --k-secondary-hover: 30 8% 22%;
+  --k-muted: 30 8% 15%;
+  --k-muted-foreground: 25 6% 60%;
+  --k-accent: 30 8% 15%;
+  --k-accent-foreground: 40 20% 93%;
+  --k-border: 30 8% 18%;
+  --k-input: 30 8% 18%;
+  --k-ring: 133 20% 65%;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   background: hsl(var(--k-background));
   color: hsl(var(--k-foreground));
-  font-family: system-ui, sans-serif;
+  font-family: var(--kh-font-sans);
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
   overflow-x: clip;
 }
-
-/* .home,
-.getting-started,
-.demo-app {
-  margin-top: 4rem;
-} */
 
 .demo-app {
   display: flex;
@@ -51,19 +111,6 @@ body {
   margin: 1rem;
 }
 
-/* .demo-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  background-color: hsl(var(--k-background));
-  backdrop-filter: blur(12px);
-  box-shadow: inset 0 -1px 0 hsl(var(--k-border)), 0 0 12px rgb(0 0 0 / 0.1);
-  z-index: 500;
-  overflow: visible;
-} */
 .demo-sidebar-trigger {
   display: inline-flex;
   align-items: center;
@@ -81,7 +128,6 @@ body {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   margin-right: auto;
 }
-
 
 .nav {
   margin: 0;
@@ -102,7 +148,7 @@ h2 {
 }
 
 pre.code-block {
-  background: #f2f3f6;
+  background: hsl(var(--k-muted));
   padding: .75rem 1rem;
   border-radius: .35rem;
   overflow-x: auto;
@@ -116,23 +162,22 @@ pre.code-block {
   max-width: 100%;
 }
 
-/* Home route styles */
+/* ── Site nav (used by both docs & marketing) ───────────────────────────── */
 .home-nav {
-  padding: 1rem 0.5rem;
+  padding: 0.75rem 1.25rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 0.5rem;
   height: 4rem;
 
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  gap: 0.375rem;
-  background-color: hsl(var(--k-background));
+  background-color: hsl(var(--k-background) / 0.85);
   backdrop-filter: blur(12px);
-  box-shadow: inset 0 -1px 0 hsl(var(--k-border)), 0 0 12px rgb(0 0 0 / 0.1);
+  box-shadow: inset 0 -1px 0 hsl(var(--k-border)), 0 0 12px rgb(0 0 0 / 0.04);
   z-index: 500;
   overflow: visible;
 }
@@ -140,11 +185,25 @@ body .home-nav + * {
   margin-top: 4rem;
 }
 
+.home-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  margin-right: auto;
+  padding: 0 0.5rem;
+}
+
 .home-nav [k="navigation-menu-link"] {
   height: 2.5rem;
   display: inline-flex;
   align-items: center;
   padding-inline: 0.4rem;
+  font-family: var(--kh-font-sans);
+}
+
+.home-nav [k="navigation-menu-list"] {
+  gap: 0.2rem;
 }
 
 .nav-actions {
@@ -153,161 +212,81 @@ body .home-nav + * {
   align-items: center;
 }
 
-.home-nav [k="navigation-menu-list"] {
-  gap: 0.2rem;
-}
-
-
 .home-nav .nav-actions {
   gap: 0.25rem;
 }
 
+.home-nav-search {
+  border-radius: 999px;
+  font-family: var(--kh-font-sans);
+  color: hsl(var(--k-muted-foreground));
+}
+.home-nav-search [k="kbd"] {
+  margin-left: 0.5rem;
+  font-family: var(--kh-font-mono);
+}
+
+/* On the marketing home, the nav floats on top of the hero (no chrome) */
+.home-nav--marketing {
+  position: absolute;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 1rem 2rem;
+}
+body .home-nav--marketing + * {
+  margin-top: 0;
+}
+
+
 
 /* ─────────────────────────────────────────────────────────────────────────
  * Kinu home — homepage option C ("Centered Hero").
- * Sage/cream brand identity scoped to the .kinu-home wrapper so it doesn't
- * bleed into the docs/components routes.
+ * Composed mostly of kinu primitives (Card, Button, Field, TabList, …);
+ * the styles below only fill the gaps the components don't cover —
+ * editorial typography, the silk image, and the dark sage bands.
  * ─────────────────────────────────────────────────────────────────────── */
 
 .kinu-home {
-  /* Sage/cream identity tokens — override the default monochrome theme */
-  --k-background: 47 53% 96.7%;
-  --k-foreground: 24 10% 10%;
-  --k-card: 0 0% 100%;
-  --k-card-foreground: 24 10% 10%;
-  --k-primary: 133 11% 33%;
-  --k-primary-foreground: 0 0% 100%;
-  --k-primary-hover: 133 11% 27%;
-  --k-secondary: 40 18% 94%;
-  --k-secondary-foreground: 24 10% 10%;
-  --k-secondary-hover: 40 18% 89%;
-  --k-muted: 40 18% 94%;
-  --k-muted-foreground: 25 4% 44%;
-  --k-border: 30 9% 90%;
-  --k-input: 30 9% 90%;
-  --k-ring: 133 11% 33%;
-
-  --kh-dark-band: #1f2c24;
-  --kh-dark-band-soft: #2c3d31;
-  --kh-cream: #fbf9f2;
-  --kh-cream-muted: #c9c2a8;
-  --kh-silk-bg: #3f5246;
-
   background: hsl(var(--k-background));
   color: hsl(var(--k-foreground));
-  font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
-  text-align: left;
+  font-family: var(--kh-font-sans);
 }
 
-.dark .kinu-home {
-  --k-background: 30 10% 8%;
-  --k-foreground: 40 20% 93%;
-  --k-card: 30 10% 6%;
-  --k-card-foreground: 40 20% 93%;
-  --k-primary: 133 20% 65%;
-  --k-primary-foreground: 30 10% 6%;
-  --k-primary-hover: 133 20% 55%;
-  --k-secondary: 30 8% 15%;
-  --k-secondary-foreground: 40 20% 93%;
-  --k-muted: 30 8% 15%;
-  --k-muted-foreground: 25 6% 60%;
-  --k-border: 30 8% 18%;
-  --k-input: 30 8% 18%;
-  --k-ring: 133 20% 65%;
-}
-
-/* ── Nav ────────────────────────────────────────────────────────────────── */
-.kh-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 56px;
-  background: transparent;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
-.kh-nav-brand {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-}
-
-.kh-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.kh-nav-links a {
-  font-family: 'Public Sans', sans-serif;
-  font-size: 13px;
-  color: hsl(var(--k-foreground) / 0.75);
-  text-decoration: none;
-  letter-spacing: 0.005em;
-  transition: color 120ms ease;
-}
-
-.kh-nav-links a:hover {
-  color: hsl(var(--k-foreground));
-}
-
-.kh-nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.kh-nav-search {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid hsl(var(--k-border));
-  background: transparent;
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 12px;
-  font-family: 'Public Sans', sans-serif;
-  color: hsl(var(--k-foreground) / 0.65);
-}
-
-.kh-nav-search kbd {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 11px;
-}
-
-/* ── Eyebrow / shared bits ──────────────────────────────────────────────── */
-.kh-eyebrow {
-  margin: 4px 0 0;
-  font-family: 'Manrope', 'Public Sans', sans-serif;
+/* ── Eyebrow (rendered as an outlined Badge) ────────────────────────────── */
+.kinu-home .kh-eyebrow {
+  font-family: var(--kh-font-label);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: hsl(var(--k-muted-foreground));
+  background: transparent;
+  border-color: transparent;
+  padding: 0;
+  height: auto;
+}
+.kinu-home .kh-eyebrow--dark {
+  color: var(--kh-cream-muted);
+  opacity: 0.85;
+  letter-spacing: 0.18em;
 }
 
-.kh-eyebrow--dark {
-  color: var(--kh-cream-muted);
-  opacity: 0.7;
-  letter-spacing: 0.18em;
+/* ── Pill button shape (overrides default radius on Button) ─────────────── */
+.kinu-home .kh-pill[k="button"] {
+  border-radius: 999px;
 }
 
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 .kh-hero {
   position: relative;
-  min-height: 980px;
+  min-height: 920px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 140px 24px 80px;
   overflow: hidden;
-  background: hsl(var(--k-background));
 }
 
 .kh-hero-glow {
@@ -340,30 +319,27 @@ body .home-nav + * {
 
 .kh-hero-title {
   margin: 0;
-  font-family: 'Newsreader', Georgia, serif;
+  font-family: var(--kh-font-serif);
   font-size: 88px;
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.035em;
   color: hsl(var(--k-foreground));
 }
-
 .kh-hero-title em {
   font-style: italic;
   font-weight: 500;
 }
 
-.kh-hero-lede {
-  margin: 0;
+/* Prose lede — narrow, centered, italic kinu intro */
+.kinu-home [k="prose"].kh-hero-lede {
   max-width: 480px;
-  font-family: 'Public Sans', sans-serif;
   font-size: 14.5px;
   line-height: 1.65;
   color: hsl(var(--k-muted-foreground));
 }
-
-.kh-hero-lede em {
-  font-family: 'Newsreader', Georgia, serif;
+.kinu-home [k="prose"].kh-hero-lede em {
+  font-family: var(--kh-font-serif);
   font-style: italic;
   color: hsl(var(--k-foreground));
 }
@@ -372,60 +348,19 @@ body .home-nav + * {
   display: flex;
   gap: 12px;
   margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* Pill buttons — override kinu's default Button styling for marketing CTA */
-.kinu-home .kh-pill[k='button'] {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 22px;
-  font-family: 'Public Sans', sans-serif;
-  font-size: 13.5px;
-  font-weight: 500;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  text-decoration: none;
-  height: auto;
-  line-height: 1;
-  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
-}
-
-.kinu-home .kh-pill--dark[k='button'] {
-  background: hsl(var(--k-foreground));
-  color: hsl(var(--k-background));
-  border-color: hsl(var(--k-foreground));
-}
-
-.kinu-home .kh-pill--dark[k='button']:hover {
-  background: hsl(var(--k-foreground) / 0.9);
-}
-
-.kinu-home .kh-pill--outline[k='button'] {
-  background: transparent;
-  color: hsl(var(--k-foreground));
-  border-color: hsl(var(--k-foreground) / 0.25);
-}
-
-.kinu-home .kh-pill--outline[k='button']:hover {
-  background: hsl(var(--k-foreground) / 0.05);
-}
-
-/* ── Silk card ──────────────────────────────────────────────────────────── */
-.kh-silk-wrap {
+/* ── Silk Card ──────────────────────────────────────────────────────────── */
+.kinu-home [k="card"].kh-silk {
   position: relative;
   z-index: 1;
   margin-top: 64px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.kh-silk {
-  position: relative;
   width: 100%;
   max-width: 960px;
   aspect-ratio: 960 / 380;
+  border: none;
   border-radius: 16px;
   overflow: hidden;
   background: var(--kh-silk-bg);
@@ -433,14 +368,16 @@ body .home-nav + * {
     0 30px 80px -30px rgba(40, 50, 40, 0.45),
     0 8px 24px -8px rgba(40, 50, 40, 0.18);
 }
-
+.kh-silk-art {
+  position: absolute;
+  inset: 0;
+}
 .kh-silk-svg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
-
 .kh-silk-vignette {
   position: absolute;
   inset: 0;
@@ -466,12 +403,12 @@ body .home-nav + * {
 .kh-facade-text {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
 }
 
 .kh-facade-title {
   margin: 0;
-  font-family: 'Newsreader', Georgia, serif;
+  font-family: var(--kh-font-serif);
   font-style: italic;
   font-size: 68px;
   font-weight: 400;
@@ -480,10 +417,8 @@ body .home-nav + * {
   color: var(--kh-cream);
 }
 
-.kh-facade-body {
-  margin: 0;
+.kinu-home [k="prose"].kh-facade-prose {
   max-width: 460px;
-  font-family: 'Public Sans', sans-serif;
   font-size: 15px;
   line-height: 1.7;
   color: #d7d2be;
@@ -491,31 +426,41 @@ body .home-nav + * {
 
 .kh-facade-links {
   display: flex;
-  gap: 24px;
+  gap: 8px;
   flex-wrap: wrap;
+  margin-top: 8px;
 }
 
-.kh-link {
-  font-family: 'Public Sans', sans-serif;
-  font-size: 13.5px;
-  text-decoration: none;
-  padding-bottom: 2px;
+/* Ghost links inside the dark band — flatten the kinu Button to text-with-rule */
+.kinu-home [k="button"].kh-link {
+  height: auto;
+  padding: 4px 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
   border-bottom: 1px solid currentColor;
+  font-weight: 400;
+  font-size: 13.5px;
 }
-
-.kh-link--bright {
+.kinu-home [k="button"].kh-link:hover {
+  background: transparent;
+  opacity: 0.75;
+}
+.kinu-home [k="button"].kh-link + .kh-link {
+  margin-left: 16px;
+}
+.kinu-home [k="button"].kh-link--bright {
   color: var(--kh-cream);
 }
-
-.kh-link--muted {
+.kinu-home [k="button"].kh-link--muted {
   color: var(--kh-cream-muted);
 }
 
+/* ── Stones disc ────────────────────────────────────────────────────────── */
 .kh-stones {
   display: flex;
   justify-content: center;
 }
-
 .kh-stones-disc {
   width: 340px;
   height: 340px;
@@ -531,7 +476,6 @@ body .home-nav + * {
     0 20px 60px -20px rgba(0, 0, 0, 0.5),
     inset 0 0 60px rgba(0, 0, 0, 0.4);
 }
-
 .kh-stones-disc svg {
   position: absolute;
   inset: 0;
@@ -550,50 +494,43 @@ body .home-nav + * {
 .kh-try-head {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .kh-section-title {
   margin: 0;
-  font-family: 'Newsreader', Georgia, serif;
+  font-family: var(--kh-font-serif);
   font-size: 44px;
   font-weight: 400;
   letter-spacing: -0.025em;
   color: hsl(var(--k-foreground));
 }
-
 .kh-section-title em {
   font-style: italic;
 }
 
-.kh-section-lede {
-  margin: 0;
+.kinu-home [k="prose"].kh-section-lede {
   max-width: 580px;
-  font-family: 'Public Sans', sans-serif;
   font-size: 15px;
   line-height: 1.6;
   color: hsl(var(--k-muted-foreground));
 }
 
+/* Preview card — kinu Card with a bit of structure */
 .kh-preview-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
-
-.kinu-home .kh-preview {
-  padding: 28px;
+.kinu-home [k="card"].kh-preview {
   display: flex;
   flex-direction: column;
   gap: 18px;
   min-height: 200px;
-  background: hsl(var(--k-card));
-  border: 1px solid hsl(var(--k-border));
-  border-radius: 12px;
 }
-
-.kh-preview-title {
-  font-family: 'Manrope', sans-serif;
+.kinu-home [k="badge"].kh-preview-title {
+  align-self: flex-start;
+  font-family: var(--kh-font-label);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -601,86 +538,33 @@ body .home-nav + * {
   color: hsl(var(--k-muted-foreground));
 }
 
-.kh-preview-body {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .kh-preview-stack {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
-  max-width: 320px;
 }
-
-.kh-preview-row {
+.kinu-home .kh-preview-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Public Sans', sans-serif;
+  font-family: var(--kh-font-sans);
   font-size: 13px;
+  margin: 0;
 }
-
-.kh-preview-row--between {
+.kinu-home .kh-preview-row--between {
   justify-content: space-between;
   width: 100%;
 }
-
-.kh-preview-tabs {
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  background: hsl(var(--k-secondary));
-  border-radius: 8px;
+.kinu-home .kh-preview-row--stack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
 }
-
-.kh-tab {
-  flex: 1;
-  appearance: none;
-  border: none;
-  background: transparent;
-  padding: 6px 10px;
-  font-family: 'Public Sans', sans-serif;
-  font-size: 12.5px;
-  font-weight: 500;
-  border-radius: 6px;
-  color: hsl(var(--k-muted-foreground));
-  cursor: pointer;
-  transition: background 120ms ease, color 120ms ease;
-}
-
-.kh-tab.is-active {
-  background: hsl(var(--k-card));
-  color: hsl(var(--k-foreground));
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-.kh-preview-note {
-  margin: 0;
-  font-family: 'Public Sans', sans-serif;
+.kinu-home [k="prose"].kh-preview-note {
   font-size: 12px;
-  color: hsl(var(--k-muted-foreground));
   line-height: 1.5;
-}
-
-.kh-preview-toast {
-  padding: 12px 14px;
-  border-radius: 8px;
-  background: hsl(var(--k-foreground));
-  color: hsl(var(--k-background));
-  font-family: 'Public Sans', sans-serif;
-  font-size: 12.5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.kh-preview-toast-arrow {
-  opacity: 0.5;
-  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
 }
 
 /* ── HTML as a First-Class Citizen ──────────────────────────────────────── */
@@ -688,24 +572,23 @@ body .home-nav + * {
   padding: 40px 96px 120px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 24px;
   align-items: center;
   text-align: center;
 }
 
 .kh-html-title {
   margin: 0;
-  font-family: 'Newsreader', Georgia, serif;
+  font-family: var(--kh-font-serif);
   font-size: 36px;
   font-weight: 400;
   color: hsl(var(--k-foreground));
 }
-
 .kh-html-title em {
   font-style: italic;
 }
 
-.kh-html-lede {
+.kinu-home [k="prose"].kh-html-lede {
   max-width: 560px;
   font-size: 14px;
   line-height: 1.65;
@@ -720,29 +603,37 @@ body .home-nav + * {
   text-align: left;
 }
 
-.kh-code {
-  margin: 0;
-  padding: 24px;
+/* Use kinu Card as the code surface, then style its <pre> inside */
+.kinu-home [k="card"].kh-code {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   border-radius: 12px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+.kinu-home [k="card"].kh-code pre {
+  margin: 0;
+  font-family: var(--kh-font-mono);
   font-size: 12.5px;
   line-height: 1.65;
-  overflow: auto;
   white-space: pre;
+  overflow: auto;
 }
-
-.kh-code--light {
+.kinu-home [k="card"].kh-code--light {
   background: #faf5e8;
-  border: 1px solid hsl(var(--k-border));
   color: #3f4b3d;
 }
-
-.kh-code--dark {
+.kinu-home [k="card"].kh-code--dark {
   background: var(--kh-dark-band);
-  border: 1px solid var(--kh-dark-band);
   color: #e8e4d5;
+  border-color: var(--kh-dark-band);
 }
-
+.kinu-home [k="badge"].kh-code-label {
+  align-self: flex-start;
+}
+.kinu-home [k="card"].kh-code--dark [k="badge"].kh-code-label {
+  color: var(--kh-cream-muted);
+  border-color: rgba(251, 249, 242, 0.2);
+}
 .kh-code-comment {
   color: #7ba68a;
 }
@@ -754,13 +645,13 @@ body .home-nav + * {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
   text-align: center;
 }
 
 .kh-ship-title {
   margin: 0;
-  font-family: 'Newsreader', Georgia, serif;
+  font-family: var(--kh-font-serif);
   font-style: italic;
   font-size: 76px;
   font-weight: 400;
@@ -769,10 +660,8 @@ body .home-nav + * {
   line-height: 1;
 }
 
-.kh-ship-lede {
-  margin: 0;
+.kinu-home [k="prose"].kh-ship-lede {
   max-width: 480px;
-  font-family: 'Public Sans', sans-serif;
   font-size: 14.5px;
   color: var(--kh-cream-muted);
   line-height: 1.6;
@@ -781,71 +670,62 @@ body .home-nav + * {
 .kh-ship-actions {
   display: flex;
   gap: 12px;
-  margin-top: 4px;
+  margin-top: 8px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.kh-ship-btn {
-  padding: 12px 26px;
-  border-radius: 999px;
-  font-family: 'Public Sans', sans-serif;
-  font-size: 13.5px;
-  font-weight: 500;
-  text-decoration: none;
-  border: 1px solid transparent;
-  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
-}
-
-.kh-ship-btn--cream {
+/* On the dark band, primary Button → cream pill, outline → ghost on dark */
+.kinu-home [k="button"].kh-ship-btn {
   background: var(--kh-cream);
   color: var(--kh-dark-band);
+  border-color: var(--kh-cream);
 }
-
-.kh-ship-btn--cream:hover {
+.kinu-home [k="button"].kh-ship-btn:hover {
   background: #fff;
+  color: var(--kh-dark-band);
+  border-color: #fff;
 }
-
-.kh-ship-btn--ghost {
+.kinu-home [k="button"].kh-ship-btn--ghost {
   background: transparent;
   color: var(--kh-cream);
   border-color: rgba(251, 249, 242, 0.3);
 }
-
-.kh-ship-btn--ghost:hover {
+.kinu-home [k="button"].kh-ship-btn--ghost:hover {
   background: rgba(251, 249, 242, 0.08);
+  color: var(--kh-cream);
+  border-color: rgba(251, 249, 242, 0.5);
 }
 
 /* ── Footer ─────────────────────────────────────────────────────────────── */
+.kinu-home [k="separator"].kh-footer-rule {
+  margin-top: 0;
+}
 .kh-footer {
-  padding: 40px 96px;
+  padding: 32px 96px 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid hsl(var(--k-border));
-  font-family: 'Public Sans', sans-serif;
+  font-family: var(--kh-font-sans);
   font-size: 12px;
   color: hsl(var(--k-muted-foreground));
 }
-
 .kh-footer-links {
   display: flex;
   gap: 20px;
 }
-
 .kh-footer-links a {
   color: inherit;
   text-decoration: none;
 }
-
 .kh-footer-links a:hover {
   color: hsl(var(--k-foreground));
 }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .kh-nav {
-    padding: 16px 28px;
+  .home-nav--marketing {
+    padding: 1rem 1.5rem;
   }
   .kh-hero {
     padding: 120px 20px 60px;
@@ -880,10 +760,10 @@ body .home-nav + * {
 }
 
 @media (max-width: 640px) {
-  .kh-nav {
-    padding: 14px 18px;
+  .home-nav--marketing {
+    padding: 0.75rem 1rem;
   }
-  .kh-nav-links {
+  .home-nav [k="navigation-menu-list"] {
     display: none;
   }
   .kh-hero {
@@ -900,7 +780,6 @@ body .home-nav + * {
   }
   .kh-hero-actions .kh-pill {
     width: 100%;
-    justify-content: center;
   }
   .kh-facade-title,
   .kh-ship-title {

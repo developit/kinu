@@ -1,20 +1,29 @@
-import type {ComponentChildren} from 'preact';
 import {
   Button,
   Card,
   Input,
   Switch,
+  Slider,
   Checkbox,
-  Progress,
+  Field,
   Label,
+  TabList,
+  Tab,
+  TabPanel,
+  Badge,
+  Prose,
+  Separator,
+  ToastContainer,
   toast,
 } from 'kinu';
-import {KinuLogo} from '../logo';
+import {useState} from 'preact/hooks';
+import {Nav} from '../nav';
 
 export default function Home() {
   return (
     <div class="kinu-home">
-      <HomeNav />
+      <Nav class="home-nav home-nav--marketing" search />
+      <ToastContainer />
 
       <section class="kh-hero">
         <div class="kh-hero-glow" aria-hidden />
@@ -24,51 +33,59 @@ export default function Home() {
             <br />
             <em>10x smaller</em> than you think.
           </h1>
-          <p class="kh-eyebrow">Intuitive for Humans + LLMs</p>
-          <p class="kh-hero-lede">
-            <em>Kinu</em>: the Japanese word for silk. An ultra-thin layer of
-            styling and ergonomics over native HTML. Zero dependencies, zero
-            runtime overhead, zero wrapper divs.
-          </p>
+          <Badge variant="outline" class="kh-eyebrow">
+            Intuitive for Humans + LLMs
+          </Badge>
+          <Prose class="kh-hero-lede">
+            <p>
+              <em>Kinu</em>: the Japanese word for silk. An ultra-thin layer of
+              styling and ergonomics over native HTML. Zero dependencies, zero
+              runtime overhead, zero wrapper divs.
+            </p>
+          </Prose>
           <div class="kh-hero-actions">
-            <Button class="kh-pill kh-pill--dark" href="/getting-started">
+            <Button class="kh-pill" size="lg" href="/getting-started">
               Start Building
             </Button>
-            <Button class="kh-pill kh-pill--outline" href="/docs">
+            <Button class="kh-pill" variant="outline" size="lg" href="/docs">
               View Components
             </Button>
           </div>
         </div>
 
-        <div class="kh-silk-wrap">
-          <SilkCard />
-        </div>
+        <Card padding="none" class="kh-silk">
+          <SilkArt />
+        </Card>
       </section>
 
       <section class="kh-facade">
         <div class="kh-facade-text">
-          <p class="kh-eyebrow kh-eyebrow--dark">The trick</p>
+          <Badge variant="outline" class="kh-eyebrow kh-eyebrow--dark">
+            The trick
+          </Badge>
           <h2 class="kh-facade-title">
             A Clever
             <br />
             Facade.
           </h2>
-          <p class="kh-facade-body">
-            The thin veneer is calculated. Kinu defers the work of styling to
-            the platform — your real elements, with real behavior, smoothed
-            over by the lightest possible coat of CSS. The toolkit reveals the
-            form beneath, then refines its lines.
-          </p>
+          <Prose class="kh-facade-prose">
+            <p>
+              The thin veneer is calculated. Kinu defers the work of styling to
+              the platform — your real elements, with real behavior, smoothed
+              over by the lightest possible coat of CSS. The toolkit reveals
+              the form beneath, then refines its lines.
+            </p>
+          </Prose>
           <div class="kh-facade-links">
-            <a class="kh-link kh-link--bright" href="/docs">
+            <Button variant="ghost" class="kh-link kh-link--bright" href="/docs">
               Read the philosophy →
-            </a>
-            <a class="kh-link kh-link--muted" href="/docs">
+            </Button>
+            <Button variant="ghost" class="kh-link kh-link--muted" href="/docs">
               Browse components
-            </a>
+            </Button>
           </div>
         </div>
-        <div class="kh-stones">
+        <div class="kh-stones" aria-hidden>
           <StackedStones />
         </div>
       </section>
@@ -78,25 +95,39 @@ export default function Home() {
           <h2 class="kh-section-title">
             Go ahead — <em>try them.</em>
           </h2>
-          <p class="kh-section-lede">
-            Sixty composable pieces, each a thin layer over the HTML it
-            enhances. Hover, focus, drag, type — the components answer.
-          </p>
+          <Prose class="kh-section-lede">
+            <p>
+              Sixty composable pieces, each a thin layer over the HTML it
+              enhances. Hover, focus, drag, type — the components answer.
+            </p>
+          </Prose>
         </div>
 
         <div class="kh-preview-grid">
-          <PreviewCard title="Form · Field">
+          <Card class="kh-preview" padding="lg">
+            <Badge variant="outline" class="kh-preview-title">
+              Form · Field
+            </Badge>
             <FormPreview />
-          </PreviewCard>
-          <PreviewCard title="Switch · Slider">
+          </Card>
+          <Card class="kh-preview" padding="lg">
+            <Badge variant="outline" class="kh-preview-title">
+              Switch · Slider
+            </Badge>
             <SwitchPreview />
-          </PreviewCard>
-          <PreviewCard title="Tabs">
+          </Card>
+          <Card class="kh-preview" padding="lg">
+            <Badge variant="outline" class="kh-preview-title">
+              Tabs
+            </Badge>
             <TabsPreview />
-          </PreviewCard>
-          <PreviewCard title="Toast">
+          </Card>
+          <Card class="kh-preview" padding="lg">
+            <Badge variant="outline" class="kh-preview-title">
+              Toast
+            </Badge>
             <ToastPreview />
-          </PreviewCard>
+          </Card>
         </div>
       </section>
 
@@ -104,13 +135,20 @@ export default function Home() {
         <h2 class="kh-html-title">
           HTML <em>as</em> a First-Class Citizen.
         </h2>
-        <p class="kh-section-lede kh-html-lede">
-          Write the markup you'd write anyway. Kinu just makes it look right —
-          with sane defaults, accessible primitives, and no hidden re-renders.
-        </p>
+        <Prose class="kh-section-lede kh-html-lede">
+          <p>
+            Write the markup you'd write anyway. Kinu just makes it look right
+            — with sane defaults, accessible primitives, and no hidden
+            re-renders.
+          </p>
+        </Prose>
 
         <div class="kh-code-grid">
-          <pre class="kh-code kh-code--light">{`<form k="form" action="/subscribe">
+          <Card class="kh-code kh-code--light" padding="lg">
+            <Badge variant="outline" class="kh-code-label">
+              Markup
+            </Badge>
+            <pre>{`<form k="form" action="/subscribe">
   <label>
     Email address
     <input type="email" required />
@@ -118,33 +156,44 @@ export default function Home() {
 
   <button>Subscribe →</button>
 </form>`}</pre>
-          <pre class="kh-code kh-code--dark">
-            <span class="kh-code-comment">{`// Theme it.`}</span>
-            {`
+          </Card>
+          <Card class="kh-code kh-code--dark" padding="lg">
+            <Badge variant="outline" class="kh-code-label">
+              Theme
+            </Badge>
+            <pre>
+              <span class="kh-code-comment">{`// Theme it.`}</span>
+              {`
 :root {
   --k-primary: 133 11% 33%;
   --k-radius: 0.5rem;
 }`}
-          </pre>
+            </pre>
+          </Card>
         </div>
       </section>
 
       <section class="kh-ship">
         <h2 class="kh-ship-title">Ship less. Do more.</h2>
-        <p class="kh-ship-lede">60 components. Around 6kB. Zero surprises.</p>
+        <Prose class="kh-ship-lede">
+          <p>60 components. Around 6kB. Zero surprises.</p>
+        </Prose>
         <div class="kh-ship-actions">
-          <a class="kh-ship-btn kh-ship-btn--cream" href="/getting-started">
+          <Button class="kh-pill kh-ship-btn" size="lg" href="/getting-started">
             Get started
-          </a>
-          <a
-            class="kh-ship-btn kh-ship-btn--ghost"
+          </Button>
+          <Button
+            class="kh-pill kh-ship-btn kh-ship-btn--ghost"
+            variant="outline"
+            size="lg"
             href="https://github.com/developit/kinu"
           >
             Star on GitHub
-          </a>
+          </Button>
         </div>
       </section>
 
+      <Separator class="kh-footer-rule" />
       <footer class="kh-footer">
         <span>© 2026 Kinu — MIT licensed.</span>
         <span class="kh-footer-links">
@@ -157,31 +206,90 @@ export default function Home() {
   );
 }
 
-function HomeNav() {
+function FormPreview() {
   return (
-    <nav class="kh-nav">
-      <a class="kh-nav-brand" href="/" aria-label="Kinu home">
-        <KinuLogo size={22} />
-      </a>
-      <div class="kh-nav-links">
-        <a href="/docs">Docs</a>
-        <a href="/docs">Components</a>
-        <a href="/linear">Examples</a>
-        <a href="/docs">Blog</a>
-        <a href="https://github.com/developit/kinu">GitHub</a>
-      </div>
-      <div class="kh-nav-actions">
-        <span class="kh-nav-search">
-          Search <kbd>⌘K</kbd>
-        </span>
-      </div>
-    </nav>
+    <div class="kh-preview-stack">
+      <Field>
+        <Field.Label>Email address</Field.Label>
+        <Input type="email" defaultValue="hello@kinu.sh" />
+        <Field.Description>We'll only mail you the good bits.</Field.Description>
+      </Field>
+      <Label class="kh-preview-row">
+        <Checkbox defaultChecked /> Send me the docs
+      </Label>
+      <Label class="kh-preview-row">
+        <Checkbox /> Subscribe to changelog
+      </Label>
+    </div>
   );
 }
 
-function SilkCard() {
+function SwitchPreview() {
+  const [volume, setVolume] = useState(64);
   return (
-    <div class="kh-silk">
+    <div class="kh-preview-stack">
+      <Label class="kh-preview-row kh-preview-row--between">
+        <span>Reduced motion</span>
+        <Switch defaultChecked />
+      </Label>
+      <Label class="kh-preview-row kh-preview-row--between">
+        <span>System sync</span>
+        <Switch />
+      </Label>
+      <Label class="kh-preview-row kh-preview-row--stack">
+        <span>Volume — {volume}%</span>
+        <Slider
+          min={0}
+          max={100}
+          value={volume}
+          onInput={(e) =>
+            setVolume(Number((e.target as HTMLInputElement).value))
+          }
+        />
+      </Label>
+    </div>
+  );
+}
+
+function TabsPreview() {
+  return (
+    <div class="kh-preview-stack">
+      <TabList>
+        <Tab aria-selected="true">Overview</Tab>
+        <Tab>Install</Tab>
+        <Tab>Theme</Tab>
+      </TabList>
+      <TabPanel>
+        <Prose>
+          <p>Composable tabs. Native semantics under the hood.</p>
+        </Prose>
+      </TabPanel>
+    </div>
+  );
+}
+
+function ToastPreview() {
+  return (
+    <div class="kh-preview-stack">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() =>
+          toast.show('Copied to clipboard', {title: 'Saved', icon: '✓'})
+        }
+      >
+        Trigger toast
+      </Button>
+      <Prose class="kh-preview-note">
+        <p>Click → fires a real kinu toast in the corner.</p>
+      </Prose>
+    </div>
+  );
+}
+
+function SilkArt() {
+  return (
+    <div class="kh-silk-art">
       <svg
         class="kh-silk-svg"
         viewBox="0 0 880 360"
@@ -253,7 +361,7 @@ function StackedStones() {
       <svg
         viewBox="0 0 280 280"
         role="img"
-        aria-label="Stack of stones balanced from large to small"
+        aria-label="A stack of stones balanced from large to small"
       >
         <title>Stacked stones</title>
         <defs>
@@ -270,91 +378,6 @@ function StackedStones() {
         <ellipse cx="140" cy="118" rx="18" ry="6" fill="url(#kh-stone)" opacity="0.65" />
         <ellipse cx="140" cy="104" rx="9" ry="4" fill="url(#kh-stone)" opacity="0.55" />
       </svg>
-    </div>
-  );
-}
-
-function PreviewCard({
-  title,
-  children,
-}: {title: string; children: ComponentChildren}) {
-  return (
-    <Card class="kh-preview">
-      <span class="kh-preview-title">{title}</span>
-      <div class="kh-preview-body">{children}</div>
-    </Card>
-  );
-}
-
-function FormPreview() {
-  return (
-    <div class="kh-preview-stack">
-      <Input defaultValue="hello@kinu.sh" />
-      <Label class="kh-preview-row">
-        <Checkbox defaultChecked />
-        <span>Send me the docs</span>
-      </Label>
-      <Label class="kh-preview-row">
-        <Checkbox />
-        <span>Subscribe to changelog</span>
-      </Label>
-    </div>
-  );
-}
-
-function SwitchPreview() {
-  return (
-    <div class="kh-preview-stack">
-      <div class="kh-preview-row kh-preview-row--between">
-        <span>Reduced motion</span>
-        <Switch defaultChecked />
-      </div>
-      <div class="kh-preview-row kh-preview-row--between">
-        <span>System sync</span>
-        <Switch />
-      </div>
-      <Progress value={64} max={100} />
-    </div>
-  );
-}
-
-function TabsPreview() {
-  return (
-    <div class="kh-preview-stack">
-      <div class="kh-preview-tabs">
-        <button class="kh-tab is-active" type="button">
-          Overview
-        </button>
-        <button class="kh-tab" type="button">
-          Install
-        </button>
-        <button class="kh-tab" type="button">
-          Theme
-        </button>
-      </div>
-      <p class="kh-preview-note">
-        Composable tabs. Native semantics under the hood.
-      </p>
-    </div>
-  );
-}
-
-function ToastPreview() {
-  return (
-    <div class="kh-preview-stack">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() =>
-          toast.show('Copied to clipboard', {title: 'Saved', icon: '✓'})
-        }
-      >
-        Trigger toast
-      </Button>
-      <div class="kh-preview-toast">
-        <span>Copied to clipboard</span>
-        <span class="kh-preview-toast-arrow">↗</span>
-      </div>
     </div>
   );
 }
