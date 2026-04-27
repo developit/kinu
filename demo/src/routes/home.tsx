@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Input,
+  Select,
   Switch,
   Slider,
   Checkbox,
@@ -13,11 +14,13 @@ import {
   Badge,
   Prose,
   Separator,
+  Status,
   ToastContainer,
   toast,
 } from 'kinu';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
+import {hljs} from '../highlight';
 
 export default function Home() {
   return (
@@ -53,9 +56,7 @@ export default function Home() {
           </div>
         </div>
 
-        <Card padding="none" class="kh-silk">
-          <SilkArt />
-        </Card>
+        <HeroPlayground />
       </section>
 
       <section class="kh-facade">
@@ -323,71 +324,110 @@ function ToastPreview() {
   );
 }
 
-function SilkArt() {
+/* ─────────────────────────────────────────────────────────────────────────
+ * HeroPlayground — the source on the left, the live result on the right.
+ *
+ * Same source string drives the syntax-highlighted code and the rendered
+ * <NewPost /> component, so what you see really is what you wrote. The
+ * form is a real <form> with browser validation + a Switch + a Select +
+ * Status indicator + toast on submit.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+const NEW_POST_SOURCE = `import {Field, Input, Select, Switch, Button, toast} from 'kinu';
+
+export function NewPost() {
   return (
-    <div class="kh-silk-art">
-      <svg
-        class="kh-silk-svg"
-        viewBox="0 0 880 360"
-        preserveAspectRatio="xMidYMid slice"
-        role="img"
-        aria-label="Abstract silk fabric flowing across a dark sage backdrop"
-      >
-        <title>Silk fabric</title>
-        <defs>
-          <linearGradient id="kh-silk-main" x1="0%" y1="40%" x2="100%" y2="60%">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.05" />
-            <stop offset="20%" stop-color="#ffffff" stop-opacity="0.85" />
-            <stop offset="55%" stop-color="#e7e8e3" stop-opacity="0.9" />
-            <stop offset="85%" stop-color="#ffffff" stop-opacity="0.6" />
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-          </linearGradient>
-          <linearGradient id="kh-silk-shadow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#000" stop-opacity="0" />
-            <stop offset="50%" stop-color="#000" stop-opacity="0.18" />
-            <stop offset="100%" stop-color="#000" stop-opacity="0" />
-          </linearGradient>
-          <radialGradient id="kh-silk-glow" cx="50%" cy="50%" r="60%">
-            <stop offset="0%" stop-color="#fff" stop-opacity="0.18" />
-            <stop offset="100%" stop-color="#fff" stop-opacity="0" />
-          </radialGradient>
-        </defs>
-        <rect width="880" height="360" fill="url(#kh-silk-glow)" />
-        <path
-          d="M -40 230 C 100 80, 220 320, 380 200 C 540 90, 680 280, 920 160 L 920 250 C 700 380, 540 200, 400 320 C 250 420, 80 240, -40 380 Z"
-          fill="url(#kh-silk-main)"
-          opacity="0.95"
-        />
-        <path
-          d="M 100 130 C 220 220, 380 80, 540 180 C 700 260, 820 130, 960 200 L 960 220 C 800 280, 660 180, 520 240 C 380 290, 220 200, 100 250 Z"
-          fill="url(#kh-silk-shadow)"
-          opacity="0.55"
-        />
-        <path
-          d="M -20 200 C 140 100, 280 280, 480 180 C 660 90, 800 240, 920 180"
-          stroke="#fff"
-          stroke-width="1.5"
-          fill="none"
-          opacity="0.7"
-        />
-        <path
-          d="M -20 240 C 160 160, 320 320, 520 220 C 700 140, 820 280, 920 240"
-          stroke="#fff"
-          stroke-width="1"
-          fill="none"
-          opacity="0.45"
-        />
-        <path
-          d="M 60 280 C 220 220, 360 380, 560 280"
-          stroke="#fff"
-          stroke-width="0.8"
-          fill="none"
-          opacity="0.3"
-        />
-        <ellipse cx="440" cy="320" rx="500" ry="60" fill="#fff" opacity="0.06" />
-      </svg>
-      <div class="kh-silk-vignette" aria-hidden />
-    </div>
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      toast.show('Post published', {icon: '✓'});
+    }}>
+      <Field>
+        <Field.Label>Title</Field.Label>
+        <Input name="title" placeholder="On silk and software" required />
+      </Field>
+      <Field>
+        <Field.Label>Audience</Field.Label>
+        <Select name="audience" defaultValue="subscribers">
+          <option value="subscribers">Subscribers</option>
+          <option value="team">Team only</option>
+          <option value="public">Public</option>
+        </Select>
+      </Field>
+      <Field>
+        <Field.Label>
+          <Switch name="notify" defaultChecked /> Email subscribers
+        </Field.Label>
+      </Field>
+      <Button type="submit">Publish →</Button>
+    </form>
+  );
+}`;
+
+function HeroPlayground() {
+  const {value: highlighted} = hljs.highlight(NEW_POST_SOURCE, {language: 'tsx'});
+  return (
+    <Card padding="none" class="kh-playground">
+      <div class="kh-playground-pane kh-playground-pane--code">
+        <header class="kh-playground-bar">
+          <span class="kh-playground-dots" aria-hidden>
+            <i /><i /><i />
+          </span>
+          <span class="kh-playground-file">new-post.tsx</span>
+          <Badge variant="outline" class="kh-playground-bar-badge">
+            22 lines
+          </Badge>
+        </header>
+        <pre class="kh-playground-code hljs">
+          <code
+            class="language-tsx"
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{__html: highlighted}}
+          />
+        </pre>
+      </div>
+      <div class="kh-playground-pane kh-playground-pane--demo">
+        <header class="kh-playground-bar">
+          <span class="kh-playground-file">preview</span>
+          <Status variant="success" class="kh-playground-bar-status">
+            Live
+          </Status>
+        </header>
+        <div class="kh-playground-stage">
+          <NewPost />
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function NewPost() {
+  return (
+    <form
+      class="kh-newpost"
+      onSubmit={(e) => {
+        e.preventDefault();
+        toast.show('Post published', {icon: '✓'});
+      }}
+    >
+      <Field>
+        <Field.Label>Title</Field.Label>
+        <Input name="title" placeholder="On silk and software" required />
+      </Field>
+      <Field>
+        <Field.Label>Audience</Field.Label>
+        <Select name="audience" defaultValue="subscribers">
+          <option value="subscribers">Subscribers</option>
+          <option value="team">Team only</option>
+          <option value="public">Public</option>
+        </Select>
+      </Field>
+      <Field>
+        <Field.Label class="kh-newpost-switch">
+          <Switch name="notify" defaultChecked /> Email subscribers
+        </Field.Label>
+      </Field>
+      <Button type="submit">Publish →</Button>
+    </form>
   );
 }
 

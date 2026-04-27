@@ -42,7 +42,6 @@
   --kh-dark-band-soft: #2c3d31;
   --kh-cream: #fbf9f2;
   --kh-cream-muted: #c9c2a8;
-  --kh-silk-bg: #3f5246;
 }
 
 .dark {
@@ -342,41 +341,138 @@ body .home-nav--marketing + * {
   justify-content: center;
 }
 
-/* ── Silk Card ──────────────────────────────────────────────────────────── */
-.kinu-home [k="card"].kh-silk {
+/* ── Hero playground (code on the left, live <NewPost/> on the right) ──── */
+.kinu-home [k="card"].kh-playground {
   position: relative;
   z-index: 1;
   margin-top: 64px;
   width: 100%;
-  max-width: 960px;
-  aspect-ratio: 960 / 380;
-  border: none;
+  max-width: 1040px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   border-radius: 16px;
   overflow: hidden;
-  background: var(--kh-silk-bg);
+  border: 1px solid hsl(var(--k-border));
   box-shadow:
-    0 30px 80px -30px rgba(40, 50, 40, 0.45),
-    0 8px 24px -8px rgba(40, 50, 40, 0.18);
+    0 30px 80px -30px rgba(40, 50, 40, 0.35),
+    0 8px 24px -8px rgba(40, 50, 40, 0.14);
 }
-.kh-silk-art {
-  position: absolute;
-  inset: 0;
+
+.kh-playground-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
-.kh-silk-svg {
-  position: absolute;
-  inset: 0;
+.kh-playground-pane--code {
+  background: var(--kh-dark-band);
+  color: #e8e4d5;
+}
+.kh-playground-pane--demo {
+  background: hsl(var(--k-card));
+  border-left: 1px solid hsl(var(--k-border));
+}
+
+.kh-playground-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  font-family: var(--kh-font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+}
+.kh-playground-pane--code .kh-playground-bar {
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--kh-cream-muted);
+  border-bottom: 1px solid rgba(251, 249, 242, 0.08);
+}
+.kh-playground-pane--demo .kh-playground-bar {
+  color: hsl(var(--k-muted-foreground));
+  border-bottom: 1px solid hsl(var(--k-border));
+}
+.kh-playground-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.kh-playground-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(251, 249, 242, 0.18);
+}
+.kh-playground-dots i:nth-child(1) { background: rgba(232, 109, 89, 0.85); }
+.kh-playground-dots i:nth-child(2) { background: rgba(232, 184, 89, 0.85); }
+.kh-playground-dots i:nth-child(3) { background: rgba(122, 168, 130, 0.85); }
+.kh-playground-file {
+  flex: 1;
+}
+.kinu-home [k="badge"].kh-playground-bar-badge {
+  background: transparent;
+  border-color: rgba(251, 249, 242, 0.2);
+  color: var(--kh-cream-muted);
+  font-family: var(--kh-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+.kinu-home [k="status"].kh-playground-bar-status {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* Code pane — scoped hljs theme that matches the brand palette */
+.kh-playground-code {
+  margin: 0;
+  padding: 22px 24px 28px;
+  font-family: var(--kh-font-mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  overflow: auto;
+  background: transparent;
+  color: #e8e4d5;
+  white-space: pre;
+  flex: 1;
+}
+.kh-playground-code .hljs-keyword,
+.kh-playground-code .hljs-built_in { color: #e6a87b; }
+.kh-playground-code .hljs-string,
+.kh-playground-code .hljs-attr     { color: #d2c98c; }
+.kh-playground-code .hljs-name,
+.kh-playground-code .hljs-tag,
+.kh-playground-code .hljs-title,
+.kh-playground-code .hljs-title.class_,
+.kh-playground-code .hljs-title.function_ { color: #9ec9a6; }
+.kh-playground-code .hljs-comment   { color: #7a8a7d; font-style: italic; }
+.kh-playground-code .hljs-number,
+.kh-playground-code .hljs-literal,
+.kh-playground-code .hljs-variable.language_ { color: #c8d4ad; }
+.kh-playground-code .hljs-punctuation,
+.kh-playground-code .hljs-property,
+.kh-playground-code .hljs-params    { color: #d6d2bf; }
+
+/* Demo pane — the actual rendered NewPost form */
+.kh-playground-stage {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  padding: 24px;
+}
+.kh-newpost {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   width: 100%;
-  height: 100%;
 }
-.kh-silk-vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    transparent 50%,
-    rgba(20, 30, 25, 0.25) 100%
-  );
-  pointer-events: none;
+.kh-newpost [k="select"] {
+  width: 100%;
+}
+.kh-newpost-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* ── A Clever Facade — dark sage band ───────────────────────────────────── */
@@ -759,6 +855,13 @@ body .home-nav--marketing + * {
   }
   .kh-code-grid {
     grid-template-columns: 1fr;
+  }
+  .kinu-home [k="card"].kh-playground {
+    grid-template-columns: 1fr;
+  }
+  .kinu-home [k="card"].kh-playground .kh-playground-pane--demo {
+    border-left: none;
+    border-top: 1px solid hsl(var(--k-border));
   }
 }
 
