@@ -1,20 +1,26 @@
 import {
+  Avatar,
+  Badge,
   Button,
   Card,
-  Input,
-  Select,
-  Switch,
-  Slider,
   Checkbox,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
   Field,
+  Input,
+  Item,
   Label,
-  TabList,
-  Tab,
-  TabPanel,
-  Badge,
+  Progress,
   Prose,
+  Select,
   Separator,
+  Slider,
   Status,
+  Switch,
+  Textarea,
+  Toggle,
+  Tooltip,
   ToastContainer,
   toast,
 } from 'kinu';
@@ -36,9 +42,6 @@ export default function Home() {
             <br />
             <em>10x smaller</em> than you think.
           </h1>
-          <Badge variant="outline" class="kh-eyebrow">
-            Intuitive for Humans + LLMs
-          </Badge>
           <Prose class="kh-hero-lede">
             <p>
               <em>Kinu</em>: the Japanese word for silk. An ultra-thin layer of
@@ -61,9 +64,6 @@ export default function Home() {
 
       <section class="kh-facade">
         <div class="kh-facade-text">
-          <Badge variant="outline" class="kh-eyebrow kh-eyebrow--dark">
-            The trick
-          </Badge>
           <h2 class="kh-facade-title">
             A Clever
             <br />
@@ -113,28 +113,32 @@ export default function Home() {
 
         <div class="kh-preview-grid">
           <Card class="kh-preview" padding="lg">
-            <Badge variant="outline" class="kh-preview-title">
-              Form · Field
-            </Badge>
-            <FormPreview />
+            <header class="kh-preview-head">
+              <span class="kh-preview-title">Tasks</span>
+              <span class="kh-preview-sub">Avatar · Progress · Checkbox · Input</span>
+            </header>
+            <TasksPreview />
           </Card>
           <Card class="kh-preview" padding="lg">
-            <Badge variant="outline" class="kh-preview-title">
-              Switch · Slider
-            </Badge>
-            <SwitchPreview />
+            <header class="kh-preview-head">
+              <span class="kh-preview-title">Now Playing</span>
+              <span class="kh-preview-sub">Slider · Toggle · Buttons</span>
+            </header>
+            <NowPlayingPreview />
           </Card>
           <Card class="kh-preview" padding="lg">
-            <Badge variant="outline" class="kh-preview-title">
-              Tabs
-            </Badge>
-            <TabsPreview />
+            <header class="kh-preview-head">
+              <span class="kh-preview-title">AI Composer</span>
+              <span class="kh-preview-sub">Textarea · DropdownMenu · Button</span>
+            </header>
+            <ComposerPreview />
           </Card>
           <Card class="kh-preview" padding="lg">
-            <Badge variant="outline" class="kh-preview-title">
-              Toast
-            </Badge>
-            <ToastPreview />
+            <header class="kh-preview-head">
+              <span class="kh-preview-title">Team Activity</span>
+              <span class="kh-preview-sub">Avatar · Status · Item</span>
+            </header>
+            <ActivityPreview />
           </Card>
         </div>
       </section>
@@ -217,109 +221,252 @@ export function Subscribe() {
   );
 }
 
-function FormPreview() {
+/* ── Tasks (Project dashboard) ──────────────────────────────────────────── */
+type Task = {id: number; text: string; done: boolean};
+const INITIAL_TASKS: Task[] = [
+  {id: 1, text: 'Pricing page copy', done: true},
+  {id: 2, text: 'Migrate auth to OAuth', done: true},
+  {id: 3, text: 'Onboarding flow QA', done: false},
+  {id: 4, text: 'Ship release notes', done: false},
+];
+
+function TasksPreview() {
+  const [tasks, setTasks] = useState(INITIAL_TASKS);
+  const [draft, setDraft] = useState('');
+  const completed = tasks.filter((t) => t.done).length;
+  const progress = (completed / tasks.length) * 100;
+
+  const toggle = (id: number) =>
+    setTasks((prev) =>
+      prev.map((t) => (t.id === id ? {...t, done: !t.done} : t)),
+    );
+
+  const add = (e: Event) => {
+    e.preventDefault();
+    const text = draft.trim();
+    if (!text) return;
+    setTasks((prev) => [...prev, {id: Date.now(), text, done: false}]);
+    setDraft('');
+  };
+
   return (
-    <div class="kh-preview-stack">
-      <Field>
-        <Field.Label>Email address</Field.Label>
-        <Input type="email" defaultValue="hello@kinu.sh" />
-        <Field.Description>We'll only mail you the good bits.</Field.Description>
-      </Field>
-      <Label class="kh-preview-row">
-        <Checkbox defaultChecked /> Send me the docs
-      </Label>
-      <Label class="kh-preview-row">
-        <Checkbox /> Subscribe to changelog
-      </Label>
+    <div class="kh-tasks">
+      <header class="kh-tasks-head">
+        <Avatar size="sm">JD</Avatar>
+        <div class="kh-tasks-meta">
+          <p>Q4 launches</p>
+          <Badge variant={progress === 100 ? 'default' : 'secondary'}>
+            {completed}/{tasks.length} done
+          </Badge>
+        </div>
+      </header>
+      <Progress value={progress} max={100} />
+      <ul class="kh-tasks-list">
+        {tasks.map((t) => (
+          <li key={t.id} class="kh-tasks-item">
+            <Checkbox
+              id={`kh-task-${t.id}`}
+              checked={t.done}
+              onInput={() => toggle(t.id)}
+            />
+            <Label
+              htmlFor={`kh-task-${t.id}`}
+              class={t.done ? 'is-done' : undefined}
+            >
+              {t.text}
+            </Label>
+          </li>
+        ))}
+      </ul>
+      <form class="kh-tasks-add" onSubmit={add}>
+        <Input
+          size="sm"
+          placeholder="Next task…"
+          value={draft}
+          onInput={(e) => setDraft((e.target as HTMLInputElement).value)}
+        />
+        <Tooltip title="Add task">
+          <Button size="sm" type="submit" disabled={!draft.trim()}>
+            ＋
+          </Button>
+        </Tooltip>
+      </form>
     </div>
   );
 }
 
-function SwitchPreview() {
-  const [volume, setVolume] = useState(64);
+/* ── Now Playing (Media player) ─────────────────────────────────────────── */
+function NowPlayingPreview() {
+  const [position, setPosition] = useState(82);
+  const [playing, setPlaying] = useState(true);
+  const [liked, setLiked] = useState(false);
+
+  const total = 222; // seconds — 3:42
+  const fmt = (s: number) => {
+    const m = Math.floor(s / 60);
+    const r = Math.floor(s % 60);
+    return `${m}:${r.toString().padStart(2, '0')}`;
+  };
+  const cur = (position / 100) * total;
+
   return (
-    <div class="kh-preview-stack">
-      <Label class="kh-preview-row kh-preview-row--between">
-        <span>Reduced motion</span>
-        <Switch defaultChecked />
-      </Label>
-      <Label class="kh-preview-row kh-preview-row--between">
-        <span>System sync</span>
-        <Switch />
-      </Label>
-      <Label class="kh-preview-row kh-preview-row--stack">
-        <span>Volume — {volume}%</span>
+    <div class="kh-player">
+      <header class="kh-player-head">
+        <span class="kh-player-cover" aria-hidden>
+          🌅
+        </span>
+        <div class="kh-player-meta">
+          <p class="kh-player-title">Summer Breeze</p>
+          <p class="kh-player-artist">DJ Sunwave · Golden Hour</p>
+        </div>
+        <Toggle
+          pressed={liked}
+          onClick={() => setLiked((v) => !v)}
+          class="kh-player-like"
+          aria-label="Like"
+        >
+          {liked ? '♥' : '♡'}
+        </Toggle>
+      </header>
+      <div class="kh-player-scrub">
+        <span class="kh-player-time">{fmt(cur)}</span>
         <Slider
           min={0}
           max={100}
-          value={volume}
+          value={position}
           onInput={(e) =>
-            setVolume(Number((e.target as HTMLInputElement).value))
+            setPosition(Number((e.target as HTMLInputElement).value))
           }
         />
-      </Label>
+        <span class="kh-player-time">{fmt(total)}</span>
+      </div>
+      <div class="kh-player-controls">
+        <Button variant="ghost" size="icon" aria-label="Previous">⏮</Button>
+        <Button
+          size="icon"
+          onClick={() => setPlaying((v) => !v)}
+          aria-label={playing ? 'Pause' : 'Play'}
+        >
+          {playing ? '⏸' : '▶'}
+        </Button>
+        <Button variant="ghost" size="icon" aria-label="Next">⏭</Button>
+      </div>
     </div>
   );
 }
 
-const TABS = [
-  {
-    id: 'overview',
-    label: 'Overview',
-    body: 'Composable tabs wrapping native semantics — selected state lives in your component, the rest is CSS.',
-  },
-  {
-    id: 'install',
-    label: 'Install',
-    body: 'pnpm add kinu — that\'s the whole story. ~5kB of JS, ~6kB of CSS.',
-  },
-  {
-    id: 'theme',
-    label: 'Theme',
-    body: 'Override the --k-* tokens on :root (or any element) to rebrand. No build step required.',
-  },
+/* ── AI Composer (Textarea + model picker) ──────────────────────────────── */
+const MODELS = [
+  {id: 'sonnet', label: 'Claude Sonnet 4.6', meta: 'Fast · 200K context'},
+  {id: 'opus',   label: 'Claude Opus 4.7',   meta: 'Smart · 1M context'},
+  {id: 'haiku',  label: 'Claude Haiku 4.5',  meta: 'Cheapest · 200K'},
+  {id: 'gpt5',   label: 'GPT-5',             meta: 'OpenAI'},
+  {id: 'gemini', label: 'Gemini 2.5 Pro',    meta: 'Google'},
 ];
 
-function TabsPreview() {
-  const [tab, setTab] = useState('overview');
-  const active = TABS.find((t) => t.id === tab) ?? TABS[0];
+function ComposerPreview() {
+  const [modelId, setModelId] = useState('sonnet');
+  const [text, setText] = useState('');
+  const model = MODELS.find((m) => m.id === modelId) ?? MODELS[0];
+
+  const send = (e: Event) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    toast.show(`Sent to ${model.label}`, {title: 'Composer', icon: '✨'});
+    setText('');
+  };
+
   return (
-    <div class="kh-preview-stack">
-      <TabList>
-        {TABS.map((t) => (
-          <Tab
-            key={t.id}
-            aria-selected={tab === t.id}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
-          </Tab>
-        ))}
-      </TabList>
-      <TabPanel>
-        <Prose class="kh-preview-note">
-          <p>{active.body}</p>
-        </Prose>
-      </TabPanel>
-    </div>
+    <form class="kh-composer" onSubmit={send}>
+      <Textarea
+        autosize
+        rows={3}
+        class="kh-composer-input"
+        placeholder="Ask anything…"
+        value={text}
+        onInput={(e) => setText((e.target as HTMLTextAreaElement).value)}
+      />
+      <footer class="kh-composer-bar">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="outline" size="sm" class="kh-composer-model">
+              <span class="kh-composer-dot" aria-hidden />
+              {model.label}
+              <span aria-hidden>▾</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {MODELS.map((m) => (
+              <Item
+                key={m.id}
+                selected={m.id === modelId}
+                onClick={() => setModelId(m.id)}
+              >
+                <span class="kh-composer-option">
+                  <strong>{m.label}</strong>
+                  <span class="kh-composer-option-meta">{m.meta}</span>
+                </span>
+              </Item>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Button type="submit" size="sm" disabled={!text.trim()}>
+          Send →
+        </Button>
+      </footer>
+    </form>
   );
 }
 
-function ToastPreview() {
+/* ── Team Activity (Avatar + Status + Item) ─────────────────────────────── */
+const ACTIVITY: Array<{
+  initials: string;
+  name: string;
+  action: string;
+  when: string;
+  variant: 'success' | 'info' | 'warning' | undefined;
+  pulse?: boolean;
+}> = [
+  {initials: 'JM', name: 'Jason',    action: 'merged pull/124',     when: '2m',  variant: 'success', pulse: true},
+  {initials: 'AS', name: 'Alex',     action: 'is reviewing pull/126', when: '7m', variant: 'info'},
+  {initials: 'KM', name: 'Karen',    action: 'opened issue #2031',  when: '14m', variant: 'success'},
+  {initials: 'TR', name: 'Toshi',    action: 'is away',             when: '1h',  variant: 'warning'},
+];
+
+function ActivityPreview() {
   return (
-    <div class="kh-preview-stack">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() =>
-          toast.show('Copied to clipboard', {title: 'Saved', icon: '✓'})
-        }
-      >
-        Trigger toast
-      </Button>
-      <Prose class="kh-preview-note">
-        <p>Click → fires a real kinu toast in the corner.</p>
-      </Prose>
+    <div class="kh-activity">
+      <header class="kh-activity-head">
+        <Avatar.Group>
+          <Avatar size="sm">JM</Avatar>
+          <Avatar size="sm">AS</Avatar>
+          <Avatar size="sm">KM</Avatar>
+          <Avatar size="sm">+4</Avatar>
+        </Avatar.Group>
+        <Status pulse variant="success" class="kh-activity-live">
+          Live
+        </Status>
+      </header>
+      <ul class="kh-activity-list">
+        {ACTIVITY.map((a) => (
+          <li key={a.name} class="kh-activity-item">
+            <Avatar size="sm">{a.initials}</Avatar>
+            <div class="kh-activity-text">
+              <p>
+                <strong>{a.name}</strong> {a.action}
+              </p>
+              <Status
+                variant={a.variant}
+                pulse={a.pulse}
+                aria-label={a.action}
+                class="kh-activity-when"
+              >
+                {a.when}
+              </Status>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
