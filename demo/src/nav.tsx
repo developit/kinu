@@ -8,8 +8,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  Button,
-  Kbd,
 } from 'kinu';
 import {ThemeCustomizer} from './theme-customizer.tsx';
 import {KinuLogo} from './logo';
@@ -18,12 +16,10 @@ export function Nav({
   class: className,
   left,
   brand = true,
-  search = false,
 }: {
   class?: string;
   left?: ComponentChildren;
   brand?: boolean;
-  search?: boolean;
 }) {
   return (
     <NavigationMenu class={className ?? 'home-nav'}>
@@ -68,11 +64,6 @@ export function Nav({
         </NavigationMenuItem>
       </NavigationMenuList>
       <div class="nav-actions">
-        {search && (
-          <Button variant="outline" size="sm" class="home-nav-search">
-            Search <Kbd>⌘K</Kbd>
-          </Button>
-        )}
         <ThemeCustomizer />
       </div>
     </NavigationMenu>

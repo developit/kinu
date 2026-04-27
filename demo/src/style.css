@@ -216,16 +216,6 @@ body .home-nav + * {
   gap: 0.25rem;
 }
 
-.home-nav-search {
-  border-radius: 999px;
-  font-family: var(--kh-font-sans);
-  color: hsl(var(--k-muted-foreground));
-}
-.home-nav-search [k="kbd"] {
-  margin-left: 0.5rem;
-  font-family: var(--kh-font-mono);
-}
-
 /* On the marketing home, the nav floats on top of the hero (no chrome) */
 .home-nav--marketing {
   position: absolute;
@@ -423,6 +413,11 @@ body .home-nav--marketing + * {
   line-height: 1.7;
   color: #d7d2be;
 }
+.kinu-home [k="prose"].kh-facade-prose code {
+  background: rgba(251, 249, 242, 0.08);
+  color: var(--kh-cream);
+  font-size: 0.88em;
+}
 
 .kh-facade-links {
   display: flex;
@@ -456,31 +451,39 @@ body .home-nav--marketing + * {
   color: var(--kh-cream-muted);
 }
 
-/* ── Stones disc ────────────────────────────────────────────────────────── */
-.kh-stones {
+/* ── Silk drape disc (sage-circle vignette accompanying "A Clever Facade") ─ */
+.kh-drape {
   display: flex;
   justify-content: center;
 }
-.kh-stones-disc {
+.kh-drape-disc {
   width: 340px;
   height: 340px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 40% 35%,
-    var(--kh-dark-band-soft) 0%,
-    #1a2620 80%
-  );
-  position: relative;
   overflow: hidden;
+  position: relative;
   box-shadow:
-    0 20px 60px -20px rgba(0, 0, 0, 0.5),
+    0 20px 60px -20px rgba(0, 0, 0, 0.55),
     inset 0 0 60px rgba(0, 0, 0, 0.4);
 }
-.kh-stones-disc svg {
+.kh-drape-disc svg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+/* soft inner edge so it reads as a circle, not a hard cutout */
+.kh-drape-disc::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 55%,
+    rgba(15, 22, 18, 0.65) 100%
+  );
+  pointer-events: none;
 }
 
 /* ── Go ahead — try them ────────────────────────────────────────────────── */
@@ -794,7 +797,7 @@ body .home-nav--marketing + * {
   .kh-preview-grid {
     grid-template-columns: 1fr;
   }
-  .kh-stones-disc {
+  .kh-drape-disc {
     width: 240px;
     height: 240px;
   }
