@@ -42,6 +42,10 @@
   --kh-dark-band-soft: #2c3d31;
   --kh-cream: #fbf9f2;
   --kh-cream-muted: #c9c2a8;
+
+  /* Page width — keep section content readable on wide monitors */
+  --kh-page-max: 1200px;
+  --kh-page-pad: max(48px, calc((100% - var(--kh-page-max)) / 2));
 }
 
 .dark {
@@ -376,10 +380,12 @@ body .home-nav--marketing + * {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 18px;
+  height: 44px;             /* fixed height so both pane headers align */
+  padding: 0 18px;
   font-family: var(--kh-font-mono);
   font-size: 11.5px;
   letter-spacing: 0.02em;
+  flex-shrink: 0;
 }
 .kh-playground-pane--code .kh-playground-bar {
   background: rgba(0, 0, 0, 0.18);
@@ -457,7 +463,8 @@ body .home-nav--marketing + * {
 .kh-playground-stage {
   flex: 1;
   display: flex;
-  align-items: stretch;
+  align-items: center;       /* center the form vertically */
+  justify-content: center;
   padding: 24px;
 }
 .kh-newpost {
@@ -465,6 +472,7 @@ body .home-nav--marketing + * {
   flex-direction: column;
   gap: 14px;
   width: 100%;
+  max-width: 320px;
 }
 .kh-newpost [k="select"] {
   width: 100%;
@@ -472,14 +480,19 @@ body .home-nav--marketing + * {
 .kh-newpost-switch {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.625rem;
+}
+.kh-newpost-switch [k="label"] {
+  font-size: 0.875rem;
+  cursor: pointer;
 }
 
 /* ── A Clever Facade — dark sage band ───────────────────────────────────── */
 .kh-facade {
   background: var(--kh-dark-band);
   color: #e8e4d5;
-  padding: 120px 96px;
+  padding-block: 120px;
+  padding-inline: var(--kh-page-pad);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
@@ -584,7 +597,8 @@ body .home-nav--marketing + * {
 
 /* ── Go ahead — try them ────────────────────────────────────────────────── */
 .kh-try {
-  padding: 120px 96px 80px;
+  padding-block: 120px 80px;
+  padding-inline: var(--kh-page-pad);
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -668,7 +682,8 @@ body .home-nav--marketing + * {
 
 /* ── HTML as a First-Class Citizen ──────────────────────────────────────── */
 .kh-html {
-  padding: 40px 96px 120px;
+  padding-block: 40px 120px;
+  padding-inline: var(--kh-page-pad);
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -717,10 +732,17 @@ body .home-nav--marketing + * {
   white-space: pre;
   overflow: auto;
 }
+/* Light variant — warm cream paper in light mode, soft sage panel in dark */
 .kinu-home [k="card"].kh-code--light {
   background: #faf5e8;
   color: #3f4b3d;
 }
+.dark .kinu-home [k="card"].kh-code--light {
+  background: #2a3530;
+  color: #d7d2be;
+  border-color: rgba(251, 249, 242, 0.08);
+}
+/* Dark variant — always the brand dark band so the contrast holds in both modes */
 .kinu-home [k="card"].kh-code--dark {
   background: var(--kh-dark-band);
   color: #e8e4d5;
@@ -729,7 +751,8 @@ body .home-nav--marketing + * {
 .kinu-home [k="badge"].kh-code-label {
   align-self: flex-start;
 }
-.kinu-home [k="card"].kh-code--dark [k="badge"].kh-code-label {
+.kinu-home [k="card"].kh-code--dark [k="badge"].kh-code-label,
+.dark .kinu-home [k="card"].kh-code--light [k="badge"].kh-code-label {
   color: var(--kh-cream-muted);
   border-color: rgba(251, 249, 242, 0.2);
 }
@@ -740,7 +763,8 @@ body .home-nav--marketing + * {
 /* ── Ship less. Do more. ────────────────────────────────────────────────── */
 .kh-ship {
   background: linear-gradient(180deg, var(--kh-dark-band-soft) 0%, #1a2620 100%);
-  padding: 120px 96px;
+  padding-block: 120px;
+  padding-inline: var(--kh-page-pad);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -801,7 +825,8 @@ body .home-nav--marketing + * {
   margin-top: 0;
 }
 .kh-footer {
-  padding: 32px 96px 48px;
+  padding-block: 32px 48px;
+  padding-inline: var(--kh-page-pad);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -823,6 +848,9 @@ body .home-nav--marketing + * {
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
+  .kinu-home {
+    --kh-page-pad: 32px;
+  }
   .home-nav--marketing {
     padding: 1rem 1.5rem;
   }
@@ -832,14 +860,6 @@ body .home-nav--marketing + * {
   }
   .kh-hero-title {
     font-size: 64px;
-  }
-  .kh-facade,
-  .kh-try,
-  .kh-html,
-  .kh-ship,
-  .kh-footer {
-    padding-left: 32px;
-    padding-right: 32px;
   }
   .kh-facade {
     grid-template-columns: 1fr;
@@ -866,6 +886,9 @@ body .home-nav--marketing + * {
 }
 
 @media (max-width: 640px) {
+  .kinu-home {
+    --kh-page-pad: 18px;
+  }
   .home-nav--marketing {
     padding: 0.75rem 1rem;
   }

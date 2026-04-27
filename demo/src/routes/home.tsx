@@ -333,7 +333,7 @@ function ToastPreview() {
  * Status indicator + toast on submit.
  * ─────────────────────────────────────────────────────────────────────── */
 
-const NEW_POST_SOURCE = `import {Field, Input, Select, Switch, Button, toast} from 'kinu';
+const NEW_POST_SOURCE = `import {Field, Input, Select, Switch, Label, Button, toast} from 'kinu';
 
 export function NewPost() {
   return (
@@ -353,11 +353,10 @@ export function NewPost() {
           <option value="public">Public</option>
         </Select>
       </Field>
-      <Field>
-        <Field.Label>
-          <Switch name="notify" defaultChecked /> Email subscribers
-        </Field.Label>
-      </Field>
+      <div class="row">
+        <Switch id="notify" name="notify" defaultChecked />
+        <Label htmlFor="notify">Email subscribers</Label>
+      </div>
       <Button type="submit">Publish →</Button>
     </form>
   );
@@ -365,6 +364,7 @@ export function NewPost() {
 
 function HeroPlayground() {
   const {value: highlighted} = hljs.highlight(NEW_POST_SOURCE, {language: 'tsx'});
+  const lineCount = NEW_POST_SOURCE.trimEnd().split('\n').length;
   return (
     <Card padding="none" class="kh-playground">
       <div class="kh-playground-pane kh-playground-pane--code">
@@ -374,7 +374,7 @@ function HeroPlayground() {
           </span>
           <span class="kh-playground-file">new-post.tsx</span>
           <Badge variant="outline" class="kh-playground-bar-badge">
-            22 lines
+            {lineCount} lines
           </Badge>
         </header>
         <pre class="kh-playground-code hljs">
@@ -421,11 +421,10 @@ function NewPost() {
           <option value="public">Public</option>
         </Select>
       </Field>
-      <Field>
-        <Field.Label class="kh-newpost-switch">
-          <Switch name="notify" defaultChecked /> Email subscribers
-        </Field.Label>
-      </Field>
+      <div class="kh-newpost-switch">
+        <Switch id="kh-notify" name="notify" defaultChecked />
+        <Label htmlFor="kh-notify">Email subscribers</Label>
+      </div>
       <Button type="submit">Publish →</Button>
     </form>
   );
