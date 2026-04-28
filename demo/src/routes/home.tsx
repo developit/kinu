@@ -2,30 +2,59 @@ import {
   Avatar,
   Badge,
   Button,
+  Calendar,
   Card,
   Checkbox,
+  Chip,
+  ColorPicker,
+  Combobox,
+  ComboboxInput,
+  ComboboxList,
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
   Field,
+  FileUpload,
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
   Input,
   Item,
+  Kbd,
   Label,
+  Listbox,
+  ListboxInput,
+  ListboxList,
+  OTPInput,
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
   Progress,
+  ProgressRing,
   Prose,
   Select,
   Separator,
   Slider,
+  Spinner,
   Status,
   Switch,
+  Tab,
+  TabList,
+  TabPanel,
   Textarea,
+  Timeline,
   Toggle,
+  ToggleGroup,
   Tooltip,
   ToastContainer,
   toast,
 } from 'kinu';
 import type {ComponentChildren} from 'preact';
-import {useState} from 'preact/hooks';
+import {useEffect, useRef, useState} from 'preact/hooks';
 import {Nav} from '../nav';
 import {hljs} from '../highlight';
 
@@ -103,25 +132,62 @@ export default function Home() {
           <h2 class="kh-section-title">Built with Kinu.</h2>
           <Prose class="kh-section-lede">
             <p>
-              Four small surfaces composed from the components in this
-              toolkit. The hero playground above publishes at roughly 11&nbsp;kB.
+              Sixteen real product surfaces, composed from the components in
+              this toolkit. Click around. The whole grid runs on the same
+              ~11&nbsp;kB you'd ship.
             </p>
           </Prose>
         </div>
 
         <div class="kh-preview-grid">
-          <Card class="kh-preview" padding="lg">
+          <PreviewCard title="Tasks">
             <TasksPreview />
-          </Card>
-          <Card class="kh-preview" padding="lg">
+          </PreviewCard>
+          <PreviewCard title="Now Playing">
             <NowPlayingPreview />
-          </Card>
-          <Card class="kh-preview" padding="lg">
+          </PreviewCard>
+          <PreviewCard title="AI Composer">
             <ComposerPreview />
-          </Card>
-          <Card class="kh-preview" padding="lg">
+          </PreviewCard>
+          <PreviewCard title="Team Activity">
             <ActivityPreview />
-          </Card>
+          </PreviewCard>
+          <PreviewCard title="Command Palette">
+            <CommandPalettePreview />
+          </PreviewCard>
+          <PreviewCard title="Trip Booking">
+            <DateRangePreview />
+          </PreviewCard>
+          <PreviewCard title="Pricing">
+            <PricingPreview />
+          </PreviewCard>
+          <PreviewCard title="Inbox">
+            <InboxPreview />
+          </PreviewCard>
+          <PreviewCard title="Onboarding">
+            <OnboardingPreview />
+          </PreviewCard>
+          <PreviewCard title="File Upload">
+            <FileUploadPreview />
+          </PreviewCard>
+          <PreviewCard title="Verify Email">
+            <OTPPreview />
+          </PreviewCard>
+          <PreviewCard title="Theme Studio">
+            <ThemeStudioPreview />
+          </PreviewCard>
+          <PreviewCard title="Editor Tabs">
+            <EditorTabsPreview />
+          </PreviewCard>
+          <PreviewCard title="Filters">
+            <FiltersPreview />
+          </PreviewCard>
+          <PreviewCard title="Quick Search">
+            <SearchPreview />
+          </PreviewCard>
+          <PreviewCard title="Account">
+            <AccountMenuPreview />
+          </PreviewCard>
         </div>
       </section>
 
@@ -415,18 +481,81 @@ function NowPlayingPreview() {
 }
 
 /* ── AI Composer (Textarea + model picker) ──────────────────────────────── */
-const MODELS = [
-  {id: 'sonnet', label: 'Claude Sonnet 4.6', meta: 'Fast · 200K context'},
-  {id: 'opus',   label: 'Claude Opus 4.7',   meta: 'Smart · 1M context'},
-  {id: 'haiku',  label: 'Claude Haiku 4.5',  meta: 'Cheapest · 200K'},
-  {id: 'gpt5',   label: 'GPT-5',             meta: 'OpenAI'},
-  {id: 'gemini', label: 'Gemini 2.5 Pro',    meta: 'Google'},
+/* Reusable card shell — header with title + (optional) hint, then body. */
+function PreviewCard({
+  title,
+  hint,
+  children,
+}: {title: string; hint?: string; children: ComponentChildren}) {
+  return (
+    <Card class="kh-preview" padding="lg">
+      <header class="kh-preview-head">
+        <span class="kh-preview-title">{title}</span>
+        {hint && <span class="kh-preview-hint">{hint}</span>}
+      </header>
+      <div class="kh-preview-body">{children}</div>
+    </Card>
+  );
+}
+
+/* ── 3. AI Composer with adaptive model picker ──────────────────────────── *
+ * Replaces the flat DropdownMenu with a Popover (mobile=drawer) housing a
+ * search input + grouped model list with ↑/↓ keyboard navigation. Inspired
+ * by the Contraption picker. Uses kinu Popover's native commandFor magic. */
+
+type ModelOption = {id: string; provider: string; label: string; meta: string; recent?: boolean};
+const MODELS: ModelOption[] = [
+  {id: 'opus',   provider: 'Anthropic', label: 'Claude Opus 4.7',     meta: 'Smartest · 1M context', recent: true},
+  {id: 'sonnet', provider: 'Anthropic', label: 'Claude Sonnet 4.6',   meta: 'Balanced · 200K',       recent: true},
+  {id: 'haiku',  provider: 'Anthropic', label: 'Claude Haiku 4.5',    meta: 'Cheapest · 200K'},
+  {id: 'gpt5',   provider: 'OpenAI',    label: 'GPT-5',               meta: 'Reasoning · 256K'},
+  {id: 'o3',     provider: 'OpenAI',    label: 'o3',                  meta: 'Deep think · 200K'},
+  {id: 'gemini', provider: 'Google',    label: 'Gemini 2.5 Pro',      meta: 'Multimodal · 2M'},
+  {id: 'flash',  provider: 'Google',    label: 'Gemini 2.5 Flash',    meta: 'Lightning · 1M'},
 ];
 
 function ComposerPreview() {
   const [modelId, setModelId] = useState('sonnet');
+  const [filter, setFilter] = useState('');
+  const [cursor, setCursor] = useState(-1);
   const [text, setText] = useState('');
   const model = MODELS.find((m) => m.id === modelId) ?? MODELS[0];
+
+  const filtered = MODELS.filter(
+    (m) =>
+      !filter ||
+      m.label.toLowerCase().includes(filter.toLowerCase()) ||
+      m.provider.toLowerCase().includes(filter.toLowerCase()),
+  );
+  const groups: Array<{provider: string; items: ModelOption[]}> = [];
+  for (const m of filtered) {
+    const last = groups[groups.length - 1];
+    if (last && last.provider === m.provider) last.items.push(m);
+    else groups.push({provider: m.provider, items: [m]});
+  }
+
+  const select = (id: string) => {
+    setModelId(id);
+    setFilter('');
+    setCursor(-1);
+    // Close the parent <dialog> popover by walking up.
+    requestAnimationFrame(() => {
+      (document.activeElement?.closest('dialog') as HTMLDialogElement | null)?.close();
+    });
+  };
+
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setCursor((c) => Math.min(c + 1, filtered.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setCursor((c) => Math.max(c - 1, 0));
+    } else if (e.key === 'Enter' && cursor >= 0) {
+      e.preventDefault();
+      select(filtered[cursor].id);
+    }
+  };
 
   const send = (e: Event) => {
     e.preventDefault();
@@ -435,6 +564,7 @@ function ComposerPreview() {
     setText('');
   };
 
+  let flatIndex = 0;
   return (
     <form class="kh-composer" onSubmit={send}>
       <Textarea
@@ -446,29 +576,64 @@ function ComposerPreview() {
         onInput={(e) => setText((e.target as HTMLTextAreaElement).value)}
       />
       <footer class="kh-composer-bar">
-        <DropdownMenu>
-          <DropdownMenuTrigger>
+        <Popover>
+          <PopoverTrigger>
             <Button variant="outline" size="sm" class="kh-composer-model">
-              <span class="kh-composer-dot" aria-hidden />
-              {model.label}
-              <span aria-hidden>▾</span>
+              <Status pulse variant="success" aria-label="Active model" />
+              <span class="kh-composer-model-label">{model.label}</span>
+              <span aria-hidden class="kh-composer-chev">▾</span>
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {MODELS.map((m) => (
-              <Item
-                key={m.id}
-                selected={m.id === modelId}
-                onClick={() => setModelId(m.id)}
-              >
-                <span class="kh-composer-option">
-                  <strong>{m.label}</strong>
-                  <span class="kh-composer-option-meta">{m.meta}</span>
-                </span>
-              </Item>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </PopoverTrigger>
+          <PopoverContent mobile="drawer" class="kh-composer-popover">
+            <div class="kh-composer-search">
+              <Input
+                size="sm"
+                placeholder="Search models…"
+                value={filter}
+                autoFocus
+                onInput={(e) => {
+                  setFilter((e.target as HTMLInputElement).value);
+                  setCursor(-1);
+                }}
+                onKeyDown={onKey}
+              />
+            </div>
+            <Separator />
+            <div class="kh-composer-list">
+              {groups.length === 0 && (
+                <p class="kh-composer-empty">
+                  No models match <code>{filter}</code>.
+                </p>
+              )}
+              {groups.map((g) => (
+                <section key={g.provider} class="kh-composer-group">
+                  <header class="kh-composer-group-head">{g.provider}</header>
+                  {g.items.map((m) => {
+                    const i = flatIndex++;
+                    return (
+                      <Item
+                        key={m.id}
+                        selected={m.id === modelId}
+                        data-active={i === cursor || undefined}
+                        onClick={() => select(m.id)}
+                      >
+                        <span class="kh-composer-option">
+                          <strong>{m.label}</strong>
+                          <span class="kh-composer-option-meta">{m.meta}</span>
+                        </span>
+                        {m.recent && (
+                          <Badge variant="outline" class="kh-composer-recent">
+                            recent
+                          </Badge>
+                        )}
+                      </Item>
+                    );
+                  })}
+                </section>
+              ))}
+            </div>
+          </PopoverContent>
+        </Popover>
         <Button type="submit" size="sm" disabled={!text.trim()}>
           Send →
         </Button>
@@ -699,6 +864,768 @@ function SilkDrape() {
           opacity="0.35"
         />
       </svg>
+    </div>
+  );
+}
+
+/* ── 5. Command Palette (⌘K) ───────────────────────────────────────────── */
+
+const COMMANDS = [
+  {group: 'Pages',   id: 'p-gs', label: 'Open Getting Started',  shortcut: 'G S'},
+  {group: 'Pages',   id: 'p-bt', label: 'Open Button reference', shortcut: 'G B'},
+  {group: 'Pages',   id: 'p-dl', label: 'Open Dialog reference', shortcut: 'G D'},
+  {group: 'Actions', id: 'a-dk', label: 'Toggle dark mode',      shortcut: '⌘D'},
+  {group: 'Actions', id: 'a-cp', label: 'Copy npm install',      shortcut: '⌘C'},
+  {group: 'Actions', id: 'a-ai', label: 'Ask the AI Composer',   shortcut: '⌘K'},
+  {group: 'Recent',  id: 'r-1',  label: '/docs/dialog'},
+  {group: 'Recent',  id: 'r-2',  label: '/docs/popover'},
+];
+
+function CommandPalettePreview() {
+  const [filter, setFilter] = useState('');
+  const matches = COMMANDS.filter((c) =>
+    !filter || c.label.toLowerCase().includes(filter.toLowerCase()),
+  );
+  let lastGroup = '';
+  return (
+    <Listbox class="kh-cmd">
+      <ListboxInput
+        placeholder="Search docs, run a command…"
+        value={filter}
+        onInput={(e) => setFilter((e.target as HTMLInputElement).value)}
+      />
+      <ListboxList>
+        {matches.length === 0 && (
+          <p class="kh-cmd-empty">No commands match.</p>
+        )}
+        {matches.map((c) => {
+          const newGroup = c.group !== lastGroup;
+          lastGroup = c.group;
+          return (
+            <span key={c.id}>
+              {newGroup && <header class="kh-cmd-group">{c.group}</header>}
+              <Item
+                shortcut={c.shortcut}
+                onClick={() => toast.show(c.label, {title: 'Ran command'})}
+              >
+                {c.label}
+              </Item>
+            </span>
+          );
+        })}
+      </ListboxList>
+    </Listbox>
+  );
+}
+
+/* ── 6. Trip Booking — two Calendars + Select + computed total ──────────── */
+
+function DateRangePreview() {
+  const [checkIn, setCheckIn] = useState('2026-04-28');
+  const [checkOut, setCheckOut] = useState('2026-05-02');
+  const [guests, setGuests] = useState('2');
+
+  const ms = new Date(checkOut).getTime() - new Date(checkIn).getTime();
+  const nights = Math.max(0, Math.round(ms / 86_400_000));
+  const total = nights * 160;
+
+  return (
+    <form
+      class="kh-trip"
+      onSubmit={(e) => {
+        e.preventDefault();
+        toast.show(`Reserved ${nights} nights · $${total}`, {icon: '🗝️'});
+      }}
+    >
+      <div class="kh-trip-dates">
+        <Field>
+          <Field.Label>Check-in</Field.Label>
+          <Calendar
+            value={checkIn}
+            onInput={(e) =>
+              setCheckIn((e.target as HTMLInputElement).value)
+            }
+          />
+        </Field>
+        <Field>
+          <Field.Label>Check-out</Field.Label>
+          <Calendar
+            value={checkOut}
+            onInput={(e) =>
+              setCheckOut((e.target as HTMLInputElement).value)
+            }
+          />
+        </Field>
+      </div>
+      <Field>
+        <Field.Label>Guests</Field.Label>
+        <Select
+          value={guests}
+          onInput={(e) => setGuests((e.target as HTMLInputElement).value)}
+        >
+          <option value="1">1 guest</option>
+          <option value="2">2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </Select>
+      </Field>
+      <footer class="kh-trip-footer">
+        <span class="kh-trip-summary">
+          <strong>{nights}</strong> nights · ${total}
+        </span>
+        <Button type="submit" size="sm" disabled={nights === 0}>
+          Reserve
+        </Button>
+      </footer>
+    </form>
+  );
+}
+
+/* ── 7. Pricing calculator — ToggleGroup + Switch + Slider ──────────────── */
+
+const PLAN_PRICE: Record<string, number> = {solo: 9, team: 22, org: 49};
+const PLAN_DESC: Record<string, string> = {
+  solo: '1 seat · personal projects',
+  team: 'unlimited projects · priority support',
+  org:  'SSO · audit log · SLA',
+};
+
+function PricingPreview() {
+  const [plan, setPlan] = useState('team');
+  const [seats, setSeats] = useState(12);
+  const [annual, setAnnual] = useState(true);
+
+  const monthly = PLAN_PRICE[plan] * seats;
+  const total = annual ? Math.round(monthly * 12 * 0.85) : monthly;
+
+  return (
+    <div class="kh-pricing">
+      <div class="kh-pricing-row">
+        <ToggleGroup
+          type="single"
+          value={plan}
+          onValueChange={(v) => v && setPlan(v as string)}
+        >
+          <Toggle value="solo">Solo</Toggle>
+          <Toggle value="team">Team</Toggle>
+          <Toggle value="org">Org</Toggle>
+        </ToggleGroup>
+        <Label class="kh-pricing-annual">
+          <Switch
+            checked={annual}
+            onInput={(e) =>
+              setAnnual((e.target as HTMLInputElement).checked)
+            }
+          />
+          <span>Annual</span>
+          {annual && <Badge variant="outline">15% off</Badge>}
+        </Label>
+      </div>
+      <Field>
+        <Field.Label>
+          Seats: <strong>{seats}</strong>
+        </Field.Label>
+        <Slider
+          min={1}
+          max={50}
+          value={seats}
+          onInput={(e) =>
+            setSeats(Number((e.target as HTMLInputElement).value))
+          }
+        />
+      </Field>
+      <p class="kh-pricing-desc">{PLAN_DESC[plan]}</p>
+      <footer class="kh-pricing-total">
+        <span class="kh-pricing-amount">${total.toLocaleString()}</span>
+        <span class="kh-pricing-period">{annual ? '/year' : '/mo'}</span>
+      </footer>
+    </div>
+  );
+}
+
+/* ── 8. Inbox — Avatar + Status + HoverCard preview + ContextMenu ───────── */
+
+const INBOX = [
+  {
+    initials: 'JM', from: 'Jason',  preview: 'Hey, did you see the build?', time: '2m',
+    status: 'success' as const,  unread: true,
+    full: 'Hey, did you see the build? CI is green and the bundle is at 11.2 kB. Tagging you because the changeset touched theme tokens.',
+  },
+  {
+    initials: 'AS', from: 'Alex',   preview: 'Re: pricing draft',           time: '14m',
+    status: 'warning' as const,  unread: true,
+    full: 'Re: pricing draft — Team feels too cheap relative to Org. What if we move Team to $24 and bump Org to $59?',
+  },
+  {
+    initials: 'KM', from: 'Karen',  preview: 'weekly retro notes',          time: '1h',
+    status: undefined,           unread: false,
+    full: 'Weekly retro: three highlights, two action items, one rant about the docs sidebar.',
+  },
+  {
+    initials: 'TR', from: 'Toshi',  preview: 'Re: Re: contract revisions',  time: '2h',
+    status: 'info' as const,     unread: false,
+    full: 'Re: Re: contract revisions — legal cleared the indemnification clause; ready for signature.',
+  },
+];
+
+function InboxPreview() {
+  return (
+    <ul class="kh-inbox">
+      {INBOX.map((m) => (
+        <li
+          key={m.from}
+          class={`kh-inbox-item${m.unread ? ' is-unread' : ''}`}
+        >
+          <ContextMenu>
+            <ContextMenuTrigger>
+              <HoverCard>
+                <HoverCardTrigger>
+                  <button class="kh-inbox-link" type="button" onClick={() => toast.show(`Open · ${m.from}`)}>
+                    <span class="kh-inbox-avatar">
+                      <Avatar size="sm">{m.initials}</Avatar>
+                      {m.status && (
+                        <Status
+                          variant={m.status}
+                          aria-label={m.status}
+                          class="kh-inbox-presence"
+                        />
+                      )}
+                    </span>
+                    <span class="kh-inbox-text">
+                      <span class="kh-inbox-line">
+                        <strong>{m.from}</strong>
+                        <span class="kh-inbox-time">{m.time}</span>
+                      </span>
+                      <span class="kh-inbox-preview">{m.preview}</span>
+                    </span>
+                    {m.unread && <span class="kh-inbox-dot" aria-label="unread" />}
+                  </button>
+                </HoverCardTrigger>
+                <HoverCardContent class="kh-inbox-hover">
+                  <strong>{m.from}</strong>
+                  <p>{m.full}</p>
+                </HoverCardContent>
+              </HoverCard>
+            </ContextMenuTrigger>
+            <ContextMenuContent mobile="drawer">
+              <Item onClick={() => toast.show(`Marked read · ${m.from}`)}>
+                Mark read
+              </Item>
+              <Item onClick={() => toast.show(`Archived · ${m.from}`)}>
+                Archive
+              </Item>
+              <Item onClick={() => toast.show(`Starred · ${m.from}`)}>
+                Star
+              </Item>
+              <Item destructive onClick={() => toast.show(`Deleted · ${m.from}`)}>
+                Delete
+              </Item>
+            </ContextMenuContent>
+          </ContextMenu>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* ── 9. Onboarding stepper — Timeline + ProgressRing on the active step ── */
+
+function OnboardingPreview() {
+  return (
+    <Timeline class="kh-onboard">
+      <Timeline.Entry data-state="done">
+        <span class="kh-onboard-row">
+          <strong>Create account</strong>
+          <Status variant="success" class="kh-onboard-when">2m ago</Status>
+        </span>
+      </Timeline.Entry>
+      <Timeline.Entry data-state="done">
+        <span class="kh-onboard-row">
+          <strong>Install kinu</strong>
+          <Status variant="success" class="kh-onboard-when">just now</Status>
+        </span>
+      </Timeline.Entry>
+      <Timeline.Entry data-state="active" class="kh-onboard-active">
+        <span class="kh-onboard-row">
+          <strong>Theme it</strong>
+          <Status pulse variant="info" class="kh-onboard-when">
+            in progress
+          </Status>
+        </span>
+        <span class="kh-onboard-progress">
+          <ProgressRing value={57} max={100} size="sm" />
+          <small>4 of 7 components themed</small>
+        </span>
+      </Timeline.Entry>
+      <Timeline.Entry>
+        <span class="kh-onboard-row">
+          <strong>Ship</strong>
+          <Status class="kh-onboard-when">up next</Status>
+        </span>
+      </Timeline.Entry>
+    </Timeline>
+  );
+}
+
+/* ── 10. File Upload — drop zone + per-file Progress ───────────────────── */
+
+type Upload = {name: string; size: string; pct: number; done: boolean};
+const SEED_UPLOADS: Upload[] = [
+  {name: 'hero.mp4',     size: '14.2 MB', pct: 72,  done: false},
+  {name: 'banner.png',   size: '420 KB',  pct: 100, done: true},
+];
+
+function FileUploadPreview() {
+  const [uploads, setUploads] = useState(SEED_UPLOADS);
+
+  // Animate the in-progress upload to completion for visual life.
+  useEffect(() => {
+    const id = setInterval(() => {
+      setUploads((prev) =>
+        prev.map((u) =>
+          u.done
+            ? u
+            : u.pct >= 100
+              ? {...u, done: true}
+              : {...u, pct: Math.min(100, u.pct + 4)},
+        ),
+      );
+    }, 600);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div class="kh-upload">
+      <FileUpload multiple class="kh-upload-zone" />
+      <ul class="kh-upload-list">
+        {uploads.map((u) => (
+          <li key={u.name} class="kh-upload-item">
+            <span class="kh-upload-name">{u.name}</span>
+            <span class="kh-upload-size">{u.size}</span>
+            <Progress value={u.pct} max={100} class="kh-upload-bar" />
+            {u.done ? (
+              <Badge variant="outline">done</Badge>
+            ) : (
+              <span class="kh-upload-pct">{u.pct}%</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ── 11. Verify Email — OTPInput + countdown + Spinner during verify ───── */
+
+function OTPPreview() {
+  const [code, setCode] = useState('');
+  const [verifying, setVerifying] = useState(false);
+  const [seconds, setSeconds] = useState(42);
+
+  useEffect(() => {
+    if (seconds <= 0) return;
+    const id = setTimeout(() => setSeconds((s) => s - 1), 1000);
+    return () => clearTimeout(id);
+  }, [seconds]);
+
+  const verify = (e: Event) => {
+    e.preventDefault();
+    if (code.length < 6) return;
+    setVerifying(true);
+    setTimeout(() => {
+      setVerifying(false);
+      setCode('');
+      toast.show('Email verified', {icon: '✓'});
+    }, 900);
+  };
+
+  return (
+    <form class="kh-otp" onSubmit={verify}>
+      <p class="kh-otp-lede">
+        We sent a code to <code>hello@kinu.sh</code>.
+      </p>
+      <OTPInput
+        maxLength={6}
+        value={code}
+        onInput={(e) =>
+          setCode(
+            (e.target as HTMLInputElement).value.replace(/\D/g, '').slice(0, 6),
+          )
+        }
+        aria-label="Verification code"
+      />
+      <footer class="kh-otp-foot">
+        <span class="kh-otp-resend">
+          {seconds > 0 ? (
+            <>
+              Resend in <strong>0:{seconds.toString().padStart(2, '0')}</strong>
+            </>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              type="button"
+              onClick={() => {
+                setSeconds(42);
+                toast.show('Code re-sent');
+              }}
+            >
+              Resend code
+            </Button>
+          )}
+        </span>
+        <Button
+          type="submit"
+          size="sm"
+          disabled={code.length < 6 || verifying}
+          loading={verifying}
+        >
+          {verifying ? <Spinner size="sm" aria-hidden="true" /> : null}
+          {verifying ? 'Verifying' : 'Verify'}
+        </Button>
+      </footer>
+    </form>
+  );
+}
+
+/* ── 12. Theme Studio — ColorPicker + ToggleGroup for radius, live preview */
+
+const RADII: Record<string, string> = {
+  none: '0',
+  sm:   '0.25rem',
+  md:   '0.5rem',
+  lg:   '0.75rem',
+  full: '999px',
+};
+
+function ThemeStudioPreview() {
+  const [color, setColor] = useState('#3f5246');
+  const [radius, setRadius] = useState('md');
+  const cssVars = `--k-primary:${hexToHsl(color)};--k-radius:${RADII[radius]}`;
+
+  return (
+    <div class="kh-studio">
+      <div class="kh-studio-controls">
+        <Field>
+          <Field.Label>Primary</Field.Label>
+          <ColorPicker
+            value={color}
+            onInput={(e) => setColor((e.target as HTMLInputElement).value)}
+          />
+        </Field>
+        <Field>
+          <Field.Label>Radius</Field.Label>
+          <ToggleGroup
+            type="single"
+            value={radius}
+            onValueChange={(v) => v && setRadius(v as string)}
+            class="kh-studio-radius"
+          >
+            <Toggle value="none">none</Toggle>
+            <Toggle value="sm">sm</Toggle>
+            <Toggle value="md">md</Toggle>
+            <Toggle value="lg">lg</Toggle>
+            <Toggle value="full">full</Toggle>
+          </ToggleGroup>
+        </Field>
+      </div>
+      <Card padding="sm" class="kh-studio-stage" style={cssVars}>
+        <span class="kh-studio-stage-label">Live preview</span>
+        <div class="kh-studio-stage-row">
+          <Button size="sm">Primary</Button>
+          <Button size="sm" variant="outline">Outline</Button>
+          <Badge>Badge</Badge>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* tiny hex→HSL helper for the theme stage. */
+function hexToHsl(hex: string): string {
+  const n = parseInt(hex.replace('#', ''), 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return `0 0% ${Math.round(l * 100)}%`;
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h = 0;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+}
+
+/* ── 13. Editor Tabs — TabList with closeable Tabs + syntax-highlighted body */
+
+const TAB_FILES: Array<{id: string; name: string; lang: string; code: string}> = [
+  {
+    id: 'newpost',
+    name: 'new-post.tsx',
+    lang: 'tsx',
+    code: `<Field>
+  <Field.Label>Title</Field.Label>
+  <Input name="title" required />
+</Field>`,
+  },
+  {
+    id: 'theme',
+    name: 'theme.css',
+    lang: 'css',
+    code: `:root {
+  --k-primary: 135 22% 22%;
+  --k-radius: 0.5rem;
+}`,
+  },
+  {
+    id: 'readme',
+    name: 'README.md',
+    lang: 'markdown',
+    code: `# Kinu
+
+Preact UI toolkit.
+**10x smaller** than you think.`,
+  },
+];
+
+function EditorTabsPreview() {
+  const [files, setFiles] = useState(TAB_FILES);
+  const [tab, setTab] = useState(TAB_FILES[0].id);
+  const active = files.find((f) => f.id === tab) ?? files[0];
+
+  const closeTab = (id: string) => {
+    setFiles((prev) => {
+      const next = prev.filter((f) => f.id !== id);
+      if (id === tab && next.length) setTab(next[0].id);
+      return next;
+    });
+  };
+
+  const highlighted = active
+    ? hljs.highlight(active.code, {
+        language:
+          active.lang === 'markdown' ? 'xml' : active.lang === 'tsx' ? 'tsx' : active.lang,
+      }).value
+    : '';
+
+  return (
+    <div class="kh-editor">
+      <TabList class="kh-editor-tabs">
+        {files.map((f) => (
+          <Tab
+            key={f.id}
+            aria-selected={tab === f.id}
+            onClick={() => setTab(f.id)}
+            class="kh-editor-tab"
+          >
+            <span>{f.name}</span>
+            <Chip.Button
+              onClick={() => closeTab(f.id)}
+              aria-label={`Close ${f.name}`}
+              class="kh-editor-close"
+            >
+              ×
+            </Chip.Button>
+          </Tab>
+        ))}
+      </TabList>
+      {active ? (
+        <TabPanel class="kh-editor-panel">
+          <pre class="kh-editor-code hljs">
+            <code
+              class={`language-${active.lang}`}
+              dangerouslySetInnerHTML={{__html: highlighted}}
+            />
+          </pre>
+        </TabPanel>
+      ) : (
+        <p class="kh-editor-empty">All tabs closed.</p>
+      )}
+    </div>
+  );
+}
+
+/* ── 14. Filters — ToggleGroup sort + removable Chips + add-filter Combobox */
+
+const SORT_OPTIONS = ['Newest', 'Top', 'Active'];
+const POSSIBLE_TAGS = ['urgent', 'docs', 'frontend', 'API', 'design', 'release'];
+
+function FiltersPreview() {
+  const [sort, setSort] = useState('Newest');
+  const [tags, setTags] = useState(['Status: Open', 'Owner: Jason']);
+  const [draft, setDraft] = useState('');
+
+  const remove = (t: string) => setTags((prev) => prev.filter((x) => x !== t));
+  const addDraft = () => {
+    const v = draft.trim();
+    if (!v || tags.includes(v)) return;
+    setTags([...tags, v]);
+    setDraft('');
+  };
+
+  return (
+    <div class="kh-filters">
+      <div class="kh-filters-row">
+        <span class="kh-filters-label">Sort</span>
+        <ToggleGroup
+          type="single"
+          value={sort}
+          onValueChange={(v) => v && setSort(v as string)}
+        >
+          {SORT_OPTIONS.map((s) => (
+            <Toggle key={s} value={s}>{s}</Toggle>
+          ))}
+        </ToggleGroup>
+      </div>
+      <div class="kh-filters-row kh-filters-row--wrap">
+        {tags.map((t) => (
+          <Chip key={t} variant="primary">
+            {t}
+            <Chip.Button onClick={() => remove(t)} aria-label={`Remove ${t}`}>
+              ×
+            </Chip.Button>
+          </Chip>
+        ))}
+        <Combobox class="kh-filters-add">
+          <ComboboxInput
+            placeholder="+ filter"
+            size="sm"
+            value={draft}
+            onInput={(e) => setDraft((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => {
+              if ((e as KeyboardEvent).key === 'Enter') {
+                e.preventDefault();
+                addDraft();
+              }
+            }}
+          />
+          <ComboboxList>
+            {POSSIBLE_TAGS.filter(
+              (p) =>
+                (!draft || p.toLowerCase().includes(draft.toLowerCase())) &&
+                !tags.includes(`Tag: ${p}`),
+            ).map((p) => (
+              <Item
+                key={p}
+                onClick={() => {
+                  setTags((prev) => [...prev, `Tag: ${p}`]);
+                  setDraft('');
+                }}
+              >
+                {p}
+              </Item>
+            ))}
+          </ComboboxList>
+        </Combobox>
+      </div>
+    </div>
+  );
+}
+
+/* ── 15. Quick Search — Combobox with rich rows (avatar + email + role) ── */
+
+const PEOPLE = [
+  {initials: 'JM', name: 'Jason Miller',   email: 'jason@kinu.sh',   role: 'Maintainer'},
+  {initials: 'AS', name: 'Alex Stein',     email: 'alex@kinu.sh',    role: 'Designer'},
+  {initials: 'KM', name: 'Karen Montoya',  email: 'karen@kinu.sh',   role: 'Engineer'},
+  {initials: 'TR', name: 'Toshi Rahman',   email: 'toshi@contoso.io',role: 'Customer'},
+  {initials: 'RB', name: 'Rosa Beltran',   email: 'rosa@contoso.io', role: 'Customer'},
+  {initials: 'SH', name: 'Sam Hwang',      email: 'sam@kinu.sh',     role: 'Engineer'},
+];
+
+function SearchPreview() {
+  const [query, setQuery] = useState('');
+  const matches = PEOPLE.filter((p) =>
+    !query ||
+    p.name.toLowerCase().includes(query.toLowerCase()) ||
+    p.email.toLowerCase().includes(query.toLowerCase()),
+  );
+
+  return (
+    <Combobox class="kh-search">
+      <ComboboxInput
+        placeholder="Search teammates and customers…"
+        value={query}
+        onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
+      />
+      <ComboboxList>
+        {matches.length === 0 && (
+          <p class="kh-search-empty">
+            No matches for <code>{query}</code>.
+          </p>
+        )}
+        {matches.map((p) => (
+          <Item
+            key={p.email}
+            onClick={() =>
+              toast.show(`Opened ${p.name}`, {title: 'Profile', icon: '↗'})
+            }
+          >
+            <span class="kh-search-row">
+              <Avatar size="sm">{p.initials}</Avatar>
+              <span class="kh-search-text">
+                <strong>{p.name}</strong>
+                <span class="kh-search-email">{p.email}</span>
+              </span>
+              <Badge variant="outline" class="kh-search-role">
+                {p.role}
+              </Badge>
+            </span>
+          </Item>
+        ))}
+      </ComboboxList>
+    </Combobox>
+  );
+}
+
+/* ── 16. Account menu — Avatar trigger + Popover content ────────────────── */
+
+function AccountMenuPreview() {
+  return (
+    <div class="kh-account">
+      <Popover>
+        <PopoverTrigger>
+          <button class="kh-account-trigger" type="button" aria-label="Account">
+            <Avatar size="sm">JM</Avatar>
+            <span class="kh-account-name">Jason</span>
+            <span class="kh-account-chev" aria-hidden>▾</span>
+          </button>
+        </PopoverTrigger>
+        <PopoverContent class="kh-account-pop" mobile="drawer">
+          <header class="kh-account-head">
+            <Avatar size="lg">JM</Avatar>
+            <span class="kh-account-headtext">
+              <strong>Jason Miller</strong>
+              <span class="kh-account-email">jason@kinu.sh</span>
+              <Status pulse variant="success" class="kh-account-status">
+                Online
+              </Status>
+            </span>
+          </header>
+          <Separator />
+          <div class="kh-account-list">
+            <Item onClick={() => toast.show('Profile')} shortcut="⌘P">
+              Profile
+            </Item>
+            <Item onClick={() => toast.show('Settings')} shortcut="⌘,">
+              Settings
+            </Item>
+            <Item onClick={() => toast.show('Billing')}>
+              Billing <Badge variant="outline">Pro</Badge>
+            </Item>
+          </div>
+          <Separator />
+          <div class="kh-account-list">
+            <Item destructive onClick={() => toast.show('Signed out')}>
+              Sign out
+            </Item>
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
