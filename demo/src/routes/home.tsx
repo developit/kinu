@@ -24,6 +24,7 @@ import {
   ToastContainer,
   toast,
 } from 'kinu';
+import type {ComponentChildren} from 'preact';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
 import {hljs} from '../highlight';
@@ -99,45 +100,26 @@ export default function Home() {
 
       <section class="kh-try">
         <div class="kh-try-head">
-          <h2 class="kh-section-title">
-            Go ahead — <em>try them.</em>
-          </h2>
+          <h2 class="kh-section-title">Built with Kinu.</h2>
           <Prose class="kh-section-lede">
             <p>
-              Every preview below is a real, live kinu component — not a
-              screenshot. Hover, focus, drag, type. They answer because they're
-              just the underlying HTML, lightly enhanced.
+              Four small surfaces composed from the components in this
+              toolkit. The hero playground above publishes at roughly 11&nbsp;kB.
             </p>
           </Prose>
         </div>
 
         <div class="kh-preview-grid">
           <Card class="kh-preview" padding="lg">
-            <header class="kh-preview-head">
-              <span class="kh-preview-title">Tasks</span>
-              <span class="kh-preview-sub">Avatar · Progress · Checkbox · Input</span>
-            </header>
             <TasksPreview />
           </Card>
           <Card class="kh-preview" padding="lg">
-            <header class="kh-preview-head">
-              <span class="kh-preview-title">Now Playing</span>
-              <span class="kh-preview-sub">Slider · Toggle · Buttons</span>
-            </header>
             <NowPlayingPreview />
           </Card>
           <Card class="kh-preview" padding="lg">
-            <header class="kh-preview-head">
-              <span class="kh-preview-title">AI Composer</span>
-              <span class="kh-preview-sub">Textarea · DropdownMenu · Button</span>
-            </header>
             <ComposerPreview />
           </Card>
           <Card class="kh-preview" padding="lg">
-            <header class="kh-preview-head">
-              <span class="kh-preview-title">Team Activity</span>
-              <span class="kh-preview-sub">Avatar · Status · Item</span>
-            </header>
             <ActivityPreview />
           </Card>
         </div>
@@ -296,12 +278,85 @@ function TasksPreview() {
 }
 
 /* ── Now Playing (Media player) ─────────────────────────────────────────── */
+/* ── Inline SVG icons (Lucide-style, currentColor) ──────────────────────── */
+const Icon = ({
+  name,
+  path,
+  size = 16,
+}: {name: string; path: ComponentChildren; size?: number}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <title>{name}</title>
+    {path}
+  </svg>
+);
+const IconPlay = ({size = 16}: {size?: number}) => (
+  <Icon name="Play" size={size} path={<polygon points="6 4 20 12 6 20 6 4" fill="currentColor" />} />
+);
+const IconPause = ({size = 16}: {size?: number}) => (
+  <Icon
+    name="Pause"
+    size={size}
+    path={
+      <>
+        <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none" />
+        <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none" />
+      </>
+    }
+  />
+);
+const IconSkipBack = ({size = 16}: {size?: number}) => (
+  <Icon
+    name="Previous"
+    size={size}
+    path={
+      <>
+        <polygon points="19 20 9 12 19 4 19 20" fill="currentColor" />
+        <line x1="5" y1="19" x2="5" y2="5" />
+      </>
+    }
+  />
+);
+const IconSkipFwd = ({size = 16}: {size?: number}) => (
+  <Icon
+    name="Next"
+    size={size}
+    path={
+      <>
+        <polygon points="5 4 15 12 5 20 5 4" fill="currentColor" />
+        <line x1="19" y1="5" x2="19" y2="19" />
+      </>
+    }
+  />
+);
+const IconHeart = ({size = 16, filled = false}: {size?: number; filled?: boolean}) => (
+  <Icon
+    name={filled ? 'Liked' : 'Like'}
+    size={size}
+    path={
+      <path
+        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+        fill={filled ? 'currentColor' : 'none'}
+      />
+    }
+  />
+);
+
 function NowPlayingPreview() {
   const [position, setPosition] = useState(82);
   const [playing, setPlaying] = useState(true);
   const [liked, setLiked] = useState(false);
 
-  const total = 222; // seconds — 3:42
+  const total = 222;
   const fmt = (s: number) => {
     const m = Math.floor(s / 60);
     const r = Math.floor(s % 60);
@@ -313,7 +368,7 @@ function NowPlayingPreview() {
     <div class="kh-player">
       <header class="kh-player-head">
         <span class="kh-player-cover" aria-hidden>
-          🌅
+          <span class="kh-player-cover-letter">S</span>
         </span>
         <div class="kh-player-meta">
           <p class="kh-player-title">Summer Breeze</p>
@@ -325,7 +380,7 @@ function NowPlayingPreview() {
           class="kh-player-like"
           aria-label="Like"
         >
-          {liked ? '♥' : '♡'}
+          <IconHeart filled={liked} />
         </Toggle>
       </header>
       <div class="kh-player-scrub">
@@ -341,15 +396,19 @@ function NowPlayingPreview() {
         <span class="kh-player-time">{fmt(total)}</span>
       </div>
       <div class="kh-player-controls">
-        <Button variant="ghost" size="icon" aria-label="Previous">⏮</Button>
+        <Button variant="ghost" size="icon" aria-label="Previous">
+          <IconSkipBack />
+        </Button>
         <Button
           size="icon"
           onClick={() => setPlaying((v) => !v)}
           aria-label={playing ? 'Pause' : 'Play'}
         >
-          {playing ? '⏸' : '▶'}
+          {playing ? <IconPause /> : <IconPlay />}
         </Button>
-        <Button variant="ghost" size="icon" aria-label="Next">⏭</Button>
+        <Button variant="ghost" size="icon" aria-label="Next">
+          <IconSkipFwd />
+        </Button>
       </div>
     </div>
   );
