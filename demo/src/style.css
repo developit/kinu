@@ -5,19 +5,25 @@
 /* ─────────────────────────────────────────────────────────────────────────
  * Kinu brand identity — sage on warm cream paper.
  *
- * Applied site-wide at :root so every kinu component on the docs site picks
- * up the brand without any per-component theming. The library's variables
- * file is untouched; we just override at higher cascade specificity.
+ * Applied site-wide so every kinu component on the docs site picks up the
+ * brand without any per-component theming. The library variables.css is
+ * untouched.
  *
- * The system is built around two anchors: a desaturated kinu-sage primary
- * and a warm cream background. Borders/muted surfaces use a slightly cooler
- * cream-tan so they read as paper rather than off-white. Accent (used by
- * ghost button + nav-link hovers) is a whispered sage so hover states feel
- * branded instead of generic. Status/semantic colors are detuned to sit
- * comfortably on the cream surfaces.
+ * Cascade note: kinu component CSS (which @imports variables.css) is
+ * bundled AFTER our overrides via JS imports of components. To win the
+ * cascade we use `:root:root` (specificity 0,2,0 → beats library's :root
+ * at 0,1,0) and `:root.dark` (0,1,1 → beats library's `.dark`). The
+ * @media block mirrors :root.dark so OS-level prefers-color-scheme: dark
+ * also takes effect.
+ *
+ * The system is anchored on a dark kinu-sage primary (close to the
+ * `--kh-dark-band` we use for the editorial bands) and a warm cream
+ * background. Borders use a slightly cooler cream-tan; accent (ghost
+ * button + nav-link hover) is a whispered sage; status colors are detuned
+ * to sit on cream instead of fighting it.
  * ─────────────────────────────────────────────────────────────────────── */
 
-:root {
+:root:root {
   /* Surfaces — cream paper, white cards */
   --k-background: 47 53% 96.7%;
   --k-foreground: 24 10% 10%;
@@ -27,11 +33,11 @@
   --k-popover-foreground: 24 10% 10%;
   --k-sidebar: 44 38% 93.5%;
 
-  /* Brand — kinu sage */
-  --k-primary: 133 13% 32%;
+  /* Brand — dark kinu sage, the same family as --kh-dark-band */
+  --k-primary: 135 22% 22%;
   --k-primary-foreground: 47 53% 97%;
-  --k-primary-hover: 133 15% 26%;
-  --k-primary-soft: 133 22% 92%;
+  --k-primary-hover: 135 26% 16%;
+  --k-primary-soft: 135 22% 90%;
 
   /* Subtle chrome — warm cream tan */
   --k-secondary: 40 22% 93%;
@@ -41,23 +47,23 @@
   --k-muted-foreground: 25 6% 42%;
 
   /* Accent — whispered sage. Ghost-button + nav-link hover backgrounds. */
-  --k-accent: 133 18% 92%;
-  --k-accent-foreground: 133 25% 22%;
+  --k-accent: 135 18% 90%;
+  --k-accent-foreground: 135 28% 18%;
 
   /* Borders — slightly cooler than secondary, for paper-edge separation */
   --k-border: 36 14% 87%;
   --k-input: 36 14% 87%;
-  --k-ring: 133 28% 38%;
+  --k-ring: 135 28% 30%;
 
   /* Semantic — tuned to sit on cream */
-  --k-destructive: 6 65% 48%;
+  --k-destructive: 6 60% 44%;
   --k-destructive-foreground: 0 0% 100%;
-  --k-destructive-hover: 6 65% 42%;
-  --k-success: 145 42% 36%;
+  --k-destructive-hover: 6 60% 38%;
+  --k-success: 145 40% 32%;
   --k-success-foreground: 0 0% 100%;
-  --k-warning: 32 78% 48%;
+  --k-warning: 32 76% 44%;
   --k-warning-foreground: 0 0% 100%;
-  --k-info: 200 55% 42%;
+  --k-info: 200 52% 38%;
   --k-info-foreground: 0 0% 100%;
 
   --k-radius: 0.5rem;
@@ -79,19 +85,62 @@
   --kh-page-pad: max(48px, calc((100% - var(--kh-page-max)) / 2));
 }
 
-.dark {
-  --k-background: 132 8% 7%;
-  --k-foreground: 40 18% 92%;
-  --k-card: 132 9% 9%;
-  --k-card-foreground: 40 18% 92%;
-  --k-popover: 132 9% 9%;
-  --k-popover-foreground: 40 18% 92%;
-  --k-sidebar: 132 8% 8%;
+/* OS-level dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:root {
+    color-scheme: dark;
 
-  --k-primary: 133 28% 64%;
+    --k-background: 132 10% 7%;
+    --k-foreground: 40 18% 92%;
+    --k-card: 132 10% 9%;
+    --k-card-foreground: 40 18% 92%;
+    --k-popover: 132 10% 9%;
+    --k-popover-foreground: 40 18% 92%;
+    --k-sidebar: 132 10% 8%;
+
+    --k-primary: 135 32% 62%;
+    --k-primary-foreground: 132 18% 8%;
+    --k-primary-hover: 135 36% 72%;
+    --k-primary-soft: 135 24% 18%;
+
+    --k-secondary: 132 6% 15%;
+    --k-secondary-foreground: 40 18% 92%;
+    --k-secondary-hover: 132 6% 22%;
+    --k-muted: 132 6% 15%;
+    --k-muted-foreground: 132 4% 62%;
+
+    --k-accent: 135 20% 16%;
+    --k-accent-foreground: 135 30% 80%;
+
+    --k-border: 132 6% 18%;
+    --k-input: 132 6% 18%;
+    --k-ring: 135 32% 62%;
+
+    --k-destructive: 6 55% 56%;
+    --k-success: 145 36% 50%;
+    --k-warning: 32 70% 56%;
+    --k-info: 200 50% 60%;
+  }
+}
+
+/* Explicit `.dark` class override (theme customizer / forced dark) */
+:root.dark,
+.dark:root,
+.dark {
+  color-scheme: dark;
+
+  --k-background: 132 10% 7%;
+  --k-foreground: 40 18% 92%;
+  --k-card: 132 10% 9%;
+  --k-card-foreground: 40 18% 92%;
+  --k-popover: 132 10% 9%;
+  --k-popover-foreground: 40 18% 92%;
+  --k-sidebar: 132 10% 8%;
+
+  --k-primary: 135 32% 62%;
   --k-primary-foreground: 132 18% 8%;
-  --k-primary-hover: 133 30% 72%;
-  --k-primary-soft: 133 24% 18%;
+  --k-primary-hover: 135 36% 72%;
+  --k-primary-soft: 135 24% 18%;
 
   --k-secondary: 132 6% 15%;
   --k-secondary-foreground: 40 18% 92%;
@@ -99,14 +148,14 @@
   --k-muted: 132 6% 15%;
   --k-muted-foreground: 132 4% 62%;
 
-  --k-accent: 133 18% 16%;
-  --k-accent-foreground: 133 28% 80%;
+  --k-accent: 135 20% 16%;
+  --k-accent-foreground: 135 30% 80%;
 
   --k-border: 132 6% 18%;
   --k-input: 132 6% 18%;
-  --k-ring: 133 30% 60%;
+  --k-ring: 135 32% 62%;
 
-  --k-destructive: 6 55% 50%;
+  --k-destructive: 6 55% 56%;
   --k-success: 145 36% 50%;
   --k-warning: 32 70% 56%;
   --k-info: 200 50% 60%;
@@ -743,28 +792,16 @@ body .home-nav--marketing + * {
   gap: 12px;
 }
 .kh-player-cover {
-  position: relative;
   display: inline-grid;
   place-items: center;
   width: 52px;
   height: 52px;
   border-radius: calc(var(--k-radius) - 2px);
-  flex-shrink: 0;
-  overflow: hidden;
-  background:
-    radial-gradient(120% 80% at 25% 20%, rgba(255,255,255,0.55), transparent 65%),
-    linear-gradient(135deg, #5a8a6e 0%, #2c4738 100%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-}
-.kh-player-cover-letter {
-  font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 28px;
+  background: linear-gradient(135deg, #ffd9b3, #ec9455);
+  font-size: 30px;
   line-height: 1;
-  color: var(--kh-cream);
-  letter-spacing: -0.02em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 .kh-player-meta {
   flex: 1;

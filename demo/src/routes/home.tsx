@@ -368,7 +368,7 @@ function NowPlayingPreview() {
     <div class="kh-player">
       <header class="kh-player-head">
         <span class="kh-player-cover" aria-hidden>
-          <span class="kh-player-cover-letter">S</span>
+          🌅
         </span>
         <div class="kh-player-meta">
           <p class="kh-player-title">Summer Breeze</p>
