@@ -1832,6 +1832,82 @@ body .home-nav--marketing + * {
   text-align: center;
 }
 
+/* ── Settings (Profile / Theme / Plan) ─────────────────────────────────── */
+.kh-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.kinu-home [k="tablist"].kh-settings-tabs {
+  align-self: flex-start;
+}
+.kinu-home [k="tab-panel"].kh-settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+.kh-settings-avatar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.kh-settings-annual {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.kh-settings-desc {
+  margin: 0;
+  font-size: 12.5px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="card"].kh-settings-stage {
+  background: hsl(var(--k-muted) / 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kh-settings-stage-label {
+  font-family: var(--kh-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-settings-stage-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.kh-settings-total {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 6px;
+  border-top: 1px solid hsl(var(--k-border));
+}
+.kh-settings-amount {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.kh-settings-period {
+  font-size: 13px;
+  color: hsl(var(--k-muted-foreground));
+}
+
 /* ── 14. Filters ───────────────────────────────────────────────────────── */
 .kh-filters {
   display: flex;

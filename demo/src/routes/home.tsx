@@ -13,9 +13,6 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuTrigger,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
   Field,
   FileUpload,
   HoverCard,
@@ -23,18 +20,15 @@ import {
   HoverCardTrigger,
   Input,
   Item,
-  Kbd,
   Label,
   Listbox,
   ListboxInput,
   ListboxList,
   OTPInput,
   Popover,
-  PopoverClose,
   PopoverContent,
   PopoverTrigger,
   Progress,
-  ProgressRing,
   Prose,
   ScrollArea,
   Select,
@@ -47,7 +41,6 @@ import {
   TabList,
   TabPanel,
   Textarea,
-  Timeline,
   Toggle,
   ToggleGroup,
   Tooltip,
@@ -1217,68 +1210,6 @@ function DateRangePreview() {
   );
 }
 
-/* ── 7. Pricing calculator — ToggleGroup + Switch + Slider ──────────────── */
-
-const PLAN_PRICE: Record<string, number> = {solo: 9, team: 22, org: 49};
-const PLAN_DESC: Record<string, string> = {
-  solo: '1 seat · personal projects',
-  team: 'unlimited projects · priority support',
-  org:  'SSO · audit log · SLA',
-};
-
-function PricingPreview() {
-  const [plan, setPlan] = useState('team');
-  const [seats, setSeats] = useState(12);
-  const [annual, setAnnual] = useState(true);
-
-  const monthly = PLAN_PRICE[plan] * seats;
-  const total = annual ? Math.round(monthly * 12 * 0.85) : monthly;
-
-  return (
-    <div class="kh-pricing">
-      <div class="kh-pricing-row">
-        <ToggleGroup
-          type="single"
-          value={plan}
-          onValueChange={(v) => v && setPlan(v as string)}
-        >
-          <Toggle value="solo">Solo</Toggle>
-          <Toggle value="team">Team</Toggle>
-          <Toggle value="org">Org</Toggle>
-        </ToggleGroup>
-        <Label class="kh-pricing-annual">
-          <Switch
-            checked={annual}
-            onInput={(e) =>
-              setAnnual((e.target as HTMLInputElement).checked)
-            }
-          />
-          <span>Annual</span>
-          {annual && <Badge variant="outline">15% off</Badge>}
-        </Label>
-      </div>
-      <Field>
-        <Field.Label>
-          Seats: <strong>{seats}</strong>
-        </Field.Label>
-        <Slider
-          min={1}
-          max={50}
-          value={seats}
-          onInput={(e) =>
-            setSeats(Number((e.target as HTMLInputElement).value))
-          }
-        />
-      </Field>
-      <p class="kh-pricing-desc">{PLAN_DESC[plan]}</p>
-      <footer class="kh-pricing-total">
-        <span class="kh-pricing-amount">${total.toLocaleString()}</span>
-        <span class="kh-pricing-period">{annual ? '/year' : '/mo'}</span>
-      </footer>
-    </div>
-  );
-}
-
 /* ── 8. Inbox — two-pane master/detail ──────────────────────────────────── */
 
 type InboxMsg = {
@@ -1425,93 +1356,6 @@ function InboxPreview() {
   );
 }
 
-/* ── 9. Onboarding stepper — Timeline + ProgressRing on the active step ── */
-
-function OnboardingPreview() {
-  return (
-    <Timeline class="kh-onboard">
-      <Timeline.Entry data-state="done">
-        <span class="kh-onboard-row">
-          <strong>Create account</strong>
-          <Status variant="success" class="kh-onboard-when">2m ago</Status>
-        </span>
-      </Timeline.Entry>
-      <Timeline.Entry data-state="done">
-        <span class="kh-onboard-row">
-          <strong>Install kinu</strong>
-          <Status variant="success" class="kh-onboard-when">just now</Status>
-        </span>
-      </Timeline.Entry>
-      <Timeline.Entry data-state="active" class="kh-onboard-active">
-        <span class="kh-onboard-row">
-          <strong>Theme it</strong>
-          <Status pulse variant="info" class="kh-onboard-when">
-            in progress
-          </Status>
-        </span>
-        <span class="kh-onboard-progress">
-          <ProgressRing value={57} max={100} size="sm" />
-          <small>4 of 7 components themed</small>
-        </span>
-      </Timeline.Entry>
-      <Timeline.Entry>
-        <span class="kh-onboard-row">
-          <strong>Ship</strong>
-          <Status class="kh-onboard-when">up next</Status>
-        </span>
-      </Timeline.Entry>
-    </Timeline>
-  );
-}
-
-/* ── 10. File Upload — drop zone + per-file Progress ───────────────────── */
-
-type Upload = {name: string; size: string; pct: number; done: boolean};
-const SEED_UPLOADS: Upload[] = [
-  {name: 'hero.mp4',     size: '14.2 MB', pct: 72,  done: false},
-  {name: 'banner.png',   size: '420 KB',  pct: 100, done: true},
-];
-
-function FileUploadPreview() {
-  const [uploads, setUploads] = useState(SEED_UPLOADS);
-
-  // Animate the in-progress upload to completion for visual life.
-  useEffect(() => {
-    const id = setInterval(() => {
-      setUploads((prev) =>
-        prev.map((u) =>
-          u.done
-            ? u
-            : u.pct >= 100
-              ? {...u, done: true}
-              : {...u, pct: Math.min(100, u.pct + 4)},
-        ),
-      );
-    }, 600);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <div class="kh-upload">
-      <FileUpload multiple class="kh-upload-zone" />
-      <ul class="kh-upload-list">
-        {uploads.map((u) => (
-          <li key={u.name} class="kh-upload-item">
-            <span class="kh-upload-name">{u.name}</span>
-            <span class="kh-upload-size">{u.size}</span>
-            <Progress value={u.pct} max={100} class="kh-upload-bar" />
-            {u.done ? (
-              <Badge variant="outline">done</Badge>
-            ) : (
-              <span class="kh-upload-pct">{u.pct}%</span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 /* ── 11. Verify Email — OTPInput + countdown + Spinner during verify ───── */
 
 function OTPPreview() {
@@ -1582,167 +1426,6 @@ function OTPPreview() {
         </Button>
       </footer>
     </form>
-  );
-}
-
-/* ── 12. Theme Studio — ColorPicker + ToggleGroup for radius, live preview */
-
-const RADII: Record<string, string> = {
-  none: '0',
-  sm:   '0.25rem',
-  md:   '0.5rem',
-  lg:   '0.75rem',
-  full: '999px',
-};
-
-function ThemeStudioPreview() {
-  const [color, setColor] = useState('#3f5246');
-  const [radius, setRadius] = useState('md');
-  const cssVars = `--k-primary:${hexToHsl(color)};--k-radius:${RADII[radius]}`;
-
-  return (
-    <div class="kh-studio">
-      <div class="kh-studio-controls">
-        <Field>
-          <Field.Label>Primary</Field.Label>
-          <ColorPicker
-            value={color}
-            onInput={(e) => setColor((e.target as HTMLInputElement).value)}
-          />
-        </Field>
-        <Field>
-          <Field.Label>Radius</Field.Label>
-          <ToggleGroup
-            type="single"
-            value={radius}
-            onValueChange={(v) => v && setRadius(v as string)}
-            class="kh-studio-radius"
-          >
-            <Toggle value="none">none</Toggle>
-            <Toggle value="sm">sm</Toggle>
-            <Toggle value="md">md</Toggle>
-            <Toggle value="lg">lg</Toggle>
-            <Toggle value="full">full</Toggle>
-          </ToggleGroup>
-        </Field>
-      </div>
-      <Card padding="sm" class="kh-studio-stage" style={cssVars}>
-        <span class="kh-studio-stage-label">Live preview</span>
-        <div class="kh-studio-stage-row">
-          <Button size="sm">Primary</Button>
-          <Button size="sm" variant="outline">Outline</Button>
-          <Badge>Badge</Badge>
-        </div>
-      </Card>
-    </div>
-  );
-}
-
-/* tiny hex→HSL helper for the theme stage. */
-function hexToHsl(hex: string): string {
-  const n = parseInt(hex.replace('#', ''), 16);
-  const r = ((n >> 16) & 255) / 255;
-  const g = ((n >> 8) & 255) / 255;
-  const b = (n & 255) / 255;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const l = (max + min) / 2;
-  if (max === min) return `0 0% ${Math.round(l * 100)}%`;
-  const d = max - min;
-  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-  let h = 0;
-  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
-  else if (max === g) h = ((b - r) / d + 2) / 6;
-  else h = ((r - g) / d + 4) / 6;
-  return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
-}
-
-/* ── 13. Editor Tabs — TabList with closeable Tabs + syntax-highlighted body */
-
-const TAB_FILES: Array<{id: string; name: string; lang: string; code: string}> = [
-  {
-    id: 'newpost',
-    name: 'new-post.tsx',
-    lang: 'tsx',
-    code: `<Field>
-  <Field.Label>Title</Field.Label>
-  <Input name="title" required />
-</Field>`,
-  },
-  {
-    id: 'theme',
-    name: 'theme.css',
-    lang: 'css',
-    code: `:root {
-  --k-primary: 135 22% 22%;
-  --k-radius: 0.5rem;
-}`,
-  },
-  {
-    id: 'readme',
-    name: 'README.md',
-    lang: 'markdown',
-    code: `# Kinu
-
-Preact UI toolkit.
-**10x smaller** than you think.`,
-  },
-];
-
-function EditorTabsPreview() {
-  const [files, setFiles] = useState(TAB_FILES);
-  const [tab, setTab] = useState(TAB_FILES[0].id);
-  const active = files.find((f) => f.id === tab) ?? files[0];
-
-  const closeTab = (id: string) => {
-    setFiles((prev) => {
-      const next = prev.filter((f) => f.id !== id);
-      if (id === tab && next.length) setTab(next[0].id);
-      return next;
-    });
-  };
-
-  const highlighted = active
-    ? hljs.highlight(active.code, {
-        language:
-          active.lang === 'markdown' ? 'xml' : active.lang === 'tsx' ? 'tsx' : active.lang,
-      }).value
-    : '';
-
-  return (
-    <div class="kh-editor">
-      <TabList class="kh-editor-tabs">
-        {files.map((f) => (
-          <Tab
-            key={f.id}
-            aria-selected={tab === f.id}
-            onClick={() => setTab(f.id)}
-            class="kh-editor-tab"
-          >
-            <span>{f.name}</span>
-            <Chip.Button
-              onClick={() => closeTab(f.id)}
-              aria-label={`Close ${f.name}`}
-              class="kh-editor-close"
-            >
-              ×
-            </Chip.Button>
-          </Tab>
-        ))}
-      </TabList>
-      {active ? (
-        <TabPanel class="kh-editor-panel">
-          <pre class="kh-editor-code hljs">
-            <code
-              class={`language-${active.lang}`}
-              dangerouslySetInnerHTML={{__html: highlighted}}
-            />
-          </pre>
-        </TabPanel>
-      ) : (
-        <p class="kh-editor-empty">All tabs closed.</p>
-      )}
-    </div>
   );
 }
 
@@ -1928,8 +1611,223 @@ function AccountMenuPreview() {
   );
 }
 
-/* ── Settings — Tabs (Profile / Theme / Plan) ──────────────────────────── */
+/* ── Settings — Tabs (Profile / Theme / Plan) ──────────────────────────── *
+ * Combines the avatar upload, theme studio, and pricing calculator demos
+ * into a single multi-tab panel — exactly the kind of place where Tabs
+ * earn their keep (separate facets of one screen, not multi-document UI).
+ * The avatar upload reads the chosen file with URL.createObjectURL and
+ * sets it as the live Avatar src (no upload, just a blob URL on the
+ * client). The Theme tab pipes its picker into a real --k-* override on
+ * an inline preview card, so editing actually re-themes the kinu Buttons
+ * + Badge inside it. The Plan tab keeps the ToggleGroup + Slider + Switch
+ * pricing math.
+ */
+
+const SETTINGS_PLAN_PRICE: Record<string, number> = {solo: 9, team: 22, org: 49};
+const SETTINGS_PLAN_DESC: Record<string, string> = {
+  solo: '1 seat · personal projects',
+  team: 'unlimited projects · priority support',
+  org:  'SSO · audit log · SLA',
+};
+
 function SettingsPreview() {
-  // Implementation comes in CHUNK F.
-  return <p style={{margin: 0, padding: 16, color: 'hsl(var(--k-muted-foreground))'}}>Settings — coming next chunk</p>;
+  const [tab, setTab] = useState<'profile' | 'theme' | 'plan'>('profile');
+  return (
+    <div class="kh-settings">
+      <TabList class="kh-settings-tabs">
+        <Tab
+          aria-selected={tab === 'profile'}
+          onClick={() => setTab('profile')}
+        >
+          Profile
+        </Tab>
+        <Tab aria-selected={tab === 'theme'} onClick={() => setTab('theme')}>
+          Theme
+        </Tab>
+        <Tab aria-selected={tab === 'plan'} onClick={() => setTab('plan')}>
+          Plan
+        </Tab>
+      </TabList>
+      {tab === 'profile' && <SettingsProfile />}
+      {tab === 'theme' && <SettingsTheme />}
+      {tab === 'plan' && <SettingsPlan />}
+    </div>
+  );
 }
+
+function SettingsProfile() {
+  const [name, setName] = useState('Jason Miller');
+  const [email] = useState('jason@kinu.sh');
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const lastBlobRef = useRef<string | null>(null);
+
+  // Revoke any previously-issued blob URL when the component unmounts so
+  // we don't leak object references across re-renders.
+  useEffect(() => () => {
+    if (lastBlobRef.current) URL.revokeObjectURL(lastBlobRef.current);
+  }, []);
+
+  const onPickAvatar = (e: Event) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    if (lastBlobRef.current) URL.revokeObjectURL(lastBlobRef.current);
+    const url = URL.createObjectURL(file);
+    lastBlobRef.current = url;
+    setAvatarUrl(url);
+  };
+
+  return (
+    <TabPanel class="kh-settings-panel">
+      <div class="kh-settings-avatar">
+        {avatarUrl ? (
+          <Avatar size="lg" src={avatarUrl} alt={name} />
+        ) : (
+          <Avatar size="lg">
+            {name
+              .split(' ')
+              .map((s) => s[0])
+              .join('')
+              .slice(0, 2)
+              .toUpperCase()}
+          </Avatar>
+        )}
+        <Field>
+          <Field.Label>Avatar</Field.Label>
+          <FileUpload accept="image/*" onChange={onPickAvatar} />
+          <Field.Description>
+            Picked from disk via FileUpload, served back as a blob URL.
+          </Field.Description>
+        </Field>
+      </div>
+      <Field>
+        <Field.Label>Display name</Field.Label>
+        <Input
+          value={name}
+          onInput={(e) => setName((e.target as HTMLInputElement).value)}
+        />
+      </Field>
+      <Field>
+        <Field.Label>Email</Field.Label>
+        <Input value={email} disabled />
+      </Field>
+    </TabPanel>
+  );
+}
+
+function SettingsTheme() {
+  const [color, setColor] = useState('#3f5246');
+  const [radius, setRadius] = useState('md');
+  const radii: Record<string, string> = {
+    none: '0',
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '0.75rem',
+    full: '999px',
+  };
+  const cssVars = `--k-primary:${hexToHsl(color)};--k-radius:${radii[radius]}`;
+
+  return (
+    <TabPanel class="kh-settings-panel">
+      <Field>
+        <Field.Label>Primary color</Field.Label>
+        <ColorPicker
+          value={color}
+          onInput={(e) => setColor((e.target as HTMLInputElement).value)}
+        />
+      </Field>
+      <Field>
+        <Field.Label>Corner radius</Field.Label>
+        <ToggleGroup
+          type="single"
+          value={radius}
+          onValueChange={(v) => v && setRadius(v as string)}
+        >
+          <Toggle value="none">none</Toggle>
+          <Toggle value="sm">sm</Toggle>
+          <Toggle value="md">md</Toggle>
+          <Toggle value="lg">lg</Toggle>
+          <Toggle value="full">full</Toggle>
+        </ToggleGroup>
+      </Field>
+      <Card padding="sm" class="kh-settings-stage" style={cssVars}>
+        <span class="kh-settings-stage-label">Live preview</span>
+        <div class="kh-settings-stage-row">
+          <Button size="sm">Primary</Button>
+          <Button size="sm" variant="outline">Outline</Button>
+          <Badge>Badge</Badge>
+        </div>
+      </Card>
+    </TabPanel>
+  );
+}
+
+function SettingsPlan() {
+  const [plan, setPlan] = useState('team');
+  const [seats, setSeats] = useState(12);
+  const [annual, setAnnual] = useState(true);
+
+  const monthly = SETTINGS_PLAN_PRICE[plan] * seats;
+  const total = annual ? Math.round(monthly * 12 * 0.85) : monthly;
+
+  return (
+    <TabPanel class="kh-settings-panel">
+      <ToggleGroup
+        type="single"
+        value={plan}
+        onValueChange={(v) => v && setPlan(v as string)}
+      >
+        <Toggle value="solo">Solo</Toggle>
+        <Toggle value="team">Team</Toggle>
+        <Toggle value="org">Org</Toggle>
+      </ToggleGroup>
+      <Label class="kh-settings-annual">
+        <Switch
+          checked={annual}
+          onInput={(e) =>
+            setAnnual((e.target as HTMLInputElement).checked)
+          }
+        />
+        <span>Annual billing</span>
+        {annual && <Badge variant="outline">15% off</Badge>}
+      </Label>
+      <Field>
+        <Field.Label>
+          Seats: <strong>{seats}</strong>
+        </Field.Label>
+        <Slider
+          min={1}
+          max={50}
+          value={seats}
+          onInput={(e) =>
+            setSeats(Number((e.target as HTMLInputElement).value))
+          }
+        />
+      </Field>
+      <p class="kh-settings-desc">{SETTINGS_PLAN_DESC[plan]}</p>
+      <footer class="kh-settings-total">
+        <span class="kh-settings-amount">${total.toLocaleString()}</span>
+        <span class="kh-settings-period">{annual ? '/year' : '/mo'}</span>
+      </footer>
+    </TabPanel>
+  );
+}
+
+/* hex→HSL helper used by the Theme tab in Settings. */
+function hexToHsl(hex: string): string {
+  const n = parseInt(hex.replace('#', ''), 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return `0 0% ${Math.round(l * 100)}%`;
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h = 0;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+}
+
