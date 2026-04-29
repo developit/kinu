@@ -4,7 +4,7 @@ A hyper-minimal UI toolkit that feels like a Preact UI toolkit, but is actually 
 
 ## Why kinu?
 
-- **🚀 Tiny Bundle**: ~5KB JS + ~6KB CSS for all components
+- **🚀 Tiny Bundle**: ~6KB JS + ~11KB CSS for all components (gzipped)
 - **⚡ Zero Re-renders**: No state, direct DOM reactions via native `commandFor` (polyfill included!)
 - **🌐 Platform-Native**: Uses `<dialog>`, anchor positioning, form validation, etc
 - **📦 Tree-Shakeable**: Import only what you use (though at 5kb who cares)

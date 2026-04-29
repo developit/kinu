@@ -1,94 +1,59 @@
 @import "../../variables.css";
 
-[k="tablist"] {
-  position: relative;
-  isolation: isolate;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.25rem;
-  width: fit-content;
-  background: hsl(var(--k-muted));
-  color: hsl(var(--k-muted-foreground));
-  padding: 3px;
-  border-radius: var(--k-radius);
-  gap: 2px;
+[k="tabs"] {
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 [k="tab"] {
-  position: relative;
-  z-index: 1;
+  display: contents;
+}
+
+[k="tab-label"] {
+  grid-row: 1;
+  list-style: none;
   appearance: none;
   background: none;
   border: 1px solid transparent;
   border-radius: calc(var(--k-radius) - 2px);
-  height: calc(100% - 1px);
-  padding: 0 0.5rem;
+  padding: 0.25rem 0.625rem;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  color: hsl(var(--k-foreground));
+  color: hsl(var(--k-muted-foreground));
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-  transition: color 0.15s, box-shadow 0.15s;
+  transition: color 0.15s, background-color 0.15s, box-shadow 0.15s;
 }
 
-[k="tab"][aria-selected="true"] {
+[k="tab-label"]::-webkit-details-marker,
+[k="tab-label"]::marker {
+  display: none;
+}
+
+[k="tab"][open] > [k="tab-label"] {
   background: hsl(var(--k-background));
   color: hsl(var(--k-foreground));
-  border-color: transparent;
+  pointer-events: none;
+  cursor: default;
   box-shadow:
     0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),
     0 1px 2px -1px var(--k-shadow-color, rgba(0, 0, 0, 0.1));
 }
 
-@supports (anchor-name: --k-tab-anchor) and (inset-inline-start: anchor(left)) {
-  [k="tablist"]::before {
-    content: "";
-    position: absolute;
-    z-index: 0;
-    top: 3px;
-    inset-inline-start: 3px;
-    block-size: calc(100% - 6px);
-    inline-size: 0;
-    border: 1px solid transparent;
-    border-radius: calc(var(--k-radius) - 2px);
-    background: hsl(var(--k-background));
-    box-shadow:
-      0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),
-      0 1px 2px -1px var(--k-shadow-color, rgba(0, 0, 0, 0.1));
-    pointer-events: none;
-    transition:
-      inset-inline-start 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-      inline-size 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  [k="tab"][aria-selected="true"] {
-    anchor-name: --k-tab-anchor;
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-  }
-
-  [k="tablist"]:has([k="tab"][aria-selected="true"])::before {
-    position-anchor: --k-tab-anchor;
-    inset-inline-start: anchor(left);
-    inline-size: anchor-size(width);
-  }
-}
-
-[k="tab"]:focus-visible {
+[k="tab-label"]:focus-visible {
   outline: 1px solid hsl(var(--k-ring));
   box-shadow: 0 0 0 3px hsl(var(--k-ring) / 0.5);
 }
 
-[k="tab"][disabled] {
-  pointer-events: none;
-  opacity: 0.5;
+[k="tab-panel"] {
+  grid-row: 2;
+  display: none;
+  padding-top: 0.5rem;
 }
 
-[k="tab-panel"] {
-  padding-top: 0.5rem;
+[k="tab"][open] > [k="tab-panel"] {
+  display: block;
 }

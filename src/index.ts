@@ -47,14 +47,18 @@ export type {
 } from './components/dialog/types';
 export {Accordion} from './components/accordion';
 export type {AccordionProps, AccordionOwnProps} from './components/accordion/types';
-export {TabList, Tab, TabPanel} from './components/tabs';
+export {Tabs, Tab, TabLabel, TabPanel, TabList} from './components/tabs';
 export type {
-  TabListProps,
-  TabListOwnProps,
+  TabsProps,
+  TabsOwnProps,
   TabProps,
   TabOwnProps,
+  TabLabelProps,
+  TabLabelOwnProps,
   TabPanelProps,
   TabPanelOwnProps,
+  TabListProps,
+  TabListOwnProps,
 } from './components/tabs/types';
 export {Tooltip} from './components/tooltip';
 export type {TooltipProps, TooltipOwnProps} from './components/tooltip/types';

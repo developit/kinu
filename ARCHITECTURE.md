@@ -19,7 +19,7 @@ demo/               # Demo application
 
 ## Key Features
 
-- **Tiny Bundle**: ~1.2KB JS + 4KB CSS for all components
+- **Tiny Bundle**: ~6KB JS + ~11KB CSS for all components, gzipped
 - **Zero Runtime Overhead**: Pure prop forwarding, no abstractions
 - **Platform-Native**: Uses HTML5 `<dialog>`, form validation, CSS custom properties
 - **Tree-Shakeable**: Import only what you use
@@ -69,12 +69,17 @@ export const Button = createSimpleComponent('button', 'button');
 ```
 
 ```tsx
-// Basic tabs composed from lightweight wrappers
-<TabList>
-  <Tab aria-selected="true">First</Tab>
-  <Tab>Second</Tab>
-</TabList>
-<TabPanel>Panel content</TabPanel>
+// Tabs over native <details name>, exclusive open via shared name
+<Tabs>
+  <Tab name="t" open>
+    <TabLabel>First</TabLabel>
+    <TabPanel>Panel content</TabPanel>
+  </Tab>
+  <Tab name="t">
+    <TabLabel>Second</TabLabel>
+    <TabPanel>...</TabPanel>
+  </Tab>
+</Tabs>
 ```
 
 ## Components
