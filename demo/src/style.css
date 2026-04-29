@@ -721,6 +721,14 @@ body .home-nav--marketing + * {
   gap: 14px;
   min-height: 320px;
 }
+.kinu-home [k="card"].kh-preview--wide {
+  grid-column: span 2;
+}
+@media (max-width: 700px) {
+  .kinu-home [k="card"].kh-preview--wide {
+    grid-column: auto;
+  }
+}
 .kh-preview-head {
   display: flex;
   align-items: baseline;
@@ -957,9 +965,8 @@ body .home-nav--marketing + * {
   min-height: 0;
 }
 .kinu-home [k="scroll-area"].kh-composer-thread {
-  flex: 1;
-  min-height: 6rem;
-  max-height: 12rem;
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1341,7 +1348,11 @@ body .home-nav--marketing + * {
   flex: 1;
   min-height: 0;
   overflow: auto;
-  padding: 4px 4px 4px 4px;
+  padding: 4px;
+}
+.kinu-home [k="listbox"].kh-cmd [k="item"] {
+  font-size: 13px;
+  padding: 5px 8px;
 }
 .kh-cmd-group {
   padding: 10px 8px 4px;
@@ -1457,10 +1468,39 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground));
 }
 
-/* ── 8. Inbox — two-pane master/detail ─────────────────────────────────── */
+/* ── 8. Inbox — header bar + two-pane body ─────────────────────────────── */
 .kh-inbox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+.kh-inbox-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid hsl(var(--k-border));
+}
+.kh-inbox-bar-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--kh-font-serif);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.kinu-home [k="badge"].kh-inbox-bar-count {
+  font-size: 10px;
+  padding: 0 6px;
+  letter-spacing: 0.04em;
+}
+.kh-inbox-body {
   display: grid;
-  grid-template-columns: minmax(0, 11.5rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
   gap: 12px;
   flex: 1;
   min-height: 0;
@@ -1471,10 +1511,8 @@ body .home-nav--marketing + * {
   gap: 1px;
   border-right: 1px solid hsl(var(--k-border));
   padding-right: 8px;
-  margin-right: 4px;
-}
-.kh-inbox-trigger {
-  display: block;
+  min-width: 0;
+  overflow-x: hidden;
 }
 .kh-inbox-link {
   appearance: none;
@@ -1490,6 +1528,7 @@ body .home-nav--marketing + * {
   background: transparent;
   border: none;
   cursor: pointer;
+  min-width: 0;
   transition: background 120ms ease;
 }
 .kh-inbox-link:hover {
@@ -1534,10 +1573,17 @@ body .home-nav--marketing + * {
   justify-content: space-between;
   gap: 8px;
   font-size: 13px;
+  min-width: 0;
+}
+.kh-inbox-line strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .kh-inbox-time {
   font-size: 11px;
   color: hsl(var(--k-muted-foreground));
+  flex-shrink: 0;
 }
 .kh-inbox-preview {
   font-size: 12px;
@@ -1591,32 +1637,11 @@ body .home-nav--marketing + * {
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
-.kh-inbox-body {
+.kh-inbox-body-text {
   margin: 0;
   font-size: 12.5px;
   line-height: 1.6;
   color: hsl(var(--k-foreground) / 0.85);
-}
-/* On touch devices, suppress the HoverCard popover (too noisy on tap). */
-@media (hover: none) {
-  .kinu-home [k="hover-card-content"].kh-inbox-hover {
-    display: none;
-  }
-}
-.kinu-home [k="hover-card-content"].kh-inbox-hover {
-  max-width: 280px;
-  padding: 12px 14px;
-  font-size: 12.5px;
-  line-height: 1.5;
-}
-.kinu-home [k="hover-card-content"].kh-inbox-hover strong {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 12.5px;
-}
-.kinu-home [k="hover-card-content"].kh-inbox-hover p {
-  margin: 0;
-  color: hsl(var(--k-muted-foreground));
 }
 
 /* ── 9. Onboarding stepper ──────────────────────────────────────────────── */
@@ -1698,19 +1723,23 @@ body .home-nav--marketing + * {
   grid-column: 1 / -1;
 }
 
-/* ── 11. OTP / 2FA ──────────────────────────────────────────────────────── */
-.kh-otp {
+/* ── Verify Email block (rendered inside Settings → Profile) ────────────── */
+.kh-verify {
+  margin-top: 4px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  align-items: stretch;
+  gap: 12px;
+  border: 1px solid hsl(var(--k-border));
+  border-radius: var(--k-radius);
+  background: hsl(var(--k-muted) / 0.4);
 }
-.kh-otp-lede {
+.kh-verify-lede {
   margin: 0;
-  font-size: 13px;
+  font-size: 12.5px;
   color: hsl(var(--k-muted-foreground));
 }
-.kh-otp-lede code {
+.kh-verify-lede code {
   font-family: var(--kh-font-mono);
   font-size: 0.95em;
   background: hsl(var(--k-primary-soft, var(--k-muted)));
@@ -1718,16 +1747,16 @@ body .home-nav--marketing + * {
   padding: 1px 6px;
   border-radius: 4px;
 }
-.kh-otp [k="otp"] {
+.kh-verify [k="otp"] {
   margin-inline: auto;
 }
-.kh-otp-foot {
+.kh-verify-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
-.kh-otp-resend {
+.kh-verify-resend {
   font-size: 12px;
   color: hsl(var(--k-muted-foreground));
 }
@@ -1908,7 +1937,12 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground));
 }
 
-/* ── 14. Filters ───────────────────────────────────────────────────────── */
+/* ── Inputs (merged Filters + Quick Search) ───────────────────────────── */
+.kh-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .kh-filters {
   display: flex;
   flex-direction: column;
@@ -1974,13 +2008,7 @@ body .home-nav--marketing + * {
   text-align: center;
 }
 
-/* ── 16. Account menu ──────────────────────────────────────────────────── */
-.kh-account {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
+/* ── Account menu (used inside the Inbox header) ───────────────────────── */
 .kh-account-trigger {
   appearance: none;
   border: 1px solid hsl(var(--k-border));

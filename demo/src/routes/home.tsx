@@ -15,10 +15,8 @@ import {
   ContextMenuTrigger,
   Field,
   FileUpload,
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
   Input,
+  InputGroup,
   Item,
   Label,
   Listbox,
@@ -126,9 +124,8 @@ export default function Home() {
           <h2 class="kh-section-title">Built with Kinu.</h2>
           <Prose class="kh-section-lede">
             <p>
-              Sixteen real product surfaces, composed from the components in
-              this toolkit. Click around. The whole grid runs on the same
-              ~11&nbsp;kB you'd ship.
+              Nine real product surfaces, composed from the components in this
+              toolkit. The whole grid runs on the same ~11&nbsp;kB you'd ship.
             </p>
           </Prose>
         </div>
@@ -137,7 +134,7 @@ export default function Home() {
           <PreviewCard title="Tasks">
             <TasksPreview />
           </PreviewCard>
-          <PreviewCard title="Now Playing">
+          <PreviewCard title="Media Player">
             <NowPlayingPreview />
           </PreviewCard>
           <PreviewCard title="AI Composer">
@@ -152,23 +149,14 @@ export default function Home() {
           <PreviewCard title="Trip Booking">
             <DateRangePreview />
           </PreviewCard>
-          <PreviewCard title="Inbox">
+          <PreviewCard title="Inbox" wide>
             <InboxPreview />
-          </PreviewCard>
-          <PreviewCard title="Verify Email">
-            <OTPPreview />
           </PreviewCard>
           <PreviewCard title="Settings">
             <SettingsPreview />
           </PreviewCard>
-          <PreviewCard title="Filters">
-            <FiltersPreview />
-          </PreviewCard>
-          <PreviewCard title="Quick Search">
-            <SearchPreview />
-          </PreviewCard>
-          <PreviewCard title="Account">
-            <AccountMenuPreview />
+          <PreviewCard title="Inputs">
+            <InputsPreview />
           </PreviewCard>
         </div>
       </section>
@@ -490,6 +478,9 @@ function NowPlayingPreview() {
           min={0}
           max={total}
           value={position}
+          // Slider only updates its --progress CSS var on the input event;
+          // pin it from React so auto-progress repaints the green fill too.
+          style={`--progress: ${(position / total) * 100}%`}
           onInput={(e) =>
             setPosition(Number((e.target as HTMLInputElement).value))
           }
@@ -537,11 +528,7 @@ function NowPlayingPreview() {
               <span>{t.artist}</span>
             </span>
             <span class="kh-player-track-meta">
-              {t.id === currentId && playing ? (
-                <Spinner size="sm" aria-label="Playing" />
-              ) : (
-                <span class="kh-player-track-dur">{t.duration}</span>
-              )}
+              <span class="kh-player-track-dur">{t.duration}</span>
             </span>
           </button>
         ))}
@@ -555,10 +542,19 @@ function NowPlayingPreview() {
 function PreviewCard({
   title,
   hint,
+  wide,
   children,
-}: {title: string; hint?: string; children: ComponentChildren}) {
+}: {
+  title: string;
+  hint?: string;
+  wide?: boolean;
+  children: ComponentChildren;
+}) {
   return (
-    <Card class="kh-preview" padding="lg">
+    <Card
+      class={`kh-preview${wide ? ' kh-preview--wide' : ''}`}
+      padding="lg"
+    >
       <header class="kh-preview-head">
         <span class="kh-preview-title">{title}</span>
         {hint && <span class="kh-preview-hint">{hint}</span>}
@@ -619,8 +615,8 @@ function ComposerPreview() {
 
   // Keep the thread pinned to the latest message.
   useEffect(() => {
-    const el = threadRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    const last = threadRef.current?.lastElementChild;
+    if (last) (last as Element).scrollIntoView({behavior: 'smooth', block: 'end'});
   }, [messages]);
 
   const filtered = MODELS.filter(
@@ -1066,10 +1062,10 @@ function CommandPalettePreview() {
 /* ── 6. Trip Booking — two Calendars + Select + computed total ──────────── */
 
 const PROPERTY_TYPES = [
-  {id: 'home',  label: 'Whole home', rate: 220},
-  {id: 'condo', label: 'Condo',      rate: 160},
-  {id: 'apt',   label: 'Apartment',  rate: 130},
-  {id: 'hotel', label: 'Hotel room', rate: 95},
+  {id: 'home',  label: 'House',     rate: 220},
+  {id: 'condo', label: 'Condo',     rate: 160},
+  {id: 'apt',   label: 'Apartment', rate: 130},
+  {id: 'hotel', label: 'Hotel',     rate: 95},
 ];
 
 const FEATURE_OPTIONS = [
@@ -1093,7 +1089,9 @@ function DateRangePreview() {
   const addFeature = (f: string) => {
     if (!f || features.includes(f)) return;
     setFeatures([...features, f]);
-    setTagDraft('');
+    // Clear after the kinu Combobox has finished writing the picked
+    // value into the input on its own click handler.
+    requestAnimationFrame(() => setTagDraft(''));
   };
   const removeFeature = (f: string) =>
     setFeatures((prev) => prev.filter((x) => x !== f));
@@ -1113,7 +1111,7 @@ function DateRangePreview() {
         class="kh-trip-types"
       >
         {PROPERTY_TYPES.map((p) => (
-          <Toggle key={p.id} value={p.id}>{p.label}</Toggle>
+          <Toggle key={p.id} value={p.id} type="button">{p.label}</Toggle>
         ))}
       </ToggleGroup>
 
@@ -1267,6 +1265,7 @@ function InboxPreview() {
   );
   const selected = INBOX.find((m) => m.id === selectedId) ?? INBOX[0];
   const isRead = (id: string) => readIds.has(id);
+  const unreadCount = INBOX.filter((m) => !isRead(m.id)).length;
   const open = (id: string) => {
     setSelectedId(id);
     setReadIds((prev) => {
@@ -1279,48 +1278,86 @@ function InboxPreview() {
 
   return (
     <div class="kh-inbox">
-      <ScrollArea class="kh-inbox-list">
-        {INBOX.map((m) => {
-          const row = (
-            <button
-              class={`kh-inbox-link${selectedId === m.id ? ' is-active' : ''}${isRead(m.id) ? '' : ' is-unread'}`}
-              type="button"
-              onClick={() => open(m.id)}
-            >
-              <span class="kh-inbox-avatar">
-                <Avatar size="sm">{m.initials}</Avatar>
-                {m.status && (
-                  <Status
-                    variant={m.status}
-                    aria-label={m.status}
-                    class="kh-inbox-presence"
-                  />
-                )}
-              </span>
-              <span class="kh-inbox-text">
-                <span class="kh-inbox-line">
-                  <strong>{m.from.split(' ')[0]}</strong>
-                  <span class="kh-inbox-time">{m.time}</span>
-                </span>
-                <span class="kh-inbox-preview">{m.preview}</span>
-              </span>
-              {!isRead(m.id) && (
-                <span class="kh-inbox-dot" aria-label="unread" />
-              )}
+      <header class="kh-inbox-bar">
+        <span class="kh-inbox-bar-title">
+          Inbox
+          {unreadCount > 0 && (
+            <Badge variant="primary" class="kh-inbox-bar-count">
+              {unreadCount}
+            </Badge>
+          )}
+        </span>
+        <Popover>
+          <PopoverTrigger>
+            <button class="kh-account-trigger" type="button" aria-label="Account">
+              <Avatar size="sm">JM</Avatar>
+              <span class="kh-account-name">Jason</span>
+              <span class="kh-account-chev" aria-hidden>▾</span>
             </button>
-          );
-          return (
+          </PopoverTrigger>
+          <PopoverContent class="kh-account-pop" mobile="drawer">
+            <header class="kh-account-head">
+              <Avatar size="lg">JM</Avatar>
+              <span class="kh-account-headtext">
+                <strong>Jason Miller</strong>
+                <span class="kh-account-email">jason@kinu.sh</span>
+                <Status pulse variant="success" class="kh-account-status">
+                  Online
+                </Status>
+              </span>
+            </header>
+            <Separator />
+            <div class="kh-account-list">
+              <Item onClick={() => toast.show('Profile')} shortcut="⌘P">
+                Profile
+              </Item>
+              <Item onClick={() => toast.show('Settings')} shortcut="⌘,">
+                Settings
+              </Item>
+              <Item onClick={() => toast.show('Billing')}>
+                Billing <Badge variant="outline">Pro</Badge>
+              </Item>
+            </div>
+            <Separator />
+            <div class="kh-account-list">
+              <Item destructive onClick={() => toast.show('Signed out')}>
+                Sign out
+              </Item>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </header>
+      <div class="kh-inbox-body">
+        <ScrollArea class="kh-inbox-list">
+          {INBOX.map((m) => (
             <ContextMenu key={m.id}>
               <ContextMenuTrigger>
-                <HoverCard>
-                  <HoverCardTrigger class="kh-inbox-trigger">
-                    {row}
-                  </HoverCardTrigger>
-                  <HoverCardContent class="kh-inbox-hover">
-                    <strong>{m.subject}</strong>
-                    <p>{m.preview}</p>
-                  </HoverCardContent>
-                </HoverCard>
+                <button
+                  class={`kh-inbox-link${selectedId === m.id ? ' is-active' : ''}${isRead(m.id) ? '' : ' is-unread'}`}
+                  type="button"
+                  onClick={() => open(m.id)}
+                >
+                  <span class="kh-inbox-avatar">
+                    <Avatar size="sm">{m.initials}</Avatar>
+                    {m.status && (
+                      <Status
+                        variant={m.status}
+                        aria-label={m.status}
+                        class="kh-inbox-presence"
+                      />
+                    )}
+                  </span>
+                  <span class="kh-inbox-text">
+                    <span class="kh-inbox-line">
+                      <strong>{m.from.split(' ')[0]}</strong>
+                      <span class="kh-inbox-time">{m.time}</span>
+                    </span>
+                    <span class="kh-inbox-preview">{m.preview}</span>
+                  </span>
+                  {!isRead(m.id) && (
+                    <span class="kh-inbox-dot" aria-label="unread" />
+                  )}
+                </button>
               </ContextMenuTrigger>
               <ContextMenuContent mobile="drawer">
                 <Item onClick={() => open(m.id)}>Open</Item>
@@ -1335,178 +1372,31 @@ function InboxPreview() {
                 </Item>
               </ContextMenuContent>
             </ContextMenu>
-          );
-        })}
-      </ScrollArea>
-      <article class="kh-inbox-detail">
-        <header class="kh-inbox-detail-head">
-          <div class="kh-inbox-detail-from">
-            <Avatar size="sm">{selected.initials}</Avatar>
-            <div>
-              <strong>{selected.from}</strong>
-              <span class="kh-inbox-detail-email">{selected.email}</span>
+          ))}
+        </ScrollArea>
+        <article class="kh-inbox-detail">
+          <header class="kh-inbox-detail-head">
+            <div class="kh-inbox-detail-from">
+              <Avatar size="sm">{selected.initials}</Avatar>
+              <div>
+                <strong>{selected.from}</strong>
+                <span class="kh-inbox-detail-email">{selected.email}</span>
+              </div>
             </div>
-          </div>
-          <span class="kh-inbox-time">{selected.time}</span>
-        </header>
-        <h4 class="kh-inbox-subject">{selected.subject}</h4>
-        <p class="kh-inbox-body">{selected.body}</p>
-      </article>
+            <span class="kh-inbox-time">{selected.time}</span>
+          </header>
+          <h4 class="kh-inbox-subject">{selected.subject}</h4>
+          <p class="kh-inbox-body-text">{selected.body}</p>
+        </article>
+      </div>
     </div>
   );
 }
 
-/* ── 11. Verify Email — OTPInput + countdown + Spinner during verify ───── */
-
-function OTPPreview() {
-  const [code, setCode] = useState('');
-  const [verifying, setVerifying] = useState(false);
-  const [seconds, setSeconds] = useState(42);
-
-  useEffect(() => {
-    if (seconds <= 0) return;
-    const id = setTimeout(() => setSeconds((s) => s - 1), 1000);
-    return () => clearTimeout(id);
-  }, [seconds]);
-
-  const verify = (e: Event) => {
-    e.preventDefault();
-    if (code.length < 6) return;
-    setVerifying(true);
-    setTimeout(() => {
-      setVerifying(false);
-      setCode('');
-      toast.show('Email verified', {icon: '✓'});
-    }, 900);
-  };
-
-  return (
-    <form class="kh-otp" onSubmit={verify}>
-      <p class="kh-otp-lede">
-        We sent a code to <code>hello@kinu.sh</code>.
-      </p>
-      <OTPInput
-        maxLength={6}
-        value={code}
-        onInput={(e) =>
-          setCode(
-            (e.target as HTMLInputElement).value.replace(/\D/g, '').slice(0, 6),
-          )
-        }
-        aria-label="Verification code"
-      />
-      <footer class="kh-otp-foot">
-        <span class="kh-otp-resend">
-          {seconds > 0 ? (
-            <>
-              Resend in <strong>0:{seconds.toString().padStart(2, '0')}</strong>
-            </>
-          ) : (
-            <Button
-              variant="ghost"
-              size="sm"
-              type="button"
-              onClick={() => {
-                setSeconds(42);
-                toast.show('Code re-sent');
-              }}
-            >
-              Resend code
-            </Button>
-          )}
-        </span>
-        <Button
-          type="submit"
-          size="sm"
-          disabled={code.length < 6 || verifying}
-          loading={verifying}
-        >
-          {verifying ? <Spinner size="sm" aria-hidden="true" /> : null}
-          {verifying ? 'Verifying' : 'Verify'}
-        </Button>
-      </footer>
-    </form>
-  );
-}
-
-/* ── 14. Filters — ToggleGroup sort + removable Chips + add-filter Combobox */
+/* ── Inputs — merged Filters + Quick Search ──────────────────────────── */
 
 const SORT_OPTIONS = ['Newest', 'Top', 'Active'];
 const POSSIBLE_TAGS = ['urgent', 'docs', 'frontend', 'API', 'design', 'release'];
-
-function FiltersPreview() {
-  const [sort, setSort] = useState('Newest');
-  const [tags, setTags] = useState(['Status: Open', 'Owner: Jason']);
-  const [draft, setDraft] = useState('');
-
-  const remove = (t: string) => setTags((prev) => prev.filter((x) => x !== t));
-  const addDraft = () => {
-    const v = draft.trim();
-    if (!v || tags.includes(v)) return;
-    setTags([...tags, v]);
-    setDraft('');
-  };
-
-  return (
-    <div class="kh-filters">
-      <div class="kh-filters-row">
-        <span class="kh-filters-label">Sort</span>
-        <ToggleGroup
-          type="single"
-          value={sort}
-          onValueChange={(v) => v && setSort(v as string)}
-        >
-          {SORT_OPTIONS.map((s) => (
-            <Toggle key={s} value={s}>{s}</Toggle>
-          ))}
-        </ToggleGroup>
-      </div>
-      <div class="kh-filters-row kh-filters-row--wrap">
-        {tags.map((t) => (
-          <Chip key={t} variant="primary">
-            {t}
-            <Chip.Button onClick={() => remove(t)} aria-label={`Remove ${t}`}>
-              ×
-            </Chip.Button>
-          </Chip>
-        ))}
-        <Combobox class="kh-filters-add">
-          <ComboboxInput
-            placeholder="+ filter"
-            size="sm"
-            value={draft}
-            onInput={(e) => setDraft((e.target as HTMLInputElement).value)}
-            onKeyDown={(e) => {
-              if ((e as KeyboardEvent).key === 'Enter') {
-                e.preventDefault();
-                addDraft();
-              }
-            }}
-          />
-          <ComboboxList>
-            {POSSIBLE_TAGS.filter(
-              (p) =>
-                (!draft || p.toLowerCase().includes(draft.toLowerCase())) &&
-                !tags.includes(`Tag: ${p}`),
-            ).map((p) => (
-              <Item
-                key={p}
-                onClick={() => {
-                  setTags((prev) => [...prev, `Tag: ${p}`]);
-                  setDraft('');
-                }}
-              >
-                {p}
-              </Item>
-            ))}
-          </ComboboxList>
-        </Combobox>
-      </div>
-    </div>
-  );
-}
-
-/* ── 15. Quick Search — Combobox with rich rows (avatar + email + role) ── */
 
 const PEOPLE = [
   {initials: 'JM', name: 'Jason Miller',   email: 'jason@kinu.sh',   role: 'Maintainer'},
@@ -1517,96 +1407,120 @@ const PEOPLE = [
   {initials: 'SH', name: 'Sam Hwang',      email: 'sam@kinu.sh',     role: 'Engineer'},
 ];
 
-function SearchPreview() {
+function InputsPreview() {
   const [query, setQuery] = useState('');
+  const [sort, setSort] = useState('Newest');
+  const [tags, setTags] = useState(['Status: Open', 'Owner: Jason']);
+  const [draft, setDraft] = useState('');
+
   const matches = PEOPLE.filter((p) =>
     !query ||
     p.name.toLowerCase().includes(query.toLowerCase()) ||
     p.email.toLowerCase().includes(query.toLowerCase()),
   );
 
-  return (
-    <Combobox class="kh-search">
-      <ComboboxInput
-        placeholder="Search teammates and customers…"
-        value={query}
-        onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
-      />
-      <ComboboxList>
-        {matches.length === 0 && (
-          <p class="kh-search-empty">
-            No matches for <code>{query}</code>.
-          </p>
-        )}
-        {matches.map((p) => (
-          <Item
-            key={p.email}
-            value={p.name}
-            onClick={() =>
-              toast.show(`Opened ${p.name}`, {title: 'Profile', icon: '↗'})
-            }
-          >
-            <span class="kh-search-row">
-              <Avatar size="sm">{p.initials}</Avatar>
-              <span class="kh-search-text">
-                <strong>{p.name}</strong>
-                <span class="kh-search-email">{p.email}</span>
-              </span>
-              <Badge variant="outline" class="kh-search-role">
-                {p.role}
-              </Badge>
-            </span>
-          </Item>
-        ))}
-      </ComboboxList>
-    </Combobox>
-  );
-}
+  const remove = (t: string) =>
+    setTags((prev) => prev.filter((x) => x !== t));
+  const addTag = (t: string) => {
+    const v = t.trim();
+    if (!v || tags.includes(v)) return;
+    setTags([...tags, v]);
+    requestAnimationFrame(() => setDraft(''));
+  };
 
-/* ── 16. Account menu — Avatar trigger + Popover content ────────────────── */
-
-function AccountMenuPreview() {
   return (
-    <div class="kh-account">
-      <Popover>
-        <PopoverTrigger>
-          <button class="kh-account-trigger" type="button" aria-label="Account">
-            <Avatar size="sm">JM</Avatar>
-            <span class="kh-account-name">Jason</span>
-            <span class="kh-account-chev" aria-hidden>▾</span>
-          </button>
-        </PopoverTrigger>
-        <PopoverContent class="kh-account-pop" mobile="drawer">
-          <header class="kh-account-head">
-            <Avatar size="lg">JM</Avatar>
-            <span class="kh-account-headtext">
-              <strong>Jason Miller</strong>
-              <span class="kh-account-email">jason@kinu.sh</span>
-              <Status pulse variant="success" class="kh-account-status">
-                Online
-              </Status>
-            </span>
-          </header>
-          <Separator />
-          <div class="kh-account-list">
-            <Item onClick={() => toast.show('Profile')} shortcut="⌘P">
-              Profile
-            </Item>
-            <Item onClick={() => toast.show('Settings')} shortcut="⌘,">
-              Settings
-            </Item>
-            <Item onClick={() => toast.show('Billing')}>
-              Billing <Badge variant="outline">Pro</Badge>
-            </Item>
-          </div>
-          <Separator />
-          <div class="kh-account-list">
-            <Item destructive onClick={() => toast.show('Signed out')}>
-              Sign out
-            </Item>
-          </div>
-        </PopoverContent>
-      </Popover>
+    <div class="kh-inputs">
+      <Field>
+        <Field.Label>Search teammates and customers</Field.Label>
+        <Combobox class="kh-search">
+          <ComboboxInput
+            placeholder="Search by name or email…"
+            value={query}
+            onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
+          />
+          <ComboboxList>
+            {matches.length === 0 && (
+              <p class="kh-search-empty">
+                No matches for <code>{query}</code>.
+              </p>
+            )}
+            {matches.map((p) => (
+              <Item
+                key={p.email}
+                value={p.name}
+                onClick={() =>
+                  toast.show(`Opened ${p.name}`, {title: 'Profile', icon: '↗'})
+                }
+              >
+                <span class="kh-search-row">
+                  <Avatar size="sm">{p.initials}</Avatar>
+                  <span class="kh-search-text">
+                    <strong>{p.name}</strong>
+                    <span class="kh-search-email">{p.email}</span>
+                  </span>
+                  <Badge variant="outline" class="kh-search-role">
+                    {p.role}
+                  </Badge>
+                </span>
+              </Item>
+            ))}
+          </ComboboxList>
+        </Combobox>
+      </Field>
+
+      <Field>
+        <Field.Label>Sort</Field.Label>
+        <ToggleGroup
+          type="single"
+          value={sort}
+          onValueChange={(v) => v && setSort(v as string)}
+        >
+          {SORT_OPTIONS.map((s) => (
+            <Toggle key={s} value={s} type="button">{s}</Toggle>
+          ))}
+        </ToggleGroup>
+      </Field>
+
+      <Field>
+        <Field.Label>Filters</Field.Label>
+        <div class="kh-filters-row kh-filters-row--wrap">
+          {tags.map((t) => (
+            <Chip key={t} variant="primary">
+              {t}
+              <Chip.Button onClick={() => remove(t)} aria-label={`Remove ${t}`}>
+                ×
+              </Chip.Button>
+            </Chip>
+          ))}
+          <Combobox class="kh-filters-add">
+            <ComboboxInput
+              placeholder="+ filter"
+              size="sm"
+              value={draft}
+              onInput={(e) =>
+                setDraft((e.target as HTMLInputElement).value)
+              }
+              onKeyDown={(e) => {
+                if ((e as KeyboardEvent).key === 'Enter') {
+                  e.preventDefault();
+                  addTag(draft);
+                }
+              }}
+            />
+            <ComboboxList>
+              {POSSIBLE_TAGS.filter(
+                (p) =>
+                  (!draft || p.toLowerCase().includes(draft.toLowerCase())) &&
+                  !tags.includes(`Tag: ${p}`),
+              ).map((p) => (
+                <Item key={p} value={p} onClick={() => addTag(`Tag: ${p}`)}>
+                  {p}
+                </Item>
+              ))}
+            </ComboboxList>
+          </Combobox>
+        </div>
+      </Field>
     </div>
   );
 }
@@ -1660,6 +1574,8 @@ function SettingsProfile() {
   const [email] = useState('jason@kinu.sh');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const lastBlobRef = useRef<string | null>(null);
+  // Stays in the verifying state for the demo so the OTP UI is visible.
+  const verifying = true;
 
   // Revoke any previously-issued blob URL when the component unmounts so
   // we don't leak object references across re-renders.
@@ -1694,9 +1610,6 @@ function SettingsProfile() {
         <Field>
           <Field.Label>Avatar</Field.Label>
           <FileUpload accept="image/*" onChange={onPickAvatar} />
-          <Field.Description>
-            Picked from disk via FileUpload, served back as a blob URL.
-          </Field.Description>
         </Field>
       </div>
       <Field>
@@ -1708,9 +1621,76 @@ function SettingsProfile() {
       </Field>
       <Field>
         <Field.Label>Email</Field.Label>
-        <Input value={email} disabled />
+        <InputGroup>
+          <Input value={email} disabled />
+          <Button type="button" variant="outline">
+            Verify
+          </Button>
+        </InputGroup>
       </Field>
+      {verifying && <VerifyEmailBlock email={email} />}
     </TabPanel>
+  );
+}
+
+function VerifyEmailBlock({email}: {email: string}) {
+  const [code, setCode] = useState('');
+  const [seconds, setSeconds] = useState(42);
+
+  useEffect(() => {
+    if (seconds <= 0) return;
+    const id = setTimeout(() => setSeconds((s) => s - 1), 1000);
+    return () => clearTimeout(id);
+  }, [seconds]);
+
+  return (
+    <div class="kh-verify">
+      <p class="kh-verify-lede">
+        We sent a code to <code>{email}</code>.
+      </p>
+      <OTPInput
+        maxLength={6}
+        value={code}
+        onInput={(e) =>
+          setCode(
+            (e.target as HTMLInputElement).value.replace(/\D/g, '').slice(0, 6),
+          )
+        }
+        aria-label="Verification code"
+      />
+      <div class="kh-verify-foot">
+        <span class="kh-verify-resend">
+          {seconds > 0 ? (
+            <>
+              Resend in <strong>0:{seconds.toString().padStart(2, '0')}</strong>
+            </>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              type="button"
+              onClick={() => {
+                setSeconds(42);
+                toast.show('Code re-sent');
+              }}
+            >
+              Resend code
+            </Button>
+          )}
+        </span>
+        <Button
+          type="button"
+          size="sm"
+          disabled={code.length < 6}
+          onClick={() => {
+            toast.show('Email verified', {icon: '✓'});
+            setCode('');
+          }}
+        >
+          Verify
+        </Button>
+      </div>
+    </div>
   );
 }
 
