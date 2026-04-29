@@ -876,6 +876,77 @@ body .home-nav--marketing + * {
   justify-content: center;
   gap: 6px;
 }
+.kinu-home [k="scroll-area"].kh-player-list {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid hsl(var(--k-border));
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-height: 0;
+}
+.kh-player-track {
+  appearance: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: none;
+  border-radius: calc(var(--k-radius) - 2px);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: background 120ms ease;
+}
+.kh-player-track:hover {
+  background: hsl(var(--k-accent));
+}
+.kh-player-track.is-active {
+  background: hsl(var(--k-primary-soft, var(--k-accent)));
+}
+.kh-player-track-cover {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.kh-player-track-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  font-size: 12.5px;
+}
+.kh-player-track-text strong {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-player-track-text > span {
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-player-track-meta {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.kh-player-track-dur {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-player-track.is-active .kh-player-track-dur {
+  color: hsl(var(--k-primary));
+}
 
 /* AI Composer preview */
 .kh-composer {
@@ -1322,6 +1393,21 @@ body .home-nav--marketing + * {
   font-style: italic;
   font-size: 17px;
   font-weight: 500;
+}
+.kinu-home [k="toggle-group"].kh-trip-types {
+  flex-wrap: wrap;
+  width: 100%;
+}
+.kh-trip-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.kinu-home [k="combobox"].kh-trip-feature-add {
+  flex: 1 0 8rem;
+  width: auto;
+  min-width: 7rem;
 }
 
 /* ── 7. Pricing Calculator ──────────────────────────────────────────────── */

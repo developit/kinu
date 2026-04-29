@@ -406,52 +406,111 @@ const IconHeart = ({size = 16, filled = false}: {size?: number; filled?: boolean
   />
 );
 
-function NowPlayingPreview() {
-  const [position, setPosition] = useState(82);
-  const [playing, setPlaying] = useState(true);
-  const [liked, setLiked] = useState(false);
+type Track = {
+  id: number; title: string; artist: string; album: string;
+  duration: string; cover: string; liked: boolean;
+};
+const TRACKS: Track[] = [
+  {id: 1, title: 'Summer Breeze', artist: 'DJ Sunwave',         album: 'Golden Hour',     duration: '4:18', cover: '🌅', liked: true},
+  {id: 2, title: 'Midnight Coffee', artist: 'Lofi Dreams',      album: 'Chill Nights',    duration: '3:42', cover: '☕', liked: false},
+  {id: 3, title: 'Neon Lights',   artist: 'Synthwave City',     album: 'Retro Future',    duration: '5:03', cover: '🌃', liked: false},
+  {id: 4, title: 'Ocean Waves',   artist: 'Nature Sounds',      album: 'Peaceful Mind',   duration: '2:57', cover: '🌊', liked: true},
+  {id: 5, title: 'Forest Path',   artist: 'Organic Beats',      album: 'Natural Rhythm',  duration: '3:28', cover: '🌲', liked: false},
+];
 
-  const total = 222;
-  const fmt = (s: number) => {
-    const m = Math.floor(s / 60);
-    const r = Math.floor(s % 60);
-    return `${m}:${r.toString().padStart(2, '0')}`;
+const parseDuration = (s: string) => {
+  const [m, sec] = s.split(':').map(Number);
+  return m * 60 + sec;
+};
+const fmtTime = (s: number) => {
+  const m = Math.floor(s / 60);
+  const r = Math.floor(s % 60);
+  return `${m}:${r.toString().padStart(2, '0')}`;
+};
+
+function NowPlayingPreview() {
+  const [tracks, setTracks] = useState(TRACKS);
+  const [currentId, setCurrentId] = useState(TRACKS[0].id);
+  const [playing, setPlaying] = useState(true);
+  const [position, setPosition] = useState(58); // seconds
+
+  const current = tracks.find((t) => t.id === currentId) ?? tracks[0];
+  const total = parseDuration(current.duration);
+
+  // Auto-progress when playing; advance to the next track on end.
+  useEffect(() => {
+    if (!playing) return;
+    const id = setInterval(() => {
+      setPosition((p) => {
+        if (p + 1 >= total) {
+          // wrap to next track
+          const i = tracks.findIndex((t) => t.id === currentId);
+          const next = tracks[(i + 1) % tracks.length];
+          setCurrentId(next.id);
+          return 0;
+        }
+        return p + 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [playing, currentId, total, tracks]);
+
+  const play = (id: number) => {
+    setCurrentId(id);
+    setPosition(0);
+    setPlaying(true);
   };
-  const cur = (position / 100) * total;
+  const step = (delta: -1 | 1) => {
+    const i = tracks.findIndex((t) => t.id === currentId);
+    const next = tracks[(i + delta + tracks.length) % tracks.length];
+    play(next.id);
+  };
+  const toggleLike = (id: number) =>
+    setTracks((prev) =>
+      prev.map((t) => (t.id === id ? {...t, liked: !t.liked} : t)),
+    );
 
   return (
     <div class="kh-player">
       <header class="kh-player-head">
         <span class="kh-player-cover" aria-hidden>
-          🌅
+          {current.cover}
         </span>
         <div class="kh-player-meta">
-          <p class="kh-player-title">Summer Breeze</p>
-          <p class="kh-player-artist">DJ Sunwave · Golden Hour</p>
+          <p class="kh-player-title">{current.title}</p>
+          <p class="kh-player-artist">
+            {current.artist} · {current.album}
+          </p>
         </div>
         <Toggle
-          pressed={liked}
-          onClick={() => setLiked((v) => !v)}
+          pressed={current.liked}
+          onClick={() => toggleLike(current.id)}
           class="kh-player-like"
-          aria-label="Like"
+          aria-label={current.liked ? 'Unlike' : 'Like'}
         >
-          <IconHeart filled={liked} />
+          <IconHeart filled={current.liked} />
         </Toggle>
       </header>
       <div class="kh-player-scrub">
-        <span class="kh-player-time">{fmt(cur)}</span>
+        <span class="kh-player-time">{fmtTime(position)}</span>
         <Slider
           min={0}
-          max={100}
+          max={total}
           value={position}
           onInput={(e) =>
             setPosition(Number((e.target as HTMLInputElement).value))
           }
+          aria-label="Seek"
         />
-        <span class="kh-player-time">{fmt(total)}</span>
+        <span class="kh-player-time">{current.duration}</span>
       </div>
       <div class="kh-player-controls">
-        <Button variant="ghost" size="icon" aria-label="Previous">
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Previous"
+          onClick={() => step(-1)}
+        >
           <IconSkipBack />
         </Button>
         <Button
@@ -461,10 +520,39 @@ function NowPlayingPreview() {
         >
           {playing ? <IconPause /> : <IconPlay />}
         </Button>
-        <Button variant="ghost" size="icon" aria-label="Next">
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Next"
+          onClick={() => step(1)}
+        >
           <IconSkipFwd />
         </Button>
       </div>
+      <ScrollArea class="kh-player-list">
+        {tracks.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            class={`kh-player-track${t.id === currentId ? ' is-active' : ''}`}
+            onClick={() => play(t.id)}
+            aria-current={t.id === currentId}
+          >
+            <span class="kh-player-track-cover" aria-hidden>{t.cover}</span>
+            <span class="kh-player-track-text">
+              <strong>{t.title}</strong>
+              <span>{t.artist}</span>
+            </span>
+            <span class="kh-player-track-meta">
+              {t.id === currentId && playing ? (
+                <Spinner size="sm" aria-label="Playing" />
+              ) : (
+                <span class="kh-player-track-dur">{t.duration}</span>
+              )}
+            </span>
+          </button>
+        ))}
+      </ScrollArea>
     </div>
   );
 }
@@ -984,14 +1072,38 @@ function CommandPalettePreview() {
 
 /* ── 6. Trip Booking — two Calendars + Select + computed total ──────────── */
 
+const PROPERTY_TYPES = [
+  {id: 'home',  label: 'Whole home', rate: 220},
+  {id: 'condo', label: 'Condo',      rate: 160},
+  {id: 'apt',   label: 'Apartment',  rate: 130},
+  {id: 'hotel', label: 'Hotel room', rate: 95},
+];
+
+const FEATURE_OPTIONS = [
+  'Pet friendly', 'Crib / rollaway', 'Two bedrooms', 'City center',
+  'Balcony view', 'Workspace', 'EV charger', 'Pool', 'Hot tub',
+];
+
 function DateRangePreview() {
   const [checkIn, setCheckIn] = useState('2026-04-28');
   const [checkOut, setCheckOut] = useState('2026-05-02');
-  const [guests, setGuests] = useState('2');
+  const [guests, setGuests] = useState(2);
+  const [propertyType, setPropertyType] = useState('condo');
+  const [features, setFeatures] = useState<string[]>(['City center', 'Balcony view']);
+  const [tagDraft, setTagDraft] = useState('');
 
   const ms = new Date(checkOut).getTime() - new Date(checkIn).getTime();
   const nights = Math.max(0, Math.round(ms / 86_400_000));
-  const total = nights * 160;
+  const rate = PROPERTY_TYPES.find((p) => p.id === propertyType)?.rate ?? 160;
+  const total = nights * rate;
+
+  const addFeature = (f: string) => {
+    if (!f || features.includes(f)) return;
+    setFeatures([...features, f]);
+    setTagDraft('');
+  };
+  const removeFeature = (f: string) =>
+    setFeatures((prev) => prev.filter((x) => x !== f));
 
   return (
     <form
@@ -1001,6 +1113,17 @@ function DateRangePreview() {
         toast.show(`Reserved ${nights} nights · $${total}`, {icon: '🗝️'});
       }}
     >
+      <ToggleGroup
+        type="single"
+        value={propertyType}
+        onValueChange={(v) => v && setPropertyType(v as string)}
+        class="kh-trip-types"
+      >
+        {PROPERTY_TYPES.map((p) => (
+          <Toggle key={p.id} value={p.id}>{p.label}</Toggle>
+        ))}
+      </ToggleGroup>
+
       <div class="kh-trip-dates">
         <Field>
           <Field.Label>Check-in</Field.Label>
@@ -1021,18 +1144,67 @@ function DateRangePreview() {
           />
         </Field>
       </div>
+
       <Field>
         <Field.Label>Guests</Field.Label>
-        <Select
-          value={guests}
-          onInput={(e) => setGuests((e.target as HTMLInputElement).value)}
-        >
-          <option value="1">1 guest</option>
-          <option value="2">2 guests</option>
-          <option value="3">3 guests</option>
-          <option value="4">4 guests</option>
-        </Select>
+        <Input
+          type="number"
+          min={1}
+          max={12}
+          value={String(guests)}
+          onInput={(e) =>
+            setGuests(
+              Math.max(1, Number((e.target as HTMLInputElement).value) || 1),
+            )
+          }
+        />
       </Field>
+
+      <Field>
+        <Field.Label>Property features</Field.Label>
+        <div class="kh-trip-features">
+          {features.map((f) => (
+            <Chip key={f} variant="primary">
+              {f}
+              <Chip.Button
+                onClick={() => removeFeature(f)}
+                aria-label={`Remove ${f}`}
+              >
+                ×
+              </Chip.Button>
+            </Chip>
+          ))}
+          <Combobox class="kh-trip-feature-add">
+            <ComboboxInput
+              placeholder="+ feature"
+              size="sm"
+              value={tagDraft}
+              onInput={(e) =>
+                setTagDraft((e.target as HTMLInputElement).value)
+              }
+              onKeyDown={(e) => {
+                if ((e as KeyboardEvent).key === 'Enter') {
+                  e.preventDefault();
+                  addFeature(tagDraft.trim());
+                }
+              }}
+            />
+            <ComboboxList>
+              {FEATURE_OPTIONS.filter(
+                (f) =>
+                  !features.includes(f) &&
+                  (!tagDraft ||
+                    f.toLowerCase().includes(tagDraft.toLowerCase())),
+              ).map((f) => (
+                <Item key={f} value={f} onClick={() => addFeature(f)}>
+                  {f}
+                </Item>
+              ))}
+            </ComboboxList>
+          </Combobox>
+        </div>
+      </Field>
+
       <footer class="kh-trip-footer">
         <span class="kh-trip-summary">
           <strong>{nights}</strong> nights · ${total}
