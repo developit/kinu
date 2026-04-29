@@ -124,7 +124,7 @@ export default function Home() {
           <h2 class="kh-section-title">Built with Kinu.</h2>
           <Prose class="kh-section-lede">
             <p>
-              Nine real product surfaces, composed from the components in this
+              Eight real product surfaces, composed from the components in this
               toolkit. The whole grid runs on the same ~11&nbsp;kB you'd ship.
             </p>
           </Prose>
@@ -140,7 +140,7 @@ export default function Home() {
           <PreviewCard title="AI Composer">
             <ComposerPreview />
           </PreviewCard>
-          <PreviewCard title="Team Activity">
+          <PreviewCard title="Activity">
             <ActivityPreview />
           </PreviewCard>
           <PreviewCard title="Command Palette">
@@ -149,14 +149,11 @@ export default function Home() {
           <PreviewCard title="Trip Booking">
             <DateRangePreview />
           </PreviewCard>
-          <PreviewCard title="Inbox" wide>
+          <PreviewCard wide>
             <InboxPreview />
           </PreviewCard>
           <PreviewCard title="Settings">
             <SettingsPreview />
-          </PreviewCard>
-          <PreviewCard title="Inputs">
-            <InputsPreview />
           </PreviewCard>
         </div>
       </section>
@@ -545,20 +542,22 @@ function PreviewCard({
   wide,
   children,
 }: {
-  title: string;
+  title?: string;
   hint?: string;
   wide?: boolean;
   children: ComponentChildren;
 }) {
   return (
     <Card
-      class={`kh-preview${wide ? ' kh-preview--wide' : ''}`}
+      class={`kh-preview${wide ? ' kh-preview--wide' : ''}${title ? '' : ' kh-preview--bare'}`}
       padding="lg"
     >
-      <header class="kh-preview-head">
-        <span class="kh-preview-title">{title}</span>
-        {hint && <span class="kh-preview-hint">{hint}</span>}
-      </header>
+      {title && (
+        <header class="kh-preview-head">
+          <span class="kh-preview-title">{title}</span>
+          {hint && <span class="kh-preview-hint">{hint}</span>}
+        </header>
+      )}
       <div class="kh-preview-body">{children}</div>
     </Card>
   );
@@ -682,8 +681,9 @@ function ComposerPreview() {
   let flatIndex = 0;
   return (
     <form class="kh-composer" onSubmit={send}>
-      <ScrollArea class="kh-composer-thread" ref={threadRef as any}>
-        {messages.map((m) => (
+      <div class="kh-composer-thread-frame">
+        <ScrollArea class="kh-composer-thread" ref={threadRef as any}>
+          {messages.map((m) => (
           <div
             key={m.id}
             class={`kh-composer-msg kh-composer-msg--${m.role}`}
@@ -701,8 +701,9 @@ function ComposerPreview() {
               )}
             </div>
           </div>
-        ))}
-      </ScrollArea>
+          ))}
+        </ScrollArea>
+      </div>
       <Textarea
         autosize
         rows={2}
@@ -783,7 +784,7 @@ function ComposerPreview() {
   );
 }
 
-/* ── Team Activity (Avatar + Status + Item) ─────────────────────────────── */
+/* ── Activity — search/filters bar + live team feed ────────────────────── */
 const ACTIVITY: Array<{
   initials: string;
   name: string;
@@ -798,9 +799,127 @@ const ACTIVITY: Array<{
   {initials: 'TR', name: 'Toshi',    action: 'is away',             when: '1h',  variant: 'warning'},
 ];
 
+const ACTIVITY_PEOPLE = [
+  {initials: 'JM', name: 'Jason Miller',   email: 'jason@kinu.sh',    role: 'Maintainer'},
+  {initials: 'AS', name: 'Alex Stein',     email: 'alex@kinu.sh',     role: 'Designer'},
+  {initials: 'KM', name: 'Karen Montoya',  email: 'karen@kinu.sh',    role: 'Engineer'},
+  {initials: 'TR', name: 'Toshi Rahman',   email: 'toshi@contoso.io', role: 'Customer'},
+  {initials: 'RB', name: 'Rosa Beltran',   email: 'rosa@contoso.io',  role: 'Customer'},
+  {initials: 'SH', name: 'Sam Hwang',      email: 'sam@kinu.sh',      role: 'Engineer'},
+];
+
+const ACTIVITY_SORT = ['Newest', 'Top', 'Active'];
+const ACTIVITY_TAG_OPTIONS = ['urgent', 'docs', 'frontend', 'API', 'design', 'release'];
+
 function ActivityPreview() {
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState('Newest');
+  const [tags, setTags] = useState(['Owner: Jason']);
+  const [tagDraft, setTagDraft] = useState('');
+
+  const matches = ACTIVITY_PEOPLE.filter((p) =>
+    !query ||
+    p.name.toLowerCase().includes(query.toLowerCase()) ||
+    p.email.toLowerCase().includes(query.toLowerCase()),
+  );
+
+  const removeTag = (t: string) =>
+    setTags((prev) => prev.filter((x) => x !== t));
+  const addTag = (t: string) => {
+    const v = t.trim();
+    if (!v || tags.includes(v)) return;
+    setTags([...tags, v]);
+    requestAnimationFrame(() => setTagDraft(''));
+  };
+
   return (
     <div class="kh-activity">
+      <Combobox class="kh-activity-search">
+        <ComboboxInput
+          placeholder="Search teammates…"
+          size="sm"
+          value={query}
+          onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
+        />
+        <ComboboxList>
+          {matches.length === 0 && (
+            <p class="kh-search-empty">
+              No matches for <code>{query}</code>.
+            </p>
+          )}
+          {matches.map((p) => (
+            <Item
+              key={p.email}
+              value={p.name}
+              onClick={() =>
+                toast.show(`Opened ${p.name}`, {title: 'Profile', icon: '↗'})
+              }
+            >
+              <span class="kh-search-row">
+                <Avatar size="sm">{p.initials}</Avatar>
+                <span class="kh-search-text">
+                  <strong>{p.name}</strong>
+                  <span class="kh-search-email">{p.email}</span>
+                </span>
+                <Badge variant="outline" class="kh-search-role">
+                  {p.role}
+                </Badge>
+              </span>
+            </Item>
+          ))}
+        </ComboboxList>
+      </Combobox>
+
+      <div class="kh-activity-filters">
+        <ToggleGroup
+          type="single"
+          value={sort}
+          onValueChange={(v) => v && setSort(v as string)}
+          class="kh-activity-sort"
+        >
+          {ACTIVITY_SORT.map((s) => (
+            <Toggle key={s} value={s} type="button">{s}</Toggle>
+          ))}
+        </ToggleGroup>
+        {tags.map((t) => (
+          <Chip key={t} variant="primary" form="">
+            {t}
+            <Chip.Button onClick={() => removeTag(t)} aria-label={`Remove ${t}`}>
+              ×
+            </Chip.Button>
+          </Chip>
+        ))}
+        <Combobox class="kh-activity-add">
+          <ComboboxInput
+            placeholder="+ filter"
+            size="sm"
+            value={tagDraft}
+            onInput={(e) =>
+              setTagDraft((e.target as HTMLInputElement).value)
+            }
+            onKeyDown={(e) => {
+              if ((e as KeyboardEvent).key === 'Enter') {
+                e.preventDefault();
+                addTag(tagDraft);
+              }
+            }}
+          />
+          <ComboboxList>
+            {ACTIVITY_TAG_OPTIONS.filter(
+              (p) =>
+                (!tagDraft || p.toLowerCase().includes(tagDraft.toLowerCase())) &&
+                !tags.includes(`Tag: ${p}`),
+            ).map((p) => (
+              <Item key={p} value={p} onClick={() => addTag(`Tag: ${p}`)}>
+                {p}
+              </Item>
+            ))}
+          </ComboboxList>
+        </Combobox>
+      </div>
+
+      <Separator />
+
       <header class="kh-activity-head">
         <Avatar.Group>
           <Avatar size="sm">JM</Avatar>
@@ -1155,7 +1274,7 @@ function DateRangePreview() {
         <Field.Label>Property features</Field.Label>
         <div class="kh-trip-features">
           {features.map((f) => (
-            <Chip key={f} variant="primary">
+            <Chip key={f} variant="primary" form="">
               {f}
               <Chip.Button
                 onClick={() => removeFeature(f)}
@@ -1328,52 +1447,54 @@ function InboxPreview() {
         </Popover>
       </header>
       <div class="kh-inbox-body">
-        <ScrollArea class="kh-inbox-list">
-          {INBOX.map((m) => (
-            <ContextMenu key={m.id}>
-              <ContextMenuTrigger>
-                <button
-                  class={`kh-inbox-link${selectedId === m.id ? ' is-active' : ''}${isRead(m.id) ? '' : ' is-unread'}`}
-                  type="button"
-                  onClick={() => open(m.id)}
-                >
-                  <span class="kh-inbox-avatar">
-                    <Avatar size="sm">{m.initials}</Avatar>
-                    {m.status && (
-                      <Status
-                        variant={m.status}
-                        aria-label={m.status}
-                        class="kh-inbox-presence"
-                      />
-                    )}
-                  </span>
-                  <span class="kh-inbox-text">
-                    <span class="kh-inbox-line">
-                      <strong>{m.from.split(' ')[0]}</strong>
-                      <span class="kh-inbox-time">{m.time}</span>
+        <Listbox class="kh-inbox-list">
+          <ListboxList>
+            {INBOX.map((m) => (
+              <ContextMenu key={m.id}>
+                <ContextMenuTrigger>
+                  <Item
+                    selected={selectedId === m.id}
+                    onClick={() => open(m.id)}
+                    class={`kh-inbox-link${isRead(m.id) ? '' : ' is-unread'}`}
+                  >
+                    <span class="kh-inbox-avatar">
+                      <Avatar size="sm">{m.initials}</Avatar>
+                      {m.status && (
+                        <Status
+                          variant={m.status}
+                          aria-label={m.status}
+                          class="kh-inbox-presence"
+                        />
+                      )}
                     </span>
-                    <span class="kh-inbox-preview">{m.preview}</span>
-                  </span>
-                  {!isRead(m.id) && (
-                    <span class="kh-inbox-dot" aria-label="unread" />
-                  )}
-                </button>
-              </ContextMenuTrigger>
-              <ContextMenuContent mobile="drawer">
-                <Item onClick={() => open(m.id)}>Open</Item>
-                <Item onClick={() => toast.show(`Archived · ${m.from}`)}>
-                  Archive
-                </Item>
-                <Item onClick={() => toast.show(`Starred · ${m.from}`)}>
-                  Star
-                </Item>
-                <Item destructive onClick={() => toast.show(`Deleted · ${m.from}`)}>
-                  Delete
-                </Item>
-              </ContextMenuContent>
-            </ContextMenu>
-          ))}
-        </ScrollArea>
+                    <span class="kh-inbox-text">
+                      <span class="kh-inbox-line">
+                        <strong>{m.from.split(' ')[0]}</strong>
+                        <span class="kh-inbox-time">{m.time}</span>
+                      </span>
+                      <span class="kh-inbox-preview">{m.preview}</span>
+                    </span>
+                    {!isRead(m.id) && (
+                      <span class="kh-inbox-dot" aria-label="unread" />
+                    )}
+                  </Item>
+                </ContextMenuTrigger>
+                <ContextMenuContent mobile="drawer">
+                  <Item onClick={() => open(m.id)}>Open</Item>
+                  <Item onClick={() => toast.show(`Archived · ${m.from}`)}>
+                    Archive
+                  </Item>
+                  <Item onClick={() => toast.show(`Starred · ${m.from}`)}>
+                    Star
+                  </Item>
+                  <Item destructive onClick={() => toast.show(`Deleted · ${m.from}`)}>
+                    Delete
+                  </Item>
+                </ContextMenuContent>
+              </ContextMenu>
+            ))}
+          </ListboxList>
+        </Listbox>
         <article class="kh-inbox-detail">
           <header class="kh-inbox-detail-head">
             <div class="kh-inbox-detail-from">
@@ -1389,138 +1510,6 @@ function InboxPreview() {
           <p class="kh-inbox-body-text">{selected.body}</p>
         </article>
       </div>
-    </div>
-  );
-}
-
-/* ── Inputs — merged Filters + Quick Search ──────────────────────────── */
-
-const SORT_OPTIONS = ['Newest', 'Top', 'Active'];
-const POSSIBLE_TAGS = ['urgent', 'docs', 'frontend', 'API', 'design', 'release'];
-
-const PEOPLE = [
-  {initials: 'JM', name: 'Jason Miller',   email: 'jason@kinu.sh',   role: 'Maintainer'},
-  {initials: 'AS', name: 'Alex Stein',     email: 'alex@kinu.sh',    role: 'Designer'},
-  {initials: 'KM', name: 'Karen Montoya',  email: 'karen@kinu.sh',   role: 'Engineer'},
-  {initials: 'TR', name: 'Toshi Rahman',   email: 'toshi@contoso.io',role: 'Customer'},
-  {initials: 'RB', name: 'Rosa Beltran',   email: 'rosa@contoso.io', role: 'Customer'},
-  {initials: 'SH', name: 'Sam Hwang',      email: 'sam@kinu.sh',     role: 'Engineer'},
-];
-
-function InputsPreview() {
-  const [query, setQuery] = useState('');
-  const [sort, setSort] = useState('Newest');
-  const [tags, setTags] = useState(['Status: Open', 'Owner: Jason']);
-  const [draft, setDraft] = useState('');
-
-  const matches = PEOPLE.filter((p) =>
-    !query ||
-    p.name.toLowerCase().includes(query.toLowerCase()) ||
-    p.email.toLowerCase().includes(query.toLowerCase()),
-  );
-
-  const remove = (t: string) =>
-    setTags((prev) => prev.filter((x) => x !== t));
-  const addTag = (t: string) => {
-    const v = t.trim();
-    if (!v || tags.includes(v)) return;
-    setTags([...tags, v]);
-    requestAnimationFrame(() => setDraft(''));
-  };
-
-  return (
-    <div class="kh-inputs">
-      <Field>
-        <Field.Label>Search teammates and customers</Field.Label>
-        <Combobox class="kh-search">
-          <ComboboxInput
-            placeholder="Search by name or email…"
-            value={query}
-            onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
-          />
-          <ComboboxList>
-            {matches.length === 0 && (
-              <p class="kh-search-empty">
-                No matches for <code>{query}</code>.
-              </p>
-            )}
-            {matches.map((p) => (
-              <Item
-                key={p.email}
-                value={p.name}
-                onClick={() =>
-                  toast.show(`Opened ${p.name}`, {title: 'Profile', icon: '↗'})
-                }
-              >
-                <span class="kh-search-row">
-                  <Avatar size="sm">{p.initials}</Avatar>
-                  <span class="kh-search-text">
-                    <strong>{p.name}</strong>
-                    <span class="kh-search-email">{p.email}</span>
-                  </span>
-                  <Badge variant="outline" class="kh-search-role">
-                    {p.role}
-                  </Badge>
-                </span>
-              </Item>
-            ))}
-          </ComboboxList>
-        </Combobox>
-      </Field>
-
-      <Field>
-        <Field.Label>Sort</Field.Label>
-        <ToggleGroup
-          type="single"
-          value={sort}
-          onValueChange={(v) => v && setSort(v as string)}
-        >
-          {SORT_OPTIONS.map((s) => (
-            <Toggle key={s} value={s} type="button">{s}</Toggle>
-          ))}
-        </ToggleGroup>
-      </Field>
-
-      <Field>
-        <Field.Label>Filters</Field.Label>
-        <div class="kh-filters-row kh-filters-row--wrap">
-          {tags.map((t) => (
-            <Chip key={t} variant="primary">
-              {t}
-              <Chip.Button onClick={() => remove(t)} aria-label={`Remove ${t}`}>
-                ×
-              </Chip.Button>
-            </Chip>
-          ))}
-          <Combobox class="kh-filters-add">
-            <ComboboxInput
-              placeholder="+ filter"
-              size="sm"
-              value={draft}
-              onInput={(e) =>
-                setDraft((e.target as HTMLInputElement).value)
-              }
-              onKeyDown={(e) => {
-                if ((e as KeyboardEvent).key === 'Enter') {
-                  e.preventDefault();
-                  addTag(draft);
-                }
-              }}
-            />
-            <ComboboxList>
-              {POSSIBLE_TAGS.filter(
-                (p) =>
-                  (!draft || p.toLowerCase().includes(draft.toLowerCase())) &&
-                  !tags.includes(`Tag: ${p}`),
-              ).map((p) => (
-                <Item key={p} value={p} onClick={() => addTag(`Tag: ${p}`)}>
-                  {p}
-                </Item>
-              ))}
-            </ComboboxList>
-          </Combobox>
-        </div>
-      </Field>
     </div>
   );
 }
@@ -1570,7 +1559,6 @@ function SettingsPreview() {
 }
 
 function SettingsProfile() {
-  const [name, setName] = useState('Jason Miller');
   const [email] = useState('jason@kinu.sh');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const lastBlobRef = useRef<string | null>(null);
@@ -1596,29 +1584,15 @@ function SettingsProfile() {
     <TabPanel class="kh-settings-panel">
       <div class="kh-settings-avatar">
         {avatarUrl ? (
-          <Avatar size="lg" src={avatarUrl} alt={name} />
+          <Avatar size="lg" src={avatarUrl} alt="Profile" />
         ) : (
-          <Avatar size="lg">
-            {name
-              .split(' ')
-              .map((s) => s[0])
-              .join('')
-              .slice(0, 2)
-              .toUpperCase()}
-          </Avatar>
+          <Avatar size="lg">JM</Avatar>
         )}
         <Field>
           <Field.Label>Avatar</Field.Label>
           <FileUpload accept="image/*" onChange={onPickAvatar} />
         </Field>
       </div>
-      <Field>
-        <Field.Label>Display name</Field.Label>
-        <Input
-          value={name}
-          onInput={(e) => setName((e.target as HTMLInputElement).value)}
-        />
-      </Field>
       <Field>
         <Field.Label>Email</Field.Label>
         <InputGroup>

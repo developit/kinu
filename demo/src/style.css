@@ -721,6 +721,16 @@ body .home-nav--marketing + * {
   gap: 14px;
   min-height: 320px;
 }
+/* When the card has no title header, the demo body owns the card directly. */
+.kinu-home [k="card"].kh-preview--bare {
+  gap: 0;
+}
+/* The OTP-driven Settings card and the two-pane Inbox card need taller
+ * floors so their inner panes don't get squashed. */
+.kinu-home [k="card"].kh-preview:has(.kh-settings),
+.kinu-home [k="card"].kh-preview:has(.kh-inbox) {
+  min-height: 380px;
+}
 .kinu-home [k="card"].kh-preview--wide {
   grid-column: span 2;
 }
@@ -964,9 +974,15 @@ body .home-nav--marketing + * {
   flex: 1;
   min-height: 0;
 }
-.kinu-home [k="scroll-area"].kh-composer-thread {
-  flex: 1 1 auto;
+.kh-composer-thread-frame {
+  flex: 1 1 0;
   min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+.kinu-home [k="scroll-area"].kh-composer-thread {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1109,11 +1125,28 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground));
 }
 
-/* Team Activity preview */
+/* Activity preview — search + filters bar above the team feed */
 .kh-activity {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+}
+.kinu-home [k="combobox"].kh-activity-search {
+  width: 100%;
+}
+.kh-activity-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.kinu-home [k="toggle-group"].kh-activity-sort {
+  flex-shrink: 0;
+}
+.kinu-home [k="combobox"].kh-activity-add {
+  flex: 1 0 6rem;
+  width: auto;
+  min-width: 6rem;
 }
 .kh-activity-head {
   display: flex;
