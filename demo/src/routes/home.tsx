@@ -36,6 +36,7 @@ import {
   Progress,
   ProgressRing,
   Prose,
+  ScrollArea,
   Select,
   Separator,
   Slider,
@@ -158,26 +159,14 @@ export default function Home() {
           <PreviewCard title="Trip Booking">
             <DateRangePreview />
           </PreviewCard>
-          <PreviewCard title="Pricing">
-            <PricingPreview />
-          </PreviewCard>
           <PreviewCard title="Inbox">
             <InboxPreview />
-          </PreviewCard>
-          <PreviewCard title="Onboarding">
-            <OnboardingPreview />
-          </PreviewCard>
-          <PreviewCard title="File Upload">
-            <FileUploadPreview />
           </PreviewCard>
           <PreviewCard title="Verify Email">
             <OTPPreview />
           </PreviewCard>
-          <PreviewCard title="Theme Studio">
-            <ThemeStudioPreview />
-          </PreviewCard>
-          <PreviewCard title="Editor Tabs">
-            <EditorTabsPreview />
+          <PreviewCard title="Settings">
+            <SettingsPreview />
           </PreviewCard>
           <PreviewCard title="Filters">
             <FiltersPreview />
@@ -514,12 +503,44 @@ const MODELS: ModelOption[] = [
   {id: 'flash',  provider: 'Google',    label: 'Gemini 2.5 Flash',    meta: 'Lightning · 1M'},
 ];
 
+type ChatMsg = {id: number; role: 'user' | 'model'; text: string; pending?: boolean};
+
+const CANNED_REPLIES: Record<string, string> = {
+  default:
+    "Sure — kinu's <Popover mobile=\"drawer\"> renders an anchor-positioned popover on desktop and a bottom sheet on phones. Same JSX, no per-device branching.",
+  size: 'Around 5 kB of JS plus 6 kB of CSS, gzipped. The grid you see below ships with the page.',
+  hello:
+    "Hey! Ask anything about kinu — components, theming, the commandFor pattern, the platform-native bits.",
+};
+
+function fakeReply(prompt: string): string {
+  const p = prompt.toLowerCase();
+  if (/(size|kb|bundle|small)/.test(p)) return CANNED_REPLIES.size;
+  if (/(hi|hello|hey)/.test(p)) return CANNED_REPLIES.hello;
+  return CANNED_REPLIES.default;
+}
+
 function ComposerPreview() {
   const [modelId, setModelId] = useState('sonnet');
   const [filter, setFilter] = useState('');
   const [cursor, setCursor] = useState(-1);
   const [text, setText] = useState('');
+  const [messages, setMessages] = useState<ChatMsg[]>([
+    {
+      id: 1,
+      role: 'model',
+      text:
+        "Hi — I'm a placeholder model running inside this card. Try asking about kinu's bundle size, or just say hello.",
+    },
+  ]);
+  const threadRef = useRef<HTMLDivElement>(null);
   const model = MODELS.find((m) => m.id === modelId) ?? MODELS[0];
+
+  // Keep the thread pinned to the latest message.
+  useEffect(() => {
+    const el = threadRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [messages]);
 
   const filtered = MODELS.filter(
     (m) =>
@@ -559,21 +580,65 @@ function ComposerPreview() {
 
   const send = (e: Event) => {
     e.preventDefault();
-    if (!text.trim()) return;
-    toast.show(`Sent to ${model.label}`, {title: 'Composer', icon: '✨'});
+    const prompt = text.trim();
+    if (!prompt) return;
+    const userId = Date.now();
+    const replyId = userId + 1;
+    setMessages((m) => [
+      ...m,
+      {id: userId, role: 'user', text: prompt},
+      {id: replyId, role: 'model', text: '', pending: true},
+    ]);
     setText('');
+    // Simulated streaming reply.
+    setTimeout(() => {
+      setMessages((m) =>
+        m.map((msg) =>
+          msg.id === replyId
+            ? {id: replyId, role: 'model', text: fakeReply(prompt)}
+            : msg,
+        ),
+      );
+    }, 700);
   };
 
   let flatIndex = 0;
   return (
     <form class="kh-composer" onSubmit={send}>
+      <ScrollArea class="kh-composer-thread" ref={threadRef as any}>
+        {messages.map((m) => (
+          <div
+            key={m.id}
+            class={`kh-composer-msg kh-composer-msg--${m.role}`}
+          >
+            {m.role === 'model' && (
+              <Avatar size="sm" class="kh-composer-msg-avatar">
+                ✦
+              </Avatar>
+            )}
+            <div class="kh-composer-bubble">
+              {m.pending ? (
+                <Spinner size="sm" aria-label="Thinking" />
+              ) : (
+                m.text
+              )}
+            </div>
+          </div>
+        ))}
+      </ScrollArea>
       <Textarea
         autosize
-        rows={3}
+        rows={2}
         class="kh-composer-input"
         placeholder="Ask anything…"
         value={text}
         onInput={(e) => setText((e.target as HTMLTextAreaElement).value)}
+        onKeyDown={(e) => {
+          if ((e as KeyboardEvent).key === 'Enter' && !(e as KeyboardEvent).shiftKey) {
+            e.preventDefault();
+            send(e);
+          }
+        }}
       />
       <footer class="kh-composer-bar">
         <Popover>
@@ -590,7 +655,6 @@ function ComposerPreview() {
                 size="sm"
                 placeholder="Search models…"
                 value={filter}
-                autoFocus
                 onInput={(e) => {
                   setFilter((e.target as HTMLInputElement).value);
                   setCursor(-1);
@@ -599,7 +663,7 @@ function ComposerPreview() {
               />
             </div>
             <Separator />
-            <div class="kh-composer-list">
+            <ScrollArea class="kh-composer-list">
               {groups.length === 0 && (
                 <p class="kh-composer-empty">
                   No models match <code>{filter}</code>.
@@ -631,7 +695,7 @@ function ComposerPreview() {
                   })}
                 </section>
               ))}
-            </div>
+            </ScrollArea>
           </PopoverContent>
         </Popover>
         <Button type="submit" size="sm" disabled={!text.trim()}>
@@ -1043,88 +1107,149 @@ function PricingPreview() {
   );
 }
 
-/* ── 8. Inbox — Avatar + Status + HoverCard preview + ContextMenu ───────── */
+/* ── 8. Inbox — two-pane master/detail ──────────────────────────────────── */
 
-const INBOX = [
+type InboxMsg = {
+  id: string;
+  initials: string;
+  from: string;
+  email: string;
+  subject: string;
+  preview: string;
+  time: string;
+  status?: 'success' | 'warning' | 'info';
+  unread: boolean;
+  body: string;
+};
+
+const INBOX: InboxMsg[] = [
   {
-    initials: 'JM', from: 'Jason',  preview: 'Hey, did you see the build?', time: '2m',
-    status: 'success' as const,  unread: true,
-    full: 'Hey, did you see the build? CI is green and the bundle is at 11.2 kB. Tagging you because the changeset touched theme tokens.',
+    id: 'jm', initials: 'JM', from: 'Jason Miller',  email: 'jason@kinu.sh',
+    subject: 'Build is green',
+    preview: 'CI is green and the bundle is at 11.2 kB.',
+    time: '2m', status: 'success', unread: true,
+    body:
+      "Hey — CI is green and the bundle is at 11.2 kB. The changeset touched theme tokens, so I tagged you. Want to look at it before I cut a release? No rush.",
   },
   {
-    initials: 'AS', from: 'Alex',   preview: 'Re: pricing draft',           time: '14m',
-    status: 'warning' as const,  unread: true,
-    full: 'Re: pricing draft — Team feels too cheap relative to Org. What if we move Team to $24 and bump Org to $59?',
+    id: 'as', initials: 'AS', from: 'Alex Stein',    email: 'alex@kinu.sh',
+    subject: 'Re: pricing draft',
+    preview: 'Team feels too cheap relative to Org.',
+    time: '14m', status: 'warning', unread: true,
+    body:
+      "Re: pricing draft — Team feels too cheap relative to Org. What if we move Team to $24 and bump Org to $59? It would also make the per-seat math line up better with the Slider in the demo.",
   },
   {
-    initials: 'KM', from: 'Karen',  preview: 'weekly retro notes',          time: '1h',
-    status: undefined,           unread: false,
-    full: 'Weekly retro: three highlights, two action items, one rant about the docs sidebar.',
+    id: 'km', initials: 'KM', from: 'Karen Montoya', email: 'karen@kinu.sh',
+    subject: 'Weekly retro notes',
+    preview: 'Three highlights, two action items.',
+    time: '1h', unread: false,
+    body:
+      "Weekly retro: three highlights (commandFor pattern is finally clicking, the docs sidebar got nicer, OTP shipped) and two action items (split Tab and document anchor positioning fallbacks).",
   },
   {
-    initials: 'TR', from: 'Toshi',  preview: 'Re: Re: contract revisions',  time: '2h',
-    status: 'info' as const,     unread: false,
-    full: 'Re: Re: contract revisions — legal cleared the indemnification clause; ready for signature.',
+    id: 'tr', initials: 'TR', from: 'Toshi Rahman',  email: 'toshi@contoso.io',
+    subject: 'Re: Re: contract revisions',
+    preview: 'Legal cleared the indemnification clause.',
+    time: '2h', status: 'info', unread: false,
+    body:
+      "Re: Re: contract revisions — legal cleared the indemnification clause; we're ready for signature. They'd like the redline back by EOD Friday if at all possible.",
   },
 ];
 
 function InboxPreview() {
+  const [selectedId, setSelectedId] = useState(INBOX[0].id);
+  const [readIds, setReadIds] = useState<Set<string>>(
+    () => new Set(INBOX.filter((m) => !m.unread).map((m) => m.id)),
+  );
+  const selected = INBOX.find((m) => m.id === selectedId) ?? INBOX[0];
+  const isRead = (id: string) => readIds.has(id);
+  const open = (id: string) => {
+    setSelectedId(id);
+    setReadIds((prev) => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+  };
+
   return (
-    <ul class="kh-inbox">
-      {INBOX.map((m) => (
-        <li
-          key={m.from}
-          class={`kh-inbox-item${m.unread ? ' is-unread' : ''}`}
-        >
-          <ContextMenu>
-            <ContextMenuTrigger>
-              <HoverCard>
-                <HoverCardTrigger>
-                  <button class="kh-inbox-link" type="button" onClick={() => toast.show(`Open · ${m.from}`)}>
-                    <span class="kh-inbox-avatar">
-                      <Avatar size="sm">{m.initials}</Avatar>
-                      {m.status && (
-                        <Status
-                          variant={m.status}
-                          aria-label={m.status}
-                          class="kh-inbox-presence"
-                        />
-                      )}
-                    </span>
-                    <span class="kh-inbox-text">
-                      <span class="kh-inbox-line">
-                        <strong>{m.from}</strong>
-                        <span class="kh-inbox-time">{m.time}</span>
-                      </span>
-                      <span class="kh-inbox-preview">{m.preview}</span>
-                    </span>
-                    {m.unread && <span class="kh-inbox-dot" aria-label="unread" />}
-                  </button>
-                </HoverCardTrigger>
-                <HoverCardContent class="kh-inbox-hover">
-                  <strong>{m.from}</strong>
-                  <p>{m.full}</p>
-                </HoverCardContent>
-              </HoverCard>
-            </ContextMenuTrigger>
-            <ContextMenuContent mobile="drawer">
-              <Item onClick={() => toast.show(`Marked read · ${m.from}`)}>
-                Mark read
-              </Item>
-              <Item onClick={() => toast.show(`Archived · ${m.from}`)}>
-                Archive
-              </Item>
-              <Item onClick={() => toast.show(`Starred · ${m.from}`)}>
-                Star
-              </Item>
-              <Item destructive onClick={() => toast.show(`Deleted · ${m.from}`)}>
-                Delete
-              </Item>
-            </ContextMenuContent>
-          </ContextMenu>
-        </li>
-      ))}
-    </ul>
+    <div class="kh-inbox">
+      <ScrollArea class="kh-inbox-list">
+        {INBOX.map((m) => {
+          const row = (
+            <button
+              class={`kh-inbox-link${selectedId === m.id ? ' is-active' : ''}${isRead(m.id) ? '' : ' is-unread'}`}
+              type="button"
+              onClick={() => open(m.id)}
+            >
+              <span class="kh-inbox-avatar">
+                <Avatar size="sm">{m.initials}</Avatar>
+                {m.status && (
+                  <Status
+                    variant={m.status}
+                    aria-label={m.status}
+                    class="kh-inbox-presence"
+                  />
+                )}
+              </span>
+              <span class="kh-inbox-text">
+                <span class="kh-inbox-line">
+                  <strong>{m.from.split(' ')[0]}</strong>
+                  <span class="kh-inbox-time">{m.time}</span>
+                </span>
+                <span class="kh-inbox-preview">{m.preview}</span>
+              </span>
+              {!isRead(m.id) && (
+                <span class="kh-inbox-dot" aria-label="unread" />
+              )}
+            </button>
+          );
+          return (
+            <ContextMenu key={m.id}>
+              <ContextMenuTrigger>
+                <HoverCard>
+                  <HoverCardTrigger class="kh-inbox-trigger">
+                    {row}
+                  </HoverCardTrigger>
+                  <HoverCardContent class="kh-inbox-hover">
+                    <strong>{m.subject}</strong>
+                    <p>{m.preview}</p>
+                  </HoverCardContent>
+                </HoverCard>
+              </ContextMenuTrigger>
+              <ContextMenuContent mobile="drawer">
+                <Item onClick={() => open(m.id)}>Open</Item>
+                <Item onClick={() => toast.show(`Archived · ${m.from}`)}>
+                  Archive
+                </Item>
+                <Item onClick={() => toast.show(`Starred · ${m.from}`)}>
+                  Star
+                </Item>
+                <Item destructive onClick={() => toast.show(`Deleted · ${m.from}`)}>
+                  Delete
+                </Item>
+              </ContextMenuContent>
+            </ContextMenu>
+          );
+        })}
+      </ScrollArea>
+      <article class="kh-inbox-detail">
+        <header class="kh-inbox-detail-head">
+          <div class="kh-inbox-detail-from">
+            <Avatar size="sm">{selected.initials}</Avatar>
+            <div>
+              <strong>{selected.from}</strong>
+              <span class="kh-inbox-detail-email">{selected.email}</span>
+            </div>
+          </div>
+          <span class="kh-inbox-time">{selected.time}</span>
+        </header>
+        <h4 class="kh-inbox-subject">{selected.subject}</h4>
+        <p class="kh-inbox-body">{selected.body}</p>
+      </article>
+    </div>
   );
 }
 
@@ -1561,6 +1686,7 @@ function SearchPreview() {
         {matches.map((p) => (
           <Item
             key={p.email}
+            value={p.name}
             onClick={() =>
               toast.show(`Opened ${p.name}`, {title: 'Profile', icon: '↗'})
             }
@@ -1628,4 +1754,10 @@ function AccountMenuPreview() {
       </Popover>
     </div>
   );
+}
+
+/* ── Settings — Tabs (Profile / Theme / Plan) ──────────────────────────── */
+function SettingsPreview() {
+  // Implementation comes in CHUNK F.
+  return <p style={{margin: 0, padding: 16, color: 'hsl(var(--k-muted-foreground))'}}>Settings — coming next chunk</p>;
 }

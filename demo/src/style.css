@@ -882,12 +882,59 @@ body .home-nav--marketing + * {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+.kinu-home [k="scroll-area"].kh-composer-thread {
+  flex: 1;
+  min-height: 6rem;
+  max-height: 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 2px;
+}
+.kh-composer-msg {
+  display: flex;
+  gap: 8px;
+  max-width: 90%;
+}
+.kh-composer-msg--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.kh-composer-msg--model .kh-composer-bubble {
+  background: hsl(var(--k-muted));
+  color: hsl(var(--k-foreground));
+}
+.kh-composer-msg--user .kh-composer-bubble {
+  background: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+}
+.kh-composer-bubble {
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  word-wrap: break-word;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.kinu-home [k="avatar"].kh-composer-msg-avatar {
+  background: hsl(var(--k-primary-soft, var(--k-muted)));
+  color: hsl(var(--k-primary));
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 13px;
+  flex-shrink: 0;
 }
 .kinu-home .kh-composer-input[k="textarea"] {
   resize: none;
   font-family: var(--kh-font-sans);
   font-size: 13.5px;
   line-height: 1.5;
+  flex-shrink: 0;
 }
 .kh-composer-bar {
   display: flex;
@@ -926,10 +973,10 @@ body .home-nav--marketing + * {
   padding: 8px;
   flex-shrink: 0;
 }
-.kh-composer-list {
+.kinu-home [k="scroll-area"].kh-composer-list {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  max-height: 18rem;
   padding: 4px;
   display: flex;
   flex-direction: column;
@@ -1324,17 +1371,24 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground));
 }
 
-/* ── 8. Inbox ───────────────────────────────────────────────────────────── */
+/* ── 8. Inbox — two-pane master/detail ─────────────────────────────────── */
 .kh-inbox {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 11.5rem) minmax(0, 1fr);
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+.kinu-home [k="scroll-area"].kh-inbox-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
+  border-right: 1px solid hsl(var(--k-border));
+  padding-right: 8px;
+  margin-right: 4px;
 }
-.kh-inbox-item {
-  list-style: none;
+.kh-inbox-trigger {
+  display: block;
 }
 .kh-inbox-link {
   appearance: none;
@@ -1344,7 +1398,6 @@ body .home-nav--marketing + * {
   gap: 10px;
   padding: 8px;
   border-radius: calc(var(--k-radius) - 2px);
-  text-decoration: none;
   text-align: left;
   font: inherit;
   color: inherit;
@@ -1355,6 +1408,16 @@ body .home-nav--marketing + * {
 }
 .kh-inbox-link:hover {
   background: hsl(var(--k-accent));
+}
+.kh-inbox-link.is-active {
+  background: hsl(var(--k-primary-soft, var(--k-accent)));
+  color: hsl(var(--k-accent-foreground));
+}
+.kh-inbox-link.is-unread strong {
+  font-weight: 600;
+}
+.kh-inbox-link.is-unread .kh-inbox-preview {
+  color: hsl(var(--k-foreground));
 }
 .kh-inbox-avatar {
   position: relative;
@@ -1397,18 +1460,62 @@ body .home-nav--marketing + * {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.is-unread .kh-inbox-line strong {
-  font-weight: 600;
-}
-.is-unread .kh-inbox-preview {
-  color: hsl(var(--k-foreground));
-}
 .kh-inbox-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: hsl(var(--k-primary));
   flex-shrink: 0;
+}
+.kh-inbox-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  font-size: 13px;
+}
+.kh-inbox-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.kh-inbox-detail-from {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.kh-inbox-detail-from > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.kh-inbox-detail-email {
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-inbox-subject {
+  margin: 4px 0 0;
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.kh-inbox-body {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: hsl(var(--k-foreground) / 0.85);
+}
+/* On touch devices, suppress the HoverCard popover (too noisy on tap). */
+@media (hover: none) {
+  .kinu-home [k="hover-card-content"].kh-inbox-hover {
+    display: none;
+  }
 }
 .kinu-home [k="hover-card-content"].kh-inbox-hover {
   max-width: 280px;
@@ -1738,7 +1845,6 @@ body .home-nav--marketing + * {
   font-size: 11px;
 }
 .kinu-home [k="popover-content"].kh-account-pop {
-  width: 280px;
   padding: 0;
   display: flex;
   flex-direction: column;
