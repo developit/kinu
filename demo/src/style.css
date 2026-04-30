@@ -1914,9 +1914,21 @@ body .home-nav--marketing + * {
 }
 .kh-settings-avatar {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 12px;
   align-items: center;
+}
+/* Native <input type="file"> reports a wide intrinsic min-width based on
+ * the "No file chosen" + file-selector-button content (especially after
+ * a long filename is picked on iOS Safari), which overflows narrow
+ * grid/flex parents. Force it to live within its column. */
+.kh-settings-avatar [k="file-upload"] {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .kh-settings-annual {
   display: inline-flex;
