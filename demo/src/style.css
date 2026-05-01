@@ -1230,7 +1230,7 @@ body .home-nav--marketing + * {
 
 .kh-code-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
   width: 100%;
   max-width: 1000px;
@@ -1243,6 +1243,9 @@ body .home-nav--marketing + * {
   flex-direction: column;
   gap: 12px;
   border-radius: 12px;
+  /* Pair with the minmax(0, 1fr) grid track so a long unwrapped code line
+   * scrolls inside the card instead of widening the page. */
+  min-width: 0;
 }
 .kinu-home [k="card"].kh-code pre {
   margin: 0;
