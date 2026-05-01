@@ -3,6 +3,18 @@
 [k="tabs"] {
   display: grid;
   grid-template-rows: auto 1fr;
+  isolation: isolate;
+  position: relative;
+}
+
+/* Tab-strip background fills row 1 only */
+[k="tabs"]::before {
+  content: "";
+  grid-row: 1;
+  grid-column: 1 / -1;
+  background: hsl(var(--k-muted));
+  border-radius: var(--k-radius);
+  z-index: 0;
 }
 
 [k="tab"] {
@@ -11,11 +23,14 @@
 
 [k="tab-label"] {
   grid-row: 1;
+  position: relative;
+  z-index: 2;
   list-style: none;
   appearance: none;
   background: none;
   border: 1px solid transparent;
   border-radius: calc(var(--k-radius) - 2px);
+  margin: 3px;
   padding: 0.25rem 0.625rem;
   font-size: 0.875rem;
   font-weight: 500;
@@ -33,14 +48,48 @@
   display: none;
 }
 
+/* Active-tab fallback styling (no anchor positioning support) */
 [k="tab"][open] > [k="tab-label"] {
-  background: hsl(var(--k-background));
   color: hsl(var(--k-foreground));
   pointer-events: none;
   cursor: default;
+  background: hsl(var(--k-background));
   box-shadow:
     0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),
     0 1px 2px -1px var(--k-shadow-color, rgba(0, 0, 0, 0.1));
+}
+
+/* Sliding active-tab indicator via CSS anchor positioning */
+@supports (anchor-name: --k-tab-anchor) and (inset-inline-start: anchor(left)) {
+  [k="tabs"]::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inline-size: 0;
+    border-radius: calc(var(--k-radius) - 2px);
+    background: hsl(var(--k-background));
+    box-shadow:
+      0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),
+      0 1px 2px -1px var(--k-shadow-color, rgba(0, 0, 0, 0.1));
+    pointer-events: none;
+    transition:
+      inset-inline-start 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+      inline-size 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  [k="tab"][open] > [k="tab-label"] {
+    anchor-name: --k-tab-anchor;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [k="tabs"]:has([k="tab"][open] > [k="tab-label"])::after {
+    position-anchor: --k-tab-anchor;
+    inset-inline-start: anchor(left);
+    inline-size: anchor-size(width);
+    inset-block-start: anchor(top);
+    block-size: anchor-size(height);
+  }
 }
 
 [k="tab-label"]:focus-visible {
