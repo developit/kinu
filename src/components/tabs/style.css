@@ -1,17 +1,22 @@
 @import "../../variables.css";
 
 [k="tabs"] {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   isolation: isolate;
   position: relative;
 }
 
-/* Tab-strip background fills row 1 only */
+/* Tab-strip background — absolutely positioned so it isn't a flex item.
+   Height matches the label row (set by [k="tab-label"]). */
 [k="tabs"]::before {
   content: "";
-  grid-row: 1;
-  grid-column: 1 / -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.25rem;
   background: hsl(var(--k-muted));
   border-radius: var(--k-radius);
   z-index: 0;
@@ -22,16 +27,17 @@
 }
 
 [k="tab-label"] {
-  grid-row: 1;
   position: relative;
   z-index: 2;
+  flex: 0 0 auto;
   list-style: none;
   appearance: none;
   background: none;
   border: 1px solid transparent;
   border-radius: calc(var(--k-radius) - 2px);
+  height: calc(2.25rem - 6px);
   margin: 3px;
-  padding: 0.25rem 0.625rem;
+  padding: 0 0.625rem;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
@@ -98,7 +104,7 @@
 }
 
 [k="tab-panel"] {
-  grid-row: 2;
+  flex-basis: 100%;
   display: none;
   padding-top: 0.5rem;
 }
