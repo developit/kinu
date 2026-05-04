@@ -1,3 +1,14 @@
+/*
+ * kinu's default tokens live in a `@layer tokens` so that themes (and
+ * consumer overrides) can override them without specificity hacks.
+ *
+ * - kinu's defaults: layered (lowest priority)
+ * - themes / consumer overrides: unlayered (always win)
+ *
+ * A theme is just a stylesheet with `[data-theme="x"] { --k-* }` rules.
+ * No `:root` prefix or `:where()` tricks needed.
+ */
+@layer tokens {
 :root {
   /* Base colors */
   --k-background: 0 0% 100%;
@@ -204,4 +215,5 @@
   --k-border: 217.2 32.6% 17.5%;
   --k-input: 217.2 32.6% 17.5%;
   --k-ring: 212.7 26.8% 83.9%;
+}
 }
