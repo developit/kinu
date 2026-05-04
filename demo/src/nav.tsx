@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
 } from 'kinu';
 import {ThemeCustomizer} from './theme-customizer.tsx';
+import {ClaudeCodeToggle} from './claude-code-toggle.tsx';
 
 export function Nav({
   class: className,
@@ -53,6 +54,7 @@ export function Nav({
         </NavigationMenuItem>
       </NavigationMenuList>
       <div class="nav-actions">
+        <ClaudeCodeToggle />
         <ThemeCustomizer />
       </div>
     </NavigationMenu>
