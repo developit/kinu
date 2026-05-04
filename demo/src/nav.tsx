@@ -9,8 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from 'kinu';
-import {ThemeCustomizer} from './theme-customizer.tsx';
-import {ClawToggle} from './claw-toggle.tsx';
+import {ThemePicker} from './theme-picker.tsx';
 
 export function Nav({
   class: className,
@@ -54,8 +53,7 @@ export function Nav({
         </NavigationMenuItem>
       </NavigationMenuList>
       <div class="nav-actions">
-        <ClawToggle />
-        <ThemeCustomizer />
+        <ThemePicker />
       </div>
     </NavigationMenu>
   );

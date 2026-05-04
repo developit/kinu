@@ -1,8 +1,32 @@
 import {useEffect, useState} from 'preact/hooks';
-import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'kinu';
+import {Dialog, Button, Label, toast, Collapsible} from 'kinu';
 
 const CUSTOM_THEME_STORAGE_KEY = 'kinu-custom-theme';
 const CUSTOM_THEME_STYLE_ID = 'kinu-custom-style';
+export const THEME_CUSTOMIZER_DIALOG_ID = 'theme-customizer';
+
+/** Read the active theme from <html data-theme="..."> ('' = none/default). */
+function activeTheme(): string {
+  if (typeof document === 'undefined') return '';
+  return document.documentElement.getAttribute('data-theme') ?? '';
+}
+
+/** Build the selector that the customizer's CSS rules should target.
+ *  When a theme is active, scope to `[data-theme="x"]` so the customizer
+ *  overlays on top of that theme. With kinu's tokens layer, both
+ *  `:root` (no theme) and `[data-theme="x"]` are unlayered and beat
+ *  kinu's defaults — and being injected late wins source-order against
+ *  the theme's own definitions. */
+function rootSelectorForTheme(theme: string): string {
+  return theme ? `[data-theme="${theme}"]` : ':root';
+}
+function darkSelectorForTheme(theme: string): string {
+  return theme ? `[data-theme="${theme}"].dark` : '.dark';
+}
+function darkMediaSelectorForTheme(theme: string): string {
+  // OS dark mode auto-applies unless explicit .light opts out
+  return theme ? `[data-theme="${theme}"]:not(.light)` : ':root:not(.light)';
+}
 
 /* ── hex→HSL helper ───────────────────────────────────────── */
 function hexToHsl(hex: string): [number, number, number] {
@@ -98,7 +122,7 @@ interface ThemeSettings {
   scaling: string;
 }
 
-function generateCSS(settings: ThemeSettings): string {
+function generateCSS(settings: ThemeSettings, theme: string = ''): string {
   const accent = ACCENT_COLORS[settings.accentColor];
   const gray = GRAY_COLORS[settings.grayColor];
   if (!accent || !gray) return '';
@@ -108,9 +132,13 @@ function generateCSS(settings: ThemeSettings): string {
   const radius = RADIUS_MAP[settings.radius] ?? '0.5rem';
   const scale = parseInt(settings.scaling) / 100;
 
+  const rootSel = rootSelectorForTheme(theme);
+  const darkMediaSel = darkMediaSelectorForTheme(theme);
+  const darkSel = darkSelectorForTheme(theme);
+
   const lines = [
     '/* Light mode */',
-    ':root {',
+    `${rootSel} {`,
     `  --k-primary: ${hsl(accent.light.step9)};`,
     `  --k-primary-hover: ${hsl(accent.light.step10)};`,
     `  --k-primary-foreground: ${fgLight};`,
@@ -142,7 +170,7 @@ function generateCSS(settings: ThemeSettings): string {
   // Dark mode (automatic)
   lines.push('/* Dark mode (automatic) */');
   lines.push('@media (prefers-color-scheme: dark) {');
-  lines.push('  :root {');
+  lines.push(`  ${darkMediaSel} {`);
   lines.push('    color-scheme: dark;');
   lines.push(`    --k-primary: ${hsl(accent.dark.step9)};`);
   lines.push(`    --k-primary-hover: ${hsl(accent.dark.step10)};`);
@@ -168,7 +196,7 @@ function generateCSS(settings: ThemeSettings): string {
 
   // Dark mode (explicit class)
   lines.push('/* Dark mode (explicit) */');
-  lines.push('.dark {');
+  lines.push(`${darkSel} {`);
   lines.push('  color-scheme: dark;');
   lines.push(`  --k-primary: ${hsl(accent.dark.step9)};`);
   lines.push(`  --k-primary-hover: ${hsl(accent.dark.step10)};`);
@@ -229,10 +257,28 @@ function applyCustomTheme(css: string) {
   document.head.appendChild(style);
 }
 
-try {
-  const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
-  if (saved) applyCustomTheme(saved);
-} catch {}
+/** Read saved settings, regenerate CSS scoped to the currently-active
+ *  theme (falling back to `:root` when none), and inject. */
+function applyFromStorage() {
+  try {
+    const raw = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
+    if (!raw) return;
+    const settings = JSON.parse(raw) as ThemeSettings;
+    applyCustomTheme(generateCSS(settings, activeTheme()));
+  } catch {}
+}
+
+if (typeof document !== 'undefined') {
+  applyFromStorage();
+
+  // Re-scope the customizer's overlay whenever the active theme changes
+  // so the `[data-theme="..."]` selectors track the picker's selection.
+  const obs = new MutationObserver(applyFromStorage);
+  obs.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  });
+}
 
 /* ── Color swatch ─────────────────────────────────────────── */
 function Swatch({color, selected, onClick, label}: {
@@ -284,35 +330,28 @@ export function ThemeCustomizer() {
   // };
 
   const handleApply = () => {
-    const css = generateCSS(settings);
+    // Always generate against the *current* active theme, so the
+    // customizer's overlay is correctly scoped to whatever the picker
+    // has selected at apply-time.
+    const css = generateCSS(settings, activeTheme());
     try {
-      localStorage.setItem(CUSTOM_THEME_STORAGE_KEY, css);
       localStorage.setItem(CUSTOM_THEME_STORAGE_KEY + '-settings', JSON.stringify(settings));
     } catch {}
     applyCustomTheme(css);
-    toast.show('Theme applied');
+    toast.show('Customizations applied');
   };
 
   const handleClear = () => {
     try {
-      localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY);
       localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
     } catch {}
     applyCustomTheme('');
     setSettings({accentColor: 'blue', grayColor: 'slate', radius: 'medium', scaling: '100%'});
-    toast.show('Theme reset to defaults');
+    toast.show('Customizations cleared');
   };
 
   return (
-    <Dialog>
-      <Dialog.Trigger>
-        <Tooltip title="Theme" side="bottom">
-          <Button variant="secondary" size="icon">
-            <iconify-icon icon="lucide:palette" />
-          </Button>
-        </Tooltip>
-      </Dialog.Trigger>
-
+    <Dialog id={THEME_CUSTOMIZER_DIALOG_ID}>
       <Dialog.Content>
         <div style="display:flex; flex-direction:column; gap:1.5rem">
           <div style="display:flex; align-items:center; justify-content:space-between; margin:-.5rem 0;">
