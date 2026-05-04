@@ -1,14 +1,23 @@
 /*
- * Kinu theme: Claude Code (claude.ai/code)
+ * kinu theme: claw  (Claude Code-style design system)
  *
- * Tokens scraped via CSSOM from the live Anthropic CDS v2 stylesheet, both
- * light and dark, and verified against computed styles on real elements
- * (sidebar, prompt input, buttons). Only the variables and a small set of
- * surface-shadow recipes are overridden — every kinu component then renders
- * with the right colours automatically. We deliberately do NOT restyle
- * buttons, tabs, tooltip, kbd, separator, etc.: kinu's defaults already
- * read like Claude's once the tokens are right (e.g. kinu's tablist is
- * already a segmented control).
+ * Tokens scraped via CSSOM from claude.ai/code (Anthropic CDS v2) and the
+ * published Claude Code desktop CSS, both light and dark, then verified
+ * against computed styles on real elements.
+ *
+ * Architecture
+ * ────────────
+ * kinu's default tokens live in `@layer tokens` (see src/variables.css).
+ * This theme is unlayered — every unlayered rule beats every layered rule
+ * regardless of selector specificity, so a bare `[data-theme="claw"]`
+ * cleanly overrides kinu's `:root { --k-* }` defaults.
+ *
+ * For per-component rules (button heights, menu-item rows, etc.) we still
+ * need higher specificity than kinu's component CSS, since component
+ * styles are unlayered too. The descendant pattern
+ * `[data-theme="claw"] [k="..."]` (specificity 0,2,0) is enough to beat
+ * kinu's `[k="..."]:not([size])` (0,2,0) via being later in source order
+ * once this stylesheet is loaded.
  *
  *  Anthropic CDS v2 tokens — verified against root computed values
  *
@@ -25,26 +34,19 @@
  *  success-100          82 100% 27%               81 100% 30%
  *  warning-100          38 100% 33%               39 100% 36%
  *
- *  df-bg-page           60 14% 99%   #fdfdfc      (inherits bg-000 in dark)
- *    — sidebar/main use df-bg-page (slightly lighter than the body bg-100).
- *
+ *  df-bg-page   60 14% 99%  (sidebar/main, slightly lighter than bg-100)
  *  df-shadow-card  inset 0 0 0 1px hsl(0 0% 4% / .06), 0 4px 24px hsl(0 0% 4% / .04)
  *  df-shadow-pop   0 0 0 .5px rgba(0 0 0 / .06), 0 4px 12px rgba(0 0 0 / .06), 0 16px 40px rgba(0 0 0 / .08)
- *
  *  df-radius-card  8px      df-radius-pill  6px      cds-radius  4px
  *  df-row-h        26px     df-row-font     13px     df-row-px   2px
  *
- * Selector strategy — `:root[data-theme="claude-code"]` (specificity 0,2,0)
- * to beat the duplicated `:root` rules from kinu's per-component
- * `@import "../../variables.css"`.
- *
- * Apply by setting `data-theme="claude-code"` on <html>.
+ * Apply by setting `data-theme="claw"` on <html>.
  */
 
 /* ────────────────────────────────────────────────────────────
  *  Light (default)
  * ──────────────────────────────────────────────────────────── */
-:root[data-theme="claude-code"] {
+[data-theme="claw"] {
   color-scheme: light;
 
   --k-background: 60 14% 97%;
@@ -93,25 +95,25 @@
   --k-radius: 0.375rem; /* df-radius-pill */
   --k-shadow-color: hsl(0 0% 4% / 0.08); /* used by kinu tab indicator */
 
-  /* Local helpers exposed to component overrides below */
-  --cc-shadow-card:
+  /* Claw-internal helpers, used by the per-component overrides below. */
+  --claw-shadow-card:
     inset 0 0 0 1px hsl(0 0% 4% / 0.06),
     0 4px 24px hsl(0 0% 4% / 0.04);
-  --cc-shadow-pop:
+  --claw-shadow-pop:
     0 0 0 0.5px hsl(0 0% 4% / 0.06),
     0 4px 12px hsl(0 0% 4% / 0.06),
     0 16px 40px hsl(0 0% 4% / 0.08);
-  --cc-hover: hsl(0 0% 4% / 0.04);
+  --claw-hover: hsl(0 0% 4% / 0.04);
   /* Segmented-pill indicator bg — Claude uses bg-000 (pure white) in
      light and df-z4 in dark, regardless of theme card colour. */
-  --cc-pill-indicator: hsl(0 0% 100%);
+  --claw-pill-indicator: hsl(0 0% 100%);
 }
 
 /* ────────────────────────────────────────────────────────────
  *  Dark — both `prefers-color-scheme: dark` and `.dark` class
  * ──────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
-  :root[data-theme="claude-code"]:not(.light) {
+  [data-theme="claw"]:not(.light) {
     color-scheme: dark;
 
     --k-background: 60 2% 12%;
@@ -149,18 +151,18 @@
     --k-brand: 14.8 63.1% 59.6%;
 
     --k-shadow-color: hsl(0 0% 0% / 0.4);
-    --cc-shadow-card:
+    --claw-shadow-card:
       inset 0 0 0 1px hsl(0 0% 100% / 0.06),
       0 4px 24px hsl(0 0% 0% / 0.4);
-    --cc-shadow-pop:
+    --claw-shadow-pop:
       0 0 0 0.5px hsl(0 0% 100% / 0.06),
       0 4px 12px hsl(0 0% 0% / 0.4),
       0 16px 40px hsl(0 0% 0% / 0.5);
-    --cc-hover: hsl(0 0% 100% / 0.06);
-    --cc-pill-indicator: hsl(0 0% 23.9%);
+    --claw-hover: hsl(0 0% 100% / 0.06);
+    --claw-pill-indicator: hsl(0 0% 23.9%);
   }
 }
-:root[data-theme="claude-code"].dark {
+[data-theme="claw"].dark {
   color-scheme: dark;
 
   --k-background: 60 2% 12%;
@@ -198,22 +200,22 @@
   --k-brand: 14.8 63.1% 59.6%;
 
   --k-shadow-color: hsl(0 0% 0% / 0.4);
-  --cc-shadow-card:
+  --claw-shadow-card:
     inset 0 0 0 1px hsl(0 0% 100% / 0.06),
     0 4px 24px hsl(0 0% 0% / 0.4);
-  --cc-shadow-pop:
+  --claw-shadow-pop:
     0 0 0 0.5px hsl(0 0% 100% / 0.06),
     0 4px 12px hsl(0 0% 0% / 0.4),
     0 16px 40px hsl(0 0% 0% / 0.5);
-  --cc-hover: hsl(0 0% 100% / 0.06);
-  --cc-pill-indicator: hsl(0 0% 23.9%);
+  --claw-hover: hsl(0 0% 100% / 0.06);
+  --claw-pill-indicator: hsl(0 0% 23.9%);
 }
 
 /* ────────────────────────────────────────────────────────────
  *  Typography
  * ──────────────────────────────────────────────────────────── */
-:root[data-theme="claude-code"] body,
-:root[data-theme="claude-code"] {
+[data-theme="claw"] body,
+[data-theme="claw"] {
   font-family:
     "Anthropic Sans", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;
@@ -221,7 +223,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root[data-theme="claude-code"] :where(code, pre, kbd, samp, [k="kbd"]) {
+[data-theme="claw"] :where(code, pre, kbd, samp, [k="kbd"]) {
   font-family:
     "Anthropic Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", monospace;
@@ -231,20 +233,19 @@
  *  Surface shadow recipes — Claude's --df-shadow-card on rooted
  *  surfaces (cards, sidebar) and --df-shadow-pop on transient
  *  surfaces (dialogs, popovers, dropdowns, menus, sheets).
- *  Border-only — kinu's component bg/color tokens do the rest.
  *
  *  IMPORTANT: nothing here applies background/padding/border to a
  *  trigger-wrapping element (kinu's [k="tooltip"] is `position:
  *  relative` around the trigger; styling it would chip the trigger).
  * ──────────────────────────────────────────────────────────── */
 
-:root[data-theme="claude-code"] :where([k="card"], [k="sidebar"]) {
+[data-theme="claw"] :where([k="card"], [k="sidebar"]) {
   border: 0;
-  box-shadow: var(--cc-shadow-card);
+  box-shadow: var(--claw-shadow-card);
   border-radius: 8px; /* --df-radius-card */
 }
 
-:root[data-theme="claude-code"] :where(
+[data-theme="claw"] :where(
   [k="dialog-content"],
   [k="alert-dialog-content"],
   [k="popover-content"],
@@ -259,23 +260,18 @@
   [k="drawer-content"]
 ) {
   border: 0;
-  box-shadow: var(--cc-shadow-pop);
+  box-shadow: var(--claw-shadow-pop);
   border-radius: 8px;
 }
 
 /* ────────────────────────────────────────────────────────────
  *  Tightening — Claude's UI is denser than kinu's defaults.
  *  Lower row heights, tighter padding, smaller default font.
- *  Compact size variants stay smaller still.
  * ──────────────────────────────────────────────────────────── */
 
 /* Button — 32px default (was 40px), 13px font, 0.75rem padding,
-   no inner stroke. Icon-size becomes 28px square.
-   NOTE: kinu's component CSS loads AFTER this theme via JS module
-   imports, so we need higher specificity than `[k="button"]:not([size])`
-   (0,0,2,0). Each rule below ends up at (0,0,4,0) by combining
-   `:root[data-theme="..."]` with `[k="button"][size="..."]`. */
-:root[data-theme="claude-code"] [k="button"] {
+   no inner stroke. Icon-size becomes 28px square. */
+[data-theme="claw"] [k="button"] {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.005em;
@@ -283,79 +279,74 @@
      theme sets to 0.375rem (6px). Setting a winning shorthand here
      would defeat input-group's corner-flattening rules. */
 }
-:root[data-theme="claude-code"] [k="button"]:not([size]),
-:root[data-theme="claude-code"] [k="button"][size="md"] {
+[data-theme="claw"] [k="button"]:not([size]),
+[data-theme="claw"] [k="button"][size="md"] {
   height: 2rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
-:root[data-theme="claude-code"] [k="button"][size="sm"] {
+[data-theme="claw"] [k="button"][size="sm"] {
   height: 1.75rem;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
   font-size: 12px;
 }
-:root[data-theme="claude-code"] [k="button"][size="lg"] {
+[data-theme="claw"] [k="button"][size="lg"] {
   height: 2.25rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 14px;
 }
-:root[data-theme="claude-code"] [k="button"][size="icon"] {
+[data-theme="claw"] [k="button"][size="icon"] {
   height: 1.75rem;
   width: 1.75rem;
 }
-/* Outline button — hairline border using the themed border var. */
-:root[data-theme="claude-code"] [k="button"][variant="outline"] {
+[data-theme="claw"] [k="button"][variant="outline"] {
   border-color: hsl(var(--k-border));
 }
-/* Ghost & secondary hover use the monochromatic wash, not brand. */
-:root[data-theme="claude-code"] [k="button"][variant="ghost"]:hover,
-:root[data-theme="claude-code"] [k="button"][variant="secondary"]:hover {
-  background-color: var(--cc-hover);
+[data-theme="claw"] [k="button"][variant="ghost"]:hover,
+[data-theme="claw"] [k="button"][variant="secondary"]:hover {
+  background-color: var(--claw-hover);
 }
 
-/* Input / textarea — 32px high, 13px font, hairline border.
-   NOTE: do NOT set `border-radius` here; kinu's `[k="input-group"]`
-   flattens corners on grouped controls, and a winning radius rule on
-   the child would break that pattern. kinu's default --k-radius (6px
-   from this theme) is the right value when standalone. */
-:root[data-theme="claude-code"] [k="input"],
-:root[data-theme="claude-code"] [k="textarea"] {
+/* Input / textarea — 32px high, 13px font, hairline border. Avoid
+   setting `border-radius` here — input-group flattens corners on
+   grouped controls and a winning radius rule would break that. */
+[data-theme="claw"] [k="input"],
+[data-theme="claw"] [k="textarea"] {
   font-size: 13px;
   border-color: hsl(var(--k-border));
 }
-:root[data-theme="claude-code"] [k="input"] {
+[data-theme="claw"] [k="input"] {
   height: 2rem;
   padding: 0 0.625rem;
 }
-:root[data-theme="claude-code"] [k="textarea"] {
+[data-theme="claw"] [k="textarea"] {
   padding: 0.5rem 0.625rem;
   line-height: 1.4;
 }
-:root[data-theme="claude-code"] [k="input"]:focus-visible,
-:root[data-theme="claude-code"] [k="textarea"]:focus-visible {
+[data-theme="claw"] [k="input"]:focus-visible,
+[data-theme="claw"] [k="textarea"]:focus-visible {
   border-color: hsl(var(--k-foreground) / 0.2);
   box-shadow: 0 0 0 3px hsl(var(--k-foreground) / 0.06);
 }
 
 /* Tabs — match Claude's `.df-pills[data-segmented]` exactly.
-   Canonical values from the Claude Code desktop app CSS:
      track    bg --df-hover, padding 2px, radius 10px, gap 2px
      indicator bg bg-000 (white light / z4 dark), height 28px, top 2px,
               radius 8px, hairline 0.5px @ border-300/30%
      pill     height 28px, padding 0 8px, radius 8px, gap 6px
      label    font-size 12px, weight 470
    Kinu's anchor-positioned `::before` indicator pattern is preserved. */
-:root[data-theme="claude-code"] [k="tablist"] {
+[data-theme="claw"] [k="tablist"] {
   height: 32px;
   padding: 2px;
   gap: 2px;
   border-radius: 10px;
-  background: var(--cc-hover);
+  background: var(--claw-hover);
   box-shadow: none;
 }
-:root[data-theme="claude-code"] [k="tab"] {
+[data-theme="claw"] [k="tab"] {
   height: 28px;
   font-size: 12px;
   font-weight: 470;
@@ -365,30 +356,29 @@
   color: hsl(var(--k-muted-foreground));
   cursor: default;
 }
-:root[data-theme="claude-code"] [k="tab"][aria-selected="true"] {
+[data-theme="claw"] [k="tab"][aria-selected="true"] {
   color: hsl(var(--k-foreground));
 }
 
 /* Indicator: `[k="tablist"]::before` when @supports (anchor-name); falls
-   back to painting the selected tab when not. Override kinu's
-   `top: 3px` / `block-size: calc(100% - 6px)` to lock to 28px / top 2px,
-   and replace its drop shadow with Claude's 0.5px hairline. */
-:root[data-theme="claude-code"] [k="tablist"]::before {
+   back to painting the selected tab when not. Override kinu's defaults
+   to lock to 28px / top 2px, and replace its drop shadow with a hairline. */
+[data-theme="claw"] [k="tablist"]::before {
   top: 2px;
   block-size: 28px;
-  background: var(--cc-pill-indicator);
+  background: var(--claw-pill-indicator);
   border-radius: 8px;
   box-shadow: 0 0 0 0.5px hsl(var(--k-foreground) / 0.3);
 }
 @supports not (anchor-name: --k) {
-  :root[data-theme="claude-code"] [k="tab"][aria-selected="true"] {
-    background: var(--cc-pill-indicator);
+  [data-theme="claw"] [k="tab"][aria-selected="true"] {
+    background: var(--claw-pill-indicator);
     box-shadow: 0 0 0 0.5px hsl(var(--k-foreground) / 0.3);
   }
 }
 
 /* Badge / chip — small, monochromatic, 12px. */
-:root[data-theme="claude-code"] :where([k="badge"], [k="chip"]) {
+[data-theme="claw"] :where([k="badge"], [k="chip"]) {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0;
@@ -397,31 +387,31 @@
 }
 
 /* Menu / list rows — kinu uses the shared `[k="item"]` element for
-   dropdown / context-menu / list / select rows. Match Claude's --df-row-*
-   tokens exactly: 26px row height, 13px font, 0 8px padding, 4px gap,
-   6px radius. Override kinu's defaults of 38px min-height / 8px 12px
-   padding / 8px gap (which were nearly 50% too tall). */
-:root[data-theme="claude-code"] [k="item"] {
+   dropdown / context-menu / list / select rows. Match Claude's
+   --df-row-* tokens exactly: 26px row height, 13px font, 0 8px padding,
+   4px gap, 6px radius (kinu's defaults of 38px min-height / 17px font /
+   8×12 padding were ~50% too tall). */
+[data-theme="claw"] [k="item"] {
   min-height: 26px;
   height: 26px;
   padding: 0 8px;
   gap: 4px;
   font-size: 13px;
-  line-height: 19.5px; /* matches Claude (1.5 * 13px) */
+  line-height: 19.5px;
   border-radius: 6px;
 }
-:root[data-theme="claude-code"] [k="item"]:hover,
-:root[data-theme="claude-code"] [k="item"]:focus-visible {
-  background: var(--cc-hover);
+[data-theme="claw"] [k="item"]:hover,
+[data-theme="claw"] [k="item"]:focus-visible {
+  background: var(--claw-hover);
 }
 /* Stack rows tight, no inter-item gap (Claude rows pack flush). */
-:root[data-theme="claude-code"] [k="list"] {
+[data-theme="claw"] [k="list"] {
   gap: 0;
 }
 
 /* Menu/popover containers — slightly tighter padding + 8px radius
    (matching `--df-radius-card`). */
-:root[data-theme="claude-code"] :where(
+[data-theme="claw"] :where(
   [k="dropdown-content"],
   [k="context-menu"],
   [k="combobox-list"],
@@ -431,90 +421,77 @@
   border-radius: 8px;
 }
 
-/* Select trigger — also 32px tall like inputs (was 40px). Same
-   no-border-radius caveat as inputs above. */
-:root[data-theme="claude-code"] [k="select"] {
+/* Select trigger — 32px tall like inputs. */
+[data-theme="claw"] [k="select"] {
   height: 2rem;
   font-size: 13px;
   padding: 0 0.625rem;
 }
 
-/* Input-group legend — match the 13px sibling input font and align
-   visual height. kinu defaults legend to 14px (0.875rem) and ~36px
-   tall which doesn't line up with our 32px inputs. */
-:root[data-theme="claude-code"] [k="input-group"] > legend {
+/* Input-group legend — match the 13px sibling input font. */
+[data-theme="claw"] [k="input-group"] > legend {
   font-size: 13px;
   padding: 0 0.75rem;
 }
 
-/* Separator — extra-subtle hairline (Claude uses lots of these). */
-:root[data-theme="claude-code"] [k="separator"] {
+/* Separator — extra-subtle hairline. */
+[data-theme="claw"] [k="separator"] {
   background: hsl(var(--k-foreground) / 0.06);
 }
 
 /* Table — tighter cells + hairline rows. */
-:root[data-theme="claude-code"] [k="table"] :where(th, td) {
+[data-theme="claw"] [k="table"] :where(th, td) {
   padding: 0.375rem 0.5rem;
   font-size: 13px;
   border-color: hsl(var(--k-foreground) / 0.06);
 }
-:root[data-theme="claude-code"] [k="table"] th {
+[data-theme="claw"] [k="table"] th {
   background: transparent;
   color: hsl(var(--k-muted-foreground));
   font-weight: 500;
   letter-spacing: 0;
 }
 
-/* List / Item — Claude row aesthetics. */
-:root[data-theme="claude-code"] [k="item"] {
-  border-radius: 6px;
-  font-size: 13px;
-}
-:root[data-theme="claude-code"] [k="item"]:hover {
-  background: var(--cc-hover);
-}
-
-/* Card content padding — Claude's card padding is tighter than kinu's default. */
-:root[data-theme="claude-code"] [k="card"] {
+/* Card content padding — Claude's card padding is tighter than
+   kinu's default. */
+[data-theme="claw"] [k="card"] {
   padding: 1rem;
 }
 
-/* Sidebar — let kinu's structure stand, but use the page surface
-   color (df-bg-page) and Claude's card shadow recipe. */
-:root[data-theme="claude-code"] [k="sidebar"] {
+[data-theme="claw"] [k="sidebar"] {
   background: hsl(var(--k-sidebar));
 }
 
 /* Switch — slightly more compact + monochromatic off-state. */
-:root[data-theme="claude-code"] [k="switch"] {
+[data-theme="claw"] [k="switch"] {
   width: 2rem;
   height: 1.125rem;
 }
-:root[data-theme="claude-code"] [k="switch"]::before {
+[data-theme="claw"] [k="switch"]::before {
   width: 0.875rem;
   height: 0.875rem;
   top: 0.0625rem;
   left: 0.125rem;
 }
-:root[data-theme="claude-code"] [k="switch"]:checked::before {
+[data-theme="claw"] [k="switch"]:checked::before {
   transform: translateX(0.875rem);
 }
-:root[data-theme="claude-code"] [k="switch"]:not(:checked) {
+[data-theme="claw"] [k="switch"]:not(:checked) {
   background: hsl(var(--k-foreground) / 0.12);
   border-color: transparent;
 }
 
 /* Checkbox / radio — hairline border, slightly smaller. */
-:root[data-theme="claude-code"] :where([k="checkbox"], [k="radio"]) {
+[data-theme="claw"] :where([k="checkbox"], [k="radio"]) {
   border-color: hsl(var(--k-foreground) / 0.2);
   border-radius: 4px;
 }
-:root[data-theme="claude-code"] [k="radio"] {
+[data-theme="claw"] [k="radio"] {
   border-radius: 50%;
 }
 
 /* Avatar default surface — soft monochromatic. */
-:root[data-theme="claude-code"] [k="avatar"] {
+[data-theme="claw"] [k="avatar"] {
   background: hsl(var(--k-foreground) / 0.08);
   color: hsl(var(--k-foreground));
   font-size: 11px;
@@ -522,7 +499,7 @@
 }
 
 /* Inline code — subtle pill against surrounding prose. */
-:root[data-theme="claude-code"] :where(p, li, span) > code {
+[data-theme="claw"] :where(p, li, span) > code {
   background: hsl(var(--k-foreground) / 0.06);
   padding: 0.0625rem 0.375rem;
   border-radius: 4px;
@@ -530,7 +507,7 @@
 }
 
 /* Kbd — same compact look as inline code. */
-:root[data-theme="claude-code"] [k="kbd"] {
+[data-theme="claw"] [k="kbd"] {
   font-size: 11px;
   padding: 0.0625rem 0.3125rem;
   border-radius: 3px;
@@ -541,21 +518,21 @@
 }
 
 /* Scrollbars — match the Anthropic warm-grey aesthetic. */
-:root[data-theme="claude-code"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
+[data-theme="claw"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-:root[data-theme="claude-code"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb {
+[data-theme="claw"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb {
   background: content-box hsl(var(--k-foreground) / 0.16);
   border: 2px solid transparent;
   border-radius: 999px;
 }
-:root[data-theme="claude-code"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb:hover {
+[data-theme="claw"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb:hover {
   background: content-box hsl(var(--k-foreground) / 0.3);
 }
 
 /* Selection — neutral foreground tint (monochromatic). */
-:root[data-theme="claude-code"] ::selection {
+[data-theme="claw"] ::selection {
   background: hsl(var(--k-foreground) / 0.15);
   color: hsl(var(--k-foreground));
 }

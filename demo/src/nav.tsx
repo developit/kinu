@@ -11,7 +11,7 @@ import {
 } from 'kinu';
 import {ThemeCustomizer} from './theme-customizer.tsx';
 import {KinuLogo} from './logo';
-import {ClaudeCodeToggle} from './claude-code-toggle.tsx';
+import {ClawToggle} from './claw-toggle.tsx';
 
 export function Nav({
   class: className,
@@ -65,7 +65,7 @@ export function Nav({
         </NavigationMenuItem>
       </NavigationMenuList>
       <div class="nav-actions">
-        <ClaudeCodeToggle />
+        <ClawToggle />
         <ThemeCustomizer />
       </div>
     </NavigationMenu>

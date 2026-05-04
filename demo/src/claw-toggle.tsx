@@ -1,15 +1,16 @@
 import {useEffect, useState} from 'preact/hooks';
 import {Button, Tooltip} from 'kinu';
 
-const STORAGE_KEY = 'kinu-claude-code-theme';
+const STORAGE_KEY = 'kinu-claw-theme';
+const THEME_NAME = 'claw';
 
 function isOn() {
-  return document.documentElement.getAttribute('data-theme') === 'claude-code';
+  return document.documentElement.getAttribute('data-theme') === THEME_NAME;
 }
 
 function apply(on: boolean) {
   if (on) {
-    document.documentElement.setAttribute('data-theme', 'claude-code');
+    document.documentElement.setAttribute('data-theme', THEME_NAME);
   } else {
     document.documentElement.removeAttribute('data-theme');
   }
@@ -22,7 +23,7 @@ try {
   }
 } catch {}
 
-export function ClaudeCodeToggle() {
+export function ClawToggle() {
   const [on, setOn] = useState<boolean>(() =>
     typeof document === 'undefined' ? false : isOn(),
   );
@@ -35,11 +36,11 @@ export function ClaudeCodeToggle() {
   }, [on]);
 
   return (
-    <Tooltip title={on ? 'Disable Claude Code theme' : 'Apply Claude Code theme'} side="bottom">
+    <Tooltip title={on ? 'Disable claw theme' : 'Apply claw theme'} side="bottom">
       <Button
         variant={on ? null : 'secondary'}
         size="icon"
-        aria-label="Toggle Claude Code theme"
+        aria-label="Toggle claw theme"
         aria-pressed={on}
         onClick={() => setOn((v) => !v)}
       >
