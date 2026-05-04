@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'preact/hooks';
+import type {ComponentChildren} from 'preact';
 import {
   Button,
   DropdownMenu,
@@ -10,12 +11,22 @@ import {
 import {ThemeCustomizer, THEME_CUSTOMIZER_DIALOG_ID} from './theme-customizer.tsx';
 
 const THEME_STORAGE_KEY = 'kinu-theme';
+const DENSITY_STORAGE_KEY = 'kinu-density';
 
 interface ThemeOption {
   /** `data-theme` attribute value; empty string = no theme (kinu default look) */
   id: string;
-  /** Human-readable name shown in the dropdown */
+  /** Human-readable name */
   name: string;
+}
+
+interface DensityOption {
+  /** `data-kinu-density` attribute value; empty string = no attr (auto/default) */
+  id: string;
+  /** Human-readable name */
+  name: string;
+  /** One-line hint shown below the name */
+  hint: string;
 }
 
 const THEMES: ReadonlyArray<ThemeOption> = [
@@ -23,47 +34,118 @@ const THEMES: ReadonlyArray<ThemeOption> = [
   {id: 'claw', name: 'Claw'},
 ];
 
-function readActiveTheme(): string {
+const DENSITIES: ReadonlyArray<DensityOption> = [
+  {id: '', name: 'Auto', hint: 'comfortable on desktop, spacious on touch'},
+  {id: 'sm', name: 'Compact', hint: 'denser power-user UI'},
+  {id: 'md', name: 'Comfortable', hint: 'kinu default desktop'},
+  {id: 'lg', name: 'Spacious', hint: 'touch-friendly everywhere'},
+];
+
+function readAttr(name: string): string {
   if (typeof document === 'undefined') return '';
-  return document.documentElement.getAttribute('data-theme') ?? '';
+  return document.documentElement.getAttribute(name) ?? '';
 }
 
-function applyTheme(id: string) {
-  if (id) {
-    document.documentElement.setAttribute('data-theme', id);
-  } else {
-    document.documentElement.removeAttribute('data-theme');
-  }
+function writeAttr(name: string, value: string) {
+  if (value) document.documentElement.setAttribute(name, value);
+  else document.documentElement.removeAttribute(name);
 }
 
-// Restore the persisted theme as early as possible (before paint when bundled
-// after the initial CSS, but at worst within the first React render tick).
+// Restore the persisted choices (the inline script in index.html primes
+// these before paint; this just keeps things in sync if the script ran
+// before localStorage existed for any reason).
 try {
   if (typeof document !== 'undefined') {
-    const saved = localStorage.getItem(THEME_STORAGE_KEY);
-    if (saved) applyTheme(saved);
+    const t = localStorage.getItem(THEME_STORAGE_KEY);
+    if (t) writeAttr('data-theme', t);
+    const d = localStorage.getItem(DENSITY_STORAGE_KEY);
+    if (d) writeAttr('data-kinu-density', d);
   }
 } catch {}
 
-export function ThemePicker() {
-  const [active, setActive] = useState<string>(() => readActiveTheme());
+/* ── Section header ──────────────────────────────────────── */
+function SectionHeader({children}: {children: ComponentChildren}) {
+  return (
+    <div
+      style="
+        padding: 0.375rem 0.5rem 0.125rem;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: hsl(var(--k-muted-foreground));
+      "
+    >
+      {children}
+    </div>
+  );
+}
 
-  // Keep our state in sync if anything else mutates `data-theme`
-  // (the customizer's MutationObserver, devtools, another picker, etc.).
+/* ── Selectable item with active-state check ─────────────── */
+function PickerItem({
+  active,
+  onClick,
+  primary,
+  secondary,
+  ...rest
+}: {
+  active: boolean;
+  onClick: () => void;
+  primary: ComponentChildren;
+  secondary?: ComponentChildren;
+} & {[key: string]: unknown}) {
+  return (
+    <DropdownMenuItem onClick={onClick} aria-pressed={active} {...rest}>
+      <span style="display:flex; align-items:center; gap:.5rem; flex:1;">
+        <iconify-icon
+          icon={active ? 'lucide:check' : 'lucide:dot'}
+          style={`opacity:${active ? 1 : 0}; flex-shrink:0;`}
+        />
+        <span style="display:flex; flex-direction:column; flex:1; min-width:0;">
+          <span>{primary}</span>
+          {secondary && (
+            <span style="font-size:.75em; opacity:.6; line-height:1.2;">
+              {secondary}
+            </span>
+          )}
+        </span>
+      </span>
+    </DropdownMenuItem>
+  );
+}
+
+/* ── Picker ──────────────────────────────────────────────── */
+export function ThemePicker() {
+  const [theme, setTheme] = useState(() => readAttr('data-theme'));
+  const [density, setDensity] = useState(() => readAttr('data-kinu-density'));
+
+  // Stay in sync if anything else mutates the attributes (devtools,
+  // bootstrap script, customizer's MutationObserver, etc.).
   useEffect(() => {
-    const obs = new MutationObserver(() => setActive(readActiveTheme()));
+    const obs = new MutationObserver(() => {
+      setTheme(readAttr('data-theme'));
+      setDensity(readAttr('data-kinu-density'));
+    });
     obs.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-theme'],
+      attributeFilter: ['data-theme', 'data-kinu-density'],
     });
     return () => obs.disconnect();
   }, []);
 
-  const choose = (id: string) => {
-    applyTheme(id);
+  const chooseTheme = (id: string) => {
+    writeAttr('data-theme', id);
     try {
       if (id) localStorage.setItem(THEME_STORAGE_KEY, id);
       else localStorage.removeItem(THEME_STORAGE_KEY);
+    } catch {}
+  };
+
+  const chooseDensity = (id: string) => {
+    writeAttr('data-kinu-density', id);
+    try {
+      if (id) localStorage.setItem(DENSITY_STORAGE_KEY, id);
+      else localStorage.removeItem(DENSITY_STORAGE_KEY);
     } catch {}
   };
 
@@ -71,27 +153,32 @@ export function ThemePicker() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Tooltip title="Theme" side="bottom">
+          <Tooltip title="Theme &amp; density" side="bottom">
             <Button variant="secondary" size="icon" aria-label="Theme picker">
               <iconify-icon icon="lucide:palette" />
             </Button>
           </Tooltip>
         </DropdownMenuTrigger>
         <DropdownMenuContent to="left">
+          <SectionHeader>Theme</SectionHeader>
           {THEMES.map((t) => (
-            <DropdownMenuItem
+            <PickerItem
               key={t.id || 'default'}
-              onClick={() => choose(t.id)}
-              aria-pressed={active === t.id}
-            >
-              <span style="display:flex; align-items:center; gap:.5rem; flex:1;">
-                <iconify-icon
-                  icon={active === t.id ? 'lucide:check' : 'lucide:dot'}
-                  style={`opacity:${active === t.id ? 1 : 0};`}
-                />
-                {t.name}
-              </span>
-            </DropdownMenuItem>
+              active={theme === t.id}
+              onClick={() => chooseTheme(t.id)}
+              primary={t.name}
+            />
+          ))}
+          <hr />
+          <SectionHeader>Density</SectionHeader>
+          {DENSITIES.map((d) => (
+            <PickerItem
+              key={d.id || 'auto'}
+              active={density === d.id}
+              onClick={() => chooseDensity(d.id)}
+              primary={d.name}
+              secondary={d.hint}
+            />
           ))}
           <hr />
           <DropdownMenuItem
@@ -105,9 +192,6 @@ export function ThemePicker() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {/* Dialog rendered alongside so the dropdown item's `commandfor` can
-          target it. The dialog has no inline trigger; it's invoked here
-          and from anywhere else that knows the id. */}
       <ThemeCustomizer />
     </>
   );
