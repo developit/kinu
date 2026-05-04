@@ -6,10 +6,10 @@
   border-radius: var(--k-radius);
   border: 1px solid hsl(var(--k-input));
   background-color: hsl(var(--k-background));
-  height: 2.5rem;
-  padding-left: 0.75rem;
+  height: var(--k-control-h, 2.5rem);
+  padding-left: var(--k-control-px, 0.75rem);
   padding-right: 2rem;
-  font-size: 0.875rem;
+  font-size: var(--k-control-font, 0.875rem);
   cursor: pointer;
   transition: border-color 150ms cubic-bezier(0.4,0,0.2,1);
   appearance: none;
