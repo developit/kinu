@@ -269,13 +269,17 @@ function applyCustomTheme(css: string) {
 }
 
 /** Read saved settings, regenerate CSS scoped to the currently-active
- *  theme (falling back to `:root` when none), and inject. */
+ *  theme (falling back to `:root` when none), inject, and write back
+ *  the result so the synchronous bootstrap script in index.html can
+ *  inject it on the next load without re-running the generator. */
 function applyFromStorage() {
   try {
     const raw = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
     if (!raw) return;
     const settings = JSON.parse(raw) as ThemeSettings;
-    applyCustomTheme(generateCSS(settings, activeTheme()));
+    const css = generateCSS(settings, activeTheme());
+    localStorage.setItem(CUSTOM_THEME_STORAGE_KEY, css);
+    applyCustomTheme(css);
   } catch {}
 }
 
@@ -346,6 +350,7 @@ export function ThemeCustomizer() {
     // has selected at apply-time.
     const css = generateCSS(settings, activeTheme());
     try {
+      localStorage.setItem(CUSTOM_THEME_STORAGE_KEY, css);
       localStorage.setItem(CUSTOM_THEME_STORAGE_KEY + '-settings', JSON.stringify(settings));
     } catch {}
     applyCustomTheme(css);
@@ -354,6 +359,7 @@ export function ThemeCustomizer() {
 
   const handleClear = () => {
     try {
+      localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY);
       localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
     } catch {}
     applyCustomTheme('');
