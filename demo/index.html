@@ -15,6 +15,8 @@
         try {
           var t = localStorage.getItem('kinu-theme');
           if (t) document.documentElement.setAttribute('data-theme', t);
+          var d = localStorage.getItem('kinu-density');
+          if (d) document.documentElement.setAttribute('data-kinu-density', d);
           var css = localStorage.getItem('kinu-custom-theme');
           if (css) {
             var s = document.createElement('style');

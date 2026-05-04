@@ -11,6 +11,7 @@ import {
 } from 'kinu';
 import {ThemePicker} from './theme-picker.tsx';
 import {KinuLogo} from './logo';
+import {DensityPicker} from './density-picker.tsx';
 
 export function Nav({
   class: className,
@@ -64,6 +65,7 @@ export function Nav({
         </NavigationMenuItem>
       </NavigationMenuList>
       <div class="nav-actions">
+        <DensityPicker />
         <ThemePicker />
       </div>
     </NavigationMenu>

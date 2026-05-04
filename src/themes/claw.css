@@ -265,41 +265,50 @@
 }
 
 /* ────────────────────────────────────────────────────────────
- *  Tightening — Claude's UI is denser than kinu's defaults.
- *  Lower row heights, tighter padding, smaller default font.
+ *  Density (desktop only)
+ *
+ *  claw runs at `sm` density on desktop — denser than kinu's `md`
+ *  default. This block is wrapped in `@media (pointer: fine) and
+ *  (min-width: 641px)` so it ONLY applies outside the auto-coarse
+ *  zone; on touch devices kinu's own `@media (pointer: coarse)
+ *  :root:not([data-kinu-density])` rule (in src/variables.css)
+ *  applies the `lg` ramp and claw inherits it for free.
+ *
+ *  `:not([data-kinu-density])` lets a consumer override density
+ *  explicitly via `<html data-kinu-density="md">` regardless of
+ *  the active theme.
+ * ──────────────────────────────────────────────────────────── */
+@media (pointer: fine) and (min-width: 641px) {
+  [data-theme="claw"]:not([data-kinu-density]) {
+    --k-row-h:          26px;
+    --k-row-font:       13px;
+    --k-row-px:         8px;
+    --k-row-gap:        4px;
+    --k-control-h:      32px;
+    --k-control-h-sm:   28px;
+    --k-control-h-lg:   36px;
+    --k-control-h-icon: 28px;
+    --k-control-font:   13px;
+    --k-control-px:     12px;
+    --k-icon:           14px;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+ *  Per-component visual overrides (non-density)
+ *
+ *  Kept: monochromatic hover washes, hairline borders, tab indicator
+ *  treatment, distinctive badge/kbd sizing, input focus glow.
+ *  Removed: all height/padding/font-size overrides — those flow
+ *  through the density tokens above.
  * ──────────────────────────────────────────────────────────── */
 
-/* Button — 32px default (was 40px), 13px font, 0.75rem padding,
-   no inner stroke. Icon-size becomes 28px square. */
 [data-theme="claw"] [k="button"] {
-  font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.005em;
   /* No explicit border-radius — kinu uses var(--k-radius) which this
      theme sets to 0.375rem (6px). Setting a winning shorthand here
      would defeat input-group's corner-flattening rules. */
-}
-[data-theme="claw"] [k="button"]:not([size]),
-[data-theme="claw"] [k="button"][size="md"] {
-  height: 2rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-[data-theme="claw"] [k="button"][size="sm"] {
-  height: 1.75rem;
-  padding-left: 0.625rem;
-  padding-right: 0.625rem;
-  font-size: 12px;
-}
-[data-theme="claw"] [k="button"][size="lg"] {
-  height: 2.25rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: 14px;
-}
-[data-theme="claw"] [k="button"][size="icon"] {
-  height: 1.75rem;
-  width: 1.75rem;
 }
 [data-theme="claw"] [k="button"][variant="outline"] {
   border-color: hsl(var(--k-border));
@@ -309,21 +318,11 @@
   background-color: var(--claw-hover);
 }
 
-/* Input / textarea — 32px high, 13px font, hairline border. Avoid
-   setting `border-radius` here — input-group flattens corners on
-   grouped controls and a winning radius rule would break that. */
+/* Input / textarea — themed border + focus glow. Density (height,
+   padding, font) flows through tokens. */
 [data-theme="claw"] [k="input"],
 [data-theme="claw"] [k="textarea"] {
-  font-size: 13px;
   border-color: hsl(var(--k-border));
-}
-[data-theme="claw"] [k="input"] {
-  height: 2rem;
-  padding: 0 0.625rem;
-}
-[data-theme="claw"] [k="textarea"] {
-  padding: 0.5rem 0.625rem;
-  line-height: 1.4;
 }
 [data-theme="claw"] [k="input"]:focus-visible,
 [data-theme="claw"] [k="textarea"]:focus-visible {
@@ -331,15 +330,13 @@
   box-shadow: 0 0 0 3px hsl(var(--k-foreground) / 0.06);
 }
 
-/* Tabs — match Claude's `.df-pills[data-segmented]` exactly.
-     track    bg --df-hover, padding 2px, radius 10px, gap 2px
-     indicator bg bg-000 (white light / z4 dark), height 28px, top 2px,
-              radius 8px, hairline 0.5px @ border-300/30%
-     pill     height 28px, padding 0 8px, radius 8px, gap 6px
-     label    font-size 12px, weight 470
+/* Tabs — match Claude's `.df-pills[data-segmented]` look:
+     track     bg --df-hover, padding 2px, gap 2px, 10px radius
+     indicator bg-000 / df-z4, 8px radius, 0.5px hairline at border-300/30%
+     pill      8px radius, 0 8px padding, font-weight 470
+   Density (height, font-size) flows through tokens.
    Kinu's anchor-positioned `::before` indicator pattern is preserved. */
 [data-theme="claw"] [k="tablist"] {
-  height: 32px;
   padding: 2px;
   gap: 2px;
   border-radius: 10px;
@@ -347,8 +344,6 @@
   box-shadow: none;
 }
 [data-theme="claw"] [k="tab"] {
-  height: 28px;
-  font-size: 12px;
   font-weight: 470;
   padding: 0 8px;
   border-radius: 8px;
@@ -360,12 +355,8 @@
   color: hsl(var(--k-foreground));
 }
 
-/* Indicator: `[k="tablist"]::before` when @supports (anchor-name); falls
-   back to painting the selected tab when not. Override kinu's defaults
-   to lock to 28px / top 2px, and replace its drop shadow with a hairline. */
+/* Indicator (kinu's animated `::before`). Override only colour + hairline. */
 [data-theme="claw"] [k="tablist"]::before {
-  top: 2px;
-  block-size: 28px;
   background: var(--claw-pill-indicator);
   border-radius: 8px;
   box-shadow: 0 0 0 0.5px hsl(var(--k-foreground) / 0.3);
@@ -386,19 +377,12 @@
   border-radius: 6px;
 }
 
-/* Menu / list rows — kinu uses the shared `[k="item"]` element for
-   dropdown / context-menu / list / select rows. Match Claude's
-   --df-row-* tokens exactly: 26px row height, 13px font, 0 8px padding,
-   4px gap, 6px radius (kinu's defaults of 38px min-height / 17px font /
-   8×12 padding were ~50% too tall). */
+/* Menu / list rows — kinu's `[k="item"]` reads density tokens (height,
+   font, padding, gap) from kinu base. claw only supplies the
+   monochromatic hover wash + tight inter-row spacing here. */
 [data-theme="claw"] [k="item"] {
-  min-height: 26px;
-  height: 26px;
-  padding: 0 8px;
-  gap: 4px;
-  font-size: 13px;
-  line-height: 19.5px;
   border-radius: 6px;
+  line-height: 1.5;
 }
 [data-theme="claw"] [k="item"]:hover,
 [data-theme="claw"] [k="item"]:focus-visible {
@@ -421,17 +405,12 @@
   border-radius: 8px;
 }
 
-/* Select trigger — 32px tall like inputs. */
-[data-theme="claw"] [k="select"] {
-  height: 2rem;
-  font-size: 13px;
-  padding: 0 0.625rem;
-}
-
-/* Input-group legend — match the 13px sibling input font. */
+/* Input-group legend — visually align with sibling inputs. Density
+   tokens already cover font-size; just make the horizontal padding
+   visually match an input's left-padding. */
 [data-theme="claw"] [k="input-group"] > legend {
-  font-size: 13px;
-  padding: 0 0.75rem;
+  font-size: var(--k-control-font);
+  padding: 0 var(--k-control-px);
 }
 
 /* Separator — extra-subtle hairline. */
@@ -537,106 +516,8 @@
   color: hsl(var(--k-foreground));
 }
 
-/* ────────────────────────────────────────────────────────────
- *  Touch-friendly sizing
- *
- *  claw's default density is desktop-grade (26px menu rows, 32px
- *  buttons, 28px tabs), which is below Apple HIG (44pt) and Material
- *  (48dp) tap-target floors. When the primary input is a finger we
- *  bump everything up into the 36–44px "Anthropic-grade" band.
- *
- *  Detection: `pointer: coarse` is the device-capability check (iPad
- *  with trackpad reports `fine`, iPad/phone in finger mode reports
- *  `coarse`). The `max-width: 640px` clause is belt-and-braces for
- *  browsers that misreport the pointer query on phones.
- * ──────────────────────────────────────────────────────────── */
-
-@media (pointer: coarse), (max-width: 640px) {
-  /* Menu / list rows */
-  [data-theme="claw"] [k="item"] {
-    min-height: 36px;
-    height: 36px;
-    font-size: 14px;
-    line-height: 21px;
-    padding: 0 12px;
-  }
-  /* Slight breathing room around enlarged rows */
-  [data-theme="claw"] :is(
-    [k="dropdown-content"],
-    [k="context-menu"],
-    [k="combobox-list"],
-    [k="listbox-list"]
-  ) {
-    padding: 8px;
-  }
-
-  /* Buttons */
-  [data-theme="claw"] [k="button"]:not([size]),
-  [data-theme="claw"] [k="button"][size="md"] {
-    height: 40px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  [data-theme="claw"] [k="button"][size="sm"] {
-    height: 36px;
-    padding-left: 0.875rem;
-    padding-right: 0.875rem;
-    font-size: 13px;
-  }
-  [data-theme="claw"] [k="button"][size="lg"] {
-    height: 44px;
-    padding-left: 1.125rem;
-    padding-right: 1.125rem;
-  }
-  [data-theme="claw"] [k="button"][size="icon"] {
-    height: 36px;
-    width: 36px;
-  }
-
-  /* Inputs / selects / textareas */
-  [data-theme="claw"] [k="input"],
-  [data-theme="claw"] [k="select"] {
-    height: 40px;
-    font-size: 14px;
-    padding: 0 12px;
-  }
-  [data-theme="claw"] [k="textarea"] {
-    font-size: 14px;
-    padding: 0.625rem 0.75rem;
-  }
-  [data-theme="claw"] [k="input-group"] > legend {
-    font-size: 14px;
-    padding: 0 0.875rem;
-  }
-
-  /* Tabs — bump track + tab + indicator together */
-  [data-theme="claw"] [k="tablist"] {
-    height: 40px;
-    padding: 3px;
-    border-radius: 12px;
-  }
-  [data-theme="claw"] [k="tab"] {
-    height: 34px;
-    font-size: 13px;
-    padding: 0 12px;
-  }
-  [data-theme="claw"] [k="tablist"]::before {
-    top: 3px;
-    block-size: 34px;
-  }
-
-  /* Switch — proportionally larger knob */
-  [data-theme="claw"] [k="switch"] {
-    width: 2.5rem;
-    height: 1.375rem;
-  }
-  [data-theme="claw"] [k="switch"]::before {
-    width: 1.0625rem;
-    height: 1.0625rem;
-    top: 0.125rem;
-    left: 0.1875rem;
-  }
-  [data-theme="claw"] [k="switch"]:checked::before {
-    transform: translateX(1.0625rem);
-  }
-}
+/* That's the entire theme. Touch-adaptive sizing is handled by kinu
+   base's auto-coarse density rule (see src/variables.css); claw's
+   `@media (pointer: fine)` desktop block at the top doesn't match on
+   touch, so kinu's `lg` ramp takes over and claw becomes comfortable
+   automatically. */
