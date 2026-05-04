@@ -223,7 +223,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-[data-theme="claw"] :where(code, pre, kbd, samp, [k="kbd"]) {
+[data-theme="claw"] :is(code, pre, kbd, samp, [k="kbd"]) {
   font-family:
     "Anthropic Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", monospace;
@@ -239,13 +239,13 @@
  *  relative` around the trigger; styling it would chip the trigger).
  * ──────────────────────────────────────────────────────────── */
 
-[data-theme="claw"] :where([k="card"], [k="sidebar"]) {
+[data-theme="claw"] :is([k="card"], [k="sidebar"]) {
   border: 0;
   box-shadow: var(--claw-shadow-card);
   border-radius: 8px; /* --df-radius-card */
 }
 
-[data-theme="claw"] :where(
+[data-theme="claw"] :is(
   [k="dialog-content"],
   [k="alert-dialog-content"],
   [k="popover-content"],
@@ -378,7 +378,7 @@
 }
 
 /* Badge / chip — small, monochromatic, 12px. */
-[data-theme="claw"] :where([k="badge"], [k="chip"]) {
+[data-theme="claw"] :is([k="badge"], [k="chip"]) {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0;
@@ -411,7 +411,7 @@
 
 /* Menu/popover containers — slightly tighter padding + 8px radius
    (matching `--df-radius-card`). */
-[data-theme="claw"] :where(
+[data-theme="claw"] :is(
   [k="dropdown-content"],
   [k="context-menu"],
   [k="combobox-list"],
@@ -482,7 +482,7 @@
 }
 
 /* Checkbox / radio — hairline border, slightly smaller. */
-[data-theme="claw"] :where([k="checkbox"], [k="radio"]) {
+[data-theme="claw"] :is([k="checkbox"], [k="radio"]) {
   border-color: hsl(var(--k-foreground) / 0.2);
   border-radius: 4px;
 }
@@ -535,4 +535,108 @@
 [data-theme="claw"] ::selection {
   background: hsl(var(--k-foreground) / 0.15);
   color: hsl(var(--k-foreground));
+}
+
+/* ────────────────────────────────────────────────────────────
+ *  Touch-friendly sizing
+ *
+ *  claw's default density is desktop-grade (26px menu rows, 32px
+ *  buttons, 28px tabs), which is below Apple HIG (44pt) and Material
+ *  (48dp) tap-target floors. When the primary input is a finger we
+ *  bump everything up into the 36–44px "Anthropic-grade" band.
+ *
+ *  Detection: `pointer: coarse` is the device-capability check (iPad
+ *  with trackpad reports `fine`, iPad/phone in finger mode reports
+ *  `coarse`). The `max-width: 640px` clause is belt-and-braces for
+ *  browsers that misreport the pointer query on phones.
+ * ──────────────────────────────────────────────────────────── */
+
+@media (pointer: coarse), (max-width: 640px) {
+  /* Menu / list rows */
+  [data-theme="claw"] [k="item"] {
+    min-height: 36px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 21px;
+    padding: 0 12px;
+  }
+  /* Slight breathing room around enlarged rows */
+  [data-theme="claw"] :is(
+    [k="dropdown-content"],
+    [k="context-menu"],
+    [k="combobox-list"],
+    [k="listbox-list"]
+  ) {
+    padding: 8px;
+  }
+
+  /* Buttons */
+  [data-theme="claw"] [k="button"]:not([size]),
+  [data-theme="claw"] [k="button"][size="md"] {
+    height: 40px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  [data-theme="claw"] [k="button"][size="sm"] {
+    height: 36px;
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+    font-size: 13px;
+  }
+  [data-theme="claw"] [k="button"][size="lg"] {
+    height: 44px;
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
+  }
+  [data-theme="claw"] [k="button"][size="icon"] {
+    height: 36px;
+    width: 36px;
+  }
+
+  /* Inputs / selects / textareas */
+  [data-theme="claw"] [k="input"],
+  [data-theme="claw"] [k="select"] {
+    height: 40px;
+    font-size: 14px;
+    padding: 0 12px;
+  }
+  [data-theme="claw"] [k="textarea"] {
+    font-size: 14px;
+    padding: 0.625rem 0.75rem;
+  }
+  [data-theme="claw"] [k="input-group"] > legend {
+    font-size: 14px;
+    padding: 0 0.875rem;
+  }
+
+  /* Tabs — bump track + tab + indicator together */
+  [data-theme="claw"] [k="tablist"] {
+    height: 40px;
+    padding: 3px;
+    border-radius: 12px;
+  }
+  [data-theme="claw"] [k="tab"] {
+    height: 34px;
+    font-size: 13px;
+    padding: 0 12px;
+  }
+  [data-theme="claw"] [k="tablist"]::before {
+    top: 3px;
+    block-size: 34px;
+  }
+
+  /* Switch — proportionally larger knob */
+  [data-theme="claw"] [k="switch"] {
+    width: 2.5rem;
+    height: 1.375rem;
+  }
+  [data-theme="claw"] [k="switch"]::before {
+    width: 1.0625rem;
+    height: 1.0625rem;
+    top: 0.125rem;
+    left: 0.1875rem;
+  }
+  [data-theme="claw"] [k="switch"]:checked::before {
+    transform: translateX(1.0625rem);
+  }
 }
