@@ -81,7 +81,11 @@ function SectionHeader({children}: {children: ComponentChildren}) {
   );
 }
 
-/* ── Selectable item with active-state check ─────────────── */
+/* ── Selectable item with active-state check ─────────────────
+ *  Stops click propagation so DropdownMenuContent's `command="close"`
+ *  on the parent <dialog> doesn't auto-dismiss the dropdown — lets
+ *  the user flip through theme/density options without re-opening
+ *  the menu. (Same trick kinu's `Item.Field` uses.) */
 function PickerItem({
   active,
   onClick,
@@ -94,8 +98,12 @@ function PickerItem({
   primary: ComponentChildren;
   secondary?: ComponentChildren;
 } & {[key: string]: unknown}) {
+  const handle = (e: MouseEvent) => {
+    e.stopPropagation();
+    onClick();
+  };
   return (
-    <DropdownMenuItem onClick={onClick} aria-pressed={active} {...rest}>
+    <DropdownMenuItem onClick={handle} aria-pressed={active} {...rest}>
       <span style="display:flex; align-items:center; gap:.5rem; flex:1;">
         <iconify-icon
           icon={active ? 'lucide:check' : 'lucide:dot'}
