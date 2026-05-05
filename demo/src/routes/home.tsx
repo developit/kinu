@@ -160,44 +160,65 @@ export default function Home() {
 
       <section class="kh-html">
         <h2 class="kh-html-title">
-          HTML <em>as</em> a First-Class Citizen.
+          JSX <em>in</em>, native HTML <em>out</em>.
         </h2>
         <Prose class="kh-section-lede kh-html-lede">
           <p>
-            Write the markup you'd write anyway, then theme it with CSS
-            custom properties. No new state hooks, no manually-wired event
-            handlers, no hidden re-renders.
+            The Dialog you write on the left renders as the markup on the
+            right. No portals, no state hooks — just <code>commandfor</code>,
+            a native <code>&lt;dialog&gt;</code>, and the form-associated
+            elements you already know.
           </p>
         </Prose>
 
         <div class="kh-code-grid">
           <Card class="kh-code kh-code--light" padding="lg">
             <Badge variant="outline" class="kh-code-label">
-              Compose
+              You write
             </Badge>
-            <pre>{`import {Field, Input, Button} from 'kinu';
+            <pre>
+              <span class="kh-code-comment">{`// edit-profile.tsx`}</span>
+              {`
+import {Dialog, Field, Input, Button} from 'kinu';
 
-export function Subscribe() {
+export function EditProfile() {
   return (
-    <Field>
-      <Field.Label>Email address</Field.Label>
-      <Input type="email" required />
-      <Button>Subscribe →</Button>
-    </Field>
+    <Dialog>
+      <Dialog.Trigger>
+        <Button>Edit profile</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Field>
+          <Field.Label>Display name</Field.Label>
+          <Input defaultValue="Jason" required />
+        </Field>
+        <Dialog.Close>
+          <Button>Save</Button>
+        </Dialog.Close>
+      </Dialog.Content>
+    </Dialog>
   );
-}`}</pre>
+}`}
+            </pre>
           </Card>
           <Card class="kh-code kh-code--dark" padding="lg">
             <Badge variant="outline" class="kh-code-label">
-              Theme
+              The browser sees
             </Badge>
             <pre>
-              <span class="kh-code-comment">{`/* Override the brand on any element. */`}</span>
+              <span class="kh-code-comment">{`<!-- ESC closes. Click-outside closes. Focus is trapped. Free. -->`}</span>
               {`
-:root {
-  --k-primary: 133 11% 33%;
-  --k-radius: 0.5rem;
-}`}
+<button commandfor="d-1" command="show-modal">
+  Edit profile
+</button>
+
+<dialog id="d-1">
+  <div k="field">
+    <label>Display name</label>
+    <input k="input" value="Jason" required />
+  </div>
+  <button commandfor="d-1" command="close">Save</button>
+</dialog>`}
             </pre>
           </Card>
         </div>
