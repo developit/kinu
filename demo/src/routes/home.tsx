@@ -635,8 +635,8 @@ function ComposerPreview() {
 
   // Keep the thread pinned to the latest message.
   useEffect(() => {
-    const last = threadRef.current?.lastElementChild;
-    if (last) (last as Element).scrollIntoView({behavior: 'smooth', block: 'end'});
+    const el = threadRef.current;
+    if (el) el.scrollTop = 9e9;
   }, [messages]);
 
   const filtered = MODELS.filter(
@@ -702,9 +702,8 @@ function ComposerPreview() {
   let flatIndex = 0;
   return (
     <form class="kh-composer" onSubmit={send}>
-      <div class="kh-composer-thread-frame">
-        <ScrollArea class="kh-composer-thread" ref={threadRef as any}>
-          {messages.map((m) => (
+      <ScrollArea class="kh-composer-thread" ref={threadRef as any}>
+        {messages.map((m) => (
           <div
             key={m.id}
             class={`kh-composer-msg kh-composer-msg--${m.role}`}
@@ -722,9 +721,8 @@ function ComposerPreview() {
               )}
             </div>
           </div>
-          ))}
-        </ScrollArea>
-      </div>
+        ))}
+      </ScrollArea>
       <Textarea
         autosize
         rows={2}

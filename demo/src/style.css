@@ -974,15 +974,8 @@ body .home-nav--marketing + * {
   flex: 1;
   min-height: 0;
 }
-.kh-composer-thread-frame {
-  flex: 1 1 0;
-  min-height: 0;
-  position: relative;
-  overflow: hidden;
-}
 .kinu-home [k="scroll-area"].kh-composer-thread {
-  position: absolute;
-  inset: 0;
+  height: 12rem;
   display: flex;
   flex-direction: column;
   gap: 8px;
