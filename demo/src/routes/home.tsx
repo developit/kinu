@@ -1397,11 +1397,16 @@ const INBOX: InboxMsg[] = [
 ];
 
 function InboxPreview() {
-  const [selectedId, setSelectedId] = useState(INBOX[0].id);
+  const [selectedId, setSelectedId] = useState<string | null>(INBOX[0].id);
   const [readIds, setReadIds] = useState<Set<string>>(
     () => new Set(INBOX.filter((m) => !m.unread).map((m) => m.id)),
   );
-  const selected = INBOX.find((m) => m.id === selectedId) ?? INBOX[0];
+  const selected = INBOX.find((m) => m.id === selectedId);
+  // Keep the last-shown message rendered while the detail pane is sliding
+  // off — otherwise the content blanks halfway through the back animation.
+  const shownRef = useRef(selected ?? INBOX[0]);
+  if (selected) shownRef.current = selected;
+  const shown = shownRef.current;
   const isRead = (id: string) => readIds.has(id);
   const unreadCount = INBOX.filter((m) => !isRead(m.id)).length;
   const open = (id: string) => {
@@ -1516,17 +1521,25 @@ function InboxPreview() {
         </Listbox>
         <article class="kh-inbox-detail">
           <header class="kh-inbox-detail-head">
+            <button
+              type="button"
+              class="kh-inbox-back"
+              onClick={() => setSelectedId(null)}
+              aria-label="Back to inbox"
+            >
+              ←
+            </button>
             <div class="kh-inbox-detail-from">
-              <Avatar size="sm">{selected.initials}</Avatar>
+              <Avatar size="sm">{shown.initials}</Avatar>
               <div>
-                <strong>{selected.from}</strong>
-                <span class="kh-inbox-detail-email">{selected.email}</span>
+                <strong>{shown.from}</strong>
+                <span class="kh-inbox-detail-email">{shown.email}</span>
               </div>
             </div>
-            <span class="kh-inbox-time">{selected.time}</span>
+            <span class="kh-inbox-time">{shown.time}</span>
           </header>
-          <h4 class="kh-inbox-subject">{selected.subject}</h4>
-          <p class="kh-inbox-body-text">{selected.body}</p>
+          <h4 class="kh-inbox-subject">{shown.subject}</h4>
+          <p class="kh-inbox-body-text">{shown.body}</p>
         </article>
       </div>
     </div>
