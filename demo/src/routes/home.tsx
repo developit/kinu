@@ -702,7 +702,12 @@ function ComposerPreview() {
   let flatIndex = 0;
   return (
     <form class="kh-composer" onSubmit={send}>
-      <ScrollArea class="kh-composer-thread" ref={threadRef as any}>
+      {/* Plain <div k="scroll-area"> so our ref attaches — kinu's
+       * createSimpleComponent only forwards refs through components that
+       * carry defaultProps or an internal ref callback, and ScrollArea
+       * has neither. Using a div with k="scroll-area" still picks up the
+       * library's overflow + themed scrollbar rules. */}
+      <div k="scroll-area" class="kh-composer-thread" ref={threadRef}>
         {messages.map((m) => (
           <div
             key={m.id}
@@ -722,7 +727,7 @@ function ComposerPreview() {
             </div>
           </div>
         ))}
-      </ScrollArea>
+      </div>
       <Textarea
         autosize
         rows={2}
@@ -1397,14 +1402,18 @@ const INBOX: InboxMsg[] = [
 ];
 
 function InboxPreview() {
-  const [selectedId, setSelectedId] = useState<string | null>(INBOX[0].id);
+  // Default to no selection — on mobile that means the list is the first
+  // surface you see, and tapping a row triggers the slide. On desktop the
+  // detail pane just shows the first message via shownRef without a row
+  // highlight until you click one.
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [readIds, setReadIds] = useState<Set<string>>(
     () => new Set(INBOX.filter((m) => !m.unread).map((m) => m.id)),
   );
   const selected = INBOX.find((m) => m.id === selectedId);
   // Keep the last-shown message rendered while the detail pane is sliding
   // off — otherwise the content blanks halfway through the back animation.
-  const shownRef = useRef(selected ?? INBOX[0]);
+  const shownRef = useRef(INBOX[0]);
   if (selected) shownRef.current = selected;
   const shown = shownRef.current;
   const isRead = (id: string) => readIds.has(id);
