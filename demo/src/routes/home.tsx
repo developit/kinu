@@ -636,7 +636,7 @@ function ComposerPreview() {
   // Keep the thread pinned to the latest message.
   useEffect(() => {
     const el = threadRef.current;
-    if (el) el.scrollTop = 9e9;
+    if (el) el.scrollTo({top: 9e9, behavior: 'smooth'});
   }, [messages]);
 
   const filtered = MODELS.filter(
