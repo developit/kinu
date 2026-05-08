@@ -504,40 +504,109 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground));
 }
 
-/* Code pane — scoped hljs theme that matches the brand palette */
-.kh-playground-code {
-  margin: 0;
+/* Hero playground code surface — ScrollArea fills the pane minus the bar. */
+.kinu-home [k="scroll-area"].kh-playground-code {
+  flex: 1;
+  min-height: 0;
+  /* The library defaults the scroll-area to overflow-y: scroll which
+   * forces a permanent vertical bar; for code we want it only when
+   * content overflows. */
+  overflow-y: auto;
+  background: transparent;
   padding: 22px 24px 28px;
+}
+.kh-playground-code pre {
+  margin: 0;
   font-family: var(--kh-font-mono);
   font-size: 12.5px;
   line-height: 1.65;
-  overflow: auto;
-  background: transparent;
-  color: #e8e4d5;
   white-space: pre;
-  flex: 1;
 }
-/* hljs palette tuned for high contrast on the dark sage editor background. */
-.kh-playground-code { color: #e8e4d5; }
-.kh-playground-code .hljs-keyword,
-.kh-playground-code .hljs-built_in,
-.kh-playground-code .hljs-literal,
-.kh-playground-code .hljs-variable.language_ { color: #ff9d72; }
-.kh-playground-code .hljs-string,
-.kh-playground-code .hljs-attr,
-.kh-playground-code .hljs-regexp              { color: #f0cd7a; }
-.kh-playground-code .hljs-name,
-.kh-playground-code .hljs-tag,
-.kh-playground-code .hljs-selector-tag,
-.kh-playground-code .hljs-title,
-.kh-playground-code .hljs-title.class_,
-.kh-playground-code .hljs-title.function_     { color: #c4b5ff; }
-.kh-playground-code .hljs-number              { color: #b6d68a; }
-.kh-playground-code .hljs-comment,
-.kh-playground-code .hljs-quote               { color: #9ba89b; font-style: italic; }
-.kh-playground-code .hljs-property,
-.kh-playground-code .hljs-params,
-.kh-playground-code .hljs-punctuation         { color: #d6d2bf; }
+
+/* JSX-in section code surfaces. Pair with .kh-code Card. */
+.kinu-home [k="scroll-area"].kh-code-scroll {
+  overflow-y: auto;
+  /* The Card already has padding: lg; the ScrollArea gets a small
+   * negative inset so the kinu themed scrollbar tucks under the card
+   * edge instead of floating in the middle. */
+  margin: 0 -0.25rem -0.25rem;
+  padding: 0 0.25rem 0.25rem;
+}
+.kh-code-scroll pre {
+  margin: 0;
+  font-family: var(--kh-font-mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Brand-aware syntax highlighting.
+ *
+ * Tokens are CSS variables so the same .kh-hljs class can adapt to:
+ *   • light mode (cream paper)         → :root values
+ *   • dark mode (dark sage page)       → .dark values
+ *   • always-dark surfaces (the hero playground pane and the dark
+ *     "Theme" card on the JSX-in row) regardless of page mode → forced
+ *     dark values via a per-surface override.
+ * ─────────────────────────────────────────────────────────────────────── */
+:root {
+  --kh-hl-text:    24 12% 22%;
+  --kh-hl-keyword: 14 50% 36%;     /* warm sienna for keywords */
+  --kh-hl-string:  140 22% 30%;    /* deep sage for strings */
+  --kh-hl-tag:     200 30% 38%;    /* deep muted blue for tags / names */
+  --kh-hl-attr:    14 35% 42%;     /* muted brown for attributes */
+  --kh-hl-number:  220 30% 40%;    /* deep slate for numbers */
+  --kh-hl-comment: 60 5% 50%;      /* warm muted grey, italic */
+  --kh-hl-punct:   95 8% 42%;
+}
+
+.dark {
+  --kh-hl-text:    40 18% 84%;
+  --kh-hl-keyword: 18 60% 76%;     /* warm peach */
+  --kh-hl-string:  140 28% 76%;    /* soft sage */
+  --kh-hl-tag:     30 50% 78%;     /* warm cream */
+  --kh-hl-attr:    18 40% 78%;
+  --kh-hl-number:  220 30% 75%;
+  --kh-hl-comment: 130 10% 62%;
+  --kh-hl-punct:   40 12% 70%;
+}
+
+/* Always-dark code surfaces — force dark tokens regardless of page mode. */
+.kh-playground-pane--code,
+.kinu-home [k="card"].kh-code--dark {
+  --kh-hl-text:    40 18% 84%;
+  --kh-hl-keyword: 18 60% 76%;
+  --kh-hl-string:  140 28% 76%;
+  --kh-hl-tag:     30 50% 78%;
+  --kh-hl-attr:    18 40% 78%;
+  --kh-hl-number:  220 30% 75%;
+  --kh-hl-comment: 130 10% 62%;
+  --kh-hl-punct:   40 12% 70%;
+}
+
+.kh-hljs                                          { color: hsl(var(--kh-hl-text)); }
+.kh-hljs .hljs-keyword,
+.kh-hljs .hljs-built_in,
+.kh-hljs .hljs-literal,
+.kh-hljs .hljs-variable.language_                  { color: hsl(var(--kh-hl-keyword)); font-weight: 500; }
+.kh-hljs .hljs-string,
+.kh-hljs .hljs-regexp                             { color: hsl(var(--kh-hl-string)); }
+.kh-hljs .hljs-name,
+.kh-hljs .hljs-tag,
+.kh-hljs .hljs-selector-tag,
+.kh-hljs .hljs-title,
+.kh-hljs .hljs-title.class_,
+.kh-hljs .hljs-title.function_                    { color: hsl(var(--kh-hl-tag)); }
+.kh-hljs .hljs-attr,
+.kh-hljs .hljs-attribute                          { color: hsl(var(--kh-hl-attr)); }
+.kh-hljs .hljs-number,
+.kh-hljs .hljs-meta                               { color: hsl(var(--kh-hl-number)); }
+.kh-hljs .hljs-comment,
+.kh-hljs .hljs-quote                              { color: hsl(var(--kh-hl-comment)); font-style: italic; }
+.kh-hljs .hljs-property,
+.kh-hljs .hljs-params,
+.kh-hljs .hljs-punctuation                        { color: hsl(var(--kh-hl-punct)); }
 
 /* Demo pane — the actual rendered NewPost form */
 .kh-playground-stage {
@@ -1240,14 +1309,6 @@ body .home-nav--marketing + * {
    * scrolls inside the card instead of widening the page. */
   min-width: 0;
 }
-.kinu-home [k="card"].kh-code pre {
-  margin: 0;
-  font-family: var(--kh-font-mono);
-  font-size: 12.5px;
-  line-height: 1.65;
-  white-space: pre;
-  overflow: auto;
-}
 /* Light variant — warm cream paper in light mode, soft sage panel in dark */
 .kinu-home [k="card"].kh-code--light {
   background: #faf5e8;
@@ -1271,9 +1332,6 @@ body .home-nav--marketing + * {
 .dark .kinu-home [k="card"].kh-code--light [k="badge"].kh-code-label {
   color: var(--kh-cream-muted);
   border-color: rgba(251, 249, 242, 0.2);
-}
-.kh-code-comment {
-  color: #7ba68a;
 }
 
 /* ── Ship less. Do more. ────────────────────────────────────────────────── */

@@ -176,50 +176,31 @@ export default function Home() {
             <Badge variant="outline" class="kh-code-label">
               You write
             </Badge>
-            <pre>
-              <span class="kh-code-comment">{`// edit-profile.tsx`}</span>
-              {`
-import {Dialog, Field, Input, Button} from 'kinu';
-
-export function EditProfile() {
-  return (
-    <Dialog>
-      <Dialog.Trigger>
-        <Button>Edit profile</Button>
-      </Dialog.Trigger>
-      <Dialog.Content>
-        <Field>
-          <Field.Label>Display name</Field.Label>
-          <Input defaultValue="Jason" required />
-        </Field>
-        <Dialog.Close>
-          <Button>Save</Button>
-        </Dialog.Close>
-      </Dialog.Content>
-    </Dialog>
-  );
-}`}
-            </pre>
+            <ScrollArea class="kh-code-scroll">
+              <pre class="kh-hljs hljs">
+                <code
+                  class="language-tsx"
+                  dangerouslySetInnerHTML={{
+                    __html: hljs.highlight(EDIT_PROFILE_TSX, {language: 'tsx'}).value,
+                  }}
+                />
+              </pre>
+            </ScrollArea>
           </Card>
           <Card class="kh-code kh-code--dark" padding="lg">
             <Badge variant="outline" class="kh-code-label">
               The browser sees
             </Badge>
-            <pre>
-              <span class="kh-code-comment">{`<!-- ESC closes. Click-outside closes. Focus is trapped. Free. -->`}</span>
-              {`
-<button commandfor="d-1" command="show-modal">
-  Edit profile
-</button>
-
-<dialog id="d-1">
-  <div k="field">
-    <label>Display name</label>
-    <input k="input" value="Jason" required />
-  </div>
-  <button commandfor="d-1" command="close">Save</button>
-</dialog>`}
-            </pre>
+            <ScrollArea class="kh-code-scroll">
+              <pre class="kh-hljs hljs">
+                <code
+                  class="language-xml"
+                  dangerouslySetInnerHTML={{
+                    __html: hljs.highlight(EDIT_PROFILE_HTML, {language: 'xml'}).value,
+                  }}
+                />
+              </pre>
+            </ScrollArea>
           </Card>
         </div>
       </section>
@@ -983,6 +964,41 @@ function ActivityPreview() {
  * Status indicator + toast on submit.
  * ─────────────────────────────────────────────────────────────────────── */
 
+const EDIT_PROFILE_TSX = `// edit-profile.tsx
+import {Dialog, Field, Input, Button} from 'kinu';
+
+export function EditProfile() {
+  return (
+    <Dialog>
+      <Dialog.Trigger>
+        <Button>Edit profile</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Field>
+          <Field.Label>Display name</Field.Label>
+          <Input defaultValue="Jason" required />
+        </Field>
+        <Dialog.Close>
+          <Button>Save</Button>
+        </Dialog.Close>
+      </Dialog.Content>
+    </Dialog>
+  );
+}`;
+
+const EDIT_PROFILE_HTML = `<!-- ESC closes. Click-outside closes. Focus is trapped. Free. -->
+<button commandfor="d-1" command="show-modal">
+  Edit profile
+</button>
+
+<dialog id="d-1">
+  <div k="field">
+    <label>Display name</label>
+    <input k="input" value="Jason" required />
+  </div>
+  <button commandfor="d-1" command="close">Save</button>
+</dialog>`;
+
 const NEW_POST_SOURCE = `import {Field, Input, Select, Switch, Label, Button, toast} from 'kinu';
 
 export function NewPost() {
@@ -1027,13 +1043,14 @@ function HeroPlayground() {
             {lineCount} lines
           </Badge>
         </header>
-        <pre class="kh-playground-code hljs">
-          <code
-            class="language-tsx"
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{__html: highlighted}}
-          />
-        </pre>
+        <ScrollArea class="kh-playground-code">
+          <pre class="kh-hljs hljs">
+            <code
+              class="language-tsx"
+              dangerouslySetInnerHTML={{__html: highlighted}}
+            />
+          </pre>
+        </ScrollArea>
       </div>
       <div class="kh-playground-pane kh-playground-pane--demo">
         <header class="kh-playground-bar">
