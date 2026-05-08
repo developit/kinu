@@ -177,9 +177,8 @@ export default function Home() {
               You write
             </Badge>
             <ScrollArea class="kh-code-scroll">
-              <pre class="kh-hljs hljs">
+              <pre class="kh-hljs">
                 <code
-                  class="language-tsx"
                   dangerouslySetInnerHTML={{
                     __html: hljs.highlight(EDIT_PROFILE_TSX, {language: 'tsx'}).value,
                   }}
@@ -192,9 +191,8 @@ export default function Home() {
               The browser sees
             </Badge>
             <ScrollArea class="kh-code-scroll">
-              <pre class="kh-hljs hljs">
+              <pre class="kh-hljs">
                 <code
-                  class="language-xml"
                   dangerouslySetInnerHTML={{
                     __html: hljs.highlight(EDIT_PROFILE_HTML, {language: 'xml'}).value,
                   }}
@@ -1044,9 +1042,8 @@ function HeroPlayground() {
           </Badge>
         </header>
         <ScrollArea class="kh-playground-code">
-          <pre class="kh-hljs hljs">
+          <pre class="kh-hljs">
             <code
-              class="language-tsx"
               dangerouslySetInnerHTML={{__html: highlighted}}
             />
           </pre>
