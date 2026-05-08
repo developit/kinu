@@ -702,12 +702,7 @@ function ComposerPreview() {
   let flatIndex = 0;
   return (
     <form class="kh-composer" onSubmit={send}>
-      {/* Plain <div k="scroll-area"> so our ref attaches — kinu's
-       * createSimpleComponent only forwards refs through components that
-       * carry defaultProps or an internal ref callback, and ScrollArea
-       * has neither. Using a div with k="scroll-area" still picks up the
-       * library's overflow + themed scrollbar rules. */}
-      <div k="scroll-area" class="kh-composer-thread" ref={threadRef}>
+      <ScrollArea class="kh-composer-thread" ref={threadRef}>
         {messages.map((m) => (
           <div
             key={m.id}
@@ -727,7 +722,7 @@ function ComposerPreview() {
             </div>
           </div>
         ))}
-      </div>
+      </ScrollArea>
       <Textarea
         autosize
         rows={2}
@@ -1431,13 +1426,24 @@ function InboxPreview() {
   return (
     <div class="kh-inbox">
       <header class="kh-inbox-bar">
-        <span class="kh-inbox-bar-title">
-          Inbox
-          {unreadCount > 0 && (
-            <Badge variant="primary" class="kh-inbox-bar-count">
-              {unreadCount}
-            </Badge>
-          )}
+        <span class="kh-inbox-bar-slot">
+          <span class="kh-inbox-bar-title">
+            Inbox
+            {unreadCount > 0 && (
+              <Badge variant="primary" class="kh-inbox-bar-count">
+                {unreadCount}
+              </Badge>
+            )}
+          </span>
+          <Button
+            variant="ghost"
+            size="sm"
+            class="kh-inbox-back"
+            onClick={() => setSelectedId(null)}
+            aria-label="Back to inbox"
+          >
+            ← Inbox
+          </Button>
         </span>
         <Popover>
           <PopoverTrigger>
@@ -1530,14 +1536,6 @@ function InboxPreview() {
         </Listbox>
         <article class="kh-inbox-detail">
           <header class="kh-inbox-detail-head">
-            <button
-              type="button"
-              class="kh-inbox-back"
-              onClick={() => setSelectedId(null)}
-              aria-label="Back to inbox"
-            >
-              ←
-            </button>
             <div class="kh-inbox-detail-from">
               <Avatar size="sm">{shown.initials}</Avatar>
               <div>
