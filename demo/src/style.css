@@ -1319,6 +1319,13 @@ body .home-nav--marketing + * {
   color: #d7d2be;
   border-color: rgba(251, 249, 242, 0.08);
 }
+@media (prefers-color-scheme: dark) {
+  .kinu-home [k="card"].kh-code--light {
+    background: #2a3530;
+    color: #d7d2be;
+    border-color: rgba(251, 249, 242, 0.08);
+  }
+}
 /* Dark variant — always the brand dark band so the contrast holds in both modes */
 .kinu-home [k="card"].kh-code--dark {
   background: var(--kh-dark-band);
@@ -1332,6 +1339,12 @@ body .home-nav--marketing + * {
 .dark .kinu-home [k="card"].kh-code--light [k="badge"].kh-code-label {
   color: var(--kh-cream-muted);
   border-color: rgba(251, 249, 242, 0.2);
+}
+@media (prefers-color-scheme: dark) {
+  .kinu-home [k="card"].kh-code--light [k="badge"].kh-code-label {
+    color: var(--kh-cream-muted);
+    border-color: rgba(251, 249, 242, 0.2);
+  }
 }
 
 /* ── Ship less. Do more. ────────────────────────────────────────────────── */
