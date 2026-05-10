@@ -571,6 +571,21 @@ body .home-nav--marketing + * {
   --kh-hl-comment: 130 10% 62%;
   --kh-hl-punct:   40 12% 70%;
 }
+/* Same overrides for OS-level dark mode — without this, kh-code--light
+ * (which inherits page-level tokens) keeps the light highlighter
+ * palette while sitting on the dark surface in @media-dark. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --kh-hl-text:    40 18% 84%;
+    --kh-hl-keyword: 18 60% 76%;
+    --kh-hl-string:  140 28% 76%;
+    --kh-hl-tag:     30 50% 78%;
+    --kh-hl-attr:    18 40% 78%;
+    --kh-hl-number:  220 30% 75%;
+    --kh-hl-comment: 130 10% 62%;
+    --kh-hl-punct:   40 12% 70%;
+  }
+}
 
 /* Always-dark code surfaces — force dark tokens regardless of page mode. */
 .kh-playground-pane--code,
