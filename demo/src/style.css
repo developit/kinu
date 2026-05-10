@@ -1309,24 +1309,27 @@ body .home-nav--marketing + * {
    * scrolls inside the card instead of widening the page. */
   min-width: 0;
 }
-/* Light variant — warm cream paper in light mode, soft sage panel in dark */
+/* Light variant — warm cream paper in light mode. In dark mode, both
+ * cards share the same brand dark-band surface so the pair reads as a
+ * single unified code panel rather than two slightly-different darks. */
 .kinu-home [k="card"].kh-code--light {
   background: #faf5e8;
   color: #3f4b3d;
 }
-.dark .kinu-home [k="card"].kh-code--light {
-  background: #2a3530;
-  color: #d7d2be;
-  border-color: rgba(251, 249, 242, 0.08);
+.dark .kinu-home [k="card"].kh-code--light,
+.dark .kinu-home [k="card"].kh-code--dark {
+  background: var(--kh-dark-band);
+  color: #e8e4d5;
+  border-color: var(--kh-dark-band);
 }
 @media (prefers-color-scheme: dark) {
   .kinu-home [k="card"].kh-code--light {
-    background: #2a3530;
-    color: #d7d2be;
-    border-color: rgba(251, 249, 242, 0.08);
+    background: var(--kh-dark-band);
+    color: #e8e4d5;
+    border-color: var(--kh-dark-band);
   }
 }
-/* Dark variant — always the brand dark band so the contrast holds in both modes */
+/* Dark variant — always the brand dark band. */
 .kinu-home [k="card"].kh-code--dark {
   background: var(--kh-dark-band);
   color: #e8e4d5;
