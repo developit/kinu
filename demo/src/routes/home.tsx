@@ -1260,9 +1260,12 @@ function PipelineRace() {
     <div
       class={`kh-race${playing ? ' kh-race--playing' : ''}`}
       ref={ref}
-      role="img"
-      aria-label="The same JSX renders to pixels through two pipelines. A typical React UI kit chains six layers of JavaScript, ships about twenty-two kilobytes, and runs about a dozen JavaScript calls each time the user opens the popover. Kinu's pipeline is three native steps, adds zero kilobytes to your bundle, and runs zero JavaScript calls — the browser handles it."
     >
+      <div
+        class="kh-race-diagram"
+        role="img"
+        aria-label="The same JSX renders to pixels through two pipelines. A typical React UI kit chains six layers of JavaScript, ships about twenty-two kilobytes, and runs about a dozen JavaScript calls each time the user opens the popover. Kinu's pipeline is three native steps, adds zero kilobytes to your bundle, and runs zero JavaScript calls — the browser handles it."
+      >
       <div class="kh-race-source">
         <span class="kh-race-source-tag">You write</span>
         <pre class="kh-race-source-code">
@@ -1353,6 +1356,7 @@ function PipelineRace() {
             />
           </footer>
         </article>
+      </div>
       </div>
 
       <div class="kh-race-controls">
