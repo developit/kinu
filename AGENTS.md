@@ -88,3 +88,22 @@ demo/
 
 Run `pnpm install` and `pnpm run build` in `demo/` to build the demo app.
 
+## Running and inspecting the demo in a cloud container
+
+The container has no display and the dev server's port isn't reachable from
+outside, but Chromium and Playwright are pre-installed so an agent can drive
+the page headlessly:
+
+```sh
+scripts/dev-server.sh start          # vite at http://127.0.0.1:5173 (logs in .devserver/log)
+scripts/browse.mjs inspect /         # title + console + network failures as JSON
+scripts/browse.mjs screenshot / -o .devserver/home.png
+scripts/browse.mjs eval / 'document.querySelectorAll("[p=button]").length'
+scripts/browse.mjs dom / 'main'      # outerHTML of a selector
+scripts/dev-server.sh stop
+```
+
+`url` accepts an absolute URL or a path relative to the running dev server.
+Screenshots can be opened with `Read` to view them inline. Both scripts keep
+state under `.devserver/` (gitignored).
+
