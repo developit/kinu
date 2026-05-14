@@ -1111,29 +1111,26 @@ const TYPICAL_STAGES: RaceStage[] = [
   {
     label: 'Floating UI',
     note: 'positioning, collisions, arrow',
-    cost: '+16 KB',
+    cost: '+10 KB',
   },
   {
-    label: 'Focus trap',
+    label: 'Focus trap + scroll lock',
     note: (
       <>
-        <code>tabbable</code> + restore
+        <code>tabbable</code> + body bookkeeping
       </>
     ),
-    cost: '+4 KB',
+    cost: '+8 KB',
   },
   {
     label: 'Click-outside · ESC',
-    note: 'listeners + ARIA bookkeeping',
-    cost: '+2 KB',
+    note: 'dismissable layer + ARIA',
+    cost: '+6 KB',
   },
   {
-    label: (
-      <>
-        Wrapper <code>&lt;div&gt;</code>s
-      </>
-    ),
-    note: 'overlay, content, inner',
+    label: 'Mount / exit animations',
+    note: 'choreographed in JS (Presence)',
+    cost: '+4 KB',
   },
 ];
 
@@ -1145,14 +1142,18 @@ const KINU_STAGES: RaceStage[] = [
   {
     label: (
       <>
-        Native <code>&lt;dialog popover&gt;</code>
+        Native <code>&lt;dialog&gt;</code> + <code>commandfor</code>
       </>
     ),
-    note: 'with CSS anchor positioning',
+    note: 'the browser opens it',
   },
   {
-    label: 'The browser',
-    note: 'modal, focus, dismiss — built in',
+    label: 'CSS does the rest',
+    note: (
+      <>
+        anchor positioning, <code>@starting-style</code>
+      </>
+    ),
   },
 ];
 
@@ -1264,7 +1265,7 @@ function PipelineRace() {
       <div
         class="kh-race-diagram"
         role="img"
-        aria-label="The same JSX renders to pixels through two pipelines. A typical React UI kit chains six layers of JavaScript, ships about twenty-two kilobytes, and runs about a dozen JavaScript calls each time the user opens the popover. Kinu's pipeline is three native steps, adds zero kilobytes to your bundle, and runs zero JavaScript calls — the browser handles it."
+        aria-label="The same JSX renders to pixels through two pipelines. A typical React popover library (such as Radix or Base UI) chains six layers of JavaScript — positioning, focus trap, scroll lock, dismiss, animation coordination, and wrappers — that together ship about twenty-eight kilobytes gzipped and run roughly twenty JavaScript calls each time the popover opens. Kinu's pipeline is three native steps — a CSS hook on the JSX, a native dialog element with commandfor, and CSS anchor positioning — adding zero kilobytes to your bundle and running zero JavaScript calls on open. The browser handles it."
       >
       <div class="kh-race-source">
         <span class="kh-race-source-tag">You write</span>
@@ -1319,8 +1320,8 @@ function PipelineRace() {
             <RacePixels />
             <RaceBudgets
               budgets={[
-                {num: '+22 KB', label: 'JS shipped per visitor'},
-                {num: '~12', label: 'JS calls per open'},
+                {num: '+28 KB', label: 'JS shipped per visitor'},
+                {num: '~20', label: 'JS calls per open'},
               ]}
             />
           </footer>

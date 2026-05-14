@@ -906,6 +906,16 @@ body .home-nav--marketing + * {
   padding-left: 22px;
   flex: 1;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.kh-race-track > .kh-race-stages {
+  flex: 1;
+}
+/* Kinu only has three stages — distribute them so the column reads as
+   balanced rather than top-heavy with empty whitespace beneath. */
+.kh-race-col--kinu .kh-race-stages {
+  justify-content: space-around;
 }
 .kh-race-rail {
   position: absolute;
