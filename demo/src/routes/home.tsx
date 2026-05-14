@@ -96,8 +96,8 @@ export default function Home() {
               Other toolkits put state, positioning, and focus management in
               JavaScript. Kinu pushes them down into <code>commandfor</code>,
               native <code>&lt;dialog&gt;</code>, anchor positioning, and the
-              form-associated elements your browser already ships. Same JSX
-              in; same pixels out — with less between.
+              form-associated elements your browser already ships. Less code
+              shipped. Less code called. Same JSX in, same pixels out.
             </p>
           </Prose>
           <div class="kh-facade-links">
@@ -1087,7 +1087,6 @@ function NewPost() {
   );
 }
 
-/* Vertical drape of silk inside a circular crop — replaces the literal stones. */
 /* ── Pipeline race (A Clever Facade graphic) ────────────────────────────── */
 
 type RaceStage = {
@@ -1217,12 +1216,52 @@ function RacePixels() {
   );
 }
 
+type RaceBudget = {num: string; label: string; tone?: 'zero'};
+
+function RaceBudgets({budgets}: {budgets: [RaceBudget, RaceBudget]}) {
+  return (
+    <dl class="kh-race-budgets">
+      {budgets.map((b, i) => (
+        <div
+          key={i}
+          class={`kh-race-budget${b.tone ? ` kh-race-budget--${b.tone}` : ''}`}
+        >
+          <dt class="kh-race-budget-num">{b.num}</dt>
+          <dd class="kh-race-budget-label">{b.label}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 function PipelineRace() {
+  // null = never played; n = play counter (changes force re-mount → restart animations)
+  const [runId, setRunId] = useState<number | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (runId !== null) return;
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) setRunId(0);
+      },
+      {threshold: 0.25, rootMargin: '0px 0px -80px 0px'},
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [runId]);
+
+  const replay = () => setRunId((n) => (n === null ? 0 : n + 1));
+  const playing = runId !== null;
+
   return (
     <div
-      class="kh-race"
+      class={`kh-race${playing ? ' kh-race--playing' : ''}`}
+      ref={ref}
       role="img"
-      aria-label="The same JSX renders to pixels through two pipelines. A typical React UI kit chains six layers of JavaScript and ships about twenty-two kilobytes. Kinu's pipeline is three native steps and adds zero kilobytes to your bundle."
+      aria-label="The same JSX renders to pixels through two pipelines. A typical React UI kit chains six layers of JavaScript, ships about twenty-two kilobytes, and runs about a dozen JavaScript calls each time the user opens the popover. Kinu's pipeline is three native steps, adds zero kilobytes to your bundle, and runs zero JavaScript calls — the browser handles it."
     >
       <div class="kh-race-source">
         <span class="kh-race-source-tag">You write</span>
@@ -1252,7 +1291,7 @@ function PipelineRace() {
         />
       </svg>
 
-      <div class="kh-race-grid">
+      <div class="kh-race-grid" key={runId ?? 'static'}>
         <article class="kh-race-col kh-race-col--typical">
           <header class="kh-race-col-head">
             <span class="kh-race-col-tag">Typical UI kit</span>
@@ -1275,10 +1314,12 @@ function PipelineRace() {
 
           <footer class="kh-race-col-foot">
             <RacePixels />
-            <div class="kh-race-budget">
-              <span class="kh-race-budget-num">+22 KB</span>
-              <span class="kh-race-budget-label">JS shipped to every visitor</span>
-            </div>
+            <RaceBudgets
+              budgets={[
+                {num: '+22 KB', label: 'JS shipped per visitor'},
+                {num: '~12', label: 'JS calls per open'},
+              ]}
+            />
           </footer>
         </article>
 
@@ -1304,12 +1345,40 @@ function PipelineRace() {
 
           <footer class="kh-race-col-foot">
             <RacePixels />
-            <div class="kh-race-budget kh-race-budget--zero">
-              <span class="kh-race-budget-num">0 KB</span>
-              <span class="kh-race-budget-label">added to your bundle</span>
-            </div>
+            <RaceBudgets
+              budgets={[
+                {num: '0 KB', label: 'added to your bundle', tone: 'zero'},
+                {num: '0', label: 'JS calls per open', tone: 'zero'},
+              ]}
+            />
           </footer>
         </article>
+      </div>
+
+      <div class="kh-race-controls">
+        <button
+          type="button"
+          class="kh-race-replay"
+          onClick={replay}
+          aria-label="Replay the pipeline animation"
+        >
+          <svg
+            class="kh-race-replay-icon"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden
+          >
+            <path d="M3 12a9 9 0 1 0 3.27-6.95L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+          <span>Replay</span>
+        </button>
       </div>
 
       <p class="kh-race-caption">

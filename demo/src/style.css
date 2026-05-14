@@ -755,7 +755,7 @@ body .home-nav--marketing + * {
 /* ── Pipeline race graphic ──────────────────────────────────────────────── */
 .kh-race {
   /* one master cycle — every animation references this */
-  --kh-race-cycle: 7s;
+  --kh-race-cycle: 4.5s;
   --kh-race-bg: rgba(251, 249, 242, 0.025);
   --kh-race-border: rgba(251, 249, 242, 0.1);
   --kh-race-border-strong: rgba(251, 249, 242, 0.18);
@@ -778,7 +778,7 @@ body .home-nav--marketing + * {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin: 0 auto 0;
+  margin: 0 auto;
   width: max-content;
   max-width: 100%;
 }
@@ -831,7 +831,7 @@ body .home-nav--marketing + * {
   margin-bottom: -8px;
 }
 
-/* two-column race grid */
+/* two-column race grid (stays side-by-side at every viewport) */
 .kh-race-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -852,6 +852,7 @@ body .home-nav--marketing + * {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  min-width: 0;
   overflow: hidden;
   box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.55);
 }
@@ -930,12 +931,6 @@ body .home-nav--marketing + * {
   transform: scaleY(0);
   box-shadow: 0 0 6px rgba(218, 209, 168, 0.4);
 }
-.kh-race-col--typical .kh-race-rail::after {
-  animation: kh-race-rail-typical var(--kh-race-cycle) infinite linear;
-}
-.kh-race-col--kinu .kh-race-rail::after {
-  animation: kh-race-rail-kinu var(--kh-race-cycle) infinite linear;
-}
 
 /* stage items */
 .kh-race-stages {
@@ -953,13 +948,10 @@ body .home-nav--marketing + * {
   gap: 12px;
   padding: 10px 12px 10px 6px;
   border-radius: 8px;
+  /* default = hidden; animation runs only when .kh-race--playing on parent */
   opacity: 0;
   transform: translateX(-6px);
   background: transparent;
-  animation-duration: var(--kh-race-cycle);
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-  animation-timing-function: ease-out;
 }
 .kh-race-stage-dot {
   position: absolute;
@@ -1023,33 +1015,73 @@ body .home-nav--marketing + * {
   letter-spacing: 0.01em;
 }
 
-/* per-column stage activation assignments */
-.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(1) {
+/* ── play-once animation gating ─────────────────────────────────────────── */
+/* Animations only run when the .kh-race--playing class is on the parent.
+   The grid is re-keyed on each play so children re-mount and animations
+   restart cleanly. Each ends at its settled (visible) state via fill-mode. */
+.kh-race--playing .kh-race-rail::after,
+.kh-race--playing .kh-race-stage,
+.kh-race--playing .kh-race-pixel,
+.kh-race--playing .kh-race-budgets {
+  animation-duration: var(--kh-race-cycle);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+
+/* rails fill linearly so the head matches the stage cadence */
+.kh-race--playing .kh-race-col--typical .kh-race-rail::after {
+  animation-name: kh-race-rail-typical;
+  animation-timing-function: linear;
+}
+.kh-race--playing .kh-race-col--kinu .kh-race-rail::after {
+  animation-name: kh-race-rail-kinu;
+  animation-timing-function: linear;
+}
+
+/* per-column stage activations */
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(1) {
   animation-name: kh-race-stage-at-0;
 }
-.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(2) {
-  animation-name: kh-race-stage-at-9;
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(2) {
+  animation-name: kh-race-stage-at-11;
 }
-.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(3) {
-  animation-name: kh-race-stage-at-18;
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(3) {
+  animation-name: kh-race-stage-at-22;
 }
-.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(4) {
-  animation-name: kh-race-stage-at-28;
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(4) {
+  animation-name: kh-race-stage-at-33;
 }
-.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(5) {
-  animation-name: kh-race-stage-at-38;
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(5) {
+  animation-name: kh-race-stage-at-44;
 }
-.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(6) {
-  animation-name: kh-race-stage-at-48;
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(6) {
+  animation-name: kh-race-stage-at-55;
 }
-.kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(1) {
+.kh-race--playing .kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(1) {
   animation-name: kh-race-stage-at-0;
 }
-.kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(2) {
-  animation-name: kh-race-stage-at-5;
+.kh-race--playing .kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(2) {
+  animation-name: kh-race-stage-at-11;
 }
-.kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(3) {
-  animation-name: kh-race-stage-at-10;
+.kh-race--playing .kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(3) {
+  animation-name: kh-race-stage-at-22;
+}
+
+/* pixel tile reveals at its column's completion moment */
+.kh-race--playing .kh-race-col--kinu .kh-race-pixel {
+  animation-name: kh-race-pixels-at-33;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-pixel {
+  animation-name: kh-race-pixels-at-67;
+}
+
+/* budgets fly in just after the pixels */
+.kh-race--playing .kh-race-col--kinu .kh-race-budgets {
+  animation-name: kh-race-budgets-at-40;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-budgets {
+  animation-name: kh-race-budgets-at-75;
 }
 
 /* column footer — rendered pixels + bytes budget */
@@ -1057,7 +1089,7 @@ body .home-nav--marketing + * {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
   margin-top: auto;
   padding-top: 20px;
   border-top: 1px dashed var(--kh-race-border);
@@ -1074,15 +1106,11 @@ body .home-nav--marketing + * {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* hidden until animation runs */
   opacity: 0;
+  transform: scale(0.94);
   transform-origin: bottom center;
   box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.55);
-}
-.kh-race-col--typical .kh-race-pixel {
-  animation: kh-race-pixels-at-56 var(--kh-race-cycle) infinite ease-out;
-}
-.kh-race-col--kinu .kh-race-pixel {
-  animation: kh-race-pixels-at-15 var(--kh-race-cycle) infinite ease-out;
 }
 
 .kh-race-pixel-head {
@@ -1152,45 +1180,93 @@ body .home-nav--marketing + * {
   letter-spacing: 0.02em;
 }
 
-/* bytes budget */
+/* budgets — two metric tiles per column, side-by-side */
+.kh-race-budgets {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+  width: 100%;
+  text-align: center;
+  /* hidden until animation runs */
+  opacity: 0;
+  transform: translateY(4px);
+}
 .kh-race-budget {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  opacity: 0;
-  transform: translateY(4px);
-}
-.kh-race-col--typical .kh-race-budget {
-  animation: kh-race-budget-typical var(--kh-race-cycle) infinite ease-out;
-}
-.kh-race-col--kinu .kh-race-budget {
-  animation: kh-race-budget-kinu var(--kh-race-cycle) infinite ease-out;
+  min-width: 0;
 }
 .kh-race-budget-num {
+  margin: 0;
   font-family: var(--kh-font-serif);
   font-style: italic;
-  font-size: 38px;
+  font-size: 32px;
   line-height: 1;
   color: #f0d98c;
   letter-spacing: -0.025em;
   font-feature-settings: "tnum";
+  white-space: nowrap;
 }
 .kh-race-budget--zero .kh-race-budget-num {
   color: #c7e0b9;
 }
 .kh-race-budget-label {
+  margin: 0;
   font-family: var(--kh-font-label);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-size: 9.5px;
+  line-height: 1.35;
   color: var(--kh-cream-muted);
-  opacity: 0.75;
+  opacity: 0.78;
+  max-width: 14ch;
+}
+
+/* replay control */
+.kh-race-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+.kh-race-replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  font-family: var(--kh-font-label);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--kh-cream);
+  background: rgba(251, 249, 242, 0.04);
+  border: 1px solid var(--kh-race-border-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 120ms ease;
+}
+.kh-race-replay:hover {
+  background: rgba(251, 249, 242, 0.1);
+  border-color: rgba(218, 209, 168, 0.45);
+}
+.kh-race-replay:active {
+  transform: scale(0.97);
+}
+.kh-race-replay:focus-visible {
+  outline: 2px solid rgba(218, 209, 168, 0.6);
+  outline-offset: 3px;
+}
+.kh-race-replay-icon {
+  flex: 0 0 auto;
 }
 
 /* caption beneath the diagram */
 .kh-race-caption {
-  margin: 36px auto 0;
+  margin: 18px auto 0;
   max-width: 540px;
   text-align: center;
   font-family: var(--kh-font-serif);
@@ -1200,139 +1276,105 @@ body .home-nav--marketing + * {
   color: var(--kh-cream-muted);
 }
 
-/* pause animations on hover */
-.kh-race:hover .kh-race-rail::after,
-.kh-race:hover .kh-race-stage,
-.kh-race:hover .kh-race-pixel,
-.kh-race:hover .kh-race-budget {
-  animation-play-state: paused;
-}
-
-/* reduced motion: show the final state without looping */
+/* reduced motion: show the settled state immediately, no animation */
 @media (prefers-reduced-motion: reduce) {
-  .kh-race-rail::after,
   .kh-race-stage,
   .kh-race-pixel,
-  .kh-race-budget {
-    animation: none !important;
+  .kh-race-budgets {
     opacity: 1 !important;
     transform: none !important;
+    animation: none !important;
   }
   .kh-race-rail::after {
     transform: scaleY(1) !important;
+    animation: none !important;
   }
 }
 
 /* ── keyframes ──────────────────────────────────────────────────────────── */
-/* shape: hidden → quick fade-in with brief background pulse → stay lit → fade out at end */
+/* Each stage animation goes: hidden → brief background pulse on activation
+   → settled-and-visible, and STAYS settled (fill-mode: both keeps the
+   final state past the end of the cycle). */
 @keyframes kh-race-stage-at-0 {
   0%   { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  4%   { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  10%  { opacity: 1; transform: translateX(0); background: transparent; }
-  90%  { opacity: 1; transform: translateX(0); background: transparent; }
-  100% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  4%   { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  10%  { opacity: 1; transform: translateX(0);    background: transparent; }
+  100% { opacity: 1; transform: translateX(0);    background: transparent; }
 }
-@keyframes kh-race-stage-at-5 {
-  0%, 4% { opacity: 0; transform: translateX(-6px); background: transparent; }
-  5%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  9%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  15%    { opacity: 1; transform: translateX(0); background: transparent; }
-  90%    { opacity: 1; transform: translateX(0); background: transparent; }
-  100%   { opacity: 0; transform: translateX(-6px); background: transparent; }
+@keyframes kh-race-stage-at-11 {
+  0%, 10% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  11%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  15%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  21%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
 }
-@keyframes kh-race-stage-at-9 {
-  0%, 8% { opacity: 0; transform: translateX(-6px); background: transparent; }
-  9%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  13%    { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  19%    { opacity: 1; transform: translateX(0); background: transparent; }
-  90%    { opacity: 1; transform: translateX(0); background: transparent; }
-  100%   { opacity: 0; transform: translateX(-6px); background: transparent; }
+@keyframes kh-race-stage-at-22 {
+  0%, 21% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  22%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  26%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  32%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
 }
-@keyframes kh-race-stage-at-10 {
-  0%, 9% { opacity: 0; transform: translateX(-6px); background: transparent; }
-  10%    { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  14%    { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  20%    { opacity: 1; transform: translateX(0); background: transparent; }
-  90%    { opacity: 1; transform: translateX(0); background: transparent; }
-  100%   { opacity: 0; transform: translateX(-6px); background: transparent; }
+@keyframes kh-race-stage-at-33 {
+  0%, 32% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  33%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  37%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  43%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
 }
-@keyframes kh-race-stage-at-18 {
-  0%, 17% { opacity: 0; transform: translateX(-6px); background: transparent; }
-  18%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  22%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  28%     { opacity: 1; transform: translateX(0); background: transparent; }
-  90%     { opacity: 1; transform: translateX(0); background: transparent; }
-  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
+@keyframes kh-race-stage-at-44 {
+  0%, 43% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  44%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  48%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  54%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
 }
-@keyframes kh-race-stage-at-28 {
-  0%, 27% { opacity: 0; transform: translateX(-6px); background: transparent; }
-  28%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  32%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  38%     { opacity: 1; transform: translateX(0); background: transparent; }
-  90%     { opacity: 1; transform: translateX(0); background: transparent; }
-  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
-}
-@keyframes kh-race-stage-at-38 {
-  0%, 37% { opacity: 0; transform: translateX(-6px); background: transparent; }
-  38%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  42%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  48%     { opacity: 1; transform: translateX(0); background: transparent; }
-  90%     { opacity: 1; transform: translateX(0); background: transparent; }
-  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
-}
-@keyframes kh-race-stage-at-48 {
-  0%, 47% { opacity: 0; transform: translateX(-6px); background: transparent; }
-  48%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
-  52%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
-  58%     { opacity: 1; transform: translateX(0); background: transparent; }
-  90%     { opacity: 1; transform: translateX(0); background: transparent; }
-  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
+@keyframes kh-race-stage-at-55 {
+  0%, 54% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  55%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  59%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  65%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
 }
 
-/* rendered pixels — pop in with a tiny scale bounce */
-@keyframes kh-race-pixels-at-15 {
-  0%, 14% { opacity: 0; transform: scale(0.94); }
-  15%     { opacity: 0; transform: scale(0.96); }
-  20%     { opacity: 1; transform: scale(1.03); }
-  24%     { opacity: 1; transform: scale(1); }
-  90%     { opacity: 1; transform: scale(1); }
-  100%    { opacity: 0; transform: scale(0.96); }
+/* rendered pixels — pop in with a tiny scale bounce when their column finishes */
+@keyframes kh-race-pixels-at-33 {
+  0%, 32% { opacity: 0; transform: scale(0.94); }
+  33%     { opacity: 0; transform: scale(0.96); }
+  38%     { opacity: 1; transform: scale(1.03); }
+  42%     { opacity: 1; transform: scale(1); }
+  100%    { opacity: 1; transform: scale(1); }
 }
-@keyframes kh-race-pixels-at-56 {
-  0%, 55% { opacity: 0; transform: scale(0.94); }
-  56%     { opacity: 0; transform: scale(0.96); }
-  61%     { opacity: 1; transform: scale(1.03); }
-  65%     { opacity: 1; transform: scale(1); }
-  90%     { opacity: 1; transform: scale(1); }
-  100%    { opacity: 0; transform: scale(0.96); }
+@keyframes kh-race-pixels-at-67 {
+  0%, 66% { opacity: 0; transform: scale(0.94); }
+  67%     { opacity: 0; transform: scale(0.96); }
+  72%     { opacity: 1; transform: scale(1.03); }
+  76%     { opacity: 1; transform: scale(1); }
+  100%    { opacity: 1; transform: scale(1); }
 }
 
-/* bytes budget appears just after the pixels */
-@keyframes kh-race-budget-kinu {
-  0%, 19% { opacity: 0; transform: translateY(4px); }
-  24%     { opacity: 1; transform: translateY(0); }
-  90%     { opacity: 1; transform: translateY(0); }
-  100%    { opacity: 0; transform: translateY(4px); }
+/* budget pair flies in just after the pixels */
+@keyframes kh-race-budgets-at-40 {
+  0%, 39% { opacity: 0; transform: translateY(4px); }
+  46%     { opacity: 1; transform: translateY(0); }
+  100%    { opacity: 1; transform: translateY(0); }
 }
-@keyframes kh-race-budget-typical {
-  0%, 60% { opacity: 0; transform: translateY(4px); }
-  66%     { opacity: 1; transform: translateY(0); }
-  90%     { opacity: 1; transform: translateY(0); }
-  100%    { opacity: 0; transform: translateY(4px); }
+@keyframes kh-race-budgets-at-75 {
+  0%, 74% { opacity: 0; transform: translateY(4px); }
+  81%     { opacity: 1; transform: translateY(0); }
+  100%    { opacity: 1; transform: translateY(0); }
 }
 
-/* rail fills downward as stages activate, holds, then fades for the loop reset */
+/* rails fill downward at each column's cadence, then hold */
 @keyframes kh-race-rail-kinu {
-  0%   { transform: scaleY(0); opacity: 1; }
-  18%  { transform: scaleY(1); opacity: 1; }
-  90%  { transform: scaleY(1); opacity: 1; }
-  100% { transform: scaleY(1); opacity: 0; }
+  0%   { transform: scaleY(0); }
+  33%  { transform: scaleY(1); }
+  100% { transform: scaleY(1); }
 }
 @keyframes kh-race-rail-typical {
-  0%   { transform: scaleY(0); opacity: 1; }
-  58%  { transform: scaleY(1); opacity: 1; }
-  90%  { transform: scaleY(1); opacity: 1; }
-  100% { transform: scaleY(1); opacity: 0; }
+  0%   { transform: scaleY(0); }
+  67%  { transform: scaleY(1); }
+  100% { transform: scaleY(1); }
 }
 
 /* ── Go ahead — try them ────────────────────────────────────────────────── */
@@ -2925,7 +2967,10 @@ body .home-nav--marketing + * {
     font-size: 11.5px;
   }
   .kh-race-budget-num {
-    font-size: 32px;
+    font-size: 28px;
+  }
+  .kh-race-budget-label {
+    max-width: 12ch;
   }
   .kh-ship-title {
     font-size: 56px;
@@ -2980,31 +3025,127 @@ body .home-nav--marketing + * {
   .kh-preview-grid {
     grid-template-columns: 1fr;
   }
-  /* stack the race so each pipeline stays readable on phones; the
-     height difference still does the comparison */
+  /* Keep race side-by-side on mobile — the comparison is the whole point.
+     Drop the per-stage notes, shrink type, condense pixel tile + budgets. */
   .kh-race-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 10px;
   }
   .kh-race-source-code {
-    font-size: 13px;
-    padding: 10px 18px;
+    font-size: 12px;
+    padding: 9px 16px;
   }
   .kh-race-fork {
-    height: 24px;
+    height: 22px;
   }
   .kh-race-col {
-    padding: 22px 18px 18px;
+    padding: 16px 12px 14px;
+    gap: 14px;
+    border-radius: 10px;
+  }
+  .kh-race-col-tag {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+  .kh-race-col-name {
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+  .kh-race-track {
+    padding-left: 16px;
+  }
+  .kh-race-rail {
+    left: 4px;
+  }
+  .kh-race-stages {
+    gap: 8px;
+  }
+  .kh-race-stage {
+    padding: 6px 4px;
+    gap: 8px;
+    border-radius: 6px;
+  }
+  .kh-race-stage-dot {
+    left: -16px;
+    top: 12px;
+    width: 6px;
+    height: 6px;
+    box-shadow: 0 0 0 3px rgba(218, 209, 168, 0.16);
+  }
+  .kh-race-stage-label {
+    font-size: 11.5px;
+    line-height: 1.3;
+  }
+  .kh-race-stage-label code {
+    font-size: 10.5px;
+    padding: 0 4px;
+  }
+  .kh-race-stage-note {
+    /* hide the secondary description on phones — labels alone carry it */
+    display: none;
+  }
+  .kh-race-stage-cost {
+    font-size: 9.5px;
+    padding: 2px 5px;
+    letter-spacing: 0;
+  }
+  .kh-race-col-foot {
+    gap: 12px;
+    padding-top: 14px;
   }
   .kh-race-pixel {
-    max-width: 220px;
+    max-width: 100%;
+    padding: 8px 10px;
+    gap: 6px;
+    border-radius: 8px;
+  }
+  .kh-race-pixel-title {
+    font-size: 11px;
+  }
+  .kh-race-pixel-pill {
+    font-size: 9.5px;
+    padding: 1px 5px;
+  }
+  .kh-race-pixel-row {
+    gap: 6px;
+  }
+  .kh-race-pixel-avatar {
+    flex-basis: 14px;
+    width: 14px;
+    height: 14px;
+  }
+  .kh-race-pixel-line {
+    height: 3px;
+  }
+  .kh-race-pixel-line--strong {
+    height: 4px;
+  }
+  .kh-race-pixel-btn {
+    font-size: 9.5px;
+    padding: 3px 7px;
+  }
+  .kh-race-budgets {
+    grid-template-columns: 1fr;
+    gap: 8px 0;
   }
   .kh-race-budget-num {
-    font-size: 30px;
+    font-size: 22px;
+  }
+  .kh-race-budget-label {
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    max-width: 16ch;
+  }
+  .kh-race-controls {
+    margin-top: 20px;
+  }
+  .kh-race-replay {
+    padding: 7px 14px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
   }
   .kh-race-caption {
-    font-size: 15px;
-    margin-top: 28px;
+    font-size: 14px;
+    margin-top: 18px;
   }
   .kh-footer {
     flex-direction: column;
