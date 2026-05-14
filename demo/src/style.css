@@ -651,40 +651,67 @@ body .home-nav--marketing + * {
   cursor: pointer;
 }
 
-/* ── A Clever Facade — dark sage band ───────────────────────────────────── */
+/* ── The platform does the work — dark sage band ─────────────────────────── */
 .kh-facade {
   background: var(--kh-dark-band);
   color: #e8e4d5;
   padding-block: 120px;
   padding-inline: var(--kh-page-pad);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.kh-facade-text {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 72px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft vignette glow behind the diagram so the dark band reads warmer */
+.kh-facade::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -120px;
+  width: min(900px, 90%);
+  height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(218, 209, 168, 0.06) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.kh-facade-head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  max-width: 740px;
+  margin: 0 auto;
 }
 
 .kh-facade-title {
   margin: 0;
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 68px;
+  font-size: 76px;
   font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.025em;
+  line-height: 0.98;
+  letter-spacing: -0.028em;
   color: var(--kh-cream);
+}
+.kh-facade-title em {
+  font-style: italic;
+  color: rgba(218, 209, 168, 0.92);
 }
 
 .kinu-home [k="prose"].kh-facade-prose {
-  max-width: 460px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #d7d2be;
+  max-width: 600px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #d2cdb6;
 }
 .kinu-home [k="prose"].kh-facade-prose code {
   background: rgba(251, 249, 242, 0.08);
@@ -696,7 +723,8 @@ body .home-nav--marketing + * {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  justify-content: center;
+  margin-top: 4px;
 }
 
 /* Ghost links inside the dark band — flatten the kinu Button to text-with-rule */
@@ -724,39 +752,587 @@ body .home-nav--marketing + * {
   color: var(--kh-cream-muted);
 }
 
-/* ── Silk drape disc (sage-circle vignette accompanying "A Clever Facade") ─ */
-.kh-drape {
-  display: flex;
-  justify-content: center;
-}
-.kh-drape-disc {
-  width: 340px;
-  height: 340px;
-  border-radius: 50%;
-  overflow: hidden;
+/* ── Pipeline race graphic ──────────────────────────────────────────────── */
+.kh-race {
+  /* one master cycle — every animation references this */
+  --kh-race-cycle: 7s;
+  --kh-race-bg: rgba(251, 249, 242, 0.025);
+  --kh-race-border: rgba(251, 249, 242, 0.1);
+  --kh-race-border-strong: rgba(251, 249, 242, 0.18);
+  --kh-race-rail-track: rgba(251, 249, 242, 0.08);
+  --kh-race-rail-flow: rgba(218, 209, 168, 0.7);
+  --kh-race-glow: rgba(218, 209, 168, 0.18);
+
   position: relative;
-  box-shadow:
-    0 20px 60px -20px rgba(0, 0, 0, 0.55),
-    inset 0 0 60px rgba(0, 0, 0, 0.4);
-}
-.kh-drape-disc svg {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  color: var(--kh-cream-muted);
+  font-family: var(--kh-font-sans);
 }
-/* soft inner edge so it reads as a circle, not a hard cutout */
-.kh-drape-disc::after {
+
+/* shared source block at the top of the diagram */
+.kh-race-source {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto 0;
+  width: max-content;
+  max-width: 100%;
+}
+.kh-race-source-tag {
+  font-family: var(--kh-font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 10px;
+  color: var(--kh-cream-muted);
+  opacity: 0.6;
+}
+.kh-race-source-code {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 12px 22px;
+  font-family: var(--kh-font-mono);
+  font-size: 14px;
+  background: rgba(251, 249, 242, 0.04);
+  border: 1px solid var(--kh-race-border-strong);
+  border-radius: 999px;
+  color: var(--kh-cream);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.6);
+}
+.kh-race-tok-tag {
+  color: #e4d39a;
+  font-weight: 500;
+}
+.kh-race-tok-punct {
+  color: var(--kh-cream-muted);
+  opacity: 0.85;
+}
+.kh-race-tok-text {
+  color: var(--kh-cream-muted);
+  opacity: 0.55;
+  padding: 0 4px;
+}
+
+/* fork connector — thin SVG that bridges source to the two columns */
+.kh-race-fork {
+  display: block;
+  width: 100%;
+  height: 36px;
+  color: var(--kh-cream);
+  opacity: 0.32;
+  margin-top: -4px;
+  margin-bottom: -8px;
+}
+
+/* two-column race grid */
+.kh-race-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  width: 100%;
+}
+
+.kh-race-col {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(251, 249, 242, 0.03) 0%,
+    rgba(251, 249, 242, 0.01) 100%
+  );
+  border: 1px solid var(--kh-race-border);
+  border-radius: 14px;
+  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.55);
+}
+
+/* kinu column gets a slightly warmer halo to signal "yours" */
+.kh-race-col--kinu {
+  border-color: rgba(218, 209, 168, 0.22);
+}
+.kh-race-col--kinu::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    transparent 55%,
-    rgba(15, 22, 18, 0.65) 100%
-  );
+  border-radius: 14px;
   pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% -20%,
+    rgba(218, 209, 168, 0.12),
+    transparent 60%
+  );
+}
+
+.kh-race-col-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.kh-race-col-tag {
+  font-family: var(--kh-font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 10.5px;
+  color: var(--kh-cream-muted);
+  opacity: 0.65;
+}
+.kh-race-col--kinu .kh-race-col-tag {
+  color: #d8c98e;
+  opacity: 0.9;
+}
+.kh-race-col-name {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--kh-cream);
+  letter-spacing: -0.015em;
+}
+
+/* track + rail */
+.kh-race-track {
+  position: relative;
+  padding-left: 22px;
+  flex: 1;
+  min-height: 0;
+}
+.kh-race-rail {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--kh-race-rail-track);
+  pointer-events: none;
+}
+.kh-race-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--kh-race-rail-flow) 8%,
+    var(--kh-race-rail-flow) 92%,
+    transparent 100%
+  );
+  transform-origin: top;
+  transform: scaleY(0);
+  box-shadow: 0 0 6px rgba(218, 209, 168, 0.4);
+}
+.kh-race-col--typical .kh-race-rail::after {
+  animation: kh-race-rail-typical var(--kh-race-cycle) infinite linear;
+}
+.kh-race-col--kinu .kh-race-rail::after {
+  animation: kh-race-rail-kinu var(--kh-race-cycle) infinite linear;
+}
+
+/* stage items */
+.kh-race-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.kh-race-stage {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px 10px 6px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateX(-6px);
+  background: transparent;
+  animation-duration: var(--kh-race-cycle);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+.kh-race-stage-dot {
+  position: absolute;
+  left: -22px;
+  top: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(218, 209, 168, 0.95);
+  box-shadow: 0 0 0 4px rgba(218, 209, 168, 0.18);
+}
+.kh-race-stage-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.kh-race-stage-label {
+  font-family: var(--kh-font-sans);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--kh-cream);
+  letter-spacing: -0.005em;
+}
+.kh-race-stage-label code {
+  font-family: var(--kh-font-mono);
+  font-size: 12.5px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(251, 249, 242, 0.06);
+  color: var(--kh-cream);
+}
+.kh-race-stage-note {
+  font-family: var(--kh-font-sans);
+  font-size: 12px;
+  color: var(--kh-cream-muted);
+  opacity: 0.78;
+  line-height: 1.4;
+}
+.kh-race-stage-note code {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  padding: 0 4px;
+  background: rgba(251, 249, 242, 0.04);
+  color: var(--kh-cream-muted);
+  border-radius: 3px;
+}
+.kh-race-stage-cost {
+  flex: 0 0 auto;
+  align-self: center;
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: #e9d999;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border: 1px solid rgba(218, 209, 168, 0.32);
+  border-radius: 999px;
+  background: rgba(218, 209, 168, 0.07);
+  letter-spacing: 0.01em;
+}
+
+/* per-column stage activation assignments */
+.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(1) {
+  animation-name: kh-race-stage-at-0;
+}
+.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(2) {
+  animation-name: kh-race-stage-at-9;
+}
+.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(3) {
+  animation-name: kh-race-stage-at-18;
+}
+.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(4) {
+  animation-name: kh-race-stage-at-28;
+}
+.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(5) {
+  animation-name: kh-race-stage-at-38;
+}
+.kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(6) {
+  animation-name: kh-race-stage-at-48;
+}
+.kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(1) {
+  animation-name: kh-race-stage-at-0;
+}
+.kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(2) {
+  animation-name: kh-race-stage-at-5;
+}
+.kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(3) {
+  animation-name: kh-race-stage-at-10;
+}
+
+/* column footer — rendered pixels + bytes budget */
+.kh-race-col-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px dashed var(--kh-race-border);
+}
+
+/* the "rendered UI" pixel tile */
+.kh-race-pixel {
+  width: 100%;
+  max-width: 240px;
+  background: rgba(251, 249, 242, 0.05);
+  border: 1px solid var(--kh-race-border-strong);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transform-origin: bottom center;
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.55);
+}
+.kh-race-col--typical .kh-race-pixel {
+  animation: kh-race-pixels-at-56 var(--kh-race-cycle) infinite ease-out;
+}
+.kh-race-col--kinu .kh-race-pixel {
+  animation: kh-race-pixels-at-15 var(--kh-race-cycle) infinite ease-out;
+}
+
+.kh-race-pixel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kh-race-pixel-title {
+  font-family: var(--kh-font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--kh-cream);
+  letter-spacing: -0.005em;
+}
+.kh-race-pixel-pill {
+  font-family: var(--kh-font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(218, 209, 168, 0.22);
+  color: #f0e3b0;
+}
+.kh-race-pixel-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.kh-race-pixel-avatar {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(218, 209, 168, 0.55), rgba(218, 209, 168, 0.25));
+}
+.kh-race-pixel-lines {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.kh-race-pixel-line {
+  height: 4px;
+  width: 80%;
+  background: rgba(251, 249, 242, 0.16);
+  border-radius: 999px;
+}
+.kh-race-pixel-line--strong {
+  background: rgba(251, 249, 242, 0.38);
+  height: 5px;
+  width: 92%;
+}
+.kh-race-pixel-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+.kh-race-pixel-btn {
+  font-family: var(--kh-font-sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(218, 209, 168, 0.88);
+  color: #2b3a30;
+  letter-spacing: 0.02em;
+}
+
+/* bytes budget */
+.kh-race-budget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(4px);
+}
+.kh-race-col--typical .kh-race-budget {
+  animation: kh-race-budget-typical var(--kh-race-cycle) infinite ease-out;
+}
+.kh-race-col--kinu .kh-race-budget {
+  animation: kh-race-budget-kinu var(--kh-race-cycle) infinite ease-out;
+}
+.kh-race-budget-num {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 38px;
+  line-height: 1;
+  color: #f0d98c;
+  letter-spacing: -0.025em;
+  font-feature-settings: "tnum";
+}
+.kh-race-budget--zero .kh-race-budget-num {
+  color: #c7e0b9;
+}
+.kh-race-budget-label {
+  font-family: var(--kh-font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 10px;
+  color: var(--kh-cream-muted);
+  opacity: 0.75;
+}
+
+/* caption beneath the diagram */
+.kh-race-caption {
+  margin: 36px auto 0;
+  max-width: 540px;
+  text-align: center;
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--kh-cream-muted);
+}
+
+/* pause animations on hover */
+.kh-race:hover .kh-race-rail::after,
+.kh-race:hover .kh-race-stage,
+.kh-race:hover .kh-race-pixel,
+.kh-race:hover .kh-race-budget {
+  animation-play-state: paused;
+}
+
+/* reduced motion: show the final state without looping */
+@media (prefers-reduced-motion: reduce) {
+  .kh-race-rail::after,
+  .kh-race-stage,
+  .kh-race-pixel,
+  .kh-race-budget {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .kh-race-rail::after {
+    transform: scaleY(1) !important;
+  }
+}
+
+/* ── keyframes ──────────────────────────────────────────────────────────── */
+/* shape: hidden → quick fade-in with brief background pulse → stay lit → fade out at end */
+@keyframes kh-race-stage-at-0 {
+  0%   { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  4%   { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  10%  { opacity: 1; transform: translateX(0); background: transparent; }
+  90%  { opacity: 1; transform: translateX(0); background: transparent; }
+  100% { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+@keyframes kh-race-stage-at-5 {
+  0%, 4% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  5%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  9%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  15%    { opacity: 1; transform: translateX(0); background: transparent; }
+  90%    { opacity: 1; transform: translateX(0); background: transparent; }
+  100%   { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+@keyframes kh-race-stage-at-9 {
+  0%, 8% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  9%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  13%    { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  19%    { opacity: 1; transform: translateX(0); background: transparent; }
+  90%    { opacity: 1; transform: translateX(0); background: transparent; }
+  100%   { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+@keyframes kh-race-stage-at-10 {
+  0%, 9% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  10%    { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  14%    { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  20%    { opacity: 1; transform: translateX(0); background: transparent; }
+  90%    { opacity: 1; transform: translateX(0); background: transparent; }
+  100%   { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+@keyframes kh-race-stage-at-18 {
+  0%, 17% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  18%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  22%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  28%     { opacity: 1; transform: translateX(0); background: transparent; }
+  90%     { opacity: 1; transform: translateX(0); background: transparent; }
+  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+@keyframes kh-race-stage-at-28 {
+  0%, 27% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  28%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  32%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  38%     { opacity: 1; transform: translateX(0); background: transparent; }
+  90%     { opacity: 1; transform: translateX(0); background: transparent; }
+  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+@keyframes kh-race-stage-at-38 {
+  0%, 37% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  38%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  42%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  48%     { opacity: 1; transform: translateX(0); background: transparent; }
+  90%     { opacity: 1; transform: translateX(0); background: transparent; }
+  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+@keyframes kh-race-stage-at-48 {
+  0%, 47% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  48%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  52%     { opacity: 1; transform: translateX(0); background: rgba(218, 209, 168, 0.08); }
+  58%     { opacity: 1; transform: translateX(0); background: transparent; }
+  90%     { opacity: 1; transform: translateX(0); background: transparent; }
+  100%    { opacity: 0; transform: translateX(-6px); background: transparent; }
+}
+
+/* rendered pixels — pop in with a tiny scale bounce */
+@keyframes kh-race-pixels-at-15 {
+  0%, 14% { opacity: 0; transform: scale(0.94); }
+  15%     { opacity: 0; transform: scale(0.96); }
+  20%     { opacity: 1; transform: scale(1.03); }
+  24%     { opacity: 1; transform: scale(1); }
+  90%     { opacity: 1; transform: scale(1); }
+  100%    { opacity: 0; transform: scale(0.96); }
+}
+@keyframes kh-race-pixels-at-56 {
+  0%, 55% { opacity: 0; transform: scale(0.94); }
+  56%     { opacity: 0; transform: scale(0.96); }
+  61%     { opacity: 1; transform: scale(1.03); }
+  65%     { opacity: 1; transform: scale(1); }
+  90%     { opacity: 1; transform: scale(1); }
+  100%    { opacity: 0; transform: scale(0.96); }
+}
+
+/* bytes budget appears just after the pixels */
+@keyframes kh-race-budget-kinu {
+  0%, 19% { opacity: 0; transform: translateY(4px); }
+  24%     { opacity: 1; transform: translateY(0); }
+  90%     { opacity: 1; transform: translateY(0); }
+  100%    { opacity: 0; transform: translateY(4px); }
+}
+@keyframes kh-race-budget-typical {
+  0%, 60% { opacity: 0; transform: translateY(4px); }
+  66%     { opacity: 1; transform: translateY(0); }
+  90%     { opacity: 1; transform: translateY(0); }
+  100%    { opacity: 0; transform: translateY(4px); }
+}
+
+/* rail fills downward as stages activate, holds, then fades for the loop reset */
+@keyframes kh-race-rail-kinu {
+  0%   { transform: scaleY(0); opacity: 1; }
+  18%  { transform: scaleY(1); opacity: 1; }
+  90%  { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+@keyframes kh-race-rail-typical {
+  0%   { transform: scaleY(0); opacity: 1; }
+  58%  { transform: scaleY(1); opacity: 1; }
+  90%  { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
 }
 
 /* ── Go ahead — try them ────────────────────────────────────────────────── */
@@ -2325,13 +2901,31 @@ body .home-nav--marketing + * {
     font-size: 64px;
   }
   .kh-facade {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    gap: 56px;
+    padding-top: 88px;
+    padding-bottom: 88px;
   }
   .kh-facade-title {
-    font-size: 56px;
+    font-size: 60px;
+  }
+  .kh-race-grid {
+    gap: 18px;
+  }
+  .kh-race-col {
+    padding: 22px 20px 18px;
+    gap: 18px;
+  }
+  .kh-race-col-name {
+    font-size: 19px;
+  }
+  .kh-race-stage-label {
+    font-size: 13.5px;
+  }
+  .kh-race-stage-note {
+    font-size: 11.5px;
+  }
+  .kh-race-budget-num {
+    font-size: 32px;
   }
   .kh-ship-title {
     font-size: 56px;
@@ -2386,9 +2980,31 @@ body .home-nav--marketing + * {
   .kh-preview-grid {
     grid-template-columns: 1fr;
   }
-  .kh-drape-disc {
-    width: 240px;
-    height: 240px;
+  /* stack the race so each pipeline stays readable on phones; the
+     height difference still does the comparison */
+  .kh-race-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .kh-race-source-code {
+    font-size: 13px;
+    padding: 10px 18px;
+  }
+  .kh-race-fork {
+    height: 24px;
+  }
+  .kh-race-col {
+    padding: 22px 18px 18px;
+  }
+  .kh-race-pixel {
+    max-width: 220px;
+  }
+  .kh-race-budget-num {
+    font-size: 30px;
+  }
+  .kh-race-caption {
+    font-size: 15px;
+    margin-top: 28px;
   }
   .kh-footer {
     flex-direction: column;

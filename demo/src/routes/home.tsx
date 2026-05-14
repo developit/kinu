@@ -85,24 +85,19 @@ export default function Home() {
       </section>
 
       <section class="kh-facade">
-        <div class="kh-facade-text">
+        <header class="kh-facade-head">
           <h2 class="kh-facade-title">
-            A Clever
+            The platform
             <br />
-            Facade.
+            <em>does the work.</em>
           </h2>
           <Prose class="kh-facade-prose">
             <p>
-              Kinu feels like a Preact UI toolkit, but it's really
-              progressively-enhanced HTML. Where other toolkits implement
-              variants, state, and behavior in JavaScript, kinu does it in
-              CSS — leaning on{' '}
-              <code>commandFor</code>, native <code>&lt;dialog&gt;</code>,
-              anchor positioning, form validation, and the form-associated
-              elements you already know.
-            </p>
-            <p>
-              The silk lies on top. The form beneath is yours.
+              Other toolkits put state, positioning, and focus management in
+              JavaScript. Kinu pushes them down into <code>commandfor</code>,
+              native <code>&lt;dialog&gt;</code>, anchor positioning, and the
+              form-associated elements your browser already ships. Same JSX
+              in; same pixels out — with less between.
             </p>
           </Prose>
           <div class="kh-facade-links">
@@ -113,10 +108,8 @@ export default function Home() {
               Browse components
             </Button>
           </div>
-        </div>
-        <div class="kh-drape" aria-hidden>
-          <SilkDrape />
-        </div>
+        </header>
+        <PipelineRace />
       </section>
 
       <section class="kh-try">
@@ -1095,68 +1088,234 @@ function NewPost() {
 }
 
 /* Vertical drape of silk inside a circular crop — replaces the literal stones. */
-function SilkDrape() {
+/* ── Pipeline race (A Clever Facade graphic) ────────────────────────────── */
+
+type RaceStage = {
+  label: ComponentChildren;
+  note?: ComponentChildren;
+  cost?: string;
+};
+
+const TYPICAL_STAGES: RaceStage[] = [
+  {
+    label: (
+      <>
+        <code>useState</code> · <code>useEffect</code>
+      </>
+    ),
+    note: 'open, focus, dismiss state',
+  },
+  {
+    label: <code>createPortal()</code>,
+    note: 'remount outside the React tree',
+  },
+  {
+    label: 'Floating UI',
+    note: 'positioning, collisions, arrow',
+    cost: '+16 KB',
+  },
+  {
+    label: 'Focus trap',
+    note: (
+      <>
+        <code>tabbable</code> + restore
+      </>
+    ),
+    cost: '+4 KB',
+  },
+  {
+    label: 'Click-outside · ESC',
+    note: 'listeners + ARIA bookkeeping',
+    cost: '+2 KB',
+  },
+  {
+    label: (
+      <>
+        Wrapper <code>&lt;div&gt;</code>s
+      </>
+    ),
+    note: 'overlay, content, inner',
+  },
+];
+
+const KINU_STAGES: RaceStage[] = [
+  {
+    label: <code>k="popover"</code>,
+    note: 'CSS hook on the JSX',
+  },
+  {
+    label: (
+      <>
+        Native <code>&lt;dialog popover&gt;</code>
+      </>
+    ),
+    note: 'with CSS anchor positioning',
+  },
+  {
+    label: 'The browser',
+    note: 'modal, focus, dismiss — built in',
+  },
+];
+
+function RaceStageItem({
+  stage,
+  index,
+  variant,
+}: {
+  stage: RaceStage;
+  index: number;
+  variant: 'typical' | 'kinu';
+}) {
   return (
-    <div class="kh-drape-disc">
+    <li
+      class="kh-race-stage"
+      style={{'--i': index}}
+      data-variant={variant}
+    >
+      <span class="kh-race-stage-dot" aria-hidden />
+      <span class="kh-race-stage-body">
+        <span class="kh-race-stage-label">{stage.label}</span>
+        {stage.note && (
+          <span class="kh-race-stage-note">{stage.note}</span>
+        )}
+      </span>
+      {stage.cost && (
+        <span class="kh-race-stage-cost">{stage.cost}</span>
+      )}
+    </li>
+  );
+}
+
+function RacePixels() {
+  return (
+    <div class="kh-race-pixel" aria-hidden>
+      <div class="kh-race-pixel-head">
+        <span class="kh-race-pixel-title">Notifications</span>
+        <span class="kh-race-pixel-pill">3</span>
+      </div>
+      <div class="kh-race-pixel-row">
+        <span class="kh-race-pixel-avatar" />
+        <span class="kh-race-pixel-lines">
+          <span class="kh-race-pixel-line kh-race-pixel-line--strong" />
+          <span class="kh-race-pixel-line" />
+        </span>
+      </div>
+      <div class="kh-race-pixel-row">
+        <span class="kh-race-pixel-avatar" />
+        <span class="kh-race-pixel-lines">
+          <span
+            class="kh-race-pixel-line kh-race-pixel-line--strong"
+            style={{width: '64%'}}
+          />
+          <span class="kh-race-pixel-line" style={{width: '46%'}} />
+        </span>
+      </div>
+      <div class="kh-race-pixel-foot">
+        <span class="kh-race-pixel-btn">View all</span>
+      </div>
+    </div>
+  );
+}
+
+function PipelineRace() {
+  return (
+    <div
+      class="kh-race"
+      role="img"
+      aria-label="The same JSX renders to pixels through two pipelines. A typical React UI kit chains six layers of JavaScript and ships about twenty-two kilobytes. Kinu's pipeline is three native steps and adds zero kilobytes to your bundle."
+    >
+      <div class="kh-race-source">
+        <span class="kh-race-source-tag">You write</span>
+        <pre class="kh-race-source-code">
+          <span class="kh-race-tok-punct">&lt;</span>
+          <span class="kh-race-tok-tag">Popover</span>
+          <span class="kh-race-tok-punct">&gt;</span>
+          <span class="kh-race-tok-text">…</span>
+          <span class="kh-race-tok-punct">&lt;/</span>
+          <span class="kh-race-tok-tag">Popover</span>
+          <span class="kh-race-tok-punct">&gt;</span>
+        </pre>
+      </div>
       <svg
-        viewBox="0 0 280 280"
-        role="img"
-        aria-label="A vertical drape of silk fabric falling under soft light"
+        class="kh-race-fork"
+        viewBox="0 0 100 36"
+        preserveAspectRatio="none"
+        aria-hidden
       >
-        <title>Silk drape</title>
-        <defs>
-          <linearGradient id="kh-drape-bg" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#34433a" />
-            <stop offset="100%" stop-color="#1a2620" />
-          </linearGradient>
-          <linearGradient id="kh-drape-light" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
-            <stop offset="20%" stop-color="#ffffff" stop-opacity="0.55" />
-            <stop offset="55%" stop-color="#ece6cf" stop-opacity="0.9" />
-            <stop offset="85%" stop-color="#ffffff" stop-opacity="0.4" />
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-          </linearGradient>
-          <linearGradient id="kh-drape-soft" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#fff" stop-opacity="0" />
-            <stop offset="50%" stop-color="#fff" stop-opacity="0.18" />
-            <stop offset="100%" stop-color="#fff" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-        <rect width="280" height="280" fill="url(#kh-drape-bg)" />
-
-        {/* Three falling silk ribbons, slightly offset, with light catching the front fold */}
         <path
-          d="M 90 -10 C 110 80, 70 160, 96 280 L 138 280 C 124 170, 158 90, 132 -10 Z"
-          fill="url(#kh-drape-soft)"
-          opacity="0.7"
-        />
-        <path
-          d="M 168 -10 C 152 70, 192 170, 174 280 L 212 280 C 222 180, 188 80, 196 -10 Z"
-          fill="url(#kh-drape-soft)"
-          opacity="0.55"
-        />
-        <path
-          d="M 118 -10 C 142 80, 102 170, 136 280 L 178 280 C 152 180, 188 80, 162 -10 Z"
-          fill="url(#kh-drape-light)"
-          opacity="0.95"
-        />
-
-        {/* Hairline highlight rib */}
-        <path
-          d="M 140 -10 C 162 80, 122 170, 148 280"
-          stroke="#fff"
-          stroke-width="0.8"
+          d="M 50 0 V 14 M 25 14 H 75 M 25 14 V 36 M 75 14 V 36"
+          stroke="currentColor"
+          stroke-width="1"
           fill="none"
-          opacity="0.55"
-        />
-        <path
-          d="M 156 -10 C 138 80, 174 170, 156 280"
-          stroke="#fff"
-          stroke-width="0.5"
-          fill="none"
-          opacity="0.35"
+          stroke-linecap="round"
+          vector-effect="non-scaling-stroke"
         />
       </svg>
+
+      <div class="kh-race-grid">
+        <article class="kh-race-col kh-race-col--typical">
+          <header class="kh-race-col-head">
+            <span class="kh-race-col-tag">Typical UI kit</span>
+            <span class="kh-race-col-name">React + Floating UI + a11y libs</span>
+          </header>
+
+          <div class="kh-race-track">
+            <span class="kh-race-rail" aria-hidden />
+            <ol class="kh-race-stages">
+              {TYPICAL_STAGES.map((s, i) => (
+                <RaceStageItem
+                  key={i}
+                  stage={s}
+                  index={i}
+                  variant="typical"
+                />
+              ))}
+            </ol>
+          </div>
+
+          <footer class="kh-race-col-foot">
+            <RacePixels />
+            <div class="kh-race-budget">
+              <span class="kh-race-budget-num">+22 KB</span>
+              <span class="kh-race-budget-label">JS shipped to every visitor</span>
+            </div>
+          </footer>
+        </article>
+
+        <article class="kh-race-col kh-race-col--kinu">
+          <header class="kh-race-col-head">
+            <span class="kh-race-col-tag">Kinu</span>
+            <span class="kh-race-col-name">CSS + the platform</span>
+          </header>
+
+          <div class="kh-race-track">
+            <span class="kh-race-rail" aria-hidden />
+            <ol class="kh-race-stages">
+              {KINU_STAGES.map((s, i) => (
+                <RaceStageItem
+                  key={i}
+                  stage={s}
+                  index={i}
+                  variant="kinu"
+                />
+              ))}
+            </ol>
+          </div>
+
+          <footer class="kh-race-col-foot">
+            <RacePixels />
+            <div class="kh-race-budget kh-race-budget--zero">
+              <span class="kh-race-budget-num">0 KB</span>
+              <span class="kh-race-budget-label">added to your bundle</span>
+            </div>
+          </footer>
+        </article>
+      </div>
+
+      <p class="kh-race-caption">
+        Same JSX in. Same pixels out. The whole middle of the diagram lives in
+        your browser already.
+      </p>
     </div>
   );
 }
