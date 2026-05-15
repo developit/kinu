@@ -1136,22 +1136,19 @@ const TYPICAL_STAGES: RaceStage[] = [
 
 const KINU_STAGES: RaceStage[] = [
   {
-    label: <code>k="popover"</code>,
-    note: 'CSS hook on the JSX',
-  },
-  {
     label: (
       <>
         Native <code>&lt;dialog&gt;</code> + <code>commandfor</code>
       </>
     ),
-    note: 'the browser opens it',
+    note: 'declarative open, ARIA, focus — no onClick',
   },
   {
-    label: 'CSS does the rest',
+    label: 'CSS',
     note: (
       <>
-        anchor positioning, <code>@starting-style</code>
+        anchor positioning, <code>@starting-style</code>,{' '}
+        <code>overscroll-behavior</code>
       </>
     ),
   },
@@ -1265,7 +1262,7 @@ function PipelineRace() {
       <div
         class="kh-race-diagram"
         role="img"
-        aria-label="The same JSX renders to pixels through two pipelines. A typical React popover library (such as Radix or Base UI) chains six layers of JavaScript — positioning, focus trap, scroll lock, dismiss, animation coordination, and wrappers — that together ship about twenty-eight kilobytes gzipped and run roughly twenty JavaScript calls each time the popover opens. Kinu's pipeline is three native steps — a CSS hook on the JSX, a native dialog element with commandfor, and CSS anchor positioning — adding zero kilobytes to your bundle and running zero JavaScript calls on open. The browser handles it."
+        aria-label="The same JSX renders to pixels through two pipelines. A typical React popover library (such as Radix or Base UI) chains six layers of JavaScript — positioning, focus trap, scroll lock, dismiss, animation coordination, and wrappers — that together ship about twenty-eight kilobytes gzipped and run roughly twenty JavaScript calls each time the popover opens. Kinu's pipeline is two native steps — a native dialog element opened declaratively by the commandfor attribute, and CSS for anchor positioning and animation — adding zero kilobytes of dependencies to your bundle. The browser does the open, the positioning, and the animation."
       >
       <div class="kh-race-source">
         <span class="kh-race-source-tag">You write</span>

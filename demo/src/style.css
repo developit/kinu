@@ -1072,9 +1072,6 @@ body .home-nav--marketing + * {
   animation-name: kh-race-stage-at-0;
 }
 .kh-race--playing .kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(2) {
-  animation-name: kh-race-stage-at-11;
-}
-.kh-race--playing .kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(3) {
   animation-name: kh-race-stage-at-22;
 }
 
