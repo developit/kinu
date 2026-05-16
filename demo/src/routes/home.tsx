@@ -1262,7 +1262,7 @@ function PipelineRace() {
       <div
         class="kh-race-diagram"
         role="img"
-        aria-label="The same JSX renders to pixels through two pipelines. A typical React popover library (such as Radix or Base UI) chains six layers of JavaScript — positioning, focus trap, scroll lock, dismiss, animation coordination, and wrappers — that together ship about twenty-eight kilobytes gzipped and run roughly twenty JavaScript calls each time the popover opens. Kinu's pipeline is two native steps — a native dialog element opened declaratively by the commandfor attribute, and CSS for anchor positioning and animation — adding zero kilobytes of dependencies to your bundle. The browser does the open, the positioning, and the animation."
+        aria-label="The same JSX renders to pixels through two pipelines. A typical React popover library (such as Radix or Base UI) chains six layers of JavaScript — positioning, focus trap, scroll lock, dismiss, animation coordination, and wrappers — that together ship about twenty-eight kilobytes gzipped and spend roughly one hundred twenty milliseconds running JavaScript on the main thread each time the popover opens. Kinu's pipeline is two native steps — a native dialog element opened declaratively by the commandfor attribute, and CSS for anchor positioning and animation — adding zero kilobytes of dependencies to your bundle and spending effectively no time running JavaScript. The browser does the open, the positioning, and the animation — the work a browser is built to do."
       >
       <div class="kh-race-source">
         <span class="kh-race-source-tag">You write</span>
@@ -1317,7 +1317,7 @@ function PipelineRace() {
             <RaceBudgets
               budgets={[
                 {num: '+28 KB', label: 'JS'},
-                {num: '~20', label: 'JS calls per open'},
+                {num: '~120 ms', label: 'JS per open'},
               ]}
             />
           </footer>
@@ -1347,7 +1347,7 @@ function PipelineRace() {
             <RaceBudgets
               budgets={[
                 {num: '0 KB', label: 'JS', tone: 'zero'},
-                {num: '0', label: 'JS calls per open', tone: 'zero'},
+                {num: '~0 ms', label: 'JS per open', tone: 'zero'},
               ]}
             />
           </footer>
