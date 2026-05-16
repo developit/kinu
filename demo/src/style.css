@@ -877,19 +877,6 @@ body .home-nav--marketing + * {
 .kh-race-col-head {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-}
-.kh-race-col-tag {
-  font-family: var(--kh-font-label);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 10.5px;
-  color: var(--kh-cream-muted);
-  opacity: 0.65;
-}
-.kh-race-col--kinu .kh-race-col-tag {
-  color: #d8c98e;
-  opacity: 0.9;
 }
 .kh-race-col-name {
   font-family: var(--kh-font-serif);
@@ -3049,12 +3036,8 @@ body .home-nav--marketing + * {
     gap: 14px;
     border-radius: 10px;
   }
-  .kh-race-col-tag {
-    font-size: 9px;
-    letter-spacing: 0.14em;
-  }
   .kh-race-col-name {
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: -0.01em;
   }
   .kh-race-track {

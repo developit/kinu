@@ -1295,8 +1295,7 @@ function PipelineRace() {
       <div class="kh-race-grid" key={runId ?? 'static'}>
         <article class="kh-race-col kh-race-col--typical">
           <header class="kh-race-col-head">
-            <span class="kh-race-col-tag">Typical UI kit</span>
-            <span class="kh-race-col-name">React + Floating UI + a11y libs</span>
+            <span class="kh-race-col-name">Typical UI Kit</span>
           </header>
 
           <div class="kh-race-track">
@@ -1317,7 +1316,7 @@ function PipelineRace() {
             <RacePixels />
             <RaceBudgets
               budgets={[
-                {num: '+28 KB', label: 'JS shipped per visitor'},
+                {num: '+28 KB', label: 'JS'},
                 {num: '~20', label: 'JS calls per open'},
               ]}
             />
@@ -1326,8 +1325,7 @@ function PipelineRace() {
 
         <article class="kh-race-col kh-race-col--kinu">
           <header class="kh-race-col-head">
-            <span class="kh-race-col-tag">Kinu</span>
-            <span class="kh-race-col-name">CSS + the platform</span>
+            <span class="kh-race-col-name">Kinu</span>
           </header>
 
           <div class="kh-race-track">
@@ -1348,7 +1346,7 @@ function PipelineRace() {
             <RacePixels />
             <RaceBudgets
               budgets={[
-                {num: '0 KB', label: 'added to your bundle', tone: 'zero'},
+                {num: '0 KB', label: 'JS', tone: 'zero'},
                 {num: '0', label: 'JS calls per open', tone: 'zero'},
               ]}
             />
