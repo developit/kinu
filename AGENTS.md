@@ -88,22 +88,18 @@ demo/
 
 Run `pnpm install` and `pnpm run build` in `demo/` to build the demo app.
 
-## Running and inspecting the demo in a cloud container
+## Inspecting the demo in a browser
 
-The container has no display and the dev server's port isn't reachable from
-outside, but Chromium and Playwright are pre-installed so an agent can drive
-the page headlessly:
+Start the demo dev server with `pnpm -F demo dev` (vite, http://localhost:5173).
 
-```sh
-scripts/dev-server.sh start          # vite at http://127.0.0.1:5173 (logs in .devserver/log)
-scripts/browse.mjs inspect /         # title + console + network failures as JSON
-scripts/browse.mjs screenshot / -o .devserver/home.png
-scripts/browse.mjs eval / 'document.querySelectorAll("[p=button]").length'
-scripts/browse.mjs dom / 'main'      # outerHTML of a selector
-scripts/dev-server.sh stop
-```
+This repo configures the Playwright MCP server in `.mcp.json`, so an agent can
+drive a real Chromium with the `browser_*` tools — navigate, snapshot, click,
+type, read console messages, screenshot, and inspect network/performance (the
+`devtools` capability is enabled). Prefer these tools over ad-hoc shell
+scripting for any view/inspect/debug task.
 
-`url` accepts an absolute URL or a path relative to the running dev server.
-Screenshots can be opened with `Read` to view them inline. Both scripts keep
-state under `.devserver/` (gitignored).
+This works in the Claude Code cloud container: Chromium is pre-installed and
+`.mcp.json` points the server at it (`--headless --no-sandbox`, with
+`--executable-path` set to the bundled browser). If that path ever changes,
+find the current one with `ls -d /opt/pw-browsers/chromium-*/chrome-linux/chrome`.
 

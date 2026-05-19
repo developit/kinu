@@ -3,5 +3,4 @@ dist/
 .claude
 memory/
 .playwright-mcp
-.devserver/
 package-lock.json
