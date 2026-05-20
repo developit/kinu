@@ -1,8 +1,9 @@
 {
   "mcpServers": {
     "playwright": {
-      "command": "npx",
+      "command": "mcp-later",
       "args": [
+        "npx",
         "-y",
         "@playwright/mcp@latest",
         "--headless",
