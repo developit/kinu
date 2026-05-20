@@ -98,9 +98,8 @@ type, read console messages, screenshot, and inspect network/performance (the
 `devtools` capability is enabled). Prefer these tools over ad-hoc shell
 scripting for any view/inspect/debug task.
 
-This works in the Claude Code cloud container: `.mcp.json` runs
-`scripts/playwright-mcp.mjs`, which starts the MCP server with the right flags
-(`--headless --no-sandbox`) and auto-detects the installed Chromium build —
-the cloud container's pre-installed browser or a local Playwright cache, on
-any OS — so no browser path is hard-coded.
+In the Claude Code cloud container, `.claude/hooks/session-start.sh` runs at
+session start and installs the matching Chromium build via
+`@playwright/mcp install-browser`, so Playwright's built-in resolution finds
+it with no hard-coded path. The hook is a no-op outside the cloud container.
 

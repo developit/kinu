@@ -1,8 +1,16 @@
 {
   "mcpServers": {
     "playwright": {
-      "command": "node",
-      "args": ["scripts/playwright-mcp.mjs"]
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--headless",
+        "--no-sandbox",
+        "--isolated",
+        "--caps",
+        "devtools"
+      ]
     }
   }
 }
