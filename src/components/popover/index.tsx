@@ -1,5 +1,6 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
+import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installCommands, installAdaptiveCommands, installDialogsDropdowns} from '../../lib/commands';
 import type {
@@ -54,13 +55,13 @@ export function PopoverTrigger({
 //   true,
 // );
 
-export function PopoverContent({
-  id,
-  ...props
-}: PopoverContentOwnProps & JSX.IntrinsicElements['dialog']) {
-  const ctx = useContext(IdCtx);
-  return <dialog k="popover-content" id={id ?? ctx} {...props} />;
-}
+export const PopoverContent = createSimpleComponent<
+  'dialog',
+  PopoverContentOwnProps
+>('popover-content', 'dialog', (p: any) => ({
+  ...p,
+  id: p.id ?? useContext(IdCtx),
+}));
 
 export function PopoverClose({
   children,

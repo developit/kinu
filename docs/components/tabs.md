@@ -1,47 +1,51 @@
 # Tabs
 
-TabList, Tab, and TabPanel wrappers using aria attributes.
+Tabs, Tab, and TabPanel wrappers over `<input type="radio">` with native exclusive selection.
 
 ## Usage
 
 ```tsx
-import {Tab, TabList, TabPanel} from 'kinu';
+import {Tab, TabPanel, Tabs} from 'kinu';
 
-<TabList role="tablist">
-  <Tab role="tab" aria-selected="true">Account</Tab>
-  <Tab role="tab" aria-selected="false">Password</Tab>
-</TabList>
-<TabPanel role="tabpanel">Account settings</TabPanel>
+<Tabs>
+  <Tab checked>Account</Tab>
+  <TabPanel>Account settings</TabPanel>
+  <Tab>Password</Tab>
+  <TabPanel>Password settings</TabPanel>
+</Tabs>
 ```
 
 ## Exports
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| TabList | Tab container | `<div k="tablist">` |
-| Tab | Tab trigger | `<button k="tab">` |
+| Tabs | Tab strip wrapper | `<div k="tabs">` (with a shared `name` context) |
+| Tab | Tab trigger | `<label k="tab"><input type="radio" name=… /> …</label>` |
 | TabPanel | Tab content | `<div k="tab-panel">` |
+| TabList | Deprecated alias for Tabs | — |
 
 ## Props
 
 ### TabProps
 
+`<Tab>` props forward to the underlying `<input type="radio">`. Notable:
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| aria-selected | `boolean | "true" | "false"` | — | Marks the tab as selected. |
-| disabled | `boolean` | — | Disable tab interactions. |
+| checked | `boolean` | — | Initially selected. Becomes `checked` on the inner radio. |
+| disabled | `boolean` | — | Disables this tab. |
+| value | `string` | — | Optional; submitted with the form if `<Tabs>` is in one (rare; the radios set `form=""` by default so they don't participate). |
 
 ### TabPanelProps
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| hidden | `boolean` | — | Hide the panel when inactive. |
+`<TabPanel>` forwards to `<div>`.
 
 ## Notes
 
-- Control selection state by toggling aria-selected.
-- TabPanel toggles the hidden attribute so CSS handles transitions.
+- All `<Tab>`s inside one `<Tabs>` share an auto-generated `name`, so opening one deselects the others — pure HTML, no JS.
+- A panel is shown via `[k="tab"]:has(> input:checked) + [k="tab-panel"]` — the panel must immediately follow its tab in DOM order.
+- Listen to `<Tabs onChange={…}>` to react to selection changes; the `change` event bubbles from the radio.
 
 ---
 
-_Source: `src/components/tabs/index.tsx`
+_Source: `src/components/tabs/index.tsx`_

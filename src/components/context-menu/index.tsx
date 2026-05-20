@@ -1,5 +1,6 @@
 import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
+import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installDialogsDropdowns} from '../../lib/commands';
 import {Item} from '../item';
@@ -57,21 +58,15 @@ function click(e: MouseEvent) {
   (e.currentTarget as HTMLDialogElement).close();
 }
 
-export function ContextMenuContent({
-  id,
-  ...props
-}: ContextMenuContentOwnProps & JSX.IntrinsicElements['dialog']) {
-  const ctx = useContext(IdCtx);
-  return (
-    <dialog
-      k="context-menu"
-      id={id ?? ctx}
-      onClickCapture={click}
-      onContextMenuCapture={click}
-      {...props}
-    />
-  );
-}
+export const ContextMenuContent = createSimpleComponent<
+  'dialog',
+  ContextMenuContentOwnProps
+>('context-menu', 'dialog', (p: any) => ({
+  onClickCapture: click,
+  onContextMenuCapture: click,
+  ...p,
+  id: p.id ?? useContext(IdCtx),
+}));
 
 /** @deprecated Use `Item` instead. */
 export const ContextMenuItem = Item;

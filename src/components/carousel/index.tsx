@@ -24,10 +24,13 @@ export function Carousel({id: idProp, children}: CarouselOwnProps) {
   );
 }
 
-const CarouselContentRoot = createSimpleComponent<'div', CarouselContentOwnProps>(
+export const CarouselContent = createSimpleComponent<'div', CarouselContentOwnProps>(
   'carousel',
   'div',
-  {},
+  (p: any) => ({
+    ...p,
+    id: p.id ?? useContext(IdCtx),
+  }),
   (el: HTMLElement) => {
     const handleCommand = (e: any) => {
       const w = el.clientWidth;
@@ -36,46 +39,30 @@ const CarouselContentRoot = createSimpleComponent<'div', CarouselContentOwnProps
       else if (cmd === '--next') el.scrollBy({left: w, behavior: 'smooth'});
       else el.scrollTo({left: cmd.slice(7) * w, behavior: 'smooth'});
     };
-
     el.addEventListener('command', handleCommand);
     return () => el.removeEventListener('command', handleCommand);
   },
 );
-
-export function CarouselContent({children}: CarouselContentOwnProps) {
-  const id = useContext(IdCtx);
-  return <CarouselContentRoot id={id}>{children}</CarouselContentRoot>;
-}
 
 export const CarouselItem = createSimpleComponent<'div', CarouselItemOwnProps>(
   'carousel-item',
   'div',
 );
 
-export function CarouselPrevious({
-  children,
-  commandFor: _commandFor,
-  command: _command,
-  ...props
-}: CarouselPreviousOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
-  const id = useContext(IdCtx);
-  return (
-    <button {...props} k="carousel-previous" command="--prev" commandfor={id ?? undefined}>
-      {children}
-    </button>
-  );
-}
+export const CarouselPrevious = createSimpleComponent<
+  'button',
+  CarouselPreviousOwnProps
+>('carousel-previous', 'button', (p: any) => ({
+  ...p,
+  command: '--prev',
+  commandfor: useContext(IdCtx) ?? undefined,
+}));
 
-export function CarouselNext({
-  children,
-  commandFor: _commandFor,
-  command: _command,
-  ...props
-}: CarouselNextOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
-  const id = useContext(IdCtx);
-  return (
-    <button {...props} k="carousel-next" command="--next" commandfor={id ?? undefined}>
-      {children}
-    </button>
-  );
-}
+export const CarouselNext = createSimpleComponent<
+  'button',
+  CarouselNextOwnProps
+>('carousel-next', 'button', (p: any) => ({
+  ...p,
+  command: '--next',
+  commandfor: useContext(IdCtx) ?? undefined,
+}));

@@ -69,16 +69,12 @@ export const Button = createSimpleComponent('button', 'button');
 ```
 
 ```tsx
-// Tabs over native <details name>, exclusive open via shared name
+// Tabs over native <input type="radio">, exclusive selection via shared name
 <Tabs>
-  <Tab name="t" open>
-    <TabLabel>First</TabLabel>
-    <TabPanel>Panel content</TabPanel>
-  </Tab>
-  <Tab name="t">
-    <TabLabel>Second</TabLabel>
-    <TabPanel>...</TabPanel>
-  </Tab>
+  <Tab checked>First</Tab>
+  <TabPanel>Panel content</TabPanel>
+  <Tab>Second</Tab>
+  <TabPanel>...</TabPanel>
 </Tabs>
 ```
 
@@ -90,7 +86,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
 - **Accordion**: Collapsible content styled like shadcn/ui with slide animation
-- **Tabs**: TabList, Tab, TabPanel wrappers
+- **Tabs**: Tabs, Tab, TabPanel wrappers (radio-based, exclusive selection)
 - **Tooltip**: Hover text overlay
 - **Progress**: Styled `<progress>` bar
 - **Skeleton**: Animated loading placeholder

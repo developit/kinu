@@ -1,5 +1,6 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
+import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import type {
@@ -37,13 +38,13 @@ export function DrawerTrigger({
   });
 }
 
-export function DrawerContent({
-  id,
-  ...props
-}: DrawerContentOwnProps & JSX.IntrinsicElements['dialog']) {
-  const ctx = useContext(IdCtx);
-  return <dialog k="drawer-content" id={id ?? ctx} {...props} />;
-}
+export const DrawerContent = createSimpleComponent<
+  'dialog',
+  DrawerContentOwnProps
+>('drawer-content', 'dialog', (p: any) => ({
+  ...p,
+  id: p.id ?? useContext(IdCtx),
+}));
 
 export function DrawerClose({
   children,

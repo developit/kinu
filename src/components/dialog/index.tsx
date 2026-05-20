@@ -1,5 +1,6 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
+import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {
   installAdaptiveCommands,
@@ -38,13 +39,13 @@ export function DialogTrigger({
   });
 }
 
-export function DialogContent({
-  id,
-  ...props
-}: DialogContentOwnProps & JSX.IntrinsicElements['dialog']) {
-  const ctx = useContext(IdCtx);
-  return <dialog k="dialog-content" id={id ?? ctx} {...props} />;
-}
+export const DialogContent = createSimpleComponent<
+  'dialog',
+  DialogContentOwnProps
+>('dialog-content', 'dialog', (p: any) => ({
+  ...p,
+  id: p.id ?? useContext(IdCtx),
+}));
 
 export function DialogClose({
   children,

@@ -1,5 +1,6 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
+import {createSimpleComponent} from '../../lib/create-simple-component';
 import {applyPropsToChildren} from '../../lib/children';
 import {
   installCommands,
@@ -44,25 +45,18 @@ export function DropdownMenuTrigger({
   });
 }
 
-export function DropdownMenuContent({
-  id,
-  command = 'close',
-  commandFor,
-  ...props
-}: DropdownMenuContentOwnProps &
-  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor' | 'commandFor'>) {
-  const ctx = useContext(IdCtx);
-  const resolvedId = id ?? ctx;
-  return (
-    <dialog
-      k="dropdown-content"
-      id={resolvedId}
-      command={command}
-      commandFor={commandFor ?? resolvedId}
-      {...props}
-    />
-  );
-}
+export const DropdownMenuContent = createSimpleComponent<
+  'dialog',
+  DropdownMenuContentOwnProps
+>('dropdown-content', 'dialog', (p: any) => {
+  const id = p.id ?? useContext(IdCtx);
+  return {
+    command: 'close',
+    ...p,
+    id,
+    commandFor: p.commandFor ?? id,
+  };
+});
 
 /** @deprecated Use `Item` instead. */
 export const DropdownMenuItem = Item;
