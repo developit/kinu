@@ -88,3 +88,21 @@ demo/
 
 Run `pnpm install` and `pnpm run build` in `demo/` to build the demo app.
 
+## Inspecting the demo in a browser
+
+Start the demo dev server with `pnpm -F demo dev` (vite, http://localhost:5173).
+
+This repo configures the Playwright MCP server in `.mcp.json`, so an agent can
+drive a real Chromium with the `browser_*` tools — navigate, snapshot, click,
+type, read console messages, screenshot, and inspect network/performance (the
+`devtools` capability is enabled). Prefer these tools over ad-hoc shell
+scripting for any view/inspect/debug task.
+
+In the Claude Code cloud container, `.claude/hooks/session-start.sh` runs at
+session start and (a) installs the matching Chromium build via
+`@playwright/mcp install-browser`, so Playwright's built-in resolution finds
+it with no hard-coded path, and (b) installs `mcp-later` and warms its cache.
+`.mcp.json` wraps the Playwright server in `mcp-later` so it only boots when a
+`browser_*` tool is actually called -- sessions that never touch the browser
+pay no startup cost. The hook is a no-op outside the cloud container.
+

@@ -1,6 +1,8 @@
 node_modules/
 dist/
-.claude
+.claude/*
+!.claude/settings.json
+!.claude/hooks
 memory/
 .playwright-mcp
 package-lock.json
