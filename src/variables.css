@@ -60,6 +60,14 @@
   /* Radius */
   --k-radius: 0.5rem;
 
+  /* Focus ring — the standard recipe used by input, textarea, select,
+     switch, radio, otp, toggle, color-picker, input-group. Themes
+     override this single token to restyle every input-like component
+     at once (e.g. softer halo, alpha-based, dual-shadow). Components
+     with intentionally bespoke focus styles (button, slider thumb,
+     tab, chip, tree, listbox) keep their own rules. */
+  --k-focus-ring: 0 0 0 2px hsl(var(--k-ring));
+
   /* ── Density tokens ──────────────────────────────────────────
    * Sized for desktop comfort by default. The values below are the
    * `md` ramp; `sm` and `lg` ramps live further down.

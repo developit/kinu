@@ -18,7 +18,7 @@
 
 [k="textarea"]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+  box-shadow: var(--k-focus-ring);
 }
 
 [k="textarea"]:disabled {
