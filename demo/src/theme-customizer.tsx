@@ -166,9 +166,9 @@ function generateCSS(settings: ThemeSettings): string {
   lines.push('}');
   lines.push('');
 
-  // Dark mode (explicit class)
-  lines.push('/* Dark mode (explicit) */');
-  lines.push('.dark {');
+  // Dark mode (explicit attribute — applies to any subtree)
+  lines.push('/* Dark mode (explicit, scopable to any subtree) */');
+  lines.push('[data-color-scheme="dark"] {');
   lines.push('  color-scheme: dark;');
   lines.push(`  --k-primary: ${hsl(accent.dark.step9)};`);
   lines.push(`  --k-primary-hover: ${hsl(accent.dark.step10)};`);

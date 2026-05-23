@@ -124,30 +124,30 @@ export default function Home() {
         </div>
 
         <div class="kh-preview-grid">
-          <PreviewCard title="Tasks">
+          <AppFrame title="Tasks">
             <TasksPreview />
-          </PreviewCard>
-          <PreviewCard title="Media Player">
+          </AppFrame>
+          <AppFrame title="Media Player">
             <NowPlayingPreview />
-          </PreviewCard>
-          <PreviewCard title="AI Composer">
+          </AppFrame>
+          <AppFrame title="AI Composer">
             <ComposerPreview />
-          </PreviewCard>
-          <PreviewCard title="Activity">
+          </AppFrame>
+          <AppFrame title="Activity">
             <ActivityPreview />
-          </PreviewCard>
-          <PreviewCard title="Command Palette">
+          </AppFrame>
+          <AppFrame title="Command Palette">
             <CommandPalettePreview />
-          </PreviewCard>
-          <PreviewCard title="Trip Booking">
+          </AppFrame>
+          <AppFrame title="Trip Booking">
             <DateRangePreview />
-          </PreviewCard>
-          <PreviewCard wide>
+          </AppFrame>
+          <AppFrame title="Inbox" wide>
             <InboxPreview />
-          </PreviewCard>
-          <PreviewCard title="Settings">
+          </AppFrame>
+          <AppFrame title="Settings">
             <SettingsPreview />
-          </PreviewCard>
+          </AppFrame>
         </div>
       </section>
 
@@ -529,30 +529,81 @@ function NowPlayingPreview() {
 
 /* ── AI Composer (Textarea + model picker) ──────────────────────────────── */
 /* Reusable card shell — header with title + (optional) hint, then body. */
-function PreviewCard({
+/**
+ * Stylized window-frame around each "Built with Kinu" demo. Titlebar shows
+ * the demo name on the left and a sun/moon button on the right; clicking
+ * the toggle flips the frame's own `data-color-scheme`, which re-cascades
+ * every kinu CSS variable for the subtree and gives the demo its own theme.
+ */
+function AppFrame({
   title,
-  hint,
   wide,
+  defaultTheme = 'light',
   children,
 }: {
-  title?: string;
-  hint?: string;
+  title: string;
   wide?: boolean;
+  defaultTheme?: 'light' | 'dark';
   children: ComponentChildren;
 }) {
+  const [scheme, setScheme] = useState<'light' | 'dark'>(defaultTheme);
+  const next = scheme === 'light' ? 'dark' : 'light';
   return (
-    <Card
-      class={`kh-preview${wide ? ' kh-preview--wide' : ''}${title ? '' : ' kh-preview--bare'}`}
-      padding="lg"
+    <article
+      class={`kh-app${wide ? ' kh-app--wide' : ''}`}
+      data-color-scheme={scheme}
     >
-      {title && (
-        <header class="kh-preview-head">
-          <span class="kh-preview-title">{title}</span>
-          {hint && <span class="kh-preview-hint">{hint}</span>}
-        </header>
-      )}
-      <div class="kh-preview-body">{children}</div>
-    </Card>
+      <header class="kh-app-bar">
+        <span class="kh-app-title">{title}</span>
+        <button
+          type="button"
+          class="kh-app-toggle"
+          onClick={() => setScheme(next)}
+          aria-label={`Switch to ${next} mode`}
+          title={`Switch to ${next} mode`}
+        >
+          {scheme === 'light' ? <SunIcon /> : <MoonIcon />}
+        </button>
+      </header>
+      <div class="kh-app-body">{children}</div>
+    </article>
+  );
+}
+
+function SunIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
   );
 }
 
