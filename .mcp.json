@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "mcp-later",
+      "args": [
+        "npx",
+        "-y",
+        "@playwright/mcp@latest",
+        "--headless",
+        "--no-sandbox",
+        "--isolated",
+        "--caps",
+        "devtools"
+      ]
+    }
+  }
+}
