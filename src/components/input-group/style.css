@@ -46,7 +46,7 @@
 }
 
 [k="input-group"]:has(> :is([k="input"], [k="textarea"], [k="select"]):focus-visible):not(:has(> :is([k="input"], [k="textarea"], [k="select"]) ~ :is([k="input"], [k="textarea"], [k="select"]))) {
-  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+  box-shadow: var(--k-focus-ring);
   border-radius: var(--k-radius);
 }
 
