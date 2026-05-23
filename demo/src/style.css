@@ -1462,14 +1462,14 @@ body .home-nav--marketing + * {
 
 /* Titlebar — no border. The bar is a gradient that fades into the body,
  * so the seam between chrome and content reads as ambient rather than
- * ruled. */
+ * ruled. 3-column grid centers the title in the bar regardless of the
+ * toggle's width. */
 .kh-app-bar {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 6px 6px 6px 16px;
+  padding: 6px;
   min-height: 40px;
   background: linear-gradient(
     180deg,
@@ -1478,17 +1478,21 @@ body .home-nav--marketing + * {
   );
 }
 .kh-app-title {
+  grid-column: 2;
+  text-align: center;
   font-family: var(--kh-font-label);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: hsl(var(--k-muted-foreground));
+  color: hsl(var(--k-muted-foreground) / 0.7);
 }
 
 /* Shrink kinu's icon Button down for the titlebar — its default is
  * 2.5rem which would extend past the bar's chrome. */
 .kh-app [k="button"].kh-app-toggle {
+  grid-column: 3;
+  justify-self: end;
   width: 28px;
   height: 28px;
   border-radius: 8px;
@@ -2324,10 +2328,9 @@ body .home-nav--marketing + * {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--kh-font-serif);
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
   transform: translateX(0);
   opacity: 1;
 }
@@ -2338,10 +2341,8 @@ body .home-nav--marketing + * {
   opacity: 0;
   pointer-events: none;
   padding-inline: 0.5rem;
-  font-family: var(--kh-font-serif);
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 500;
-  font-style: italic;
   letter-spacing: -0.005em;
   color: hsl(var(--k-foreground));
 }
@@ -2488,12 +2489,11 @@ body .home-nav--marketing + * {
 }
 .kh-inbox-subject {
   margin: 4px 0 0;
-  font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: hsl(var(--k-foreground));
 }
 .kh-inbox-body-text {
   margin: 0;

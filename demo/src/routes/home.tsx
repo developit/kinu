@@ -543,16 +543,28 @@ function NowPlayingPreview() {
 function AppFrame({
   title,
   wide,
-  defaultTheme = 'light',
   children,
 }: {
   title: string;
   wide?: boolean;
-  defaultTheme?: 'light' | 'dark';
   children: ComponentChildren;
 }) {
-  const [scheme, setScheme] = useState<'light' | 'dark'>(defaultTheme);
-  const next = scheme === 'light' ? 'dark' : 'light';
+  // null = no explicit scheme yet → frame inherits from the page / OS.
+  // After the first toggle, scheme becomes 'light' or 'dark' and the
+  // attribute is applied so the frame holds its own theme.
+  const [scheme, setScheme] = useState<'light' | 'dark' | null>(null);
+  const [systemDark, setSystemDark] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    setSystemDark(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setSystemDark(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  const effective: 'light' | 'dark' = scheme ?? (systemDark ? 'dark' : 'light');
+  const next: 'light' | 'dark' = effective === 'light' ? 'dark' : 'light';
   const slug = title.toLowerCase().replace(/\s+/g, '-');
   const transitionName = `kh-app-${slug}`;
 
@@ -571,7 +583,7 @@ function AppFrame({
   return (
     <article
       class={`kh-app${wide ? ' kh-app--wide' : ''}`}
-      data-color-scheme={scheme}
+      data-color-scheme={scheme ?? undefined}
       style={{viewTransitionName: transitionName}}
     >
       <header class="kh-app-bar">
@@ -584,7 +596,7 @@ function AppFrame({
           aria-label={`Switch to ${next} mode`}
           title={`Switch to ${next} mode`}
         >
-          {scheme === 'light' ? <SunIcon /> : <MoonIcon />}
+          {effective === 'light' ? <SunIcon /> : <MoonIcon />}
         </Button>
       </header>
       <div class="kh-app-body">{children}</div>
