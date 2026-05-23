@@ -4,6 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UI Toolkit Demo</title>
+    <!--
+      Theme bootstrap — must run synchronously before any CSS is applied
+      so we don't paint kinu defaults first and then flash to the chosen
+      theme. Reads the persisted picker selection and the customizer's
+      cached CSS overlay; both are written by the demo's React code.
+    -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('kinu-theme');
+          if (t) document.documentElement.setAttribute('data-theme', t);
+          var d = localStorage.getItem('kinu-density');
+          if (d) document.documentElement.setAttribute('data-kinu-density', d);
+          var css = localStorage.getItem('kinu-custom-theme');
+          if (css) {
+            var s = document.createElement('style');
+            s.id = 'kinu-custom-style';
+            s.textContent = css;
+            document.head.appendChild(s);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <style>
       * {
         box-sizing: border-box;

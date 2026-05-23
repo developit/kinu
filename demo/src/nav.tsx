@@ -9,7 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from 'kinu';
-import {ThemeCustomizer} from './theme-customizer.tsx';
+import {ThemePicker} from './theme-picker.tsx';
 
 export function Nav({
   class: className,
@@ -53,7 +53,7 @@ export function Nav({
         </NavigationMenuItem>
       </NavigationMenuList>
       <div class="nav-actions">
-        <ThemeCustomizer />
+        <ThemePicker />
       </div>
     </NavigationMenu>
   );
