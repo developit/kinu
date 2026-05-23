@@ -20,6 +20,7 @@
 
 [k="input"]:focus-visible {
   outline: none;
+  border-color: var(--k-focus-border);
   box-shadow: var(--k-focus-ring);
 }
 
