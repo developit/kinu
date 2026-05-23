@@ -1,5 +1,5 @@
-:root,
-[data-color-scheme="light"] {
+:where(:root),
+:where([data-color-scheme="light"]) {
   /* Base colors */
   --k-background: 0 0% 100%;
   --k-foreground: 222.2 84% 4.9%;
@@ -126,7 +126,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :where(:root) {
     color-scheme: dark;
     /* Base colors */
     --k-background: 222.2 50% 7%;
@@ -167,7 +167,7 @@
   }
 }
 
-[data-color-scheme="dark"] {
+:where([data-color-scheme="dark"]) {
   color-scheme: dark;
   /* Base colors */
   --k-background: 222.2 50% 7%;

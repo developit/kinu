@@ -534,6 +534,11 @@ function NowPlayingPreview() {
  * the demo name on the left and a sun/moon button on the right; clicking
  * the toggle flips the frame's own `data-color-scheme`, which re-cascades
  * every kinu CSS variable for the subtree and gives the demo its own theme.
+ *
+ * The flip uses the View Transitions API to do a radial wipe from the
+ * upper right (where the button lives). Each frame gets a unique
+ * `view-transition-name` so multiple frames can toggle without
+ * interfering with each other.
  */
 function AppFrame({
   title,
@@ -548,22 +553,39 @@ function AppFrame({
 }) {
   const [scheme, setScheme] = useState<'light' | 'dark'>(defaultTheme);
   const next = scheme === 'light' ? 'dark' : 'light';
+  const slug = title.toLowerCase().replace(/\s+/g, '-');
+  const transitionName = `kh-app-${slug}`;
+
+  const toggle = () => {
+    // Firefox doesn't ship startViewTransition yet — fall back to instant flip.
+    const start = (document as Document & {
+      startViewTransition?: (cb: () => void) => unknown;
+    }).startViewTransition;
+    if (typeof start === 'function') {
+      start.call(document, () => setScheme(next));
+    } else {
+      setScheme(next);
+    }
+  };
+
   return (
     <article
       class={`kh-app${wide ? ' kh-app--wide' : ''}`}
       data-color-scheme={scheme}
+      style={{viewTransitionName: transitionName}}
     >
       <header class="kh-app-bar">
         <span class="kh-app-title">{title}</span>
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="icon"
           class="kh-app-toggle"
-          onClick={() => setScheme(next)}
+          onClick={toggle}
           aria-label={`Switch to ${next} mode`}
           title={`Switch to ${next} mode`}
         >
           {scheme === 'light' ? <SunIcon /> : <MoonIcon />}
-        </button>
+        </Button>
       </header>
       <div class="kh-app-body">{children}</div>
     </article>

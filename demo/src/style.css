@@ -9,12 +9,10 @@
  * brand without any per-component theming. The library variables.css is
  * untouched.
  *
- * Cascade note: kinu component CSS (which @imports variables.css) is
- * bundled AFTER our overrides via JS imports of components. To win the
- * cascade we use `:root:root` and doubled attribute selectors like
- * `[data-color-scheme="dark"][data-color-scheme="dark"]` (both 0,2,0 →
- * beats library's 0,1,0). The @media block mirrors the explicit dark
- * rule so OS-level prefers-color-scheme: dark also takes effect.
+ * Cascade note: kinu's variables.css wraps its token rules in :where(...)
+ * so they have specificity (0,0,0). Any normal selector here wins. The
+ * @media block mirrors the explicit dark rule so OS-level
+ * prefers-color-scheme: dark also takes effect.
  *
  * The system is anchored on a dark kinu-sage primary (close to the
  * `--kh-dark-band` we use for the editorial bands) and a warm cream
@@ -23,8 +21,8 @@
  * to sit on cream instead of fighting it.
  * ─────────────────────────────────────────────────────────────────────── */
 
-:root:root,
-[data-color-scheme="light"][data-color-scheme="light"] {
+:root,
+[data-color-scheme="light"] {
   /* Surfaces — cream paper, white cards */
   --k-background: 47 53% 96.7%;
   --k-foreground: 24 10% 10%;
@@ -88,7 +86,7 @@
 
 /* OS-level dark mode */
 @media (prefers-color-scheme: dark) {
-  :root:root {
+  :root {
     color-scheme: dark;
 
     --k-background: 132 10% 7%;
@@ -124,12 +122,11 @@
   }
 }
 
-/* Explicit per-subtree dark override (theme customizer / forced dark / per-demo
-   toggle in the homepage's "Built with Kinu" grid). Doubled attribute selector
-   gives 0,2,0 specificity so we win against the library's 0,1,0 rule
-   regardless of bundle order. */
-:root[data-color-scheme="dark"],
-[data-color-scheme="dark"][data-color-scheme="dark"] {
+/* Explicit per-subtree dark override (theme customizer / forced dark /
+   per-demo toggle in the homepage's "Built with Kinu" grid). Library's
+   token rules are :where()-wrapped at 0,0,0, so a normal attribute
+   selector wins cleanly. */
+[data-color-scheme="dark"] {
   color-scheme: dark;
 
   --k-background: 132 10% 7%;
@@ -1415,27 +1412,40 @@ body .home-nav--marketing + * {
   gap: 20px;
 }
 
-/* Stylized window-frame around each demo. Titlebar (.kh-app-bar) carries
- * the demo name + a sun/moon button; clicking the button flips this
- * frame's own data-color-scheme, which re-cascades all kinu CSS variables
- * inside it. */
+/* Stylized window-frame around each demo. Tahoe-ish: hairline outer
+ * border, no hard rule between titlebar and body (titlebar is a fade),
+ * two-layer shadow (contact + drop), faint inner specular highlight
+ * along the top edge. */
 .kh-app {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: hsl(var(--k-card));
   color: hsl(var(--k-card-foreground));
-  border: 1px solid hsl(var(--k-border));
-  border-radius: 12px;
+  border: 1px solid hsl(var(--k-border) / 0.55);
+  border-radius: 14px;
   overflow: hidden;
   min-height: 320px;
   box-shadow:
+    /* contact — grounds the frame */
     0 1px 2px hsl(0 0% 0% / 0.04),
-    0 16px 40px -28px hsl(0 0% 0% / 0.25);
+    /* drop — floats it */
+    0 24px 60px -40px hsl(0 0% 0% / 0.18),
+    /* inner specular — reads as a catch-light along the top edge */
+    inset 0 1px 0 hsl(0 0% 100% / 0.06);
   transition: background 0.18s ease, border-color 0.18s ease,
     box-shadow 0.18s ease, color 0.18s ease;
 }
+[data-color-scheme="dark"].kh-app {
+  /* In dark mode the inner highlight wants to be a touch brighter to
+   * read as a lit edge against the darker surface. */
+  box-shadow:
+    0 1px 2px hsl(0 0% 0% / 0.25),
+    0 24px 60px -40px hsl(0 0% 0% / 0.5),
+    inset 0 1px 0 hsl(0 0% 100% / 0.07);
+}
 
-/* The Settings (OTP) and Inbox (two-pane) demos need extra floor. */
+/* Settings (OTP) and Inbox (two-pane) demos need extra floor. */
 .kh-app:has(.kh-settings),
 .kh-app:has(.kh-inbox) {
   min-height: 380px;
@@ -1450,16 +1460,22 @@ body .home-nav--marketing + * {
   }
 }
 
-/* Titlebar — restrained, no traffic lights. */
+/* Titlebar — no border. The bar is a gradient that fades into the body,
+ * so the seam between chrome and content reads as ambient rather than
+ * ruled. */
 .kh-app-bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 8px 8px 8px 16px;
-  min-height: 38px;
-  background: hsl(var(--k-background) / 0.5);
-  border-bottom: 1px solid hsl(var(--k-border));
+  padding: 6px 6px 6px 16px;
+  min-height: 40px;
+  background: linear-gradient(
+    180deg,
+    hsl(var(--k-background) / 0.7) 0%,
+    hsl(var(--k-background) / 0) 100%
+  );
 }
 .kh-app-title {
   font-family: var(--kh-font-label);
@@ -1470,37 +1486,18 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground));
 }
 
-/* Sun/moon toggle — ghost button, expands subtly on hover. */
-.kh-app-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  margin: 0;
-  padding: 0;
-  border-radius: 6px;
-  background: transparent;
-  border: 1px solid transparent;
-  color: hsl(var(--k-muted-foreground));
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease,
-    border-color 0.15s ease;
-}
-.kh-app-toggle:hover {
-  background: hsl(var(--k-secondary));
-  color: hsl(var(--k-foreground));
-}
-.kh-app-toggle:focus-visible {
-  outline: 2px solid hsl(var(--k-ring));
-  outline-offset: 2px;
+/* Shrink kinu's icon Button down for the titlebar — its default is
+ * 2.5rem which would extend past the bar's chrome. */
+.kh-app [k="button"].kh-app-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
 }
 .kh-app-toggle svg {
   display: block;
 }
 
-/* Body — full bleed inside the frame. Each demo's own root CSS handles
- * its inner padding. */
+/* Body — full bleed inside the frame. */
 .kh-app-body {
   flex: 1;
   display: flex;
@@ -1508,6 +1505,42 @@ body .home-nav--marketing + * {
   min-height: 0;
   padding: 20px;
   background: hsl(var(--k-card));
+}
+
+/* ── View Transition: radial wipe from the upper right ──────────────── */
+/* Each AppFrame sets its own view-transition-name (e.g. kh-app-tasks),
+ * so toggling one frame doesn't disturb the others. The new snapshot
+ * grows from the corner where the toggle button sits, "drawing" the new
+ * theme over the old one. */
+@keyframes kh-app-reveal {
+  from { clip-path: circle(0% at 100% 0%); }
+  to   { clip-path: circle(150% at 100% 0%); }
+}
+
+/* Suppress the root crossfade — only frame snapshots should animate. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Old frame snapshot stays put under the wipe; new snapshot reveals. */
+::view-transition-group(*) {
+  animation-duration: 420ms;
+}
+::view-transition-old(*) {
+  animation: none;
+}
+::view-transition-new(*) {
+  animation: kh-app-reveal 420ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduced motion: skip the wipe, instant swap. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 /* Tasks preview */
