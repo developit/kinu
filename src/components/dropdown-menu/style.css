@@ -43,6 +43,20 @@
 }
 
 
+/* Submenu trigger arrow indicator */
+[k="item"][submenu]::after {
+  content: "›";
+  margin-left: auto;
+  opacity: 0.7;
+}
+
+@position-try --k-submenu-left {
+  left: auto;
+  right: anchor(left);
+  top: anchor(top);
+  inset-block-start: anchor(top);
+}
+
 @supports (position-anchor: --k-trigger) {
   [k="dropdown-content"] {
     left: anchor(left);
@@ -56,5 +70,12 @@
     right: anchor(right);
     --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
+  }
+
+  [k="dropdown-content"] [k="dropdown"] > [k="dropdown-content"] {
+    inset-block-start: anchor(top);
+    left: anchor(right);
+    right: auto;
+    position-try-fallbacks: --k-submenu-left;
   }
 }

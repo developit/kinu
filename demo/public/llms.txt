@@ -4,7 +4,7 @@ kinu is a lightweight, modern UI component library built for Preact that provide
 
 ## Architecture Overview
 
-kinu is primarily a pass-through from JSX to semantic HTML that attaches `[k="component-name"]` attributes to elements for styling and behavior. The `p` stands for `kinu` and contains the kinu component name. CSS uses these attributes to style components without JavaScript, and delegated event handlers use them for features like keyboard navigation.
+kinu is primarily a pass-through from JSX to semantic HTML that attaches `[k="component-name"]` attributes to elements for styling and behavior. The `k` stands for `kinu` and contains the kinu component name. CSS uses these attributes to style components without JavaScript, and delegated event handlers use them for features like keyboard navigation.
 
 ### Core Philosophy
 - **Minimal JavaScript**: Components use native HTML elements with minimal JavaScript for enhanced functionality

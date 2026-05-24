@@ -14,6 +14,11 @@ import {
   Slider,
   Checkbox,
   Label,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuSubTrigger,
+  Item,
 } from 'kinu';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
@@ -73,6 +78,11 @@ export default function Home() {
             <h3>Settings Panel</h3>
             <p>Toggle switches and user preferences</p>
             <SettingsDemo />
+          </Card>
+          <Card class="showcase-demo">
+            <h3>Nested Menus</h3>
+            <p>Nested dialog submenus with command-driven triggers</p>
+            <NestedDropdownDemo />
           </Card>
           <Card class="showcase-demo">
             <h3>Notifications</h3>
@@ -425,5 +435,38 @@ function NotificationDemo() {
         </Dialog.Content>
       </Dialog>
     </div>
+  );
+}
+
+function NestedDropdownDemo() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button variant="outline">Open menu</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <Item>New File</Item>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <DropdownMenuSubTrigger>Share</DropdownMenuSubTrigger>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Item>Email Link</Item>
+            <Item>Copy Invite</Item>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <DropdownMenuSubTrigger>Permissions</DropdownMenuSubTrigger>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <Item>Can view</Item>
+                <Item>Can comment</Item>
+                <Item>Can edit</Item>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Item destructive>Delete</Item>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

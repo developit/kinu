@@ -253,6 +253,7 @@ export {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSubTrigger,
 } from './components/dropdown-menu';
 export type {
   DropdownMenuProps,
@@ -261,6 +262,8 @@ export type {
   DropdownMenuTriggerOwnProps,
   DropdownMenuContentProps,
   DropdownMenuContentOwnProps,
+  DropdownMenuSubTriggerProps,
+  DropdownMenuSubTriggerOwnProps,
 } from './components/dropdown-menu/types';
 export {
   HoverCard,

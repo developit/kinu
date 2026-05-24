@@ -47,5 +47,15 @@ export type DropdownMenuTriggerProps = DropdownMenuTriggerOwnProps &
 export type DropdownMenuContentProps = DropdownMenuContentOwnProps &
   Omit<JSX.IntrinsicElements['dialog'], keyof DropdownMenuContentOwnProps>;
 
+export interface DropdownMenuSubTriggerOwnProps extends BaseProps {
+  /**
+   * Applies destructive styling to the submenu trigger.
+   */
+  destructive?: boolean;
+}
+
+export type DropdownMenuSubTriggerProps = DropdownMenuSubTriggerOwnProps &
+  Omit<JSX.IntrinsicElements['button'], keyof DropdownMenuSubTriggerOwnProps>;
+
 // Backward compat re-exports from unified Item types
 export type {DropdownMenuItemOwnProps, DropdownMenuItemProps} from '../item/types';

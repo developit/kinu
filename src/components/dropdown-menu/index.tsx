@@ -1,6 +1,7 @@
-import {createContext} from 'preact';
+import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {createSimpleComponent} from '../../lib/create-simple-component';
 import {
   installCommands,
   installAdaptiveCommands,
@@ -12,6 +13,7 @@ import type {
   DropdownMenuOwnProps,
   DropdownMenuTriggerOwnProps,
   DropdownMenuContentOwnProps,
+  DropdownMenuSubTriggerOwnProps,
 } from './types';
 import './style.css';
 
@@ -66,5 +68,10 @@ export function DropdownMenuContent({
 
 /** @deprecated Use `Item` instead. */
 export const DropdownMenuItem = Item;
+
+export const DropdownMenuSubTrigger = createSimpleComponent<
+  'button',
+  DropdownMenuSubTriggerOwnProps
+>('item', 'button', {submenu: ''} as any);
 
 Object.assign(DropdownMenu, {Item});
