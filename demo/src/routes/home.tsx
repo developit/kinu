@@ -1,3 +1,4 @@
+import '../homepage.css';
 import {
   Button,
   Card,
@@ -14,153 +15,228 @@ import {
   Slider,
   Checkbox,
   Label,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
 } from 'kinu';
 import {useState} from 'preact/hooks';
-import {Nav} from '../nav';
 
 export default function Home() {
   return (
     <div class="home">
       <ToastContainer />
-      <Nav />
 
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-text">
-            <h1>
-              Build beautiful UIs with <span class="highlight">kinu</span>
-            </h1>
-            <p class="hero-subtitle">
-              A lightweight <strong>5kB</strong> component library that
-              leverages native HTML commands for interactions. Accessible,
-              performant interfaces without the JS bloat.
-            </p>
-            <div class="hero-actions">
-              <Button href="/getting-started" size="lg">
-                Get Started
-              </Button>
-              <Button href="/docs" variant="outline" size="lg">
-                Browse Components
-              </Button>
+      {/* ── Navigation ── */}
+      <nav class="atelier-nav">
+        <div class="atelier-nav-inner">
+          <div class="nav-left">
+            <a href="/" class="atelier-logo">Kinu</a>
+          </div>
+          <div class="atelier-links">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <button type="button" class="atelier-link">Demos</button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem as="a" href="/linear">
+                  Linear Demo
+                </DropdownMenuItem>
+                <DropdownMenuItem as="a" href="/chat">
+                  Chat Demo
+                </DropdownMenuItem>
+                <DropdownMenuItem as="a" href="/player">
+                  Music Demo
+                </DropdownMenuItem>
+                <DropdownMenuItem as="a" href="/dashboard">
+                  Dashboard Demo
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div class="nav-actions">
+            <Button href="/docs" variant="ghost">Docs</Button>
+            <Button href="/getting-started">Get Started</Button>
+          </div>
+        </div>
+      </nav>
+
+      {/* ── Main ── */}
+      <main class="atelier-main">
+
+        {/* ── Hero ── */}
+        <section class="hero-section">
+          <div class="hero-grid">
+            <div>
+              <h1 class="hero-headline">
+                Preact UI toolkit. <br />
+                <span class="accent">10x smaller</span> <br />
+                than you think.
+              </h1>
+              <p class="hero-subtitle">
+                Intuitive for humans+LLMs. A high-performance architecture wrapped in an editorial shell.
+              </p>
+              <div class="hero-actions">
+                <Button href="/getting-started" size="lg">
+                  Get Started
+                </Button>
+                <Button href="/docs" variant="outline" size="lg">
+                  Browse Components
+                </Button>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <HeroDemo />
             </div>
           </div>
-          <div class="hero-demo">
-            <HeroDemo />
+        </section>
+
+        {/* ── Laboratory ── */}
+        <section class="lab-section">
+          <div class="lab-inner">
+            <div class="section-header">
+              <span class="section-label">Laboratory</span>
+              <h2 class="section-title">The Technical Workspace</h2>
+              <p class="section-subtitle">Interactive demos showcasing real-world usage—all powered by just 5kB of JavaScript</p>
+            </div>
+            <div class="lab-grid">
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Form Controls</h3>
+                <p class="lab-card-desc">Accessible forms with validation feedback</p>
+                <FormDemo />
+              </Card>
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Data Visualization</h3>
+                <p class="lab-card-desc">Progress tracking and interactive displays</p>
+                <DataDemo />
+              </Card>
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Settings Panel</h3>
+                <p class="lab-card-desc">Toggle switches and user preferences</p>
+                <SettingsDemo />
+              </Card>
+              <Card class="lab-card">
+                <h3 class="lab-card-title">Notifications</h3>
+                <p class="lab-card-desc">Toast messages and alert dialogs</p>
+                <NotificationDemo />
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="showcase">
-        <div class="showcase-header">
-          <h2>See it in action</h2>
-          <p>
-            Interactive demos showcasing real-world usage—all powered by just
-            5kB of JavaScript
-          </p>
-        </div>
-        <div class="showcase-grid">
-          <Card class="showcase-demo">
-            <h3>Form Controls</h3>
-            <p>Accessible forms with validation feedback</p>
-            <FormDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Data Visualization</h3>
-            <p>Progress tracking and interactive displays</p>
-            <DataDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Settings Panel</h3>
-            <p>Toggle switches and user preferences</p>
-            <SettingsDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Notifications</h3>
-            <p>Toast messages and alert dialogs</p>
-            <NotificationDemo />
-          </Card>
-        </div>
-      </section>
+        {/* ── Architecture ── */}
+        <section class="arch-section">
+          <div class="arch-inner">
+            <div class="arch-text">
+              <span class="arch-label">Architecture</span>
+              <h2 class="arch-heading">A Clever Facade.</h2>
+              <p class="arch-desc">
+                Kinu offers the ergonomics of a heavy toolkit with the weight of a whisper.
+                Built for high-stakes technical environments where speed is not an option—it is the standard.
+              </p>
+              <div class="arch-stats">
+                <div class="arch-stat">
+                  <div class="arch-stat-value">~5kB</div>
+                  <div class="arch-stat-label">JS Total</div>
+                </div>
+                <div class="arch-stat">
+                  <div class="arch-stat-value">0</div>
+                  <div class="arch-stat-label">Dependencies</div>
+                </div>
+              </div>
+            </div>
+            <div class="arch-visual">
+              <div class="arch-image-wrapper">
+                <div class="arch-image-bg" />
+                <div class="arch-image-overlay" />
+                <div class="arch-quote-card">
+                  <iconify-icon icon="material-symbols:architecture" class="arch-quote-icon" />
+                  <p class="arch-quote-text">
+                    "The precision of Kinu allows our engineers to ship with confidence and our designers to dream without constraint."
+                  </p>
+                  <div class="arch-quote-attribution">
+                    Lead Architect, Vertex Corp
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section class="why-preact-ui">
-        <h2>Why developers choose kinu</h2>
-        <div class="benefits-grid">
-          <div class="benefit">
-            <div class="benefit-icon">🪶</div>
-            <h3>Incredibly Light</h3>
-            <p>
-              Just 5kB of JavaScript—smaller than most images. Your users will
-              thank you for the fast load times.
+        {/* ── Features Grid ── */}
+        <section class="features-section">
+          <div class="features-grid">
+            <div class="feature-card-large">
+              <iconify-icon icon="material-symbols:code" class="feature-card-large-icon" />
+              <h3>HTML Commands, Not Event Handlers</h3>
+              <p>Dialogs open, menus toggle, and drawers close using the proposed HTML <code>command</code>/<code>commandfor</code> attributes. No event handlers, no re-renders—just declarative markup.</p>
+            </div>
+            <div class="feature-card-primary">
+              <iconify-icon icon="material-symbols:bolt" class="feature-card-primary-icon" style="font-variation-settings: 'FILL' 1;" />
+              <div>
+                <h3>~5kB JS</h3>
+                <p>50+ components in ~5kB of JavaScript. Every prop forwards directly to the DOM—no runtime filtering, no abstraction tax.</p>
+              </div>
+            </div>
+            <div class="feature-card-sm">
+              <h3>01. Platform-Native</h3>
+              <p>Real <code>&lt;dialog&gt;</code>, real <code>&lt;progress&gt;</code>, real form validation. Kinu wraps native HTML instead of rebuilding it.</p>
+            </div>
+            <div class="feature-card-sm">
+              <h3>02. CSS-Driven</h3>
+              <p>Variants, sizes, and states are HTML attributes read by CSS selectors. No runtime branching—instant first paint.</p>
+            </div>
+            <div class="feature-card-sm">
+              <h3>03. AI-Readable</h3>
+              <p>Props forward directly to the DOM as attributes. What you write in JSX is what renders in HTML—transparent to humans and LLMs alike.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CTA ── */}
+        <section class="cta-section">
+          <Card class="cta-card" padding="lg">
+            <h2>Built for real applications</h2>
+            <p>From simple forms to complex dashboards, kinu scales with your needs</p>
+            <div class="cta-links">
+              <Button href="/linear" variant="secondary" size="lg">
+                Linear Dashboard
+              </Button>
+              <Button href="/chat" variant="secondary" size="lg">
+                Chat Application
+              </Button>
+              <Button href="/player" variant="secondary" size="lg">
+                Music Player
+              </Button>
+              <Button variant="outline" href="https://github.com/nicehash-developit/kinu">
+                GitHub
+              </Button>
+            </div>
+          </Card>
+        </section>
+      </main>
+
+      {/* ── Footer ── */}
+      <footer class="atelier-footer">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <a href="/" class="footer-logo">Kinu</a>
+            <p class="footer-tagline">
+              A Preact UI toolkit. ~5kB of JavaScript, zero dependencies, native HTML semantics.
             </p>
           </div>
-          <div class="benefit">
-            <div class="benefit-icon">🔧</div>
-            <h3>Native HTML Power</h3>
-            <p>
-              Uses HTML commands for interactions instead of manually wired up
-              event handlers. Better performance, better accessibility.
-            </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">📱</div>
-            <h3>Works Everywhere</h3>
-            <p>
-              Responsive by default. Components adapt seamlessly from mobile to
-              desktop without bloating your bundle.
-            </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">🚀</div>
-            <h3>Ship Faster</h3>
-            <p>
-              Skip the component building phase. Focus on your app logic while
-              we handle the lightweight UI foundations.
-            </p>
+          <div class="footer-links">
+            <a href="/docs">Documentation</a>
+            <a href="/getting-started">Get Started</a>
+            <a href="https://github.com/nicehash-developit/kinu">GitHub</a>
           </div>
         </div>
-      </section>
-
-      <section class="real-world">
-        <h2>Built for real applications</h2>
-        <p class="real-world-subtitle">
-          From simple forms to complex dashboards, kinu scales with your needs
-        </p>
-        <div class="demo-links">
-          <Button href="/linear" variant="secondary" size="lg">
-            📊 Linear-style Dashboard
-          </Button>
-          <Button href="/chat" variant="secondary" size="lg">
-            💬 Chat Application
-          </Button>
-          <Button href="/player" variant="secondary" size="lg">
-            🎵 Music Player
-          </Button>
-          <Button variant="outline" href="https://github.com/developit/kinu">
-            GitHub
-          </Button>
-        </div>
-      </section>
-
-      <section class="cta">
-        <Card class="cta-card">
-          <h2>Ready to build?</h2>
-          <p>
-            Join developers who are shipping faster with just 5kB of JavaScript
-          </p>
-          <div class="cta-actions">
-            <Button href="/getting-started" size="lg">
-              Start Building →
-            </Button>
-            <Button variant="ghost" href="/docs">
-              Explore Components
-            </Button>
-          </div>
-        </Card>
-      </section>
+      </footer>
     </div>
   );
 }
 
+/* ── Hero Demo ── */
 function HeroDemo() {
   const [tasks, setTasks] = useState([
     {id: 1, text: 'Design new landing page', completed: true},
@@ -185,11 +261,7 @@ function HeroDemo() {
     if (!newTask.trim()) return;
     setTasks((prev) => [
       ...prev,
-      {
-        id: Date.now(),
-        text: newTask,
-        completed: false,
-      },
+      {id: Date.now(), text: newTask, completed: false},
     ]);
     setNewTask('');
   };
@@ -235,7 +307,7 @@ function HeroDemo() {
         />
         <Tooltip title="Add task">
           <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
-            ＋
+            +
           </Button>
         </Tooltip>
       </div>
@@ -243,6 +315,7 @@ function HeroDemo() {
   );
 }
 
+/* ── Form Demo ── */
 function FormDemo() {
   const [name, setName] = useState('');
   const [agreed, setAgreed] = useState(false);
@@ -258,10 +331,7 @@ function FormDemo() {
 
   const handleSubmit = () => {
     if (validate()) {
-      toast.show('Form submitted successfully!', {
-        title: 'Success',
-        icon: '✅',
-      });
+      toast.show('Form submitted successfully!', {title: 'Success', icon: '✅'});
     }
   };
 
@@ -299,6 +369,7 @@ function FormDemo() {
   );
 }
 
+/* ── Data Demo ── */
 function DataDemo() {
   const [value, setValue] = useState(65);
 
@@ -314,15 +385,14 @@ function DataDemo() {
           min={0}
           max={100}
           value={value}
-          onInput={(e) =>
-            setValue(Number((e.target as HTMLInputElement).value))
-          }
+          onInput={(e) => setValue(Number((e.target as HTMLInputElement).value))}
         />
       </div>
     </div>
   );
 }
 
+/* ── Settings Demo ── */
 function SettingsDemo() {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
@@ -337,9 +407,7 @@ function SettingsDemo() {
         </div>
         <Switch
           checked={notifications}
-          onInput={(e) =>
-            setNotifications((e.target as HTMLInputElement).checked)
-          }
+          onInput={(e) => setNotifications((e.target as HTMLInputElement).checked)}
         />
       </div>
       <div class="setting-item">
@@ -361,15 +429,14 @@ function SettingsDemo() {
           min={0}
           max={100}
           value={volume}
-          onInput={(e) =>
-            setVolume(Number((e.target as HTMLInputElement).value))
-          }
+          onInput={(e) => setVolume(Number((e.target as HTMLInputElement).value))}
         />
       </div>
     </div>
   );
 }
 
+/* ── Notification Demo ── */
 function NotificationDemo() {
   return (
     <div class="notification-demo">
@@ -377,31 +444,20 @@ function NotificationDemo() {
         <Button
           variant="outline"
           size="sm"
-          onClick={() =>
-            toast.show('Task completed!', {
-              title: 'Success',
-              icon: '✅',
-            })
-          }
+          onClick={() => toast.show('Task completed!', {title: 'Success', icon: '✅'})}
         >
           Success Toast
         </Button>
         <Button
           variant="outline"
           size="sm"
-          onClick={() =>
-            toast.show('Connection lost', {
-              title: 'Warning',
-              icon: '⚠️',
-            })
-          }
+          onClick={() => toast.show('Connection lost', {title: 'Warning', icon: '⚠️'})}
         >
           Warning Toast
         </Button>
       </div>
       <Alert>
-        <strong>Tip:</strong> Click the buttons above to see toast notifications
-        in action.
+        <strong>Tip:</strong> Click the buttons above to see toast notifications in action.
       </Alert>
       <Dialog>
         <Dialog.Trigger>

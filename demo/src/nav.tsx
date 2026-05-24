@@ -1,9 +1,6 @@
 import type {ComponentChildren} from 'preact';
 import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
+  Button,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
@@ -16,26 +13,18 @@ export function Nav({
   left,
 }: {class?: string; left?: ComponentChildren}) {
   return (
-    <NavigationMenu class={className ?? 'home-nav'}>
-      {left}
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/">Home</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/getting-started">
-            Get&nbsp;Started
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
+    <nav class={`atelier-nav ${className ?? ''}`}>
+      <div class="atelier-nav-inner">
+        <div class="nav-left">
+          {left}
+          <a href="/" class="atelier-logo">Kinu</a>
+        </div>
+        <div class="atelier-links">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <NavigationMenuLink href="#">Demos</NavigationMenuLink>
+              <button type="button" class="atelier-link">Demos</button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent to="left">
+            <DropdownMenuContent>
               <DropdownMenuItem as="a" href="/linear">
                 Linear Demo
               </DropdownMenuItem>
@@ -50,11 +39,13 @@ export function Nav({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-      <div class="nav-actions">
-        <ThemeCustomizer />
+        </div>
+        <div class="nav-actions">
+          <Button href="/docs" variant="ghost">Docs</Button>
+          <Button href="/getting-started">Get Started</Button>
+          <ThemeCustomizer />
+        </div>
       </div>
-    </NavigationMenu>
+    </nav>
   );
 }
