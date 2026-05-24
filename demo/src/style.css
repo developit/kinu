@@ -1512,16 +1512,24 @@ body .home-nav--marketing + * {
 }
 
 /* ── View Transition: radial wipe from the upper right ──────────────── */
-/* Each AppFrame sets its own view-transition-name (e.g. kh-app-tasks),
- * so toggling one frame doesn't disturb the others. The new snapshot
- * grows from the corner where the toggle button sits, "drawing" the new
- * theme over the old one. */
+/* A single shared `view-transition-name: kh-app` is assigned dynamically,
+ * via CSS, to the one frame whose toggle button currently has focus. The
+ * click handler explicitly focuses the toggle to make this match across
+ * browsers (Safari/Firefox don't auto-focus buttons on click). Because
+ * only one toggle can be focused at a time, only one frame ever
+ * participates in the transition — and because non-focused frames have
+ * no name, they don't create their own stacking contexts and therefore
+ * don't clip popovers in adjacent frames. */
+.kh-app:has(.kh-app-toggle:focus) {
+  view-transition-name: kh-app;
+}
+
 @keyframes kh-app-reveal {
   from { clip-path: circle(0% at 100% 0%); }
   to   { clip-path: circle(150% at 100% 0%); }
 }
 
-/* Suppress the root crossfade — only frame snapshots should animate. */
+/* Suppress the root crossfade — only the named frame should animate. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -1529,20 +1537,17 @@ body .home-nav--marketing + * {
 }
 
 /* Old frame snapshot stays put under the wipe; new snapshot reveals. */
-::view-transition-group(*) {
-  animation-duration: 420ms;
-}
-::view-transition-old(*) {
+::view-transition-old(kh-app) {
   animation: none;
 }
-::view-transition-new(*) {
+::view-transition-new(kh-app) {
   animation: kh-app-reveal 420ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Reduced motion: skip the wipe, instant swap. */
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
+  ::view-transition-old(kh-app),
+  ::view-transition-new(kh-app) {
     animation: none !important;
   }
 }
@@ -1757,7 +1762,11 @@ body .home-nav--marketing + * {
   min-height: 0;
 }
 .kinu-home [k="scroll-area"].kh-composer-thread {
-  height: 12rem;
+  /* On desktop the AppFrame is taller than the thread + input pair, so
+   * let the thread grow into the slack. min-height keeps it from
+   * collapsing below ~12rem on mobile / narrow layouts. */
+  flex: 1 1 12rem;
+  min-height: 12rem;
   display: flex;
   flex-direction: column;
   gap: 8px;

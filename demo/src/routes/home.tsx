@@ -565,11 +565,14 @@ function AppFrame({
 
   const effective: 'light' | 'dark' = scheme ?? (systemDark ? 'dark' : 'light');
   const next: 'light' | 'dark' = effective === 'light' ? 'dark' : 'light';
-  const slug = title.toLowerCase().replace(/\s+/g, '-');
-  const transitionName = `kh-app-${slug}`;
 
-  const toggle = () => {
-    // Firefox doesn't ship startViewTransition yet — fall back to instant flip.
+  const toggle = (e: MouseEvent) => {
+    // Explicitly focus the toggle so :focus matches in Safari / Firefox
+    // (which don't auto-focus buttons on click). The CSS rule
+    // `.kh-app:has(.kh-app-toggle:focus)` then assigns the shared
+    // view-transition-name to this frame only — so siblings don't
+    // create a stacking context and clip its popovers.
+    (e.currentTarget as HTMLElement).focus();
     const start = (document as Document & {
       startViewTransition?: (cb: () => void) => unknown;
     }).startViewTransition;
@@ -584,7 +587,6 @@ function AppFrame({
     <article
       class={`kh-app${wide ? ' kh-app--wide' : ''}`}
       data-color-scheme={scheme ?? undefined}
-      style={{viewTransitionName: transitionName}}
     >
       <header class="kh-app-bar">
         <span class="kh-app-title">{title}</span>
