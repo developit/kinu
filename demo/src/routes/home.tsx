@@ -14,6 +14,7 @@ import {
   Slider,
   Checkbox,
   Label,
+  Separator,
 } from 'kinu';
 import {useState} from 'preact/hooks';
 import {Nav} from '../nav';
@@ -24,154 +25,237 @@ export default function Home() {
       <ToastContainer />
       <Nav />
 
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-text">
-            <h1>
-              Build beautiful UIs with <span class="highlight">kinu</span>
-            </h1>
-            <p class="hero-subtitle">
-              A lightweight <strong>5kB</strong> component library that
-              leverages native HTML commands for interactions. Accessible,
-              performant interfaces without the JS bloat.
+      {/* Hero Section */}
+      <section class="hero-section">
+        <div class="hero-bg-glow" aria-hidden="true" />
+        <div class="hero-inner">
+          <h1 class="hero-title">
+            Preact UI toolkit.
+            <br />
+            <span class="hero-accent">10x smaller</span> than you think.
+          </h1>
+          <p class="hero-tagline">Intuitive for humans + LLMs</p>
+          <div class="hero-desc-wrap">
+            <p class="hero-description">
+              Kinu: The Japanese word for silk. An ultra-thin layer of styling
+              and ergonomics over native HTML. Zero dependencies, zero runtime
+              overhead, zero wrapper divs.
             </p>
-            <div class="hero-actions">
-              <Button href="/getting-started" size="lg">
-                Get Started
-              </Button>
-              <Button href="/docs" variant="outline" size="lg">
-                Browse Components
-              </Button>
+          </div>
+          <div class="hero-buttons">
+            <Button href="/getting-started" size="lg" class="btn-pill btn-dark">
+              Start Building
+            </Button>
+            <Button
+              href="/docs/button"
+              variant="outline"
+              size="lg"
+              class="btn-pill btn-outline-light"
+            >
+              View Components
+            </Button>
+          </div>
+        </div>
+
+        {/* Fluid Visual Element */}
+        <div class="hero-image-wrap">
+          <img
+            class="hero-image"
+            alt="Abstract white silk fabric flowing in air"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD4t96svJh9sUhAPBSpwgVhySABo_of9a7hkkAzjrGPGErQbMDktIxbcOUwwH9E2PQqx7YID--LKqJyt0Fjq8rnU6paqZAlDEYSSrFemSSNFJlmNq5wvyzWrs4rT8wY5AtERHPPAMpX_bHntfkMPHdbBM3_jts83DhK3c2SPLAciU8hP_24GzyQCTV2j6C5SU241SQXWsDCiUiuSqd4cwkJ_IuB1ShAurdjDMM1dc5QYxeq3jCmoWPBxIQPgOol7_saTuowNRxrCnr"
+          />
+          <div class="hero-image-overlay" aria-hidden="true" />
+        </div>
+      </section>
+
+      {/* Architecture Section (dark) */}
+      <section class="philosophy-section">
+        <div class="philosophy-grid">
+          <div class="philosophy-text">
+            <span class="section-eyebrow philosophy-eyebrow">Architecture</span>
+            <h2 class="philosophy-heading">
+              A Clever
+              <br />
+              Facade.
+            </h2>
+            <p class="philosophy-body">
+              Kinu offers the ergonomics of a heavy toolkit with the weight of a
+              whisper. By mapping directly to native HTML elements and platform
+              APIs, entire layers of the conventional UI toolkit rendering
+              process are simply bypassed. No virtual DOM diffing for dialogs. No
+              synthetic event systems for forms. The fastest code is the code
+              that never runs.
+            </p>
+            <div class="philosophy-stats">
+              <div class="stat-block">
+                <span class="stat-value">~5kB</span>
+                <span class="stat-label">JS Total</span>
+              </div>
+              <div class="stat-block">
+                <span class="stat-value">0</span>
+                <span class="stat-label">Dependencies</span>
+              </div>
             </div>
           </div>
-          <div class="hero-demo">
-            <HeroDemo />
+          <div class="philosophy-visual">
+            <div class="philosophy-circle">
+              <img
+                class="philosophy-image"
+                alt="Monochromatic macro photography of zen stones"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM7vxr9gXZ17bIJRiUSE1L5XjJ91ZUp5FyBLtqLYWWX8kz_r44cjYiVjAT4F9gjnu5ZF6HowqlIhiXfQn8wcvySJd5I6ZkCluTM5gUAw28tsjRL-W5QxYVrdjMgZ6vrYMG2ZevRbFkkuV5E1Z_EvhlfvrTdRhr6EndESta5sw-R3Ex5vQld6e1l8SIl6azJToqDLZcg5B1WNNgBLpsLWftLWfn-OGebhOKL8mk3vAXnifnFuhkCcauUBJz_gX_6_4dsz5QijfxqXmK"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="showcase">
-        <div class="showcase-header">
-          <h2>See it in action</h2>
-          <p>
-            Interactive demos showcasing real-world usage—all powered by just
-            5kB of JavaScript
+      {/* Interactive Primitives */}
+      <section class="primitives-section">
+        <div class="primitives-inner">
+          <div class="primitives-header">
+            <span class="section-eyebrow">Components</span>
+            <h2 class="section-heading">Go ahead — try them.</h2>
+            <p class="section-subhead">
+              Every component below is live. Interact with them, inspect the DOM,
+              check the network tab. What you see is what ships.
+            </p>
+          </div>
+          <div class="primitives-grid">
+            <Card class="primitive-card">
+              <span class="demo-card-label">Task List</span>
+              <TodoDemo />
+            </Card>
+            <Card class="primitive-card">
+              <span class="demo-card-label">Controls</span>
+              <ControlsDemo />
+            </Card>
+            <Card class="primitive-card">
+              <span class="demo-card-label">Actions</span>
+              <ButtonDemo />
+            </Card>
+            <Card class="primitive-card">
+              <span class="demo-card-label">Feedback</span>
+              <FeedbackDemo />
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* HTML as First-Class Citizen */}
+      <section class="native-section">
+        <div class="native-inner">
+          <div class="native-header">
+            <h2 class="native-heading">
+              <em>HTML</em> as a First-Class Citizen
+            </h2>
+            <p class="native-subhead">
+              Kinu doesn't reinvent the wheel; it completes it. Your components
+              render to native semantic elements with a single attribute for
+              styling. No div soup, no synthetic event system, no runtime
+              overhead.
+            </p>
+          </div>
+          <div class="code-comparison">
+            <div class="code-panel code-panel-light">
+              <div class="code-panel-header">
+                <span class="code-panel-label primary">Kinu Approach</span>
+                <div class="code-panel-dots">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+              <pre class="code-panel-code">{`<Button variant="outline" size="lg">
+  Redefine Everything
+</Button>
+
+<Dialog>
+  <Dialog.Trigger>
+    <Button>Open</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    Confirm action?
+  </Dialog.Content>
+</Dialog>`}</pre>
+            </div>
+
+            <div class="code-panel code-panel-dark">
+              <div class="code-panel-header">
+                <span class="code-panel-label muted">Rendered DOM</span>
+                <div class="code-panel-dots dark">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+              <pre class="code-panel-code">{`<button k="button" variant="outline"
+  size="lg">
+  Redefine Everything
+</button>
+
+<button k="button" commandfor=":r0:"
+  command="show-modal">Open</button>
+<dialog k="dialog-content" id=":r0:">
+  Confirm action?
+</dialog>`}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section class="cta-section">
+        <div class="cta-glow" aria-hidden="true" />
+        <div class="cta-inner">
+          <h2 class="cta-heading">Ship less. Do more.</h2>
+          <p class="cta-body">
+            50+ components. Native HTML output. One tiny dependency.
           </p>
-        </div>
-        <div class="showcase-grid">
-          <Card class="showcase-demo">
-            <h3>Form Controls</h3>
-            <p>Accessible forms with validation feedback</p>
-            <FormDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Data Visualization</h3>
-            <p>Progress tracking and interactive displays</p>
-            <DataDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Settings Panel</h3>
-            <p>Toggle switches and user preferences</p>
-            <SettingsDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Notifications</h3>
-            <p>Toast messages and alert dialogs</p>
-            <NotificationDemo />
-          </Card>
-        </div>
-      </section>
-
-      <section class="why-preact-ui">
-        <h2>Why developers choose kinu</h2>
-        <div class="benefits-grid">
-          <div class="benefit">
-            <div class="benefit-icon">🪶</div>
-            <h3>Incredibly Light</h3>
-            <p>
-              Just 5kB of JavaScript—smaller than most images. Your users will
-              thank you for the fast load times.
-            </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">🔧</div>
-            <h3>Native HTML Power</h3>
-            <p>
-              Uses HTML commands for interactions instead of manually wired up
-              event handlers. Better performance, better accessibility.
-            </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">📱</div>
-            <h3>Works Everywhere</h3>
-            <p>
-              Responsive by default. Components adapt seamlessly from mobile to
-              desktop without bloating your bundle.
-            </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">🚀</div>
-            <h3>Ship Faster</h3>
-            <p>
-              Skip the component building phase. Focus on your app logic while
-              we handle the lightweight UI foundations.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="real-world">
-        <h2>Built for real applications</h2>
-        <p class="real-world-subtitle">
-          From simple forms to complex dashboards, kinu scales with your needs
-        </p>
-        <div class="demo-links">
-          <Button href="/linear" variant="secondary" size="lg">
-            📊 Linear-style Dashboard
-          </Button>
-          <Button href="/chat" variant="secondary" size="lg">
-            💬 Chat Application
-          </Button>
-          <Button href="/player" variant="secondary" size="lg">
-            🎵 Music Player
-          </Button>
-          <Button variant="outline" href="https://github.com/developit/kinu">
-            GitHub
-          </Button>
-        </div>
-      </section>
-
-      <section class="cta">
-        <Card class="cta-card">
-          <h2>Ready to build?</h2>
-          <p>
-            Join developers who are shipping faster with just 5kB of JavaScript
-          </p>
-          <div class="cta-actions">
-            <Button href="/getting-started" size="lg">
-              Start Building →
+          <div class="cta-buttons">
+            <Button
+              href="https://github.com/developit/kinu"
+              class="btn-pill btn-white"
+            >
+              Clone the Repo
             </Button>
-            <Button variant="ghost" href="/docs">
-              Explore Components
-            </Button>
+            <a href="/docs" class="cta-link">
+              Browse components
+            </a>
           </div>
-        </Card>
+        </div>
       </section>
+
+      {/* Footer */}
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <span class="footer-logo">KINU</span>
+            <span class="footer-copy">
+              Built by{' '}
+              <a href="https://github.com/developit" class="footer-author">
+                developit
+              </a>
+            </span>
+          </div>
+          <div class="footer-links">
+            <a href="https://github.com/developit/kinu">GitHub</a>
+            <a href="/docs">Components</a>
+            <a href="/getting-started">Getting Started</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
 
-function HeroDemo() {
+function TodoDemo() {
   const [tasks, setTasks] = useState([
-    {id: 1, text: 'Design new landing page', completed: true},
-    {id: 2, text: 'Implement user authentication', completed: true},
-    {id: 3, text: 'Add payment processing', completed: false},
-    {id: 4, text: 'Write documentation', completed: false},
+    {id: 1, text: 'Install kinu', completed: true},
+    {id: 2, text: 'Import components', completed: true},
+    {id: 3, text: 'Ship to production', completed: false},
+    {id: 4, text: 'Celebrate', completed: false},
   ]);
   const [newTask, setNewTask] = useState('');
-
-  const completedCount = tasks.filter((t) => t.completed).length;
-  const progress = (completedCount / tasks.length) * 100;
 
   const toggleTask = (id: number) => {
     setTasks((prev) =>
@@ -182,248 +266,152 @@ function HeroDemo() {
   };
 
   const addTask = () => {
-    if (!newTask.trim()) return;
-    setTasks((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        text: newTask,
-        completed: false,
-      },
-    ]);
+    const text = newTask.trim();
+    if (!text) return;
+    setTasks((prev) => [...prev, {id: Date.now(), text, completed: false}]);
     setNewTask('');
   };
 
+  const completed = tasks.filter((t) => t.completed).length;
+
   return (
-    <Card class="hero-demo-card">
-      <div class="hero-demo-header">
-        <Avatar>JD</Avatar>
-        <div>
-          <div class="demo-title">Project Dashboard</div>
-          <Badge variant={progress === 100 ? undefined : 'secondary'}>
-            {completedCount}/{tasks.length} Complete
+    <div class="demo-todo-list">
+      <div class="demo-todo-progress">
+        <div class="demo-feedback-row">
+          <span class="demo-control-hint">
+            {completed} of {tasks.length} complete
+          </span>
+          <Badge variant="outline">
+            {Math.round((completed / tasks.length) * 100)}%
           </Badge>
         </div>
+        <Progress value={completed} max={tasks.length} />
       </div>
-
-      <div class="progress-section">
-        <div class="progress-label">Overall Progress</div>
-        <Progress value={progress} max={100} />
-        <div class="progress-text">{Math.round(progress)}%</div>
-      </div>
-
-      <div class="task-list">
-        {tasks.map((task) => (
-          <Label key={task.id} class="task-item">
-            <Checkbox
-              checked={task.completed}
-              onInput={() => toggleTask(task.id)}
-            />
-            <span class={task.completed ? 'task-completed' : ''}>
-              {task.text}
-            </span>
-          </Label>
-        ))}
-      </div>
-
-      <div class="add-task">
+      {tasks.map((task) => (
+        <label key={task.id} class="demo-todo-item">
+          <Checkbox
+            checked={task.completed}
+            onInput={() => toggleTask(task.id)}
+          />
+          <span
+            class={`demo-todo-text ${task.completed ? 'line-through' : ''}`}
+          >
+            {task.text}
+          </span>
+        </label>
+      ))}
+      <Separator />
+      <div class="demo-todo-add">
         <Input
-          placeholder="Add new task..."
+          placeholder="Add a task..."
           value={newTask}
           onInput={(e) => setNewTask((e.target as HTMLInputElement).value)}
-          onKeyPress={(e) => e.key === 'Enter' && addTask()}
+          onKeyDown={(e) => e.key === 'Enter' && addTask()}
         />
-        <Tooltip title="Add task">
-          <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
-            ＋
-          </Button>
-        </Tooltip>
-      </div>
-    </Card>
-  );
-}
-
-function FormDemo() {
-  const [name, setName] = useState('');
-  const [agreed, setAgreed] = useState(false);
-  const [errors, setErrors] = useState<{name?: string; agreed?: string}>({});
-
-  const validate = () => {
-    const newErrors: {name?: string; agreed?: string} = {};
-    if (!name.trim()) newErrors.name = 'Name is required';
-    if (!agreed) newErrors.agreed = 'You must agree to continue';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = () => {
-    if (validate()) {
-      toast.show('Form submitted successfully!', {
-        title: 'Success',
-        icon: '✅',
-      });
-    }
-  };
-
-  return (
-    <div class="demo-form">
-      <div class="form-field">
-        <Label htmlFor="demo-name">Full Name</Label>
-        <Input
-          id="demo-name"
-          placeholder="Enter your name"
-          value={name}
-          onInput={(e) => {
-            setName((e.target as HTMLInputElement).value);
-            if (errors.name) setErrors({...errors, name: undefined});
-          }}
-        />
-        {errors.name && <div class="error-message">{errors.name}</div>}
-      </div>
-      <div class="form-field">
-        <div class="checkbox-field">
-          <Checkbox
-            id="demo-agree"
-            checked={agreed}
-            onInput={(e) => {
-              setAgreed((e.target as HTMLInputElement).checked);
-              if (errors.agreed) setErrors({...errors, agreed: undefined});
-            }}
-          />
-          <Label htmlFor="demo-agree">I agree to the terms</Label>
-        </div>
-        {errors.agreed && <div class="error-message">{errors.agreed}</div>}
-      </div>
-      <Button onClick={handleSubmit}>Submit</Button>
-    </div>
-  );
-}
-
-function DataDemo() {
-  const [value, setValue] = useState(65);
-
-  return (
-    <div class="data-demo">
-      <div class="metric">
-        <div class="metric-label">System Performance</div>
-        <div class="metric-value">{Math.round(value)}%</div>
-      </div>
-      <Progress value={value} max={100} />
-      <div class="demo-controls">
-        <Slider
-          min={0}
-          max={100}
-          value={value}
-          onInput={(e) =>
-            setValue(Number((e.target as HTMLInputElement).value))
-          }
-        />
+        <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
+          Add
+        </Button>
       </div>
     </div>
   );
 }
 
-function SettingsDemo() {
-  const [notifications, setNotifications] = useState(true);
+function ControlsDemo() {
+  const [volume, setVolume] = useState(68);
   const [darkMode, setDarkMode] = useState(false);
-  const [volume, setVolume] = useState(75);
+  const [notifications, setNotifications] = useState(true);
 
   return (
-    <div class="settings-demo">
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Push Notifications</div>
-          <div class="setting-desc">Receive updates and alerts</div>
-        </div>
-        <Switch
-          checked={notifications}
-          onInput={(e) =>
-            setNotifications((e.target as HTMLInputElement).checked)
-          }
-        />
+    <div class="demo-controls">
+      <div class="demo-control-row">
+        <Label class="demo-control-label">Volume</Label>
+        <div class="demo-control-value">{volume}%</div>
       </div>
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Dark Mode</div>
-          <div class="setting-desc">Use dark theme</div>
+      <Slider
+        min={0}
+        max={100}
+        value={volume}
+        onInput={(e) => setVolume(Number((e.target as HTMLInputElement).value))}
+      />
+      <Separator />
+      <label class="demo-switch-row">
+        <div>
+          <div class="demo-control-label">Dark mode</div>
+          <div class="demo-control-hint">Use dark theme</div>
         </div>
         <Switch
           checked={darkMode}
-          onInput={(e) => setDarkMode((e.target as HTMLInputElement).checked)}
+          onChange={() => setDarkMode(!darkMode)}
         />
-      </div>
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Volume</div>
-          <div class="setting-desc">{volume}%</div>
+      </label>
+      <label class="demo-switch-row">
+        <div>
+          <div class="demo-control-label">Notifications</div>
+          <div class="demo-control-hint">Push alerts</div>
         </div>
-        <Slider
-          min={0}
-          max={100}
-          value={volume}
-          onInput={(e) =>
-            setVolume(Number((e.target as HTMLInputElement).value))
-          }
+        <Switch
+          checked={notifications}
+          onChange={() => setNotifications(!notifications)}
         />
-      </div>
+      </label>
     </div>
   );
 }
 
-function NotificationDemo() {
+function ButtonDemo() {
   return (
-    <div class="notification-demo">
-      <div class="demo-buttons">
+    <div class="demo-buttons-stack">
+      <Button
+        onClick={() => toast.show('Deployed to production.', {title: 'Success'})}
+      >
+        Primary Action
+      </Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+    </div>
+  );
+}
+
+function FeedbackDemo() {
+  const [progress, setProgress] = useState(62);
+
+  return (
+    <div class="demo-feedback">
+      <div class="demo-feedback-row">
+        <span class="demo-control-label">Upload progress</span>
+        <Badge variant="outline">{progress}%</Badge>
+      </div>
+      <Progress value={progress} max={100} />
+      <div class="demo-feedback-buttons">
         <Button
-          variant="outline"
           size="sm"
-          onClick={() =>
-            toast.show('Task completed!', {
-              title: 'Success',
-              icon: '✅',
-            })
-          }
+          variant="outline"
+          onClick={() => setProgress(Math.max(0, progress - 10))}
         >
-          Success Toast
+          -10
         </Button>
         <Button
-          variant="outline"
           size="sm"
-          onClick={() =>
-            toast.show('Connection lost', {
-              title: 'Warning',
-              icon: '⚠️',
-            })
-          }
+          variant="outline"
+          onClick={() => setProgress(Math.min(100, progress + 10))}
         >
-          Warning Toast
+          +10
+        </Button>
+        <Button
+          size="sm"
+          onClick={() => {
+            setProgress(100);
+            toast.show('Upload complete!');
+          }}
+        >
+          Complete
         </Button>
       </div>
+      <Separator />
       <Alert>
-        <strong>Tip:</strong> Click the buttons above to see toast notifications
-        in action.
+        All components render to native HTML elements.
       </Alert>
-      <Dialog>
-        <Dialog.Trigger>
-          <Button variant="outline" size="sm">
-            Open Dialog
-          </Button>
-        </Dialog.Trigger>
-        <Dialog.Content>
-          <h3>Confirm Action</h3>
-          <p>Are you sure you want to continue?</p>
-          <div class="dialog-actions">
-            <Dialog.Close>
-              <Button variant="outline">Cancel</Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button onClick={() => toast.show('Action confirmed!')}>
-                Confirm
-              </Button>
-            </Dialog.Close>
-          </div>
-        </Dialog.Content>
-      </Dialog>
     </div>
   );
 }

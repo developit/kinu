@@ -1,0 +1,127 @@
+/*
+ * Kinu Demo Theme
+ *
+ * Sage green primary, cream surfaces, serif typography accents.
+ *
+ * Uses :root:root to ensure these overrides always beat the
+ * base :root in variables.css, even when component CSS is
+ * injected later (e.g. during Vite dev HMR).
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;500;600;700&display=swap');
+
+:root:root {
+  /* Surface: warm cream #fbf9f2 */
+  --k-background: 47 53% 96.7%;
+  --k-foreground: 24 10% 10%;
+
+  /* Card: white */
+  --k-card: 0 0% 100%;
+  --k-card-foreground: 24 10% 10%;
+
+  /* Popover */
+  --k-popover: 0 0% 100%;
+  --k-popover-foreground: 24 10% 10%;
+
+  /* Sidebar */
+  --k-sidebar: 44 38% 93.5%;
+
+  /* Primary: sage green #4A5D4E */
+  --k-primary: 133 11% 33%;
+  --k-primary-foreground: 0 0% 100%;
+  --k-primary-hover: 133 11% 27%;
+
+  /* Secondary */
+  --k-secondary: 40 18% 94%;
+  --k-secondary-foreground: 24 10% 10%;
+  --k-secondary-hover: 40 18% 89%;
+
+  /* Muted */
+  --k-muted: 40 18% 94%;
+  --k-muted-foreground: 25 4% 44%;
+
+  /* Accent */
+  --k-accent: 40 18% 94%;
+  --k-accent-foreground: 24 10% 10%;
+
+  /* Destructive */
+  --k-destructive: 0 84% 60%;
+  --k-destructive-foreground: 0 0% 100%;
+  --k-destructive-hover: 0 84% 50%;
+
+  /* Border / Input */
+  --k-border: 30 9% 90%;
+  --k-input: 30 9% 90%;
+  --k-ring: 133 11% 33%;
+
+  /* Radius */
+  --k-radius: 0.5rem;
+
+  /* Font stacks */
+  --font-sans: 'Public Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-label: 'Manrope', 'Public Sans', system-ui, sans-serif;
+}
+
+/* Selection color */
+::selection {
+  background: hsl(133 11% 33%);
+  color: #fff;
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root:root {
+    color-scheme: dark;
+    --k-background: 30 10% 8%;
+    --k-foreground: 40 20% 93%;
+    --k-card: 30 10% 6%;
+    --k-card-foreground: 40 20% 93%;
+    --k-popover: 30 10% 6%;
+    --k-popover-foreground: 40 20% 93%;
+    --k-sidebar: 30 10% 9%;
+    --k-primary: 133 20% 65%;
+    --k-primary-foreground: 30 10% 6%;
+    --k-primary-hover: 133 20% 55%;
+    --k-secondary: 30 8% 15%;
+    --k-secondary-foreground: 40 20% 93%;
+    --k-secondary-hover: 30 8% 22%;
+    --k-muted: 30 8% 15%;
+    --k-muted-foreground: 25 6% 60%;
+    --k-accent: 30 8% 15%;
+    --k-accent-foreground: 40 20% 93%;
+    --k-destructive: 0 63% 31%;
+    --k-destructive-foreground: 40 20% 93%;
+    --k-destructive-hover: 0 63% 40%;
+    --k-border: 30 8% 18%;
+    --k-input: 30 8% 18%;
+    --k-ring: 133 20% 65%;
+  }
+}
+
+.dark {
+  color-scheme: dark;
+  --k-background: 30 10% 8%;
+  --k-foreground: 40 20% 93%;
+  --k-card: 30 10% 6%;
+  --k-card-foreground: 40 20% 93%;
+  --k-popover: 30 10% 6%;
+  --k-popover-foreground: 40 20% 93%;
+  --k-sidebar: 30 10% 9%;
+  --k-primary: 133 20% 65%;
+  --k-primary-foreground: 30 10% 6%;
+  --k-primary-hover: 133 20% 55%;
+  --k-secondary: 30 8% 15%;
+  --k-secondary-foreground: 40 20% 93%;
+  --k-secondary-hover: 30 8% 22%;
+  --k-muted: 30 8% 15%;
+  --k-muted-foreground: 25 6% 60%;
+  --k-accent: 30 8% 15%;
+  --k-accent-foreground: 40 20% 93%;
+  --k-destructive: 0 63% 31%;
+  --k-destructive-foreground: 40 20% 93%;
+  --k-destructive-hover: 0 63% 40%;
+  --k-border: 30 8% 18%;
+  --k-input: 30 8% 18%;
+  --k-ring: 133 20% 65%;
+}
