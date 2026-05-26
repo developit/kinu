@@ -698,32 +698,6 @@ function ComposerPreview() {
     if (el) el.scrollTo({top: 9e9, behavior: 'smooth'});
   }, [messages]);
 
-  // Drop the auto-focus that lands on the search input when the popover
-  // dialog opens — on mobile that pops the on-screen keyboard. Listen
-  // on window in CAPTURE phase so we run before kinu's adaptive
-  // beforetoggle handler (which calls showModal, which runs the
-  // focusing steps). Set `inert` on the search wrapper so showModal's
-  // focus delegate skips its descendants and falls through to the
-  // dialog itself; remove on the next frame so Tab still reaches the
-  // input afterwards.
-  useEffect(() => {
-    const onBeforeToggle = (e: Event) => {
-      const dialog = e.target as HTMLDialogElement;
-      if (!dialog?.classList?.contains?.('kh-composer-popover')) return;
-      if ((e as ToggleEvent).newState !== 'open') return;
-      // Set inert on every direct child of the dialog so the focus
-       // delegate is null and focus falls through to the dialog itself.
-      const children = Array.from(dialog.children) as HTMLElement[];
-      children.forEach((el) => (el.inert = true));
-      requestAnimationFrame(() => {
-        children.forEach((el) => (el.inert = false));
-      });
-    };
-    window.addEventListener('beforetoggle', onBeforeToggle, true);
-    return () =>
-      window.removeEventListener('beforetoggle', onBeforeToggle, true);
-  }, []);
-
   const filtered = MODELS.filter(
     (m) =>
       !filter ||
@@ -832,6 +806,12 @@ function ComposerPreview() {
             </Button>
           </PopoverTrigger>
           <PopoverContent mobile="drawer" class="kh-composer-popover">
+            <span
+              tabindex={-1}
+              autofocus
+              aria-hidden
+              class="kh-composer-focus-sink"
+            />
             <div class="kh-composer-search">
               <Input
                 size="sm"
