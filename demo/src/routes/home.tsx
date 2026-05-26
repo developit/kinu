@@ -4,6 +4,9 @@ import {
   Button,
   Calendar,
   Card,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
   Checkbox,
   Chip,
   ColorPicker,
@@ -13,6 +16,8 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuTrigger,
+  Drawer,
+  DrawerContent,
   Field,
   FileUpload,
   Input,
@@ -124,31 +129,37 @@ export default function Home() {
         </div>
 
         <div class="kh-preview-grid">
-          <AppFrame title="Tasks">
-            <TasksPreview />
-          </AppFrame>
-          <AppFrame title="Media Player">
-            <NowPlayingPreview />
-          </AppFrame>
-          <AppFrame title="AI Composer">
-            <ComposerPreview />
-          </AppFrame>
-          <AppFrame title="Activity">
-            <ActivityPreview />
-          </AppFrame>
-          <AppFrame title="Command Palette">
-            <CommandPalettePreview />
-          </AppFrame>
-          <AppFrame title="Trip Booking">
-            <DateRangePreview />
-          </AppFrame>
-          <AppFrame title="Inbox" wide>
-            <InboxPreview />
-          </AppFrame>
-          <AppFrame title="Settings">
-            <SettingsPreview />
-          </AppFrame>
+          {DEMOS.map((d, i) => (
+            <AppFrame key={d.title} title={d.title} wide={d.wide} index={i}>
+              <d.Component />
+            </AppFrame>
+          ))}
         </div>
+
+        {/* Mobile-only fullscreen "maximize" surface — single kinu Drawer
+            (native <dialog>.showModal) hosting a kinu Carousel of all the
+            cards. OS back closes the drawer; per-card minimize button
+            does the same via commandfor="close". */}
+        <Drawer id={MAXIMIZED_ID}>
+          <DrawerContent class="kh-app-maximized">
+            <Carousel id={`${MAXIMIZED_ID}-carousel`}>
+              <CarouselContent class="kh-app-maximized-track">
+                {DEMOS.map((d, i) => (
+                  <CarouselItem key={d.title}>
+                    <AppFrame
+                      title={d.title}
+                      wide={d.wide}
+                      index={i}
+                      maximized
+                    >
+                      <d.Component />
+                    </AppFrame>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </DrawerContent>
+        </Drawer>
       </section>
 
       <section class="kh-html">
@@ -540,13 +551,40 @@ function NowPlayingPreview() {
  * `view-transition-name` so multiple frames can toggle without
  * interfering with each other.
  */
+const MAXIMIZED_ID = 'kh-app-maximized';
+
+/** Master list of the demos rendered in "Built with Kinu". Each entry is
+ *  rendered twice: once in the grid, once inside the maximized drawer's
+ *  carousel. Two instances means independent state across the two views,
+ *  which is fine for a marketing surface (the user only sees one at a time). */
+const DEMOS: Array<{
+  title: string;
+  wide?: boolean;
+  Component: () => ComponentChildren;
+}> = [
+  {title: 'Tasks', Component: TasksPreview},
+  {title: 'Media Player', Component: NowPlayingPreview},
+  {title: 'AI Composer', Component: ComposerPreview},
+  {title: 'Activity', Component: ActivityPreview},
+  {title: 'Command Palette', Component: CommandPalettePreview},
+  {title: 'Trip Booking', Component: DateRangePreview},
+  {title: 'Inbox', wide: true, Component: InboxPreview},
+  {title: 'Settings', Component: SettingsPreview},
+];
+
 function AppFrame({
   title,
   wide,
+  maximized,
+  index,
   children,
 }: {
   title: string;
   wide?: boolean;
+  /** True when this frame is rendered inside the maximized drawer carousel. */
+  maximized?: boolean;
+  /** Position in the grid; used to scroll the carousel to this card on open. */
+  index?: number;
   children: ComponentChildren;
 }) {
   // null = no explicit scheme yet → frame inherits from the page / OS.
@@ -583,6 +621,24 @@ function AppFrame({
     }
   };
 
+  // Maximize button: opens the shared Drawer (kinu Drawer uses
+  // <dialog>.showModal() so the OS back button closes it). The onClick
+  // also imperatively scrolls the carousel inside the drawer to this
+  // card's index, so the maximized view starts on the tapped card.
+  // Minimize variant lives inside the drawer and closes it.
+  const onExpand = () => {
+    if (maximized) return; // closing is handled by native commandfor
+    requestAnimationFrame(() => {
+      const carousel = document.querySelector(
+        `#${MAXIMIZED_ID} [k="carousel"]`,
+      ) as HTMLElement | null;
+      const item = carousel?.children[index ?? 0] as HTMLElement | undefined;
+      if (carousel && item) {
+        carousel.scrollTo({left: item.offsetLeft, behavior: 'instant'});
+      }
+    });
+  };
+
   return (
     <article
       class={`kh-app${wide ? ' kh-app--wide' : ''}`}
@@ -590,16 +646,30 @@ function AppFrame({
     >
       <header class="kh-app-bar">
         <span class="kh-app-title">{title}</span>
-        <Button
-          variant="ghost"
-          size="icon"
-          class="kh-app-toggle"
-          onClick={toggle}
-          aria-label={`Switch to ${next} mode`}
-          title={`Switch to ${next} mode`}
-        >
-          {effective === 'light' ? <SunIcon /> : <MoonIcon />}
-        </Button>
+        <span class="kh-app-actions">
+          <Button
+            variant="ghost"
+            size="icon"
+            class="kh-app-expand"
+            commandfor={MAXIMIZED_ID}
+            command={maximized ? 'close' : 'show-modal'}
+            onClick={onExpand}
+            aria-label={maximized ? 'Minimize' : 'Maximize'}
+            title={maximized ? 'Minimize' : 'Maximize'}
+          >
+            {maximized ? <MinimizeIcon /> : <MaximizeIcon />}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            class="kh-app-toggle"
+            onClick={toggle}
+            aria-label={`Switch to ${next} mode`}
+            title={`Switch to ${next} mode`}
+          >
+            {effective === 'light' ? <SunIcon /> : <MoonIcon />}
+          </Button>
+        </span>
       </header>
       <div class="kh-app-body">{children}</div>
     </article>
@@ -639,6 +709,42 @@ function MoonIcon() {
       stroke-linejoin="round"
     >
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
+function MaximizeIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M3 9V3h6 M21 9V3h-6 M3 15v6h6 M21 15v6h-6" />
+    </svg>
+  );
+}
+
+function MinimizeIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M9 3v6H3 M15 3v6h6 M9 21v-6H3 M15 21v-6h6" />
     </svg>
   );
 }

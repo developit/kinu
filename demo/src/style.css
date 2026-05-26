@@ -1488,17 +1488,98 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground) / 0.7);
 }
 
-/* Shrink kinu's icon Button down for the titlebar — its default is
- * 2.5rem which would extend past the bar's chrome. */
-.kh-app [k="button"].kh-app-toggle {
+/* Right-side action cluster: theme toggle + (mobile-only) maximize.
+ * Sits in column 3 of the bar's grid so the title in column 2 stays
+ * centered regardless of how many buttons are visible. */
+.kh-app-actions {
   grid-column: 3;
   justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Shrink kinu's icon Button down for the titlebar — its default is
+ * 2.5rem which would extend past the bar's chrome. */
+.kh-app [k="button"].kh-app-toggle,
+.kh-app [k="button"].kh-app-expand {
   width: 28px;
   height: 28px;
   border-radius: 8px;
 }
-.kh-app-toggle svg {
+.kh-app-toggle svg,
+.kh-app-expand svg {
   display: block;
+}
+
+/* The maximize button is mobile-only on grid cards. The minimize
+ * variant (inside the maximized drawer) is always visible — desktop
+ * users who somehow opened the drawer can still close it. */
+.kh-app [k="button"].kh-app-expand {
+  display: none;
+}
+@media (max-width: 640px) {
+  .kh-app [k="button"].kh-app-expand {
+    display: inline-flex;
+  }
+}
+.kh-app-maximized .kh-app [k="button"].kh-app-expand {
+  display: inline-flex;
+}
+
+/* ── Maximized drawer: a kinu Drawer holding a kinu Carousel ─────────── */
+/* The drawer is opt-in via the maximize button on each grid card. It
+ * fills the viewport and contains a horizontal scroll-snap carousel
+ * of every demo. Each card retains its own chrome (titlebar with
+ * theme toggle + minimize). OS back closes the drawer because kinu's
+ * Drawer opens via <dialog>.showModal(). */
+.kinu-home [k="drawer-content"].kh-app-maximized {
+  /* override kinu's default drawer styling (bottom sheet, padding) */
+  inset: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 0;
+  margin: 0;
+  background: hsl(var(--k-background));
+  /* the drawer already animates translateY(100%) → 0 from below — keep
+   * that so it feels like an app rising up from a card */
+}
+
+/* Carousel content fills the dialog body. CarouselContent in kinu
+ * doesn't forward `class` to its inner element, so we target by
+ * descending from the drawer instead. */
+.kh-app-maximized > div {
+  /* the position:relative wrapper kinu's Carousel adds */
+  height: 100dvh;
+}
+.kh-app-maximized [k="carousel"] {
+  height: 100dvh;
+  scroll-snap-type: x mandatory;
+}
+.kh-app-maximized [k="carousel-item"] {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100dvh;
+  display: block;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+/* The frame inside the carousel fills its slide — no rounded corners,
+ * no border, no shadow. It looks like the demo "is" the screen. */
+.kh-app-maximized .kh-app {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 0;
+}
+.kh-app-maximized .kh-app-body {
+  flex: 1;
+  min-height: 0;
 }
 
 /* Body — full bleed inside the frame. */
