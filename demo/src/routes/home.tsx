@@ -645,20 +645,63 @@ function AppFrame({
       data-color-scheme={scheme ?? undefined}
     >
       <header class="kh-app-bar">
+        {maximized && (
+          <span class="kh-app-actions kh-app-actions--left">
+            <Button
+              variant="ghost"
+              size="icon"
+              class="kh-app-expand"
+              commandfor={MAXIMIZED_ID}
+              command="close"
+              aria-label="Minimize"
+              title="Minimize"
+            >
+              <MinimizeIcon />
+            </Button>
+          </span>
+        )}
         <span class="kh-app-title">{title}</span>
-        <span class="kh-app-actions">
-          <Button
-            variant="ghost"
-            size="icon"
-            class="kh-app-expand"
-            commandfor={MAXIMIZED_ID}
-            command={maximized ? 'close' : 'show-modal'}
-            onClick={onExpand}
-            aria-label={maximized ? 'Minimize' : 'Maximize'}
-            title={maximized ? 'Minimize' : 'Maximize'}
-          >
-            {maximized ? <MinimizeIcon /> : <MaximizeIcon />}
-          </Button>
+        <span class="kh-app-actions kh-app-actions--right">
+          {maximized && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="kh-app-nav"
+                commandfor={`${MAXIMIZED_ID}-carousel`}
+                command="--prev"
+                aria-label="Previous demo"
+                title="Previous demo"
+              >
+                ￩
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="kh-app-nav"
+                commandfor={`${MAXIMIZED_ID}-carousel`}
+                command="--next"
+                aria-label="Next demo"
+                title="Next demo"
+              >
+                ￫
+              </Button>
+            </>
+          )}
+          {!maximized && (
+            <Button
+              variant="ghost"
+              size="icon"
+              class="kh-app-expand"
+              commandfor={MAXIMIZED_ID}
+              command="show-modal"
+              onClick={onExpand}
+              aria-label="Maximize"
+              title="Maximize"
+            >
+              <MaximizeIcon />
+            </Button>
+          )}
           <Button
             variant="ghost"
             size="icon"
