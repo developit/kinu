@@ -1544,21 +1544,17 @@ body .home-nav--marketing + * {
 
 /* ── Maximized drawer: a kinu Drawer holding a kinu Carousel ─────────── */
 /* The drawer is opt-in via the maximize button on each grid card. It
- * fills the SMALL viewport (100svh, so it doesn't grow when the URL
- * bar hides) and contains a horizontal scroll-snap carousel of every
- * demo. Each card retains its own chrome (titlebar with theme toggle
- * + minimize). OS back closes the drawer because kinu's Drawer opens
- * via <dialog>.showModal(). */
+ * inherits kinu's default drawer chrome — pinned to the bottom,
+ * slides up from below, dark backdrop behind. We only override what
+ * we need: full available height (less ~20px so the backdrop shows
+ * through at the top — iOS sheet idiom), rounded top corners, no
+ * inner padding. */
 .kinu-home [k="drawer-content"].kh-app-maximized {
-  inset: 0;
-  width: 100vw;
-  max-width: 100vw;
-  height: 100svh;
-  max-height: 100svh;
+  height: calc(100svh - 20px);
+  max-height: calc(100svh - 20px);
+  border-radius: var(--k-radius) var(--k-radius) 0 0;
   padding: 0;
-  margin: 0;
   overflow: hidden;
-  background: hsl(var(--k-background));
 }
 
 /* Carousel content fills the dialog body. CarouselContent in kinu
@@ -1566,18 +1562,18 @@ body .home-nav--marketing + * {
  * descending from the drawer instead. */
 .kh-app-maximized > div {
   /* the position:relative wrapper kinu's Carousel adds */
-  height: 100svh;
+  height: 100%;
   overflow: hidden;
 }
 .kh-app-maximized [k="carousel"] {
-  height: 100svh;
+  height: 100%;
   scroll-snap-type: x mandatory;
   overflow-y: hidden;
 }
 .kh-app-maximized [k="carousel-item"] {
   flex: 0 0 100vw;
   width: 100vw;
-  height: 100svh;
+  height: 100%;
   display: block;
   scroll-snap-align: center;
   scroll-snap-stop: always;
