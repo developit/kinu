@@ -6,10 +6,11 @@
   margin: 0;
   width: 20rem;
   max-width: 90vw;
-  /* Anchor to the small viewport so soft-keyboard popups don't make
-   * the page beneath the sheet scrollable. */
-  height: 100svh;
-  max-height: 100svh;
+  /* Use dvh so the sheet shrinks with the visible viewport when a soft
+   * keyboard opens — keeps inputs visible without iOS floating the
+   * visual viewport. */
+  height: 100dvh;
+  max-height: 100dvh;
   position: fixed;
   left: auto;
   top: 0;

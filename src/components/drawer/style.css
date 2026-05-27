@@ -6,9 +6,9 @@
   margin: 0;
   width: 100%;
   max-width: 100vw;
-  /* Anchor to the small viewport so a soft keyboard opening doesn't
-   * make the page beneath the drawer scrollable. */
-  max-height: 100svh;
+  /* Cap to the dynamic viewport so a soft-keyboard popup shrinks the
+   * drawer instead of leaving content hidden behind the keyboard. */
+  max-height: 100dvh;
   border-radius: 0;
   position: fixed;
   top: auto;

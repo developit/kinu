@@ -1550,8 +1550,8 @@ body .home-nav--marketing + * {
  * through at the top — iOS sheet idiom), rounded top corners, no
  * inner padding. */
 .kinu-home [k="drawer-content"].kh-app-maximized {
-  height: calc(100svh - 20px);
-  max-height: calc(100svh - 20px);
+  height: calc(100dvh - 20px);
+  max-height: calc(100dvh - 20px);
   border-radius: var(--k-radius) var(--k-radius) 0 0;
   padding: 0;
   overflow: hidden;

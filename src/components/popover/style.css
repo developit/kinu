@@ -107,9 +107,9 @@
     margin: 0.25rem 0 0;
     width: max-content;
     max-inline-size: min(24rem, calc(100vw - 1rem));
-    /* svh, not dvh — keep the popover sized to the smallest viewport so
-     * a soft keyboard opening doesn't cause the page beneath to scroll. */
-    max-block-size: min(24rem, calc(100svh - 1rem));
+    /* dvh shrinks with a soft-keyboard popup, so the popover stays in
+     * the visible area and iOS doesn't float the visual viewport. */
+    max-block-size: min(24rem, calc(100dvh - 1rem));
     overflow: auto;
     position-try-fallbacks: --k-menu-right-top, --k-menu-left-bottom, --k-menu-right-bottom;
   }
@@ -142,8 +142,8 @@
     width: 100%;
     max-width: 100vw;
     min-width: 0;
-    /* svh — see above. */
-    max-height: 70svh;
+    /* dvh — see above. */
+    max-height: 70dvh;
     border-radius: var(--k-radius) var(--k-radius) 0 0;
     position: fixed;
     top: auto;

@@ -7,11 +7,11 @@
   background-color: hsl(var(--k-background));
   padding: 0;
   max-width: 32rem;
-  /* Cap to the small viewport so a soft keyboard opening doesn't make
-   * the page beneath the dialog scrollable. Matches the shape of the
-   * UA default `calc(100% - 6px - 2em)` but anchored to svh instead
-   * of the layout viewport. */
-  max-height: calc(100svh - 6px - 2em);
+  /* Cap to the dynamic viewport so a soft keyboard popup shrinks the
+   * dialog instead of leaving inputs hidden behind the keyboard. The
+   * shape matches the UA default `calc(100% - 6px - 2em)` but anchored
+   * to dvh, which respects the current visible area. */
+  max-height: calc(100dvh - 6px - 2em);
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   flex-direction: column;
   padding: 1.5rem;
