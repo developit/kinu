@@ -645,21 +645,23 @@ function AppFrame({
       data-color-scheme={scheme ?? undefined}
     >
       <header class="kh-app-bar">
-        {maximized && (
-          <span class="kh-app-actions kh-app-actions--left">
-            <Button
-              variant="ghost"
-              size="icon"
-              class="kh-app-expand"
-              commandfor={MAXIMIZED_ID}
-              command="close"
-              aria-label="Minimize"
-              title="Minimize"
-            >
-              <MinimizeIcon />
-            </Button>
-          </span>
-        )}
+        {/* The expand button always lives on the left so its position
+         * doesn't shift between the maximized and non-maximized states.
+         * It's hidden on desktop in the non-maximized state via CSS. */}
+        <span class="kh-app-actions kh-app-actions--left">
+          <Button
+            variant="ghost"
+            size="icon"
+            class="kh-app-expand"
+            commandfor={MAXIMIZED_ID}
+            command={maximized ? 'close' : 'show-modal'}
+            onClick={maximized ? undefined : onExpand}
+            aria-label={maximized ? 'Minimize' : 'Maximize'}
+            title={maximized ? 'Minimize' : 'Maximize'}
+          >
+            {maximized ? <MinimizeIcon /> : <MaximizeIcon />}
+          </Button>
+        </span>
         <span class="kh-app-title">{title}</span>
         <span class="kh-app-actions kh-app-actions--right">
           {maximized && (
@@ -687,20 +689,6 @@ function AppFrame({
                 ￫
               </Button>
             </>
-          )}
-          {!maximized && (
-            <Button
-              variant="ghost"
-              size="icon"
-              class="kh-app-expand"
-              commandfor={MAXIMIZED_ID}
-              command="show-modal"
-              onClick={onExpand}
-              aria-label="Maximize"
-              title="Maximize"
-            >
-              <MaximizeIcon />
-            </Button>
           )}
           <Button
             variant="ghost"

@@ -6,6 +6,9 @@
   margin: 0;
   width: 100%;
   max-width: 100vw;
+  /* Anchor to the small viewport so a soft keyboard opening doesn't
+   * make the page beneath the drawer scrollable. */
+  max-height: 100svh;
   border-radius: 0;
   position: fixed;
   top: auto;

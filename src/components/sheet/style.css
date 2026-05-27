@@ -6,8 +6,10 @@
   margin: 0;
   width: 20rem;
   max-width: 90vw;
-  height: 100vh;
-  max-height: 100vh;
+  /* Anchor to the small viewport so soft-keyboard popups don't make
+   * the page beneath the sheet scrollable. */
+  height: 100svh;
+  max-height: 100svh;
   position: fixed;
   left: auto;
   top: 0;
