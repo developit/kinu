@@ -144,6 +144,9 @@
     min-width: 0;
     /* dvh — see above. */
     max-height: 70dvh;
+    /* Drawer-mode is its own scroll container; overscroll-behavior
+     * below pairs with this. */
+    overflow: auto;
     border-radius: var(--k-radius) var(--k-radius) 0 0;
     position: fixed;
     top: auto;

@@ -11,6 +11,9 @@
    * visual viewport. */
   height: 100dvh;
   max-height: 100dvh;
+  /* Sheet is its own scroll container; overscroll-behavior:contain
+   * below pairs with this. */
+  overflow: auto;
   position: fixed;
   left: auto;
   top: 0;
