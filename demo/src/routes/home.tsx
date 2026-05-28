@@ -51,7 +51,7 @@ import {
   toast,
 } from 'kinu';
 import type {ComponentChildren} from 'preact';
-import {useEffect, useRef, useState} from 'preact/hooks';
+import {useEffect, useId, useRef, useState} from 'preact/hooks';
 import {Nav} from '../nav';
 import {hljs} from '../highlight';
 
@@ -250,6 +250,10 @@ const INITIAL_TASKS: Task[] = [
 ];
 
 function TasksPreview() {
+  // Per-instance id prefix so the grid copy and the maximized-drawer
+  // copy don't share label-for ids — clicking a label in the drawer
+  // would otherwise toggle the occluded grid checkbox.
+  const idPrefix = useId();
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [draft, setDraft] = useState('');
   const completed = tasks.filter((t) => t.done).length;
@@ -284,12 +288,12 @@ function TasksPreview() {
         {tasks.map((t) => (
           <li key={t.id} class="kh-tasks-item">
             <Checkbox
-              id={`kh-task-${t.id}`}
+              id={`${idPrefix}-${t.id}`}
               checked={t.done}
               onInput={() => toggle(t.id)}
             />
             <Label
-              htmlFor={`kh-task-${t.id}`}
+              htmlFor={`${idPrefix}-${t.id}`}
               class={t.done ? 'is-done' : undefined}
             >
               {t.text}
