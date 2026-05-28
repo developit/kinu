@@ -1596,11 +1596,17 @@ body .home-nav--marketing + * {
 }
 
 /* Body — full bleed inside the frame. */
+/* Body scrolls internally when a demo's intrinsic height exceeds the
+ * available space (most visible in the maximized drawer with the Tasks
+ * demo's many items). The outer .kh-app keeps overflow: hidden for its
+ * rounded corners + titlebar gradient — making the body the scroll
+ * container leaves the titlebar sticky above the scrolling content. */
 .kh-app-body {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: auto;
   padding: 20px;
   background: hsl(var(--k-card));
 }
