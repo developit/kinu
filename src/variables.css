@@ -126,7 +126,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :where(:root) {
+  :where(:root:not([data-color-scheme])) {
     color-scheme: dark;
     /* Base colors */
     --k-background: 222.2 50% 7%;
