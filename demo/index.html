@@ -16,6 +16,15 @@
         color: hsl(var(--k-foreground));
       }
     </style>
+    <script>
+      // Apply the theme customizer's typeface choice before first paint.
+      // Default = serif; user can opt to sans via the customizer.
+      try {
+        var s = localStorage.getItem('kinu-custom-theme-settings');
+        var t = s ? (JSON.parse(s).typeface || 'serif') : 'serif';
+        if (t === 'serif') document.documentElement.classList.add('theme-serif');
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="app"></div>

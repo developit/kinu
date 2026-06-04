@@ -96,7 +96,16 @@ interface ThemeSettings {
   grayColor: string;
   radius: string;
   scaling: string;
+  typeface: 'sans' | 'serif';
 }
+
+const DEFAULT_SETTINGS: ThemeSettings = {
+  accentColor: 'blue',
+  grayColor: 'slate',
+  radius: 'medium',
+  scaling: '100%',
+  typeface: 'serif',
+};
 
 function generateCSS(settings: ThemeSettings): string {
   const accent = ACCENT_COLORS[settings.accentColor];
@@ -232,9 +241,20 @@ function applyCustomTheme(css: string) {
   document.head.appendChild(style);
 }
 
+/* The serif variant is a class on :root (style.css holds the override
+ * block); sans is the absence of that class. */
+function applyTypeface(typeface: ThemeSettings['typeface']) {
+  document.documentElement.classList.toggle('theme-serif', typeface === 'serif');
+}
+
 try {
   const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
   if (saved) applyCustomTheme(saved);
+  const savedSettings = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
+  const typeface = savedSettings
+    ? JSON.parse(savedSettings).typeface ?? DEFAULT_SETTINGS.typeface
+    : DEFAULT_SETTINGS.typeface;
+  applyTypeface(typeface);
 } catch {}
 
 /* ── Color swatch ─────────────────────────────────────────── */
@@ -269,9 +289,9 @@ export function ThemeCustomizer() {
   const [settings, setSettings] = useState<ThemeSettings>(() => {
     try {
       const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
-      if (saved) return JSON.parse(saved);
+      if (saved) return {...DEFAULT_SETTINGS, ...JSON.parse(saved)};
     } catch {}
-    return {accentColor: 'blue', grayColor: 'slate', radius: 'medium', scaling: '100%'};
+    return DEFAULT_SETTINGS;
   });
 
   // const handlePaste = () => {
@@ -293,6 +313,7 @@ export function ThemeCustomizer() {
       localStorage.setItem(CUSTOM_THEME_STORAGE_KEY + '-settings', JSON.stringify(settings));
     } catch {}
     applyCustomTheme(css);
+    applyTypeface(settings.typeface);
     toast.show('Theme applied');
   };
 
@@ -302,7 +323,8 @@ export function ThemeCustomizer() {
       localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
     } catch {}
     applyCustomTheme('');
-    setSettings({accentColor: 'blue', grayColor: 'slate', radius: 'medium', scaling: '100%'});
+    applyTypeface(DEFAULT_SETTINGS.typeface);
+    setSettings(DEFAULT_SETTINGS);
     toast.show('Theme reset to defaults');
   };
 
@@ -362,6 +384,26 @@ export function ThemeCustomizer() {
                   onClick={() => setSettings((s) => ({...s, grayColor: name}))}
                   label={name}
                 />
+              ))}
+            </div>
+          </div>
+
+          {/* Typeface */}
+          <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+            <Label>
+              Typeface: <strong>{settings.typeface}</strong>
+            </Label>
+            <div style={{display: 'flex', gap: '0.375rem', flexWrap: 'wrap'}}>
+              {(['sans', 'serif'] as const).map((t) => (
+                <Button
+                  key={t}
+                  variant={settings.typeface === t ? null : 'outline'}
+                  size="sm"
+                  onClick={() => setSettings((s) => ({...s, typeface: t}))}
+                  style={t === 'serif' ? {fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic'} : undefined}
+                >
+                  {t}
+                </Button>
               ))}
             </div>
           </div>
