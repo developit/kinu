@@ -19,7 +19,7 @@ demo/               # Demo application
 
 ## Key Features
 
-- **Tiny Bundle**: ~6KB JS + ~11KB CSS for all components, gzipped
+- **Tiny Bundle**: ~1.2KB JS + 4KB CSS for all components
 - **Zero Runtime Overhead**: Pure prop forwarding, no abstractions
 - **Platform-Native**: Uses HTML5 `<dialog>`, form validation, CSS custom properties
 - **Tree-Shakeable**: Import only what you use
@@ -69,13 +69,15 @@ export const Button = createSimpleComponent('button', 'button');
 ```
 
 ```tsx
-// Tabs over native <input type="radio">, exclusive selection via shared name
-<Tabs>
-  <Tab checked>First</Tab>
-  <TabPanel>Panel content</TabPanel>
+// Tabs over a native <input type="radio"> group — exclusive selection,
+// keyboard nav, and form-exclusion are all platform behavior; zero JS state.
+// Panels are siblings *after* TabList, mapped by position (Nth tab → Nth panel).
+<TabList>
+  <Tab defaultChecked>First</Tab>
   <Tab>Second</Tab>
-  <TabPanel>...</TabPanel>
-</Tabs>
+</TabList>
+<TabPanel>First panel content</TabPanel>
+<TabPanel>Second panel content</TabPanel>
 ```
 
 ## Components
@@ -86,7 +88,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Card**: Layout containers
 - **Dialog**: Native modal dialogs
 - **Accordion**: Collapsible content styled like shadcn/ui with slide animation
-- **Tabs**: Tabs, Tab, TabPanel wrappers (radio-based, exclusive selection)
+- **Tabs**: TabList, Tab, TabPanel wrappers
 - **Tooltip**: Hover text overlay
 - **Progress**: Styled `<progress>` bar
 - **Skeleton**: Animated loading placeholder

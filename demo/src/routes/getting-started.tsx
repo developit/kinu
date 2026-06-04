@@ -14,10 +14,6 @@ import {CodeBlock} from '../code-block';
 import {Nav} from '../nav';
 
 export default function GettingStarted() {
-  const [activeTab, setActiveTab] = useState<'install' | 'setup' | 'usage'>(
-    'install',
-  );
-
   return (
     <div class="getting-started">
       <Nav />
@@ -33,100 +29,77 @@ export default function GettingStarted() {
 
         <section class="quick-start">
           <TabList>
-            <Tab
-              aria-selected={activeTab === 'install'}
-              onClick={() => setActiveTab('install')}
-            >
-              Installation
-            </Tab>
-            <Tab
-              aria-selected={activeTab === 'setup'}
-              onClick={() => setActiveTab('setup')}
-            >
-              Setup
-            </Tab>
-            <Tab
-              aria-selected={activeTab === 'usage'}
-              onClick={() => setActiveTab('usage')}
-            >
-              Basic Usage
-            </Tab>
+            <Tab defaultChecked>Installation</Tab>
+            <Tab>Setup</Tab>
+            <Tab>Basic Usage</Tab>
           </TabList>
+          <TabPanel>
+            <Card>
+              <h3>Install kinu</h3>
+              <p>
+                Add kinu to your project using your preferred package manager:
+              </p>
 
-          {activeTab === 'install' && (
-            <TabPanel>
-              <Card>
-                <h3>Install kinu</h3>
-                <p>
-                  Add kinu to your project using your preferred package manager:
-                </p>
+              <h4>npm</h4>
+              <CodeBlock code="npm install kinu" />
 
-                <h4>npm</h4>
-                <CodeBlock code="npm install kinu" />
+              <h4>pnpm</h4>
+              <CodeBlock code="pnpm add kinu" />
 
-                <h4>pnpm</h4>
-                <CodeBlock code="pnpm add kinu" />
+              <h4>yarn</h4>
+              <CodeBlock code="yarn add kinu" />
 
-                <h4>yarn</h4>
-                <CodeBlock code="yarn add kinu" />
+              <Alert>
+                <strong>Prerequisites:</strong> kinu requires Preact 10.5.0 or
+                higher.
+              </Alert>
+            </Card>
+          </TabPanel>
+          <TabPanel>
+            <Card>
+              <h3>Project Setup</h3>
+              <p>
+                After installation, import the kinu styles and start using
+                components:
+              </p>
 
-                <Alert>
-                  <strong>Prerequisites:</strong> kinu requires Preact 10.5.0 or
-                  higher.
-                </Alert>
-              </Card>
-            </TabPanel>
-          )}
-
-          {activeTab === 'setup' && (
-            <TabPanel>
-              <Card>
-                <h3>Project Setup</h3>
-                <p>
-                  After installation, import the kinu styles and start using
-                  components:
-                </p>
-
-                <h4>Import Styles</h4>
-                <p>Add the CSS import to your main entry point:</p>
-                <CodeBlock
-                  code={`// In your main.tsx or index.tsx
+              <h4>Import Styles</h4>
+              <p>Add the CSS import to your main entry point:</p>
+              <CodeBlock
+                code={`// In your main.tsx or index.tsx
 import 'kinu/style.css';`}
-                />
+              />
 
-                <h4>Import Components</h4>
-                <p>Import individual components as needed:</p>
-                <CodeBlock
-                  code={`import { Button, Card, Input } from 'kinu';`}
-                />
-                <p>
-                  Unused components will be tree-shaken, though frankly at 5kB
-                  who cares.
-                </p>
+              <h4>Import Components</h4>
+              <p>Import individual components as needed:</p>
+              <CodeBlock
+                code={`import { Button, Card, Input } from 'kinu';`}
+              />
+              <p>
+                Unused components will be tree-shaken, though frankly at 5kB
+                who cares.
+              </p>
 
-                <h4>TypeScript Support</h4>
-                <p>
-                  kinu comes with built-in TypeScript definitions. No additional
-                  setup required!
-                </p>
+              <h4>TypeScript Support</h4>
+              <p>
+                kinu comes with built-in TypeScript definitions. No additional
+                setup required!
+              </p>
 
-                <Alert variant="default">
-                  <strong>CSS Variables:</strong> kinu uses CSS custom properties
-                  for theming. You can customize the design tokens by overriding
-                  these variables.
-                </Alert>
-              </Card>
-            </TabPanel>
-          )}
+              <Alert variant="default">
+                <strong>CSS Variables:</strong> kinu uses CSS custom properties
+                for theming. You can customize the design tokens by overriding
+                these variables.
+              </Alert>
+            </Card>
+          </TabPanel>
+          <TabPanel>
+            <Card>
+              <h3>Your First Component</h3>
+              <p>Here's a simple example to get you started:</p>
 
-          {activeTab === 'usage' && (
-            <TabPanel>
-              <Card>
-                <h3>Your First Component</h3>
-                <p>Here's a simple example to get you started:</p>
-
-                <CodeBlock
-                  code={`import { Button, Card, Input } from 'kinu';
+              <CodeBlock
+                code={`import { Button, Card, Input } from 'kinu';
 import { useState } from 'preact/hooks';
 
 function MyApp() {
@@ -146,15 +119,14 @@ function MyApp() {
     </Card>
   );
 }`}
-                />
+              />
 
-                <div class="example-demo">
-                  <h4>Live Example:</h4>
-                  <DemoExample />
-                </div>
-              </Card>
-            </TabPanel>
-          )}
+              <div class="example-demo">
+                <h4>Live Example:</h4>
+                <DemoExample />
+              </div>
+            </Card>
+          </TabPanel>
         </section>
 
         <Separator />

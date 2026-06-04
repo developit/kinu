@@ -1,23 +1,25 @@
 import type {JSX} from 'preact';
 import type {BaseProps} from '../../types/component-props';
 
-export interface TabsOwnProps extends BaseProps {}
+export interface TabListOwnProps extends BaseProps {}
 
-export interface TabOwnProps extends BaseProps {
-  /** Whether this tab is initially selected. Sets `defaultChecked` on the underlying radio. */
-  checked?: boolean;
-}
+// Props on <Tab> forward to the underlying <input type="radio">. Use
+// `defaultChecked` to pre-select; `disabled` to disable; `name` to override the
+// auto-generated group name (rare).
+export interface TabOwnProps extends BaseProps {}
 
 export interface TabPanelOwnProps extends BaseProps {}
 
-export type TabsProps = TabsOwnProps &
-  Omit<JSX.IntrinsicElements['div'], keyof TabsOwnProps>;
+export type TabListProps = TabListOwnProps &
+  Omit<JSX.IntrinsicElements['div'], keyof TabListOwnProps>;
+
 export type TabProps = TabOwnProps &
   Omit<JSX.IntrinsicElements['input'], keyof TabOwnProps>;
-export type TabPanelProps = TabPanelOwnProps &
-  Omit<JSX.IntrinsicElements['div'], keyof TabPanelOwnProps>;
 
-/** @deprecated Renamed to `Tabs`. */
-export type TabListProps = TabsProps;
-/** @deprecated Renamed to `TabsOwnProps`. */
-export type TabListOwnProps = TabsOwnProps;
+export type TabPanelProps = TabPanelOwnProps &
+  Omit<JSX.IntrinsicElements['section'], keyof TabPanelOwnProps>;
+
+/** @deprecated Renamed to `TabListOwnProps`. */
+export type TabsOwnProps = TabListOwnProps;
+/** @deprecated Renamed to `TabListProps`. */
+export type TabsProps = TabListProps;

@@ -1,21 +1,23 @@
-import {Tab, TabPanel, Tabs} from 'kinu';
+import {Tab, TabList, TabPanel} from 'kinu';
 
 export function Demo() {
   return (
-    <Tabs>
-      <Tab checked>Overview</Tab>
-      <TabPanel>Content for the Overview tab.</TabPanel>
-      <Tab>Details</Tab>
-      <TabPanel>Details panel content.</TabPanel>
-    </Tabs>
+    <div>
+      <TabList>
+        <Tab defaultChecked>First</Tab>
+        <Tab>Second</Tab>
+      </TabList>
+      <TabPanel>Content for first tab.</TabPanel>
+      <TabPanel>Second tab panel.</TabPanel>
+    </div>
   );
 }
 
-export const code = `<Tabs>
-  <Tab checked>Overview</Tab>
-  <TabPanel>...</TabPanel>
-  <Tab>Details</Tab>
-  <TabPanel>...</TabPanel>
-</Tabs>`;
+export const code = `<TabList>
+  <Tab defaultChecked>First</Tab>
+  <Tab>Second</Tab>
+</TabList>
+<TabPanel>Content for first tab.</TabPanel>
+<TabPanel>Second tab panel.</TabPanel>`;
 
 export default {Demo, code};

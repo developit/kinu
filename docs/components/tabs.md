@@ -1,50 +1,63 @@
 # Tabs
 
-Tabs, Tab, and TabPanel wrappers over `<input type="radio">` with native exclusive selection.
+`TabList`, `Tab`, and `TabPanel` ride on a native `<input type="radio">` group
+— exclusive selection, keyboard navigation, and form-non-participation are all
+the platform's job. No JS state, no event handlers.
 
 ## Usage
 
 ```tsx
-import {Tab, TabPanel, Tabs} from 'kinu';
+import {Tab, TabList, TabPanel} from 'kinu';
 
-<Tabs>
-  <Tab checked>Account</Tab>
-  <TabPanel>Account settings</TabPanel>
+<TabList>
+  <Tab defaultChecked>Account</Tab>
   <Tab>Password</Tab>
-  <TabPanel>Password settings</TabPanel>
-</Tabs>
+</TabList>
+<TabPanel>Account settings</TabPanel>
+<TabPanel>Password settings</TabPanel>
 ```
+
+`TabPanel`s are **siblings *after* the `TabList`**, not nested inside it. This
+keeps the well a hugging pill that can scroll horizontally on its own, while
+panels flow at the parent container's full width. Panels are mapped to tabs by
+position: the *N*th `Tab` controls the *N*th `TabPanel`.
 
 ## Exports
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
-| Tabs | Tab strip wrapper | `<div k="tabs">` (with a shared `name` context) |
-| Tab | Tab trigger | `<label k="tab"><input type="radio" name=… /> …</label>` |
-| TabPanel | Tab content | `<div k="tab-panel">` |
-| TabList | Deprecated alias for Tabs | — |
+| `TabList` | Tab strip (the visual well). Generates a shared radio `name`. | `<div k="tablist">` |
+| `Tab` | One tab. Renders a `<label>` wrapping a hidden radio. | `<label k="tab"><input type="radio" name="…" /> …</label>` |
+| `TabPanel` | One panel. Visible only when its sibling tab is selected. | `<section k="tab-panel">` |
 
 ## Props
 
-### TabProps
+`Tab` props forward to the underlying `<input type="radio">`. The useful ones:
 
-`<Tab>` props forward to the underlying `<input type="radio">`. Notable:
+| Prop | Type | Description |
+| --- | --- | --- |
+| `defaultChecked` | `boolean` | Pre-select this tab on mount. |
+| `disabled` | `boolean` | Disable this tab. |
+| `name` | `string` | Override the auto-generated group name (rare). |
+| `value` | `string` | Submitted with the form if `TabList` is in one (also rare — radios default to `form=""` so they don't participate). |
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| checked | `boolean` | — | Initially selected. Becomes `checked` on the inner radio. |
-| disabled | `boolean` | — | Disables this tab. |
-| value | `string` | — | Optional; submitted with the form if `<Tabs>` is in one (rare; the radios set `form=""` by default so they don't participate). |
-
-### TabPanelProps
-
-`<TabPanel>` forwards to `<div>`.
+`TabList` and `TabPanel` forward to `<div>` and `<section>` respectively.
 
 ## Notes
 
-- All `<Tab>`s inside one `<Tabs>` share an auto-generated `name`, so opening one deselects the others — pure HTML, no JS.
-- A panel is shown via `[k="tab"]:has(> input:checked) + [k="tab-panel"]` — the panel must immediately follow its tab in DOM order.
-- Listen to `<Tabs onChange={…}>` to react to selection changes; the `change` event bubbles from the radio.
+- **Selection is DOM-owned.** No `useState`, no `onChange` handler required.
+  Listen to `change` on the `TabList` if you need to react to the user picking
+  a tab.
+- **Keyboard nav (←/→/↑/↓, Home/End) is native** to HTML radio groups — no
+  library code involved.
+- **Up to 12 tabs.** Panel visibility is wired by 12 unrolled CSS rules
+  (`[k="tablist"]:has([k="tab"]:nth-of-type(N) :checked) ~ [k="tab-panel"]:nth-of-type(N)`).
+  If you need more, raise the cap in `tabs/style.css`.
+- **Accessibility caveat.** Screen readers announce this as a radio group, not
+  a true ARIA tablist (no `role="tab"` / `role="tablist"` / `role="tabpanel"`).
+  For a utility kit at this byte budget the trade favors zero-JS over the
+  ARIA-tablist roles — `<input type="radio">` is itself an accessible
+  primitive.
 
 ---
 
