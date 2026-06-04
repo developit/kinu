@@ -109,8 +109,11 @@ function generateCSS(settings: ThemeSettings): string {
   const scale = parseInt(settings.scaling) / 100;
 
   const lines = [
-    '/* Light mode */',
-    ':root {',
+    '/* Light mode — :root + explicit-light subtrees (e.g. per-component',
+    '   `data-color-scheme="light"`). Both need the same tokens so that',
+    '   toggling a subtree back to light keeps the customized palette. */',
+    ':root,',
+    '[data-color-scheme="light"] {',
     `  --k-primary: ${hsl(accent.light.step9)};`,
     `  --k-primary-hover: ${hsl(accent.light.step10)};`,
     `  --k-primary-foreground: ${fgLight};`,
@@ -166,9 +169,9 @@ function generateCSS(settings: ThemeSettings): string {
   lines.push('}');
   lines.push('');
 
-  // Dark mode (explicit class)
-  lines.push('/* Dark mode (explicit) */');
-  lines.push('.dark {');
+  // Dark mode (explicit attribute — applies to any subtree)
+  lines.push('/* Dark mode (explicit, scopable to any subtree) */');
+  lines.push('[data-color-scheme="dark"] {');
   lines.push('  color-scheme: dark;');
   lines.push(`  --k-primary: ${hsl(accent.dark.step9)};`);
   lines.push(`  --k-primary-hover: ${hsl(accent.dark.step10)};`);

@@ -7,6 +7,16 @@
   background-color: hsl(var(--k-background));
   padding: 0;
   max-width: 32rem;
+  /* Cap to the dynamic viewport so a soft keyboard popup shrinks the
+   * dialog instead of leaving inputs hidden behind the keyboard. The
+   * shape matches the UA default `calc(100% - 6px - 2em)` but anchored
+   * to dvh, which respects the current visible area. */
+  max-height: calc(100dvh - 6px - 2em);
+  /* If the content overflows max-height the dialog itself scrolls.
+   * Without this the content would clip (or overflow visibly), and
+   * overscroll-behavior:contain would be a no-op since the dialog
+   * wouldn't be a scroll container. */
+  overflow: auto;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   flex-direction: column;
   padding: 1.5rem;

@@ -55,6 +55,11 @@ export function createSimpleComponent<
       );
       normalizedProps.ref =
         this.$_ref || (this.$_ref = proxyRef.bind(fwdRef || props.ref as any) as any);
+    } else if (fwdRef) {
+      // No defaults / no internal ref handler — but forwardRef has already
+      // pulled the user's ref off the props bag, so blast it back on the
+      // way k is. (Cheaper than cloning props.)
+      (normalizedProps as any).ref = fwdRef;
     }
     (normalizedProps as any).k = name;
     const resolvedTag = typeof tag === 'function' ? tag(props) : tag;

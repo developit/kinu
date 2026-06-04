@@ -6,6 +6,13 @@
   margin: 0;
   width: 100%;
   max-width: 100vw;
+  /* Cap to the dynamic viewport so a soft-keyboard popup shrinks the
+   * drawer instead of leaving content hidden behind the keyboard. */
+  max-height: 100dvh;
+  /* Make the drawer itself the scroll container when content overflows
+   * max-height — otherwise overscroll-behavior:contain below is a
+   * no-op and the content clips. */
+  overflow: auto;
   border-radius: 0;
   position: fixed;
   top: auto;

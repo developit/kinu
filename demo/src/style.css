@@ -1,5 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "../../src/variables.css";
 @import "../../src/base.css";
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Kinu brand identity — sage on warm cream paper.
+ *
+ * Applied site-wide so every kinu component on the docs site picks up the
+ * brand without any per-component theming. The library variables.css is
+ * untouched.
+ *
+ * Cascade note: kinu's variables.css wraps its token rules in :where(...)
+ * so they have specificity (0,0,0). Any normal selector here wins. The
+ * @media block mirrors the explicit dark rule so OS-level
+ * prefers-color-scheme: dark also takes effect.
+ *
+ * The system is anchored on a dark kinu-sage primary (close to the
+ * `--kh-dark-band` we use for the editorial bands) and a warm cream
+ * background. Borders use a slightly cooler cream-tan; accent (ghost
+ * button + nav-link hover) is a whispered sage; status colors are detuned
+ * to sit on cream instead of fighting it.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+:root,
+[data-color-scheme="light"] {
+  /* Surfaces — cream paper, white cards */
+  --k-background: 47 53% 96.7%;
+  --k-foreground: 24 10% 10%;
+  --k-card: 0 0% 100%;
+  --k-card-foreground: 24 10% 10%;
+  --k-popover: 0 0% 100%;
+  --k-popover-foreground: 24 10% 10%;
+  --k-sidebar: 44 38% 93.5%;
+
+  /* Brand — dark kinu sage, the same family as --kh-dark-band */
+  --k-primary: 135 22% 22%;
+  --k-primary-foreground: 47 53% 97%;
+  --k-primary-hover: 135 26% 16%;
+  --k-primary-soft: 135 22% 90%;
+
+  /* Subtle chrome — warm cream tan */
+  --k-secondary: 40 22% 93%;
+  --k-secondary-foreground: 24 10% 18%;
+  --k-secondary-hover: 40 22% 87%;
+  --k-muted: 40 22% 93%;
+  --k-muted-foreground: 25 6% 42%;
+
+  /* Accent — whispered sage. Ghost-button + nav-link hover backgrounds. */
+  --k-accent: 135 18% 90%;
+  --k-accent-foreground: 135 28% 18%;
+
+  /* Borders — slightly cooler than secondary, for paper-edge separation */
+  --k-border: 36 14% 87%;
+  --k-input: 36 14% 87%;
+  --k-ring: 135 28% 30%;
+
+  /* Semantic — tuned to sit on cream */
+  --k-destructive: 6 60% 44%;
+  --k-destructive-foreground: 0 0% 100%;
+  --k-destructive-hover: 6 60% 38%;
+  --k-success: 145 40% 32%;
+  --k-success-foreground: 0 0% 100%;
+  --k-warning: 32 76% 44%;
+  --k-warning-foreground: 0 0% 100%;
+  --k-info: 200 52% 38%;
+  --k-info-foreground: 0 0% 100%;
+
+  --k-radius: 0.5rem;
+
+  /* Brand typography stack */
+  --kh-font-sans: 'Public Sans', system-ui, -apple-system, sans-serif;
+  --kh-font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --kh-font-label: 'Manrope', 'Public Sans', system-ui, sans-serif;
+  --kh-font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  /* Brand-only palette extensions used by dark sections + silk art */
+  --kh-dark-band: #1f2c24;
+  --kh-dark-band-soft: #2c3d31;
+  --kh-cream: #fbf9f2;
+  --kh-cream-muted: #c9c2a8;
+
+  /* Page width — keep section content readable on wide monitors */
+  --kh-page-max: 1200px;
+  --kh-page-pad: max(48px, calc((100% - var(--kh-page-max)) / 2));
+}
+
+/* OS-level dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --k-background: 132 10% 7%;
+    --k-foreground: 40 18% 92%;
+    --k-card: 132 10% 9%;
+    --k-card-foreground: 40 18% 92%;
+    --k-popover: 132 10% 9%;
+    --k-popover-foreground: 40 18% 92%;
+    --k-sidebar: 132 10% 8%;
+
+    --k-primary: 135 32% 62%;
+    --k-primary-foreground: 132 18% 8%;
+    --k-primary-hover: 135 36% 72%;
+    --k-primary-soft: 135 24% 18%;
+
+    --k-secondary: 132 6% 15%;
+    --k-secondary-foreground: 40 18% 92%;
+    --k-secondary-hover: 132 6% 22%;
+    --k-muted: 132 6% 15%;
+    --k-muted-foreground: 132 4% 62%;
+
+    --k-accent: 135 20% 16%;
+    --k-accent-foreground: 135 30% 80%;
+
+    --k-border: 132 6% 18%;
+    --k-input: 132 6% 18%;
+    --k-ring: 135 32% 62%;
+
+    --k-destructive: 6 55% 56%;
+    --k-success: 145 36% 50%;
+    --k-warning: 32 70% 56%;
+    --k-info: 200 50% 60%;
+  }
+}
+
+/* Explicit per-subtree dark override (theme customizer / forced dark /
+   per-demo toggle in the homepage's "Built with Kinu" grid). Library's
+   token rules are :where()-wrapped at 0,0,0, so a normal attribute
+   selector wins cleanly. */
+[data-color-scheme="dark"] {
+  color-scheme: dark;
+
+  --k-background: 132 10% 7%;
+  --k-foreground: 40 18% 92%;
+  --k-card: 132 10% 9%;
+  --k-card-foreground: 40 18% 92%;
+  --k-popover: 132 10% 9%;
+  --k-popover-foreground: 40 18% 92%;
+  --k-sidebar: 132 10% 8%;
+
+  --k-primary: 135 32% 62%;
+  --k-primary-foreground: 132 18% 8%;
+  --k-primary-hover: 135 36% 72%;
+  --k-primary-soft: 135 24% 18%;
+
+  --k-secondary: 132 6% 15%;
+  --k-secondary-foreground: 40 18% 92%;
+  --k-secondary-hover: 132 6% 22%;
+  --k-muted: 132 6% 15%;
+  --k-muted-foreground: 132 4% 62%;
+
+  --k-accent: 135 20% 16%;
+  --k-accent-foreground: 135 30% 80%;
+
+  --k-border: 132 6% 18%;
+  --k-input: 132 6% 18%;
+  --k-ring: 135 32% 62%;
+
+  --k-destructive: 6 55% 56%;
+  --k-success: 145 36% 50%;
+  --k-warning: 32 70% 56%;
+  --k-info: 200 50% 60%;
+}
 
 html,
 body {
@@ -7,17 +167,11 @@ body {
   padding: 0;
   background: hsl(var(--k-background));
   color: hsl(var(--k-foreground));
-  font-family: system-ui, sans-serif;
+  font-family: var(--kh-font-sans);
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
   overflow-x: clip;
 }
-
-/* .home,
-.getting-started,
-.demo-app {
-  margin-top: 4rem;
-} */
 
 .demo-app {
   display: flex;
@@ -50,19 +204,6 @@ body {
   margin: 1rem;
 }
 
-/* .demo-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  background-color: hsl(var(--k-background));
-  backdrop-filter: blur(12px);
-  box-shadow: inset 0 -1px 0 hsl(var(--k-border)), 0 0 12px rgb(0 0 0 / 0.1);
-  z-index: 500;
-  overflow: visible;
-} */
 .demo-sidebar-trigger {
   display: inline-flex;
   align-items: center;
@@ -80,7 +221,6 @@ body {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   margin-right: auto;
 }
-
 
 .nav {
   margin: 0;
@@ -101,9 +241,13 @@ h2 {
 }
 
 pre.code-block {
-  background: #f2f3f6;
+  background: hsl(var(--k-muted));
   padding: .75rem 1rem;
-  border-radius: .35rem;
+  border-radius: var(--k-radius);
+  border: 1px solid hsl(var(--k-border));
+  font-family: var(--kh-font-mono);
+  font-size: 0.85rem;
+  line-height: 1.65;
   overflow-x: auto;
 }
 
@@ -115,23 +259,22 @@ pre.code-block {
   max-width: 100%;
 }
 
-/* Home route styles */
+/* ── Site nav (used by both docs & marketing) ───────────────────────────── */
 .home-nav {
-  padding: 1rem 0.5rem;
+  padding: 0.75rem 1.25rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 0.5rem;
   height: 4rem;
 
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  gap: 0.375rem;
-  background-color: hsl(var(--k-background));
+  background-color: hsl(var(--k-background) / 0.85);
   backdrop-filter: blur(12px);
-  box-shadow: inset 0 -1px 0 hsl(var(--k-border)), 0 0 12px rgb(0 0 0 / 0.1);
+  box-shadow: inset 0 -1px 0 hsl(var(--k-border)), 0 0 12px rgb(0 0 0 / 0.04);
   z-index: 500;
   overflow: visible;
 }
@@ -139,11 +282,25 @@ body .home-nav + * {
   margin-top: 4rem;
 }
 
+.home-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  margin-right: auto;
+  padding: 0 0.5rem;
+}
+
 .home-nav [k="navigation-menu-link"] {
   height: 2.5rem;
   display: inline-flex;
   align-items: center;
   padding-inline: 0.4rem;
+  font-family: var(--kh-font-sans);
+}
+
+.home-nav [k="navigation-menu-list"] {
+  gap: 0.2rem;
 }
 
 .nav-actions {
@@ -152,502 +309,3044 @@ body .home-nav + * {
   align-items: center;
 }
 
-.home-nav [k="navigation-menu-list"] {
-  gap: 0.2rem;
-}
-
-
 .home-nav .nav-actions {
   gap: 0.25rem;
 }
 
-.hero {
-  padding: 4rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
+/* On the marketing home, the nav floats on top of the hero (no chrome) */
+.home-nav--marketing {
+  position: absolute;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 1rem 2rem;
+}
+body .home-nav--marketing + * {
+  margin-top: 0;
 }
 
-.hero-content {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 2rem;
-  align-items: center;
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Kinu home — homepage option C ("Centered Hero").
+ * Composed mostly of kinu primitives (Card, Button, Field, TabList, …);
+ * the styles below only fill the gaps the components don't cover —
+ * editorial typography, the silk image, and the dark sage bands.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+.kinu-home {
+  background: hsl(var(--k-background));
+  color: hsl(var(--k-foreground));
+  font-family: var(--kh-font-sans);
 }
 
-.hero-text {
-  padding: 0 2rem;
+/* ── Pill button shape (overrides default radius on Button) ─────────────── */
+.kinu-home .kh-pill[k="button"] {
+  border-radius: 999px;
 }
 
-.hero-text h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.1;
-  margin: 0 0 1.5rem 0;
-  letter-spacing: -0.025em;
-  background: linear-gradient(135deg, #3b82f6, #673ab8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-wrap-style: pretty;
-}
-
-.hero-subtitle {
-  font-size: 1.25rem;
-  line-height: 1.6;
-  color: hsl(var(--k-muted-foreground));
-  margin: 0 0 2rem 0;
-  max-width: 500px;
-  text-wrap-style: pretty;
-}
-
-.hero-features {
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.kh-hero {
+  position: relative;
+  min-height: 920px;
   display: flex;
-  gap: 1rem;
-  margin: 2rem 0;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 140px 24px 80px;
+  overflow: hidden;
 }
 
-.feature-pill {
+.kh-hero-glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 600px;
+  background: radial-gradient(
+    ellipse,
+    hsl(var(--k-primary) / 0.08) 0%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.kh-hero-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  background: hsl(var(--k-muted) / 0.5);
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  font-size: 0.875rem;
+  text-align: center;
+  max-width: 920px;
+  width: 100%;
+  gap: 24px;
+}
+
+.kh-hero-title {
+  margin: 0;
+  font-family: var(--kh-font-serif);
+  font-size: 88px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: hsl(var(--k-foreground));
+}
+.kh-hero-title em {
+  font-style: italic;
   font-weight: 500;
 }
 
-.feature-icon {
-  font-size: 1rem;
+/* Prose lede — narrow, centered, italic kinu intro */
+.kinu-home [k="prose"].kh-hero-lede {
+  max-width: 480px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="prose"].kh-hero-lede em {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  color: hsl(var(--k-foreground));
 }
 
-.hero-actions {
+.kh-hero-actions {
   display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.hero-demo {
-  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
-.hero-demo-card {
-  width: 100%;
-  max-width: 350px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  background: linear-gradient(
-    135deg,
-    hsl(var(--k-background)),
-    hsl(var(--k-muted) / 0.3)
-  );
-  border: 2px solid hsl(var(--k-border));
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-.hero-demo-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.demo-title {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.progress-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.progress-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: hsl(var(--k-muted-foreground));
-}
-
-.progress-text {
-  font-size: 0.75rem;
-  color: hsl(var(--k-muted-foreground));
-  text-align: right;
-}
-
-.task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-body .task-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  background: hsl(var(--k-muted) / 0.3);
-  text-align: left;
-}
-
-.task-item span {
-  flex: 1;
+/* ── Hero playground (code on the left, live <NewPost/> on the right) ──── */
+.kinu-home [k="card"].kh-playground {
   position: relative;
-  top: -1px;
-  font-size: 0.875rem;
+  z-index: 1;
+  margin-top: 64px;
+  width: 100%;
+  max-width: 1040px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid hsl(var(--k-border));
+  box-shadow:
+    0 30px 80px -30px rgba(40, 50, 40, 0.35),
+    0 8px 24px -8px rgba(40, 50, 40, 0.14);
 }
 
-.task-completed {
+.kh-playground-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.kh-playground-pane--code {
+  background: var(--kh-dark-band);
+  color: #e8e4d5;
+}
+.kh-playground-pane--demo {
+  background: hsl(var(--k-card));
+  border-left: 1px solid hsl(var(--k-border));
+}
+
+.kh-playground-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;             /* fixed height so both pane headers align */
+  padding: 0 18px;
+  font-family: var(--kh-font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.kh-playground-pane--code .kh-playground-bar {
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--kh-cream-muted);
+  border-bottom: 1px solid rgba(251, 249, 242, 0.08);
+}
+.kh-playground-pane--demo .kh-playground-bar {
+  color: hsl(var(--k-muted-foreground));
+  border-bottom: 1px solid hsl(var(--k-border));
+}
+.kh-playground-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.kh-playground-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(251, 249, 242, 0.18);
+}
+.kh-playground-dots i:nth-child(1) { background: rgba(232, 109, 89, 0.85); }
+.kh-playground-dots i:nth-child(2) { background: rgba(232, 184, 89, 0.85); }
+.kh-playground-dots i:nth-child(3) { background: rgba(122, 168, 130, 0.85); }
+.kh-playground-file {
+  flex: 1;
+}
+.kinu-home [k="badge"].kh-playground-bar-badge {
+  background: transparent;
+  border-color: rgba(251, 249, 242, 0.2);
+  color: var(--kh-cream-muted);
+  font-family: var(--kh-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+.kinu-home [k="status"].kh-playground-bar-status {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* Hero playground code surface — ScrollArea fills the pane minus the bar. */
+.kinu-home [k="scroll-area"].kh-playground-code {
+  flex: 1;
+  min-height: 0;
+  /* The library defaults the scroll-area to overflow-y: scroll which
+   * forces a permanent vertical bar; for code we want it only when
+   * content overflows. */
+  overflow-y: auto;
+  background: transparent;
+  padding: 22px 24px 28px;
+}
+.kh-playground-code pre {
+  margin: 0;
+  font-family: var(--kh-font-mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre;
+}
+
+/* JSX-in section code surfaces. Pair with .kh-code Card. */
+.kinu-home [k="scroll-area"].kh-code-scroll {
+  overflow-y: auto;
+  /* The Card already has padding: lg; the ScrollArea gets a small
+   * negative inset so the kinu themed scrollbar tucks under the card
+   * edge instead of floating in the middle. */
+  margin: 0 -0.25rem -0.25rem;
+  padding: 0 0.25rem 0.25rem;
+}
+.kh-code-scroll pre {
+  margin: 0;
+  font-family: var(--kh-font-mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Brand-aware syntax highlighting.
+ *
+ * Tokens are CSS variables so the same .kh-hljs class can adapt to:
+ *   • light mode (cream paper)         → :root values
+ *   • dark mode (dark sage page)       → [data-color-scheme="dark"] values
+ *   • always-dark surfaces (the hero playground pane and the dark
+ *     "Theme" card on the JSX-in row) regardless of page mode → forced
+ *     dark values via a per-surface override.
+ * ─────────────────────────────────────────────────────────────────────── */
+:root {
+  --kh-hl-text:    24 12% 22%;
+  --kh-hl-keyword: 14 50% 36%;     /* warm sienna for keywords */
+  --kh-hl-string:  140 22% 30%;    /* deep sage for strings */
+  --kh-hl-tag:     200 30% 38%;    /* deep muted blue for tags / names */
+  --kh-hl-attr:    14 35% 42%;     /* muted brown for attributes */
+  --kh-hl-number:  220 30% 40%;    /* deep slate for numbers */
+  --kh-hl-comment: 60 5% 50%;      /* warm muted grey, italic */
+  --kh-hl-punct:   95 8% 42%;
+}
+
+[data-color-scheme="dark"] {
+  --kh-hl-text:    40 18% 84%;
+  --kh-hl-keyword: 18 60% 76%;     /* warm peach */
+  --kh-hl-string:  140 28% 76%;    /* soft sage */
+  --kh-hl-tag:     30 50% 78%;     /* warm cream */
+  --kh-hl-attr:    18 40% 78%;
+  --kh-hl-number:  220 30% 75%;
+  --kh-hl-comment: 130 10% 62%;
+  --kh-hl-punct:   40 12% 70%;
+}
+/* Same overrides for OS-level dark mode — without this, kh-code--light
+ * (which inherits page-level tokens) keeps the light highlighter
+ * palette while sitting on the dark surface in @media-dark. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --kh-hl-text:    40 18% 84%;
+    --kh-hl-keyword: 18 60% 76%;
+    --kh-hl-string:  140 28% 76%;
+    --kh-hl-tag:     30 50% 78%;
+    --kh-hl-attr:    18 40% 78%;
+    --kh-hl-number:  220 30% 75%;
+    --kh-hl-comment: 130 10% 62%;
+    --kh-hl-punct:   40 12% 70%;
+  }
+}
+
+/* Always-dark code surfaces — force dark tokens regardless of page mode. */
+.kh-playground-pane--code,
+.kinu-home [k="card"].kh-code--dark {
+  --kh-hl-text:    40 18% 84%;
+  --kh-hl-keyword: 18 60% 76%;
+  --kh-hl-string:  140 28% 76%;
+  --kh-hl-tag:     30 50% 78%;
+  --kh-hl-attr:    18 40% 78%;
+  --kh-hl-number:  220 30% 75%;
+  --kh-hl-comment: 130 10% 62%;
+  --kh-hl-punct:   40 12% 70%;
+}
+
+.kh-hljs                                          { color: hsl(var(--kh-hl-text)); }
+.kh-hljs .hljs-keyword,
+.kh-hljs .hljs-built_in,
+.kh-hljs .hljs-literal,
+.kh-hljs .hljs-variable.language_                  { color: hsl(var(--kh-hl-keyword)); font-weight: 500; }
+.kh-hljs .hljs-string,
+.kh-hljs .hljs-regexp                             { color: hsl(var(--kh-hl-string)); }
+.kh-hljs .hljs-name,
+.kh-hljs .hljs-tag,
+.kh-hljs .hljs-selector-tag,
+.kh-hljs .hljs-title,
+.kh-hljs .hljs-title.class_,
+.kh-hljs .hljs-title.function_                    { color: hsl(var(--kh-hl-tag)); }
+.kh-hljs .hljs-attr,
+.kh-hljs .hljs-attribute                          { color: hsl(var(--kh-hl-attr)); }
+.kh-hljs .hljs-number,
+.kh-hljs .hljs-meta                               { color: hsl(var(--kh-hl-number)); }
+.kh-hljs .hljs-comment,
+.kh-hljs .hljs-quote                              { color: hsl(var(--kh-hl-comment)); font-style: italic; }
+.kh-hljs .hljs-property,
+.kh-hljs .hljs-params,
+.kh-hljs .hljs-punctuation                        { color: hsl(var(--kh-hl-punct)); }
+
+/* Demo pane — the actual rendered NewPost form */
+.kh-playground-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;       /* center the form vertically */
+  justify-content: center;
+  padding: 24px;
+}
+.kh-newpost {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 320px;
+}
+.kh-newpost [k="select"] {
+  width: 100%;
+}
+.kh-newpost-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+.kh-newpost-switch [k="label"] {
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* ── The platform does the work — dark sage band ─────────────────────────── */
+.kh-facade {
+  background: var(--kh-dark-band);
+  color: #e8e4d5;
+  padding-block: 120px;
+  padding-inline: var(--kh-page-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft vignette glow behind the diagram so the dark band reads warmer */
+.kh-facade::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -120px;
+  width: min(900px, 90%);
+  height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(218, 209, 168, 0.06) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.kh-facade-head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.kh-facade-title {
+  margin: 0;
+  font-family: var(--kh-font-serif);
+  font-size: 76px;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.028em;
+  color: var(--kh-cream);
+}
+.kh-facade-title em {
+  font-style: italic;
+  color: rgba(218, 209, 168, 0.92);
+}
+
+.kinu-home [k="prose"].kh-facade-prose {
+  max-width: 600px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #d2cdb6;
+}
+.kinu-home [k="prose"].kh-facade-prose code {
+  background: rgba(251, 249, 242, 0.08);
+  color: var(--kh-cream);
+  font-size: 0.88em;
+}
+
+.kh-facade-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+/* Ghost links inside the dark band — flatten the kinu Button to text-with-rule */
+.kinu-home [k="button"].kh-link {
+  height: auto;
+  padding: 4px 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  font-weight: 400;
+  font-size: 13.5px;
+}
+.kinu-home [k="button"].kh-link:hover {
+  background: transparent;
+  opacity: 0.75;
+}
+.kinu-home [k="button"].kh-link + .kh-link {
+  margin-left: 16px;
+}
+.kinu-home [k="button"].kh-link--bright {
+  color: var(--kh-cream);
+}
+.kinu-home [k="button"].kh-link--muted {
+  color: var(--kh-cream-muted);
+}
+
+/* ── Pipeline race graphic ──────────────────────────────────────────────── */
+.kh-race {
+  /* one master cycle — every animation references this */
+  --kh-race-cycle: 4.5s;
+  --kh-race-bg: rgba(251, 249, 242, 0.025);
+  --kh-race-border: rgba(251, 249, 242, 0.1);
+  --kh-race-border-strong: rgba(251, 249, 242, 0.18);
+  --kh-race-rail-track: rgba(251, 249, 242, 0.08);
+  --kh-race-rail-flow: rgba(218, 209, 168, 0.7);
+  --kh-race-glow: rgba(218, 209, 168, 0.18);
+
+  position: relative;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  color: var(--kh-cream-muted);
+  font-family: var(--kh-font-sans);
+}
+
+/* shared source block at the top of the diagram */
+.kh-race-source {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  width: max-content;
+  max-width: 100%;
+}
+.kh-race-source-tag {
+  font-family: var(--kh-font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 10px;
+  color: var(--kh-cream-muted);
+  opacity: 0.6;
+}
+.kh-race-source-code {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 12px 22px;
+  font-family: var(--kh-font-mono);
+  font-size: 14px;
+  background: rgba(251, 249, 242, 0.04);
+  border: 1px solid var(--kh-race-border-strong);
+  border-radius: 999px;
+  color: var(--kh-cream);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.6);
+}
+.kh-race-tok-tag {
+  color: #e4d39a;
+  font-weight: 500;
+}
+.kh-race-tok-punct {
+  color: var(--kh-cream-muted);
+  opacity: 0.85;
+}
+.kh-race-tok-text {
+  color: var(--kh-cream-muted);
+  opacity: 0.55;
+  padding: 0 4px;
+}
+
+/* fork connector — thin SVG that bridges source to the two columns */
+.kh-race-fork {
+  display: block;
+  width: 100%;
+  height: 36px;
+  color: var(--kh-cream);
+  opacity: 0.32;
+  margin-top: -4px;
+  margin-bottom: -8px;
+}
+
+/* two-column race grid (stays side-by-side at every viewport) */
+.kh-race-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  width: 100%;
+}
+
+.kh-race-col {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(251, 249, 242, 0.03) 0%,
+    rgba(251, 249, 242, 0.01) 100%
+  );
+  border: 1px solid var(--kh-race-border);
+  border-radius: 14px;
+  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.55);
+}
+
+/* kinu column gets a slightly warmer halo to signal "yours" */
+.kh-race-col--kinu {
+  border-color: rgba(218, 209, 168, 0.22);
+}
+.kh-race-col--kinu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% -20%,
+    rgba(218, 209, 168, 0.12),
+    transparent 60%
+  );
+}
+
+.kh-race-col-head {
+  display: flex;
+  flex-direction: column;
+}
+.kh-race-col-name {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--kh-cream);
+  letter-spacing: -0.015em;
+}
+
+/* track + rail */
+.kh-race-track {
+  position: relative;
+  padding-left: 22px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.kh-race-track > .kh-race-stages {
+  flex: 1;
+}
+/* Kinu only has three stages — distribute them so the column reads as
+   balanced rather than top-heavy with empty whitespace beneath. */
+.kh-race-col--kinu .kh-race-stages {
+  justify-content: space-around;
+}
+.kh-race-rail {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--kh-race-rail-track);
+  pointer-events: none;
+}
+.kh-race-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--kh-race-rail-flow) 8%,
+    var(--kh-race-rail-flow) 92%,
+    transparent 100%
+  );
+  transform-origin: top;
+  transform: scaleY(0);
+  box-shadow: 0 0 6px rgba(218, 209, 168, 0.4);
+}
+
+/* stage items */
+.kh-race-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.kh-race-stage {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px 10px 6px;
+  border-radius: 8px;
+  /* default = hidden; animation runs only when .kh-race--playing on parent */
+  opacity: 0;
+  transform: translateX(-6px);
+  background: transparent;
+}
+.kh-race-stage-dot {
+  position: absolute;
+  left: -22px;
+  top: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(218, 209, 168, 0.95);
+  box-shadow: 0 0 0 4px rgba(218, 209, 168, 0.18);
+}
+.kh-race-stage-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.kh-race-stage-label {
+  font-family: var(--kh-font-sans);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--kh-cream);
+  letter-spacing: -0.005em;
+}
+.kh-race-stage-label code {
+  font-family: var(--kh-font-mono);
+  font-size: 12.5px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(251, 249, 242, 0.06);
+  color: var(--kh-cream);
+}
+.kh-race-stage-note {
+  font-family: var(--kh-font-sans);
+  font-size: 12px;
+  color: var(--kh-cream-muted);
+  opacity: 0.78;
+  line-height: 1.4;
+}
+.kh-race-stage-note code {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  padding: 0 4px;
+  background: rgba(251, 249, 242, 0.04);
+  color: var(--kh-cream-muted);
+  border-radius: 3px;
+}
+.kh-race-stage-cost {
+  flex: 0 0 auto;
+  align-self: center;
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: #e9d999;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border: 1px solid rgba(218, 209, 168, 0.32);
+  border-radius: 999px;
+  background: rgba(218, 209, 168, 0.07);
+  letter-spacing: 0.01em;
+}
+
+/* ── play-once animation gating ─────────────────────────────────────────── */
+/* Animations only run when the .kh-race--playing class is on the parent.
+   The grid is re-keyed on each play so children re-mount and animations
+   restart cleanly. Each ends at its settled (visible) state via fill-mode. */
+.kh-race--playing .kh-race-rail::after,
+.kh-race--playing .kh-race-stage,
+.kh-race--playing .kh-race-pixel,
+.kh-race--playing .kh-race-budgets {
+  animation-duration: var(--kh-race-cycle);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+
+/* rails fill linearly so the head matches the stage cadence */
+.kh-race--playing .kh-race-col--typical .kh-race-rail::after {
+  animation-name: kh-race-rail-typical;
+  animation-timing-function: linear;
+}
+.kh-race--playing .kh-race-col--kinu .kh-race-rail::after {
+  animation-name: kh-race-rail-kinu;
+  animation-timing-function: linear;
+}
+
+/* per-column stage activations */
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(1) {
+  animation-name: kh-race-stage-at-0;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(2) {
+  animation-name: kh-race-stage-at-11;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(3) {
+  animation-name: kh-race-stage-at-22;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(4) {
+  animation-name: kh-race-stage-at-33;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(5) {
+  animation-name: kh-race-stage-at-44;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-stages > .kh-race-stage:nth-child(6) {
+  animation-name: kh-race-stage-at-55;
+}
+.kh-race--playing .kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(1) {
+  animation-name: kh-race-stage-at-0;
+}
+.kh-race--playing .kh-race-col--kinu .kh-race-stages > .kh-race-stage:nth-child(2) {
+  animation-name: kh-race-stage-at-22;
+}
+
+/* pixel tile reveals at its column's completion moment */
+.kh-race--playing .kh-race-col--kinu .kh-race-pixel {
+  animation-name: kh-race-pixels-at-33;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-pixel {
+  animation-name: kh-race-pixels-at-67;
+}
+
+/* budgets fly in just after the pixels */
+.kh-race--playing .kh-race-col--kinu .kh-race-budgets {
+  animation-name: kh-race-budgets-at-40;
+}
+.kh-race--playing .kh-race-col--typical .kh-race-budgets {
+  animation-name: kh-race-budgets-at-75;
+}
+
+/* column footer — rendered pixels + bytes budget */
+.kh-race-col-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px dashed var(--kh-race-border);
+}
+
+/* the "rendered UI" pixel tile */
+.kh-race-pixel {
+  width: 100%;
+  max-width: 240px;
+  background: rgba(251, 249, 242, 0.05);
+  border: 1px solid var(--kh-race-border-strong);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* hidden until animation runs */
+  opacity: 0;
+  transform: scale(0.94);
+  transform-origin: bottom center;
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.55);
+}
+
+.kh-race-pixel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kh-race-pixel-title {
+  font-family: var(--kh-font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--kh-cream);
+  letter-spacing: -0.005em;
+}
+.kh-race-pixel-pill {
+  font-family: var(--kh-font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(218, 209, 168, 0.22);
+  color: #f0e3b0;
+}
+.kh-race-pixel-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.kh-race-pixel-avatar {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(218, 209, 168, 0.55), rgba(218, 209, 168, 0.25));
+}
+.kh-race-pixel-lines {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.kh-race-pixel-line {
+  height: 4px;
+  width: 80%;
+  background: rgba(251, 249, 242, 0.16);
+  border-radius: 999px;
+}
+.kh-race-pixel-line--strong {
+  background: rgba(251, 249, 242, 0.38);
+  height: 5px;
+  width: 92%;
+}
+.kh-race-pixel-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+.kh-race-pixel-btn {
+  font-family: var(--kh-font-sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(218, 209, 168, 0.88);
+  color: #2b3a30;
+  letter-spacing: 0.02em;
+}
+
+/* budgets — two metric tiles per column, side-by-side */
+.kh-race-budgets {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+  width: 100%;
+  text-align: center;
+  /* hidden until animation runs */
+  opacity: 0;
+  transform: translateY(4px);
+}
+.kh-race-budget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.kh-race-budget-num {
+  margin: 0;
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 32px;
+  line-height: 1;
+  color: #f0d98c;
+  letter-spacing: -0.025em;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+.kh-race-budget--zero .kh-race-budget-num {
+  color: #c7e0b9;
+}
+.kh-race-budget-label {
+  margin: 0;
+  font-family: var(--kh-font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 9.5px;
+  line-height: 1.35;
+  color: var(--kh-cream-muted);
+  opacity: 0.78;
+  max-width: 14ch;
+}
+
+/* replay control */
+.kh-race-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+.kh-race-replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  font-family: var(--kh-font-label);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--kh-cream);
+  background: rgba(251, 249, 242, 0.04);
+  border: 1px solid var(--kh-race-border-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 120ms ease;
+}
+.kh-race-replay:hover {
+  background: rgba(251, 249, 242, 0.1);
+  border-color: rgba(218, 209, 168, 0.45);
+}
+.kh-race-replay:active {
+  transform: scale(0.97);
+}
+.kh-race-replay:focus-visible {
+  outline: 2px solid rgba(218, 209, 168, 0.6);
+  outline-offset: 3px;
+}
+.kh-race-replay-icon {
+  flex: 0 0 auto;
+}
+
+/* caption beneath the diagram */
+.kh-race-caption {
+  margin: 18px auto 0;
+  max-width: 540px;
+  text-align: center;
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--kh-cream-muted);
+}
+
+/* reduced motion: show the settled state immediately, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .kh-race-stage,
+  .kh-race-pixel,
+  .kh-race-budgets {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .kh-race-rail::after {
+    transform: scaleY(1) !important;
+    animation: none !important;
+  }
+}
+
+/* ── keyframes ──────────────────────────────────────────────────────────── */
+/* Each stage animation goes: hidden → brief background pulse on activation
+   → settled-and-visible, and STAYS settled (fill-mode: both keeps the
+   final state past the end of the cycle). */
+@keyframes kh-race-stage-at-0 {
+  0%   { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  4%   { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  10%  { opacity: 1; transform: translateX(0);    background: transparent; }
+  100% { opacity: 1; transform: translateX(0);    background: transparent; }
+}
+@keyframes kh-race-stage-at-11 {
+  0%, 10% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  11%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  15%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  21%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
+}
+@keyframes kh-race-stage-at-22 {
+  0%, 21% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  22%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  26%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  32%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
+}
+@keyframes kh-race-stage-at-33 {
+  0%, 32% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  33%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  37%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  43%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
+}
+@keyframes kh-race-stage-at-44 {
+  0%, 43% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  44%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  48%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  54%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
+}
+@keyframes kh-race-stage-at-55 {
+  0%, 54% { opacity: 0; transform: translateX(-6px); background: transparent; }
+  55%     { opacity: 0; transform: translateX(-2px); background: rgba(218, 209, 168, 0.16); }
+  59%     { opacity: 1; transform: translateX(0);    background: rgba(218, 209, 168, 0.08); }
+  65%     { opacity: 1; transform: translateX(0);    background: transparent; }
+  100%    { opacity: 1; transform: translateX(0);    background: transparent; }
+}
+
+/* rendered pixels — pop in with a tiny scale bounce when their column finishes */
+@keyframes kh-race-pixels-at-33 {
+  0%, 32% { opacity: 0; transform: scale(0.94); }
+  33%     { opacity: 0; transform: scale(0.96); }
+  38%     { opacity: 1; transform: scale(1.03); }
+  42%     { opacity: 1; transform: scale(1); }
+  100%    { opacity: 1; transform: scale(1); }
+}
+@keyframes kh-race-pixels-at-67 {
+  0%, 66% { opacity: 0; transform: scale(0.94); }
+  67%     { opacity: 0; transform: scale(0.96); }
+  72%     { opacity: 1; transform: scale(1.03); }
+  76%     { opacity: 1; transform: scale(1); }
+  100%    { opacity: 1; transform: scale(1); }
+}
+
+/* budget pair flies in just after the pixels */
+@keyframes kh-race-budgets-at-40 {
+  0%, 39% { opacity: 0; transform: translateY(4px); }
+  46%     { opacity: 1; transform: translateY(0); }
+  100%    { opacity: 1; transform: translateY(0); }
+}
+@keyframes kh-race-budgets-at-75 {
+  0%, 74% { opacity: 0; transform: translateY(4px); }
+  81%     { opacity: 1; transform: translateY(0); }
+  100%    { opacity: 1; transform: translateY(0); }
+}
+
+/* rails fill downward at each column's cadence, then hold */
+@keyframes kh-race-rail-kinu {
+  0%   { transform: scaleY(0); }
+  33%  { transform: scaleY(1); }
+  100% { transform: scaleY(1); }
+}
+@keyframes kh-race-rail-typical {
+  0%   { transform: scaleY(0); }
+  67%  { transform: scaleY(1); }
+  100% { transform: scaleY(1); }
+}
+
+/* ── Go ahead — try them ────────────────────────────────────────────────── */
+.kh-try {
+  padding-block: 120px 80px;
+  padding-inline: var(--kh-page-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.kh-try-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kh-section-title {
+  margin: 0;
+  font-family: var(--kh-font-serif);
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: hsl(var(--k-foreground));
+}
+.kh-section-title em {
+  font-style: italic;
+}
+
+.kinu-home [k="prose"].kh-section-lede {
+  max-width: 580px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* Preview grid for the "Built with Kinu" section. */
+.kh-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Stylized window-frame around each demo. Tahoe-ish: hairline outer
+ * border, no hard rule between titlebar and body (titlebar is a fade),
+ * two-layer shadow (contact + drop), faint inner specular highlight
+ * along the top edge. */
+.kh-app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: hsl(var(--k-card));
+  color: hsl(var(--k-card-foreground));
+  border: 1px solid hsl(var(--k-border) / 0.55);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 320px;
+  box-shadow:
+    /* contact — grounds the frame */
+    0 1px 2px hsl(0 0% 0% / 0.04),
+    /* drop — floats it */
+    0 24px 60px -40px hsl(0 0% 0% / 0.18),
+    /* inner specular — reads as a catch-light along the top edge */
+    inset 0 1px 0 hsl(0 0% 100% / 0.06);
+  transition: background 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease, color 0.18s ease;
+}
+[data-color-scheme="dark"].kh-app {
+  /* In dark mode the inner highlight wants to be a touch brighter to
+   * read as a lit edge against the darker surface. */
+  box-shadow:
+    0 1px 2px hsl(0 0% 0% / 0.25),
+    0 24px 60px -40px hsl(0 0% 0% / 0.5),
+    inset 0 1px 0 hsl(0 0% 100% / 0.07);
+}
+
+/* Settings (OTP) and Inbox (two-pane) demos need extra floor. */
+.kh-app:has(.kh-settings),
+.kh-app:has(.kh-inbox) {
+  min-height: 380px;
+}
+
+.kh-app--wide {
+  grid-column: span 2;
+}
+@media (max-width: 700px) {
+  .kh-app--wide {
+    grid-column: auto;
+  }
+}
+
+/* Titlebar — no border. The bar is a gradient that fades into the body,
+ * so the seam between chrome and content reads as ambient rather than
+ * ruled. 3-column grid centers the title in the bar regardless of the
+ * toggle's width. */
+.kh-app-bar {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 6px;
+  min-height: 40px;
+  background: linear-gradient(
+    180deg,
+    hsl(var(--k-background) / 0.7) 0%,
+    hsl(var(--k-background) / 0) 100%
+  );
+}
+.kh-app-title {
+  grid-column: 2;
+  text-align: center;
+  font-family: var(--kh-font-label);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground) / 0.7);
+}
+
+/* Action clusters in the titlebar's outer grid columns. The bar is
+ * 3-column (1fr | auto | 1fr), so the title in column 2 stays
+ * centered regardless of how many buttons sit on either side. */
+.kh-app-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.kh-app-actions--right {
+  grid-column: 3;
+  justify-self: end;
+}
+.kh-app-actions--left {
+  grid-column: 1;
+  justify-self: start;
+}
+
+/* Shrink kinu's icon Button down for the titlebar — its default is
+ * 2.5rem which would extend past the bar's chrome. */
+.kh-app [k="button"].kh-app-toggle,
+.kh-app [k="button"].kh-app-expand,
+.kh-app [k="button"].kh-app-nav {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+.kh-app-toggle svg,
+.kh-app-expand svg {
+  display: block;
+}
+/* The ascii arrows are full-width glyphs; pull them in a hair so they
+ * sit comfortably inside the 28px button. */
+.kh-app [k="button"].kh-app-nav {
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: 400;
+}
+
+/* The maximize button is mobile-only on grid cards. The minimize
+ * variant (inside the maximized drawer) is always visible — desktop
+ * users who somehow opened the drawer can still close it. */
+.kh-app [k="button"].kh-app-expand {
+  display: none;
+}
+@media (max-width: 640px) {
+  .kh-app [k="button"].kh-app-expand {
+    display: inline-flex;
+  }
+}
+.kh-app-maximized .kh-app [k="button"].kh-app-expand {
+  display: inline-flex;
+}
+
+/* ── Maximized drawer: a kinu Drawer holding a kinu Carousel ─────────── */
+/* The drawer is opt-in via the maximize button on each grid card. It
+ * inherits kinu's default drawer chrome — pinned to the bottom,
+ * slides up from below, dark backdrop behind. We only override what
+ * we need: full available height (less ~20px so the backdrop shows
+ * through at the top — iOS sheet idiom), rounded top corners, no
+ * inner padding. */
+.kinu-home [k="drawer-content"].kh-app-maximized {
+  height: calc(100dvh - 20px);
+  max-height: calc(100dvh - 20px);
+  border-radius: var(--k-radius) var(--k-radius) 0 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Carousel content fills the dialog body. CarouselContent in kinu
+ * doesn't forward `class` to its inner element, so we target by
+ * descending from the drawer instead. */
+.kh-app-maximized > div {
+  /* the position:relative wrapper kinu's Carousel adds */
+  height: 100%;
+  overflow: hidden;
+}
+.kh-app-maximized [k="carousel"] {
+  height: 100%;
+  scroll-snap-type: x mandatory;
+  overflow-y: hidden;
+}
+.kh-app-maximized [k="carousel-item"] {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  display: block;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  overflow: hidden;
+}
+
+/* The frame inside the carousel fills its slide — no rounded corners,
+ * no border, no shadow. It looks like the demo "is" the screen. */
+.kh-app-maximized .kh-app {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 0;
+}
+.kh-app-maximized .kh-app-body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Body — full bleed inside the frame. */
+/* Body scrolls internally when a demo's intrinsic height exceeds the
+ * available space (most visible in the maximized drawer with the Tasks
+ * demo's many items). The outer .kh-app keeps overflow: hidden for its
+ * rounded corners + titlebar gradient — making the body the scroll
+ * container leaves the titlebar sticky above the scrolling content. */
+.kh-app-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px;
+  background: hsl(var(--k-card));
+}
+
+/* ── View Transition: radial wipe from the upper right ──────────────── */
+/* A single shared `view-transition-name: kh-app` is assigned dynamically,
+ * via CSS, to the one frame whose toggle button currently has focus. The
+ * click handler explicitly focuses the toggle to make this match across
+ * browsers (Safari/Firefox don't auto-focus buttons on click). Because
+ * only one toggle can be focused at a time, only one frame ever
+ * participates in the transition — and because non-focused frames have
+ * no name, they don't create their own stacking contexts and therefore
+ * don't clip popovers in adjacent frames. */
+.kh-app:has(.kh-app-toggle:focus) {
+  view-transition-name: kh-app;
+}
+
+@keyframes kh-app-reveal {
+  from { clip-path: circle(0% at 100% 0%); }
+  to   { clip-path: circle(150% at 100% 0%); }
+}
+
+/* Suppress the root crossfade — only the named frame should animate. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Old frame snapshot stays put under the wipe; new snapshot reveals. */
+::view-transition-old(kh-app) {
+  animation: none;
+}
+::view-transition-new(kh-app) {
+  animation: kh-app-reveal 420ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduced motion: skip the wipe, instant swap. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(kh-app),
+  ::view-transition-new(kh-app) {
+    animation: none !important;
+  }
+}
+
+/* Tasks preview */
+.kh-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.kh-tasks-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.kh-tasks-meta {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.kh-tasks-meta p {
+  margin: 0;
+  font-family: var(--kh-font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+.kh-tasks-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kh-tasks-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: calc(var(--k-radius) - 2px);
+  font-size: 13px;
+}
+.kh-tasks-item:hover {
+  background: hsl(var(--k-muted) / 0.5);
+}
+.kh-tasks-item [k="label"] {
+  cursor: pointer;
+  flex: 1;
+}
+.kh-tasks-item .is-done {
   text-decoration: line-through;
   color: hsl(var(--k-muted-foreground));
 }
-
-.add-task {
+.kh-tasks-add {
   display: flex;
-  gap: 0.5rem;
-  align-items: center;
+  gap: 6px;
 }
-
-.showcase {
-  padding: 6rem 1rem;
-  background: hsl(var(--k-muted) / 0.3);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.showcase-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.showcase-header h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-}
-
-.showcase-header p {
-  font-size: 1.125rem;
-  color: hsl(var(--k-muted-foreground));
-  text-wrap-style: balance;
-}
-
-.showcase-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.showcase-demo {
-  padding: 2rem;
-}
-
-.showcase-demo h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.showcase-demo > p {
-  color: hsl(var(--k-muted-foreground));
-  margin: 0 0 1.5rem 0;
-}
-
-.demo-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.checkbox-field {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.error-message {
-  color: hsl(var(--k-destructive));
-  font-size: 0.875rem;
-}
-
-.data-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.metric {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.metric-label {
-  font-size: 0.875rem;
-  color: hsl(var(--k-muted-foreground));
-}
-
-.metric-value {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.demo-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.switch-control {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.settings-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.setting-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.setting-info {
+.kh-tasks-add [k="input"] {
   flex: 1;
 }
 
-.setting-title {
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.setting-desc {
-  font-size: 0.875rem;
-  color: hsl(var(--k-muted-foreground));
-}
-
-.notification-demo {
+/* Now Playing preview */
+.kh-player {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 14px;
+}
+.kh-player-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.kh-player-cover {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: calc(var(--k-radius) - 2px);
+  background: linear-gradient(135deg, #ffd9b3, #ec9455);
+  font-size: 30px;
+  line-height: 1;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.kh-player-meta {
+  flex: 1;
+  min-width: 0;
+}
+.kh-player-title {
+  margin: 0;
+  font-family: var(--kh-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-player-artist {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: hsl(var(--k-muted-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kinu-home [k="toggle"].kh-player-like {
+  color: hsl(var(--k-muted-foreground));
+  padding: 0.4rem;
+}
+.kinu-home [k="toggle"].kh-player-like[aria-pressed="true"] {
+  color: #c95e5a;
+}
+.kh-player-scrub {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.kh-player-time {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+  min-width: 32px;
+  text-align: center;
+}
+.kh-player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.kinu-home [k="scroll-area"].kh-player-list {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid hsl(var(--k-border));
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-height: 0;
+}
+.kh-player-track {
+  appearance: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: none;
+  border-radius: calc(var(--k-radius) - 2px);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: background 120ms ease;
+}
+.kh-player-track:hover {
+  background: hsl(var(--k-accent));
+}
+.kh-player-track.is-active {
+  background: hsl(var(--k-primary-soft, var(--k-accent)));
+}
+.kh-player-track-cover {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.kh-player-track-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  font-size: 12.5px;
+}
+.kh-player-track-text strong {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-player-track-text > span {
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-player-track-meta {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.kh-player-track-dur {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-player-track.is-active .kh-player-track-dur {
+  color: hsl(var(--k-primary));
 }
 
-.demo-buttons {
+/* AI Composer preview */
+.kh-composer {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+.kinu-home [k="scroll-area"].kh-composer-thread {
+  /* On desktop the AppFrame is taller than the thread + input pair, so
+   * let the thread grow into the slack. min-height keeps it from
+   * collapsing below ~12rem on mobile / narrow layouts. */
+  flex: 1 1 12rem;
+  min-height: 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 2px;
+}
+.kh-composer-msg {
+  display: flex;
+  gap: 8px;
+  max-width: 90%;
+}
+.kh-composer-msg--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.kh-composer-msg--model .kh-composer-bubble {
+  background: hsl(var(--k-muted));
+  color: hsl(var(--k-foreground));
+}
+.kh-composer-msg--user .kh-composer-bubble {
+  background: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+}
+.kh-composer-bubble {
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  word-wrap: break-word;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.kinu-home [k="avatar"].kh-composer-msg-avatar {
+  background: hsl(var(--k-primary-soft, var(--k-muted)));
+  color: hsl(var(--k-primary));
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.kinu-home .kh-composer-input[k="textarea"] {
+  resize: none;
+  font-family: var(--kh-font-sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+.kh-composer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.kinu-home [k="button"].kh-composer-model {
+  max-width: 100%;
+  font-family: var(--kh-font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding-inline: 0.625rem;
+  gap: 0.45rem;
+}
+.kh-composer-model-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+.kh-composer-chev {
+  opacity: 0.55;
+  font-size: 10px;
+}
+/* Scope display:flex to [open] — otherwise it overrides the library's
+ * `[k="popover-content"]:not([open]) { display: none }` and a closed
+ * popover lays out as if visible. (That bug surfaced as a 341px tail
+ * of dialog scrollHeight inside the maximized AI Composer.) */
+.kinu-home [k="popover-content"].kh-composer-popover[open] {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* Only constrain width on desktop — on mobile the popover renders as a
+ * drawer (mobile="drawer") and should fill the full viewport width, which
+ * the library handles via its own @media (max-width: 640px) rule. */
+@media (min-width: 641px) {
+  .kinu-home [k="popover-content"].kh-composer-popover[open] {
+    min-width: 280px;
+    max-width: min(360px, 90vw);
+  }
+}
+.kh-composer-search {
+  padding: 8px;
+  flex-shrink: 0;
+}
+.kinu-home [k="scroll-area"].kh-composer-list {
+  flex: 1;
+  min-height: 0;
+  max-height: 18rem;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.kh-composer-empty {
+  margin: 0;
+  padding: 16px;
+  font-size: 12.5px;
+  color: hsl(var(--k-muted-foreground));
+  text-align: center;
+}
+.kh-composer-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.kh-composer-group-head {
+  padding: 8px 8px 4px;
+  font-family: var(--kh-font-label);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground) / 0.85);
+}
+.kh-composer-list [k="item"][data-active="true"]:not([selected]) {
+  background: hsl(var(--k-accent));
+  color: hsl(var(--k-accent-foreground));
+}
+.kh-composer-option {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+}
+.kh-composer-option strong {
+  font-weight: 500;
+  font-size: 13px;
+}
+.kh-composer-option-meta {
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="badge"].kh-composer-recent {
+  font-size: 9.5px;
+  padding: 0 6px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* Activity preview — search + filters bar above the team feed */
+.kh-activity {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.kinu-home [k="combobox"].kh-activity-search {
+  width: 100%;
+}
+.kh-activity-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   flex-wrap: wrap;
 }
-
-.dialog-actions {
+.kinu-home [k="toggle-group"].kh-activity-sort {
+  flex-shrink: 0;
+}
+.kinu-home [k="combobox"].kh-activity-add {
+  flex: 1 0 6rem;
+  width: auto;
+  min-width: 6rem;
+}
+.kh-activity-head {
   display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
-
-.why-preact-ui {
-  padding: 6rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.why-preact-ui h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin: 0 0 3rem 0;
-}
-
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-}
-
-.benefit {
-  text-align: center;
-  text-wrap-style: balance;
-  padding: 1.5rem;
-}
-
-.benefit-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.benefit h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 1rem 0;
-}
-
-.benefit p {
+.kinu-home [k="status"].kh-activity-live {
+  font-family: var(--kh-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: hsl(var(--k-muted-foreground));
+}
+.kh-activity-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kh-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.kh-activity-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+.kh-activity-text p {
+  margin: 0;
+  font-size: 13px;
+  color: hsl(var(--k-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-activity-text strong {
+  font-weight: 600;
+}
+.kinu-home [k="status"].kh-activity-when {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+  flex-shrink: 0;
+}
+
+/* ── HTML as a First-Class Citizen ──────────────────────────────────────── */
+.kh-html {
+  padding-block: 40px 120px;
+  padding-inline: var(--kh-page-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  text-align: center;
+}
+
+.kh-html-title {
+  margin: 0;
+  font-family: var(--kh-font-serif);
+  font-size: 36px;
+  font-weight: 400;
+  color: hsl(var(--k-foreground));
+}
+.kh-html-title em {
+  font-style: italic;
+}
+
+.kinu-home [k="prose"].kh-html-lede {
+  max-width: 560px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.kh-code-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  text-align: left;
+}
+
+/* Use kinu Card as the code surface, then style its <pre> inside */
+.kinu-home [k="card"].kh-code {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 12px;
+  /* Pair with the minmax(0, 1fr) grid track so a long unwrapped code line
+   * scrolls inside the card instead of widening the page. */
+  min-width: 0;
+}
+/* Light variant — warm cream paper in light mode. In dark mode, both
+ * cards share the same brand dark-band surface so the pair reads as a
+ * single unified code panel rather than two slightly-different darks. */
+.kinu-home [k="card"].kh-code--light {
+  background: #faf5e8;
+  color: #3f4b3d;
+}
+[data-color-scheme="dark"] .kinu-home [k="card"].kh-code--light,
+[data-color-scheme="dark"] .kinu-home [k="card"].kh-code--dark {
+  background: var(--kh-dark-band);
+  color: #e8e4d5;
+  border-color: var(--kh-dark-band);
+}
+@media (prefers-color-scheme: dark) {
+  .kinu-home [k="card"].kh-code--light {
+    background: var(--kh-dark-band);
+    color: #e8e4d5;
+    border-color: var(--kh-dark-band);
+  }
+}
+/* Dark variant — always the brand dark band. */
+.kinu-home [k="card"].kh-code--dark {
+  background: var(--kh-dark-band);
+  color: #e8e4d5;
+  border-color: var(--kh-dark-band);
+}
+.kinu-home [k="badge"].kh-code-label {
+  align-self: flex-start;
+}
+.kinu-home [k="card"].kh-code--dark [k="badge"].kh-code-label,
+[data-color-scheme="dark"] .kinu-home [k="card"].kh-code--light [k="badge"].kh-code-label {
+  color: var(--kh-cream-muted);
+  border-color: rgba(251, 249, 242, 0.2);
+}
+@media (prefers-color-scheme: dark) {
+  .kinu-home [k="card"].kh-code--light [k="badge"].kh-code-label {
+    color: var(--kh-cream-muted);
+    border-color: rgba(251, 249, 242, 0.2);
+  }
+}
+
+/* ── Ship less. Do more. ────────────────────────────────────────────────── */
+.kh-ship {
+  background: linear-gradient(180deg, var(--kh-dark-band-soft) 0%, #1a2620 100%);
+  padding-block: 120px;
+  padding-inline: var(--kh-page-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.kh-ship-title {
+  margin: 0;
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 76px;
+  font-weight: 400;
+  color: var(--kh-cream);
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.kinu-home [k="prose"].kh-ship-lede {
+  max-width: 480px;
+  font-size: 14.5px;
+  color: var(--kh-cream-muted);
   line-height: 1.6;
 }
 
-.real-world {
-  padding: 6rem 1rem;
+.kh-ship-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* On the dark band, primary Button → cream pill, outline → ghost on dark */
+.kinu-home [k="button"].kh-ship-btn {
+  background: var(--kh-cream);
+  color: var(--kh-dark-band);
+  border-color: var(--kh-cream);
+}
+.kinu-home [k="button"].kh-ship-btn:hover {
+  background: #fff;
+  color: var(--kh-dark-band);
+  border-color: #fff;
+}
+.kinu-home [k="button"].kh-ship-btn--ghost {
+  background: transparent;
+  color: var(--kh-cream);
+  border-color: rgba(251, 249, 242, 0.3);
+}
+.kinu-home [k="button"].kh-ship-btn--ghost:hover {
+  background: rgba(251, 249, 242, 0.08);
+  color: var(--kh-cream);
+  border-color: rgba(251, 249, 242, 0.5);
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.kinu-home [k="separator"].kh-footer-rule {
+  margin-top: 0;
+}
+.kh-footer {
+  padding-block: 32px 48px;
+  padding-inline: var(--kh-page-pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--kh-font-sans);
+  font-size: 12px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-footer-links {
+  display: flex;
+  gap: 20px;
+}
+.kh-footer-links a {
+  color: inherit;
+  text-decoration: none;
+}
+.kh-footer-links a:hover {
+  color: hsl(var(--k-foreground));
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * New preview demos (5–16). Keep custom CSS minimal; lean on kinu tokens.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+/* ── 5. Command Palette ─────────────────────────────────────────────────── */
+.kinu-home [k="listbox"].kh-cmd {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.kinu-home [k="listbox"].kh-cmd [k="listbox-list"] {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 4px;
+}
+.kinu-home [k="listbox"].kh-cmd [k="item"] {
+  font-size: 13px;
+  padding: 5px 8px;
+}
+.kh-cmd-group {
+  padding: 10px 8px 4px;
+  font-family: var(--kh-font-label);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground) / 0.85);
+}
+.kh-cmd-empty {
+  margin: 0;
+  padding: 18px 8px;
+  font-size: 12.5px;
+  color: hsl(var(--k-muted-foreground));
+  text-align: center;
+}
+
+/* ── 6. Trip Booking ────────────────────────────────────────────────────── */
+.kh-trip {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.kh-trip-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.kh-trip [k="calendar"],
+.kh-trip [k="select"] {
+  width: 100%;
+}
+.kh-trip-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid hsl(var(--k-border));
+  margin-top: 4px;
+}
+.kh-trip-summary {
+  font-size: 13px;
+  color: hsl(var(--k-foreground));
+}
+.kh-trip-summary strong {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 500;
+}
+.kinu-home [k="toggle-group"].kh-trip-types {
+  flex-wrap: wrap;
+  width: 100%;
+}
+.kh-trip-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.kinu-home [k="combobox"].kh-trip-feature-add {
+  flex: 1 0 8rem;
+  width: auto;
+  min-width: 7rem;
+}
+
+/* ── 7. Pricing Calculator ──────────────────────────────────────────────── */
+.kh-pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.kh-pricing-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.kh-pricing-annual {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.kh-pricing-desc {
+  margin: 0;
+  font-size: 12.5px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-pricing-total {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid hsl(var(--k-border));
+  margin-top: auto;
+}
+.kh-pricing-amount {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: hsl(var(--k-foreground));
+  line-height: 1;
+}
+.kh-pricing-period {
+  font-size: 13px;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* ── 8. Inbox — header bar + two-pane body ─────────────────────────────── */
+.kh-inbox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+.kh-inbox-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid hsl(var(--k-border));
+}
+/* Both children of the slot live in the same grid cell so they overlap;
+ * we shift them with translateX to swap. Overflow: clip keeps the
+ * sliding element from poking out of the bar. */
+.kh-inbox-bar-slot {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  min-height: 2rem;
+  overflow: clip;
+}
+.kh-inbox-bar-title,
+.kinu-home [k="button"].kh-inbox-back {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  justify-self: start;
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 200ms ease;
+  white-space: nowrap;
+}
+.kh-inbox-bar-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  transform: translateX(0);
+  opacity: 1;
+}
+/* Back button starts off-screen right; it's only made interactive on
+ * mobile once a row is selected (see the @media block). */
+.kinu-home [k="button"].kh-inbox-back {
+  transform: translateX(110%);
+  opacity: 0;
+  pointer-events: none;
+  padding-inline: 0.5rem;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: hsl(var(--k-foreground));
+}
+.kinu-home [k="badge"].kh-inbox-bar-count {
+  font-size: 10px;
+  padding: 0 6px;
+  letter-spacing: 0.04em;
+}
+.kh-inbox-body {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+/* List is a kinu Listbox without the component's default border —
+ * the desktop layout draws the divider between panes itself. */
+.kinu-home [k="listbox"].kh-inbox-list {
+  border: none;
+  border-radius: 0;
+  border-right: 1px solid hsl(var(--k-border));
+  padding-right: 4px;
+  min-width: 0;
+}
+.kinu-home [k="listbox"].kh-inbox-list [k="listbox-list"] {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.kh-inbox-link {
+  appearance: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: calc(var(--k-radius) - 2px);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  min-width: 0;
+  transition: background 120ms ease;
+}
+.kh-inbox-link:hover {
+  background: hsl(var(--k-accent));
+}
+.kh-inbox-link.is-active {
+  background: hsl(var(--k-primary-soft, var(--k-accent)));
+  color: hsl(var(--k-accent-foreground));
+}
+.kh-inbox-link.is-unread strong {
+  font-weight: 600;
+}
+.kh-inbox-link.is-unread .kh-inbox-preview {
+  color: hsl(var(--k-foreground));
+}
+.kh-inbox-avatar {
+  position: relative;
+  flex-shrink: 0;
+}
+.kinu-home [k="status"].kh-inbox-presence {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  font-size: 11px;
+  background: hsl(var(--k-card));
+  border-radius: 50%;
+  padding: 1px;
+}
+.kinu-home [k="status"].kh-inbox-presence::before {
+  outline: 2px solid hsl(var(--k-card));
+}
+.kh-inbox-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.kh-inbox-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  min-width: 0;
+}
+.kh-inbox-line strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-inbox-time {
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+  flex-shrink: 0;
+}
+.kh-inbox-preview {
+  font-size: 12px;
+  color: hsl(var(--k-muted-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-inbox-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: hsl(var(--k-primary));
+  flex-shrink: 0;
+}
+.kh-inbox-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  font-size: 13px;
+}
+.kh-inbox-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kh-inbox-detail-from {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.kh-inbox-detail-from > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.kh-inbox-detail-email {
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-inbox-subject {
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: hsl(var(--k-foreground));
+}
+.kh-inbox-body-text {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: hsl(var(--k-foreground) / 0.85);
+}
+
+/* ── Inbox mobile: index → detail slide ────────────────────────────────── *
+ * On narrow viewports, swap the two-pane grid for a single layered surface
+ * with both panes absolute-positioned and translated. When any Item carries
+ * the [selected] attribute, the list slides off to the left and the detail
+ * slides in from the right; the Back button on the detail head clears the
+ * selection (no [selected]) and the slide reverses.
+ *
+ * We chain class selectors (.kinu-home .kh-inbox …) so this beats the
+ * desktop list rule's specificity and wins inside the media block. */
+@media (max-width: 600px) {
+  .kinu-home .kh-inbox-body {
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .kinu-home .kh-inbox-list[k="listbox"],
+  .kinu-home .kh-inbox-detail {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+  }
+  .kinu-home .kh-inbox-list[k="listbox"] {
+    transform: translateX(0);
+    border-right: none;
+    padding-right: 0;
+  }
+  .kinu-home .kh-inbox-detail {
+    transform: translateX(100%);
+    overflow: auto;
+    padding-right: 4px;
+  }
+  /* A row is selected → swap the panes. */
+  .kinu-home .kh-inbox:has([k="item"][selected]) .kh-inbox-list[k="listbox"] {
+    transform: translateX(-100%);
+  }
+  .kinu-home .kh-inbox:has([k="item"][selected]) .kh-inbox-detail {
+    transform: translateX(0);
+  }
+  /* Top-bar swap: a row is selected → "Inbox" title slides off left,
+   * "← Inbox" back Button slides in from the right. The back button is
+   * pointer-active and the title is pointer-inert in the selected state. */
+  .kinu-home .kh-inbox:has([k="item"][selected]) .kh-inbox-bar-title {
+    transform: translateX(-110%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .kinu-home .kh-inbox:has([k="item"][selected]) [k="button"].kh-inbox-back {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+@media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+  .kinu-home .kh-inbox-bar-title,
+  .kinu-home [k="button"].kh-inbox-back,
+  .kinu-home .kh-inbox-list[k="listbox"],
+  .kinu-home .kh-inbox-detail {
+    transition: none;
+  }
+}
+
+/* ── 9. Onboarding stepper ──────────────────────────────────────────────── */
+.kinu-home [k="timeline"].kh-onboard {
+  margin: 0;
+  font-size: 13px;
+}
+.kinu-home [k="timeline-entry"][data-state="done"] {
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="timeline-entry"][data-state="done"] strong {
+  text-decoration: line-through;
+  text-decoration-color: hsl(var(--k-muted-foreground) / 0.4);
+}
+.kinu-home [k="timeline-entry"].kh-onboard-active {
+  color: hsl(var(--k-foreground));
+}
+.kh-onboard-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.kinu-home [k="status"].kh-onboard-when {
+  font-family: var(--kh-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-onboard-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* ── 10. File Upload ────────────────────────────────────────────────────── */
+.kh-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.kinu-home [k="file-upload"].kh-upload-zone {
+  width: 100%;
+}
+.kh-upload-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kh-upload-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 4px;
+  align-items: center;
+  font-size: 12.5px;
+}
+.kh-upload-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kh-upload-size,
+.kh-upload-pct {
+  font-family: var(--kh-font-mono);
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+  text-align: right;
+}
+.kh-upload-bar {
+  grid-column: 1 / -1;
+}
+
+/* ── Verify Email block (rendered inside Settings → Profile) ────────────── */
+.kh-verify {
+  margin-top: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid hsl(var(--k-border));
+  border-radius: var(--k-radius);
+  background: hsl(var(--k-muted) / 0.4);
+}
+.kh-verify-lede {
+  margin: 0;
+  font-size: 12.5px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-verify-lede code {
+  font-family: var(--kh-font-mono);
+  font-size: 0.95em;
+  background: hsl(var(--k-primary-soft, var(--k-muted)));
+  color: hsl(var(--k-accent-foreground));
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.kh-verify [k="otp"] {
+  margin-inline: auto;
+}
+.kh-verify-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.kh-verify-resend {
+  font-size: 12px;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* ── 12. Theme Studio ──────────────────────────────────────────────────── */
+.kh-studio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.kh-studio-controls {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.kh-studio-radius {
+  flex-wrap: wrap;
+}
+.kinu-home [k="card"].kh-studio-stage {
+  margin-top: 4px;
+  background: hsl(var(--k-muted) / 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kh-studio-stage-label {
+  font-family: var(--kh-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-studio-stage-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kinu-home [k="color-picker"] {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* ── 13. Editor Tabs ───────────────────────────────────────────────────── */
+.kh-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid hsl(var(--k-border));
+  border-radius: var(--k-radius);
+  overflow: hidden;
   background: hsl(var(--k-muted) / 0.3);
-  text-align: center;
-  max-width: 1200px;
-  margin: 0 auto;
 }
-
-.real-world h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
+.kinu-home [k="tablist"].kh-editor-tabs {
+  width: 100%;
+  height: auto;
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid hsl(var(--k-border));
+  padding: 4px 4px 0;
+  gap: 2px;
+  justify-content: flex-start;
+  overflow-x: auto;
 }
-
-.real-world-subtitle {
-  font-size: 1.125rem;
+.kinu-home [k="tab"].kh-editor-tab {
+  height: auto;
+  padding: 6px 10px;
+  font-family: var(--kh-font-mono);
+  font-size: 11.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.kinu-home [k="chip-button"].kh-editor-close {
+  font-size: 13px;
+  line-height: 1;
+  padding: 0 2px;
+  margin-left: 2px;
+  opacity: 0.5;
+}
+.kinu-home [k="chip-button"].kh-editor-close:hover {
+  opacity: 1;
+}
+.kinu-home [k="tab-panel"].kh-editor-panel {
+  padding: 12px 14px;
+}
+.kh-editor-code {
+  margin: 0;
+  font-family: var(--kh-font-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+  background: transparent;
+  color: hsl(var(--k-foreground));
+  white-space: pre;
+  overflow: auto;
+}
+.kh-editor-empty {
+  margin: 0;
+  padding: 24px;
+  font-size: 12px;
   color: hsl(var(--k-muted-foreground));
-  margin: 0 0 3rem 0;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  text-align: center;
 }
 
-.demo-links {
+/* ── Settings (Profile / Theme / Plan) ─────────────────────────────────── */
+.kh-settings {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.kinu-home [k="tablist"].kh-settings-tabs {
+  align-self: flex-start;
+}
+.kinu-home [k="tab-panel"].kh-settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+.kh-settings-avatar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+/* Native <input type="file"> reports a wide intrinsic min-width based on
+ * the "No file chosen" + file-selector-button content (especially after
+ * a long filename is picked on iOS Safari), which overflows narrow
+ * grid/flex parents. Force it to live within its column. */
+.kh-settings-avatar [k="file-upload"] {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.kh-settings-annual {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.kh-settings-desc {
+  margin: 0;
+  font-size: 12.5px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="card"].kh-settings-stage {
+  background: hsl(var(--k-muted) / 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kh-settings-stage-label {
+  font-family: var(--kh-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-settings-stage-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-wrap: wrap;
 }
-
-.cta {
-  padding: 6rem 1rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.cta-card {
-  padding: 4rem 2rem;
-  text-align: center;
-  background: linear-gradient(
-    135deg,
-    hsl(var(--k-background)),
-    hsl(var(--k-muted) / 0.3)
-  );
-  border: 2px solid hsl(var(--k-border));
-}
-
-.cta-card h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-}
-
-.cta-card p {
-  font-size: 1.125rem;
-  color: hsl(var(--k-muted-foreground));
-  margin: 0 0 2rem 0;
-}
-
-.cta-actions {
+.kh-settings-total {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 6px;
+  border-top: 1px solid hsl(var(--k-border));
+}
+.kh-settings-amount {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.kh-settings-period {
+  font-size: 13px;
+  color: hsl(var(--k-muted-foreground));
+}
+
+/* ── Inputs (merged Filters + Quick Search) ───────────────────────────── */
+.kh-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.kh-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.kh-filters-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kh-filters-row--wrap {
   flex-wrap: wrap;
 }
+.kh-filters-label {
+  font-family: var(--kh-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="combobox"].kh-filters-add {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 9rem;
+}
 
-/* Responsive adjustments */
+/* ── 15. Quick Search ──────────────────────────────────────────────────── */
+.kinu-home [k="combobox"].kh-search {
+  width: 100%;
+}
+.kh-search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.kh-search-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+.kh-search-text strong {
+  font-weight: 500;
+  font-size: 13px;
+}
+.kh-search-email {
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="badge"].kh-search-role {
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+.kh-search-empty {
+  margin: 0;
+  padding: 14px;
+  font-size: 12.5px;
+  color: hsl(var(--k-muted-foreground));
+  text-align: center;
+}
+
+/* ── Account menu (used inside the Inbox header) ───────────────────────── */
+.kh-account-trigger {
+  appearance: none;
+  border: 1px solid hsl(var(--k-border));
+  background: hsl(var(--k-card));
+  border-radius: 999px;
+  padding: 4px 10px 4px 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: background 120ms ease;
+}
+.kh-account-trigger:hover {
+  background: hsl(var(--k-accent));
+}
+.kh-account-name {
+  font-size: 13px;
+  font-weight: 500;
+}
+.kh-account-chev {
+  opacity: 0.5;
+  font-size: 11px;
+}
+/* Scope display:flex to [open] — same reason as kh-composer-popover. */
+.kinu-home [k="popover-content"].kh-account-pop[open] {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.kh-account-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 12px;
+}
+.kh-account-headtext {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.kh-account-headtext strong {
+  font-weight: 600;
+}
+.kh-account-email {
+  font-size: 12px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kinu-home [k="status"].kh-account-status {
+  margin-top: 2px;
+  font-size: 11px;
+  color: hsl(var(--k-muted-foreground));
+}
+.kh-account-list {
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .kinu-home {
+    --kh-page-pad: 32px;
   }
+  .home-nav--marketing {
+    padding: 1rem 1.5rem;
+  }
+  .kh-hero {
+    padding: 120px 20px 60px;
+    min-height: auto;
+  }
+  .kh-hero-title {
+    font-size: 64px;
+  }
+  .kh-facade {
+    gap: 56px;
+    padding-top: 88px;
+    padding-bottom: 88px;
+  }
+  .kh-facade-title {
+    font-size: 60px;
+  }
+  .kh-race-grid {
+    gap: 18px;
+  }
+  .kh-race-col {
+    padding: 22px 20px 18px;
+    gap: 18px;
+  }
+  .kh-race-col-name {
+    font-size: 19px;
+  }
+  .kh-race-stage-label {
+    font-size: 13.5px;
+  }
+  .kh-race-stage-note {
+    font-size: 11.5px;
+  }
+  .kh-race-budget-num {
+    font-size: 28px;
+  }
+  .kh-race-budget-label {
+    max-width: 12ch;
+  }
+  .kh-ship-title {
+    font-size: 56px;
+  }
+  .kh-code-grid {
+    grid-template-columns: 1fr;
+  }
+  .kinu-home [k="card"].kh-playground {
+    grid-template-columns: 1fr;
+  }
+  .kinu-home [k="card"].kh-playground .kh-playground-pane--demo {
+    border-left: none;
+    border-top: 1px solid hsl(var(--k-border));
+  }
+}
 
-  .hero-text {
+@media (max-width: 640px) {
+  .kinu-home {
+    --kh-page-pad: 18px;
+  }
+  .home-nav--marketing {
+    padding: 0.75rem 1rem;
+  }
+  .home-nav [k="navigation-menu-list"] {
+    display: none;
+  }
+  .kh-hero {
+    padding: 100px 18px 40px;
+  }
+  .kh-hero-title {
+    font-size: 44px;
+    letter-spacing: -0.03em;
+  }
+  .kh-hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+  }
+  .kh-hero-actions .kh-pill {
+    width: 100%;
+  }
+  .kh-facade-title,
+  .kh-ship-title {
+    font-size: 44px;
+  }
+  .kh-section-title {
+    font-size: 32px;
+  }
+  .kh-html-title {
+    font-size: 28px;
+  }
+  .kh-preview-grid {
+    grid-template-columns: 1fr;
+  }
+  /* Keep race side-by-side on mobile — the comparison is the whole point.
+     Drop the per-stage notes, shrink type, condense pixel tile + budgets. */
+  .kh-race-grid {
+    gap: 10px;
+  }
+  .kh-race-source-code {
+    font-size: 12px;
+    padding: 9px 16px;
+  }
+  .kh-race-fork {
+    height: 22px;
+  }
+  .kh-race-col {
+    padding: 16px 12px 14px;
+    gap: 14px;
+    border-radius: 10px;
+  }
+  .kh-race-col-name {
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .kh-race-track {
+    padding-left: 16px;
+  }
+  .kh-race-rail {
+    left: 4px;
+  }
+  .kh-race-stages {
+    gap: 8px;
+  }
+  .kh-race-stage {
+    padding: 6px 4px;
+    gap: 8px;
+    border-radius: 6px;
+  }
+  .kh-race-stage-dot {
+    left: -16px;
+    top: 12px;
+    width: 6px;
+    height: 6px;
+    box-shadow: 0 0 0 3px rgba(218, 209, 168, 0.16);
+  }
+  .kh-race-stage-label {
+    font-size: 11.5px;
+    line-height: 1.3;
+  }
+  .kh-race-stage-label code {
+    font-size: 10.5px;
+    padding: 0 4px;
+  }
+  .kh-race-stage-note {
+    /* hide the secondary description on phones — labels alone carry it */
+    display: none;
+  }
+  .kh-race-stage-cost {
+    font-size: 9.5px;
+    padding: 2px 5px;
+    letter-spacing: 0;
+  }
+  .kh-race-col-foot {
+    gap: 12px;
+    padding-top: 14px;
+  }
+  .kh-race-pixel {
+    max-width: 100%;
+    padding: 8px 10px;
+    gap: 6px;
+    border-radius: 8px;
+  }
+  .kh-race-pixel-title {
+    font-size: 11px;
+  }
+  .kh-race-pixel-pill {
+    font-size: 9.5px;
+    padding: 1px 5px;
+  }
+  .kh-race-pixel-row {
+    gap: 6px;
+  }
+  .kh-race-pixel-avatar {
+    flex-basis: 14px;
+    width: 14px;
+    height: 14px;
+  }
+  .kh-race-pixel-line {
+    height: 3px;
+  }
+  .kh-race-pixel-line--strong {
+    height: 4px;
+  }
+  .kh-race-pixel-btn {
+    font-size: 9.5px;
+    padding: 3px 7px;
+  }
+  .kh-race-budgets {
+    grid-template-columns: 1fr;
+    gap: 8px 0;
+  }
+  .kh-race-budget-num {
+    font-size: 22px;
+  }
+  .kh-race-budget-label {
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    max-width: 16ch;
+  }
+  .kh-race-controls {
+    margin-top: 20px;
+  }
+  .kh-race-replay {
+    padding: 7px 14px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+  .kh-race-caption {
+    font-size: 14px;
+    margin-top: 18px;
+  }
+  .kh-footer {
+    flex-direction: column;
+    gap: 12px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 0.25rem;
-  }
-
-  .hero-text h1 {
-    font-size: 3rem;
-  }
-
-  .hero-features {
-    justify-content: center;
-  }
-
-  .hero-actions {
-    justify-content: center;
   }
 }
 
-@media (max-width: 768px) {
-  .hero {
-    padding: 6rem 1rem 2rem 1rem; /* Adjusted for mobile nav */
-  }
-
-  .hero-text h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.125rem;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .showcase,
-  .why-preact-ui,
-  .real-world,
-  .cta {
-    padding: 3rem 1rem;
-  }
-
-  .showcase-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .benefits-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .demo-links {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .cta-card {
-    padding: 2rem 1rem;
-  }
-
-  .cta-card h2 {
-    font-size: 2rem;
-  }
-
-  .cta-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-}
 
 /* Linear demo styles */
 .linear-app {
@@ -1404,17 +4103,16 @@ body .task-item {
 }
 
 .getting-started-header h1 {
-  font-size: 3rem;
-  font-weight: 700;
+  font-family: var(--kh-font-serif);
+  font-size: 3.25rem;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   margin: 0 0 1rem 0;
-  background: linear-gradient(
-    135deg,
-    hsl(var(--k-primary)),
-    hsl(var(--k-primary) / 0.8)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: hsl(var(--k-foreground));
+}
+.getting-started-header h1 em {
+  font-style: italic;
 }
 
 .getting-started-header .lead {
@@ -2345,9 +5043,11 @@ body .example-demo {
 
 .docs-sidebar-section h2 {
   margin: 0 0 0.75rem 0;
-  font-size: 0.85rem;
+  font-family: var(--kh-font-label);
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   color: hsl(var(--k-muted-foreground));
 }
 
@@ -2362,10 +5062,10 @@ body .example-demo {
 
 .docs-link {
   display: block;
-  padding: 0.45rem 0.65rem;
-  border-radius: 0.55rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.5rem;
   text-decoration: none;
-  color: hsl(var(--k-foreground));
+  color: hsl(var(--k-foreground) / 0.75);
   background: transparent;
   transition: background-color 160ms ease, color 160ms ease;
 }
@@ -2376,13 +5076,14 @@ body .example-demo {
 }
 
 .docs-link.is-active {
-  background: hsl(var(--k-primary) / 0.12);
+  background: hsl(var(--k-primary-soft, var(--k-primary) / 0.12));
   color: hsl(var(--k-primary));
 }
 
 .docs-link-title {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: -0.005em;
 }
 
 .docs-content {
@@ -2448,10 +5149,20 @@ body .example-demo {
   font-weight: 600;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
+  letter-spacing: -0.015em;
 }
 
 .docs-content h1 {
-  font-size: 2rem;
+  font-family: var(--kh-font-serif);
+  font-weight: 400;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-top: 0;
+  color: hsl(var(--k-foreground));
+}
+.docs-content h1 em {
+  font-style: italic;
 }
 .docs-content h2 {
   font-size: 1.45rem;
@@ -2468,11 +5179,11 @@ body .example-demo {
 }
 
 .docs-content code {
-  font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 0.9rem;
-  background: hsl(var(--k-muted) / 0.6);
-  border-radius: 0.35rem;
+  font-family: var(--kh-font-mono);
+  font-size: 0.875em;
+  background: hsl(var(--k-primary-soft, var(--k-muted)));
+  color: hsl(var(--k-accent-foreground));
+  border-radius: 0.3rem;
   padding: 0.1rem 0.35rem;
 }
 

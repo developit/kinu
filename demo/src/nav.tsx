@@ -10,14 +10,25 @@ import {
   DropdownMenuItem,
 } from 'kinu';
 import {ThemeCustomizer} from './theme-customizer.tsx';
+import {KinuLogo} from './logo';
 
 export function Nav({
   class: className,
   left,
-}: {class?: string; left?: ComponentChildren}) {
+  brand = true,
+}: {
+  class?: string;
+  left?: ComponentChildren;
+  brand?: boolean;
+}) {
   return (
     <NavigationMenu class={className ?? 'home-nav'}>
       {left}
+      {brand && (
+        <a class="home-nav-brand" href="/" aria-label="Kinu home">
+          <KinuLogo size={20} />
+        </a>
+      )}
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink href="/">Home</NavigationMenuLink>

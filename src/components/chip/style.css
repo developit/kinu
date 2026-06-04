@@ -100,9 +100,15 @@
   }
 }
 
-.dark [k="chip-button"] {
+[data-color-scheme="dark"] [k="chip-button"] {
   background: hsl(0 0% 100% / 0.15);
 }
-.dark [k="chip-button"]:hover {
+[data-color-scheme="dark"] [k="chip-button"]:hover {
   background: hsl(0 0% 100% / 0.28);
+}
+[data-color-scheme="light"] [k="chip-button"] {
+  background: hsl(0 0% 0% / 0.15);
+}
+[data-color-scheme="light"] [k="chip-button"]:hover {
+  background: hsl(0 0% 0% / 0.28);
 }

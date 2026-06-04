@@ -1,429 +1,2302 @@
 import {
-  Button,
-  Card,
-  Input,
-  Badge,
-  Alert,
-  Progress,
-  Switch,
-  Tooltip,
   Avatar,
-  Dialog,
-  toast,
-  ToastContainer,
-  Slider,
+  Badge,
+  Button,
+  Calendar,
+  Card,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
   Checkbox,
+  Chip,
+  ColorPicker,
+  Combobox,
+  ComboboxInput,
+  ComboboxList,
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuTrigger,
+  Drawer,
+  DrawerContent,
+  Field,
+  FileUpload,
+  Input,
+  InputGroup,
+  Item,
   Label,
+  Listbox,
+  ListboxInput,
+  ListboxList,
+  OTPInput,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Progress,
+  Prose,
+  ScrollArea,
+  Select,
+  Separator,
+  Slider,
+  Spinner,
+  Status,
+  Switch,
+  Tab,
+  TabList,
+  TabPanel,
+  Textarea,
+  Toggle,
+  ToggleGroup,
+  Tooltip,
+  ToastContainer,
+  toast,
 } from 'kinu';
-import {useState} from 'preact/hooks';
+import type {ComponentChildren} from 'preact';
+import {useEffect, useId, useRef, useState} from 'preact/hooks';
 import {Nav} from '../nav';
+import {hljs} from '../highlight';
 
 export default function Home() {
   return (
-    <div class="home">
+    <div class="kinu-home">
+      <Nav class="home-nav home-nav--marketing" />
       <ToastContainer />
-      <Nav />
 
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-text">
-            <h1>
-              Build beautiful UIs with <span class="highlight">kinu</span>
-            </h1>
-            <p class="hero-subtitle">
-              A lightweight <strong>5kB</strong> component library that
-              leverages native HTML commands for interactions. Accessible,
-              performant interfaces without the JS bloat.
-            </p>
-            <div class="hero-actions">
-              <Button href="/getting-started" size="lg">
-                Get Started
-              </Button>
-              <Button href="/docs" variant="outline" size="lg">
-                Browse Components
-              </Button>
-            </div>
-          </div>
-          <div class="hero-demo">
-            <HeroDemo />
-          </div>
-        </div>
-      </section>
-
-      <section class="showcase">
-        <div class="showcase-header">
-          <h2>See it in action</h2>
-          <p>
-            Interactive demos showcasing real-world usage—all powered by just
-            5kB of JavaScript
-          </p>
-        </div>
-        <div class="showcase-grid">
-          <Card class="showcase-demo">
-            <h3>Form Controls</h3>
-            <p>Accessible forms with validation feedback</p>
-            <FormDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Data Visualization</h3>
-            <p>Progress tracking and interactive displays</p>
-            <DataDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Settings Panel</h3>
-            <p>Toggle switches and user preferences</p>
-            <SettingsDemo />
-          </Card>
-          <Card class="showcase-demo">
-            <h3>Notifications</h3>
-            <p>Toast messages and alert dialogs</p>
-            <NotificationDemo />
-          </Card>
-        </div>
-      </section>
-
-      <section class="why-preact-ui">
-        <h2>Why developers choose kinu</h2>
-        <div class="benefits-grid">
-          <div class="benefit">
-            <div class="benefit-icon">🪶</div>
-            <h3>Incredibly Light</h3>
+      <section class="kh-hero">
+        <div class="kh-hero-glow" aria-hidden />
+        <div class="kh-hero-inner">
+          <h1 class="kh-hero-title">
+            Preact UI toolkit.
+            <br />
+            <em>10x smaller</em> than you think.
+          </h1>
+          <Prose class="kh-hero-lede">
             <p>
-              Just 5kB of JavaScript—smaller than most images. Your users will
-              thank you for the fast load times.
+              <em>Kinu</em>: the Japanese word for silk. An ultra-thin layer of
+              styling and ergonomics over native HTML. Zero dependencies, zero
+              runtime overhead, zero wrapper divs.
             </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">🔧</div>
-            <h3>Native HTML Power</h3>
-            <p>
-              Uses HTML commands for interactions instead of manually wired up
-              event handlers. Better performance, better accessibility.
-            </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">📱</div>
-            <h3>Works Everywhere</h3>
-            <p>
-              Responsive by default. Components adapt seamlessly from mobile to
-              desktop without bloating your bundle.
-            </p>
-          </div>
-          <div class="benefit">
-            <div class="benefit-icon">🚀</div>
-            <h3>Ship Faster</h3>
-            <p>
-              Skip the component building phase. Focus on your app logic while
-              we handle the lightweight UI foundations.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="real-world">
-        <h2>Built for real applications</h2>
-        <p class="real-world-subtitle">
-          From simple forms to complex dashboards, kinu scales with your needs
-        </p>
-        <div class="demo-links">
-          <Button href="/linear" variant="secondary" size="lg">
-            📊 Linear-style Dashboard
-          </Button>
-          <Button href="/chat" variant="secondary" size="lg">
-            💬 Chat Application
-          </Button>
-          <Button href="/player" variant="secondary" size="lg">
-            🎵 Music Player
-          </Button>
-          <Button variant="outline" href="https://github.com/developit/kinu">
-            GitHub
-          </Button>
-        </div>
-      </section>
-
-      <section class="cta">
-        <Card class="cta-card">
-          <h2>Ready to build?</h2>
-          <p>
-            Join developers who are shipping faster with just 5kB of JavaScript
-          </p>
-          <div class="cta-actions">
-            <Button href="/getting-started" size="lg">
-              Start Building →
+          </Prose>
+          <div class="kh-hero-actions">
+            <Button class="kh-pill" size="lg" href="/getting-started">
+              Start Building
             </Button>
-            <Button variant="ghost" href="/docs">
-              Explore Components
+            <Button class="kh-pill" variant="outline" size="lg" href="/docs">
+              View Components
             </Button>
           </div>
-        </Card>
+        </div>
+
+        <HeroPlayground />
       </section>
+
+      <section class="kh-facade">
+        <header class="kh-facade-head">
+          <h2 class="kh-facade-title">
+            The platform
+            <br />
+            <em>does the work.</em>
+          </h2>
+          <Prose class="kh-facade-prose">
+            <p>
+              Other toolkits put state, positioning, and focus management in
+              JavaScript. Kinu pushes them down into <code>commandfor</code>,
+              native <code>&lt;dialog&gt;</code>, anchor positioning, and the
+              form-associated elements your browser already ships. Less code
+              shipped. Less code called. Same JSX in, same pixels out.
+            </p>
+          </Prose>
+          <div class="kh-facade-links">
+            <Button variant="ghost" class="kh-link kh-link--bright" href="/docs">
+              Read the philosophy →
+            </Button>
+            <Button variant="ghost" class="kh-link kh-link--muted" href="/docs">
+              Browse components
+            </Button>
+          </div>
+        </header>
+        <PipelineRace />
+      </section>
+
+      <section class="kh-try">
+        <div class="kh-try-head">
+          <h2 class="kh-section-title">Built with Kinu.</h2>
+          <Prose class="kh-section-lede">
+            <p>
+              Eight real product surfaces, composed from the components in this
+              toolkit. The whole grid runs on the same ~11&nbsp;kB you'd ship.
+            </p>
+          </Prose>
+        </div>
+
+        <div class="kh-preview-grid">
+          {DEMOS.map((d, i) => (
+            <AppFrame key={d.title} title={d.title} wide={d.wide} index={i}>
+              <d.Component />
+            </AppFrame>
+          ))}
+        </div>
+
+        {/* Mobile-only fullscreen "maximize" surface — single kinu Drawer
+            (native <dialog>.showModal) hosting a kinu Carousel of all the
+            cards. OS back closes the drawer; per-card minimize button
+            does the same via commandfor="close". */}
+        <Drawer id={MAXIMIZED_ID}>
+          <DrawerContent class="kh-app-maximized">
+            <Carousel id={`${MAXIMIZED_ID}-carousel`}>
+              <CarouselContent class="kh-app-maximized-track">
+                {DEMOS.map((d, i) => (
+                  <CarouselItem key={d.title}>
+                    <AppFrame
+                      title={d.title}
+                      wide={d.wide}
+                      index={i}
+                      maximized
+                    >
+                      <d.Component />
+                    </AppFrame>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </DrawerContent>
+        </Drawer>
+      </section>
+
+      <section class="kh-html">
+        <h2 class="kh-html-title">
+          JSX <em>in</em>, native HTML <em>out</em>.
+        </h2>
+        <Prose class="kh-section-lede kh-html-lede">
+          <p>
+            The Dialog you write on the left renders as the markup on the
+            right. No portals, no state hooks — just <code>commandfor</code>,
+            a native <code>&lt;dialog&gt;</code>, and the form-associated
+            elements you already know.
+          </p>
+        </Prose>
+
+        <div class="kh-code-grid">
+          <Card class="kh-code kh-code--light" padding="lg">
+            <Badge variant="outline" class="kh-code-label">
+              You write
+            </Badge>
+            <ScrollArea class="kh-code-scroll">
+              <pre class="kh-hljs">
+                <code
+                  dangerouslySetInnerHTML={{
+                    __html: hljs.highlight(EDIT_PROFILE_TSX, {language: 'tsx'}).value,
+                  }}
+                />
+              </pre>
+            </ScrollArea>
+          </Card>
+          <Card class="kh-code kh-code--dark" padding="lg">
+            <Badge variant="outline" class="kh-code-label">
+              The browser sees
+            </Badge>
+            <ScrollArea class="kh-code-scroll">
+              <pre class="kh-hljs">
+                <code
+                  dangerouslySetInnerHTML={{
+                    __html: hljs.highlight(EDIT_PROFILE_HTML, {language: 'xml'}).value,
+                  }}
+                />
+              </pre>
+            </ScrollArea>
+          </Card>
+        </div>
+      </section>
+
+      <section class="kh-ship">
+        <h2 class="kh-ship-title">Ship less. Do more.</h2>
+        <Prose class="kh-ship-lede">
+          <p>60+ components. ~5kB of JS, ~6kB of CSS. No dependencies, no surprises.</p>
+        </Prose>
+        <div class="kh-ship-actions">
+          <Button class="kh-pill kh-ship-btn" size="lg" href="/getting-started">
+            Get started
+          </Button>
+          <Button
+            class="kh-pill kh-ship-btn kh-ship-btn--ghost"
+            variant="outline"
+            size="lg"
+            href="https://github.com/developit/kinu"
+          >
+            Star on GitHub
+          </Button>
+        </div>
+      </section>
+
+      <Separator class="kh-footer-rule" />
+      <footer class="kh-footer">
+        <span>© 2026 Kinu — MIT licensed.</span>
+        <span class="kh-footer-links">
+          <a href="https://github.com/developit/kinu">GitHub</a>
+          <a href="https://www.npmjs.com/package/kinu">npm</a>
+          <a href="/docs">Docs</a>
+        </span>
+      </footer>
     </div>
   );
 }
 
-function HeroDemo() {
-  const [tasks, setTasks] = useState([
-    {id: 1, text: 'Design new landing page', completed: true},
-    {id: 2, text: 'Implement user authentication', completed: true},
-    {id: 3, text: 'Add payment processing', completed: false},
-    {id: 4, text: 'Write documentation', completed: false},
-  ]);
-  const [newTask, setNewTask] = useState('');
+/* ── Tasks (Project dashboard) ──────────────────────────────────────────── */
+type Task = {id: number; text: string; done: boolean};
+const INITIAL_TASKS: Task[] = [
+  {id: 1, text: 'Pricing page copy', done: true},
+  {id: 2, text: 'Migrate auth to OAuth', done: true},
+  {id: 3, text: 'Onboarding flow QA', done: false},
+  {id: 4, text: 'Ship release notes', done: false},
+];
 
-  const completedCount = tasks.filter((t) => t.completed).length;
-  const progress = (completedCount / tasks.length) * 100;
+function TasksPreview() {
+  // Per-instance id prefix so the grid copy and the maximized-drawer
+  // copy don't share label-for ids — clicking a label in the drawer
+  // would otherwise toggle the occluded grid checkbox.
+  const idPrefix = useId();
+  const [tasks, setTasks] = useState(INITIAL_TASKS);
+  const [draft, setDraft] = useState('');
+  const completed = tasks.filter((t) => t.done).length;
+  const progress = (completed / tasks.length) * 100;
 
-  const toggleTask = (id: number) => {
+  const toggle = (id: number) =>
     setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? {...task, completed: !task.completed} : task,
-      ),
+      prev.map((t) => (t.id === id ? {...t, done: !t.done} : t)),
     );
-  };
 
-  const addTask = () => {
-    if (!newTask.trim()) return;
-    setTasks((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        text: newTask,
-        completed: false,
-      },
-    ]);
-    setNewTask('');
+  const add = (e: Event) => {
+    e.preventDefault();
+    const text = draft.trim();
+    if (!text) return;
+    setTasks((prev) => [...prev, {id: Date.now(), text, done: false}]);
+    setDraft('');
   };
 
   return (
-    <Card class="hero-demo-card">
-      <div class="hero-demo-header">
-        <Avatar>JD</Avatar>
-        <div>
-          <div class="demo-title">Project Dashboard</div>
-          <Badge variant={progress === 100 ? undefined : 'secondary'}>
-            {completedCount}/{tasks.length} Complete
+    <div class="kh-tasks">
+      <header class="kh-tasks-head">
+        <Avatar size="sm">JD</Avatar>
+        <div class="kh-tasks-meta">
+          <p>Q4 launches</p>
+          <Badge variant={progress === 100 ? 'default' : 'secondary'}>
+            {completed}/{tasks.length} done
           </Badge>
         </div>
-      </div>
-
-      <div class="progress-section">
-        <div class="progress-label">Overall Progress</div>
-        <Progress value={progress} max={100} />
-        <div class="progress-text">{Math.round(progress)}%</div>
-      </div>
-
-      <div class="task-list">
-        {tasks.map((task) => (
-          <Label key={task.id} class="task-item">
+      </header>
+      <Progress value={progress} max={100} />
+      <ul class="kh-tasks-list">
+        {tasks.map((t) => (
+          <li key={t.id} class="kh-tasks-item">
             <Checkbox
-              checked={task.completed}
-              onInput={() => toggleTask(task.id)}
+              id={`${idPrefix}-${t.id}`}
+              checked={t.done}
+              onInput={() => toggle(t.id)}
             />
-            <span class={task.completed ? 'task-completed' : ''}>
-              {task.text}
-            </span>
-          </Label>
+            <Label
+              htmlFor={`${idPrefix}-${t.id}`}
+              class={t.done ? 'is-done' : undefined}
+            >
+              {t.text}
+            </Label>
+          </li>
         ))}
-      </div>
-
-      <div class="add-task">
+      </ul>
+      <form class="kh-tasks-add" onSubmit={add}>
         <Input
-          placeholder="Add new task..."
-          value={newTask}
-          onInput={(e) => setNewTask((e.target as HTMLInputElement).value)}
-          onKeyPress={(e) => e.key === 'Enter' && addTask()}
+          size="sm"
+          placeholder="Next task…"
+          value={draft}
+          onInput={(e) => setDraft((e.target as HTMLInputElement).value)}
         />
         <Tooltip title="Add task">
-          <Button size="sm" onClick={addTask} disabled={!newTask.trim()}>
+          <Button size="sm" type="submit" disabled={!draft.trim()}>
             ＋
           </Button>
         </Tooltip>
+      </form>
+    </div>
+  );
+}
+
+/* ── Now Playing (Media player) ─────────────────────────────────────────── */
+/* ── Inline SVG icons (Lucide-style, currentColor) ──────────────────────── */
+const Icon = ({
+  name,
+  path,
+  size = 16,
+}: {name: string; path: ComponentChildren; size?: number}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <title>{name}</title>
+    {path}
+  </svg>
+);
+const IconPlay = ({size = 16}: {size?: number}) => (
+  <Icon name="Play" size={size} path={<polygon points="6 4 20 12 6 20 6 4" fill="currentColor" />} />
+);
+const IconPause = ({size = 16}: {size?: number}) => (
+  <Icon
+    name="Pause"
+    size={size}
+    path={
+      <>
+        <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none" />
+        <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none" />
+      </>
+    }
+  />
+);
+const IconSkipBack = ({size = 16}: {size?: number}) => (
+  <Icon
+    name="Previous"
+    size={size}
+    path={
+      <>
+        <polygon points="19 20 9 12 19 4 19 20" fill="currentColor" />
+        <line x1="5" y1="19" x2="5" y2="5" />
+      </>
+    }
+  />
+);
+const IconSkipFwd = ({size = 16}: {size?: number}) => (
+  <Icon
+    name="Next"
+    size={size}
+    path={
+      <>
+        <polygon points="5 4 15 12 5 20 5 4" fill="currentColor" />
+        <line x1="19" y1="5" x2="19" y2="19" />
+      </>
+    }
+  />
+);
+const IconHeart = ({size = 16, filled = false}: {size?: number; filled?: boolean}) => (
+  <Icon
+    name={filled ? 'Liked' : 'Like'}
+    size={size}
+    path={
+      <path
+        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+        fill={filled ? 'currentColor' : 'none'}
+      />
+    }
+  />
+);
+
+type Track = {
+  id: number; title: string; artist: string; album: string;
+  duration: string; cover: string; liked: boolean;
+};
+const TRACKS: Track[] = [
+  {id: 1, title: 'Summer Breeze', artist: 'DJ Sunwave',         album: 'Golden Hour',     duration: '4:18', cover: '🌅', liked: true},
+  {id: 2, title: 'Midnight Coffee', artist: 'Lofi Dreams',      album: 'Chill Nights',    duration: '3:42', cover: '☕', liked: false},
+  {id: 3, title: 'Neon Lights',   artist: 'Synthwave City',     album: 'Retro Future',    duration: '5:03', cover: '🌃', liked: false},
+  {id: 4, title: 'Ocean Waves',   artist: 'Nature Sounds',      album: 'Peaceful Mind',   duration: '2:57', cover: '🌊', liked: true},
+  {id: 5, title: 'Forest Path',   artist: 'Organic Beats',      album: 'Natural Rhythm',  duration: '3:28', cover: '🌲', liked: false},
+];
+
+const parseDuration = (s: string) => {
+  const [m, sec] = s.split(':').map(Number);
+  return m * 60 + sec;
+};
+const fmtTime = (s: number) => {
+  const m = Math.floor(s / 60);
+  const r = Math.floor(s % 60);
+  return `${m}:${r.toString().padStart(2, '0')}`;
+};
+
+function NowPlayingPreview() {
+  const [tracks, setTracks] = useState(TRACKS);
+  const [currentId, setCurrentId] = useState(TRACKS[0].id);
+  const [playing, setPlaying] = useState(true);
+  const [position, setPosition] = useState(58); // seconds
+
+  const current = tracks.find((t) => t.id === currentId) ?? tracks[0];
+  const total = parseDuration(current.duration);
+
+  // Auto-progress when playing; advance to the next track on end.
+  useEffect(() => {
+    if (!playing) return;
+    const id = setInterval(() => {
+      setPosition((p) => {
+        if (p + 1 >= total) {
+          // wrap to next track
+          const i = tracks.findIndex((t) => t.id === currentId);
+          const next = tracks[(i + 1) % tracks.length];
+          setCurrentId(next.id);
+          return 0;
+        }
+        return p + 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [playing, currentId, total, tracks]);
+
+  const play = (id: number) => {
+    setCurrentId(id);
+    setPosition(0);
+    setPlaying(true);
+  };
+  const step = (delta: -1 | 1) => {
+    const i = tracks.findIndex((t) => t.id === currentId);
+    const next = tracks[(i + delta + tracks.length) % tracks.length];
+    play(next.id);
+  };
+  const toggleLike = (id: number) =>
+    setTracks((prev) =>
+      prev.map((t) => (t.id === id ? {...t, liked: !t.liked} : t)),
+    );
+
+  return (
+    <div class="kh-player">
+      <header class="kh-player-head">
+        <span class="kh-player-cover" aria-hidden>
+          {current.cover}
+        </span>
+        <div class="kh-player-meta">
+          <p class="kh-player-title">{current.title}</p>
+          <p class="kh-player-artist">
+            {current.artist} · {current.album}
+          </p>
+        </div>
+        <Toggle
+          pressed={current.liked}
+          onClick={() => toggleLike(current.id)}
+          class="kh-player-like"
+          aria-label={current.liked ? 'Unlike' : 'Like'}
+        >
+          <IconHeart filled={current.liked} />
+        </Toggle>
+      </header>
+      <div class="kh-player-scrub">
+        <span class="kh-player-time">{fmtTime(position)}</span>
+        <Slider
+          min={0}
+          max={total}
+          value={position}
+          // Slider only updates its --progress CSS var on the input event;
+          // pin it from React so auto-progress repaints the green fill too.
+          style={`--progress: ${(position / total) * 100}%`}
+          onInput={(e) =>
+            setPosition(Number((e.target as HTMLInputElement).value))
+          }
+          aria-label="Seek"
+        />
+        <span class="kh-player-time">{current.duration}</span>
+      </div>
+      <div class="kh-player-controls">
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Previous"
+          onClick={() => step(-1)}
+        >
+          <IconSkipBack />
+        </Button>
+        <Button
+          size="icon"
+          onClick={() => setPlaying((v) => !v)}
+          aria-label={playing ? 'Pause' : 'Play'}
+        >
+          {playing ? <IconPause /> : <IconPlay />}
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Next"
+          onClick={() => step(1)}
+        >
+          <IconSkipFwd />
+        </Button>
+      </div>
+      <ScrollArea class="kh-player-list">
+        {tracks.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            class={`kh-player-track${t.id === currentId ? ' is-active' : ''}`}
+            onClick={() => play(t.id)}
+            aria-current={t.id === currentId}
+          >
+            <span class="kh-player-track-cover" aria-hidden>{t.cover}</span>
+            <span class="kh-player-track-text">
+              <strong>{t.title}</strong>
+              <span>{t.artist}</span>
+            </span>
+            <span class="kh-player-track-meta">
+              <span class="kh-player-track-dur">{t.duration}</span>
+            </span>
+          </button>
+        ))}
+      </ScrollArea>
+    </div>
+  );
+}
+
+/* ── AI Composer (Textarea + model picker) ──────────────────────────────── */
+/* Reusable card shell — header with title + (optional) hint, then body. */
+/**
+ * Stylized window-frame around each "Built with Kinu" demo. Titlebar shows
+ * the demo name on the left and a sun/moon button on the right; clicking
+ * the toggle flips the frame's own `data-color-scheme`, which re-cascades
+ * every kinu CSS variable for the subtree and gives the demo its own theme.
+ *
+ * The flip uses the View Transitions API to do a radial wipe from the
+ * upper right (where the button lives). Each frame gets a unique
+ * `view-transition-name` so multiple frames can toggle without
+ * interfering with each other.
+ */
+const MAXIMIZED_ID = 'kh-app-maximized';
+
+/** Master list of the demos rendered in "Built with Kinu". Each entry is
+ *  rendered twice: once in the grid, once inside the maximized drawer's
+ *  carousel. Two instances means independent state across the two views,
+ *  which is fine for a marketing surface (the user only sees one at a time). */
+const DEMOS: Array<{
+  title: string;
+  wide?: boolean;
+  Component: () => ComponentChildren;
+}> = [
+  {title: 'Tasks', Component: TasksPreview},
+  {title: 'Media Player', Component: NowPlayingPreview},
+  {title: 'AI Composer', Component: ComposerPreview},
+  {title: 'Activity', Component: ActivityPreview},
+  {title: 'Command Palette', Component: CommandPalettePreview},
+  {title: 'Trip Booking', Component: DateRangePreview},
+  {title: 'Inbox', wide: true, Component: InboxPreview},
+  {title: 'Settings', Component: SettingsPreview},
+];
+
+function AppFrame({
+  title,
+  wide,
+  maximized,
+  index,
+  children,
+}: {
+  title: string;
+  wide?: boolean;
+  /** True when this frame is rendered inside the maximized drawer carousel. */
+  maximized?: boolean;
+  /** Position in the grid; used to scroll the carousel to this card on open. */
+  index?: number;
+  children: ComponentChildren;
+}) {
+  // null = no explicit scheme yet → frame inherits from the page / OS.
+  // After the first toggle, scheme becomes 'light' or 'dark' and the
+  // attribute is applied so the frame holds its own theme.
+  const [scheme, setScheme] = useState<'light' | 'dark' | null>(null);
+  const [systemDark, setSystemDark] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    setSystemDark(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setSystemDark(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  const effective: 'light' | 'dark' = scheme ?? (systemDark ? 'dark' : 'light');
+  const next: 'light' | 'dark' = effective === 'light' ? 'dark' : 'light';
+
+  const toggle = (e: MouseEvent) => {
+    // Explicitly focus the toggle so :focus matches in Safari / Firefox
+    // (which don't auto-focus buttons on click). The CSS rule
+    // `.kh-app:has(.kh-app-toggle:focus)` then assigns the shared
+    // view-transition-name to this frame only — so siblings don't
+    // create a stacking context and clip its popovers.
+    (e.currentTarget as HTMLElement).focus();
+    const start = (document as Document & {
+      startViewTransition?: (cb: () => void) => unknown;
+    }).startViewTransition;
+    if (typeof start === 'function') {
+      start.call(document, () => setScheme(next));
+    } else {
+      setScheme(next);
+    }
+  };
+
+  // Maximize button: opens the shared Drawer (kinu Drawer uses
+  // <dialog>.showModal() so the OS back button closes it). The onClick
+  // also imperatively scrolls the carousel inside the drawer to this
+  // card's index, so the maximized view starts on the tapped card.
+  // Minimize variant lives inside the drawer and closes it.
+  const onExpand = () => {
+    if (maximized) return; // closing is handled by native commandfor
+    requestAnimationFrame(() => {
+      const carousel = document.querySelector(
+        `#${MAXIMIZED_ID} [k="carousel"]`,
+      ) as HTMLElement | null;
+      const item = carousel?.children[index ?? 0] as HTMLElement | undefined;
+      if (carousel && item) {
+        carousel.scrollTo({left: item.offsetLeft, behavior: 'instant'});
+      }
+    });
+  };
+
+  return (
+    <article
+      class={`kh-app${wide ? ' kh-app--wide' : ''}`}
+      data-color-scheme={scheme ?? undefined}
+    >
+      <header class="kh-app-bar">
+        {/* The expand button always lives on the left so its position
+         * doesn't shift between the maximized and non-maximized states.
+         * It's hidden on desktop in the non-maximized state via CSS. */}
+        <span class="kh-app-actions kh-app-actions--left">
+          <Button
+            variant="ghost"
+            size="icon"
+            class="kh-app-expand"
+            commandfor={MAXIMIZED_ID}
+            command={maximized ? 'close' : 'show-modal'}
+            onClick={maximized ? undefined : onExpand}
+            aria-label={maximized ? 'Minimize' : 'Maximize'}
+            title={maximized ? 'Minimize' : 'Maximize'}
+          >
+            {maximized ? <MinimizeIcon /> : <MaximizeIcon />}
+          </Button>
+        </span>
+        <span class="kh-app-title">{title}</span>
+        <span class="kh-app-actions kh-app-actions--right">
+          {maximized && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="kh-app-nav"
+                commandfor={`${MAXIMIZED_ID}-carousel`}
+                command="--prev"
+                aria-label="Previous demo"
+                title="Previous demo"
+              >
+                ￩
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="kh-app-nav"
+                commandfor={`${MAXIMIZED_ID}-carousel`}
+                command="--next"
+                aria-label="Next demo"
+                title="Next demo"
+              >
+                ￫
+              </Button>
+            </>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            class="kh-app-toggle"
+            onClick={toggle}
+            aria-label={`Switch to ${next} mode`}
+            title={`Switch to ${next} mode`}
+          >
+            {effective === 'light' ? <SunIcon /> : <MoonIcon />}
+          </Button>
+        </span>
+      </header>
+      <div class="kh-app-body">{children}</div>
+    </article>
+  );
+}
+
+function SunIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
+function MaximizeIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M3 9V3h6 M21 9V3h-6 M3 15v6h6 M21 15v6h-6" />
+    </svg>
+  );
+}
+
+function MinimizeIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M9 3v6H3 M15 3v6h6 M9 21v-6H3 M15 21v-6h6" />
+    </svg>
+  );
+}
+
+/* ── 3. AI Composer with adaptive model picker ──────────────────────────── *
+ * Replaces the flat DropdownMenu with a Popover (mobile=drawer) housing a
+ * search input + grouped model list with ↑/↓ keyboard navigation. Inspired
+ * by the Contraption picker. Uses kinu Popover's native commandFor magic. */
+
+type ModelOption = {id: string; provider: string; label: string; meta: string; recent?: boolean};
+const MODELS: ModelOption[] = [
+  {id: 'opus',   provider: 'Anthropic', label: 'Claude Opus 4.7',     meta: 'Smartest · 1M context', recent: true},
+  {id: 'sonnet', provider: 'Anthropic', label: 'Claude Sonnet 4.6',   meta: 'Balanced · 200K',       recent: true},
+  {id: 'haiku',  provider: 'Anthropic', label: 'Claude Haiku 4.5',    meta: 'Cheapest · 200K'},
+  {id: 'gpt5',   provider: 'OpenAI',    label: 'GPT-5',               meta: 'Reasoning · 256K'},
+  {id: 'o3',     provider: 'OpenAI',    label: 'o3',                  meta: 'Deep think · 200K'},
+  {id: 'gemini', provider: 'Google',    label: 'Gemini 2.5 Pro',      meta: 'Multimodal · 2M'},
+  {id: 'flash',  provider: 'Google',    label: 'Gemini 2.5 Flash',    meta: 'Lightning · 1M'},
+];
+
+type ChatMsg = {id: number; role: 'user' | 'model'; text: string; pending?: boolean};
+
+const CANNED_REPLIES: Record<string, string> = {
+  default:
+    "Sure — kinu's <Popover mobile=\"drawer\"> renders an anchor-positioned popover on desktop and a bottom sheet on phones. Same JSX, no per-device branching.",
+  size: 'Around 5 kB of JS plus 6 kB of CSS, gzipped. The grid you see below ships with the page.',
+  hello:
+    "Hey! Ask anything about kinu — components, theming, the commandFor pattern, the platform-native bits.",
+};
+
+function fakeReply(prompt: string): string {
+  const p = prompt.toLowerCase();
+  if (/(size|kb|bundle|small)/.test(p)) return CANNED_REPLIES.size;
+  if (/(hi|hello|hey)/.test(p)) return CANNED_REPLIES.hello;
+  return CANNED_REPLIES.default;
+}
+
+function ComposerPreview() {
+  const [modelId, setModelId] = useState('sonnet');
+  const [filter, setFilter] = useState('');
+  const [cursor, setCursor] = useState(-1);
+  const [text, setText] = useState('');
+  const [messages, setMessages] = useState<ChatMsg[]>([
+    {
+      id: 1,
+      role: 'model',
+      text:
+        "Hi — I'm a placeholder model running inside this card. Try asking about kinu's bundle size, or just say hello.",
+    },
+  ]);
+  const threadRef = useRef<HTMLDivElement>(null);
+  const model = MODELS.find((m) => m.id === modelId) ?? MODELS[0];
+
+  // Keep the thread pinned to the latest message.
+  useEffect(() => {
+    const el = threadRef.current;
+    if (el) el.scrollTo({top: 9e9, behavior: 'smooth'});
+  }, [messages]);
+
+  const filtered = MODELS.filter(
+    (m) =>
+      !filter ||
+      m.label.toLowerCase().includes(filter.toLowerCase()) ||
+      m.provider.toLowerCase().includes(filter.toLowerCase()),
+  );
+  const groups: Array<{provider: string; items: ModelOption[]}> = [];
+  for (const m of filtered) {
+    const last = groups[groups.length - 1];
+    if (last && last.provider === m.provider) last.items.push(m);
+    else groups.push({provider: m.provider, items: [m]});
+  }
+
+  const select = (id: string) => {
+    setModelId(id);
+    setFilter('');
+    setCursor(-1);
+    // Close the parent <dialog> popover by walking up.
+    requestAnimationFrame(() => {
+      (document.activeElement?.closest('dialog') as HTMLDialogElement | null)?.close();
+    });
+  };
+
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setCursor((c) => Math.min(c + 1, filtered.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setCursor((c) => Math.max(c - 1, 0));
+    } else if (e.key === 'Enter' && cursor >= 0) {
+      e.preventDefault();
+      select(filtered[cursor].id);
+    }
+  };
+
+  const send = (e: Event) => {
+    e.preventDefault();
+    const prompt = text.trim();
+    if (!prompt) return;
+    const userId = Date.now();
+    const replyId = userId + 1;
+    setMessages((m) => [
+      ...m,
+      {id: userId, role: 'user', text: prompt},
+      {id: replyId, role: 'model', text: '', pending: true},
+    ]);
+    setText('');
+    // Simulated streaming reply.
+    setTimeout(() => {
+      setMessages((m) =>
+        m.map((msg) =>
+          msg.id === replyId
+            ? {id: replyId, role: 'model', text: fakeReply(prompt)}
+            : msg,
+        ),
+      );
+    }, 700);
+  };
+
+  let flatIndex = 0;
+  return (
+    <form class="kh-composer" onSubmit={send}>
+      <ScrollArea class="kh-composer-thread" ref={threadRef}>
+        {messages.map((m) => (
+          <div
+            key={m.id}
+            class={`kh-composer-msg kh-composer-msg--${m.role}`}
+          >
+            {m.role === 'model' && (
+              <Avatar size="sm" class="kh-composer-msg-avatar">
+                ✦
+              </Avatar>
+            )}
+            <div class="kh-composer-bubble">
+              {m.pending ? (
+                <Spinner size="sm" aria-label="Thinking" />
+              ) : (
+                m.text
+              )}
+            </div>
+          </div>
+        ))}
+      </ScrollArea>
+      <Textarea
+        autosize
+        rows={2}
+        class="kh-composer-input"
+        placeholder="Ask anything…"
+        value={text}
+        onInput={(e) => setText((e.target as HTMLTextAreaElement).value)}
+        onKeyDown={(e) => {
+          if ((e as KeyboardEvent).key === 'Enter' && !(e as KeyboardEvent).shiftKey) {
+            e.preventDefault();
+            send(e);
+          }
+        }}
+      />
+      <footer class="kh-composer-bar">
+        <Popover>
+          <PopoverTrigger>
+            <Button variant="outline" size="sm" class="kh-composer-model">
+              <Status pulse variant="success" aria-label="Active model" />
+              <span class="kh-composer-model-label">{model.label}</span>
+              <span aria-hidden class="kh-composer-chev">▾</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent mobile="drawer" class="kh-composer-popover">
+            <span
+              tabindex={-1}
+              autofocus
+              aria-hidden
+              class="kh-composer-focus-sink"
+            />
+            <div class="kh-composer-search">
+              <Input
+                size="sm"
+                placeholder="Search models…"
+                value={filter}
+                onInput={(e) => {
+                  setFilter((e.target as HTMLInputElement).value);
+                  setCursor(-1);
+                }}
+                onKeyDown={onKey}
+              />
+            </div>
+            <Separator />
+            <ScrollArea class="kh-composer-list">
+              {groups.length === 0 && (
+                <p class="kh-composer-empty">
+                  No models match <code>{filter}</code>.
+                </p>
+              )}
+              {groups.map((g) => (
+                <section key={g.provider} class="kh-composer-group">
+                  <header class="kh-composer-group-head">{g.provider}</header>
+                  {g.items.map((m) => {
+                    const i = flatIndex++;
+                    return (
+                      <Item
+                        key={m.id}
+                        selected={m.id === modelId}
+                        data-active={i === cursor || undefined}
+                        onClick={() => select(m.id)}
+                      >
+                        <span class="kh-composer-option">
+                          <strong>{m.label}</strong>
+                          <span class="kh-composer-option-meta">{m.meta}</span>
+                        </span>
+                        {m.recent && (
+                          <Badge variant="outline" class="kh-composer-recent">
+                            recent
+                          </Badge>
+                        )}
+                      </Item>
+                    );
+                  })}
+                </section>
+              ))}
+            </ScrollArea>
+          </PopoverContent>
+        </Popover>
+        <Button type="submit" size="sm" disabled={!text.trim()}>
+          Send →
+        </Button>
+      </footer>
+    </form>
+  );
+}
+
+/* ── Activity — search/filters bar + live team feed ────────────────────── */
+const ACTIVITY: Array<{
+  initials: string;
+  name: string;
+  action: string;
+  when: string;
+  variant: 'success' | 'info' | 'warning' | undefined;
+  pulse?: boolean;
+}> = [
+  {initials: 'JM', name: 'Jason',    action: 'merged pull/124',     when: '2m',  variant: 'success', pulse: true},
+  {initials: 'AS', name: 'Alex',     action: 'is reviewing pull/126', when: '7m', variant: 'info'},
+  {initials: 'KM', name: 'Karen',    action: 'opened issue #2031',  when: '14m', variant: 'success'},
+  {initials: 'TR', name: 'Toshi',    action: 'is away',             when: '1h',  variant: 'warning'},
+];
+
+const ACTIVITY_PEOPLE = [
+  {initials: 'JM', name: 'Jason Miller',   email: 'jason@kinu.sh',    role: 'Maintainer'},
+  {initials: 'AS', name: 'Alex Stein',     email: 'alex@kinu.sh',     role: 'Designer'},
+  {initials: 'KM', name: 'Karen Montoya',  email: 'karen@kinu.sh',    role: 'Engineer'},
+  {initials: 'TR', name: 'Toshi Rahman',   email: 'toshi@contoso.io', role: 'Customer'},
+  {initials: 'RB', name: 'Rosa Beltran',   email: 'rosa@contoso.io',  role: 'Customer'},
+  {initials: 'SH', name: 'Sam Hwang',      email: 'sam@kinu.sh',      role: 'Engineer'},
+];
+
+const ACTIVITY_SORT = ['Newest', 'Top', 'Active'];
+const ACTIVITY_TAG_OPTIONS = ['urgent', 'docs', 'frontend', 'API', 'design', 'release'];
+
+function ActivityPreview() {
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState('Newest');
+  const [tags, setTags] = useState(['Owner: Jason']);
+  const [tagDraft, setTagDraft] = useState('');
+
+  const matches = ACTIVITY_PEOPLE.filter((p) =>
+    !query ||
+    p.name.toLowerCase().includes(query.toLowerCase()) ||
+    p.email.toLowerCase().includes(query.toLowerCase()),
+  );
+
+  const removeTag = (t: string) =>
+    setTags((prev) => prev.filter((x) => x !== t));
+  const addTag = (t: string) => {
+    const v = t.trim();
+    if (!v || tags.includes(v)) return;
+    setTags([...tags, v]);
+    requestAnimationFrame(() => setTagDraft(''));
+  };
+
+  return (
+    <div class="kh-activity">
+      <Combobox class="kh-activity-search">
+        <ComboboxInput
+          placeholder="Search teammates…"
+          size="sm"
+          value={query}
+          onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
+        />
+        <ComboboxList>
+          {matches.length === 0 && (
+            <p class="kh-search-empty">
+              No matches for <code>{query}</code>.
+            </p>
+          )}
+          {matches.map((p) => (
+            <Item
+              key={p.email}
+              value={p.name}
+              onClick={() =>
+                toast.show(`Opened ${p.name}`, {title: 'Profile', icon: '↗'})
+              }
+            >
+              <span class="kh-search-row">
+                <Avatar size="sm">{p.initials}</Avatar>
+                <span class="kh-search-text">
+                  <strong>{p.name}</strong>
+                  <span class="kh-search-email">{p.email}</span>
+                </span>
+                <Badge variant="outline" class="kh-search-role">
+                  {p.role}
+                </Badge>
+              </span>
+            </Item>
+          ))}
+        </ComboboxList>
+      </Combobox>
+
+      <div class="kh-activity-filters">
+        <ToggleGroup
+          type="single"
+          value={sort}
+          onValueChange={(v) => v && setSort(v as string)}
+          class="kh-activity-sort"
+        >
+          {ACTIVITY_SORT.map((s) => (
+            <Toggle key={s} value={s} type="button">{s}</Toggle>
+          ))}
+        </ToggleGroup>
+        {tags.map((t) => (
+          <Chip key={t} variant="primary" form="">
+            {t}
+            <Chip.Button onClick={() => removeTag(t)} aria-label={`Remove ${t}`}>
+              ×
+            </Chip.Button>
+          </Chip>
+        ))}
+        <Combobox class="kh-activity-add">
+          <ComboboxInput
+            placeholder="+ filter"
+            size="sm"
+            value={tagDraft}
+            onInput={(e) =>
+              setTagDraft((e.target as HTMLInputElement).value)
+            }
+            onKeyDown={(e) => {
+              if ((e as KeyboardEvent).key === 'Enter') {
+                e.preventDefault();
+                addTag(tagDraft);
+              }
+            }}
+          />
+          <ComboboxList>
+            {ACTIVITY_TAG_OPTIONS.filter(
+              (p) =>
+                (!tagDraft || p.toLowerCase().includes(tagDraft.toLowerCase())) &&
+                !tags.includes(`Tag: ${p}`),
+            ).map((p) => (
+              <Item key={p} value={p} onClick={() => addTag(`Tag: ${p}`)}>
+                {p}
+              </Item>
+            ))}
+          </ComboboxList>
+        </Combobox>
+      </div>
+
+      <Separator />
+
+      <header class="kh-activity-head">
+        <Avatar.Group>
+          <Avatar size="sm">JM</Avatar>
+          <Avatar size="sm">AS</Avatar>
+          <Avatar size="sm">KM</Avatar>
+          <Avatar size="sm">+4</Avatar>
+        </Avatar.Group>
+        <Status pulse variant="success" class="kh-activity-live">
+          Live
+        </Status>
+      </header>
+      <ul class="kh-activity-list">
+        {ACTIVITY.map((a) => (
+          <li key={a.name} class="kh-activity-item">
+            <Avatar size="sm">{a.initials}</Avatar>
+            <div class="kh-activity-text">
+              <p>
+                <strong>{a.name}</strong> {a.action}
+              </p>
+              <Status
+                variant={a.variant}
+                pulse={a.pulse}
+                aria-label={a.action}
+                class="kh-activity-when"
+              >
+                {a.when}
+              </Status>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * HeroPlayground — the source on the left, the live result on the right.
+ *
+ * Same source string drives the syntax-highlighted code and the rendered
+ * <NewPost /> component, so what you see really is what you wrote. The
+ * form is a real <form> with browser validation + a Switch + a Select +
+ * Status indicator + toast on submit.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+const EDIT_PROFILE_TSX = `// edit-profile.tsx
+import {Dialog, Field, Input, Button} from 'kinu';
+
+export function EditProfile() {
+  return (
+    <Dialog>
+      <Dialog.Trigger>
+        <Button>Edit profile</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Field>
+          <Field.Label>Display name</Field.Label>
+          <Input defaultValue="Jason" required />
+        </Field>
+        <Dialog.Close>
+          <Button>Save</Button>
+        </Dialog.Close>
+      </Dialog.Content>
+    </Dialog>
+  );
+}`;
+
+const EDIT_PROFILE_HTML = `<!-- ESC closes. Click-outside closes. Focus is trapped. Free. -->
+<button commandfor="d-1" command="show-modal">
+  Edit profile
+</button>
+
+<dialog id="d-1">
+  <div k="field">
+    <label>Display name</label>
+    <input k="input" value="Jason" required />
+  </div>
+  <button commandfor="d-1" command="close">Save</button>
+</dialog>`;
+
+const NEW_POST_SOURCE = `import {Field, Input, Select, Switch, Label, Button, toast} from 'kinu';
+
+export function NewPost() {
+  return (
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      toast.show('Post published', {icon: '✓'});
+    }}>
+      <Field>
+        <Field.Label>Title</Field.Label>
+        <Input name="title" placeholder="On silk and software" required />
+      </Field>
+      <Field>
+        <Field.Label>Audience</Field.Label>
+        <Select name="audience" defaultValue="subscribers">
+          <option value="subscribers">Subscribers</option>
+          <option value="team">Team only</option>
+          <option value="public">Public</option>
+        </Select>
+      </Field>
+      <div class="row">
+        <Switch id="notify" name="notify" defaultChecked />
+        <Label htmlFor="notify">Email subscribers</Label>
+      </div>
+      <Button type="submit">Publish →</Button>
+    </form>
+  );
+}`;
+
+function HeroPlayground() {
+  const {value: highlighted} = hljs.highlight(NEW_POST_SOURCE, {language: 'tsx'});
+  const lineCount = NEW_POST_SOURCE.trimEnd().split('\n').length;
+  return (
+    <Card padding="none" class="kh-playground">
+      <div class="kh-playground-pane kh-playground-pane--code">
+        <header class="kh-playground-bar">
+          <span class="kh-playground-dots" aria-hidden>
+            <i /><i /><i />
+          </span>
+          <span class="kh-playground-file">new-post.tsx</span>
+          <Badge variant="outline" class="kh-playground-bar-badge">
+            {lineCount} lines
+          </Badge>
+        </header>
+        <ScrollArea class="kh-playground-code">
+          <pre class="kh-hljs">
+            <code
+              dangerouslySetInnerHTML={{__html: highlighted}}
+            />
+          </pre>
+        </ScrollArea>
+      </div>
+      <div class="kh-playground-pane kh-playground-pane--demo">
+        <header class="kh-playground-bar">
+          <span class="kh-playground-file">preview</span>
+          <Status variant="success" class="kh-playground-bar-status">
+            Live
+          </Status>
+        </header>
+        <div class="kh-playground-stage">
+          <NewPost />
+        </div>
       </div>
     </Card>
   );
 }
 
-function FormDemo() {
-  const [name, setName] = useState('');
-  const [agreed, setAgreed] = useState(false);
-  const [errors, setErrors] = useState<{name?: string; agreed?: string}>({});
-
-  const validate = () => {
-    const newErrors: {name?: string; agreed?: string} = {};
-    if (!name.trim()) newErrors.name = 'Name is required';
-    if (!agreed) newErrors.agreed = 'You must agree to continue';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = () => {
-    if (validate()) {
-      toast.show('Form submitted successfully!', {
-        title: 'Success',
-        icon: '✅',
-      });
-    }
-  };
-
+function NewPost() {
   return (
-    <div class="demo-form">
-      <div class="form-field">
-        <Label htmlFor="demo-name">Full Name</Label>
-        <Input
-          id="demo-name"
-          placeholder="Enter your name"
-          value={name}
-          onInput={(e) => {
-            setName((e.target as HTMLInputElement).value);
-            if (errors.name) setErrors({...errors, name: undefined});
-          }}
-        />
-        {errors.name && <div class="error-message">{errors.name}</div>}
+    <form
+      class="kh-newpost"
+      onSubmit={(e) => {
+        e.preventDefault();
+        toast.show('Post published', {icon: '✓'});
+      }}
+    >
+      <Field>
+        <Field.Label>Title</Field.Label>
+        <Input name="title" placeholder="On silk and software" required />
+      </Field>
+      <Field>
+        <Field.Label>Audience</Field.Label>
+        <Select name="audience" defaultValue="subscribers">
+          <option value="subscribers">Subscribers</option>
+          <option value="team">Team only</option>
+          <option value="public">Public</option>
+        </Select>
+      </Field>
+      <div class="kh-newpost-switch">
+        <Switch id="kh-notify" name="notify" defaultChecked />
+        <Label htmlFor="kh-notify">Email subscribers</Label>
       </div>
-      <div class="form-field">
-        <div class="checkbox-field">
-          <Checkbox
-            id="demo-agree"
-            checked={agreed}
-            onInput={(e) => {
-              setAgreed((e.target as HTMLInputElement).checked);
-              if (errors.agreed) setErrors({...errors, agreed: undefined});
-            }}
+      <Button type="submit">Publish →</Button>
+    </form>
+  );
+}
+
+/* ── Pipeline race (A Clever Facade graphic) ────────────────────────────── */
+
+type RaceStage = {
+  label: ComponentChildren;
+  note?: ComponentChildren;
+  cost?: string;
+};
+
+const TYPICAL_STAGES: RaceStage[] = [
+  {
+    label: (
+      <>
+        <code>useState</code> · <code>useEffect</code>
+      </>
+    ),
+    note: 'open, focus, dismiss state',
+  },
+  {
+    label: <code>createPortal()</code>,
+    note: 'remount outside the React tree',
+  },
+  {
+    label: 'Floating UI',
+    note: 'positioning, collisions, arrow',
+    cost: '+12 KB',
+  },
+  {
+    label: 'Focus trap + scroll lock',
+    note: (
+      <>
+        <code>tabbable</code> + body bookkeeping
+      </>
+    ),
+    cost: '+11 KB',
+  },
+  {
+    label: 'Click-outside · ESC',
+    note: 'dismissable layer + ARIA',
+    cost: '+9 KB',
+  },
+  {
+    label: 'Mount / exit animations',
+    note: 'choreographed in JS (Presence)',
+    cost: '+8 KB',
+  },
+];
+
+const KINU_STAGES: RaceStage[] = [
+  {
+    label: (
+      <>
+        Native <code>&lt;dialog&gt;</code> + <code>commandfor</code>
+      </>
+    ),
+    note: 'declarative open, ARIA, focus — no onClick',
+  },
+  {
+    label: 'CSS',
+    note: (
+      <>
+        anchor positioning, <code>@starting-style</code>,{' '}
+        <code>overscroll-behavior</code>
+      </>
+    ),
+  },
+];
+
+function RaceStageItem({
+  stage,
+  index,
+  variant,
+}: {
+  stage: RaceStage;
+  index: number;
+  variant: 'typical' | 'kinu';
+}) {
+  return (
+    <li
+      class="kh-race-stage"
+      style={{'--i': index}}
+      data-variant={variant}
+    >
+      <span class="kh-race-stage-dot" aria-hidden />
+      <span class="kh-race-stage-body">
+        <span class="kh-race-stage-label">{stage.label}</span>
+        {stage.note && (
+          <span class="kh-race-stage-note">{stage.note}</span>
+        )}
+      </span>
+      {stage.cost && (
+        <span class="kh-race-stage-cost">{stage.cost}</span>
+      )}
+    </li>
+  );
+}
+
+function RacePixels() {
+  return (
+    <div class="kh-race-pixel" aria-hidden>
+      <div class="kh-race-pixel-head">
+        <span class="kh-race-pixel-title">Notifications</span>
+        <span class="kh-race-pixel-pill">3</span>
+      </div>
+      <div class="kh-race-pixel-row">
+        <span class="kh-race-pixel-avatar" />
+        <span class="kh-race-pixel-lines">
+          <span class="kh-race-pixel-line kh-race-pixel-line--strong" />
+          <span class="kh-race-pixel-line" />
+        </span>
+      </div>
+      <div class="kh-race-pixel-row">
+        <span class="kh-race-pixel-avatar" />
+        <span class="kh-race-pixel-lines">
+          <span
+            class="kh-race-pixel-line kh-race-pixel-line--strong"
+            style={{width: '64%'}}
           />
-          <Label htmlFor="demo-agree">I agree to the terms</Label>
-        </div>
-        {errors.agreed && <div class="error-message">{errors.agreed}</div>}
+          <span class="kh-race-pixel-line" style={{width: '46%'}} />
+        </span>
       </div>
-      <Button onClick={handleSubmit}>Submit</Button>
-    </div>
-  );
-}
-
-function DataDemo() {
-  const [value, setValue] = useState(65);
-
-  return (
-    <div class="data-demo">
-      <div class="metric">
-        <div class="metric-label">System Performance</div>
-        <div class="metric-value">{Math.round(value)}%</div>
-      </div>
-      <Progress value={value} max={100} />
-      <div class="demo-controls">
-        <Slider
-          min={0}
-          max={100}
-          value={value}
-          onInput={(e) =>
-            setValue(Number((e.target as HTMLInputElement).value))
-          }
-        />
+      <div class="kh-race-pixel-foot">
+        <span class="kh-race-pixel-btn">View all</span>
       </div>
     </div>
   );
 }
 
-function SettingsDemo() {
-  const [notifications, setNotifications] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
-  const [volume, setVolume] = useState(75);
+type RaceBudget = {num: string; label: string; tone?: 'zero'};
 
+function RaceBudgets({budgets}: {budgets: [RaceBudget, RaceBudget]}) {
   return (
-    <div class="settings-demo">
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Push Notifications</div>
-          <div class="setting-desc">Receive updates and alerts</div>
-        </div>
-        <Switch
-          checked={notifications}
-          onInput={(e) =>
-            setNotifications((e.target as HTMLInputElement).checked)
-          }
-        />
-      </div>
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Dark Mode</div>
-          <div class="setting-desc">Use dark theme</div>
-        </div>
-        <Switch
-          checked={darkMode}
-          onInput={(e) => setDarkMode((e.target as HTMLInputElement).checked)}
-        />
-      </div>
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Volume</div>
-          <div class="setting-desc">{volume}%</div>
-        </div>
-        <Slider
-          min={0}
-          max={100}
-          value={volume}
-          onInput={(e) =>
-            setVolume(Number((e.target as HTMLInputElement).value))
-          }
-        />
-      </div>
-    </div>
-  );
-}
-
-function NotificationDemo() {
-  return (
-    <div class="notification-demo">
-      <div class="demo-buttons">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() =>
-            toast.show('Task completed!', {
-              title: 'Success',
-              icon: '✅',
-            })
-          }
+    <dl class="kh-race-budgets">
+      {budgets.map((b, i) => (
+        <div
+          key={i}
+          class={`kh-race-budget${b.tone ? ` kh-race-budget--${b.tone}` : ''}`}
         >
-          Success Toast
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() =>
-            toast.show('Connection lost', {
-              title: 'Warning',
-              icon: '⚠️',
-            })
-          }
-        >
-          Warning Toast
-        </Button>
+          <dt class="kh-race-budget-num">{b.num}</dt>
+          <dd class="kh-race-budget-label">{b.label}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function PipelineRace() {
+  // null = never played; n = play counter (changes force re-mount → restart animations)
+  const [runId, setRunId] = useState<number | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (runId !== null) return;
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) setRunId(0);
+      },
+      {threshold: 0.25, rootMargin: '0px 0px -80px 0px'},
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [runId]);
+
+  const replay = () => setRunId((n) => (n === null ? 0 : n + 1));
+  const playing = runId !== null;
+
+  return (
+    <div
+      class={`kh-race${playing ? ' kh-race--playing' : ''}`}
+      ref={ref}
+    >
+      <div
+        class="kh-race-diagram"
+        role="img"
+        aria-label="The same JSX renders to pixels through two pipelines. A typical React popover library (such as Radix or Base UI) chains six layers of JavaScript — positioning, focus trap, scroll lock, dismiss, animation coordination, and wrappers — that together ship about forty kilobytes gzipped and spend roughly one hundred twenty milliseconds running JavaScript on the main thread each time the popover opens. Kinu's pipeline is two native steps — a native dialog element opened declaratively by the commandfor attribute, and CSS for anchor positioning and animation — adding zero kilobytes of dependencies to your bundle and spending effectively no time running JavaScript. The browser does the open, the positioning, and the animation — the work a browser is built to do."
+      >
+      <div class="kh-race-source">
+        <span class="kh-race-source-tag">You write</span>
+        <pre class="kh-race-source-code">
+          <span class="kh-race-tok-punct">&lt;</span>
+          <span class="kh-race-tok-tag">Popover</span>
+          <span class="kh-race-tok-punct">&gt;</span>
+          <span class="kh-race-tok-text">…</span>
+          <span class="kh-race-tok-punct">&lt;/</span>
+          <span class="kh-race-tok-tag">Popover</span>
+          <span class="kh-race-tok-punct">&gt;</span>
+        </pre>
       </div>
-      <Alert>
-        <strong>Tip:</strong> Click the buttons above to see toast notifications
-        in action.
-      </Alert>
-      <Dialog>
-        <Dialog.Trigger>
-          <Button variant="outline" size="sm">
-            Open Dialog
-          </Button>
-        </Dialog.Trigger>
-        <Dialog.Content>
-          <h3>Confirm Action</h3>
-          <p>Are you sure you want to continue?</p>
-          <div class="dialog-actions">
-            <Dialog.Close>
-              <Button variant="outline">Cancel</Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button onClick={() => toast.show('Action confirmed!')}>
-                Confirm
-              </Button>
-            </Dialog.Close>
+      <svg
+        class="kh-race-fork"
+        viewBox="0 0 100 36"
+        preserveAspectRatio="none"
+        aria-hidden
+      >
+        <path
+          d="M 50 0 V 14 M 25 14 H 75 M 25 14 V 36 M 75 14 V 36"
+          stroke="currentColor"
+          stroke-width="1"
+          fill="none"
+          stroke-linecap="round"
+          vector-effect="non-scaling-stroke"
+        />
+      </svg>
+
+      <div class="kh-race-grid" key={runId ?? 'static'}>
+        <article class="kh-race-col kh-race-col--typical">
+          <header class="kh-race-col-head">
+            <span class="kh-race-col-name">Typical UI Kit</span>
+          </header>
+
+          <div class="kh-race-track">
+            <span class="kh-race-rail" aria-hidden />
+            <ol class="kh-race-stages">
+              {TYPICAL_STAGES.map((s, i) => (
+                <RaceStageItem
+                  key={i}
+                  stage={s}
+                  index={i}
+                  variant="typical"
+                />
+              ))}
+            </ol>
           </div>
-        </Dialog.Content>
-      </Dialog>
+
+          <footer class="kh-race-col-foot">
+            <RacePixels />
+            <RaceBudgets
+              budgets={[
+                {num: '+40 KB', label: 'JS'},
+                {num: '~120 ms', label: 'JS per open'},
+              ]}
+            />
+          </footer>
+        </article>
+
+        <article class="kh-race-col kh-race-col--kinu">
+          <header class="kh-race-col-head">
+            <span class="kh-race-col-name">Kinu</span>
+          </header>
+
+          <div class="kh-race-track">
+            <span class="kh-race-rail" aria-hidden />
+            <ol class="kh-race-stages">
+              {KINU_STAGES.map((s, i) => (
+                <RaceStageItem
+                  key={i}
+                  stage={s}
+                  index={i}
+                  variant="kinu"
+                />
+              ))}
+            </ol>
+          </div>
+
+          <footer class="kh-race-col-foot">
+            <RacePixels />
+            <RaceBudgets
+              budgets={[
+                {num: '0 KB', label: 'JS', tone: 'zero'},
+                {num: '~0 ms', label: 'JS per open', tone: 'zero'},
+              ]}
+            />
+          </footer>
+        </article>
+      </div>
+      </div>
+
+      <div class="kh-race-controls">
+        <button
+          type="button"
+          class="kh-race-replay"
+          onClick={replay}
+          aria-label="Replay the pipeline animation"
+        >
+          <svg
+            class="kh-race-replay-icon"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden
+          >
+            <path d="M3 12a9 9 0 1 0 3.27-6.95L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+          <span>Replay</span>
+        </button>
+      </div>
+
+      <p class="kh-race-caption">
+        Same JSX in. Same pixels out. The whole middle of the diagram lives in
+        your browser already.
+      </p>
     </div>
   );
 }
+
+/* ── 5. Command Palette (⌘K) ───────────────────────────────────────────── */
+
+const COMMANDS = [
+  {group: 'Pages',   id: 'p-gs', label: 'Open Getting Started',  shortcut: 'G S'},
+  {group: 'Pages',   id: 'p-bt', label: 'Open Button reference', shortcut: 'G B'},
+  {group: 'Pages',   id: 'p-dl', label: 'Open Dialog reference', shortcut: 'G D'},
+  {group: 'Actions', id: 'a-dk', label: 'Toggle dark mode',      shortcut: '⌘D'},
+  {group: 'Actions', id: 'a-cp', label: 'Copy npm install',      shortcut: '⌘C'},
+  {group: 'Actions', id: 'a-ai', label: 'Ask the AI Composer',   shortcut: '⌘K'},
+  {group: 'Recent',  id: 'r-1',  label: '/docs/dialog'},
+  {group: 'Recent',  id: 'r-2',  label: '/docs/popover'},
+];
+
+function CommandPalettePreview() {
+  const [filter, setFilter] = useState('');
+  const matches = COMMANDS.filter((c) =>
+    !filter || c.label.toLowerCase().includes(filter.toLowerCase()),
+  );
+  let lastGroup = '';
+  return (
+    <Listbox class="kh-cmd">
+      <ListboxInput
+        placeholder="Search docs, run a command…"
+        value={filter}
+        onInput={(e) => setFilter((e.target as HTMLInputElement).value)}
+      />
+      <ListboxList>
+        {matches.length === 0 && (
+          <p class="kh-cmd-empty">No commands match.</p>
+        )}
+        {matches.map((c) => {
+          const newGroup = c.group !== lastGroup;
+          lastGroup = c.group;
+          return (
+            <span key={c.id}>
+              {newGroup && <header class="kh-cmd-group">{c.group}</header>}
+              <Item
+                shortcut={c.shortcut}
+                onClick={() => toast.show(c.label, {title: 'Ran command'})}
+              >
+                {c.label}
+              </Item>
+            </span>
+          );
+        })}
+      </ListboxList>
+    </Listbox>
+  );
+}
+
+/* ── 6. Trip Booking — two Calendars + Select + computed total ──────────── */
+
+const PROPERTY_TYPES = [
+  {id: 'home',  label: 'House',     rate: 220},
+  {id: 'condo', label: 'Condo',     rate: 160},
+  {id: 'apt',   label: 'Apartment', rate: 130},
+  {id: 'hotel', label: 'Hotel',     rate: 95},
+];
+
+const FEATURE_OPTIONS = [
+  'Pet friendly', 'Crib / rollaway', 'Two bedrooms', 'City center',
+  'Balcony view', 'Workspace', 'EV charger', 'Pool', 'Hot tub',
+];
+
+function DateRangePreview() {
+  const [checkIn, setCheckIn] = useState('2026-04-28');
+  const [checkOut, setCheckOut] = useState('2026-05-02');
+  const [guests, setGuests] = useState(2);
+  const [propertyType, setPropertyType] = useState('condo');
+  const [features, setFeatures] = useState<string[]>(['City center', 'Balcony view']);
+  const [tagDraft, setTagDraft] = useState('');
+
+  const ms = new Date(checkOut).getTime() - new Date(checkIn).getTime();
+  const nights = Math.max(0, Math.round(ms / 86_400_000));
+  const rate = PROPERTY_TYPES.find((p) => p.id === propertyType)?.rate ?? 160;
+  const total = nights * rate;
+
+  const addFeature = (f: string) => {
+    if (!f || features.includes(f)) return;
+    setFeatures([...features, f]);
+    // Clear after the kinu Combobox has finished writing the picked
+    // value into the input on its own click handler.
+    requestAnimationFrame(() => setTagDraft(''));
+  };
+  const removeFeature = (f: string) =>
+    setFeatures((prev) => prev.filter((x) => x !== f));
+
+  return (
+    <form
+      class="kh-trip"
+      onSubmit={(e) => {
+        e.preventDefault();
+        toast.show(`Reserved ${nights} nights · $${total}`, {icon: '🗝️'});
+      }}
+    >
+      <ToggleGroup
+        type="single"
+        value={propertyType}
+        onValueChange={(v) => v && setPropertyType(v as string)}
+        class="kh-trip-types"
+      >
+        {PROPERTY_TYPES.map((p) => (
+          <Toggle key={p.id} value={p.id} type="button">{p.label}</Toggle>
+        ))}
+      </ToggleGroup>
+
+      <div class="kh-trip-dates">
+        <Field>
+          <Field.Label>Check-in</Field.Label>
+          <Calendar
+            value={checkIn}
+            onInput={(e) =>
+              setCheckIn((e.target as HTMLInputElement).value)
+            }
+          />
+        </Field>
+        <Field>
+          <Field.Label>Check-out</Field.Label>
+          <Calendar
+            value={checkOut}
+            onInput={(e) =>
+              setCheckOut((e.target as HTMLInputElement).value)
+            }
+          />
+        </Field>
+      </div>
+
+      <Field>
+        <Field.Label>Guests</Field.Label>
+        <Input
+          type="number"
+          min={1}
+          max={12}
+          value={String(guests)}
+          onInput={(e) =>
+            setGuests(
+              Math.max(1, Number((e.target as HTMLInputElement).value) || 1),
+            )
+          }
+        />
+      </Field>
+
+      <Field>
+        <Field.Label>Property features</Field.Label>
+        <div class="kh-trip-features">
+          {features.map((f) => (
+            <Chip key={f} variant="primary" form="">
+              {f}
+              <Chip.Button
+                onClick={() => removeFeature(f)}
+                aria-label={`Remove ${f}`}
+              >
+                ×
+              </Chip.Button>
+            </Chip>
+          ))}
+          <Combobox class="kh-trip-feature-add">
+            <ComboboxInput
+              placeholder="+ feature"
+              size="sm"
+              value={tagDraft}
+              onInput={(e) =>
+                setTagDraft((e.target as HTMLInputElement).value)
+              }
+              onKeyDown={(e) => {
+                if ((e as KeyboardEvent).key === 'Enter') {
+                  e.preventDefault();
+                  addFeature(tagDraft.trim());
+                }
+              }}
+            />
+            <ComboboxList>
+              {FEATURE_OPTIONS.filter(
+                (f) =>
+                  !features.includes(f) &&
+                  (!tagDraft ||
+                    f.toLowerCase().includes(tagDraft.toLowerCase())),
+              ).map((f) => (
+                <Item key={f} value={f} onClick={() => addFeature(f)}>
+                  {f}
+                </Item>
+              ))}
+            </ComboboxList>
+          </Combobox>
+        </div>
+      </Field>
+
+      <footer class="kh-trip-footer">
+        <span class="kh-trip-summary">
+          <strong>{nights}</strong> nights · ${total}
+        </span>
+        <Button type="submit" size="sm" disabled={nights === 0}>
+          Reserve
+        </Button>
+      </footer>
+    </form>
+  );
+}
+
+/* ── 8. Inbox — two-pane master/detail ──────────────────────────────────── */
+
+type InboxMsg = {
+  id: string;
+  initials: string;
+  from: string;
+  email: string;
+  subject: string;
+  preview: string;
+  time: string;
+  status?: 'success' | 'warning' | 'info';
+  unread: boolean;
+  body: string;
+};
+
+const INBOX: InboxMsg[] = [
+  {
+    id: 'jm', initials: 'JM', from: 'Jason Miller',  email: 'jason@kinu.sh',
+    subject: 'Build is green',
+    preview: 'CI is green and the bundle is at 11.2 kB.',
+    time: '2m', status: 'success', unread: true,
+    body:
+      "Hey — CI is green and the bundle is at 11.2 kB. The changeset touched theme tokens, so I tagged you. Want to look at it before I cut a release? No rush.",
+  },
+  {
+    id: 'as', initials: 'AS', from: 'Alex Stein',    email: 'alex@kinu.sh',
+    subject: 'Re: pricing draft',
+    preview: 'Team feels too cheap relative to Org.',
+    time: '14m', status: 'warning', unread: true,
+    body:
+      "Re: pricing draft — Team feels too cheap relative to Org. What if we move Team to $24 and bump Org to $59? It would also make the per-seat math line up better with the Slider in the demo.",
+  },
+  {
+    id: 'km', initials: 'KM', from: 'Karen Montoya', email: 'karen@kinu.sh',
+    subject: 'Weekly retro notes',
+    preview: 'Three highlights, two action items.',
+    time: '1h', unread: false,
+    body:
+      "Weekly retro: three highlights (commandFor pattern is finally clicking, the docs sidebar got nicer, OTP shipped) and two action items (split Tab and document anchor positioning fallbacks).",
+  },
+  {
+    id: 'tr', initials: 'TR', from: 'Toshi Rahman',  email: 'toshi@contoso.io',
+    subject: 'Re: Re: contract revisions',
+    preview: 'Legal cleared the indemnification clause.',
+    time: '2h', status: 'info', unread: false,
+    body:
+      "Re: Re: contract revisions — legal cleared the indemnification clause; we're ready for signature. They'd like the redline back by EOD Friday if at all possible.",
+  },
+];
+
+function InboxPreview() {
+  // Default to no selection — on mobile that means the list is the first
+  // surface you see, and tapping a row triggers the slide. On desktop the
+  // detail pane just shows the first message via shownRef without a row
+  // highlight until you click one.
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [readIds, setReadIds] = useState<Set<string>>(
+    () => new Set(INBOX.filter((m) => !m.unread).map((m) => m.id)),
+  );
+  const selected = INBOX.find((m) => m.id === selectedId);
+  // Keep the last-shown message rendered while the detail pane is sliding
+  // off — otherwise the content blanks halfway through the back animation.
+  const shownRef = useRef(INBOX[0]);
+  if (selected) shownRef.current = selected;
+  const shown = shownRef.current;
+  const isRead = (id: string) => readIds.has(id);
+  const unreadCount = INBOX.filter((m) => !isRead(m.id)).length;
+  const open = (id: string) => {
+    setSelectedId(id);
+    setReadIds((prev) => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+  };
+
+  return (
+    <div class="kh-inbox">
+      <header class="kh-inbox-bar">
+        <span class="kh-inbox-bar-slot">
+          <span class="kh-inbox-bar-title">
+            Inbox
+            {unreadCount > 0 && (
+              <Badge variant="primary" class="kh-inbox-bar-count">
+                {unreadCount}
+              </Badge>
+            )}
+          </span>
+          <Button
+            variant="ghost"
+            size="sm"
+            class="kh-inbox-back"
+            onClick={() => setSelectedId(null)}
+            aria-label="Back to inbox"
+          >
+            ← Inbox
+          </Button>
+        </span>
+        <Popover>
+          <PopoverTrigger>
+            <button class="kh-account-trigger" type="button" aria-label="Account">
+              <Avatar size="sm">JM</Avatar>
+              <span class="kh-account-name">Jason</span>
+              <span class="kh-account-chev" aria-hidden>▾</span>
+            </button>
+          </PopoverTrigger>
+          <PopoverContent class="kh-account-pop" mobile="drawer">
+            <header class="kh-account-head">
+              <Avatar size="lg">JM</Avatar>
+              <span class="kh-account-headtext">
+                <strong>Jason Miller</strong>
+                <span class="kh-account-email">jason@kinu.sh</span>
+                <Status pulse variant="success" class="kh-account-status">
+                  Online
+                </Status>
+              </span>
+            </header>
+            <Separator />
+            <div class="kh-account-list">
+              <Item onClick={() => toast.show('Profile')} shortcut="⌘P">
+                Profile
+              </Item>
+              <Item onClick={() => toast.show('Settings')} shortcut="⌘,">
+                Settings
+              </Item>
+              <Item onClick={() => toast.show('Billing')}>
+                Billing <Badge variant="outline">Pro</Badge>
+              </Item>
+            </div>
+            <Separator />
+            <div class="kh-account-list">
+              <Item destructive onClick={() => toast.show('Signed out')}>
+                Sign out
+              </Item>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </header>
+      <div class="kh-inbox-body">
+        <Listbox class="kh-inbox-list">
+          <ListboxList>
+            {INBOX.map((m) => (
+              <ContextMenu key={m.id}>
+                <ContextMenuTrigger>
+                  <Item
+                    selected={selectedId === m.id}
+                    onClick={() => open(m.id)}
+                    class={`kh-inbox-link${isRead(m.id) ? '' : ' is-unread'}`}
+                  >
+                    <span class="kh-inbox-avatar">
+                      <Avatar size="sm">{m.initials}</Avatar>
+                      {m.status && (
+                        <Status
+                          variant={m.status}
+                          aria-label={m.status}
+                          class="kh-inbox-presence"
+                        />
+                      )}
+                    </span>
+                    <span class="kh-inbox-text">
+                      <span class="kh-inbox-line">
+                        <strong>{m.from.split(' ')[0]}</strong>
+                        <span class="kh-inbox-time">{m.time}</span>
+                      </span>
+                      <span class="kh-inbox-preview">{m.preview}</span>
+                    </span>
+                    {!isRead(m.id) && (
+                      <span class="kh-inbox-dot" aria-label="unread" />
+                    )}
+                  </Item>
+                </ContextMenuTrigger>
+                <ContextMenuContent mobile="drawer">
+                  <Item onClick={() => open(m.id)}>Open</Item>
+                  <Item onClick={() => toast.show(`Archived · ${m.from}`)}>
+                    Archive
+                  </Item>
+                  <Item onClick={() => toast.show(`Starred · ${m.from}`)}>
+                    Star
+                  </Item>
+                  <Item destructive onClick={() => toast.show(`Deleted · ${m.from}`)}>
+                    Delete
+                  </Item>
+                </ContextMenuContent>
+              </ContextMenu>
+            ))}
+          </ListboxList>
+        </Listbox>
+        <article class="kh-inbox-detail">
+          <header class="kh-inbox-detail-head">
+            <div class="kh-inbox-detail-from">
+              <Avatar size="sm">{shown.initials}</Avatar>
+              <div>
+                <strong>{shown.from}</strong>
+                <span class="kh-inbox-detail-email">{shown.email}</span>
+              </div>
+            </div>
+            <span class="kh-inbox-time">{shown.time}</span>
+          </header>
+          <h4 class="kh-inbox-subject">{shown.subject}</h4>
+          <p class="kh-inbox-body-text">{shown.body}</p>
+        </article>
+      </div>
+    </div>
+  );
+}
+
+/* ── Settings — Tabs (Profile / Theme / Plan) ──────────────────────────── *
+ * Combines the avatar upload, theme studio, and pricing calculator demos
+ * into a single multi-tab panel — exactly the kind of place where Tabs
+ * earn their keep (separate facets of one screen, not multi-document UI).
+ * The avatar upload reads the chosen file with URL.createObjectURL and
+ * sets it as the live Avatar src (no upload, just a blob URL on the
+ * client). The Theme tab pipes its picker into a real --k-* override on
+ * an inline preview card, so editing actually re-themes the kinu Buttons
+ * + Badge inside it. The Plan tab keeps the ToggleGroup + Slider + Switch
+ * pricing math.
+ */
+
+const SETTINGS_PLAN_PRICE: Record<string, number> = {solo: 9, team: 22, org: 49};
+const SETTINGS_PLAN_DESC: Record<string, string> = {
+  solo: '1 seat · personal projects',
+  team: 'unlimited projects · priority support',
+  org:  'SSO · audit log · SLA',
+};
+
+function SettingsPreview() {
+  const [tab, setTab] = useState<'profile' | 'theme' | 'plan'>('profile');
+  return (
+    <div class="kh-settings">
+      <TabList class="kh-settings-tabs">
+        <Tab
+          aria-selected={tab === 'profile'}
+          onClick={() => setTab('profile')}
+        >
+          Profile
+        </Tab>
+        <Tab aria-selected={tab === 'theme'} onClick={() => setTab('theme')}>
+          Theme
+        </Tab>
+        <Tab aria-selected={tab === 'plan'} onClick={() => setTab('plan')}>
+          Plan
+        </Tab>
+      </TabList>
+      {tab === 'profile' && <SettingsProfile />}
+      {tab === 'theme' && <SettingsTheme />}
+      {tab === 'plan' && <SettingsPlan />}
+    </div>
+  );
+}
+
+function SettingsProfile() {
+  const [email] = useState('jason@kinu.sh');
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const lastBlobRef = useRef<string | null>(null);
+  // Stays in the verifying state for the demo so the OTP UI is visible.
+  const verifying = true;
+
+  // Revoke any previously-issued blob URL when the component unmounts so
+  // we don't leak object references across re-renders.
+  useEffect(() => () => {
+    if (lastBlobRef.current) URL.revokeObjectURL(lastBlobRef.current);
+  }, []);
+
+  const onPickAvatar = (e: Event) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    if (lastBlobRef.current) URL.revokeObjectURL(lastBlobRef.current);
+    const url = URL.createObjectURL(file);
+    lastBlobRef.current = url;
+    setAvatarUrl(url);
+  };
+
+  return (
+    <TabPanel class="kh-settings-panel">
+      <div class="kh-settings-avatar">
+        {avatarUrl ? (
+          <Avatar size="lg" src={avatarUrl} alt="Profile" />
+        ) : (
+          <Avatar size="lg">JM</Avatar>
+        )}
+        <Field>
+          <Field.Label>Avatar</Field.Label>
+          <FileUpload accept="image/*" onChange={onPickAvatar} />
+        </Field>
+      </div>
+      <Field>
+        <Field.Label>Email</Field.Label>
+        <InputGroup>
+          <Input value={email} disabled />
+          <Button type="button" variant="outline">
+            Verify
+          </Button>
+        </InputGroup>
+      </Field>
+      {verifying && <VerifyEmailBlock email={email} />}
+    </TabPanel>
+  );
+}
+
+function VerifyEmailBlock({email}: {email: string}) {
+  const [code, setCode] = useState('');
+  const [seconds, setSeconds] = useState(42);
+
+  useEffect(() => {
+    if (seconds <= 0) return;
+    const id = setTimeout(() => setSeconds((s) => s - 1), 1000);
+    return () => clearTimeout(id);
+  }, [seconds]);
+
+  return (
+    <div class="kh-verify">
+      <p class="kh-verify-lede">
+        We sent a code to <code>{email}</code>.
+      </p>
+      <OTPInput
+        maxLength={6}
+        value={code}
+        onInput={(e) =>
+          setCode(
+            (e.target as HTMLInputElement).value.replace(/\D/g, '').slice(0, 6),
+          )
+        }
+        aria-label="Verification code"
+      />
+      <div class="kh-verify-foot">
+        <span class="kh-verify-resend">
+          {seconds > 0 ? (
+            <>
+              Resend in <strong>0:{seconds.toString().padStart(2, '0')}</strong>
+            </>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              type="button"
+              onClick={() => {
+                setSeconds(42);
+                toast.show('Code re-sent');
+              }}
+            >
+              Resend code
+            </Button>
+          )}
+        </span>
+        <Button
+          type="button"
+          size="sm"
+          disabled={code.length < 6}
+          onClick={() => {
+            toast.show('Email verified', {icon: '✓'});
+            setCode('');
+          }}
+        >
+          Verify
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function SettingsTheme() {
+  const [color, setColor] = useState('#3f5246');
+  const [radius, setRadius] = useState('md');
+  const radii: Record<string, string> = {
+    none: '0',
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '0.75rem',
+    full: '999px',
+  };
+  const cssVars = `--k-primary:${hexToHsl(color)};--k-radius:${radii[radius]}`;
+
+  return (
+    <TabPanel class="kh-settings-panel">
+      <Field>
+        <Field.Label>Primary color</Field.Label>
+        <ColorPicker
+          value={color}
+          onInput={(e) => setColor((e.target as HTMLInputElement).value)}
+        />
+      </Field>
+      <Field>
+        <Field.Label>Corner radius</Field.Label>
+        <ToggleGroup
+          type="single"
+          value={radius}
+          onValueChange={(v) => v && setRadius(v as string)}
+        >
+          <Toggle value="none">none</Toggle>
+          <Toggle value="sm">sm</Toggle>
+          <Toggle value="md">md</Toggle>
+          <Toggle value="lg">lg</Toggle>
+          <Toggle value="full">full</Toggle>
+        </ToggleGroup>
+      </Field>
+      <Card padding="sm" class="kh-settings-stage" style={cssVars}>
+        <span class="kh-settings-stage-label">Live preview</span>
+        <div class="kh-settings-stage-row">
+          <Button size="sm">Primary</Button>
+          <Button size="sm" variant="outline">Outline</Button>
+          <Badge>Badge</Badge>
+        </div>
+      </Card>
+    </TabPanel>
+  );
+}
+
+function SettingsPlan() {
+  const [plan, setPlan] = useState('team');
+  const [seats, setSeats] = useState(12);
+  const [annual, setAnnual] = useState(true);
+
+  const monthly = SETTINGS_PLAN_PRICE[plan] * seats;
+  const total = annual ? Math.round(monthly * 12 * 0.85) : monthly;
+
+  return (
+    <TabPanel class="kh-settings-panel">
+      <ToggleGroup
+        type="single"
+        value={plan}
+        onValueChange={(v) => v && setPlan(v as string)}
+      >
+        <Toggle value="solo">Solo</Toggle>
+        <Toggle value="team">Team</Toggle>
+        <Toggle value="org">Org</Toggle>
+      </ToggleGroup>
+      <Label class="kh-settings-annual">
+        <Switch
+          checked={annual}
+          onInput={(e) =>
+            setAnnual((e.target as HTMLInputElement).checked)
+          }
+        />
+        <span>Annual billing</span>
+        {annual && <Badge variant="outline">15% off</Badge>}
+      </Label>
+      <Field>
+        <Field.Label>
+          Seats: <strong>{seats}</strong>
+        </Field.Label>
+        <Slider
+          min={1}
+          max={50}
+          value={seats}
+          onInput={(e) =>
+            setSeats(Number((e.target as HTMLInputElement).value))
+          }
+        />
+      </Field>
+      <p class="kh-settings-desc">{SETTINGS_PLAN_DESC[plan]}</p>
+      <footer class="kh-settings-total">
+        <span class="kh-settings-amount">${total.toLocaleString()}</span>
+        <span class="kh-settings-period">{annual ? '/year' : '/mo'}</span>
+      </footer>
+    </TabPanel>
+  );
+}
+
+/* hex→HSL helper used by the Theme tab in Settings. */
+function hexToHsl(hex: string): string {
+  const n = parseInt(hex.replace('#', ''), 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return `0 0% ${Math.round(l * 100)}%`;
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h = 0;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+}
+
