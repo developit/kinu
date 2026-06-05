@@ -17,7 +17,9 @@ export function createSimpleComponent<
 >(
   name: string,
   tag: T | ((props: P & JSX.IntrinsicElements[T]) => T) = 'div' as T,
-  defaultProps?: Partial<JSX.IntrinsicElements[T]>,
+  defaultProps?:
+    | Partial<JSX.IntrinsicElements[T]>
+    | ((props: P & JSX.IntrinsicElements[T]) => Partial<JSX.IntrinsicElements[T]>),
   ref?: RefCallbackWithCleanup<HTMLElementTagNameMap[T]>,
 ) {
   type Props = Omit<JSX.IntrinsicElements[T], keyof P> &
@@ -26,7 +28,12 @@ export function createSimpleComponent<
       ref?: Ref<HTMLElementTagNameMap[T]>;
     };
 
-  const defaultDescriptors = Object.getOwnPropertyDescriptors(defaultProps || {});
+  // When defaultProps is a function, we call it per-render and use its return
+  // value as the full final props. When it's an object, descriptors (with
+  // getters) are merged as fallbacks (props win).
+  const defaultDescriptors = Object.getOwnPropertyDescriptors(
+    typeof defaultProps == 'function' ? {} : defaultProps || {},
+  );
 
   function proxyRef(
     this: Ref<HTMLElementTagNameMap[T]>,
@@ -45,14 +52,12 @@ export function createSimpleComponent<
   }
 
   const Wrap = forwardRef<HTMLElementTagNameMap[T], Props>(function Wrap(this: ComponentInstance, props, fwdRef) {
-    let normalizedProps = props;
+    let normalizedProps: any = props;
     if (defaultProps || ref) {
-      const propsWithDefaults = Object.create(props, defaultDescriptors);
-      normalizedProps = Object.assign(
-        {},
-        propsWithDefaults,
-        props,
-      );
+      normalizedProps =
+        typeof defaultProps == 'function'
+          ? (defaultProps as any)(props)
+          : Object.assign({}, Object.create(props, defaultDescriptors), props);
       normalizedProps.ref =
         this.$_ref || (this.$_ref = proxyRef.bind(fwdRef || props.ref as any) as any);
     } else if (fwdRef) {
@@ -61,7 +66,7 @@ export function createSimpleComponent<
       // way k is. (Cheaper than cloning props.)
       (normalizedProps as any).ref = fwdRef;
     }
-    (normalizedProps as any).k = name;
+    normalizedProps.k = name;
     const resolvedTag = typeof tag === 'function' ? tag(props) : tag;
     return h(resolvedTag, normalizedProps);
   });

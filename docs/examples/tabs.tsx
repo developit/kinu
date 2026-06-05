@@ -1,24 +1,23 @@
 import {Tab, TabList, TabPanel} from 'kinu';
-import {useState} from 'preact/hooks';
 
 export function Demo() {
-  const [tab, setTab] = useState<'first' | 'second'>('first');
   return (
     <div>
       <TabList>
-        <Tab aria-selected={tab === 'first'} onClick={() => setTab('first')}>
-          First
-        </Tab>
-        <Tab aria-selected={tab === 'second'} onClick={() => setTab('second')}>
-          Second
-        </Tab>
+        <Tab defaultChecked>First</Tab>
+        <Tab>Second</Tab>
       </TabList>
-      {tab === 'first' && <TabPanel>Content for first tab.</TabPanel>}
-      {tab === 'second' && <TabPanel>Second tab panel.</TabPanel>}
+      <TabPanel>Content for first tab.</TabPanel>
+      <TabPanel>Second tab panel.</TabPanel>
     </div>
   );
 }
 
-export const code = `<TabList>...</TabList>`;
+export const code = `<TabList>
+  <Tab defaultChecked>First</Tab>
+  <Tab>Second</Tab>
+</TabList>
+<TabPanel>Content for first tab.</TabPanel>
+<TabPanel>Second tab panel.</TabPanel>`;
 
 export default {Demo, code};

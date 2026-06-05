@@ -30,10 +30,10 @@ overlays, so there is no separate setup step.
 - `show` — calls `show()` on a dialog, used by dropdown style menus.
 - `close` — closes the target dialog.
 
-Commands dispatch as CustomEvents so you can intercept them if you need custom behavior:
+Commands dispatch as native `command` events you can intercept:
 
 ```ts
-document.addEventListener('kinu-command', (event) => {
-  // event.detail: {command: string, target: HTMLElement}
+document.addEventListener('command', (event) => {
+  // event.command: string, event.source: HTMLElement
 });
 ```

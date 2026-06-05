@@ -4945,59 +4945,37 @@ export default function Dashboard() {
       <main className="dashboard-main">
         {isMobile ? (
           <div className="mobile-tabs">
-            <TabList className="mobile-tab-list">
-              <Tab
-                aria-selected={activeTab === 'overview'}
-                onClick={() => setActiveTab('overview')}
-                className="mobile-tab"
-              >
-                <iconify-icon
-                  icon="lucide:bar-chart-3"
-                  width="16"
-                  height="16"
-                  style={{marginRight: '0.25rem'}}
-                />
-                Overview
-              </Tab>
-              <Tab
-                aria-selected={activeTab === 'transactions'}
-                onClick={() => setActiveTab('transactions')}
-                className="mobile-tab"
-              >
-                <iconify-icon
-                  icon="lucide:credit-card"
-                  width="16"
-                  height="16"
-                  style={{marginRight: '0.25rem'}}
-                />
-                Transactions
-              </Tab>
-              <Tab
-                aria-selected={activeTab === 'goals'}
-                onClick={() => setActiveTab('goals')}
-                className="mobile-tab"
-              >
-                <iconify-icon
-                  icon="lucide:target"
-                  width="16"
-                  height="16"
-                  style={{marginRight: '0.25rem'}}
-                />
-                Goals
-              </Tab>
-              <Tab
-                aria-selected={activeTab === 'settings'}
-                onClick={() => setActiveTab('settings')}
-                className="mobile-tab"
-              >
-                <iconify-icon
-                  icon="lucide:settings"
-                  width="16"
-                  height="16"
-                  style={{marginRight: '0.25rem'}}
-                />
-                Settings
-              </Tab>
+            <TabList
+              className="mobile-tab-list"
+              onChange={(e: JSX.TargetedEvent<HTMLDivElement, Event>) =>
+                setActiveTab(
+                  (e.target as HTMLInputElement).value as typeof activeTab,
+                )
+              }
+            >
+              {(
+                [
+                  ['overview', 'lucide:bar-chart-3', 'Overview'],
+                  ['transactions', 'lucide:credit-card', 'Transactions'],
+                  ['goals', 'lucide:target', 'Goals'],
+                  ['settings', 'lucide:settings', 'Settings'],
+                ] as const
+              ).map(([id, icon, label]) => (
+                <Tab
+                  key={id}
+                  value={id}
+                  checked={activeTab === id}
+                  className="mobile-tab"
+                >
+                  <iconify-icon
+                    icon={icon}
+                    width="16"
+                    height="16"
+                    style={{marginRight: '0.25rem'}}
+                  />
+                  {label}
+                </Tab>
+              ))}
             </TabList>
             <div className="tab-content">{tabContent[activeTab]}</div>
           </div>

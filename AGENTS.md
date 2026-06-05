@@ -42,14 +42,14 @@ export function Dialog({defaultOpen, children}: DialogProps) {
 Styling is handled with attribute selectors. Component props are forwarded to attributes so CSS controls variants and states:
 
 ```css
-[p="button"] {
-  background-color: hsl(var(--p-primary));
-  color: hsl(var(--p-primary-foreground));
+[k="button"] {
+  background-color: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
 }
 
-[p="button"][variant="outline"] {
-  background-color: hsl(var(--p-background));
-  border: 1px solid hsl(var(--p-border));
+[k="button"][variant="outline"] {
+  background-color: hsl(var(--k-background));
+  border: 1px solid hsl(var(--k-border));
 }
 ```
 
@@ -62,14 +62,14 @@ All simple components are located in `src/components/` and import their own `sty
 We never use JavaScript to express basic logic when the same outcome can be achieved in CSS. For example, rather than destructuring props to add a fallback value of "default" for "variant", we simply include the empty case in our CSS selector:
 
 ```css
-[p="button"][variant="default"],
-[p="button"]:not([variant]) {
-  background-color: hsl(var(--p-background));
-  border: 1px solid hsl(var(--p-border));
+[k="button"][variant="default"],
+[k="button"]:not([variant]) {
+  background-color: hsl(var(--k-background));
+  border: 1px solid hsl(var(--k-border));
 }
 ```
 
-Alternatively, for a enum/boolean prop that has a default value like the above, it's often the case that the set of CSS properties applied dependent on the prop value are always the same. When this is true, you can omit the entire `[p="button"][variant="default"], [p="button"]:not([variant])` selector entirely and simply apply the default CSS properties in the element's base selector (`[p="button"]`).
+Alternatively, for a enum/boolean prop that has a default value like the above, it's often the case that the set of CSS properties applied dependent on the prop value are always the same. When this is true, you can omit the entire `[k="button"][variant="default"], [k="button"]:not([variant])` selector entirely and simply apply the default CSS properties in the element's base selector (`[k="button"]`).
 
 ## Repository Structure
 

@@ -77,7 +77,6 @@ const tracks = [
 ];
 
 export default function Player() {
-  const [tab, setTab] = useState<'playlist' | 'queue' | 'library'>('playlist');
   const [volume, setVolume] = useState(65);
   const [currentTrack, setCurrentTrack] = useState(tracks[0]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -235,28 +234,11 @@ export default function Player() {
         <div class="playlist-sidebar">
           <Card class="playlist-card">
             <TabList>
-              <Tab
-                aria-selected={tab === 'playlist'}
-                onClick={() => setTab('playlist')}
-              >
-                Playlist
-              </Tab>
-              <Tab
-                aria-selected={tab === 'queue'}
-                onClick={() => setTab('queue')}
-              >
-                Queue
-              </Tab>
-              <Tab
-                aria-selected={tab === 'library'}
-                onClick={() => setTab('library')}
-              >
-                Library
-              </Tab>
+              <Tab defaultChecked>Playlist</Tab>
+              <Tab>Queue</Tab>
+              <Tab>Library</Tab>
             </TabList>
-
-            {tab === 'playlist' && (
-              <TabPanel class="playlist-tab-panel">
+            <TabPanel class="playlist-tab-panel">
                 <ScrollArea class="track-list">
                   {trackList.map((track) => (
                     <ContextMenu key={track.id}>
@@ -329,9 +311,7 @@ export default function Player() {
                   ))}
                 </ScrollArea>
               </TabPanel>
-            )}
 
-            {tab === 'queue' && (
               <TabPanel>
                 {queue.length === 0 ? (
                   <div class="empty-state">
@@ -372,9 +352,6 @@ export default function Player() {
                   </ScrollArea>
                 )}
               </TabPanel>
-            )}
-
-            {tab === 'library' && (
               <TabPanel>
                 <div class="library-stats">
                   <div class="stat-item">
@@ -397,7 +374,6 @@ export default function Player() {
                   </Button>
                 </div>
               </TabPanel>
-            )}
           </Card>
         </div>
       </div>

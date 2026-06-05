@@ -69,12 +69,15 @@ export const Button = createSimpleComponent('button', 'button');
 ```
 
 ```tsx
-// Basic tabs composed from lightweight wrappers
+// Tabs over a native <input type="radio"> group — exclusive selection,
+// keyboard nav, and form-exclusion are all platform behavior; zero JS state.
+// Panels are siblings *after* TabList, mapped by position (Nth tab → Nth panel).
 <TabList>
-  <Tab aria-selected="true">First</Tab>
+  <Tab defaultChecked>First</Tab>
   <Tab>Second</Tab>
 </TabList>
-<TabPanel>Panel content</TabPanel>
+<TabPanel>First panel content</TabPanel>
+<TabPanel>Second panel content</TabPanel>
 ```
 
 ## Components
