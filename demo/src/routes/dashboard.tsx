@@ -8,6 +8,8 @@ import {
   Textarea,
   Switch,
   Progress,
+  TabList,
+  Tab,
   Alert,
   DropdownMenu,
   DropdownMenuTrigger,
@@ -4943,7 +4945,14 @@ export default function Dashboard() {
       <main className="dashboard-main">
         {isMobile ? (
           <div className="mobile-tabs">
-            <div className="mobile-tab-list" role="tablist">
+            <TabList
+              className="mobile-tab-list"
+              onChange={(e: JSX.TargetedEvent<HTMLDivElement, Event>) =>
+                setActiveTab(
+                  (e.target as HTMLInputElement).value as typeof activeTab,
+                )
+              }
+            >
               {(
                 [
                   ['overview', 'lucide:bar-chart-3', 'Overview'],
@@ -4952,12 +4961,10 @@ export default function Dashboard() {
                   ['settings', 'lucide:settings', 'Settings'],
                 ] as const
               ).map(([id, icon, label]) => (
-                <button
+                <Tab
                   key={id}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeTab === id}
-                  onClick={() => setActiveTab(id)}
+                  value={id}
+                  checked={activeTab === id}
                   className="mobile-tab"
                 >
                   <iconify-icon
@@ -4967,9 +4974,9 @@ export default function Dashboard() {
                     style={{marginRight: '0.25rem'}}
                   />
                   {label}
-                </button>
+                </Tab>
               ))}
-            </div>
+            </TabList>
             <div className="tab-content">{tabContent[activeTab]}</div>
           </div>
         ) : (
