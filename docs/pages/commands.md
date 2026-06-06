@@ -30,6 +30,22 @@ overlays, so there is no separate setup step.
 - `show` — calls `show()` on a dialog, used by dropdown style menus.
 - `close` — closes the target dialog.
 
+## Swipeable Overlays
+
+Drawer, Sheet, and Sidebar install one extra helper, `installSwipe`, alongside
+the command polyfill. On touch devices their `<dialog>` becomes a native CSS
+scroll-snap container — the panel sits beside an empty "rail" you can fling it
+into — so the gesture, momentum, and snap-back are all the browser's. The
+helper only touches the scroller at the open/close boundaries:
+
+- On open (`beforetoggle`) it jumps to the rail and smooth-scrolls the panel in.
+- On `scrollend`, if a dismiss gesture has flung the panel off-screen, it calls
+  `close()`.
+
+CSS opts a dialog in by setting `--swipe: 1` inside the relevant media query, so
+the same markup renders a transform-animated overlay on desktop and a
+gesture-driven one on touch with no branching in JavaScript.
+
 Commands dispatch as CustomEvents so you can intercept them if you need custom behavior:
 
 ```ts

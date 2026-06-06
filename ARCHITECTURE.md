@@ -108,8 +108,8 @@ export const Button = createSimpleComponent('button', 'button');
 - **Table**: Basic styled table
 - **Collapsible**: Toggle visibility of content
 - **Resizable**: User-resizable panel
-- **Sheet**: Sliding side panel
-- **Sidebar**: Vertical navigation container
+- **Sheet**: Sliding side panel (swipe-to-dismiss on touch)
+- **Sidebar**: Vertical navigation container (swipeable when modal on touch)
 - **Breadcrumb**: Page hierarchy navigation
 - **Menubar**: Horizontal menu of actions
 - **NavigationMenu**: Complex nav menu
@@ -120,7 +120,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Listbox**: Non-modal filterable list (inline command palette)
 - **Chip**: Badge with icon button
 - **ContextMenu**: Right-click menu
-- **Drawer**: Bottom sliding panel
+- **Drawer**: Bottom sliding panel (swipe-to-dismiss on touch)
 - **DropdownMenu**: Triggered action list
 - **HoverCard**: Card shown on hover
 - **Calendar**: Date selection input

@@ -77,6 +77,14 @@ export function installDialogsDropdowns() {
 function dialogsDropdownsClickHandler(e: MouseEvent) {
   const target = e.target as Element;
 
+  // close on swipe-dismiss rail tap (the dimmed area beside a swipeable panel)
+  const rail = target.closest?.('[k$="-rail"]');
+  if (rail) {
+    (rail.closest('dialog') as HTMLDialogElement | null)?.close();
+    e.preventDefault();
+    return;
+  }
+
   // close on backdrop click
   if (target.localName === 'dialog' && target.getAttribute('k')) {
     const {clientX, clientY} = e;
@@ -160,4 +168,72 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
     e.preventDefault();
     break;
   }
+}
+
+// Swipeable Drawer / Sheet / Sidebar.
+//
+// The motion, gesture, momentum and snap-back all live in CSS: each panel sits
+// inside a scroll-snap container (the <dialog> itself) next to an empty "rail"
+// that you scroll it away into. This handler is the entire JS control plane —
+// it only nudges the native scroller at the open/close boundaries; the finger
+// tracking in between is the browser's.
+//
+// CSS opts a dialog in by setting `--swipe: 1` (inside the relevant media
+// query), so the same component renders a plain transform-animated overlay on
+// desktop and a gesture-driven one on touch with zero branching here.
+const SWIPE = '[k="drawer-content"],[k="sheet-content"],[k="sidebar"]';
+
+let swipeInstalled: boolean;
+export function installSwipe() {
+  if (swipeInstalled) return;
+  if (typeof document === 'undefined') return;
+  swipeInstalled = true;
+  addEventListener('beforetoggle', swipeToggle as EventListener, true);
+  addEventListener('scrollend', swipeSettle, true);
+}
+
+/** A swipeable scroller that CSS has currently put into gesture mode, else null. */
+function swipeScroller(target: EventTarget | null) {
+  const el = target as Element | null;
+  if (!el?.matches?.(SWIPE)) return null;
+  return getComputedStyle(el).getPropertyValue('--swipe')
+    ? (el as HTMLDialogElement)
+    : null;
+}
+
+/** Is any part of `el` inside the viewport? (A panel snapped to the rail isn't.) */
+function onScreen(el: Element) {
+  const r = el.getBoundingClientRect();
+  return r.top < innerHeight && r.bottom > 0 && r.left < innerWidth && r.right > 0;
+}
+
+// Dialogs whose entrance scroll is still in flight — their first `scrollend`
+// is our own and must not be read as a dismiss.
+const entering = new WeakSet<EventTarget>();
+
+// Entrance: the moment the overlay enters the top layer, snap to the closed
+// (rail) edge and glide the panel in. Same two lines slide a drawer up, a sheet
+// in from the side, or a sidebar across — the axis is entirely the CSS's call.
+function swipeToggle(e: ToggleEvent) {
+  if (e.newState !== 'open') return;
+  const el = swipeScroller(e.target);
+  const rail = el?.querySelector(':scope > [k$="-rail"]');
+  const panel = el?.querySelector(':scope > [k$="-panel"]');
+  if (!el || !rail || !panel) return;
+  entering.add(el);
+  requestAnimationFrame(() => {
+    rail.scrollIntoView({behavior: 'instant'} as ScrollIntoViewOptions);
+    panel.scrollIntoView({behavior: 'smooth'});
+  });
+}
+
+// Dismiss: when a gesture settles with the panel flung off screen, close for
+// real. Closing is otherwise instant — there's no close path to intercept.
+function swipeSettle(e: Event) {
+  const el = swipeScroller(e.target);
+  if (!el?.open) return;
+  // Swallow the settle from our own entrance scroll.
+  if (entering.delete(el)) return;
+  const panel = el.querySelector(':scope > [k$="-panel"]');
+  if (panel && !onScreen(panel)) el.close();
 }

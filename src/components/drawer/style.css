@@ -1,4 +1,5 @@
 @import "../../variables.css";
+@import "../_swipe.css";
 
 [k="drawer-content"] {
   border: none;
@@ -37,6 +38,15 @@
   }
 }
 
+/* The swipe scaffolding is inert on desktop: the rail collapses and the panel
+   is a transparent passthrough, so the dialog looks exactly as it did. */
+[k="drawer-rail"] {
+  display: none;
+}
+[k="drawer-panel"] {
+  display: contents;
+}
+
 [k="drawer-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(1px);
@@ -57,5 +67,30 @@
 @starting-style {
   [k="drawer-content"][open]::backdrop {
     opacity: 0;
+  }
+}
+
+/* Touch: slide up from the bottom edge, swipe down to dismiss. */
+@media (hover: none) and (pointer: coarse) {
+  [k="drawer-content"] {
+    --swipe-axis: column;
+    --swipe-snap: y mandatory;
+  }
+  [k="drawer-content"] > [k="drawer-panel"] {
+    --swipe-align: end;
+    width: 100%;
+    max-height: 90dvh;
+    border-radius: 1rem 1rem 0 0;
+  }
+  /* Grab handle. */
+  [k="drawer-content"] > [k="drawer-panel"]::before {
+    content: "";
+    width: 2rem;
+    height: 0.25rem;
+    flex: none;
+    align-self: center;
+    margin-bottom: 0.75rem;
+    border-radius: 1rem;
+    background: hsl(var(--k-muted-foreground) / 0.4);
   }
 }

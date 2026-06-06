@@ -47,6 +47,10 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'kinu';
 
 - Positions content with CSS variables so you can change direction.
 - Attach Drawer.Close to any element that should dismiss.
+- On touch devices the drawer is swipeable: it opens by gliding up and is
+  dismissed by flinging it down. The gesture is native CSS scroll-snapping —
+  see [Command Attributes](../pages/commands.md) for the tiny `installSwipe`
+  helper that drives the open/close edges.
 
 ---
 
