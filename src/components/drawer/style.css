@@ -1,5 +1,4 @@
 @import "../../variables.css";
-@import "../_swipe.css";
 
 [k="drawer-content"] {
   border: none;
@@ -38,15 +37,6 @@
   }
 }
 
-/* The swipe scaffolding is inert on desktop: the rail collapses and the panel
-   is a transparent passthrough, so the dialog looks exactly as it did. */
-[k="drawer-rail"] {
-  display: none;
-}
-[k="drawer-panel"] {
-  display: contents;
-}
-
 [k="drawer-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
   backdrop-filter: blur(1px);
@@ -70,27 +60,72 @@
   }
 }
 
-/* Touch: slide up from the bottom edge, swipe down to dismiss. */
+/* Touch: the dialog becomes a scroll-snap scroller. A ::before pseudo acts as
+   the transparent "rail" you fling the panel into; background-attachment:local
+   paints the panel surface behind the content without any wrapper divs. */
 @media (hover: none) and (pointer: coarse) {
   [k="drawer-content"] {
-    --swipe-axis: column;
-    --swipe-snap: y mandatory;
-  }
-  [k="drawer-content"] > [k="drawer-panel"] {
-    --swipe-align: end;
+    --swipe: 1;
+    inset: 0;
     width: 100%;
-    max-height: 90dvh;
-    border-radius: 1rem 1rem 0 0;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-position: 0 100dvh;
+    background-size: 100% 10000px;
+    transform: none;
+    transition: none;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  [k="drawer-content"]::-webkit-scrollbar {
+    display: none;
+  }
+  /* Rail: transparent full-height space above the content. */
+  [k="drawer-content"]::before {
+    content: "";
+    flex: 0 0 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  /* Snap anchor at the end of content so the panel snaps flush to the bottom. */
+  [k="drawer-content"]::after {
+    content: "";
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
   }
   /* Grab handle. */
-  [k="drawer-content"] > [k="drawer-panel"]::before {
+  [k="drawer-content"] > :first-child::before {
     content: "";
+    display: block;
     width: 2rem;
     height: 0.25rem;
-    flex: none;
-    align-self: center;
-    margin-bottom: 0.75rem;
+    margin: 0 auto 0.75rem;
     border-radius: 1rem;
     background: hsl(var(--k-muted-foreground) / 0.4);
+  }
+  /* Content padding (no wrapper, so pad the children). */
+  [k="drawer-content"] > * {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  [k="drawer-content"] > :first-child {
+    padding-top: 1rem;
+    border-radius: 1rem 1rem 0 0;
+  }
+  [k="drawer-content"] > :last-child {
+    padding-bottom: 1rem;
   }
 }

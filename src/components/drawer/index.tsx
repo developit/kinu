@@ -1,11 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {
-  installCommands,
-  installDialogsDropdowns,
-  installSwipe,
-} from '../../lib/commands';
+import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import type {
   DrawerOwnProps,
   DrawerTriggerOwnProps,
@@ -19,7 +15,6 @@ const IdCtx = createContext<string | undefined>(undefined);
 export function Drawer({id: idProp, children}: DrawerOwnProps) {
   installCommands();
   installDialogsDropdowns();
-  installSwipe();
   const gen = useId();
   const id = idProp ?? gen;
   return (
@@ -44,16 +39,10 @@ export function DrawerTrigger({
 
 export function DrawerContent({
   id,
-  children,
   ...props
 }: DrawerContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return (
-    <dialog k="drawer-content" id={id ?? ctx} {...props}>
-      <div k="drawer-rail" />
-      <div k="drawer-panel">{children}</div>
-    </dialog>
-  );
+  return <dialog k="drawer-content" id={id ?? ctx} {...props} />;
 }
 
 export function DrawerClose({

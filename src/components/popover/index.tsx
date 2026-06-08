@@ -1,7 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {installCommands, installAdaptiveCommands, installDialogsDropdowns} from '../../lib/commands';
+import {installCommands, installAdaptiveCommands, installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import type {
   PopoverOwnProps,
   PopoverTriggerOwnProps,
@@ -16,6 +16,7 @@ export function Popover({id: idProp, children}: PopoverOwnProps) {
   installCommands();
   installAdaptiveCommands();
   installDialogsDropdowns();
+  installSwipe();
   const gen = useId();
   const id = idProp ?? gen;
   return (

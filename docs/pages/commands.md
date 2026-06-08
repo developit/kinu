@@ -32,19 +32,15 @@ overlays, so there is no separate setup step.
 
 ## Swipeable Overlays
 
-Drawer, Sheet, and Sidebar install one extra helper, `installSwipe`, alongside
-the command polyfill. On touch devices their `<dialog>` becomes a native CSS
-scroll-snap container — the panel sits beside an empty "rail" you can fling it
-into — so the gesture, momentum, and snap-back are all the browser's. The
-helper only touches the scroller at the open/close boundaries:
+Drawer and the `mobile="drawer"` variants of Popover, DropdownMenu and ContextMenu install a shared
+`installSwipe` helper alongside the command polyfill. On touch devices the `<dialog>` itself becomes
+a CSS scroll-snap container — a `::before` pseudo acts as the transparent dismiss rail and
+`background-attachment: local` paints the panel surface, so there are no wrapper elements in the DOM.
+The helper only touches the scroller at the edges: it glides the panel up on open (`beforetoggle`) and
+closes the dialog once a dismiss gesture settles at `scrollTop 0` (`scrollend`).
 
-- On open (`beforetoggle`) it jumps to the rail and smooth-scrolls the panel in.
-- On `scrollend`, if a dismiss gesture has flung the panel off-screen, it calls
-  `close()`.
-
-CSS opts a dialog in by setting `--swipe: 1` inside the relevant media query, so
-the same markup renders a transform-animated overlay on desktop and a
-gesture-driven one on touch with no branching in JavaScript.
+CSS opts a dialog in by setting `--swipe: 1` inside a touch media query, so the same markup renders a
+transform-animated overlay on desktop and a gesture-driven one on touch with no branching in JavaScript.
 
 Commands dispatch as CustomEvents so you can intercept them if you need custom behavior:
 

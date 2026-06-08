@@ -108,8 +108,8 @@ export const Button = createSimpleComponent('button', 'button');
 - **Table**: Basic styled table
 - **Collapsible**: Toggle visibility of content
 - **Resizable**: User-resizable panel
-- **Sheet**: Sliding side panel (swipe-to-dismiss on touch)
-- **Sidebar**: Vertical navigation container (swipeable when modal on touch)
+- **Sheet**: Sliding side panel
+- **Sidebar**: Vertical navigation container
 - **Breadcrumb**: Page hierarchy navigation
 - **Menubar**: Horizontal menu of actions
 - **NavigationMenu**: Complex nav menu

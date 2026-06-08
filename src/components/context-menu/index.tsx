@@ -1,7 +1,7 @@
 import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {installDialogsDropdowns} from '../../lib/commands';
+import {installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import {Item} from '../item';
 import type {
   ContextMenuOwnProps,
@@ -46,6 +46,7 @@ export function ContextMenuTrigger({
 
 export function ContextMenu({id: idProp, children}: ContextMenuOwnProps) {
   installDialogsDropdowns();
+  installSwipe();
   const gen = useId();
   const id = idProp ?? gen;
   return <IdCtx.Provider value={id}>{children}</IdCtx.Provider>;

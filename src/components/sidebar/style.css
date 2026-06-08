@@ -102,65 +102,24 @@
     overflow: auto;
     scrollbar-width: none;
   }
-}
-
-/* The swipe scaffolding is inert outside of mobile-modal mode: the panel is a
-   transparent passthrough so the inline flex column is unchanged. */
-[k="sidebar-panel"] {
-  display: contents;
-}
-[k="sidebar-rail"] {
-  display: none;
-}
-
-/*
- * Touch + mobile: the sidebar becomes a horizontal scroll-snap scroller. The
- * panel rests pinned to the left (open); swipe it left into the rail to
- * dismiss. `installSwipe()` drives only the open/close edges — see commands.ts.
- */
-@media (hover: none) and (pointer: coarse) and (max-width: 640px) {
-  [k="sidebar"] {
-    --swipe: 1;
-    inset: 0;
-    width: 100%;
-    max-width: none;
-    height: 100dvh;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    transform: none;
-    transition: none;
-    flex-direction: row;
-    overflow: auto;
+  /*
+  html:has([k="sidebar"]):before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    background: rgba(0,0,0,0.5);
+    pointer-events: none;
+    transition: all 300ms var(--k-ease);
+    z-index: 499;
+  }
+  html:has([k="sidebar"][open]):before {
+    opacity: 1;
+    pointer-events: all;
     overscroll-behavior: contain;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
   }
-  [k="sidebar"]::-webkit-scrollbar {
-    display: none;
-  }
-  [k="sidebar"] > [k="sidebar-panel"] {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 auto;
-    width: min(320px, 80vw);
-    height: 100dvh;
-    padding: 0.5rem;
-    box-sizing: border-box;
-    gap: 0.5rem;
-    overflow: auto;
-    overscroll-behavior: contain;
-    background: hsl(var(--k-background));
-    box-shadow: 0 0 15px rgb(0 0 0 / 0.15);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-  [k="sidebar"] > [k="sidebar-rail"] {
-    display: block;
-    flex: 0 0 100%;
-    scroll-snap-align: end;
-    scroll-snap-stop: always;
-  }
+  */
 }

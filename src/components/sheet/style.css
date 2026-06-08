@@ -1,5 +1,4 @@
 @import "../../variables.css";
-@import "../_swipe.css";
 
 [k="sheet-content"] {
   border: none;
@@ -38,28 +37,6 @@
 @starting-style {
   [k="sheet-content"][open] {
     transform: translateX(100%);
-  }
-}
-
-/* The swipe scaffolding is inert on desktop. */
-[k="sheet-rail"] {
-  display: none;
-}
-[k="sheet-panel"] {
-  display: contents;
-}
-
-/* Touch: slide in from the right edge, swipe right to dismiss. */
-@media (hover: none) and (pointer: coarse) {
-  [k="sheet-content"] {
-    --swipe-axis: row;
-    --swipe-snap: x mandatory;
-  }
-  [k="sheet-content"] > [k="sheet-panel"] {
-    --swipe-align: end;
-    width: 20rem;
-    max-width: 90vw;
-    height: 100dvh;
   }
 }
 

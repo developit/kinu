@@ -1,10 +1,6 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
-import {
-  installCommands,
-  installDialogsDropdowns,
-  installSwipe,
-} from '../../lib/commands';
-import type {SidebarProps, SidebarTriggerOwnProps} from './types';
+import {installCommands, installDialogsDropdowns} from '../../lib/commands';
+import type {SidebarOwnProps, SidebarTriggerOwnProps} from './types';
 import './style.css';
 
 export const SidebarTrigger = createSimpleComponent<
@@ -29,6 +25,8 @@ export const SidebarTrigger = createSimpleComponent<
           } else {
             sidebar.toggleAttribute('hidden');
           }
+          // sidebar.setAttribute('open', '');
+          // sidebar.showModal();
           return;
         }
         node = node.parentNode;
@@ -39,17 +37,20 @@ export const SidebarTrigger = createSimpleComponent<
   },
 );
 
-export function Sidebar({children, ...props}: SidebarProps) {
-  installCommands();
-  installDialogsDropdowns();
-  installSwipe();
-  // The panel/rail wrap lets the mobile sidebar become a scroll-snap scroller
-  // (swipe to dismiss) while staying an ordinary inline flex column on desktop,
-  // where `[k="sidebar-panel"]` is `display: contents` and the rail collapses.
-  return (
-    <dialog k="sidebar" tabIndex={-1} {...props}>
-      <div k="sidebar-panel">{children}</div>
-      <div k="sidebar-rail" />
-    </dialog>
-  );
-}
+export const Sidebar = createSimpleComponent<'dialog', SidebarOwnProps>(
+  'sidebar',
+  'dialog',
+  {
+    tabIndex: -1,
+  },
+  () => {
+    installCommands();
+    installDialogsDropdowns();
+    // function mousedown(e: MouseEvent) {
+    //   if (el.contains(e.target as Node)) return;
+    //   el.removeAttribute('open');
+    // }
+    // addEventListener('mousedown', mousedown);
+    // return () => removeEventListener('mousedown', mousedown);
+  },
+);
