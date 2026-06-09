@@ -62,10 +62,16 @@
 
 /* Touch: the dialog becomes a scroll-snap scroller. A ::before pseudo acts as
    the transparent "rail" you fling the panel into; background-attachment:local
-   paints the panel surface behind the content without any wrapper divs. */
+   paints the panel surface behind the content without any wrapper divs.
+   Everything below is gated on [open] — an unopened <dialog> must stay
+   display:none, or it becomes a full-viewport overlay covering the page.
+   Only the --swipe flag is ungated, so the beforetoggle handler (which fires
+   before [open] is set) can detect swipe mode. */
 @media (hover: none) and (pointer: coarse) {
   [k="drawer-content"] {
     --swipe: 1;
+  }
+  [k="drawer-content"][open] {
     inset: 0;
     width: 100%;
     height: 100dvh;
@@ -90,24 +96,24 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
-  [k="drawer-content"]::-webkit-scrollbar {
+  [k="drawer-content"][open]::-webkit-scrollbar {
     display: none;
   }
   /* Rail: transparent full-height space above the content. */
-  [k="drawer-content"]::before {
+  [k="drawer-content"][open]::before {
     content: "";
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
   /* Snap anchor at the end of content so the panel snaps flush to the bottom. */
-  [k="drawer-content"]::after {
+  [k="drawer-content"][open]::after {
     content: "";
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
   /* Grab handle. */
-  [k="drawer-content"] > :first-child::before {
+  [k="drawer-content"][open] > :first-child::before {
     content: "";
     display: block;
     width: 2rem;
@@ -117,15 +123,15 @@
     background: hsl(var(--k-muted-foreground) / 0.4);
   }
   /* Content padding (no wrapper, so pad the children). */
-  [k="drawer-content"] > * {
+  [k="drawer-content"][open] > * {
     margin-left: 1rem;
     margin-right: 1rem;
   }
-  [k="drawer-content"] > :first-child {
+  [k="drawer-content"][open] > :first-child {
     padding-top: 1rem;
     border-radius: 1rem 1rem 0 0;
   }
-  [k="drawer-content"] > :last-child {
+  [k="drawer-content"][open] > :last-child {
     padding-bottom: 1rem;
   }
 }

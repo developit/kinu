@@ -223,12 +223,19 @@
   }
 }
 
-/* Touch: mobile-drawer overlays become swipeable scroll-snap containers. */
+/* Touch: mobile-drawer overlays become swipeable scroll-snap containers.
+   The layout is gated on [open] so a closed <dialog> stays display:none rather
+   than covering the page; only the --swipe flag is ungated so the beforetoggle
+   handler can detect swipe mode before [open] is set. */
 @media (max-width: 640px) and (hover: none) and (pointer: coarse) {
   [k="popover-content"][mobile="drawer"],
   [k="dropdown-content"][mobile="drawer"],
   [k="context-menu"][mobile="drawer"] {
     --swipe: 1;
+  }
+  [k="popover-content"][mobile="drawer"][open],
+  [k="dropdown-content"][mobile="drawer"][open],
+  [k="context-menu"][mobile="drawer"][open] {
     inset: 0;
     width: 100%;
     height: 100dvh;
@@ -254,40 +261,40 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
-  [k="popover-content"][mobile="drawer"]::-webkit-scrollbar,
-  [k="dropdown-content"][mobile="drawer"]::-webkit-scrollbar,
-  [k="context-menu"][mobile="drawer"]::-webkit-scrollbar {
+  [k="popover-content"][mobile="drawer"][open]::-webkit-scrollbar,
+  [k="dropdown-content"][mobile="drawer"][open]::-webkit-scrollbar,
+  [k="context-menu"][mobile="drawer"][open]::-webkit-scrollbar {
     display: none;
   }
-  [k="popover-content"][mobile="drawer"]::before,
-  [k="dropdown-content"][mobile="drawer"]::before,
-  [k="context-menu"][mobile="drawer"]::before {
+  [k="popover-content"][mobile="drawer"][open]::before,
+  [k="dropdown-content"][mobile="drawer"][open]::before,
+  [k="context-menu"][mobile="drawer"][open]::before {
     content: "";
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  [k="popover-content"][mobile="drawer"]::after,
-  [k="dropdown-content"][mobile="drawer"]::after,
-  [k="context-menu"][mobile="drawer"]::after {
+  [k="popover-content"][mobile="drawer"][open]::after,
+  [k="dropdown-content"][mobile="drawer"][open]::after,
+  [k="context-menu"][mobile="drawer"][open]::after {
     content: "";
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
-  [k="popover-content"][mobile="drawer"] > *,
-  [k="dropdown-content"][mobile="drawer"] > *,
-  [k="context-menu"][mobile="drawer"] > * {
+  [k="popover-content"][mobile="drawer"][open] > *,
+  [k="dropdown-content"][mobile="drawer"][open] > *,
+  [k="context-menu"][mobile="drawer"][open] > * {
     margin-left: 1rem;
     margin-right: 1rem;
   }
-  [k="popover-content"][mobile="drawer"] > :first-child,
-  [k="dropdown-content"][mobile="drawer"] > :first-child,
-  [k="context-menu"][mobile="drawer"] > :first-child {
+  [k="popover-content"][mobile="drawer"][open] > :first-child,
+  [k="dropdown-content"][mobile="drawer"][open] > :first-child,
+  [k="context-menu"][mobile="drawer"][open] > :first-child {
     padding-top: 1rem;
   }
-  [k="popover-content"][mobile="drawer"] > :last-child,
-  [k="dropdown-content"][mobile="drawer"] > :last-child,
-  [k="context-menu"][mobile="drawer"] > :last-child {
+  [k="popover-content"][mobile="drawer"][open] > :last-child,
+  [k="dropdown-content"][mobile="drawer"][open] > :last-child,
+  [k="context-menu"][mobile="drawer"][open] > :last-child {
     padding-bottom: 1rem;
   }
 }
