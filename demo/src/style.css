@@ -1557,6 +1557,23 @@ body .home-nav--marketing + * {
   overflow: hidden;
 }
 
+/* On touch, kinu's drawer is a swipeable scroll-snap container — don't fight
+ * it: restore the scroller geometry the overrides above disable, and size the
+ * carousel wrapper to the viewport instead of a percentage of the (taller,
+ * rail-included) scroller. */
+@media (hover: none) and (pointer: coarse) {
+  .kinu-home [k="drawer-content"].kh-app-maximized[open] {
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    overflow-y: auto;
+  }
+  .kinu-home [k="drawer-content"].kh-app-maximized[open] > div {
+    height: 100dvh;
+    margin: 0;
+  }
+}
+
 /* Carousel content fills the dialog body. CarouselContent in kinu
  * doesn't forward `class` to its inner element, so we target by
  * descending from the drawer instead. */

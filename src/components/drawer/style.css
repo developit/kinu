@@ -77,7 +77,10 @@
     height: 100dvh;
     max-width: none;
     max-height: none;
-    padding: 0;
+    /* Horizontal only: top padding would displace the rail, and bottom padding
+       would land below the ::after snap anchor where it can't be scrolled to.
+       The painted surface ignores it (the padding box spans the full width). */
+    padding: 0 1rem;
     border: 0;
     border-radius: 0;
     background-color: transparent;
@@ -112,26 +115,19 @@
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
-  /* Grab handle. */
-  [k="drawer-content"][open] > :first-child::before {
-    content: "";
-    display: block;
-    width: 2rem;
-    height: 0.25rem;
-    margin: 0 auto 0.75rem;
-    border-radius: 1rem;
-    background: hsl(var(--k-muted-foreground) / 0.4);
-  }
-  /* Content padding (no wrapper, so pad the children). */
+  /* flex:none — the rail already fills the scrollport, so shrinkable children
+     would be crushed to their min-content height instead of overflowing the
+     container into scroll range. */
   [k="drawer-content"][open] > * {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    flex: none;
   }
+  /* Vertical breathing room via margins: the surface starts at the rail's end
+     regardless, so a first-child top margin shows as padding inside it, and a
+     last-child bottom margin sits above the ::after snap anchor. */
   [k="drawer-content"][open] > :first-child {
-    padding-top: 1rem;
-    border-radius: 1rem 1rem 0 0;
+    margin-top: 1rem;
   }
   [k="drawer-content"][open] > :last-child {
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
   }
 }

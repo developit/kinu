@@ -242,7 +242,9 @@
     max-width: none;
     max-height: none;
     min-width: 0;
-    padding: 0;
+    /* Horizontal only — top padding would displace the rail, bottom padding
+       would land below the ::after snap anchor. */
+    padding: 0 1rem;
     border: 0;
     border-radius: 0;
     background-color: transparent;
@@ -281,21 +283,23 @@
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
+  /* flex:none — the rail already fills the scrollport, so shrinkable children
+     would be crushed to min-content instead of overflowing into scroll range. */
   [k="popover-content"][mobile="drawer"][open] > *,
   [k="dropdown-content"][mobile="drawer"][open] > *,
   [k="context-menu"][mobile="drawer"][open] > * {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    flex: none;
   }
+  /* Vertical breathing room via margins (see drawer styles). */
   [k="popover-content"][mobile="drawer"][open] > :first-child,
   [k="dropdown-content"][mobile="drawer"][open] > :first-child,
   [k="context-menu"][mobile="drawer"][open] > :first-child {
-    padding-top: 1rem;
+    margin-top: 1rem;
   }
   [k="popover-content"][mobile="drawer"][open] > :last-child,
   [k="dropdown-content"][mobile="drawer"][open] > :last-child,
   [k="context-menu"][mobile="drawer"][open] > :last-child {
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
   }
 }
 
