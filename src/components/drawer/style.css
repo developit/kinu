@@ -61,8 +61,12 @@
 }
 
 /* Touch: the dialog becomes a scroll-snap scroller. A ::before pseudo acts as
-   the transparent "rail" you fling the panel into; background-attachment:local
-   paints the panel surface behind the content without any wrapper divs.
+   the transparent "rail" you fling the panel into. The panel surface, its
+   rounded top corners, and the drag handle are all painted as background
+   layers on the dialog with background-attachment:local so they scroll with
+   the content — and because the background positioning area is the padding
+   box, they span the full width and stay aligned no matter what padding the
+   consumer sets.
 
    The swipe layout is gated on [open] so a closed <dialog> stays display:none.
    Only --swipe and transition:none are set ungated — the flag lets the
@@ -84,15 +88,36 @@
     border: 0;
     border-radius: 0;
     background-color: transparent;
-    /* Panel surface: a solid-color gradient that scrolls with the content,
-       starting just below the rail's rounded-corner overhang. */
-    background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
+    /* Layers, top to bottom: drag handle pill; rounded top-left and top-right
+       corners (quarter-disc radial gradients); the cap strip between them;
+       the main panel surface below the cap. */
+    background-image:
+      radial-gradient(closest-side, hsl(var(--k-muted-foreground) / 0.35) 99%, transparent),
+      radial-gradient(circle var(--k-radius) at 100% 100%, hsl(var(--k-background)) calc(var(--k-radius) - 0.5px), transparent var(--k-radius)),
+      radial-gradient(circle var(--k-radius) at 0 100%, hsl(var(--k-background)) calc(var(--k-radius) - 0.5px), transparent var(--k-radius)),
+      linear-gradient(hsl(var(--k-background)), hsl(var(--k-background))),
+      linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
     background-repeat: no-repeat;
     background-attachment: local;
-    background-position: 0 calc(100dvh + 1.5rem);
-    background-size: 100% 10000px;
+    background-position:
+      50% calc(100dvh + 0.5rem),
+      0 100dvh,
+      100% 100dvh,
+      50% 100dvh,
+      0 calc(100dvh + var(--k-radius));
+    background-size:
+      2rem 0.25rem,
+      var(--k-radius) var(--k-radius),
+      var(--k-radius) var(--k-radius),
+      calc(100% - 2 * var(--k-radius)) var(--k-radius),
+      100% 10000px;
     transform: none;
     transition: none;
+    /* Entrance: the scroller is placed in its open position instantly (see
+       installSwipe), and the whole thing slides up. @starting-style would be
+       the natural fit but can't nest inside @media yet, so a one-shot
+       animation provides the same first-frame override. */
+    animation: k-swipe-in 300ms var(--k-ease);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -103,20 +128,12 @@
   [k="drawer-content"][open]::-webkit-scrollbar {
     display: none;
   }
-  /* Rail: transparent space above the content. The bottom 1.5rem is painted
-     with the panel background + rounded corners + a centered drag handle,
-     via negative margin overlapping the content's top edge. */
+  /* Rail: transparent space above the content. */
   [k="drawer-content"][open]::before {
     content: "";
-    flex: 0 0 calc(100dvh + 1.5rem);
-    margin-bottom: -1.5rem;
-    border-radius: 0 0 var(--k-radius) var(--k-radius);
+    flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    background:
-      radial-gradient(1rem 0.125rem at 50% calc(100% - 0.625rem), hsl(var(--k-muted-foreground) / 0.35) 99%, transparent)
-        no-repeat,
-      linear-gradient(to top, hsl(var(--k-background)) 1.5rem, transparent 1.5rem);
   }
   /* Snap anchor at the end of content so the panel snaps flush to the bottom. */
   [k="drawer-content"][open]::after {
@@ -135,5 +152,11 @@
   }
   [k="drawer-content"][open] > :last-child {
     margin-bottom: 1rem;
+  }
+}
+
+@keyframes k-swipe-in {
+  from {
+    translate: 0 100%;
   }
 }

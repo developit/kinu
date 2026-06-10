@@ -195,11 +195,12 @@ function swipeScroller(target: EventTarget | null) {
 }
 
 // Entrance: once the overlay is in the top layer (and thus has real scroll
-// geometry) glide the panel up from the rail into view.
+// geometry) jump the scroller to its open position before first paint — the
+// visible slide-in is the CSS k-swipe-in animation on the whole dialog.
 function swipeToggle(e: ToggleEvent) {
   if (e.newState !== 'open') return;
   const el = swipeScroller(e.target);
-  if (el) requestAnimationFrame(() => el.scrollTo({top: el.scrollHeight, behavior: 'smooth'}));
+  if (el) requestAnimationFrame(() => el.scrollTo({top: el.scrollHeight, behavior: 'instant'}));
 }
 
 // Dismiss: a fling that settles back at the rail (scrollTop 0) closes for real.

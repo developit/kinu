@@ -246,13 +246,29 @@
     border: 0;
     border-radius: 0;
     background-color: transparent;
-    background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
+    background-image:
+      radial-gradient(closest-side, hsl(var(--k-muted-foreground) / 0.35) 99%, transparent),
+      radial-gradient(circle var(--k-radius) at 100% 100%, hsl(var(--k-background)) calc(var(--k-radius) - 0.5px), transparent var(--k-radius)),
+      radial-gradient(circle var(--k-radius) at 0 100%, hsl(var(--k-background)) calc(var(--k-radius) - 0.5px), transparent var(--k-radius)),
+      linear-gradient(hsl(var(--k-background)), hsl(var(--k-background))),
+      linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
     background-repeat: no-repeat;
     background-attachment: local;
-    background-position: 0 calc(100dvh + 1.5rem);
-    background-size: 100% 10000px;
+    background-position:
+      50% calc(100dvh + 0.5rem),
+      0 100dvh,
+      100% 100dvh,
+      50% 100dvh,
+      0 calc(100dvh + var(--k-radius));
+    background-size:
+      2rem 0.25rem,
+      var(--k-radius) var(--k-radius),
+      var(--k-radius) var(--k-radius),
+      calc(100% - 2 * var(--k-radius)) var(--k-radius),
+      100% 10000px;
     transform: none;
     transition: none;
+    animation: k-swipe-in 300ms var(--k-ease);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -269,15 +285,9 @@
   [k="dropdown-content"][mobile="drawer"][open]::before,
   [k="context-menu"][mobile="drawer"][open]::before {
     content: "";
-    flex: 0 0 calc(100dvh + 1.5rem);
-    margin-bottom: -1.5rem;
-    border-radius: 0 0 var(--k-radius) var(--k-radius);
+    flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    background:
-      radial-gradient(1rem 0.125rem at 50% calc(100% - 0.625rem), hsl(var(--k-muted-foreground) / 0.35) 99%, transparent)
-        no-repeat,
-      linear-gradient(to top, hsl(var(--k-background)) 1.5rem, transparent 1.5rem);
   }
   [k="popover-content"][mobile="drawer"][open]::after,
   [k="dropdown-content"][mobile="drawer"][open]::after,
@@ -300,6 +310,14 @@
   [k="dropdown-content"][mobile="drawer"][open] > :last-child,
   [k="context-menu"][mobile="drawer"][open] > :last-child {
     margin-bottom: 1rem;
+  }
+}
+
+/* Duplicated from drawer/style.css — component stylesheets load
+   independently, so each swipe consumer carries its own copy. */
+@keyframes k-swipe-in {
+  from {
+    translate: 0 100%;
   }
 }
 

@@ -40,10 +40,10 @@ describe('installSwipe control plane', () => {
     expect(typeof handlers.scrollend).toBe('function');
   });
 
-  it('scrolls to the bottom of the dialog on open', () => {
+  it('jumps to the open scroll position on open (the slide-in is CSS)', () => {
     const el = makeDialog({swipe: true});
     handlers.beforetoggle(makeEvent(el, 'open'));
-    expect(el.scrollTo).toHaveBeenCalledWith({top: 1000, behavior: 'smooth'});
+    expect(el.scrollTo).toHaveBeenCalledWith({top: 1000, behavior: 'instant'});
   });
 
   it('does not scroll on close events', () => {
