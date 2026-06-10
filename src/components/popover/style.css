@@ -224,14 +224,14 @@
 }
 
 /* Touch: mobile-drawer overlays become swipeable scroll-snap containers.
-   The layout is gated on [open] so a closed <dialog> stays display:none rather
-   than covering the page; only the --swipe flag is ungated so the beforetoggle
-   handler can detect swipe mode before [open] is set. */
+   See drawer/style.css for the full rationale on --swipe, transition:none,
+   the [open] gate, the ::before rail+handle, and background-attachment. */
 @media (max-width: 640px) and (hover: none) and (pointer: coarse) {
   [k="popover-content"][mobile="drawer"],
   [k="dropdown-content"][mobile="drawer"],
   [k="context-menu"][mobile="drawer"] {
     --swipe: 1;
+    transition: none;
   }
   [k="popover-content"][mobile="drawer"][open],
   [k="dropdown-content"][mobile="drawer"][open],
@@ -242,8 +242,6 @@
     max-width: none;
     max-height: none;
     min-width: 0;
-    /* Horizontal only — top padding would displace the rail, bottom padding
-       would land below the ::after snap anchor. */
     padding: 0 1rem;
     border: 0;
     border-radius: 0;
@@ -251,7 +249,7 @@
     background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
     background-repeat: no-repeat;
     background-attachment: local;
-    background-position: 0 100dvh;
+    background-position: 0 calc(100dvh + 1.5rem);
     background-size: 100% 10000px;
     transform: none;
     transition: none;
@@ -261,7 +259,6 @@
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
   }
   [k="popover-content"][mobile="drawer"][open]::-webkit-scrollbar,
   [k="dropdown-content"][mobile="drawer"][open]::-webkit-scrollbar,
@@ -272,9 +269,15 @@
   [k="dropdown-content"][mobile="drawer"][open]::before,
   [k="context-menu"][mobile="drawer"][open]::before {
     content: "";
-    flex: 0 0 100dvh;
+    flex: 0 0 calc(100dvh + 1.5rem);
+    margin-bottom: -1.5rem;
+    border-radius: 0 0 var(--k-radius) var(--k-radius);
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    background:
+      radial-gradient(1rem 0.125rem at 50% calc(100% - 0.625rem), hsl(var(--k-muted-foreground) / 0.35) 99%, transparent)
+        no-repeat,
+      linear-gradient(to top, hsl(var(--k-background)) 1.5rem, transparent 1.5rem);
   }
   [k="popover-content"][mobile="drawer"][open]::after,
   [k="dropdown-content"][mobile="drawer"][open]::after,
@@ -283,14 +286,11 @@
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
-  /* flex:none — the rail already fills the scrollport, so shrinkable children
-     would be crushed to min-content instead of overflowing into scroll range. */
   [k="popover-content"][mobile="drawer"][open] > *,
   [k="dropdown-content"][mobile="drawer"][open] > *,
   [k="context-menu"][mobile="drawer"][open] > * {
     flex: none;
   }
-  /* Vertical breathing room via margins (see drawer styles). */
   [k="popover-content"][mobile="drawer"][open] > :first-child,
   [k="dropdown-content"][mobile="drawer"][open] > :first-child,
   [k="context-menu"][mobile="drawer"][open] > :first-child {

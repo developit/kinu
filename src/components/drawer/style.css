@@ -63,13 +63,16 @@
 /* Touch: the dialog becomes a scroll-snap scroller. A ::before pseudo acts as
    the transparent "rail" you fling the panel into; background-attachment:local
    paints the panel surface behind the content without any wrapper divs.
-   Everything below is gated on [open] — an unopened <dialog> must stay
-   display:none, or it becomes a full-viewport overlay covering the page.
-   Only the --swipe flag is ungated, so the beforetoggle handler (which fires
-   before [open] is set) can detect swipe mode. */
+
+   The swipe layout is gated on [open] so a closed <dialog> stays display:none.
+   Only --swipe and transition:none are set ungated — the flag lets the
+   beforetoggle handler detect swipe mode, and killing transitions prevents
+   the exit flash (removing [open] would otherwise briefly reveal the base
+   transform:translateY(100%) styles and slide them out). */
 @media (hover: none) and (pointer: coarse) {
   [k="drawer-content"] {
     --swipe: 1;
+    transition: none;
   }
   [k="drawer-content"][open] {
     inset: 0;
@@ -77,17 +80,16 @@
     height: 100dvh;
     max-width: none;
     max-height: none;
-    /* Horizontal only: top padding would displace the rail, and bottom padding
-       would land below the ::after snap anchor where it can't be scrolled to.
-       The painted surface ignores it (the padding box spans the full width). */
     padding: 0 1rem;
     border: 0;
     border-radius: 0;
     background-color: transparent;
+    /* Panel surface: a solid-color gradient that scrolls with the content,
+       starting just below the rail's rounded-corner overhang. */
     background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
     background-repeat: no-repeat;
     background-attachment: local;
-    background-position: 0 100dvh;
+    background-position: 0 calc(100dvh + 1.5rem);
     background-size: 100% 10000px;
     transform: none;
     transition: none;
@@ -97,17 +99,24 @@
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
   }
   [k="drawer-content"][open]::-webkit-scrollbar {
     display: none;
   }
-  /* Rail: transparent full-height space above the content. */
+  /* Rail: transparent space above the content. The bottom 1.5rem is painted
+     with the panel background + rounded corners + a centered drag handle,
+     via negative margin overlapping the content's top edge. */
   [k="drawer-content"][open]::before {
     content: "";
-    flex: 0 0 100dvh;
+    flex: 0 0 calc(100dvh + 1.5rem);
+    margin-bottom: -1.5rem;
+    border-radius: 0 0 var(--k-radius) var(--k-radius);
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    background:
+      radial-gradient(1rem 0.125rem at 50% calc(100% - 0.625rem), hsl(var(--k-muted-foreground) / 0.35) 99%, transparent)
+        no-repeat,
+      linear-gradient(to top, hsl(var(--k-background)) 1.5rem, transparent 1.5rem);
   }
   /* Snap anchor at the end of content so the panel snaps flush to the bottom. */
   [k="drawer-content"][open]::after {
@@ -121,9 +130,6 @@
   [k="drawer-content"][open] > * {
     flex: none;
   }
-  /* Vertical breathing room via margins: the surface starts at the rail's end
-     regardless, so a first-child top margin shows as padding inside it, and a
-     last-child bottom margin sits above the ::after snap anchor. */
   [k="drawer-content"][open] > :first-child {
     margin-top: 1rem;
   }
