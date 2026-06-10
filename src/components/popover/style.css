@@ -233,6 +233,11 @@
     --swipe: 1;
     transition: none;
   }
+  [k="popover-content"][mobile="drawer"]::backdrop,
+  [k="dropdown-content"][mobile="drawer"]::backdrop,
+  [k="context-menu"][mobile="drawer"]::backdrop {
+    transition: none;
+  }
   [k="popover-content"][mobile="drawer"][open],
   [k="dropdown-content"][mobile="drawer"][open],
   [k="context-menu"][mobile="drawer"][open] {

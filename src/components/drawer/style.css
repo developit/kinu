@@ -78,6 +78,11 @@
     --swipe: 1;
     transition: none;
   }
+  /* Kill the 300ms backdrop fade-out on close (the fade-in still runs because
+     the [open]::backdrop rule from the base styles carries the transition). */
+  [k="drawer-content"]::backdrop {
+    transition: none;
+  }
   [k="drawer-content"][open] {
     inset: 0;
     width: 100%;
