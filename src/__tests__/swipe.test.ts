@@ -12,6 +12,7 @@ function makeDialog(opts: {swipe?: boolean; open?: boolean; scrollTop?: number})
     open: opts.open ?? true,
     scrollTop: opts.scrollTop ?? 0,
     scrollHeight: 1000,
+    style: {} as Record<string, string>,
     __swipe: opts.swipe ? '1' : '',
     matches: (sel: string) => sel.includes('drawer-content'),
     scrollTo: vi.fn(),

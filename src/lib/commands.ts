@@ -200,12 +200,19 @@ function swipeScroller(target: EventTarget | null) {
 function swipeToggle(e: ToggleEvent) {
   if (e.newState !== 'open') return;
   const el = swipeScroller(e.target);
-  if (el) requestAnimationFrame(() => el.scrollTo({top: el.scrollHeight, behavior: 'instant'}));
+  if (el) requestAnimationFrame(() => {
+    el.style.translate = '';
+    el.scrollTo({top: el.scrollHeight, behavior: 'instant'});
+  });
 }
 
 // Dismiss: a fling that settles back at the rail (scrollTop 0) closes for real.
-// Closing is otherwise instant — there's no close path to intercept.
+// Jump translate to the closed position first so the CSS exit transition
+// (meant for ESC / back-button) has nothing to animate.
 function swipeSettle(e: Event) {
   const el = swipeScroller(e.target);
-  if (el?.open && el.scrollTop === 0) el.close();
+  if (el?.open && el.scrollTop === 0) {
+    el.style.translate = '0 100%';
+    el.close();
+  }
 }
