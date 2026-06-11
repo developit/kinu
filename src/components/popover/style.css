@@ -262,6 +262,7 @@
       100% 10000px;
     transform: none;
     translate: 0 100%;
+    flex-direction: column;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
@@ -276,50 +277,49 @@
   [k="context-menu"][mobile="drawer"]::-webkit-scrollbar {
     display: none;
   }
-  [k="popover-content"][mobile="drawer"][open],
-  [k="dropdown-content"][mobile="drawer"][open],
-  [k="context-menu"][mobile="drawer"][open] {
-    display: flex;
-    flex-direction: column;
-    translate: none;
-    animation: k-swipe-in 300ms var(--k-ease);
-  }
-  [k="popover-content"][mobile="drawer"][open]::before,
-  [k="dropdown-content"][mobile="drawer"][open]::before,
-  [k="context-menu"][mobile="drawer"][open]::before {
+  [k="popover-content"][mobile="drawer"]::before,
+  [k="dropdown-content"][mobile="drawer"]::before,
+  [k="context-menu"][mobile="drawer"]::before {
     content: "";
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  [k="popover-content"][mobile="drawer"][open]::after,
-  [k="dropdown-content"][mobile="drawer"][open]::after,
-  [k="context-menu"][mobile="drawer"][open]::after {
+  [k="popover-content"][mobile="drawer"]::after,
+  [k="dropdown-content"][mobile="drawer"]::after,
+  [k="context-menu"][mobile="drawer"]::after {
     content: "";
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
-  [k="popover-content"][mobile="drawer"][open] > *,
-  [k="dropdown-content"][mobile="drawer"][open] > *,
-  [k="context-menu"][mobile="drawer"][open] > * {
+  [k="popover-content"][mobile="drawer"] > *,
+  [k="dropdown-content"][mobile="drawer"] > *,
+  [k="context-menu"][mobile="drawer"] > * {
     flex: none;
   }
-  [k="popover-content"][mobile="drawer"][open] > :first-child,
-  [k="dropdown-content"][mobile="drawer"][open] > :first-child,
-  [k="context-menu"][mobile="drawer"][open] > :first-child {
+  [k="popover-content"][mobile="drawer"] > :first-child,
+  [k="dropdown-content"][mobile="drawer"] > :first-child,
+  [k="context-menu"][mobile="drawer"] > :first-child {
     margin-top: 1rem;
   }
-  [k="popover-content"][mobile="drawer"][open] > :last-child,
-  [k="dropdown-content"][mobile="drawer"][open] > :last-child,
-  [k="context-menu"][mobile="drawer"][open] > :last-child {
+  [k="popover-content"][mobile="drawer"] > :last-child,
+  [k="dropdown-content"][mobile="drawer"] > :last-child,
+  [k="context-menu"][mobile="drawer"] > :last-child {
     margin-bottom: 1rem;
+  }
+  [k="popover-content"][mobile="drawer"][open],
+  [k="dropdown-content"][mobile="drawer"][open],
+  [k="context-menu"][mobile="drawer"][open] {
+    display: flex;
+    translate: none;
+    animation: k-swipe-in 300ms var(--k-ease);
   }
 
   /* Scroll-driven backdrop dimming — see drawer/style.css for rationale. */
   @supports (animation-timeline: scroll()) {
-    [k="popover-content"][mobile="drawer"][open],
-    [k="dropdown-content"][mobile="drawer"][open],
-    [k="context-menu"][mobile="drawer"][open] {
+    [k="popover-content"][mobile="drawer"],
+    [k="dropdown-content"][mobile="drawer"],
+    [k="context-menu"][mobile="drawer"] {
       scroll-timeline: --k-swipe block;
     }
     [k="popover-content"][mobile="drawer"][open]::backdrop,

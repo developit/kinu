@@ -200,19 +200,22 @@ function swipeScroller(target: EventTarget | null) {
 function swipeToggle(e: ToggleEvent) {
   if (e.newState !== 'open') return;
   const el = swipeScroller(e.target);
-  if (el) requestAnimationFrame(() => {
-    el.style.translate = '';
-    el.scrollTo({top: el.scrollHeight, behavior: 'instant'});
-  });
+  if (!el) return;
+  el.style.transitionDuration = '';
+  requestAnimationFrame(() => el.scrollTo({top: el.scrollHeight, behavior: 'instant'}));
 }
 
-// Dismiss: a fling that settles back at the rail (scrollTop 0) closes for real.
-// Jump translate to the closed position first so the CSS exit transition
-// (meant for ESC / back-button) has nothing to animate.
+// Dismiss: a fling that settles back at the rail (scrollTop 0) closes for
+// real. The panel is already off screen, so zero the exit transition to tear
+// down instantly — otherwise the (invisible) translate/display transition
+// keeps the closed dialog in the top layer for 300ms, eating taps. Inline
+// works where a scroll-driven custom property can't: transition parameters
+// come from the after-change style, which includes inline declarations but
+// not CSS-animation-derived values.
 function swipeSettle(e: Event) {
   const el = swipeScroller(e.target);
   if (el?.open && el.scrollTop === 0) {
-    el.style.translate = '0 100%';
+    el.style.transitionDuration = '0s';
     el.close();
   }
 }

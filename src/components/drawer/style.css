@@ -57,18 +57,17 @@
 
 /* Touch: the dialog itself becomes a scroll-snap scroller.
  *
- * The key insight: every property EXCEPT `display` can safely live on the
- * non-[open] base. A display:none element (the UA default for dialog:not([open]))
- * generates no box, so position/inset/translate are inert. Only `display:flex`
- * must be gated on [open] — it was the one that beat the UA's display:none and
- * created a full-viewport invisible overlay covering the page.
+ * Everything EXCEPT `display:flex` lives on the non-[open] base: a
+ * display:none element generates no box, so the layout properties are inert
+ * when closed — but they remain during the exit transition (allow-discrete
+ * holds display:flex until it ends), so the panel keeps its rail, snap
+ * geometry and scroll position while ESC / back slides it down via translate.
+ * Only display:flex is gated on [open]; it was the one property that beat the
+ * UA's dialog:not([open]) display:none and covered the page.
  *
- * This split means `translate` and `display` can transition the exit direction
- * via the base rule's transition property: ESC / back button smoothly slides
- * the panel down while fading the backdrop — same 300ms as the entrance.
- * Swipe dismiss bypasses this because the scroll-driven animation has already
- * brought the backdrop to 0 and the panel is visually behind the rail when
- * close() fires, so the transition out is imperceptible. */
+ * Swipe dismiss tears down instantly (installSwipe zeroes the transition
+ * duration inline before close — the panel is already off screen); ESC/back
+ * animates the full 300ms slide of the still-assembled panel. */
 @media (hover: none) and (pointer: coarse) {
   [k="drawer-content"] {
     --swipe: 1;
@@ -103,6 +102,7 @@
       100% 10000px;
     transform: none;
     translate: 0 100%;
+    flex-direction: column;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
@@ -115,35 +115,34 @@
   [k="drawer-content"]::-webkit-scrollbar {
     display: none;
   }
-  [k="drawer-content"][open] {
-    display: flex;
-    flex-direction: column;
-    translate: none;
-    animation: k-swipe-in 300ms var(--k-ease);
-  }
-  [k="drawer-content"][open]::before {
+  [k="drawer-content"]::before {
     content: "";
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  [k="drawer-content"][open]::after {
+  [k="drawer-content"]::after {
     content: "";
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
-  [k="drawer-content"][open] > * {
+  [k="drawer-content"] > * {
     flex: none;
   }
-  [k="drawer-content"][open] > :first-child {
+  [k="drawer-content"] > :first-child {
     margin-top: 1rem;
   }
-  [k="drawer-content"][open] > :last-child {
+  [k="drawer-content"] > :last-child {
     margin-bottom: 1rem;
+  }
+  [k="drawer-content"][open] {
+    display: flex;
+    translate: none;
+    animation: k-swipe-in 300ms var(--k-ease);
   }
 
   @supports (animation-timeline: scroll()) {
-    [k="drawer-content"][open] {
+    [k="drawer-content"] {
       scroll-timeline: --k-swipe block;
     }
     [k="drawer-content"][open]::backdrop {
@@ -160,6 +159,7 @@
     translate: 0 100%;
   }
 }
+
 
 @keyframes k-swipe-fade {
   from {

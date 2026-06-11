@@ -53,10 +53,20 @@ describe('installSwipe control plane', () => {
     expect(el.scrollTo).not.toHaveBeenCalled();
   });
 
-  it('closes the dialog when scrollend settles at scrollTop 0', () => {
+  it('closes instantly when scrollend settles at scrollTop 0', () => {
     const el = makeDialog({swipe: true, scrollTop: 0});
     handlers.scrollend({target: el});
+    // Inline zero duration suppresses the CSS exit transition (the panel is
+    // already off screen); cleared again by the next open.
+    expect(el.style.transitionDuration).toBe('0s');
     expect(el.close).toHaveBeenCalled();
+  });
+
+  it('clears the inline exit-suppression on reopen', () => {
+    const el = makeDialog({swipe: true, scrollTop: 0});
+    el.style.transitionDuration = '0s';
+    handlers.beforetoggle(makeEvent(el, 'open'));
+    expect(el.style.transitionDuration).toBe('');
   });
 
   it('keeps the dialog open when scrollend settles with scrollTop > 0', () => {

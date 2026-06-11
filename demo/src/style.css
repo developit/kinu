@@ -1562,13 +1562,13 @@ body .home-nav--marketing + * {
  * carousel wrapper to the viewport instead of a percentage of the (taller,
  * rail-included) scroller. */
 @media (hover: none) and (pointer: coarse) {
-  .kinu-home [k="drawer-content"].kh-app-maximized[open] {
+  .kinu-home [k="drawer-content"].kh-app-maximized {
     height: 100dvh;
     max-height: none;
     border-radius: 0;
     overflow-y: auto;
   }
-  .kinu-home [k="drawer-content"].kh-app-maximized[open] > div {
+  .kinu-home [k="drawer-content"].kh-app-maximized > div {
     height: 100dvh;
     margin: 0;
   }
