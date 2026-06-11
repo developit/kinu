@@ -6,12 +6,7 @@
   margin: 0;
   width: 100%;
   max-width: 100vw;
-  /* Cap to the dynamic viewport so a soft-keyboard popup shrinks the
-   * drawer instead of leaving content hidden behind the keyboard. */
   max-height: 100dvh;
-  /* Make the drawer itself the scroll container when content overflows
-   * max-height — otherwise overscroll-behavior:contain below is a
-   * no-op and the content clips. */
   overflow: auto;
   border-radius: 0;
   position: fixed;
@@ -60,30 +55,23 @@
   }
 }
 
-/* Touch: the dialog becomes a scroll-snap scroller. A ::before pseudo acts as
-   the transparent "rail" you fling the panel into. The panel surface, its
-   rounded top corners, and the drag handle are all painted as background
-   layers on the dialog with background-attachment:local so they scroll with
-   the content — and because the background positioning area is the padding
-   box, they span the full width and stay aligned no matter what padding the
-   consumer sets.
-
-   The swipe layout is gated on [open] so a closed <dialog> stays display:none.
-   Only --swipe and transition:none are set ungated — the flag lets the
-   beforetoggle handler detect swipe mode, and killing transitions prevents
-   the exit flash (removing [open] would otherwise briefly reveal the base
-   transform:translateY(100%) styles and slide them out). */
+/* Touch: the dialog itself becomes a scroll-snap scroller.
+ *
+ * The key insight: every property EXCEPT `display` can safely live on the
+ * non-[open] base. A display:none element (the UA default for dialog:not([open]))
+ * generates no box, so position/inset/translate are inert. Only `display:flex`
+ * must be gated on [open] — it was the one that beat the UA's display:none and
+ * created a full-viewport invisible overlay covering the page.
+ *
+ * This split means `translate` and `display` can transition the exit direction
+ * via the base rule's transition property: ESC / back button smoothly slides
+ * the panel down while fading the backdrop — same 300ms as the entrance.
+ * Swipe dismiss bypasses this because the scroll-driven animation has already
+ * brought the backdrop to 0 and the panel is visually behind the rail when
+ * close() fires, so the transition out is imperceptible. */
 @media (hover: none) and (pointer: coarse) {
   [k="drawer-content"] {
     --swipe: 1;
-    transition: none;
-  }
-  /* Kill the 300ms backdrop fade-out on close (the fade-in still runs because
-     the [open]::backdrop rule from the base styles carries the transition). */
-  [k="drawer-content"]::backdrop {
-    transition: none;
-  }
-  [k="drawer-content"][open] {
     inset: 0;
     width: 100%;
     height: 100dvh;
@@ -93,9 +81,6 @@
     border: 0;
     border-radius: 0;
     background-color: transparent;
-    /* Layers, top to bottom: drag handle pill; rounded top-left and top-right
-       corners (quarter-disc radial gradients); the cap strip between them;
-       the main panel surface below the cap. */
     background-image:
       radial-gradient(closest-side, hsl(var(--k-muted-foreground) / 0.35) 99%, transparent),
       radial-gradient(circle var(--k-radius) at 100% 100%, hsl(var(--k-background)) calc(var(--k-radius) - 0.5px), transparent var(--k-radius)),
@@ -117,38 +102,36 @@
       calc(100% - 2 * var(--k-radius)) var(--k-radius),
       100% 10000px;
     transform: none;
-    transition: none;
-    /* Entrance: the scroller is placed in its open position instantly (see
-       installSwipe), and the whole thing slides up. @starting-style would be
-       the natural fit but can't nest inside @media yet, so a one-shot
-       animation provides the same first-frame override. */
-    animation: k-swipe-in 300ms var(--k-ease);
-    display: flex;
-    flex-direction: column;
+    translate: 0 100%;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
+    transition:
+      translate 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
   }
-  [k="drawer-content"][open]::-webkit-scrollbar {
+  [k="drawer-content"]::-webkit-scrollbar {
     display: none;
   }
-  /* Rail: transparent space above the content. */
+  [k="drawer-content"][open] {
+    display: flex;
+    flex-direction: column;
+    translate: none;
+    animation: k-swipe-in 300ms var(--k-ease);
+  }
   [k="drawer-content"][open]::before {
     content: "";
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  /* Snap anchor at the end of content so the panel snaps flush to the bottom. */
   [k="drawer-content"][open]::after {
     content: "";
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
-  /* flex:none — the rail already fills the scrollport, so shrinkable children
-     would be crushed to their min-content height instead of overflowing the
-     container into scroll range. */
   [k="drawer-content"][open] > * {
     flex: none;
   }
@@ -159,13 +142,6 @@
     margin-bottom: 1rem;
   }
 
-  /* Backdrop dimming driven by the swipe itself: a scroll-driven animation
-     ties ::backdrop opacity to the panel position, so dragging dims/undims in
-     lockstep with the finger and a dismissed panel leaves no lingering dim.
-     The second, time-based instance of the same keyframes covers the 300ms
-     entrance slide — the scroller is already at its open position then, so
-     the scroll-driven instance alone would snap to fully dimmed. It's listed
-     last so it wins while it runs, then hands off (both end at opacity 1). */
   @supports (animation-timeline: scroll()) {
     [k="drawer-content"][open] {
       scroll-timeline: --k-swipe block;

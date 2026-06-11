@@ -224,23 +224,12 @@
 }
 
 /* Touch: mobile-drawer overlays become swipeable scroll-snap containers.
-   See drawer/style.css for the full rationale on --swipe, transition:none,
-   the [open] gate, the ::before rail+handle, and background-attachment. */
+   See drawer/style.css for the full design rationale. */
 @media (max-width: 640px) and (hover: none) and (pointer: coarse) {
   [k="popover-content"][mobile="drawer"],
   [k="dropdown-content"][mobile="drawer"],
   [k="context-menu"][mobile="drawer"] {
     --swipe: 1;
-    transition: none;
-  }
-  [k="popover-content"][mobile="drawer"]::backdrop,
-  [k="dropdown-content"][mobile="drawer"]::backdrop,
-  [k="context-menu"][mobile="drawer"]::backdrop {
-    transition: none;
-  }
-  [k="popover-content"][mobile="drawer"][open],
-  [k="dropdown-content"][mobile="drawer"][open],
-  [k="context-menu"][mobile="drawer"][open] {
     inset: 0;
     width: 100%;
     height: 100dvh;
@@ -272,19 +261,28 @@
       calc(100% - 2 * var(--k-radius)) var(--k-radius),
       100% 10000px;
     transform: none;
-    transition: none;
-    animation: k-swipe-in 300ms var(--k-ease);
-    display: flex;
-    flex-direction: column;
+    translate: 0 100%;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
+    transition:
+      translate 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
   }
-  [k="popover-content"][mobile="drawer"][open]::-webkit-scrollbar,
-  [k="dropdown-content"][mobile="drawer"][open]::-webkit-scrollbar,
-  [k="context-menu"][mobile="drawer"][open]::-webkit-scrollbar {
+  [k="popover-content"][mobile="drawer"]::-webkit-scrollbar,
+  [k="dropdown-content"][mobile="drawer"]::-webkit-scrollbar,
+  [k="context-menu"][mobile="drawer"]::-webkit-scrollbar {
     display: none;
+  }
+  [k="popover-content"][mobile="drawer"][open],
+  [k="dropdown-content"][mobile="drawer"][open],
+  [k="context-menu"][mobile="drawer"][open] {
+    display: flex;
+    flex-direction: column;
+    translate: none;
+    animation: k-swipe-in 300ms var(--k-ease);
   }
   [k="popover-content"][mobile="drawer"][open]::before,
   [k="dropdown-content"][mobile="drawer"][open]::before,
