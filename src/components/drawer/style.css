@@ -126,8 +126,11 @@
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
+  /* Geometric invariant, hence !important: the rail consumes the scroller's
+     entire fixed height, so any flex-sized child gets crushed to nothing.
+     Children size intrinsically (height/max-height still apply). */
   [k="drawer-content"] > * {
-    flex: none;
+    flex: none !important;
   }
   [k="drawer-content"] > :first-child {
     margin-top: 1rem;

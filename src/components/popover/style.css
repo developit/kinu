@@ -292,10 +292,11 @@
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
+  /* Geometric invariant, hence !important — see drawer/style.css. */
   [k="popover-content"][mobile="drawer"] > *,
   [k="dropdown-content"][mobile="drawer"] > *,
   [k="context-menu"][mobile="drawer"] > * {
-    flex: none;
+    flex: none !important;
   }
   [k="popover-content"][mobile="drawer"] > :first-child,
   [k="dropdown-content"][mobile="drawer"] > :first-child,

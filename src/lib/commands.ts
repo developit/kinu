@@ -79,15 +79,28 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
 
   // close on backdrop click
   if (target.localName === 'dialog' && target.getAttribute('k')) {
+    const dialog = target as HTMLDialogElement;
+
+    // Swipe overlays span the whole viewport, so backdrop clicks land on the
+    // dialog itself. The panel surface starts where the rail ends; any direct
+    // hit above it is a tap on the dimmed area.
+    if (getComputedStyle(dialog).getPropertyValue('--swipe')) {
+      if (e.clientY < dialog.clientHeight - dialog.scrollTop) {
+        dialog.close();
+        e.preventDefault();
+      }
+      return;
+    }
+
     const {clientX, clientY} = e;
-    const {left, right, top, bottom} = target.getBoundingClientRect();
+    const {left, right, top, bottom} = dialog.getBoundingClientRect();
     if (
       clientX < left ||
       clientX > right ||
       clientY < top ||
       clientY > bottom
     ) {
-      (target as HTMLDialogElement).close();
+      dialog.close();
       e.preventDefault();
       return;
     }
