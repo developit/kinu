@@ -316,6 +316,23 @@
   [k="context-menu"][mobile="drawer"][open] > :last-child {
     margin-bottom: 1rem;
   }
+
+  /* Scroll-driven backdrop dimming — see drawer/style.css for rationale. */
+  @supports (animation-timeline: scroll()) {
+    [k="popover-content"][mobile="drawer"][open],
+    [k="dropdown-content"][mobile="drawer"][open],
+    [k="context-menu"][mobile="drawer"][open] {
+      scroll-timeline: --k-swipe block;
+    }
+    [k="popover-content"][mobile="drawer"][open]::backdrop,
+    [k="dropdown-content"][mobile="drawer"][open]::backdrop,
+    [k="context-menu"][mobile="drawer"][open]::backdrop {
+      animation:
+        k-swipe-fade linear both,
+        k-swipe-fade 300ms var(--k-ease);
+      animation-timeline: --k-swipe, auto;
+    }
+  }
 }
 
 /* Duplicated from drawer/style.css — component stylesheets load
@@ -323,6 +340,15 @@
 @keyframes k-swipe-in {
   from {
     translate: 0 100%;
+  }
+}
+
+@keyframes k-swipe-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

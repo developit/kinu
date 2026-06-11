@@ -158,10 +158,38 @@
   [k="drawer-content"][open] > :last-child {
     margin-bottom: 1rem;
   }
+
+  /* Backdrop dimming driven by the swipe itself: a scroll-driven animation
+     ties ::backdrop opacity to the panel position, so dragging dims/undims in
+     lockstep with the finger and a dismissed panel leaves no lingering dim.
+     The second, time-based instance of the same keyframes covers the 300ms
+     entrance slide — the scroller is already at its open position then, so
+     the scroll-driven instance alone would snap to fully dimmed. It's listed
+     last so it wins while it runs, then hands off (both end at opacity 1). */
+  @supports (animation-timeline: scroll()) {
+    [k="drawer-content"][open] {
+      scroll-timeline: --k-swipe block;
+    }
+    [k="drawer-content"][open]::backdrop {
+      animation:
+        k-swipe-fade linear both,
+        k-swipe-fade 300ms var(--k-ease);
+      animation-timeline: --k-swipe, auto;
+    }
+  }
 }
 
 @keyframes k-swipe-in {
   from {
     translate: 0 100%;
+  }
+}
+
+@keyframes k-swipe-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
