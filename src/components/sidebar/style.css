@@ -129,12 +129,13 @@
     overflow: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
+    overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     box-shadow: none;
     grid-template-columns: min(16rem, 80vw) 100vw;
-    grid-auto-rows: min-content;
-    align-content: start;
-    gap: 0.5rem;
+    grid-template-rows: auto 1fr;
+    gap: 0;
     z-index: 500;
     transition:
       translate 300ms var(--k-ease),
@@ -147,16 +148,20 @@
   [k="sidebar"]::before {
     content: "";
     grid-column: 2;
-    grid-row: 1 / span 999;
+    grid-row: 1 / -1;
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
   [k="sidebar"] > * {
     grid-column: 1;
     flex: none !important;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding: 0.5rem 0.75rem;
     box-sizing: border-box;
+    min-height: 0;
+  }
+  [k="sidebar"] > :last-child {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
   }
   [k="sidebar"] > :first-child {
     scroll-snap-align: start;
@@ -174,8 +179,8 @@
     }
     [k="sidebar"][open]::backdrop {
       animation:
-        k-sidebar-fade linear both reverse,
-        k-sidebar-fade 300ms var(--k-ease);
+        k-swipe-fade linear both reverse,
+        k-swipe-fade 300ms var(--k-ease);
       animation-timeline: --k-swipe, auto;
     }
   }
@@ -187,11 +192,11 @@
   }
 }
 
-@keyframes k-sidebar-fade {
+@keyframes k-swipe-fade {
   from {
-    opacity: 1;
+    opacity: 0;
   }
   to {
-    opacity: 0;
+    opacity: 1;
   }
 }

@@ -116,8 +116,16 @@
     padding-left: 1rem;
     padding-right: 1rem;
     box-sizing: border-box;
+    min-height: 0;
   }
-  [k="sheet-content"] > :last-child {
+  [k="sheet-content"] > button,
+  [k="sheet-content"] > [k="button"] {
+    justify-self: start;
+  }
+  [k="sheet-content"]::after {
+    content: "";
+    grid-column: 2;
+    grid-row: 1;
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
