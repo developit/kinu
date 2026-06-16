@@ -5019,8 +5019,10 @@ body .example-demo {
   border-right: 1px solid hsl(var(--k-border));
   background: hsl(var(--k-background));
   box-shadow: none;
-  display: flex;
-  flex-direction: column;
+  /* Grid (matching the component) — fixed-height header row + filling,
+     scrollable content row. */
+  display: grid;
+  grid-template-rows: auto 1fr;
   padding: 0 !important;
   gap: 0 !important;
   overflow: hidden;

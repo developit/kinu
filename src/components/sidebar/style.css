@@ -11,8 +11,11 @@
   margin: 0;
   padding: 0.5rem;
   flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
+  /* Always a grid (single stacking column) so content lays out identically
+   * across breakpoints — the touch swipe mode (below) adds a rail column. */
+  display: grid;
+  grid-auto-rows: min-content;
+  align-content: start;
   border: none;
   border-right: 1px solid hsl(var(--k-border));
   background-color: hsl(var(--k-sidebar));

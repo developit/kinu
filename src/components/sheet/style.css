@@ -2,7 +2,10 @@
 
 [k="sheet-content"] {
   border: none;
-  padding: 1rem;
+  /* Vertical padding on the panel; horizontal padding lives on the children so
+   * the box model is identical to the touch swipe mode (where the panel column
+   * spans the rail). */
+  padding: 1rem 0;
   margin: 0;
   width: 20rem;
   max-width: 90vw;
@@ -23,6 +26,12 @@
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   border-radius: 0;
   overscroll-behavior: contain;
+  /* Always a grid so content lays out identically across breakpoints: desktop
+   * is a single panel column; the touch swipe mode (below) adds a rail column
+   * in front of it. */
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+  align-content: start;
   transform: translateX(100%);
   transition:
     transform 300ms var(--k-ease),
@@ -31,6 +40,7 @@
 }
 
 [k="sheet-content"][open] {
+  display: grid;
   transform: translateX(0);
 }
 
@@ -38,6 +48,27 @@
   [k="sheet-content"][open] {
     transform: translateX(100%);
   }
+}
+
+/* Content placement — applies at every breakpoint. The grid is an internal
+   mechanism (no wrapper element: a right-anchored swipe panel can't be built in
+   flow, since scrollable overflow is clamped at the inline-start edge). These
+   rules keep user content laying out like a block-flow panel — children fill the
+   panel width (justify-items defaults to stretch) with their own horizontal
+   padding, and inline-level children that grid would blockify and stretch are
+   pinned back to natural width. (Residual: adjacent vertical margins don't
+   collapse between grid items the way they do in block flow.) */
+[k="sheet-content"] > * {
+  flex: none !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+  min-height: 0;
+}
+[k="sheet-content"] > button,
+[k="sheet-content"] > a,
+[k="sheet-content"] > [k="button"] {
+  justify-self: start;
 }
 
 [k="sheet-content"]::backdrop {
@@ -76,7 +107,6 @@
     height: 100dvh;
     max-width: none;
     max-height: none;
-    padding: 1rem 0;
     border: 0;
     border-radius: 0;
     box-shadow: none;
@@ -88,13 +118,11 @@
     background-size: min(20rem, 90vw) 10000px;
     transform: none;
     translate: 100% 0;
-    overflow: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
+    /* Add the full-viewport rail column in front of the panel column. */
     grid-template-columns: 100vw min(20rem, 90vw);
-    grid-auto-rows: min-content;
-    align-content: start;
     transition:
       translate 300ms var(--k-ease),
       display 300ms allow-discrete,
@@ -110,27 +138,9 @@
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  /* The grid is an internal mechanism: it places the rail in column 1 and the
-     panel in column 2 without a wrapper element (a right-anchored swipe panel
-     can't be built in flow, since scrollable overflow is clamped at the
-     inline-start edge). These rules neutralize the ways grid placement would
-     otherwise alter user content so it lays out like the block-flow desktop
-     sheet — children fill the panel width (justify-items defaults to stretch),
-     and inline-level children that grid would blockify and stretch are pinned
-     back to their natural width. (Residual: adjacent vertical margins don't
-     collapse between grid items the way they do in block flow.) */
+  /* Content moves to the panel column (column 2); column 1 is the rail. */
   [k="sheet-content"] > * {
     grid-column: 2;
-    flex: none !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    box-sizing: border-box;
-    min-height: 0;
-  }
-  [k="sheet-content"] > button,
-  [k="sheet-content"] > a,
-  [k="sheet-content"] > [k="button"] {
-    justify-self: start;
   }
   [k="sheet-content"]::after {
     content: "";
