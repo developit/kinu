@@ -93,8 +93,11 @@
     background-color: transparent;
     transform: none;
     translate: 100% 0;
-    overflow-x: auto;
-    overflow-y: hidden;
+    /* 2-D scroller: X scroll-snaps for the swipe, Y scrolls content freely.
+       The panel must NOT be its own scroll container — a nested scroller would
+       capture the horizontal gesture (overflow on one axis coerces the other
+       off `visible`) instead of letting the swipe chain to this dialog. */
+    overflow: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
@@ -114,10 +117,6 @@
   }
   [k="sheet-content"] > [k="sheet-panel"] {
     flex: 0 0 min(20rem, 90vw);
-    min-height: 0;
-    height: 100dvh;
-    overflow-y: auto;
-    overscroll-behavior: contain;
     background-color: hsl(var(--k-background));
     scroll-snap-align: end;
     scroll-snap-stop: always;
