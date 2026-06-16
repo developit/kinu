@@ -92,13 +92,33 @@ is not "done" until all apply:
     bail). Add an SSR smoke case to `src/__tests__/ssr-smoke.test.tsx` if the item
     introduces JS.
 11. `pnpm lint` (tsc + biome) clean; `pnpm test` green.
-12. `pnpm bench:size` — record the delta in the PR; a single-component import must
-    add **only** its own bytes (verify tree-shaking — no accidental cross-imports).
+12. **Size delta (the primary KPI).** Build (`pnpm build`) and record the
+    **minified + gzipped** size change for **JS and CSS separately**
+    (`dist/index.js` vs `dist/index.css`), plus the per-component `bench:size` case.
+    **JS min+gzip is the budget we minimize** — a pure-CSS item (most `LAY`/`DIS`)
+    must add **~0 bytes JS**; only `refCb`/singleton items (`CTL-2/3/4/5`, `CHT-3`,
+    `CMP-*`, `FUN-2`) may add JS, and each added byte must be justified. CSS min+gzip
+    is **secondary** — tracked and kept reasonable, but not the gate. Verify
+    tree-shaking (a single-component import pulls only its own bytes). Record both
+    `JS Δ` and `CSS Δ` in the commit body / changeset.
 13. Visual check in the demo via the Playwright MCP (`browser_*` tools); wire the
     component into a demo route or `components-index`.
 14. `pnpm changeset` — patch/minor entry.
 
 For **`FUN`** items the DoD is item-specific and stated inline.
+
+### 0.7 Execution discipline (sequential + measured)
+
+- **One item at a time, in order.** Work strictly sequentially by phase then
+  priority (§11). Fully complete an item's DoD — **including the JS/CSS size deltas
+  (§0.6 #12)** — and commit it before starting the next. Never batch multiple
+  roadmap items into one change: it makes the per-item size delta unattributable and
+  reviews harder.
+- **JS size is the thing we protect.** If an item pushes **JS** min+gzip up
+  unexpectedly, stop and re-examine before proceeding. Pure-CSS items must register
+  ~0 JS; CSS growth is secondary.
+- **Record as you go.** Each item's commit body states `JS Δ` and `CSS Δ`
+  (min+gzip), and resolving an open question updates the §12 decisions log.
 
 ---
 
@@ -162,12 +182,18 @@ inventing handlers:
   components should prefer dispatching `--custom` commands over new listeners.
 **DoD:** a short "extending behavior" section in `ARCHITECTURE.md`.
 
-### CON-5 — Size-budget guardrail
+### CON-5 — Size-budget guardrail (JS primary, CSS secondary)
 **Status:** READY · **Priority:** P0
-Extend `benchmarks/size` with a per-component case so each new component's gzip cost
-is tracked, and add the numbers to `CHANGELOG`/PR. Target: any single component
-imports add < ~0.6 KB gzip on top of `Button`'s baseline unless justified.
-**DoD:** `bench:size` covers each new component; CI prints the delta.
+Make per-change size measurable and **split JS vs CSS**. Extend `benchmarks/size` so
+every scenario reports **minified + gzipped JS and CSS separately** (today it reports
+a combined figure), and add a per-component case. **Primary KPI:** JS min+gzip —
+minimize it; pure-CSS components must register ~0 JS. **Secondary:** CSS min+gzip —
+track and keep reasonable. Every item records its `JS Δ` / `CSS Δ` in the commit body
+(§0.6 #12) and the executor proceeds one item at a time (§0.7). **Target:** a single
+component import adds < ~0.6 KB gzip total on top of `Button`'s baseline, with JS as
+near zero as the component allows, unless justified. **DoD:** `bench:size` prints JS
+and CSS gzip per scenario plus a per-component case; numbers land in
+`benchmarks/size/results`.
 
 ---
 
@@ -386,12 +412,20 @@ zero JS. Distinct from `Timeline` (vertical) and `Progress` (continuous).
 [k="indicator"] > [k="badge"]{position:absolute;top:0;right:0;transform:translate(40%,-40%)}
 ```
 
-### DIS-4 — `Code` (styled block/inline)
-**Status:** SPIKE · **Priority:** P3 · **Overlap:** `Prose` already styles nested
-`<pre><code>`. Only ship if there's a need for **standalone** code (outside Prose)
-with copy chrome. Compose `CopyButton` (`CTL-5`). **Never bundle a highlighter**
-(see `DROP-6`). **Spike question:** is standalone `Code` worth a component, or is a
-`docs/pages/code.md` recipe (use `<pre>` + `Prose` + `CopyButton`) enough? Decide before building.
+### DIS-4 — `Code` (styled block / inline)
+**Status:** READY · **Priority:** P3 · **Decision (2026-06-16):** ship as a
+component — we may later offer opt-in syntax highlighting via a plugin.
+**Renders:** `<pre k="code">` (block) / `<code k="code" inline>` (inline).
+**API:** `inline?`, `language?` (advisory; a future highlighting plugin reads it),
+plus a `Code.Copy` slot composing `CopyButton` (`CTL-5`). **Mechanism:** pure CSS
+chrome (mono font, surface, radius, horizontal scroll) — zero JS for the base.
+**Highlighting stays out of core** (`DROP-6`): design **one extension seam** — accept
+already-highlighted markup as children, **and/or** let an opt-in plugin target
+`[k="code"][language]` — so a highlighter can be added later **without bundling one
+in core** and without changing the component API. **Overlap note:** `Prose` styles
+nested `<pre><code>`; `Code` is for standalone/inline code plus the copy + plugin
+seam. **Demo impact:** replaces the bespoke `CodeBlock` + `highlight.ts` wiring, which
+becomes the first consumer of the plugin seam.
 
 ---
 
@@ -529,22 +563,24 @@ cross-document `@view-transition` recipe for MPA nav. Motion tokens
 resolves.
 
 ### FUN-5 — Theming hardening
-**Status:** SPIKE (one sub-part is breaking) · **Priority:** P2
-**Safe, do now:** (a) document the `--k-*` token contract as a stable public surface;
+**Status:** READY · **Priority:** P2
+**Do now (safe):** (a) document the `--k-*` token contract as a stable public surface;
 (b) productize 2–3 preset themes from the existing `theme-customizer` Radix→token
 generator as importable CSS; (c) use `color-mix()` (already in `Spinner`) to *derive*
-hover/soft variants instead of hand-listing them where it shrinks CSS.
-**SPIKE — do NOT do blindly:** collapsing the duplicated dark palette (208 lines:
-`@media (prefers-color-scheme: dark)` **and** `[data-color-scheme="dark"]`) via
-`light-dark()` is tempting but **conflicts with the deliberate HSL-triplet + alpha
-architecture**: tokens are triplets consumed as `hsl(var(--k-x) / a)` (e.g.
-`--k-primary-soft: var(--k-primary) / 0.15`). `light-dark()` returns a `<color>`, so
-adopting it means abandoning the triplet/alpha trick at hundreds of call sites and
-moving alpha to `color-mix()`. **Decision needed:** either (i) keep triplets and
-reduce duplication by **generating** the dark block from the light block at build, or
-(ii) migrate to full-color tokens + `color-mix()` alpha + `light-dark()` theming as a
-coordinated breaking change with visual regression tests. Pick (i) unless there's
-appetite for the bigger refactor.
+hover/soft variants where it shrinks CSS.
+**Decision (resolved 2026-06-16):** keep the **hand-maintained** dark palette and the
+**HSL-triplet** token format for now — do **not** adopt `light-dark()`. Rationale:
+its older-device coverage is still middling, and more importantly it returns a
+`<color>`, which would break the deliberate `hsl(var(--k-x) / a)` alpha trick used
+throughout (`--k-primary-soft: var(--k-primary) / 0.15`, etc.). The duplicated dark
+block (`@media (prefers-color-scheme: dark)` + `[data-color-scheme="dark"]`) stays;
+we accept it.
+**Later (forward path, not scheduled):** when **CSS Custom Functions** (`@function`)
+ship, dedupe the palette with a custom `--light-dark(--l, --d)` that returns the
+correct **triplet** per `color-scheme` — automating the dedup *while preserving the
+triplet/alpha format*. Interim option if duplication becomes a maintenance burden:
+generate the dark block from the light block at build. Revisit when `@function` is
+available.
 
 ### FUN-6 — Density, RTL & forced-colors pass
 **Status:** READY · **Priority:** P3 · **Mechanism:** pure CSS, the kind of audit a
@@ -639,9 +675,34 @@ largest share of the 5,268 lines of demo CSS and ships the differentiator.
 - `ENH-1` and any Chromium-only CSS strictly follow `CON-3` (`@supports` + fallback).
 
 ### Standing guardrails (apply to every item)
+- **Sequential & measured** (§0.7): one item at a time, fully done — **including the
+  separate JS/CSS min+gzip deltas** — and committed before the next. Never batch items.
+- **JS size is the budget** (`CON-5`): minimize min+gzip **JS** (pure-CSS items add
+  ~0); CSS min+gzip is secondary. Record `JS Δ` / `CSS Δ` per item.
 - Pass the **Kinu Test** (§0.4) — if an item starts needing per-instance framework
   state, stop and redesign.
 - Follow the **DoD runbook** (§0.6) — a component isn't done without export + docs +
   manifest + llms + example + size delta.
 - **Gate, don't bet** (`CON-3`): Chromium-only CSS is enhancement over a working
   native fallback, never load-bearing.
+
+---
+
+## 12. Decisions log
+
+Canonical decisions, newest first — reference by date + item ID over the long haul.
+
+- **2026-06-16 · Process:** Execute roadmap items **strictly sequentially**; measure
+  and record **min+gzip JS and CSS deltas separately** per item. **JS is the primary
+  budget to minimize**; CSS is secondary. (See §0.7, `CON-5`.)
+- **2026-06-16 · FUN-5:** Keep the hand-maintained dark palette + HSL-triplet token
+  format; do **not** adopt `light-dark()` (returns a `<color>`, breaks the `/ a` alpha
+  trick; coverage still middling). Automate the dedup later via CSS Custom Functions
+  (`@function --light-dark`) preserving the triplet format.
+- **2026-06-16 · DIS-4:** `Code` ships as a component; syntax highlighting stays out
+  of core and is added later through an opt-in plugin seam (`[k="code"][language]` /
+  pre-highlighted children).
+- **2026-06-16 · PARK-1 / DROP-2 / DROP-3:** Popover-API overlay migration parked
+  (`<dialog>` support + conditional modal/amodal cases); Carousel CSS markers dropped
+  (detection + fallback costs more JS than today's `commandFor` handler); ToggleGroup
+  ink-bar dropped (multi-select has no single anchor; `Tabs` owns it).
