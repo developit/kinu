@@ -124,16 +124,26 @@ function PickerItem({
 
 /* ── Picker ──────────────────────────────────────────────── */
 export function ThemePicker() {
-  const [theme, setTheme] = useState(() => readAttr('data-theme'));
-  const [density, setDensity] = useState(() => readAttr('data-kinu-density'));
+  // Start from the empty state the prerender produced (no attributes exist
+  // at prerender time) so the first client render matches the prerendered
+  // DOM — Preact's hydrate() attaches listeners but does NOT patch attribute
+  // diffs, so initializing straight to the live attribute value would leave
+  // the baked-in "Default"/"Auto" checkmarks stale until the next render.
+  // The effect below syncs to the real attributes after hydration, and that
+  // state change triggers the re-render that moves the checkmarks.
+  const [theme, setTheme] = useState('');
+  const [density, setDensity] = useState('');
 
-  // Stay in sync if anything else mutates the attributes (devtools,
-  // bootstrap script, customizer's MutationObserver, etc.).
   useEffect(() => {
-    const obs = new MutationObserver(() => {
+    const sync = () => {
       setTheme(readAttr('data-theme'));
       setDensity(readAttr('data-kinu-density'));
-    });
+    };
+    // Reconcile once post-hydration (the bootstrap script in index.html
+    // applied the persisted attributes before paint), then stay in sync if
+    // anything else mutates them (devtools, the customizer, etc.).
+    sync();
+    const obs = new MutationObserver(sync);
     obs.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme', 'data-kinu-density'],

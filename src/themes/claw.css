@@ -361,10 +361,13 @@
 
 /* Menu / list rows — kinu's `[k="item"]` reads density tokens (height,
    font, padding, gap) from kinu base. claw only supplies the
-   monochromatic hover wash + tight inter-row spacing here. */
+   monochromatic hover wash + tight inter-row spacing here.
+   Note: deliberately no `line-height` override — rows are fixed-height
+   from the density tokens, and a taller line-height pushes two-line rows
+   (e.g. the Inbox demo) past the row box, turning the list into a
+   subregion scroll container. */
 [data-theme="claw"] [k="item"] {
   border-radius: 6px;
-  line-height: 1.5;
 }
 [data-theme="claw"] [k="item"]:hover,
 [data-theme="claw"] [k="item"]:focus-visible {
@@ -455,8 +458,15 @@
 [data-theme="claw"] [k="avatar"] {
   background: hsl(var(--k-foreground) / 0.08);
   color: hsl(var(--k-foreground));
-  font-size: 11px;
   font-weight: 500;
+}
+/* Initials render through the ::after, which kinu sizes with an
+   em-multiplier trick (img `font-size: 0.01em` × ::after `font-size: 100em`).
+   Set the glyph size on the ::after directly — putting `font-size` on the
+   <img> feeds the 100em multiplier and blows the initials up to ~1100px,
+   clipping a single giant glyph fragment inside the 32px circle. */
+[data-theme="claw"] [k="avatar"]:after {
+  font-size: 11px;
 }
 
 /* Inline code — subtle pill against surrounding prose. */
