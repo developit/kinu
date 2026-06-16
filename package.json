@@ -33,7 +33,8 @@
     "prepublishOnly": "pnpm run build",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "bench:size:components": "node benchmarks/size/run-components.mjs"
   },
   "peerDependencies": {
     "preact": "^10.26.8"

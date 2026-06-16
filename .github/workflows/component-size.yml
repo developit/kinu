@@ -1,0 +1,41 @@
+name: Component size report
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  component-size:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate component size report
+        run: pnpm bench:size:components
+
+      - name: Upload component size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: kinu-component-size-report
+          path: |
+            benchmarks/size/results/components.html
+            benchmarks/size/results/components.md
+            benchmarks/size/results/components.json
+            benchmarks/size/results/components.sankey.json
+            benchmarks/size/results/components.shapley.json
+          if-no-files-found: error
