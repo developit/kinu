@@ -110,6 +110,15 @@
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
+  /* The grid is an internal mechanism: it places the rail in column 1 and the
+     panel in column 2 without a wrapper element (a right-anchored swipe panel
+     can't be built in flow, since scrollable overflow is clamped at the
+     inline-start edge). These rules neutralize the ways grid placement would
+     otherwise alter user content so it lays out like the block-flow desktop
+     sheet — children fill the panel width (justify-items defaults to stretch),
+     and inline-level children that grid would blockify and stretch are pinned
+     back to their natural width. (Residual: adjacent vertical margins don't
+     collapse between grid items the way they do in block flow.) */
   [k="sheet-content"] > * {
     grid-column: 2;
     flex: none !important;
@@ -119,6 +128,7 @@
     min-height: 0;
   }
   [k="sheet-content"] > button,
+  [k="sheet-content"] > a,
   [k="sheet-content"] > [k="button"] {
     justify-self: start;
   }
