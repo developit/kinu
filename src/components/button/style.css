@@ -127,7 +127,7 @@
 /* Size: sm */
 [k="button"][size="sm"] {
   height: var(--k-control-h-sm, 2.25rem);
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   font-size: 0.8125rem;
@@ -136,7 +136,7 @@
 /* Size: lg */
 [k="button"][size="lg"] {
   height: var(--k-control-h-lg, 2.75rem);
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   padding-left: 2rem;
   padding-right: 2rem;
 }

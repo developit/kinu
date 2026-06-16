@@ -70,6 +70,20 @@
   /* Radius */
   --k-radius: 0.5rem;
 
+  /* Radius scale — a 4-step ramp expressed as offsets off --k-radius, so a
+     single knob (--k-radius) shifts the whole set, while any individual step
+     can be re-pinned for a bespoke ramp (e.g. `--k-radius-1: 0`). Step 3 is
+     --k-radius itself; components use `var(--k-radius)` for the default and
+     reach for a numbered step only when they want a tighter/looser corner.
+       1  tightest (inner controls, swatches)
+       2  tight    (buttons-in-groups, badges, items, tabs, kbd, tooltip)
+       3  default  (== --k-radius)
+       4  loose    (floating menus: dropdown, listbox) */
+  --k-radius-1: calc(var(--k-radius) - 4px);
+  --k-radius-2: calc(var(--k-radius) - 2px);
+  --k-radius-3: var(--k-radius);
+  --k-radius-4: calc(var(--k-radius) + 4px);
+
   /* Focus appearance — used by input, textarea, select, switch, radio,
      otp, toggle, color-picker (and the input-group wrapper):
        --k-focus-ring     box-shadow on :focus-visible

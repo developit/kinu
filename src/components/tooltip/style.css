@@ -18,7 +18,7 @@
   background-color: hsl(var(--k-foreground));
   color: hsl(var(--k-background));
   padding: 0.25rem 0.5rem;
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   font-size: 0.75rem;
   line-height: 1rem;
   white-space: nowrap;

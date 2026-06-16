@@ -3,7 +3,7 @@
   width: 1rem;
   height: 1rem;
   border: 1px solid hsl(var(--k-input));
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   background-color: hsl(var(--k-background));
   display: inline-grid;
   place-content: center;

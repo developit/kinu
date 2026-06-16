@@ -6,7 +6,7 @@
   width: 100%;
   background: none;
   border: none;
-  border-radius: calc(var(--k-radius) - 0.125rem);
+  border-radius: var(--k-radius-2);
   text-align: left;
   padding: 0 var(--k-row-px, 0.75rem);
   min-height: var(--k-row-h, 2.375rem);

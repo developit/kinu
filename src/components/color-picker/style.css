@@ -11,17 +11,17 @@
 
 [k="color-picker"]::-webkit-color-swatch-wrapper {
   padding: 0;
-  border-radius: calc(var(--k-radius) - 4px);
+  border-radius: var(--k-radius-1);
 }
 
 [k="color-picker"]::-webkit-color-swatch {
   border: none;
-  border-radius: calc(var(--k-radius) - 4px);
+  border-radius: var(--k-radius-1);
 }
 
 [k="color-picker"]::-moz-color-swatch {
   border: none;
-  border-radius: calc(var(--k-radius) - 4px);
+  border-radius: var(--k-radius-1);
 }
 
 [k="color-picker"]:focus-visible {

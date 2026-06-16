@@ -31,7 +31,7 @@
   font-size: 0.9em;
   background: hsl(var(--k-muted));
   padding: 0.125em 0.375em;
-  border-radius: calc(var(--k-radius) - 0.25rem);
+  border-radius: var(--k-radius-1);
 }
 
 [k="prose"] pre {

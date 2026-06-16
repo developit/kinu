@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid hsl(var(--k-border));
-  border-radius: calc(var(--k-radius) + 0.25rem);
+  border-radius: var(--k-radius-4);
   overflow: hidden;
 }
 

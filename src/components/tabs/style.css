@@ -19,7 +19,7 @@
   appearance: none;
   background: none;
   border: 1px solid transparent;
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   height: calc(100% - 1px);
   padding: 0 0.5rem;
   font-size: var(--k-control-font, 0.875rem);
@@ -52,7 +52,7 @@
     block-size: calc(100% - 6px);
     inline-size: 0;
     border: 1px solid transparent;
-    border-radius: calc(var(--k-radius) - 2px);
+    border-radius: var(--k-radius-2);
     background: hsl(var(--k-background));
     box-shadow:
       0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),
