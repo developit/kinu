@@ -1,3 +1,25 @@
 [k="scroll-area"] {
   overflow-y: scroll;
+  /* A scroll area is a self-contained region: its scroll shouldn't chain out
+     to the page (or a parent scroller) when it hits an edge. */
+  overscroll-behavior: contain;
+}
+
+/* …except when it lives inside a swipe-to-dismiss overlay on touch. There the
+   overlay's own scroll container is the dismiss gesture, and the overlay itself
+   is the containment boundary (it sets overscroll-behavior:contain). Letting the
+   inner scroll chain lets a fling that runs past the list edge carry through to
+   the panel and dismiss it — matching the nested-scroll physics iOS and Android
+   both use for sheets. */
+@media (hover: none) and (pointer: coarse) {
+  :is(
+    [k="drawer-content"],
+    [k="sheet-content"],
+    [k="sidebar"],
+    [k="popover-content"][mobile="drawer"],
+    [k="dropdown-content"][mobile="drawer"],
+    [k="context-menu"][mobile="drawer"]
+  ) [k="scroll-area"] {
+    overscroll-behavior: auto;
+  }
 }

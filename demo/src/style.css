@@ -5048,7 +5048,9 @@ body .example-demo {
   flex: 1;
   min-height: 0;
   overflow: auto;
-  overscroll-behavior: contain;
+  /* auto (not contain) so a vertical fling past the edge chains out to the
+     swipeable sidebar dialog, which is the page-boundary containment. */
+  overscroll-behavior: auto;
   padding: 2rem 1rem;
 }
 

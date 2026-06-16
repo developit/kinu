@@ -161,11 +161,21 @@
   }
   [k="sidebar"] > :last-child {
     overflow-y: auto;
-    overscroll-behavior-y: contain;
+    /* Chain a past-the-edge vertical fling out to the dialog (the swipe
+       scroller), which contains it at the page boundary. No containment here. */
+    overscroll-behavior: auto;
   }
   [k="sidebar"] > :first-child {
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+  /* The closed state must be display:none so the exit animates grid→none with
+     allow-discrete (the panel holds its grid layout for the whole slide-out).
+     Without this the base `display:flex` (the persistent desktop sidebar) is the
+     closed value, and a discrete grid→flex flip at the midpoint reflows the panel
+     to full width for one frame. Specificity beats demo `.docs-sidebar`. */
+  [k="sidebar"]:not([open]) {
+    display: none;
   }
   [k="sidebar"][open] {
     display: grid;
