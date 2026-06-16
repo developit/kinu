@@ -62,3 +62,95 @@
     opacity: 0;
   }
 }
+
+/* Touch: horizontal scroll-snap scroller. A CSS grid places the ::before rail
+   in column 1 (full viewport width) and all content children in column 2
+   (the panel). Children stack vertically via auto-rows. The panel background
+   is painted via background-attachment:local, positioned at the column 2
+   origin. See drawer/style.css for the full architectural rationale. */
+@media (hover: none) and (pointer: coarse) {
+  [k="sheet-content"] {
+    --swipe: x;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    padding: 1rem 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-position: 100vw 0;
+    background-size: min(20rem, 90vw) 10000px;
+    transform: none;
+    translate: 100% 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    grid-template-columns: 100vw min(20rem, 90vw);
+    grid-auto-rows: min-content;
+    align-content: start;
+    transition:
+      translate 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
+  }
+  [k="sheet-content"]::-webkit-scrollbar {
+    display: none;
+  }
+  [k="sheet-content"]::before {
+    content: "";
+    grid-column: 1;
+    grid-row: 1 / span 999;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  [k="sheet-content"] > * {
+    grid-column: 2;
+    flex: none !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+  [k="sheet-content"] > :last-child {
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
+  }
+  [k="sheet-content"][open] {
+    display: grid;
+    translate: none;
+    animation: k-sheet-in 300ms var(--k-ease);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    [k="sheet-content"] {
+      scroll-timeline: --k-swipe inline;
+    }
+    [k="sheet-content"][open]::backdrop {
+      animation:
+        k-swipe-fade linear both,
+        k-swipe-fade 300ms var(--k-ease);
+      animation-timeline: --k-swipe, auto;
+    }
+  }
+}
+
+@keyframes k-sheet-in {
+  from {
+    translate: 100% 0;
+  }
+}
+
+@keyframes k-swipe-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

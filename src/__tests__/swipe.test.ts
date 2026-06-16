@@ -7,14 +7,27 @@ function makeEvent(target: unknown, newState?: string) {
   return {target, newState, preventDefault: vi.fn()};
 }
 
-function makeDialog(opts: {swipe?: boolean; open?: boolean; scrollTop?: number}) {
+function makeDialog(opts: {
+  swipe?: string | false;
+  open?: boolean;
+  scrollTop?: number;
+  scrollLeft?: number;
+  scrollWidth?: number;
+  scrollHeight?: number;
+  clientWidth?: number;
+  clientHeight?: number;
+}) {
   return {
     open: opts.open ?? true,
     scrollTop: opts.scrollTop ?? 0,
-    scrollHeight: 1000,
+    scrollLeft: opts.scrollLeft ?? 0,
+    scrollHeight: opts.scrollHeight ?? 1000,
+    scrollWidth: opts.scrollWidth ?? 1000,
+    clientWidth: opts.clientWidth ?? 390,
+    clientHeight: opts.clientHeight ?? 844,
     style: {} as Record<string, string>,
-    __swipe: opts.swipe ? '1' : '',
-    matches: (sel: string) => sel.includes('drawer-content'),
+    __swipe: opts.swipe || '',
+    matches: () => !!opts.swipe,
     scrollTo: vi.fn(),
     close: vi.fn(),
   };
@@ -41,41 +54,73 @@ describe('installSwipe control plane', () => {
     expect(typeof handlers.scrollend).toBe('function');
   });
 
-  it('jumps to the open scroll position on open (the slide-in is CSS)', () => {
-    const el = makeDialog({swipe: true});
+  // --- Vertical (drawer, --swipe: y) ---
+  it('drawer: jumps to max scrollTop on open', () => {
+    const el = makeDialog({swipe: 'y', scrollHeight: 1200, clientHeight: 800});
     handlers.beforetoggle(makeEvent(el, 'open'));
-    expect(el.scrollTo).toHaveBeenCalledWith({top: 1000, behavior: 'instant'});
+    expect(el.scrollTop).toBe(400);
   });
 
-  it('does not scroll on close events', () => {
-    const el = makeDialog({swipe: true});
-    handlers.beforetoggle(makeEvent(el, 'closed'));
-    expect(el.scrollTo).not.toHaveBeenCalled();
-  });
-
-  it('closes instantly when scrollend settles at scrollTop 0', () => {
-    const el = makeDialog({swipe: true, scrollTop: 0});
+  it('drawer: closes when scrollTop settles at 0', () => {
+    const el = makeDialog({swipe: 'y', scrollTop: 0});
     handlers.scrollend({target: el});
-    // Inline zero duration suppresses the CSS exit transition (the panel is
-    // already off screen); cleared again by the next open.
     expect(el.style.transitionDuration).toBe('0s');
     expect(el.close).toHaveBeenCalled();
   });
 
+  it('drawer: stays open when scrollTop > 0', () => {
+    const el = makeDialog({swipe: 'y', scrollTop: 150});
+    handlers.scrollend({target: el});
+    expect(el.close).not.toHaveBeenCalled();
+  });
+
+  // --- Horizontal right panel (sheet, --swipe: x) ---
+  it('sheet: jumps to max scrollLeft on open', () => {
+    const el = makeDialog({swipe: 'x', scrollWidth: 700, clientWidth: 390});
+    handlers.beforetoggle(makeEvent(el, 'open'));
+    expect(el.scrollLeft).toBe(310);
+  });
+
+  it('sheet: closes when scrollLeft settles at 0', () => {
+    const el = makeDialog({swipe: 'x', scrollLeft: 0});
+    handlers.scrollend({target: el});
+    expect(el.close).toHaveBeenCalled();
+  });
+
+  it('sheet: stays open when scrollLeft > 0', () => {
+    const el = makeDialog({swipe: 'x', scrollLeft: 200});
+    handlers.scrollend({target: el});
+    expect(el.close).not.toHaveBeenCalled();
+  });
+
+  // --- Horizontal left panel (sidebar, --swipe: -x) ---
+  it('sidebar: jumps to scrollLeft 0 on open', () => {
+    const el = makeDialog({swipe: '-x'});
+    handlers.beforetoggle(makeEvent(el, 'open'));
+    expect(el.scrollLeft).toBe(0);
+  });
+
+  it('sidebar: closes when scrollLeft reaches max', () => {
+    const el = makeDialog({swipe: '-x', scrollLeft: 610, scrollWidth: 1000, clientWidth: 390});
+    handlers.scrollend({target: el});
+    expect(el.close).toHaveBeenCalled();
+  });
+
+  it('sidebar: stays open when scrollLeft < max', () => {
+    const el = makeDialog({swipe: '-x', scrollLeft: 100, scrollWidth: 1000, clientWidth: 390});
+    handlers.scrollend({target: el});
+    expect(el.close).not.toHaveBeenCalled();
+  });
+
+  // --- Shared ---
   it('clears the inline exit-suppression on reopen', () => {
-    const el = makeDialog({swipe: true, scrollTop: 0});
+    const el = makeDialog({swipe: 'y'});
     el.style.transitionDuration = '0s';
     handlers.beforetoggle(makeEvent(el, 'open'));
     expect(el.style.transitionDuration).toBe('');
   });
 
-  it('keeps the dialog open when scrollend settles with scrollTop > 0', () => {
-    const el = makeDialog({swipe: true, scrollTop: 150});
-    handlers.scrollend({target: el});
-    expect(el.close).not.toHaveBeenCalled();
-  });
-
-  it('ignores dialogs CSS has not put into swipe mode', () => {
+  it('ignores dialogs not in swipe mode', () => {
     const el = makeDialog({swipe: false, scrollTop: 0});
     handlers.beforetoggle(makeEvent(el, 'open'));
     handlers.scrollend({target: el});

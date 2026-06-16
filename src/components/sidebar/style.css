@@ -102,24 +102,96 @@
     overflow: auto;
     scrollbar-width: none;
   }
-  /*
-  html:has([k="sidebar"]):before {
-    content: '';
-    position: fixed;
-    left: 0;
-    top: 0;
+}
+
+/* Touch + mobile: horizontal scroll-snap scroller for swipe-to-dismiss.
+   Grid places content in column 1 (panel) and the ::before rail in column 2.
+   Dismiss = swipe left (scrollLeft reaches max). */
+@media (max-width: 640px) and (hover: none) and (pointer: coarse) {
+  [k="sidebar"] {
+    --swipe: -x;
+    inset: 0;
     width: 100vw;
-    height: 100vh;
-    opacity: 0;
-    background: rgba(0,0,0,0.5);
-    pointer-events: none;
-    transition: all 300ms var(--k-ease);
-    z-index: 499;
-  }
-  html:has([k="sidebar"][open]):before {
-    opacity: 1;
-    pointer-events: all;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-position: 0 0;
+    background-size: min(16rem, 80vw) 10000px;
+    transform: none;
+    translate: -100% 0;
+    overflow: auto;
     overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    box-shadow: none;
+    grid-template-columns: min(16rem, 80vw) 100vw;
+    grid-auto-rows: min-content;
+    align-content: start;
+    gap: 0.5rem;
+    z-index: 500;
+    transition:
+      translate 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
   }
-  */
+  [k="sidebar"]::-webkit-scrollbar {
+    display: none;
+  }
+  [k="sidebar"]::before {
+    content: "";
+    grid-column: 2;
+    grid-row: 1 / span 999;
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
+  }
+  [k="sidebar"] > * {
+    grid-column: 1;
+    flex: none !important;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    box-sizing: border-box;
+  }
+  [k="sidebar"] > :first-child {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  [k="sidebar"][open] {
+    display: grid;
+    translate: none;
+    animation: k-sidebar-in 300ms var(--k-ease);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    [k="sidebar"] {
+      scroll-timeline: --k-swipe inline;
+    }
+    [k="sidebar"][open]::backdrop {
+      animation:
+        k-sidebar-fade linear both reverse,
+        k-sidebar-fade 300ms var(--k-ease);
+      animation-timeline: --k-swipe, auto;
+    }
+  }
+}
+
+@keyframes k-sidebar-in {
+  from {
+    translate: -100% 0;
+  }
+}
+
+@keyframes k-sidebar-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

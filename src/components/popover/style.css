@@ -229,7 +229,7 @@
   [k="popover-content"][mobile="drawer"],
   [k="dropdown-content"][mobile="drawer"],
   [k="context-menu"][mobile="drawer"] {
-    --swipe: 1;
+    --swipe: y;
     inset: 0;
     width: 100%;
     height: 100dvh;

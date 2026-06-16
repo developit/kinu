@@ -82,10 +82,15 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
     const dialog = target as HTMLDialogElement;
 
     // Swipe overlays span the whole viewport, so backdrop clicks land on the
-    // dialog itself. The panel surface starts where the rail ends; any direct
-    // hit above it is a tap on the dimmed area.
-    if (getComputedStyle(dialog).getPropertyValue('--swipe')) {
-      if (e.clientY < dialog.clientHeight - dialog.scrollTop) {
+    // dialog itself. The rail occupies one full viewport-length of scroll; a
+    // click whose scroll-relative coordinate falls within it is a dismiss tap.
+    const swipe = getComputedStyle(dialog).getPropertyValue('--swipe').trim();
+    if (swipe) {
+      const inRail =
+        swipe === 'x' ? dialog.scrollLeft + e.clientX < dialog.clientWidth
+        : swipe === '-x' ? dialog.scrollLeft + e.clientX >= dialog.scrollWidth - dialog.clientWidth
+        : dialog.scrollTop + e.clientY < dialog.clientHeight;
+      if (inRail) {
         dialog.close();
         e.preventDefault();
       }
@@ -175,19 +180,15 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   }
 }
 
-// Swipe-to-dismiss for bottom-drawer overlays — Drawer plus the adaptive
-// `mobile="drawer"` Popover / DropdownMenu / ContextMenu.
+// Swipe-to-dismiss for overlay panels.
 //
-// The motion, gesture, momentum and snap-back all live in CSS (see the
-// `--swipe` blocks): on touch the <dialog> itself becomes a vertical
-// scroll-snap container with a full-height transparent "rail" pseudo above the
-// content, so you fling the panel down into the rail to dismiss. No wrapper
-// elements — the rail and the panel's surface are drawn entirely with
-// pseudo-elements and a background. This handler is the whole JS control plane:
-// it glides the panel up on open and closes the dialog once the panel is flung
-// back to the top (scrollTop 0). CSS opts a dialog in by setting `--swipe: 1`,
-// so desktop keeps its plain transform transition with zero branching here.
-const SWIPE = '[k="drawer-content"],[k="popover-content"],[k="dropdown-content"],[k="context-menu"]';
+// CSS opts a dialog in by setting --swipe to a value encoding the axis and
+// direction: "y" (drawer, dismiss at scrollTop 0), "x" (sheet, dismiss at
+// scrollLeft 0), or "-x" (sidebar, dismiss at scrollLeft max). The JS here
+// is the whole control plane: jump the scroller to its open position on open,
+// close the dialog once a dismiss-fling settles. The gesture, momentum and
+// snap-back are all the browser's.
+const SWIPE = '[k="drawer-content"],[k="popover-content"],[k="dropdown-content"],[k="context-menu"],[k="sheet-content"],[k="sidebar"]';
 
 let swipeInstalled: boolean;
 export function installSwipe() {
@@ -198,36 +199,35 @@ export function installSwipe() {
   addEventListener('scrollend', swipeSettle, true);
 }
 
-/** A swipeable scroller that CSS has currently put into gesture mode, else null. */
-function swipeScroller(target: EventTarget | null) {
+function swipeAxis(target: EventTarget | null) {
   const el = target as Element | null;
   if (!el?.matches?.(SWIPE)) return null;
-  return getComputedStyle(el).getPropertyValue('--swipe')
-    ? (el as HTMLDialogElement)
-    : null;
+  const v = getComputedStyle(el).getPropertyValue('--swipe').trim();
+  return v ? {el: el as HTMLDialogElement, axis: v} : null;
 }
 
-// Entrance: once the overlay is in the top layer (and thus has real scroll
-// geometry) jump the scroller to its open position before first paint — the
-// visible slide-in is the CSS k-swipe-in animation on the whole dialog.
 function swipeToggle(e: ToggleEvent) {
   if (e.newState !== 'open') return;
-  const el = swipeScroller(e.target);
-  if (!el) return;
-  el.style.transitionDuration = '';
-  requestAnimationFrame(() => el.scrollTo({top: el.scrollHeight, behavior: 'instant'}));
+  const s = swipeAxis(e.target);
+  if (!s) return;
+  s.el.style.transitionDuration = '';
+  requestAnimationFrame(() => {
+    const {el, axis} = s;
+    if (axis === '-x') el.scrollLeft = 0;
+    else if (axis === 'x') el.scrollLeft = el.scrollWidth - el.clientWidth;
+    else el.scrollTop = el.scrollHeight - el.clientHeight;
+  });
 }
 
-// Dismiss: a fling that settles back at the rail (scrollTop 0) closes for
-// real. The panel is already off screen, so zero the exit transition to tear
-// down instantly — otherwise the (invisible) translate/display transition
-// keeps the closed dialog in the top layer for 300ms, eating taps. Inline
-// works where a scroll-driven custom property can't: transition parameters
-// come from the after-change style, which includes inline declarations but
-// not CSS-animation-derived values.
 function swipeSettle(e: Event) {
-  const el = swipeScroller(e.target);
-  if (el?.open && el.scrollTop === 0) {
+  const s = swipeAxis(e.target);
+  if (!s?.el.open) return;
+  const {el, axis} = s;
+  const dismissed =
+    axis === '-x' ? el.scrollLeft >= el.scrollWidth - el.clientWidth - 1
+    : axis === 'x' ? el.scrollLeft === 0
+    : el.scrollTop === 0;
+  if (dismissed) {
     el.style.transitionDuration = '0s';
     el.close();
   }
