@@ -2,10 +2,7 @@
 
 [k="sheet-content"] {
   border: none;
-  /* Vertical padding on the panel; horizontal padding lives on the children so
-   * the box model is identical to the touch swipe mode (where the panel column
-   * spans the rail). */
-  padding: 1rem 0;
+  padding: 0;
   margin: 0;
   width: 20rem;
   max-width: 90vw;
@@ -26,12 +23,6 @@
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   border-radius: 0;
   overscroll-behavior: contain;
-  /* Always a grid so content lays out identically across breakpoints: desktop
-   * is a single panel column; the touch swipe mode (below) adds a rail column
-   * in front of it. */
-  grid-template-columns: 1fr;
-  grid-auto-rows: min-content;
-  align-content: start;
   transform: translateX(100%);
   transition:
     transform 300ms var(--k-ease),
@@ -39,8 +30,16 @@
     overlay 300ms allow-discrete;
 }
 
+/* The panel wrapper holds user content in normal block flow — no per-child
+ * layout neutralization. On desktop it simply fills the dialog; on touch it
+ * becomes the swipeable panel beside the rail (below). */
+[k="sheet-content"] > [k="sheet-panel"] {
+  box-sizing: border-box;
+  padding: 1rem;
+  min-height: 100%;
+}
+
 [k="sheet-content"][open] {
-  display: grid;
   transform: translateX(0);
 }
 
@@ -48,27 +47,6 @@
   [k="sheet-content"][open] {
     transform: translateX(100%);
   }
-}
-
-/* Content placement — applies at every breakpoint. The grid is an internal
-   mechanism (no wrapper element: a right-anchored swipe panel can't be built in
-   flow, since scrollable overflow is clamped at the inline-start edge). These
-   rules keep user content laying out like a block-flow panel — children fill the
-   panel width (justify-items defaults to stretch) with their own horizontal
-   padding, and inline-level children that grid would blockify and stretch are
-   pinned back to natural width. (Residual: adjacent vertical margins don't
-   collapse between grid items the way they do in block flow.) */
-[k="sheet-content"] > * {
-  flex: none !important;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  box-sizing: border-box;
-  min-height: 0;
-}
-[k="sheet-content"] > button,
-[k="sheet-content"] > a,
-[k="sheet-content"] > [k="button"] {
-  justify-self: start;
 }
 
 [k="sheet-content"]::backdrop {
@@ -94,11 +72,13 @@
   }
 }
 
-/* Touch: horizontal scroll-snap scroller. A CSS grid places the ::before rail
-   in column 1 (full viewport width) and all content children in column 2
-   (the panel). Children stack vertically via auto-rows. The panel background
-   is painted via background-attachment:local, positioned at the column 2
-   origin. See drawer/style.css for the full architectural rationale. */
+/* Touch: the dialog becomes a horizontal scroll-snap scroller laid out as a
+   flex row — a full-viewport ::before rail in front of the panel wrapper. You
+   fling the panel into the rail to dismiss; scrollLeft 0 is the rail (dismiss),
+   scrollLeft max is the panel (open). The panel is a real element with its own
+   background and block-flow content, so no grid or background tricks are
+   needed. The dialog scrolls only horizontally (the swipe); the panel scrolls
+   its own content vertically, keeping the two gesture axes independent. */
 @media (hover: none) and (pointer: coarse) {
   [k="sheet-content"] {
     --swipe: x;
@@ -111,18 +91,13 @@
     border-radius: 0;
     box-shadow: none;
     background-color: transparent;
-    background-image: linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
-    background-repeat: no-repeat;
-    background-attachment: local;
-    background-position: 100vw 0;
-    background-size: min(20rem, 90vw) 10000px;
     transform: none;
     translate: 100% 0;
+    overflow-x: auto;
+    overflow-y: hidden;
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
-    /* Add the full-viewport rail column in front of the panel column. */
-    grid-template-columns: 100vw min(20rem, 90vw);
     transition:
       translate 300ms var(--k-ease),
       display 300ms allow-discrete,
@@ -133,24 +108,22 @@
   }
   [k="sheet-content"]::before {
     content: "";
-    grid-column: 1;
-    grid-row: 1 / span 999;
+    flex: 0 0 100vw;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  /* Content moves to the panel column (column 2); column 1 is the rail. */
-  [k="sheet-content"] > * {
-    grid-column: 2;
-  }
-  [k="sheet-content"]::after {
-    content: "";
-    grid-column: 2;
-    grid-row: 1;
+  [k="sheet-content"] > [k="sheet-panel"] {
+    flex: 0 0 min(20rem, 90vw);
+    min-height: 0;
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background-color: hsl(var(--k-background));
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
   [k="sheet-content"][open] {
-    display: grid;
+    display: flex;
     translate: none;
     animation: k-sheet-in 300ms var(--k-ease);
   }
