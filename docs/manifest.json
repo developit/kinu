@@ -754,5 +754,14 @@
     "order": 14,
     "file": "components/number-field.md",
     "description": "Native number input with stepper buttons driven by the command bus."
+  },
+  {
+    "slug": "form",
+    "title": "Form",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 15,
+    "file": "components/form.md",
+    "description": "Form wrapper that runs native validation before your submit handler."
   }
 ]

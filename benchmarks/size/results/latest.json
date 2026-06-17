@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-17T06:22:42.089Z",
+  "generatedAt": "2026-06-17T06:31:40.245Z",
   "results": [
     {
       "id": "one-component",
@@ -43,19 +43,19 @@
       "id": "nearly-all-components",
       "label": "Nearly all components (namespace import)",
       "js": {
-        "raw": 14672,
-        "gzip": 4543,
-        "brotli": 3990
+        "raw": 15203,
+        "gzip": 4688,
+        "brotli": 4107
       },
       "css": {
-        "raw": 71715,
-        "gzip": 12672,
-        "brotli": 10970
+        "raw": 72820,
+        "gzip": 12838,
+        "brotli": 11075
       },
       "total": {
-        "raw": 86387,
-        "gzip": 17215,
-        "brotli": 14960
+        "raw": 88023,
+        "gzip": 17526,
+        "brotli": 15182
       }
     }
   ],
@@ -362,6 +362,25 @@
         "raw": 6724,
         "gzip": 2004,
         "brotli": 1735
+      }
+    },
+    {
+      "id": "composer",
+      "label": "composer",
+      "js": {
+        "raw": 1566,
+        "gzip": 737,
+        "brotli": 643
+      },
+      "css": {
+        "raw": 4552,
+        "gzip": 1263,
+        "brotli": 1059
+      },
+      "total": {
+        "raw": 6118,
+        "gzip": 2000,
+        "brotli": 1702
       }
     },
     {
@@ -1160,6 +1179,25 @@
         "raw": 4958,
         "gzip": 1445,
         "brotli": 1273
+      }
+    },
+    {
+      "id": "form",
+      "label": "form",
+      "js": {
+        "raw": 982,
+        "gzip": 527,
+        "brotli": 463
+      },
+      "css": {
+        "raw": 3509,
+        "gzip": 911,
+        "brotli": 782
+      },
+      "total": {
+        "raw": 4491,
+        "gzip": 1438,
+        "brotli": 1245
       }
     },
     {

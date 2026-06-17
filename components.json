@@ -882,5 +882,17 @@
       "Compound parts: `Composer.Send` (a submit button, pushed to the trailing edge) and `Composer.Actions` (a row for attach / model controls — compose `FileUpload`, `Select`, etc.).",
       "No engine: a typing indicator is just `<Spinner>`, and suggestions are a `Cluster` of `Chip`. Bring your own submit handler."
     ]
+  },
+  {
+    "name": "Form",
+    "slug": "form",
+    "category": "Data Input",
+    "description": "Form wrapper that runs native validation before your submit handler.",
+    "usage": "<Form onValid={save}>\n  <Field>...</Field>\n  <Button type=\"submit\">Save</Button>\n</Form>",
+    "notes": [
+      "No form-state engine. On submit it runs `checkValidity()`: if the form is invalid it blocks submission and focuses the first invalid control; otherwise it calls `onValid` with the event.",
+      "Pairs with the native-validation CSS layer (`:user-invalid`) and `Field` / `Field.Error` — see the Forms & Validation page. You never manage `touched` or `errors` state.",
+      "Bring your own submit in `onValid` (e.g. `e.preventDefault()` then POST)."
+    ]
   }
 ]

@@ -1,0 +1,6 @@
+@import "../../variables.css";
+
+[k="form"] {
+  display: grid;
+  gap: 1rem;
+}
