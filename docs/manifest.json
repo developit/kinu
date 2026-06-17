@@ -675,6 +675,15 @@
     "description": "One-tap copy-to-clipboard button with a CSS-only copied state."
   },
   {
+    "slug": "stepper",
+    "title": "Stepper",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 10,
+    "file": "components/stepper.md",
+    "description": "Horizontal ordered steps with numbered markers and connectors."
+  },
+  {
     "slug": "textarea",
     "title": "Textarea",
     "section": "Components",

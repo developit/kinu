@@ -1,0 +1,68 @@
+@import "../../variables.css";
+
+[k="steps"] {
+  counter-reset: k-step;
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+[k="step"] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  position: relative;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: hsl(var(--k-muted-foreground));
+}
+
+[k="step"]::before {
+  counter-increment: k-step;
+  content: counter(k-step);
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--k-border));
+  background: hsl(var(--k-background));
+  font-weight: 600;
+  color: hsl(var(--k-foreground));
+}
+
+[k="step"][data-state="current"] {
+  color: hsl(var(--k-foreground));
+}
+
+[k="step"][data-state="current"]::before {
+  border-color: hsl(var(--k-primary));
+  color: hsl(var(--k-primary));
+}
+
+[k="step"][data-state="complete"]::before {
+  content: "✓";
+  background: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+  border-color: transparent;
+}
+
+/* Connector line from each step back to the previous one */
+[k="step"]:not(:first-child)::after {
+  content: "";
+  position: absolute;
+  top: 0.875rem;
+  right: 50%;
+  width: 100%;
+  height: 1px;
+  background: hsl(var(--k-border));
+  z-index: -1;
+}
+
+[k="step"][data-state="complete"]:not(:first-child)::after,
+[k="step"][data-state="current"]:not(:first-child)::after {
+  background: hsl(var(--k-primary));
+}
