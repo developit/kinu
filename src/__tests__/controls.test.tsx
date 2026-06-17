@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest';
 import renderToString from 'preact-render-to-string';
 import {CopyButton} from '../components/copy-button';
+import {Form} from '../components/form';
 import {NumberField} from '../components/number-field';
 import {Rating} from '../components/rating';
 
@@ -30,6 +31,17 @@ describe('form controls ssr', () => {
   it('renders CopyButton without a DOM', () => {
     expect(() =>
       renderToString(<CopyButton value="hello" label="Copy" />),
+    ).not.toThrow();
+  });
+
+  it('renders Form without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Form>
+          <input type="email" name="email" required />
+          <button type="submit">Go</button>
+        </Form>,
+      ),
     ).not.toThrow();
   });
 });

@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T06:22:42.089Z
+Generated at: 2026-06-17T06:31:40.245Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T06:22:42.089Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 14.33 | 4.44 | 70.03 | 12.38 | 16.81 |
+| Nearly all components (namespace import) | 14.85 | 4.58 | 71.11 | 12.54 | 17.12 |
 
 ## Per-component (isolated import)
 
@@ -32,6 +32,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | drawer | 2.7 | 1.15 | 4.2 | 1.15 | 2.29 |
 | copy-button | 1.95 | 0.89 | 4.14 | 1.16 | 2.05 |
 | chip | 1.24 | 0.6 | 5.33 | 1.36 | 1.96 |
+| composer | 1.53 | 0.72 | 4.45 | 1.23 | 1.95 |
 | button | 0.65 | 0.35 | 5.99 | 1.51 | 1.86 |
 | status | 0.63 | 0.34 | 5.51 | 1.51 | 1.85 |
 | tree | 0.84 | 0.44 | 4.99 | 1.4 | 1.84 |
@@ -74,6 +75,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | pagination | 0.81 | 0.4 | 3.82 | 1.02 | 1.42 |
 | grid | 0.62 | 0.34 | 4.29 | 1.08 | 1.41 |
 | stack | 0.62 | 0.33 | 4.22 | 1.08 | 1.41 |
+| form | 0.96 | 0.51 | 3.43 | 0.89 | 1.4 |
 | breadcrumb | 0.8 | 0.4 | 3.68 | 1 | 1.4 |
 | meter | 0.63 | 0.34 | 4.15 | 1.05 | 1.39 |
 | skeleton | 0.63 | 0.34 | 3.78 | 1.05 | 1.39 |

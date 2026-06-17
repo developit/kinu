@@ -207,6 +207,8 @@ export type {
   ComposerActionsProps,
   ComposerActionsOwnProps,
 } from './components/composer/types';
+export {Form} from './components/form';
+export type {FormProps, FormOwnProps} from './components/form/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

@@ -988,6 +988,20 @@ Native number input with stepper buttons driven by the command bus.
 - The buttons use `command="--step-up"`/`"--step-down"` on the existing command bus — no new global listeners — and the input calls native `stepUp()`/`stepDown()`, firing `input`/`change` so forms stay in sync.
 - Native Invoker Commands are Baseline; the bundled `installCommands()` polyfill is the fallback for older Safari.
 
+#### Form
+Form wrapper that runs native validation before your submit handler.
+
+```tsx
+<Form onValid={save}>
+  <Field>...</Field>
+  <Button type="submit">Save</Button>
+</Form>
+```
+
+- No form-state engine. On submit it runs `checkValidity()`: if the form is invalid it blocks submission and focuses the first invalid control; otherwise it calls `onValid` with the event.
+- Pairs with the native-validation CSS layer (`:user-invalid`) and `Field` / `Field.Error` — see the Forms & Validation page. You never manage `touched` or `errors` state.
+- Bring your own submit in `onValid` (e.g. `e.preventDefault()` then POST).
+
 ### Conversation
 
 #### Message
