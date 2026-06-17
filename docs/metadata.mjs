@@ -959,5 +959,20 @@ export default [
       'Items wrap to new rows as needed; `align` defaults to `center` and `gap` defaults to `sm`.',
       'Reach for it whenever you have a row of badges, chips, buttons, or filters that should wrap gracefully.'
     ]
+  },
+  {
+    slug: 'grid',
+    title: 'Grid',
+    section: 'Components',
+    category: 'Layout',
+    order: 2,
+    folder: 'grid',
+    description: 'Responsive auto-fit grid with a token-based gap — dashboards, card galleries.',
+    usage: `<Grid gap="md" min="sm">\n  <Card>One</Card>\n  <Card>Two</Card>\n</Grid>`,
+    notes: [
+      'CSS-only: renders a `<div k="grid">` using `repeat(auto-fit, minmax(...))`. Zero JavaScript.',
+      'By default it fits as many columns as will hold the `min` width (presets `xs`–`xl`, default `md` = 16rem); override arbitrarily with the `--k-grid-min` custom property.',
+      'Pass `cols={3}` for a fixed equal-column grid instead of the responsive behaviour.'
+    ]
   }
 ];

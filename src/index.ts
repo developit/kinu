@@ -117,6 +117,14 @@ export type {
   ClusterAlign,
   ClusterJustify,
 } from './components/cluster/types';
+export {Grid} from './components/grid';
+export type {
+  GridProps,
+  GridOwnProps,
+  GridGap,
+  GridMin,
+  GridCols,
+} from './components/grid/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,
