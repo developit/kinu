@@ -1,5 +1,5 @@
 {
-  "files": { "ignore": ["dist"] },
+  "files": { "ignore": ["dist", "benchmarks/size/.tmp"] },
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "vcs": { "enabled": false },
   "organizeImports": { "enabled": false },
