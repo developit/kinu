@@ -772,5 +772,14 @@
     "order": 15,
     "file": "components/form.md",
     "description": "Form wrapper that runs native validation before your submit handler."
+  },
+  {
+    "slug": "tags-input",
+    "title": "Tags Input",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 16,
+    "file": "components/tags-input.md",
+    "description": "Token / tags input that submits natively via a hidden field."
   }
 ]

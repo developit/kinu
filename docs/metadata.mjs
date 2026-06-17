@@ -1189,5 +1189,20 @@ export default [
       'Place it inside a `Dialog` and open with a `Dialog.Trigger` or a hotkey (`commandfor` + `command="show-modal"`).',
       'Items are regular `Item`s, so they support `shortcut`, `destructive`, and `href`.'
     ]
+  },
+  {
+    slug: 'tags-input',
+    title: 'Tags Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 16,
+    folder: 'tags-input',
+    description: 'Token / tags input that submits natively via a hidden field.',
+    usage: `<TagsInput name="tags" value={['design', 'frontend']} placeholder="Add a tag…" />`,
+    notes: [
+      'Type and press Enter (or the `separator`) to add a tag; Backspace on an empty field removes the last; click a chip’s × to remove it. Each change rewrites a hidden `<input name>` and fires `input`/`change`, so it submits with a normal form.',
+      'A single per-instance ref manages the chips imperatively — no framework state store. SSR-safe: tags render on mount.',
+      'The submitted value is the tags joined by `separator` (default `,`). API: `name`, `value` (string[]), `separator`, `max`, `duplicates`.'
+    ]
   }
 ];

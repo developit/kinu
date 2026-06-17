@@ -211,6 +211,11 @@ export {Form} from './components/form';
 export type {FormProps, FormOwnProps} from './components/form/types';
 export {Command} from './components/command';
 export type {CommandProps, CommandOwnProps} from './components/command/types';
+export {TagsInput} from './components/tags-input';
+export type {
+  TagsInputProps,
+  TagsInputOwnProps,
+} from './components/tags-input/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

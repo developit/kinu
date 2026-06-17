@@ -7,6 +7,7 @@ import {Form} from '../components/form';
 import {Item} from '../components/item';
 import {NumberField} from '../components/number-field';
 import {Rating} from '../components/rating';
+import {TagsInput} from '../components/tags-input';
 
 describe('form controls ssr', () => {
   it('renders Rating without a DOM', () => {
@@ -59,6 +60,14 @@ describe('form controls ssr', () => {
             </Command.List>
           </Command>
         </Dialog>,
+      ),
+    ).not.toThrow();
+  });
+
+  it('renders TagsInput without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <TagsInput name="tags" value={['a', 'b']} placeholder="Add…" />,
       ),
     ).not.toThrow();
   });
