@@ -5,6 +5,7 @@ import {Center} from '../components/center';
 import {Cluster} from '../components/cluster';
 import {Grid} from '../components/grid';
 import {Row} from '../components/row';
+import {Spacer} from '../components/spacer';
 import {Stack} from '../components/stack';
 
 describe('layout primitives ssr', () => {
@@ -59,6 +60,18 @@ describe('layout primitives ssr', () => {
         <Center inline>
           <span>Centered</span>
         </Center>,
+      ),
+    ).not.toThrow();
+  });
+
+  it('renders Spacer without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Row>
+          <span>Left</span>
+          <Spacer />
+          <span>Right</span>
+        </Row>,
       ),
     ).not.toThrow();
   });
