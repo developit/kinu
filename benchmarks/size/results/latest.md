@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T05:50:41.172Z
+Generated at: 2026-06-17T05:55:28.054Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T05:50:41.172Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 13.88 | 4.31 | 66.1 | 11.73 | 16.04 |
+| Nearly all components (namespace import) | 13.88 | 4.31 | 66.72 | 11.81 | 16.12 |
 
 ## Per-component (isolated import)
 
@@ -43,14 +43,14 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | rating | 0.99 | 0.55 | 4.21 | 1.2 | 1.75 |
 | otp | 1.12 | 0.56 | 4.13 | 1.18 | 1.75 |
 | progress-ring | 0.65 | 0.35 | 5.06 | 1.35 | 1.7 |
+| checkbox | 1.04 | 0.51 | 4.27 | 1.17 | 1.68 |
 | switch | 1.06 | 0.52 | 4.13 | 1.16 | 1.68 |
 | radio-group | 1.08 | 0.53 | 4.06 | 1.15 | 1.68 |
 | accordion | 0.64 | 0.34 | 4.57 | 1.33 | 1.68 |
-| checkbox | 1.04 | 0.51 | 4.18 | 1.15 | 1.66 |
+| select | 0.63 | 0.34 | 4.34 | 1.3 | 1.64 |
 | collapsible | 1.24 | 0.61 | 3.85 | 1.03 | 1.64 |
 | tooltip | 0.63 | 0.34 | 4.82 | 1.3 | 1.64 |
-| select | 0.63 | 0.34 | 4.15 | 1.27 | 1.61 |
-| field | 1.19 | 0.57 | 3.77 | 1.02 | 1.59 |
+| field | 1.19 | 0.57 | 3.9 | 1.05 | 1.62 |
 | menubar | 1.27 | 0.63 | 3.59 | 0.96 | 1.59 |
 | color-picker | 1.04 | 0.52 | 4 | 1.07 | 1.59 |
 | prose | 0.62 | 0.33 | 4.44 | 1.25 | 1.59 |
@@ -59,7 +59,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | timeline | 0.69 | 0.36 | 4.23 | 1.19 | 1.55 |
 | file-upload | 1.04 | 0.52 | 3.8 | 1.03 | 1.55 |
 | hover-card | 0.76 | 0.39 | 4.02 | 1.13 | 1.53 |
-| textarea | 0.64 | 0.34 | 4.01 | 1.15 | 1.49 |
+| textarea | 0.64 | 0.34 | 4.21 | 1.18 | 1.52 |
 | badge | 0.62 | 0.34 | 4.39 | 1.14 | 1.48 |
 | app-shell | 0.87 | 0.44 | 3.78 | 1.02 | 1.46 |
 | stat | 0.78 | 0.41 | 3.87 | 1.03 | 1.44 |

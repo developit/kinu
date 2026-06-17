@@ -45,6 +45,15 @@
     "description": ""
   },
   {
+    "slug": "forms",
+    "title": "Forms & Validation",
+    "section": "Foundations",
+    "category": "Forms",
+    "order": 4,
+    "file": "pages/forms.md",
+    "description": ""
+  },
+  {
     "slug": "button",
     "title": "Button",
     "section": "Components",
