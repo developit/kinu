@@ -1129,5 +1129,20 @@ export default [
       'Pure CSS: `<div k="message" from="user|assistant|system">`. `from` flips alignment and colors the bubble (user = primary, assistant = muted, system = quiet italic).',
       'Compound parts: `Message.Avatar` (a small round badge) and `Message.Bubble` (the content). Drop a `<Prose>` inside the bubble to render markdown.'
     ]
+  },
+  {
+    slug: 'thread',
+    title: 'Thread',
+    section: 'Components',
+    category: 'Conversation',
+    order: 1,
+    folder: 'thread',
+    description: 'Message list that sticks to the bottom as new messages arrive.',
+    usage: `<Thread scrollable style={{height: '20rem'}}>\n  <Message from="user"><Message.Bubble>Hi</Message.Bubble></Message>\n</Thread>`,
+    notes: [
+      'Pass `scrollable` to make it a scroll container. New messages pin the viewport to the bottom via native scroll anchoring (a 1px bottom anchor) — no `scrollTo` loop and no JavaScript.',
+      'Progressive enhancement: where scroll anchoring is unsupported it degrades to a normal scroll container.',
+      'Fill it with `Message` components; size it with a height (or let it fill a flex parent).'
+    ]
   }
 ];
