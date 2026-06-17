@@ -944,5 +944,20 @@ export default [
       'Set `gap` to a spacing-scale step (`0`, `xs`, `sm`, `md`, `lg`, `xl`); it maps to the `--k-space-*` tokens and defaults to `md`.',
       'Use `align` (cross-axis) and `justify` (main-axis) to position children.'
     ]
+  },
+  {
+    slug: 'cluster',
+    title: 'Cluster',
+    section: 'Components',
+    category: 'Layout',
+    order: 1,
+    folder: 'cluster',
+    description: 'Horizontal wrap row with a token-based gap — chip rows, button rows, toolbars.',
+    usage: `<Cluster gap="sm">\n  <Badge>One</Badge>\n  <Badge>Two</Badge>\n</Cluster>`,
+    notes: [
+      'CSS-only: renders a `<div k="cluster">` with `display:flex;flex-wrap:wrap`. Zero JavaScript.',
+      'Items wrap to new rows as needed; `align` defaults to `center` and `gap` defaults to `sm`.',
+      'Reach for it whenever you have a row of badges, chips, buttons, or filters that should wrap gracefully.'
+    ]
   }
 ];

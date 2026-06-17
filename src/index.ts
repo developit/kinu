@@ -109,6 +109,14 @@ export type {
   StackAlign,
   StackJustify,
 } from './components/stack/types';
+export {Cluster} from './components/cluster';
+export type {
+  ClusterProps,
+  ClusterOwnProps,
+  ClusterGap,
+  ClusterAlign,
+  ClusterJustify,
+} from './components/cluster/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,
