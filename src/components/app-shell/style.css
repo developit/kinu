@@ -1,0 +1,41 @@
+@import "../../variables.css";
+
+[k="app-shell"] {
+  display: grid;
+  min-height: 100dvh;
+  grid-template:
+    "hd hd" auto
+    "sb mn" 1fr
+    "sb ft" auto
+    / minmax(0, auto) 1fr;
+}
+
+[k="app-shell-header"] {
+  grid-area: hd;
+}
+[k="app-shell-sidebar"] {
+  grid-area: sb;
+}
+[k="app-shell-main"] {
+  grid-area: mn;
+  min-width: 0;
+}
+[k="app-shell-footer"] {
+  grid-area: ft;
+}
+
+/* Collapse to a single column on mobile; the inline sidebar rail gives way to
+   the modal Sidebar dialog. */
+@media (max-width: 48rem) {
+  [k="app-shell"] {
+    grid-template:
+      "hd" auto
+      "mn" 1fr
+      "ft" auto
+      / 1fr;
+  }
+
+  [k="app-shell-sidebar"] {
+    display: none;
+  }
+}
