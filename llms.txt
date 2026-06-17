@@ -272,6 +272,21 @@ Metric block with a label, large value, and a trend-colored delta.
 - `Stat.Delta` takes `trend` (`up` / `down` / `flat`) which colors it via the semantic success/destructive tokens.
 - Drops naturally into a `Grid` for dashboard stat rows.
 
+#### Stepper
+Horizontal ordered steps with numbered markers and connectors.
+
+```tsx
+<Stepper>
+  <Stepper.Step state="complete">Cart</Stepper.Step>
+  <Stepper.Step state="current">Payment</Stepper.Step>
+  <Stepper.Step>Review</Stepper.Step>
+</Stepper>
+```
+
+- Pure CSS: renders `<ol k="steps">` + `<li k="step">`. Markers are auto-numbered with CSS counters and joined by line connectors. Zero JavaScript.
+- `Stepper.Step` takes `state` (`upcoming` / `current` / `complete`): complete shows a check on a filled marker, current outlines it in the primary color.
+- Distinct from `Timeline` (vertical event feed) and `Progress` (continuous bar).
+
 ### Feedback
 
 #### Alert

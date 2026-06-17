@@ -178,6 +178,14 @@ export type {
   StatDeltaOwnProps,
   StatTrend,
 } from './components/stat/types';
+export {Stepper} from './components/stepper';
+export type {
+  StepperProps,
+  StepperOwnProps,
+  StepProps,
+  StepOwnProps,
+  StepState,
+} from './components/stepper/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

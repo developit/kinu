@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T06:13:38.870Z
+Generated at: 2026-06-17T06:17:20.121Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T06:13:38.870Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 13.95 | 4.33 | 67.93 | 11.98 | 16.31 |
+| Nearly all components (namespace import) | 14.15 | 4.38 | 69.02 | 12.21 | 16.59 |
 
 ## Per-component (isolated import)
 
@@ -43,6 +43,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | rating | 0.99 | 0.55 | 4.21 | 1.2 | 1.75 |
 | otp | 1.12 | 0.56 | 4.13 | 1.18 | 1.75 |
 | progress-ring | 0.65 | 0.35 | 5.06 | 1.35 | 1.7 |
+| stepper | 0.84 | 0.45 | 4.48 | 1.24 | 1.69 |
 | checkbox | 1.04 | 0.51 | 4.27 | 1.17 | 1.68 |
 | switch | 1.06 | 0.52 | 4.13 | 1.16 | 1.68 |
 | radio-group | 1.08 | 0.53 | 4.06 | 1.15 | 1.68 |

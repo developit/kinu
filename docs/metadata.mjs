@@ -1100,5 +1100,20 @@ export default [
       '`Stat.Delta` takes `trend` (`up` / `down` / `flat`) which colors it via the semantic success/destructive tokens.',
       'Drops naturally into a `Grid` for dashboard stat rows.'
     ]
+  },
+  {
+    slug: 'stepper',
+    title: 'Stepper',
+    section: 'Components',
+    category: 'Data Display',
+    order: 10,
+    folder: 'stepper',
+    description: 'Horizontal ordered steps with numbered markers and connectors.',
+    usage: `<Stepper>\n  <Stepper.Step state="complete">Cart</Stepper.Step>\n  <Stepper.Step state="current">Payment</Stepper.Step>\n  <Stepper.Step>Review</Stepper.Step>\n</Stepper>`,
+    notes: [
+      'Pure CSS: renders `<ol k="steps">` + `<li k="step">`. Markers are auto-numbered with CSS counters and joined by line connectors. Zero JavaScript.',
+      '`Stepper.Step` takes `state` (`upcoming` / `current` / `complete`): complete shows a check on a filled marker, current outlines it in the primary color.',
+      'Distinct from `Timeline` (vertical event feed) and `Progress` (continuous bar).'
+    ]
   }
 ];
