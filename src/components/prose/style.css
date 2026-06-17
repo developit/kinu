@@ -27,7 +27,7 @@
 }
 
 [k="prose"] code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--k-font-mono);
   font-size: 0.9em;
   background: hsl(var(--k-muted));
   padding: 0.125em 0.375em;

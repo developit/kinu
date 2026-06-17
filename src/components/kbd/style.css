@@ -6,7 +6,7 @@
   border: 1px solid hsl(var(--k-border));
   background-color: hsl(var(--k-muted));
   color: hsl(var(--k-muted-foreground));
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--k-font-mono);
   font-size: 0.75rem;
   line-height: 1;
 }

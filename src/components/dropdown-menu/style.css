@@ -19,7 +19,7 @@
   border-radius: var(--k-radius-4);
   border-color: hsl(var(--k-border));
   padding: 0.5rem;
-  box-shadow: 0 14px 30px rgb(0 0 0 / 0.14);
+  box-shadow: var(--k-shadow-2);
   overflow: hidden auto;
 }
 

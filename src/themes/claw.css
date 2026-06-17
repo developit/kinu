@@ -103,18 +103,39 @@
   --k-focus-ring: 0 0 0 3px hsl(var(--k-foreground) / 0.06);
   --k-focus-border: hsl(var(--k-foreground) / 0.2);
 
-  /* Claw-internal helpers, used by the per-component overrides below. */
-  --claw-shadow-card:
+  /* Elevation — Claude's df-shadow-card (resting) and df-shadow-pop.
+     Claude uses df-shadow-pop for every transient surface, so claw keeps
+     floating == modal (shadow-2 == shadow-3) rather than adopting kinu's
+     extra modal step. */
+  --k-shadow-1:
     inset 0 0 0 1px hsl(0 0% 4% / 0.06),
     0 4px 24px hsl(0 0% 4% / 0.04);
-  --claw-shadow-pop:
+  --k-shadow-2:
     0 0 0 0.5px hsl(0 0% 4% / 0.06),
     0 4px 12px hsl(0 0% 4% / 0.06),
     0 16px 40px hsl(0 0% 4% / 0.08);
-  --claw-hover: hsl(0 0% 4% / 0.04);
+  --k-shadow-3: var(--k-shadow-2);
+
   /* Segmented-pill indicator bg — Claude uses bg-000 (pure white) in
      light and df-z4 in dark, regardless of theme card colour. */
-  --claw-pill-indicator: hsl(0 0% 100%);
+  --k-tab-indicator-bg: hsl(0 0% 100%);
+
+  /* Avatar initials — an absolute size; the base ::after em-trick means a
+     px value renders correctly (no 100× blow-up). */
+  --k-avatar-font-size: 11px;
+
+  /* Scrollbars + text selection — warm-grey monochromatic. */
+  --k-scrollbar-size: 8px;
+  --k-scrollbar-thumb: hsl(var(--k-foreground) / 0.16);
+  --k-scrollbar-thumb-hover: hsl(var(--k-foreground) / 0.3);
+  --k-selection-bg: hsl(var(--k-foreground) / 0.15);
+
+  /* Anthropic's monospace stack (shared by kbd + prose code). */
+  --k-font-mono:
+    "Anthropic Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+
+  --claw-hover: hsl(0 0% 4% / 0.04);
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -160,15 +181,16 @@
     --k-brand: 14.8 63.1% 59.6%;
 
     --k-shadow-color: hsl(0 0% 0% / 0.4);
-    --claw-shadow-card:
+    --k-shadow-1:
       inset 0 0 0 1px hsl(0 0% 100% / 0.06),
       0 4px 24px hsl(0 0% 0% / 0.4);
-    --claw-shadow-pop:
+    --k-shadow-2:
       0 0 0 0.5px hsl(0 0% 100% / 0.06),
       0 4px 12px hsl(0 0% 0% / 0.4),
       0 16px 40px hsl(0 0% 0% / 0.5);
+    --k-shadow-3: var(--k-shadow-2);
+    --k-tab-indicator-bg: hsl(0 0% 23.9%);
     --claw-hover: hsl(0 0% 100% / 0.06);
-    --claw-pill-indicator: hsl(0 0% 23.9%);
   }
 }
 [data-theme="claw"][data-color-scheme="dark"],
@@ -210,15 +232,16 @@
   --k-brand: 14.8 63.1% 59.6%;
 
   --k-shadow-color: hsl(0 0% 0% / 0.4);
-  --claw-shadow-card:
+  --k-shadow-1:
     inset 0 0 0 1px hsl(0 0% 100% / 0.06),
     0 4px 24px hsl(0 0% 0% / 0.4);
-  --claw-shadow-pop:
+  --k-shadow-2:
     0 0 0 0.5px hsl(0 0% 100% / 0.06),
     0 4px 12px hsl(0 0% 0% / 0.4),
     0 16px 40px hsl(0 0% 0% / 0.5);
+  --k-shadow-3: var(--k-shadow-2);
+  --k-tab-indicator-bg: hsl(0 0% 23.9%);
   --claw-hover: hsl(0 0% 100% / 0.06);
-  --claw-pill-indicator: hsl(0 0% 23.9%);
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -233,44 +256,43 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-[data-theme="claw"] :is(code, pre, kbd, samp, [k="kbd"]) {
-  font-family:
-    "Anthropic Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", monospace;
+/* Mono stack flows through --k-font-mono (set in the token block); kbd and
+   prose code pick it up from kinu base. This rule extends it to raw
+   <code>/<pre>/<samp> that base doesn't otherwise style. */
+[data-theme="claw"] :is(code, pre, samp) {
+  font-family: var(--k-font-mono);
 }
 
 /* ────────────────────────────────────────────────────────────
- *  Surface shadow recipes — Claude's --df-shadow-card on rooted
- *  surfaces (cards, sidebar) and --df-shadow-pop on transient
- *  surfaces (dialogs, popovers, dropdowns, menus, sheets).
+ *  Surfaces — borderless, 8px corners (--df-radius-card). The shadows
+ *  themselves now flow through kinu's elevation tokens (--k-shadow-1
+ *  for cards, --k-shadow-2/3 for overlays, set in the token block);
+ *  these rules only carry claw's borderless + rounded treatment.
  *
- *  IMPORTANT: nothing here applies background/padding/border to a
- *  trigger-wrapping element (kinu's [k="tooltip"] is `position:
- *  relative` around the trigger; styling it would chip the trigger).
+ *  IMPORTANT: nothing here styles a trigger-wrapping element (kinu's
+ *  [k="tooltip"] is `position: relative` around the trigger; styling
+ *  it would chip the trigger).
  * ──────────────────────────────────────────────────────────── */
 
+/* sidebar isn't auto-elevated by base, so it carries the resting shadow
+   here; card already gets --k-shadow-1 from kinu base (same value). */
 [data-theme="claw"] :is([k="card"], [k="sidebar"]) {
   border: 0;
-  box-shadow: var(--claw-shadow-card);
+  box-shadow: var(--k-shadow-1);
   border-radius: 8px; /* --df-radius-card */
 }
 
 [data-theme="claw"] :is(
   [k="dialog-content"],
-  [k="alert-dialog-content"],
-  [k="popover-content"],
-  [k="dropdown-menu-content"],
-  [k="context-menu-content"],
-  [k="hover-card-content"],
-  [k="menubar-content"],
-  [k="navigation-menu-content"],
-  [k="select-content"],
-  [k="combobox-content"],
   [k="sheet-content"],
-  [k="drawer-content"]
+  [k="drawer-content"],
+  [k="popover-content"],
+  [k="dropdown-content"],
+  [k="context-menu"],
+  [k="hover-card-content"],
+  [k="combobox-list"]
 ) {
   border: 0;
-  box-shadow: var(--claw-shadow-pop);
   border-radius: 8px;
 }
 
@@ -339,15 +361,15 @@
   color: hsl(var(--k-foreground));
 }
 
-/* Indicator (kinu's animated `::before`). Override only colour + hairline. */
+/* Indicator (kinu's animated `::before`). Colour flows through
+   --k-tab-indicator-bg (token block); here we only add the 8px radius and
+   the 0.5px hairline. */
 [data-theme="claw"] [k="tablist"]::before {
-  background: var(--claw-pill-indicator);
   border-radius: 8px;
   box-shadow: 0 0 0 0.5px hsl(var(--k-foreground) / 0.3);
 }
 @supports not (anchor-name: --k) {
   [data-theme="claw"] [k="tab"][aria-selected="true"] {
-    background: var(--claw-pill-indicator);
     box-shadow: 0 0 0 0.5px hsl(var(--k-foreground) / 0.3);
   }
 }
@@ -456,19 +478,12 @@
   border-radius: 50%;
 }
 
-/* Avatar default surface — soft monochromatic. */
+/* Avatar default surface — soft monochromatic. Initials size flows
+   through --k-avatar-font-size (token block). */
 [data-theme="claw"] [k="avatar"] {
   background: hsl(var(--k-foreground) / 0.08);
   color: hsl(var(--k-foreground));
   font-weight: 500;
-}
-/* Initials render through the ::after, which kinu sizes with an
-   em-multiplier trick (img `font-size: 0.01em` × ::after `font-size: 100em`).
-   Set the glyph size on the ::after directly — putting `font-size` on the
-   <img> feeds the 100em multiplier and blows the initials up to ~1100px,
-   clipping a single giant glyph fragment inside the 32px circle. */
-[data-theme="claw"] [k="avatar"]:after {
-  font-size: 11px;
 }
 
 /* Inline code — subtle pill against surrounding prose. */
@@ -490,26 +505,10 @@
   box-shadow: inset 0 -1px 0 hsl(var(--k-foreground) / 0.1);
 }
 
-/* Scrollbars — match the Anthropic warm-grey aesthetic. */
-[data-theme="claw"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-[data-theme="claw"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb {
-  background: content-box hsl(var(--k-foreground) / 0.16);
-  border: 2px solid transparent;
-  border-radius: 999px;
-}
-[data-theme="claw"] :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb:hover {
-  background: content-box hsl(var(--k-foreground) / 0.3);
-}
+/* Scrollbars and text selection now flow through kinu base, retuned via
+   --k-scrollbar-* and --k-selection-bg in the token block above. */
 
-/* Selection — neutral foreground tint (monochromatic). */
-[data-theme="claw"] ::selection {
-  background: hsl(var(--k-foreground) / 0.15);
-  color: hsl(var(--k-foreground));
-}
-
-/* That's the entire theme — purely visual overrides on top of kinu's
-   defaults. Sizing/density is left to kinu base's `data-kinu-density`
-   system (defaults to md on desktop, lg auto on touch). */
+/* That's the entire theme — visual token overrides plus a handful of
+   component-specific tweaks. Sizing/density is left to kinu base's
+   `data-kinu-density` system (defaults to md on desktop, lg auto on
+   touch). */

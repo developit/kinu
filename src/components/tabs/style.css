@@ -34,7 +34,7 @@
 }
 
 [k="tab"][aria-selected="true"] {
-  background: hsl(var(--k-background));
+  background: var(--k-tab-indicator-bg);
   color: hsl(var(--k-foreground));
   border-color: transparent;
   box-shadow:
@@ -53,7 +53,7 @@
     inline-size: 0;
     border: 1px solid transparent;
     border-radius: var(--k-radius-2);
-    background: hsl(var(--k-background));
+    background: var(--k-tab-indicator-bg);
     box-shadow:
       0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),
       0 1px 2px -1px var(--k-shadow-color, rgba(0, 0, 0, 0.1));

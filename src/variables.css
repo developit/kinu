@@ -98,6 +98,41 @@
   --k-focus-ring: 0 0 0 2px hsl(var(--k-ring));
   --k-focus-border: hsl(var(--k-input));
 
+  /* ── Elevation ───────────────────────────────────────────────
+   * Surface shadows by role; a theme retunes all elevated surfaces
+   * by overriding these three. Ordered low → high:
+   *   1  resting   — cards
+   *   2  floating  — popovers, dropdowns, menus, hover-cards, combobox
+   *   3  modal     — dialogs, sheets, drawers (most elevated) */
+  --k-shadow-1: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --k-shadow-2: 0 4px 12px rgb(0 0 0 / 0.15);
+  --k-shadow-3: 0 16px 40px rgb(0 0 0 / 0.18);
+
+  /* ── Typography ──────────────────────────────────────────────
+   * Sans is intentionally left to inherit from the host page (kinu
+   * imposes no body font). Mono is shared by kbd + prose code so a
+   * theme can swap the monospace stack in one place. */
+  --k-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* ── Misc surface tokens ─────────────────────────────────────
+   * Values a theme commonly retunes whose component selectors are
+   * fiddly to re-author (pseudo-elements, anchor positioning, the
+   * avatar initials em-trick). Tokenized so themes set a value, not
+   * a selector. */
+  --k-tab-indicator-bg: hsl(var(--k-background));
+  /* Avatar initials size. kinu renders initials via ::after with an
+     em-multiplier (img `font-size: 0.01em` × ::after `100em`), so the
+     DEFAULT must stay in `em`. Themes set an absolute size (e.g. 11px)
+     — putting a px size on the <img> would feed the 100× and clip. */
+  --k-avatar-font-size: 100em;
+  --k-scrollbar-size: 10px;
+  --k-scrollbar-thumb: hsl(var(--k-foreground) / 0.15);
+  --k-scrollbar-thumb-hover: hsl(var(--k-foreground) / 0.25);
+  /* Defaults to the same soft brand tint used for selected rows, so the
+     "tinted overlay" look stays consistent; still independently settable. */
+  --k-selection-bg: hsl(var(--k-primary-soft));
+
   /* ── Density tokens ──────────────────────────────────────────
    * Sized for desktop comfort by default. The values below are the
    * `md` ramp; `sm` and `lg` ramps live further down.

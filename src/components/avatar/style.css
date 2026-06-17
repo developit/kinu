@@ -30,7 +30,7 @@
   width: 100%;
   height: 100%;
   background-color: hsl(var(--k-muted));
-  font-size: 100em;
+  font-size: var(--k-avatar-font-size);
   display: flex;
   align-items: center;
   justify-content: center;

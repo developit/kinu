@@ -84,18 +84,24 @@ label[k] {
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: var(--k-scrollbar-size);
+  height: var(--k-scrollbar-size);
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb {
-  background: content-box hsl(var(--k-foreground) / 0.15);
+  background: content-box var(--k-scrollbar-thumb);
   border: 3px solid transparent;
   border-radius: 999px;
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb:hover {
-  background: content-box hsl(var(--k-foreground) / 0.25);
+  background: content-box var(--k-scrollbar-thumb-hover);
+}
+
+/* Text selection — brand-tinted by default; themes retune via
+ * --k-selection-bg. */
+::selection {
+  background: var(--k-selection-bg);
 }
 
 /* Honor the user's "Reduce motion" OS preference, scoped to kinu elements
