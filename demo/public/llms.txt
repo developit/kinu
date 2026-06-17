@@ -987,3 +987,18 @@ Native number input with stepper buttons driven by the command bus.
 - Wraps a native `<input type="number">` in an `InputGroup` with − / + buttons. Forwards every native input attribute (`min`, `max`, `step`, `value`, `name`, …).
 - The buttons use `command="--step-up"`/`"--step-down"` on the existing command bus — no new global listeners — and the input calls native `stepUp()`/`stepDown()`, firing `input`/`change` so forms stay in sync.
 - Native Invoker Commands are Baseline; the bundled `installCommands()` polyfill is the fallback for older Safari.
+
+### Conversation
+
+#### Message
+Chat message bubble with author-driven color and alignment.
+
+```tsx
+<Message from="user">
+  <Message.Avatar>JM</Message.Avatar>
+  <Message.Bubble>Hello</Message.Bubble>
+</Message>
+```
+
+- Pure CSS: `<div k="message" from="user|assistant|system">`. `from` flips alignment and colors the bubble (user = primary, assistant = muted, system = quiet italic).
+- Compound parts: `Message.Avatar` (a small round badge) and `Message.Bubble` (the content). Drop a `<Prose>` inside the bubble to render markdown.
