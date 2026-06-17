@@ -87,6 +87,21 @@ kinu deliberately adopts cutting-edge platform features (native `command`/`comma
 4. **Document the baseline.** When a component depends on a feature newer than Baseline, state the minimum browser versions in its docs `notes` (see ProgressRing's typed-`attr()` note and Textarea's `field-sizing` fallback note).
 5. **No polyfill bloat by default.** The only shipped shim is the tiny, on-demand `command`/`commandfor` polyfill. Do not add JavaScript to back-fill a CSS feature; prefer an `@supports` fallback. Any new platform shim must be justified against the size budget in [`ROADMAP.md`](./ROADMAP.md).
 
+### Singletons & the Command Model
+
+Two shared mechanisms keep interactive components stateless and provider-free. Reuse them instead of inventing per-component event wiring.
+
+**Command attributes are the interaction primitive.** Disclosure components (Dialog, Popover, DropdownMenu, ContextMenu, Drawer, Sheet, Sidebar) are driven declaratively by the native `command`/`commandfor` attributes — a trigger points `commandfor` at a target `id` and names a `command` verb (`show-modal`, `close`, `toggle`, …) — rather than `onClick` state machines. The behaviour comes from small, layered installers in `src/lib/commands.ts`:
+
+- `installCommands()` — the core `command`/`commandfor` polyfill.
+- `installDialogsDropdowns()` — light-dismiss / outside-click closing.
+- `installAdaptiveCommands()` — `beforetoggle`-based adaptation (e.g. responsive drawer/popover behaviour).
+- `installMenuShortcuts()` — keyboard navigation for menus.
+
+Components import only the installers they need (unused behaviour tree-shakes away) and call them at render time. Each installer is **idempotent and SSR-safe**: it returns early if already installed, if there is no `document`, or if the browser supports the feature natively — so calling it from every trigger costs nothing.
+
+**Global singletons are event-driven, not context-driven.** The `toast` API is the template: a module-level `toast.show()` dispatches a DOM `CustomEvent`, and a single `<ToastContainer>` mounted once anywhere in the tree listens for it and renders. There is no provider and no context, and `toast.show()` works from outside the component tree entirely. New app-level singletons should follow the same shape — an import-and-call API, one mount point, decoupled by events, and safe to import under SSR.
+
 ## Components
 
 - **Badge**: Inline status indicators
