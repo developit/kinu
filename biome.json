@@ -14,6 +14,11 @@
       "quoteStyle": "single"
     }
   },
+  "css": {
+    "linter": {
+      "enabled": false
+    }
+  },
   "linter": {
     "rules": {
       "correctness": {
