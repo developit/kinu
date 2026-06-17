@@ -655,5 +655,14 @@
     "order": 13,
     "file": "components/rating.md",
     "description": "Star rating built from a native radio group — form-associated, zero JavaScript."
+  },
+  {
+    "slug": "number-field",
+    "title": "Number Field",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 14,
+    "file": "components/number-field.md",
+    "description": "Native number input with stepper buttons driven by the command bus."
   }
 ]

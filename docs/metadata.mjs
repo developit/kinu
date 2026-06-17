@@ -1004,5 +1004,20 @@ export default [
       'Set `name` (required) and an optional initial `value`; the chosen star submits with the form.',
       'Pass `readOnly` to show an average as a non-interactive display, `count` to change the number of stars, and `size` (`sm`/`md`/`lg`) to scale.'
     ]
+  },
+  {
+    slug: 'number-field',
+    title: 'Number Field',
+    section: 'Components',
+    category: 'Data Input',
+    order: 14,
+    folder: 'number-field',
+    description: 'Native number input with stepper buttons driven by the command bus.',
+    usage: '<NumberField defaultValue={3} min={0} max={10} />',
+    notes: [
+      'Wraps a native `<input type="number">` in an `InputGroup` with − / + buttons. Forwards every native input attribute (`min`, `max`, `step`, `value`, `name`, …).',
+      'The buttons use `command="--step-up"`/`"--step-down"` on the existing command bus — no new global listeners — and the input calls native `stepUp()`/`stepDown()`, firing `input`/`change` so forms stay in sync.',
+      'Native Invoker Commands are Baseline; the bundled `installCommands()` polyfill is the fallback for older Safari.'
+    ]
   }
 ];
