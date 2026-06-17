@@ -207,6 +207,15 @@
     "description": "TabList, Tab, and TabPanel wrappers using aria attributes."
   },
   {
+    "slug": "composer",
+    "title": "Composer",
+    "section": "Components",
+    "category": "Conversation",
+    "order": 2,
+    "file": "components/composer.md",
+    "description": "Chat input form — autosizing textarea with Enter-to-send."
+  },
+  {
     "slug": "collapsible",
     "title": "Collapsible",
     "section": "Components",

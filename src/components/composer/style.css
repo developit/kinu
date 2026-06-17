@@ -1,0 +1,68 @@
+@import "../../variables.css";
+
+[k="composer"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid hsl(var(--k-input));
+  border-radius: var(--k-radius);
+  background: hsl(var(--k-background));
+}
+
+[k="composer"]:focus-within {
+  border-color: hsl(var(--k-ring));
+  box-shadow: 0 0 0 2px hsl(var(--k-ring) / 0.4);
+}
+
+/* The textarea sheds its own chrome — the composer box provides it */
+[k="composer"] [k="textarea"] {
+  border: none;
+  padding: 0.25rem;
+  min-height: 2.25rem;
+  resize: none;
+  background: transparent;
+}
+
+[k="composer"] [k="textarea"]:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+[k="composer-actions"] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+[k="composer-send"] {
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 2rem;
+  padding-inline: 0.875rem;
+  border: none;
+  border-radius: var(--k-radius);
+  background: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 150ms var(--k-ease);
+}
+
+[k="composer-send"]:hover {
+  background: hsl(var(--k-primary-hover));
+}
+
+[k="composer-send"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+}
+
+[k="composer-send"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
