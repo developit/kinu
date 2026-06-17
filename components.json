@@ -755,6 +755,29 @@
     ]
   },
   {
+    "name": "Row",
+    "slug": "row",
+    "category": "Layout",
+    "description": "Horizontal flow layout — a flex row with a token-based gap.",
+    "usage": "<Row gap=\"sm\" justify=\"between\">\n  <strong>Title</strong>\n  <Button>Save</Button>\n</Row>",
+    "notes": [
+      "CSS-only: renders a `<div k=\"row\">` with `display:flex`. The horizontal sibling of `Stack`. Zero JavaScript.",
+      "`gap` (default `sm`), `align` (default `center`), and `justify` mirror the other layout primitives.",
+      "Does not wrap by default — pass `wrap`, or reach for `Cluster` when wrapping is the point."
+    ]
+  },
+  {
+    "name": "Center",
+    "slug": "center",
+    "category": "Layout",
+    "description": "Centers its content horizontally and vertically with CSS grid.",
+    "usage": "<Center style={{height: '10rem'}}>\n  <span>Centered</span>\n</Center>",
+    "notes": [
+      "CSS-only: `<div k=\"center\">` using `display:grid;place-items:center`. Give it a size (or let it fill its parent) and the child centers on both axes.",
+      "Pass `inline` to shrink to the content and center inline instead of filling the box."
+    ]
+  },
+  {
     "name": "Rating",
     "slug": "rating",
     "category": "Data Input",

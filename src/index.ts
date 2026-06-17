@@ -146,6 +146,8 @@ export type {
   RowAlign,
   RowJustify,
 } from './components/row/types';
+export {Center} from './components/center';
+export type {CenterProps, CenterOwnProps} from './components/center/types';
 export {Rating} from './components/rating';
 export type {
   RatingProps,

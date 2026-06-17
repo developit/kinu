@@ -486,6 +486,15 @@
     "description": ""
   },
   {
+    "slug": "center",
+    "title": "Center",
+    "section": "Components",
+    "category": "Layout",
+    "order": 5,
+    "file": "components/center.md",
+    "description": "Centers its content horizontally and vertically with CSS grid."
+  },
+  {
     "slug": "separator",
     "title": "Separator",
     "section": "Components",

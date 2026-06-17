@@ -1014,6 +1014,20 @@ export default [
     ]
   },
   {
+    slug: 'center',
+    title: 'Center',
+    section: 'Components',
+    category: 'Layout',
+    order: 5,
+    folder: 'center',
+    description: 'Centers its content horizontally and vertically with CSS grid.',
+    usage: `<Center style={{height: '10rem'}}>\n  <span>Centered</span>\n</Center>`,
+    notes: [
+      'CSS-only: `<div k="center">` using `display:grid;place-items:center`. Give it a size (or let it fill its parent) and the child centers on both axes.',
+      'Pass `inline` to shrink to the content and center inline instead of filling the box.'
+    ]
+  },
+  {
     slug: 'rating',
     title: 'Rating',
     section: 'Components',
