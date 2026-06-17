@@ -198,6 +198,8 @@ export type {
   MessageAvatarProps,
   MessageAvatarOwnProps,
 } from './components/message/types';
+export {Thread} from './components/thread';
+export type {ThreadProps, ThreadOwnProps} from './components/thread/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

@@ -1,0 +1,27 @@
+@import "../../variables.css";
+
+[k="thread"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+[k="thread"][scrollable] {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Stick-to-bottom: content opts out of scroll anchoring so the browser pins to
+   the bottom anchor as messages are appended. Progressive enhancement — where
+   scroll anchoring is absent, it degrades to a normal scroll container. */
+[k="thread"][scrollable] > * {
+  overflow-anchor: none;
+}
+
+[k="thread"][scrollable] > [k="thread-anchor"] {
+  overflow-anchor: auto;
+}
+
+[k="thread-anchor"] {
+  height: 1px;
+}
