@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest';
 import renderToString from 'preact-render-to-string';
 import {AppShell} from '../components/app-shell';
+import {Center} from '../components/center';
 import {Cluster} from '../components/cluster';
 import {Grid} from '../components/grid';
 import {Row} from '../components/row';
@@ -48,6 +49,16 @@ describe('layout primitives ssr', () => {
           <span>One</span>
           <span>Two</span>
         </Row>,
+      ),
+    ).not.toThrow();
+  });
+
+  it('renders Center without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Center inline>
+          <span>Centered</span>
+        </Center>,
       ),
     ).not.toThrow();
   });

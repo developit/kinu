@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T06:03:48.967Z
+Generated at: 2026-06-17T06:10:24.317Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T06:03:48.967Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 13.9 | 4.32 | 67.58 | 11.9 | 16.23 |
+| Nearly all components (namespace import) | 13.92 | 4.33 | 67.68 | 11.93 | 16.25 |
 
 ## Per-component (isolated import)
 
@@ -84,6 +84,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | card | 0.62 | 0.34 | 3.71 | 0.98 | 1.32 |
 | resizable | 0.64 | 0.34 | 3.54 | 0.94 | 1.29 |
 | label | 0.63 | 0.34 | 3.52 | 0.94 | 1.28 |
+| center | 0.63 | 0.34 | 3.5 | 0.91 | 1.25 |
 | separator | 0.64 | 0.34 | 3.47 | 0.91 | 1.25 |
 | aspect-ratio | 0.31 | 0.23 | 3.55 | 0.94 | 1.17 |
 | typography | 0 | 0.02 | 3.5 | 0.93 | 0.95 |

@@ -1,0 +1,11 @@
+@import "../../variables.css";
+
+[k="center"] {
+  display: grid;
+  place-items: center;
+}
+
+[k="center"][inline] {
+  display: inline-grid;
+  place-content: center;
+}

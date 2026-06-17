@@ -566,6 +566,20 @@ Resizable container that exposes native CSS handles.
 - Wraps a `<div>` with resize: both so the browser handles drag gestures.
 - Perfect for scratchpads, preview panes, or demos where users adjust size.
 
+#### Row
+Horizontal flow layout — a flex row with a token-based gap.
+
+```tsx
+<Row gap="sm" justify="between">
+  <strong>Title</strong>
+  <Button>Save</Button>
+</Row>
+```
+
+- CSS-only: renders a `<div k="row">` with `display:flex`. The horizontal sibling of `Stack`. Zero JavaScript.
+- `gap` (default `sm`), `align` (default `center`), and `justify` mirror the other layout primitives.
+- Does not wrap by default — pass `wrap`, or reach for `Cluster` when wrapping is the point.
+
 #### Separator
 Semantic horizontal or vertical divider.
 
@@ -575,6 +589,18 @@ Semantic horizontal or vertical divider.
 
 - Rendered as a `<div>` so you can set orientation via attribute.
 - Use decorative when the separator is purely visual.
+
+#### Center
+Centers its content horizontally and vertically with CSS grid.
+
+```tsx
+<Center style={{height: '10rem'}}>
+  <span>Centered</span>
+</Center>
+```
+
+- CSS-only: `<div k="center">` using `display:grid;place-items:center`. Give it a size (or let it fill its parent) and the child centers on both axes.
+- Pass `inline` to shrink to the content and center inline instead of filling the box.
 
 #### Sidebar
 Responsive sidebar dialog that collapses on mobile.
