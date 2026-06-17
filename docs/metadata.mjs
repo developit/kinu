@@ -974,5 +974,20 @@ export default [
       'By default it fits as many columns as will hold the `min` width (presets `xs`–`xl`, default `md` = 16rem); override arbitrarily with the `--k-grid-min` custom property.',
       'Pass `cols={3}` for a fixed equal-column grid instead of the responsive behaviour.'
     ]
+  },
+  {
+    slug: 'app-shell',
+    title: 'App Shell',
+    section: 'Components',
+    category: 'Layout',
+    order: 3,
+    folder: 'app-shell',
+    description: 'Full-page application scaffold — header, sidebar, main, and footer in a CSS grid.',
+    usage: `<AppShell>\n  <AppShell.Header>Acme</AppShell.Header>\n  <AppShell.Sidebar>{/* nav */}</AppShell.Sidebar>\n  <AppShell.Main>{/* content */}</AppShell.Main>\n  <AppShell.Footer>© 2026</AppShell.Footer>\n</AppShell>`,
+    notes: [
+      'CSS-only: a `<div k="app-shell">` using named grid areas, `min-height:100dvh`, and semantic `<header>`/`<aside>`/`<main>`/`<footer>` parts. Zero JavaScript.',
+      'Collapses to a single column at ≤48rem; the inline sidebar rail hides so you can hand mobile navigation to the modal `Sidebar` dialog.',
+      'Compound parts: `AppShell.Header`, `AppShell.Sidebar`, `AppShell.Main`, `AppShell.Footer`. Style each region with normal CSS or inline styles.'
+    ]
   }
 ];

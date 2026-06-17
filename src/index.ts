@@ -125,6 +125,19 @@ export type {
   GridMin,
   GridCols,
 } from './components/grid/types';
+export {AppShell} from './components/app-shell';
+export type {
+  AppShellProps,
+  AppShellOwnProps,
+  AppShellHeaderProps,
+  AppShellHeaderOwnProps,
+  AppShellSidebarProps,
+  AppShellSidebarOwnProps,
+  AppShellMainProps,
+  AppShellMainOwnProps,
+  AppShellFooterProps,
+  AppShellFooterOwnProps,
+} from './components/app-shell/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,
