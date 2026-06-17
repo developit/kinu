@@ -1144,5 +1144,20 @@ export default [
       'Progressive enhancement: where scroll anchoring is unsupported it degrades to a normal scroll container.',
       'Fill it with `Message` components; size it with a height (or let it fill a flex parent).'
     ]
+  },
+  {
+    slug: 'composer',
+    title: 'Composer',
+    section: 'Components',
+    category: 'Conversation',
+    order: 2,
+    folder: 'composer',
+    description: 'Chat input form — autosizing textarea with Enter-to-send.',
+    usage: `<Composer onSubmit={send}>\n  <Textarea autosize rows={1} placeholder="Message…" />\n  <Composer.Actions>\n    <Composer.Send>Send</Composer.Send>\n  </Composer.Actions>\n</Composer>`,
+    notes: [
+      'Renders a `<form k="composer">` around a `Textarea` (use `autosize` so it grows with content). Enter submits, Shift+Enter inserts a newline — a single delegated keydown calls `form.requestSubmit()`, and it is IME-safe.',
+      'Compound parts: `Composer.Send` (a submit button, pushed to the trailing edge) and `Composer.Actions` (a row for attach / model controls — compose `FileUpload`, `Select`, etc.).',
+      'No engine: a typing indicator is just `<Spinner>`, and suggestions are a `Cluster` of `Chip`. Bring your own submit handler.'
+    ]
   }
 ];
