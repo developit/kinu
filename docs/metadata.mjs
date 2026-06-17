@@ -929,5 +929,20 @@ export default [
       'Only styles direct and nested standard elements; does not touch Kinu components used inside.',
       'First/last child margins are zeroed so the wrapper can drop into any layout without margin collapse.'
     ]
+  },
+  {
+    slug: 'stack',
+    title: 'Stack',
+    section: 'Components',
+    category: 'Layout',
+    order: 0,
+    folder: 'stack',
+    description: 'Vertical flow layout — a flex column with a token-based gap.',
+    usage: `<Stack gap="md">\n  <div>One</div>\n  <div>Two</div>\n</Stack>`,
+    notes: [
+      'CSS-only: renders a `<div k="stack">` with `display:flex;flex-direction:column`. Zero JavaScript.',
+      'Set `gap` to a spacing-scale step (`0`, `xs`, `sm`, `md`, `lg`, `xl`); it maps to the `--k-space-*` tokens and defaults to `md`.',
+      'Use `align` (cross-axis) and `justify` (main-axis) to position children.'
+    ]
   }
 ];
