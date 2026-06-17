@@ -143,18 +143,16 @@ async function listComponentDirs() {
   return names.sort();
 }
 
-// Generate a tiny entry that pulls in a single component (and the side-effect
-// `style.css` its index imports), mirroring the `void` idiom of the
-// hand-written case files.
+// Generate a tiny entry that re-exports a single component (and pulls in the
+// side-effect `style.css` its index imports). Re-exporting — rather than
+// `import * as C; void C;` — keeps the component's JS in the bundle so its real
+// cost-when-used is measured; a voided namespace tree-shakes the body away,
+// leaving only the CSS side effect and under-reporting JS for logic components.
 async function writeComponentCase(name) {
   const entry = resolve(casesDir, `${name}.ts`);
   let importPath = relative(casesDir, resolve(componentsRoot, name)).split('\\').join('/');
   if (!importPath.startsWith('.')) importPath = `./${importPath}`;
-  await writeFile(
-    entry,
-    `import * as Component from '${importPath}';\n\nvoid Component;\n`,
-    'utf8',
-  );
+  await writeFile(entry, `export * from '${importPath}';\n`, 'utf8');
   return entry;
 }
 
