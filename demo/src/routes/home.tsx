@@ -717,7 +717,7 @@ function SunIcon() {
       width="14"
       height="14"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -737,7 +737,7 @@ function MoonIcon() {
       width="14"
       height="14"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -756,7 +756,7 @@ function MaximizeIcon() {
       width="13"
       height="13"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -775,7 +775,7 @@ function MinimizeIcon() {
       width="13"
       height="13"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -1518,7 +1518,7 @@ function PipelineRace() {
         class="kh-race-fork"
         viewBox="0 0 100 36"
         preserveAspectRatio="none"
-        aria-hidden
+        aria-hidden="true"
       >
         <title>Fork</title>
         <path
@@ -1542,7 +1542,7 @@ function PipelineRace() {
             <ol class="kh-race-stages">
               {TYPICAL_STAGES.map((s, i) => (
                 <RaceStageItem
-                  key={i}
+                  key={s.note}
                   stage={s}
                   index={i}
                   variant="typical"
@@ -1572,7 +1572,7 @@ function PipelineRace() {
             <ol class="kh-race-stages">
               {KINU_STAGES.map((s, i) => (
                 <RaceStageItem
-                  key={i}
+                  key={s.note}
                   stage={s}
                   index={i}
                   variant="kinu"
@@ -1611,7 +1611,7 @@ function PipelineRace() {
             stroke-width="1.8"
             stroke-linecap="round"
             stroke-linejoin="round"
-            aria-hidden
+            aria-hidden="true"
           >
             <title>Replay</title>
             <path d="M3 12a9 9 0 1 0 3.27-6.95L3 8" />
