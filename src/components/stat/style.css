@@ -1,0 +1,38 @@
+@import "../../variables.css";
+
+[k="stat"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+[k="stat-label"] {
+  color: hsl(var(--k-muted-foreground));
+  font-size: 0.8125rem;
+}
+
+[k="stat-value"] {
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+[k="stat-delta"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  color: hsl(var(--k-muted-foreground));
+}
+
+[k="stat-delta"][trend="up"] {
+  color: hsl(var(--k-success));
+}
+
+[k="stat-delta"][trend="down"] {
+  color: hsl(var(--k-destructive));
+}
+
+[k="stat-delta"][trend="flat"] {
+  color: hsl(var(--k-muted-foreground));
+}

@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T05:47:41.580Z
+Generated at: 2026-06-17T05:50:41.172Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T05:47:41.580Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 13.69 | 4.25 | 65.62 | 11.64 | 15.89 |
+| Nearly all components (namespace import) | 13.88 | 4.31 | 66.1 | 11.73 | 16.04 |
 
 ## Per-component (isolated import)
 
@@ -62,6 +62,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | textarea | 0.64 | 0.34 | 4.01 | 1.15 | 1.49 |
 | badge | 0.62 | 0.34 | 4.39 | 1.14 | 1.48 |
 | app-shell | 0.87 | 0.44 | 3.78 | 1.02 | 1.46 |
+| stat | 0.78 | 0.41 | 3.87 | 1.03 | 1.44 |
 | cluster | 0.63 | 0.34 | 4.31 | 1.09 | 1.43 |
 | time-picker | 1.04 | 0.52 | 3.5 | 0.91 | 1.43 |
 | date-picker | 1.04 | 0.52 | 3.5 | 0.91 | 1.43 |

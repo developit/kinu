@@ -1034,5 +1034,20 @@ export default [
       'The idle and copied labels render via CSS `attr()` (`label` / `copiedLabel`), so the success state needs no JS text swap — the handler just toggles a `[copied]` attribute for ~1.2s.',
       'SSR-safe: `navigator.clipboard` is only touched inside the click handler, which runs client-side.'
     ]
+  },
+  {
+    slug: 'stat',
+    title: 'Stat',
+    section: 'Components',
+    category: 'Data Display',
+    order: 9,
+    folder: 'stat',
+    description: 'Metric block with a label, large value, and a trend-colored delta.',
+    usage: `<Stat>\n  <Stat.Label>Revenue</Stat.Label>\n  <Stat.Value>$48,200</Stat.Value>\n  <Stat.Delta trend="up">+12.5%</Stat.Delta>\n</Stat>`,
+    notes: [
+      'Pure CSS presentation. Compound parts: `Stat.Label`, `Stat.Value`, `Stat.Delta`.',
+      '`Stat.Delta` takes `trend` (`up` / `down` / `flat`) which colors it via the semantic success/destructive tokens.',
+      'Drops naturally into a `Grid` for dashboard stat rows.'
+    ]
   }
 ];

@@ -154,6 +154,18 @@ export type {
   CopyButtonProps,
   CopyButtonOwnProps,
 } from './components/copy-button/types';
+export {Stat} from './components/stat';
+export type {
+  StatProps,
+  StatOwnProps,
+  StatLabelProps,
+  StatLabelOwnProps,
+  StatValueProps,
+  StatValueOwnProps,
+  StatDeltaProps,
+  StatDeltaOwnProps,
+  StatTrend,
+} from './components/stat/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

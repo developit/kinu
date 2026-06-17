@@ -603,6 +603,15 @@
     "description": "Side or bottom sheet overlay with directional variants."
   },
   {
+    "slug": "stat",
+    "title": "Stat",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 9,
+    "file": "components/stat.md",
+    "description": "Metric block with a label, large value, and a trend-colored delta."
+  },
+  {
     "slug": "label",
     "title": "Label",
     "section": "Components",
