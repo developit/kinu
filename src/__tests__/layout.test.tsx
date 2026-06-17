@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest';
 import renderToString from 'preact-render-to-string';
 import {Cluster} from '../components/cluster';
+import {Grid} from '../components/grid';
 import {Stack} from '../components/stack';
 
 describe('layout primitives ssr', () => {
@@ -22,6 +23,18 @@ describe('layout primitives ssr', () => {
           <span>One</span>
           <span>Two</span>
         </Cluster>,
+      ),
+    ).not.toThrow();
+  });
+
+  it('renders Grid without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Grid gap="md" min="sm" cols={3}>
+          <div>One</div>
+          <div>Two</div>
+          <div>Three</div>
+        </Grid>,
       ),
     ).not.toThrow();
   });

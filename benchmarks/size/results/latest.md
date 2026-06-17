@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T05:13:43.631Z
+Generated at: 2026-06-17T05:15:44.934Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T05:13:43.631Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 12.39 | 3.92 | 61.88 | 10.95 | 14.87 |
+| Nearly all components (namespace import) | 12.4 | 3.92 | 62.77 | 11.11 | 15.03 |
 
 ## Per-component (isolated import)
 
@@ -59,6 +59,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | time-picker | 1 | 0.49 | 3.5 | 0.91 | 1.41 |
 | calendar | 1 | 0.49 | 3.5 | 0.91 | 1.4 |
 | stack | 0.59 | 0.32 | 4.22 | 1.08 | 1.39 |
+| grid | 0.59 | 0.32 | 4.29 | 1.08 | 1.39 |
 | meter | 0.6 | 0.32 | 4.15 | 1.05 | 1.37 |
 | pagination | 0.7 | 0.35 | 3.82 | 1.02 | 1.37 |
 | skeleton | 0.6 | 0.32 | 3.78 | 1.05 | 1.37 |
