@@ -17,13 +17,17 @@
       "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./style.css": "./dist/index.css"
+    "./style.css": "./dist/index.css",
+    "./llms.txt": "./llms.txt",
+    "./components.json": "./components.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "llms.txt",
+    "components.json"
   ],
   "scripts": {
-    "build": "vite build && tsc --noEmit false --outDir dist",
+    "build": "node scripts/gen-llms.mjs && vite build && tsc --noEmit false --outDir dist",
     "build:demo": "cd demo && pnpm build",
     "lint": "tsc && biome lint",
     "dev": "vite build --watch",
