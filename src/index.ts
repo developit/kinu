@@ -146,6 +146,11 @@ export type {
   RatingOwnProps,
   RatingSize,
 } from './components/rating/types';
+export {NumberField} from './components/number-field';
+export type {
+  NumberFieldProps,
+  NumberFieldOwnProps,
+} from './components/number-field/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

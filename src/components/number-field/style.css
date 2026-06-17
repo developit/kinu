@@ -1,0 +1,54 @@
+@import "../../variables.css";
+
+/* Input chrome (InputGroup owns the radius + border joining with the buttons) */
+[k="number-field"] {
+  flex: 1;
+  min-width: 0;
+  height: 2.5rem;
+  border: 1px solid hsl(var(--k-input));
+  background-color: hsl(var(--k-background));
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: center;
+  padding-inline: 0.5rem;
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+[k="number-field"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+  position: relative;
+  z-index: 1;
+}
+
+[k="number-field"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+[k="number-field"]::placeholder {
+  color: hsl(var(--k-muted-foreground));
+}
+
+[k="number-field"]:user-invalid,
+[k="number-field"][invalid] {
+  border-color: hsl(var(--k-destructive));
+}
+
+/* Hide native spin buttons — the +/- buttons replace them */
+[k="number-field"]::-webkit-outer-spin-button,
+[k="number-field"]::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Keep the stepper buttons compact rather than stretching */
+[k="input-group"]:has(> [k="number-field"]) [k="button"] {
+  flex: none;
+  padding-inline: 0.75rem;
+}
