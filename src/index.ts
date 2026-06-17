@@ -138,6 +138,14 @@ export type {
   AppShellFooterProps,
   AppShellFooterOwnProps,
 } from './components/app-shell/types';
+export {Row} from './components/row';
+export type {
+  RowProps,
+  RowOwnProps,
+  RowGap,
+  RowAlign,
+  RowJustify,
+} from './components/row/types';
 export {Rating} from './components/rating';
 export type {
   RatingProps,

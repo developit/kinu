@@ -999,6 +999,21 @@ export default [
     ]
   },
   {
+    slug: 'row',
+    title: 'Row',
+    section: 'Components',
+    category: 'Layout',
+    order: 4,
+    folder: 'row',
+    description: 'Horizontal flow layout — a flex row with a token-based gap.',
+    usage: `<Row gap="sm" justify="between">\n  <strong>Title</strong>\n  <Button>Save</Button>\n</Row>`,
+    notes: [
+      'CSS-only: renders a `<div k="row">` with `display:flex`. The horizontal sibling of `Stack`. Zero JavaScript.',
+      '`gap` (default `sm`), `align` (default `center`), and `justify` mirror the other layout primitives.',
+      'Does not wrap by default — pass `wrap`, or reach for `Cluster` when wrapping is the point.'
+    ]
+  },
+  {
     slug: 'rating',
     title: 'Rating',
     section: 'Components',
