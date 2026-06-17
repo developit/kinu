@@ -25,6 +25,29 @@ Override tokens at the root or within a scope. Tokens follow the `--k-*` naming 
 Because values are stored as space-separated `h s l` triplets, components call `hsl(var(--k-primary))` to render consistent
 colors. You can replace tokens with your own palette or plug in design system values.
 
+## Spacing Scale
+
+Layout primitives and `gap`-style props read from a fixed, theme-independent spacing scale. Reach for these tokens instead of
+hard-coded lengths so spacing stays consistent across components:
+
+| Token | Value | Pixels |
+| --- | --- | --- |
+| `--k-space-0` | `0` | 0 |
+| `--k-space-xs` | `0.25rem` | 4px |
+| `--k-space-sm` | `0.5rem` | 8px |
+| `--k-space-md` | `1rem` | 16px |
+| `--k-space-lg` | `1.5rem` | 24px |
+| `--k-space-xl` | `2.5rem` | 40px |
+
+The step names mirror kinu's `sm`/`md`/`lg` size convention, so a `gap="md"` prop maps to `--k-space-md`. Override a step at
+the root to rescale spacing everywhere at once:
+
+```css
+:root {
+  --k-space-md: 1.25rem; /* roomier default gap */
+}
+```
+
 ## Component Variants via Attributes
 
 Each component maps props to attributes, letting you target them with CSS selectors:
