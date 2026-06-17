@@ -149,6 +149,11 @@ export type {
   NumberFieldProps,
   NumberFieldOwnProps,
 } from './components/number-field/types';
+export {CopyButton} from './components/copy-button';
+export type {
+  CopyButtonProps,
+  CopyButtonOwnProps,
+} from './components/copy-button/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

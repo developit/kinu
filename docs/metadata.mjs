@@ -1019,5 +1019,20 @@ export default [
       'The buttons use `command="--step-up"`/`"--step-down"` on the existing command bus — no new global listeners — and the input calls native `stepUp()`/`stepDown()`, firing `input`/`change` so forms stay in sync.',
       'Native Invoker Commands are Baseline; the bundled `installCommands()` polyfill is the fallback for older Safari.'
     ]
+  },
+  {
+    slug: 'copy-button',
+    title: 'Copy Button',
+    section: 'Components',
+    category: 'Actions',
+    order: 10,
+    folder: 'copy-button',
+    description: 'One-tap copy-to-clipboard button with a CSS-only copied state.',
+    usage: '<CopyButton value="npm install kinu" />',
+    notes: [
+      'Pass `value` to copy a string, or `for` (a CSS selector) to copy another element’s `textContent`.',
+      'The idle and copied labels render via CSS `attr()` (`label` / `copiedLabel`), so the success state needs no JS text swap — the handler just toggles a `[copied]` attribute for ~1.2s.',
+      'SSR-safe: `navigator.clipboard` is only touched inside the click handler, which runs client-side.'
+    ]
   }
 ];
