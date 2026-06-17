@@ -1,0 +1,65 @@
+@import "../../variables.css";
+
+[k="cluster"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--k-gap, var(--k-space-sm));
+}
+
+/* Gap scale */
+[k="cluster"][gap="0"] {
+  --k-gap: var(--k-space-0);
+}
+[k="cluster"][gap="xs"] {
+  --k-gap: var(--k-space-xs);
+}
+[k="cluster"][gap="sm"] {
+  --k-gap: var(--k-space-sm);
+}
+[k="cluster"][gap="md"] {
+  --k-gap: var(--k-space-md);
+}
+[k="cluster"][gap="lg"] {
+  --k-gap: var(--k-space-lg);
+}
+[k="cluster"][gap="xl"] {
+  --k-gap: var(--k-space-xl);
+}
+
+/* Cross-axis alignment */
+[k="cluster"][align="start"] {
+  align-items: flex-start;
+}
+[k="cluster"][align="center"] {
+  align-items: center;
+}
+[k="cluster"][align="end"] {
+  align-items: flex-end;
+}
+[k="cluster"][align="stretch"] {
+  align-items: stretch;
+}
+[k="cluster"][align="baseline"] {
+  align-items: baseline;
+}
+
+/* Main-axis distribution */
+[k="cluster"][justify="start"] {
+  justify-content: flex-start;
+}
+[k="cluster"][justify="center"] {
+  justify-content: center;
+}
+[k="cluster"][justify="end"] {
+  justify-content: flex-end;
+}
+[k="cluster"][justify="between"] {
+  justify-content: space-between;
+}
+[k="cluster"][justify="around"] {
+  justify-content: space-around;
+}
+[k="cluster"][justify="evenly"] {
+  justify-content: space-evenly;
+}
