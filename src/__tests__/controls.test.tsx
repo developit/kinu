@@ -1,7 +1,10 @@
 import {describe, expect, it} from 'vitest';
 import renderToString from 'preact-render-to-string';
+import {Command} from '../components/command';
 import {CopyButton} from '../components/copy-button';
+import {Dialog} from '../components/dialog';
 import {Form} from '../components/form';
+import {Item} from '../components/item';
 import {NumberField} from '../components/number-field';
 import {Rating} from '../components/rating';
 
@@ -41,6 +44,21 @@ describe('form controls ssr', () => {
           <input type="email" name="email" required />
           <button type="submit">Go</button>
         </Form>,
+      ),
+    ).not.toThrow();
+  });
+
+  it('renders Command palette without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Dialog id="cmdk">
+          <Command>
+            <Command.Input placeholder="Search" />
+            <Command.List>
+              <Item>One</Item>
+            </Command.List>
+          </Command>
+        </Dialog>,
       ),
     ).not.toThrow();
   });

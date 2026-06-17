@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T06:31:40.245Z
+Generated at: 2026-06-17T06:37:44.594Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T06:31:40.245Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 14.85 | 4.58 | 71.11 | 12.54 | 17.12 |
+| Nearly all components (namespace import) | 15.9 | 4.83 | 71.64 | 12.63 | 17.47 |
 
 ## Per-component (isolated import)
 
@@ -17,6 +17,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | Component | JS raw (KiB) | JS gzip (KiB) | CSS raw (KiB) | CSS gzip (KiB) | Total gzip (KiB) |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | dropdown-menu | 5.43 | 2.09 | 9.25 | 2.23 | 4.32 |
+| command | 6.29 | 2.33 | 5.93 | 1.69 | 4.03 |
 | combobox | 4.38 | 1.64 | 9.58 | 2.3 | 3.93 |
 | context-menu | 3.49 | 1.45 | 10.2 | 2.36 | 3.82 |
 | number-field | 3.3 | 1.33 | 8.48 | 1.97 | 3.3 |

@@ -475,6 +475,25 @@ One-tap copy-to-clipboard button with a CSS-only copied state.
 - The idle and copied labels render via CSS `attr()` (`label` / `copiedLabel`), so the success state needs no JS text swap — the handler just toggles a `[copied]` attribute for ~1.2s.
 - SSR-safe: `navigator.clipboard` is only touched inside the click handler, which runs client-side.
 
+#### Command
+Command palette — a modal Dialog hosting a filterable Listbox.
+
+```tsx
+<Dialog id="cmdk">
+  <Dialog.Trigger><Button>⌘K</Button></Dialog.Trigger>
+  <Command>
+    <Command.Input placeholder="Search…" />
+    <Command.List>
+      <Item>Search docs</Item>
+    </Command.List>
+  </Command>
+</Dialog>
+```
+
+- A pure composition of shipped parts: a modal `Dialog` hosting a `Listbox`. The Listbox supplies substring filtering (`Command.Input`) and keyboard navigation; the Dialog supplies the modal + focus trap. No fuzzy-search engine.
+- Place it inside a `Dialog` and open with a `Dialog.Trigger` or a hotkey (`commandfor` + `command="show-modal"`).
+- Items are regular `Item`s, so they support `shortcut`, `destructive`, and `href`.
+
 ### Layout
 
 #### Stack
