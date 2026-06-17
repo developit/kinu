@@ -432,6 +432,15 @@
     "description": "Resizable container that exposes native CSS handles."
   },
   {
+    "slug": "row",
+    "title": "Row",
+    "section": "Components",
+    "category": "Layout",
+    "order": 4,
+    "file": "components/row.md",
+    "description": "Horizontal flow layout — a flex row with a token-based gap."
+  },
+  {
     "slug": "menubar",
     "title": "Menubar",
     "section": "Components",

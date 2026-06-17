@@ -3,6 +3,7 @@ import renderToString from 'preact-render-to-string';
 import {AppShell} from '../components/app-shell';
 import {Cluster} from '../components/cluster';
 import {Grid} from '../components/grid';
+import {Row} from '../components/row';
 import {Stack} from '../components/stack';
 
 describe('layout primitives ssr', () => {
@@ -36,6 +37,17 @@ describe('layout primitives ssr', () => {
           <div>Two</div>
           <div>Three</div>
         </Grid>,
+      ),
+    ).not.toThrow();
+  });
+
+  it('renders Row without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Row gap="sm" align="center" justify="between" wrap>
+          <span>One</span>
+          <span>Two</span>
+        </Row>,
       ),
     ).not.toThrow();
   });
