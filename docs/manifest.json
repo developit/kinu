@@ -621,6 +621,15 @@
     "description": "Styled time input that shares the same foundation as Date Picker."
   },
   {
+    "slug": "copy-button",
+    "title": "Copy Button",
+    "section": "Components",
+    "category": "Actions",
+    "order": 10,
+    "file": "components/copy-button.md",
+    "description": "One-tap copy-to-clipboard button with a CSS-only copied state."
+  },
+  {
     "slug": "textarea",
     "title": "Textarea",
     "section": "Components",

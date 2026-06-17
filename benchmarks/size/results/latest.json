@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-17T05:42:07.438Z",
+  "generatedAt": "2026-06-17T05:47:41.580Z",
   "results": [
     {
       "id": "one-component",
@@ -43,19 +43,19 @@
       "id": "nearly-all-components",
       "label": "Nearly all components (namespace import)",
       "js": {
-        "raw": 13443,
-        "gzip": 4192,
-        "brotli": 3676
+        "raw": 14019,
+        "gzip": 4351,
+        "brotli": 3805
       },
       "css": {
-        "raw": 66434,
-        "gzip": 11806,
-        "brotli": 10332
+        "raw": 67196,
+        "gzip": 11921,
+        "brotli": 10416
       },
       "total": {
-        "raw": 79877,
-        "gzip": 15998,
-        "brotli": 14008
+        "raw": 81215,
+        "gzip": 16272,
+        "brotli": 14221
       }
     }
   ],
@@ -324,6 +324,25 @@
         "raw": 7067,
         "gzip": 2350,
         "brotli": 1999
+      }
+    },
+    {
+      "id": "copy-button",
+      "label": "copy-button",
+      "js": {
+        "raw": 2001,
+        "gzip": 908,
+        "brotli": 803
+      },
+      "css": {
+        "raw": 4240,
+        "gzip": 1188,
+        "brotli": 1002
+      },
+      "total": {
+        "raw": 6241,
+        "gzip": 2096,
+        "brotli": 1805
       }
     },
     {
