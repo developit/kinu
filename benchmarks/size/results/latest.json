@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-17T05:19:00.590Z",
+  "generatedAt": "2026-06-17T05:30:22.275Z",
   "results": [
     {
       "id": "one-component",
@@ -48,14 +48,14 @@
         "brotli": 3602
       },
       "css": {
-        "raw": 64667,
-        "gzip": 11496,
-        "brotli": 10048
+        "raw": 65496,
+        "gzip": 11697,
+        "brotli": 10213
       },
       "total": {
-        "raw": 77659,
-        "gzip": 15610,
-        "brotli": 13650
+        "raw": 78488,
+        "gzip": 15811,
+        "brotli": 13815
       }
     }
   ],
@@ -1236,6 +1236,25 @@
         "raw": 4440,
         "gzip": 1294,
         "brotli": 1101
+      }
+    },
+    {
+      "id": "rating",
+      "label": "rating",
+      "js": {
+        "raw": 52,
+        "gzip": 60,
+        "brotli": 50
+      },
+      "css": {
+        "raw": 4307,
+        "gzip": 1224,
+        "brotli": 1023
+      },
+      "total": {
+        "raw": 4359,
+        "gzip": 1284,
+        "brotli": 1073
       }
     },
     {

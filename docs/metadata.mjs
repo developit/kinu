@@ -989,5 +989,20 @@ export default [
       'Collapses to a single column at ≤48rem; the inline sidebar rail hides so you can hand mobile navigation to the modal `Sidebar` dialog.',
       'Compound parts: `AppShell.Header`, `AppShell.Sidebar`, `AppShell.Main`, `AppShell.Footer`. Style each region with normal CSS or inline styles.'
     ]
+  },
+  {
+    slug: 'rating',
+    title: 'Rating',
+    section: 'Components',
+    category: 'Data Input',
+    order: 13,
+    folder: 'rating',
+    description: 'Star rating built from a native radio group — form-associated, zero JavaScript.',
+    usage: '<Rating name="score" value={3} />',
+    notes: [
+      'Pure CSS: renders N `<input type="radio">` + `<label>` pairs inside a `<span k="rating">`. Keyboard-accessible and form-submittable for free.',
+      'Set `name` (required) and an optional initial `value`; the chosen star submits with the form.',
+      'Pass `readOnly` to show an average as a non-interactive display, `count` to change the number of stars, and `size` (`sm`/`md`/`lg`) to scale.'
+    ]
   }
 ];

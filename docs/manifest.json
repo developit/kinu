@@ -646,5 +646,14 @@
     "order": 12,
     "file": "components/toggle-group.md",
     "description": "Container that lets Toggle buttons coordinate pressed state."
+  },
+  {
+    "slug": "rating",
+    "title": "Rating",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 13,
+    "file": "components/rating.md",
+    "description": "Star rating built from a native radio group — form-associated, zero JavaScript."
   }
 ]

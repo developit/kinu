@@ -138,6 +138,12 @@ export type {
   AppShellFooterProps,
   AppShellFooterOwnProps,
 } from './components/app-shell/types';
+export {Rating} from './components/rating';
+export type {
+  RatingProps,
+  RatingOwnProps,
+  RatingSize,
+} from './components/rating/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,
