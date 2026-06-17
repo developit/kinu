@@ -12,6 +12,12 @@ A pattern-driven toolkit that enhances standard HTML elements. Built using a con
 4. High signal-to-noise APIs so developers write much less code
 5. Handle the simple case first, then provide fallbacks for complexity
 
+## Contributing & Roadmap
+
+- **[`CONTRIBUTING.md`](./CONTRIBUTING.md)** — the runbook for adding a component: folder layout, the `createSimpleComponent` factory, docs wiring, the Definition-of-Done gates, and the size-first commit discipline. Read it before adding or changing a component.
+- **[`ROADMAP.md`](./ROADMAP.md)** — what to build next, in priority order, with per-component gzipped size budgets and the decisions log.
+- **[`ARCHITECTURE.md`](./ARCHITECTURE.md)** — the platform-first rationale, the command-attribute model, and the conventions that keep runtime JS near zero.
+
 ## Technical Architecture
 
 ### Simple Components
