@@ -90,6 +90,15 @@
     "description": "Layout wrapper that groups a label, control, description, and error message."
   },
   {
+    "slug": "stack",
+    "title": "Stack",
+    "section": "Components",
+    "category": "Layout",
+    "order": 0,
+    "file": "components/stack.md",
+    "description": "Vertical flow layout — a flex column with a token-based gap."
+  },
+  {
     "slug": "accordion",
     "title": "Accordion",
     "section": "Components",
@@ -142,6 +151,15 @@
     "order": 1,
     "file": "components/tooltip.md",
     "description": "Hover/focus tooltip with placement attributes and CSS timing."
+  },
+  {
+    "slug": "cluster",
+    "title": "Cluster",
+    "section": "Components",
+    "category": "Layout",
+    "order": 1,
+    "file": "components/cluster.md",
+    "description": "Horizontal wrap row with a token-based gap — chip rows, button rows, toolbars."
   },
   {
     "slug": "list",
@@ -223,6 +241,15 @@
     "order": 2,
     "file": "components/aspect-ratio.md",
     "description": "Maintains responsive boxes at a fixed ratio using pure CSS."
+  },
+  {
+    "slug": "grid",
+    "title": "Grid",
+    "section": "Components",
+    "category": "Layout",
+    "order": 2,
+    "file": "components/grid.md",
+    "description": "Responsive auto-fit grid with a token-based gap — dashboards, card galleries."
   },
   {
     "slug": "popover",
@@ -313,6 +340,15 @@
     "order": 3,
     "file": "components/progress-ring.md",
     "description": "Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask."
+  },
+  {
+    "slug": "app-shell",
+    "title": "App Shell",
+    "section": "Components",
+    "category": "Layout",
+    "order": 3,
+    "file": "components/app-shell.md",
+    "description": "Full-page application scaffold — header, sidebar, main, and footer in a CSS grid."
   },
   {
     "slug": "scroll-area",
