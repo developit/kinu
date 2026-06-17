@@ -1,0 +1,23 @@
+@import "../../variables.css";
+
+/* By default, grow to push siblings apart inside a Row/Cluster/Stack */
+[k="spacer"] {
+  flex: 1 1 0;
+}
+
+/* Fixed sizes use flex-basis, so they work along either axis */
+[k="spacer"][size="xs"] {
+  flex: 0 0 var(--k-space-xs);
+}
+[k="spacer"][size="sm"] {
+  flex: 0 0 var(--k-space-sm);
+}
+[k="spacer"][size="md"] {
+  flex: 0 0 var(--k-space-md);
+}
+[k="spacer"][size="lg"] {
+  flex: 0 0 var(--k-space-lg);
+}
+[k="spacer"][size="xl"] {
+  flex: 0 0 var(--k-space-xl);
+}

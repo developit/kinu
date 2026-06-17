@@ -1028,6 +1028,20 @@ export default [
     ]
   },
   {
+    slug: 'spacer',
+    title: 'Spacer',
+    section: 'Components',
+    category: 'Layout',
+    order: 6,
+    folder: 'spacer',
+    description: 'Flexible spacer that pushes siblings apart, or a fixed gap block.',
+    usage: `<Row>\n  <Button>Back</Button>\n  <Spacer />\n  <Button>Next</Button>\n</Row>`,
+    notes: [
+      'CSS-only: `<div k="spacer">` with `flex:1` so it grows to push siblings to opposite ends of a Row, Cluster, or Stack.',
+      'Pass `size` (`xs`–`xl`) to render a fixed gap (via `flex-basis`) that works along either axis instead of growing.'
+    ]
+  },
+  {
     slug: 'rating',
     title: 'Rating',
     section: 'Components',

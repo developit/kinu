@@ -615,6 +615,20 @@ Responsive sidebar dialog that collapses on mobile.
 - Renders a `<dialog>` so it can slide in as a modal on small screens.
 - SidebarTrigger toggles the hidden/open state with the command attribute.
 
+#### Spacer
+Flexible spacer that pushes siblings apart, or a fixed gap block.
+
+```tsx
+<Row>
+  <Button>Back</Button>
+  <Spacer />
+  <Button>Next</Button>
+</Row>
+```
+
+- CSS-only: `<div k="spacer">` with `flex:1` so it grows to push siblings to opposite ends of a Row, Cluster, or Stack.
+- Pass `size` (`xs`–`xl`) to render a fixed gap (via `flex-basis`) that works along either axis instead of growing.
+
 ### Navigation
 
 #### Tabs

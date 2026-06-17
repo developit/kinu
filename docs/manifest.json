@@ -558,6 +558,15 @@
     "description": "Responsive sidebar dialog that collapses on mobile."
   },
   {
+    "slug": "spacer",
+    "title": "Spacer",
+    "section": "Components",
+    "category": "Layout",
+    "order": 6,
+    "file": "components/spacer.md",
+    "description": "Flexible spacer that pushes siblings apart, or a fixed gap block."
+  },
+  {
     "slug": "context-menu",
     "title": "Context Menu",
     "section": "Components",

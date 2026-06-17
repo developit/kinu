@@ -148,6 +148,8 @@ export type {
 } from './components/row/types';
 export {Center} from './components/center';
 export type {CenterProps, CenterOwnProps} from './components/center/types';
+export {Spacer} from './components/spacer';
+export type {SpacerProps, SpacerOwnProps, SpacerSize} from './components/spacer/types';
 export {Rating} from './components/rating';
 export type {
   RatingProps,
