@@ -1,5 +1,5 @@
 {
-  "files": { "ignore": ["dist"] },
+  "files": { "ignore": ["dist", "benchmarks/size/.tmp"] },
   "overrides": [
     {
       "include": [
