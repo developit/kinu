@@ -77,6 +77,16 @@ export const Button = createSimpleComponent('button', 'button');
 <TabPanel>Panel content</TabPanel>
 ```
 
+### Platform-Gating Policy
+
+kinu deliberately adopts cutting-edge platform features (native `command`/`commandfor`, typed `attr()`, `@position-try` anchor positioning, `field-sizing`, `<details name>`). Using a feature before it is Baseline "widely available" is allowed, but it is **gated** so it never breaks a user:
+
+1. **Progressive enhancement, never hard failure.** A component built on a newer feature must stay usable where the feature is absent — degrade via CSS `@supports`, a native fallback (a styled `<input type="range">` still works unstyled), or a documented graceful degradation. It must never throw or render unusable markup.
+2. **Detect, then enhance.** Prefer native capability detection over version sniffing. The commands polyfill is the model: `installCommands()` no-ops when the browser already implements the API (`if ('commandFor' in HTMLButtonElement.prototype) return;`), so native support wins and the shim contributes nothing.
+3. **SSR-safe by construction.** No module-level access to `document`/`window`; guard any DOM work with `typeof document === 'undefined'` (as `installCommands()` does). Every component must pass the SSR smoke test — render under `preact-render-to-string` without throwing.
+4. **Document the baseline.** When a component depends on a feature newer than Baseline, state the minimum browser versions in its docs `notes` (see ProgressRing's typed-`attr()` note and Textarea's `field-sizing` fallback note).
+5. **No polyfill bloat by default.** The only shipped shim is the tiny, on-demand `command`/`commandfor` polyfill. Do not add JavaScript to back-fill a CSS feature; prefer an `@supports` fallback. Any new platform shim must be justified against the size budget in [`ROADMAP.md`](./ROADMAP.md).
+
 ## Components
 
 - **Badge**: Inline status indicators
