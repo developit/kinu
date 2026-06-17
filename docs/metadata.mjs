@@ -32,6 +32,14 @@ export default [
     file: 'pages/base-styles.md'
   },
   {
+    slug: 'forms',
+    title: 'Forms & Validation',
+    section: 'Foundations',
+    category: 'Forms',
+    order: 4,
+    file: 'pages/forms.md'
+  },
+  {
     slug: 'accordion',
     title: 'Accordion',
     section: 'Components',

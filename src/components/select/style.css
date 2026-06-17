@@ -28,3 +28,14 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* Invalid state — post-interaction via :user-invalid, or explicit [invalid] */
+[k="select"]:user-invalid,
+[k="select"][invalid] {
+  border-color: hsl(var(--k-destructive));
+}
+
+[k="select"]:user-invalid:focus-visible,
+[k="select"][invalid]:focus-visible {
+  box-shadow: 0 0 0 2px hsl(var(--k-destructive));
+}
