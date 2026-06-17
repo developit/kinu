@@ -1174,5 +1174,20 @@ export default [
       'Pairs with the native-validation CSS layer (`:user-invalid`) and `Field` / `Field.Error` — see the Forms & Validation page. You never manage `touched` or `errors` state.',
       'Bring your own submit in `onValid` (e.g. `e.preventDefault()` then POST).'
     ]
+  },
+  {
+    slug: 'command',
+    title: 'Command',
+    section: 'Components',
+    category: 'Actions',
+    order: 11,
+    folder: 'command',
+    description: 'Command palette — a modal Dialog hosting a filterable Listbox.',
+    usage: `<Dialog id="cmdk">\n  <Dialog.Trigger><Button>⌘K</Button></Dialog.Trigger>\n  <Command>\n    <Command.Input placeholder="Search…" />\n    <Command.List>\n      <Item>Search docs</Item>\n    </Command.List>\n  </Command>\n</Dialog>`,
+    notes: [
+      'A pure composition of shipped parts: a modal `Dialog` hosting a `Listbox`. The Listbox supplies substring filtering (`Command.Input`) and keyboard navigation; the Dialog supplies the modal + focus trap. No fuzzy-search engine.',
+      'Place it inside a `Dialog` and open with a `Dialog.Trigger` or a hotkey (`commandfor` + `command="show-modal"`).',
+      'Items are regular `Item`s, so they support `shortcut`, `destructive`, and `href`.'
+    ]
   }
 ];

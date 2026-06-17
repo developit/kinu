@@ -209,6 +209,8 @@ export type {
 } from './components/composer/types';
 export {Form} from './components/form';
 export type {FormProps, FormOwnProps} from './components/form/types';
+export {Command} from './components/command';
+export type {CommandProps, CommandOwnProps} from './components/command/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

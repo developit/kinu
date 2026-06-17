@@ -720,6 +720,15 @@
     "description": "Text area with matching input styling, variants, and sizes."
   },
   {
+    "slug": "command",
+    "title": "Command",
+    "section": "Components",
+    "category": "Actions",
+    "order": 11,
+    "file": "components/command.md",
+    "description": "Command palette — a modal Dialog hosting a filterable Listbox."
+  },
+  {
     "slug": "toggle",
     "title": "Toggle",
     "section": "Components",
