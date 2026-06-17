@@ -1021,6 +1021,17 @@ Form wrapper that runs native validation before your submit handler.
 - Pairs with the native-validation CSS layer (`:user-invalid`) and `Field` / `Field.Error` — see the Forms & Validation page. You never manage `touched` or `errors` state.
 - Bring your own submit in `onValid` (e.g. `e.preventDefault()` then POST).
 
+#### TagsInput
+Token / tags input that submits natively via a hidden field.
+
+```tsx
+<TagsInput name="tags" value={['design', 'frontend']} placeholder="Add a tag…" />
+```
+
+- Type and press Enter (or the `separator`) to add a tag; Backspace on an empty field removes the last; click a chip’s × to remove it. Each change rewrites a hidden `<input name>` and fires `input`/`change`, so it submits with a normal form.
+- A single per-instance ref manages the chips imperatively — no framework state store. SSR-safe: tags render on mount.
+- The submitted value is the tags joined by `separator` (default `,`). API: `name`, `value` (string[]), `separator`, `max`, `duplicates`.
+
 ### Conversation
 
 #### Message

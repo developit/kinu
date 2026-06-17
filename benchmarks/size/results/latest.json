@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-17T06:37:44.594Z",
+  "generatedAt": "2026-06-17T06:43:29.109Z",
   "results": [
     {
       "id": "one-component",
@@ -43,19 +43,19 @@
       "id": "nearly-all-components",
       "label": "Nearly all components (namespace import)",
       "js": {
-        "raw": 16286,
-        "gzip": 4950,
-        "brotli": 4345
+        "raw": 18339,
+        "gzip": 5538,
+        "brotli": 4862
       },
       "css": {
-        "raw": 73356,
-        "gzip": 12937,
-        "brotli": 11178
+        "raw": 73966,
+        "gzip": 13005,
+        "brotli": 11234
       },
       "total": {
-        "raw": 89642,
-        "gzip": 17887,
-        "brotli": 15523
+        "raw": 92305,
+        "gzip": 18543,
+        "brotli": 16096
       }
     }
   ],
@@ -153,6 +153,25 @@
         "raw": 12057,
         "gzip": 3379,
         "brotli": 2868
+      }
+    },
+    {
+      "id": "tags-input",
+      "label": "tags-input",
+      "js": {
+        "raw": 3867,
+        "gzip": 1556,
+        "brotli": 1366
+      },
+      "css": {
+        "raw": 6067,
+        "gzip": 1573,
+        "brotli": 1324
+      },
+      "total": {
+        "raw": 9934,
+        "gzip": 3129,
+        "brotli": 2690
       }
     },
     {
