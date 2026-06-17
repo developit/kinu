@@ -72,6 +72,15 @@
     "description": "Generic selectable item for lists, menus, comboboxes, and more."
   },
   {
+    "slug": "message",
+    "title": "Message",
+    "section": "Components",
+    "category": "Conversation",
+    "order": 0,
+    "file": "components/message.md",
+    "description": "Chat message bubble with author-driven color and alignment."
+  },
+  {
     "slug": "badge",
     "title": "Badge",
     "section": "Components",

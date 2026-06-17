@@ -186,6 +186,16 @@ export type {
   StepOwnProps,
   StepState,
 } from './components/stepper/types';
+export {Message} from './components/message';
+export type {
+  MessageProps,
+  MessageOwnProps,
+  MessageFrom,
+  MessageBubbleProps,
+  MessageBubbleOwnProps,
+  MessageAvatarProps,
+  MessageAvatarOwnProps,
+} from './components/message/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

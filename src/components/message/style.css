@@ -1,0 +1,47 @@
+@import "../../variables.css";
+
+[k="message"] {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 48rem;
+}
+
+[k="message"][from="user"] {
+  flex-direction: row-reverse;
+  margin-inline-start: auto;
+}
+
+[k="message-bubble"] {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--k-radius);
+  background: hsl(var(--k-muted));
+}
+
+[k="message"][from="user"] [k="message-bubble"] {
+  background: hsl(var(--k-primary));
+  color: hsl(var(--k-primary-foreground));
+}
+
+[k="message"][from="assistant"] [k="message-bubble"] {
+  background: hsl(var(--k-muted));
+}
+
+[k="message"][from="system"] [k="message-bubble"] {
+  background: transparent;
+  color: hsl(var(--k-muted-foreground));
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+[k="message-avatar"] {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: hsl(var(--k-secondary));
+  color: hsl(var(--k-secondary-foreground));
+  font-size: 0.75rem;
+  font-weight: 600;
+}

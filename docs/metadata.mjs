@@ -1115,5 +1115,19 @@ export default [
       '`Stepper.Step` takes `state` (`upcoming` / `current` / `complete`): complete shows a check on a filled marker, current outlines it in the primary color.',
       'Distinct from `Timeline` (vertical event feed) and `Progress` (continuous bar).'
     ]
+  },
+  {
+    slug: 'message',
+    title: 'Message',
+    section: 'Components',
+    category: 'Conversation',
+    order: 0,
+    folder: 'message',
+    description: 'Chat message bubble with author-driven color and alignment.',
+    usage: `<Message from="user">\n  <Message.Avatar>JM</Message.Avatar>\n  <Message.Bubble>Hello</Message.Bubble>\n</Message>`,
+    notes: [
+      'Pure CSS: `<div k="message" from="user|assistant|system">`. `from` flips alignment and colors the bubble (user = primary, assistant = muted, system = quiet italic).',
+      'Compound parts: `Message.Avatar` (a small round badge) and `Message.Bubble` (the content). Drop a `<Prose>` inside the bubble to render markdown.'
+    ]
   }
 ];
