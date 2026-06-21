@@ -300,6 +300,20 @@ Corner overlay for notification counts or status dots.
 - Pure CSS: a `<span k="indicator">` that positions a `Badge` child (or a `[dot]`) at a corner of whatever it wraps — an Avatar, Button, icon, etc.
 - Set `placement` (`top-end` default, `top-start`, `bottom-end`, `bottom-start`). Pass `dot` for a small status dot with no count.
 
+#### Code
+Styled code block and inline code with an optional copy button.
+
+```tsx
+<Code language="tsx">
+  {snippet}
+  <Code.Copy />
+</Code>
+```
+
+- Pure CSS chrome over `<pre>` (block) or `<code inline>` (inline) — mono font, surface, radius, horizontal scroll. Zero JavaScript for the base.
+- `Code.Copy` is a corner button (revealed on hover) that copies the enclosing block. Its label renders via CSS so it adds nothing to the copied text.
+- No highlighter in core. The seam is the advisory `language` attribute (an opt-in plugin can target `[k="code"][language]`) and/or passing pre-highlighted markup as children — `Prose` already styles nested `<pre><code>`.
+
 ### Feedback
 
 #### Alert

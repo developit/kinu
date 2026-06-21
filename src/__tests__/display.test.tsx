@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest';
 import renderToString from 'preact-render-to-string';
 import {Badge} from '../components/badge';
+import {Code} from '../components/code';
 import {Indicator} from '../components/indicator';
 import {Stat} from '../components/stat';
 import {Stepper} from '../components/stepper';
@@ -39,5 +40,17 @@ describe('display components ssr', () => {
         </Indicator>,
       ),
     ).not.toThrow();
+  });
+
+  it('renders Code block + inline without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Code language="tsx">
+          const x = 1;
+          <Code.Copy />
+        </Code>,
+      ),
+    ).not.toThrow();
+    expect(() => renderToString(<Code inline>npm i kinu</Code>)).not.toThrow();
   });
 });
