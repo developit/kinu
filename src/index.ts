@@ -224,6 +224,9 @@ export {Form} from './components/form';
 export type {FormProps, FormOwnProps} from './components/form/types';
 export {Command} from './components/command';
 export type {CommandProps, CommandOwnProps} from './components/command/types';
+export {Hotkey} from './components/hotkey';
+export type {HotkeyProps, HotkeyOwnProps} from './components/hotkey/types';
+export {installHotkeys, normalizeChord} from './lib/hotkeys';
 export {TagsInput} from './components/tags-input';
 export type {
   TagsInputProps,

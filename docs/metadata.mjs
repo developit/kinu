@@ -1222,6 +1222,21 @@ export default [
     ]
   },
   {
+    slug: 'hotkey',
+    title: 'Hotkey',
+    section: 'Components',
+    category: 'Actions',
+    order: 12,
+    folder: 'hotkey',
+    description: 'Bind a keyboard shortcut to a command — declaratively, no handlers.',
+    usage: '<Hotkey keys="mod+k" command="show-modal" commandfor="cmdk" />',
+    notes: [
+      'Renders nothing visible. One global keydown listener matches the pressed chord against `[data-hotkey]` and fires the element’s `command` on its `commandfor` target — reusing the command bus, with no per-app key handlers.',
+      'Chord syntax: `mod` (⌘ on Apple, Ctrl elsewhere), `alt`, `shift`, plus a key, joined with `+` — e.g. `mod+k`, `mod+shift+p`, `/`. Bare-key chords are ignored while typing in a field.',
+      'Pairs with `Command` (open a palette on ⌘K) and `Kbd` (display the shortcut). SSR-safe.'
+    ]
+  },
+  {
     slug: 'tags-input',
     title: 'Tags Input',
     section: 'Components',

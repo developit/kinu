@@ -747,6 +747,15 @@
     "description": "ARIA-pressed aware button for on/off interactions."
   },
   {
+    "slug": "hotkey",
+    "title": "Hotkey",
+    "section": "Components",
+    "category": "Actions",
+    "order": 12,
+    "file": "components/hotkey.md",
+    "description": "Bind a keyboard shortcut to a command — declaratively, no handlers."
+  },
+  {
     "slug": "code",
     "title": "Code",
     "section": "Components",

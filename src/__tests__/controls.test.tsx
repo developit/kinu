@@ -4,6 +4,7 @@ import {Command} from '../components/command';
 import {CopyButton} from '../components/copy-button';
 import {Dialog} from '../components/dialog';
 import {Form} from '../components/form';
+import {Hotkey} from '../components/hotkey';
 import {Item} from '../components/item';
 import {NumberField} from '../components/number-field';
 import {PasswordInput} from '../components/password-input';
@@ -76,6 +77,14 @@ describe('form controls ssr', () => {
   it('renders PasswordInput without a DOM', () => {
     expect(() =>
       renderToString(<PasswordInput name="password" placeholder="Password" />),
+    ).not.toThrow();
+  });
+
+  it('renders Hotkey without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Hotkey keys="mod+k" command="show-modal" commandfor="cmdk" />,
+      ),
     ).not.toThrow();
   });
 });
