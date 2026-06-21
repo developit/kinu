@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-21T02:17:01.650Z
+Generated at: 2026-06-21T02:18:59.585Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-21T02:17:01.650Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 18.99 | 5.58 | 75.22 | 13.27 | 18.85 |
+| Nearly all components (namespace import) | 18.99 | 5.58 | 76.02 | 13.41 | 18.99 |
 
 ## Per-component (isolated import)
 
@@ -38,6 +38,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | chip | 1.24 | 0.6 | 5.33 | 1.36 | 1.96 |
 | composer | 1.53 | 0.72 | 4.45 | 1.23 | 1.95 |
 | button | 0.65 | 0.35 | 5.99 | 1.51 | 1.86 |
+| select | 0.63 | 0.34 | 5.14 | 1.52 | 1.86 |
 | status | 0.63 | 0.34 | 5.51 | 1.51 | 1.85 |
 | tree | 0.84 | 0.44 | 4.99 | 1.4 | 1.84 |
 | tabs | 0.72 | 0.38 | 5.23 | 1.45 | 1.83 |
@@ -53,7 +54,6 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | switch | 1.06 | 0.52 | 4.13 | 1.16 | 1.68 |
 | radio-group | 1.08 | 0.53 | 4.06 | 1.15 | 1.68 |
 | accordion | 0.64 | 0.34 | 4.57 | 1.33 | 1.68 |
-| select | 0.63 | 0.34 | 4.34 | 1.3 | 1.64 |
 | collapsible | 1.24 | 0.61 | 3.85 | 1.03 | 1.64 |
 | tooltip | 0.63 | 0.34 | 4.82 | 1.3 | 1.64 |
 | field | 1.19 | 0.57 | 3.9 | 1.05 | 1.62 |
