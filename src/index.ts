@@ -227,6 +227,7 @@ export type {CommandProps, CommandOwnProps} from './components/command/types';
 export {Hotkey} from './components/hotkey';
 export type {HotkeyProps, HotkeyOwnProps} from './components/hotkey/types';
 export {installHotkeys, normalizeChord} from './lib/hotkeys';
+export {transition} from './lib/motion';
 export {TagsInput} from './components/tags-input';
 export type {
   TagsInputProps,
