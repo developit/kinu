@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T02:34:19.913Z",
+  "generatedAt": "2026-06-21T03:30:52.712Z",
   "results": [
     {
       "id": "one-component",
@@ -43,19 +43,19 @@
       "id": "nearly-all-components",
       "label": "Nearly all components (namespace import)",
       "js": {
-        "raw": 19548,
-        "gzip": 5741,
-        "brotli": 5053
+        "raw": 19642,
+        "gzip": 5772,
+        "brotli": 5078
       },
       "css": {
-        "raw": 78364,
-        "gzip": 13879,
-        "brotli": 11871
+        "raw": 78882,
+        "gzip": 14003,
+        "brotli": 11946
       },
       "total": {
-        "raw": 97912,
-        "gzip": 19620,
-        "brotli": 16924
+        "raw": 98524,
+        "gzip": 19775,
+        "brotli": 17024
       }
     }
   ],
@@ -403,6 +403,25 @@
       }
     },
     {
+      "id": "rating",
+      "label": "rating",
+      "js": {
+        "raw": 1489,
+        "gzip": 728,
+        "brotli": 658
+      },
+      "css": {
+        "raw": 4840,
+        "gzip": 1402,
+        "brotli": 1187
+      },
+      "total": {
+        "raw": 6329,
+        "gzip": 2130,
+        "brotli": 1845
+      }
+    },
+    {
       "id": "copy-button",
       "label": "copy-button",
       "js": {
@@ -647,25 +666,6 @@
         "raw": 5686,
         "gzip": 1826,
         "brotli": 1575
-      }
-    },
-    {
-      "id": "rating",
-      "label": "rating",
-      "js": {
-        "raw": 1014,
-        "gzip": 568,
-        "brotli": 487
-      },
-      "css": {
-        "raw": 4322,
-        "gzip": 1233,
-        "brotli": 1025
-      },
-      "total": {
-        "raw": 5336,
-        "gzip": 1801,
-        "brotli": 1512
       }
     },
     {

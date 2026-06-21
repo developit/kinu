@@ -8,12 +8,12 @@ export type RatingSize = 'sm' | 'md' | 'lg';
 
 export interface RatingOwnProps extends BaseProps {
   /**
-   * Radio-group name. Required so the rating is form-associated.
+   * Form field name. The rating submits its value under this name.
    */
-  name: string;
+  name?: string | null;
 
   /**
-   * Initially selected rating (1 through `count`).
+   * Initial rating (0 through `count`).
    */
   value?: number | null;
 
@@ -24,7 +24,7 @@ export interface RatingOwnProps extends BaseProps {
   count?: number | null;
 
   /**
-   * Render a non-interactive display of `value` (disables the inputs).
+   * Render a non-interactive display of `value`.
    */
   readOnly?: boolean | null;
 
@@ -36,4 +36,6 @@ export interface RatingOwnProps extends BaseProps {
 }
 
 export type RatingProps = RatingOwnProps &
-  Omit<JSX.IntrinsicElements['span'], keyof RatingOwnProps>;
+  Omit<JSX.IntrinsicElements['input'], keyof RatingOwnProps | 'k' | 'ref'>;
+
+export interface RatingInputOwnProps extends BaseProps {}

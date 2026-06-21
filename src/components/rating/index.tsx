@@ -1,6 +1,18 @@
-import {useId} from 'preact/hooks';
-import type {RatingProps} from './types';
+import {createSimpleComponent} from '../../lib/create-simple-component';
+import type {RatingProps, RatingInputOwnProps} from './types';
 import './style.css';
+
+// A star rating is a styled native <input type="range"> — one form-associated,
+// keyboard-accessible element with ZERO JavaScript. The fill follows the live
+// value entirely in CSS: a thumb box-shadow paints the stars up to the value on
+// WebKit, ::-moz-range-progress does it on Firefox, both masked into a star row.
+// The star count reads from the `max` attribute via typed attr() (like
+// ProgressRing), so even the layout is script-free.
+const RatingInput = createSimpleComponent<'input', RatingInputOwnProps>(
+  'rating',
+  'input',
+  {type: 'range', min: '0', step: '1', 'aria-label': 'Rating'},
+);
 
 export function Rating({
   name,
@@ -10,37 +22,14 @@ export function Rating({
   size,
   ...props
 }: RatingProps) {
-  const baseId = useId();
-  const stars = [];
-
-  // Descending DOM order (count → 1) so the CSS sibling combinator can fill the
-  // checked star and every lower one; `flex-direction: row-reverse` flips it back.
-  for (let i = count ?? 5; i >= 1; i--) {
-    const id = `${baseId}-${i}`;
-    stars.push(
-      <input
-        key={id}
-        type="radio"
-        id={id}
-        name={name}
-        value={i}
-        defaultChecked={value === i}
-        disabled={readOnly ?? undefined}
-        aria-label={`${i} star${i === 1 ? '' : 's'}`}
-      />,
-      // biome-ignore lint/a11y/noLabelWithoutControl: associated to its radio via htmlFor; the CSS star widget needs input and label to be siblings, so the control can't be nested inside the label.
-      <label key={`${id}-label`} htmlFor={id} />,
-    );
-  }
-
-  // `size` isn't part of <span>'s typed attributes; merge it in via a spread
-  // (a literal `size=` triggers a JSX excess-property error) so it still lands
-  // as the bare `[size]` attribute the stylesheet targets.
-  const wrapperProps = {...props, ...(size ? {size} : null)};
-
   return (
-    <span k="rating" {...wrapperProps}>
-      {stars}
-    </span>
+    <RatingInput
+      name={name ?? undefined}
+      max={count ?? 5}
+      defaultValue={value ?? 0}
+      data-size={size ?? undefined}
+      {...(readOnly ? {readonly: true} : {})}
+      {...props}
+    />
   );
 }
