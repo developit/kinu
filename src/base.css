@@ -121,3 +121,129 @@ label[k] {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Native-style numeric alignment for components that render figures. */
+:where(
+  [k="table"] td,
+  [k="table"] th,
+  [k="pagination-item"],
+  [k="otp"],
+  [k="time-picker"],
+  [k="calendar"],
+  [k="meter"],
+  [k="kbd"]
+) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tint native form controls and the text caret with the theme accent. Inherited,
+ * so it reaches any raw <input>/<progress>/range a consumer nests under kinu. */
+:where([k]) {
+  accent-color: hsl(var(--k-primary));
+  caret-color: hsl(var(--k-primary));
+}
+
+/* Brand text selection inside kinu surfaces, scoped so the host app's own
+ * selection styling stays untouched. */
+:where([k])::selection,
+:where([k]) ::selection {
+  background-color: hsl(var(--k-primary) / 0.25);
+}
+
+/* Optical text wrapping — balance short headings, avoid orphans in body copy. */
+:where(
+  [k="alert"],
+  [k="empty"],
+  [k="toast-title"],
+  [k="card"] :is(h1, h2, h3),
+  [k="dialog-content"] :is(h1, h2, h3)
+) {
+  text-wrap: balance;
+}
+
+:where([k="prose"] p, [k="toast-content"]) {
+  text-wrap: pretty;
+}
+
+/* Squircle corners (superellipse) on rounded-rectangle surfaces for the
+ * iOS/macOS look. Curated allow-list so pill/circle components (avatar, switch,
+ * radio, chip, spinner, status, timeline) and thin bars (progress, meter,
+ * slider) keep their true shape — a squircle of a stadium reads wrong. Reuses
+ * each component's existing border-radius, so unsupported browsers simply keep
+ * today's rounded corners. Revert globally: :root { --k-corner-shape: round }. */
+@supports (corner-shape: squircle) {
+  :root {
+    --k-corner-shape: squircle;
+  }
+  :where(
+    [k="button"],
+    [k="card"],
+    [k="input"],
+    [k="textarea"],
+    [k="select"],
+    [k="badge"],
+    [k="alert"],
+    [k="kbd"],
+    [k="dialog-content"],
+    [k="popover-content"],
+    [k="dropdown-content"],
+    [k="context-menu"],
+    [k="combobox-list"],
+    [k="listbox-list"],
+    [k="hover-card-content"],
+    [k="tablist"],
+    [k="tab"],
+    [k="toast"],
+    [k="checkbox"],
+    [k="toggle"],
+    [k="item"],
+    [k="calendar"],
+    [k="date-picker"],
+    [k="time-picker"],
+    [k="file-upload"],
+    [k="navigation-menu"],
+    [k="skeleton"],
+    [k="pagination-item"]
+  ) {
+    corner-shape: var(--k-corner-shape);
+  }
+  [k="tooltip"][title]::after {
+    corner-shape: var(--k-corner-shape);
+  }
+}
+
+/* Optically center text in label-like controls by trimming the font's
+ * half-leading. Excludes text inputs (would clip descenders/caret). */
+@supports (text-box: trim-both cap alphabetic) {
+  :where([k="button"], [k="badge"], [k="chip"], [k="tab"], [k="kbd"]) {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+/* Accessibility backstops native apps respect. Reduced-transparency is handled
+ * inline at each material rule; here we strengthen shadows under increased
+ * contrast and hand off to the OS theme under forced-colors. */
+@media (prefers-contrast: more) {
+  :where([k]) {
+    --k-shadow-hsl: 0 0% 0%;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(
+    [k="card"],
+    [k="dialog-content"],
+    [k="popover-content"],
+    [k="dropdown-content"],
+    [k="context-menu"],
+    [k="combobox-list"],
+    [k="listbox-list"],
+    [k="hover-card-content"],
+    [k="sheet-content"],
+    [k="toast"]
+  ) {
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

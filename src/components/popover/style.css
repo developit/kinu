@@ -371,3 +371,23 @@
     }
   }
 }
+
+/* Translucent "material" surface (macOS/iOS vibrancy) for floating menus. Plain
+ * selectors match the base rule's specificity so this overrides the solid
+ * background, while the higher-specificity mobile-drawer rule above keeps its
+ * opaque sheet. Falls back to the solid background when backdrop-filter is
+ * unsupported or the user prefers reduced transparency / more contrast. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @media not (prefers-reduced-transparency: reduce) {
+    @media not (prefers-contrast: more) {
+      [k="popover-content"],
+      [k="dropdown-content"],
+      [k="context-menu"],
+      [k="combobox-list"] {
+        background-color: hsl(var(--k-popover) / var(--k-material-opacity));
+        -webkit-backdrop-filter: var(--k-material-blur);
+        backdrop-filter: var(--k-material-blur);
+      }
+    }
+  }
+}

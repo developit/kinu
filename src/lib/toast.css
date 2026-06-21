@@ -22,7 +22,7 @@
   border: 1px solid hsl(var(--k-border));
   border-radius: var(--k-radius);
   padding: 0.5rem 0.75rem;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  box-shadow: var(--k-shadow-2);
   opacity: 0;
   transform: translateY(calc(100% + var(--offset))) scale(var(--scale));
   pointer-events: auto;
@@ -118,4 +118,19 @@
 [k="toast"][data-closing] {
   opacity: 0;
   transform: translateY(calc(110% + var(--offset))) scale(var(--scale));
+}
+
+/* Translucent material surface, matching the floating-menu vibrancy. Falls back
+ * to the solid background when unsupported or under reduced-transparency /
+ * increased-contrast preferences. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @media not (prefers-reduced-transparency: reduce) {
+    @media not (prefers-contrast: more) {
+      [k="toast"] {
+        background: hsl(var(--k-popover) / var(--k-material-opacity));
+        -webkit-backdrop-filter: var(--k-material-blur);
+        backdrop-filter: var(--k-material-blur);
+      }
+    }
+  }
 }
