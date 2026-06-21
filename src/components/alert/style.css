@@ -27,3 +27,11 @@
   background-color: hsl(var(--k-warning));
   color: hsl(var(--k-warning-foreground));
 }
+
+/* Banner: full-bleed, square-cornered, page-level alert. Composes with any
+   tone variant (e.g. variant="info" banner). */
+[k="alert"][banner] {
+  border-radius: 0;
+  border-inline: none;
+  padding-inline: clamp(1rem, 5vw, 4rem);
+}

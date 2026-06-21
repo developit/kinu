@@ -311,6 +311,7 @@ Inline status message with tone variants.
 
 - Renders a `<div>` so you can include any markup you need.
 - Supports `destructive`, `info`, `success`, and `warning` tone variants.
+- Pass `banner` for a full-bleed, square-cornered, page-level banner — it composes with any tone (e.g. `<Alert variant="info" banner>`).
 
 #### Tooltip
 Hover/focus tooltip with placement attributes and CSS timing.

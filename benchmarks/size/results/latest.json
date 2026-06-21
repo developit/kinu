@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T02:09:52.399Z",
+  "generatedAt": "2026-06-21T02:12:25.990Z",
   "results": [
     {
       "id": "one-component",
@@ -48,14 +48,14 @@
         "brotli": 4960
       },
       "css": {
-        "raw": 75824,
-        "gzip": 13354,
-        "brotli": 11469
+        "raw": 75913,
+        "gzip": 13383,
+        "brotli": 11500
       },
       "total": {
-        "raw": 94683,
-        "gzip": 18991,
-        "brotli": 16429
+        "raw": 94772,
+        "gzip": 19020,
+        "brotli": 16460
       }
     }
   ],
@@ -1391,6 +1391,25 @@
       }
     },
     {
+      "id": "alert",
+      "label": "alert",
+      "js": {
+        "raw": 637,
+        "gzip": 343,
+        "brotli": 320
+      },
+      "css": {
+        "raw": 4149,
+        "gzip": 1051,
+        "brotli": 900
+      },
+      "total": {
+        "raw": 4786,
+        "gzip": 1394,
+        "brotli": 1220
+      }
+    },
+    {
       "id": "progress",
       "label": "progress",
       "js": {
@@ -1444,25 +1463,6 @@
       "total": {
         "raw": 4365,
         "gzip": 1365,
-        "brotli": 1186
-      }
-    },
-    {
-      "id": "alert",
-      "label": "alert",
-      "js": {
-        "raw": 637,
-        "gzip": 343,
-        "brotli": 320
-      },
-      "css": {
-        "raw": 4060,
-        "gzip": 1013,
-        "brotli": 866
-      },
-      "total": {
-        "raw": 4697,
-        "gzip": 1356,
         "brotli": 1186
       }
     },

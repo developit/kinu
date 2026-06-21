@@ -66,7 +66,8 @@ export default [
     usage: '<Alert variant="info">Heads up!</Alert>',
     notes: [
       'Renders a `<div>` so you can include any markup you need.',
-      'Supports `destructive`, `info`, `success`, and `warning` tone variants.'
+      'Supports `destructive`, `info`, `success`, and `warning` tone variants.',
+      'Pass `banner` for a full-bleed, square-cornered, page-level banner — it composes with any tone (e.g. `<Alert variant="info" banner>`).'
     ]
   },
   {
