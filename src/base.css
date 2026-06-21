@@ -121,3 +121,12 @@ label[k] {
     outline-offset: 2px;
   }
 }
+
+/* Virtualization-free long lists (FUN-7): add `virtual` to a scroll container
+   (List, Listbox list, Tree, any [k] wrapper) and the browser skips rendering
+   off-screen rows via content-visibility — thousands of rows stay smooth with
+   no JS virtualizer. Override the row-height estimate with --k-virtual-row. */
+[virtual] > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--k-virtual-row, 2.25rem);
+}

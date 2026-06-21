@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-21T02:32:37.246Z
+Generated at: 2026-06-21T02:34:19.913Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-21T02:32:37.246Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 6.07 | 1.54 | 1.87 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.99 | 3.02 | 3.65 |
-| Nearly all components (namespace import) | 19.09 | 5.61 | 76.44 | 13.51 | 19.12 |
+| Nearly all components (namespace import) | 19.09 | 5.61 | 76.53 | 13.55 | 19.16 |
 
 ## Per-component (isolated import)
 

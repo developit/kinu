@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T02:32:37.246Z",
+  "generatedAt": "2026-06-21T02:34:19.913Z",
   "results": [
     {
       "id": "one-component",
@@ -48,14 +48,14 @@
         "brotli": 5053
       },
       "css": {
-        "raw": 78270,
-        "gzip": 13839,
-        "brotli": 11813
+        "raw": 78364,
+        "gzip": 13879,
+        "brotli": 11871
       },
       "total": {
-        "raw": 97818,
-        "gzip": 19580,
-        "brotli": 16866
+        "raw": 97912,
+        "gzip": 19620,
+        "brotli": 16924
       }
     }
   ],
