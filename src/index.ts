@@ -186,6 +186,12 @@ export type {
   StepOwnProps,
   StepState,
 } from './components/stepper/types';
+export {Indicator} from './components/indicator';
+export type {
+  IndicatorProps,
+  IndicatorOwnProps,
+  IndicatorPlacement,
+} from './components/indicator/types';
 export {Message} from './components/message';
 export type {
   MessageProps,

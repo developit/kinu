@@ -1,0 +1,54 @@
+@import "../../variables.css";
+
+[k="indicator"] {
+  position: relative;
+  display: inline-flex;
+}
+
+/* A counted Badge child sits in the corner; or a CSS dot when [dot] is set */
+[k="indicator"] > [k="badge"] {
+  position: absolute;
+  z-index: 1;
+}
+
+[k="indicator"][dot]::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: hsl(var(--k-destructive));
+  border: 2px solid hsl(var(--k-background));
+}
+
+/* Placement — applies to both the Badge child and the dot. Default: top-end */
+[k="indicator"] > [k="badge"],
+[k="indicator"][dot]::after {
+  top: 0;
+  inset-inline-end: 0;
+  transform: translate(40%, -40%);
+}
+
+[k="indicator"][placement="top-start"] > [k="badge"],
+[k="indicator"][placement="top-start"][dot]::after {
+  inset-inline-end: auto;
+  inset-inline-start: 0;
+  transform: translate(-40%, -40%);
+}
+
+[k="indicator"][placement="bottom-end"] > [k="badge"],
+[k="indicator"][placement="bottom-end"][dot]::after {
+  top: auto;
+  bottom: 0;
+  transform: translate(40%, 40%);
+}
+
+[k="indicator"][placement="bottom-start"] > [k="badge"],
+[k="indicator"][placement="bottom-start"][dot]::after {
+  top: auto;
+  bottom: 0;
+  inset-inline-end: auto;
+  inset-inline-start: 0;
+  transform: translate(-40%, 40%);
+}

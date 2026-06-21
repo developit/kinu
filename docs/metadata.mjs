@@ -1117,6 +1117,20 @@ export default [
     ]
   },
   {
+    slug: 'indicator',
+    title: 'Indicator',
+    section: 'Components',
+    category: 'Data Display',
+    order: 11,
+    folder: 'indicator',
+    description: 'Corner overlay for notification counts or status dots.',
+    usage: `<Indicator>\n  <Avatar alt="JM" />\n  <Badge variant="destructive">3</Badge>\n</Indicator>`,
+    notes: [
+      'Pure CSS: a `<span k="indicator">` that positions a `Badge` child (or a `[dot]`) at a corner of whatever it wraps — an Avatar, Button, icon, etc.',
+      'Set `placement` (`top-end` default, `top-start`, `bottom-end`, `bottom-start`). Pass `dot` for a small status dot with no count.'
+    ]
+  },
+  {
     slug: 'message',
     title: 'Message',
     section: 'Components',
