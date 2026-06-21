@@ -57,6 +57,9 @@
   --k-space-lg: 1.5rem; /* 24px */
   --k-space-xl: 2.5rem; /* 40px */
 
+  /* Density scalar — multiplies control heights/padding (1 = default, <1 = compact) */
+  --k-density: 1;
+
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
   --k-ease-elastic: var(--k-ease-fallback);

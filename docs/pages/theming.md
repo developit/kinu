@@ -122,3 +122,23 @@ import 'kinu/themes/violet.css'; // or 'kinu/themes/emerald.css'
 Each preset overrides only the brand tokens (`--k-primary*`, `--k-ring`), so everything else — surfaces, semantic colors,
 spacing — stays consistent. Copy one as a starting point for your own brand: it is just a handful of token declarations across
 the light, system-dark, and explicit-dark scopes.
+
+## Density, RTL & High Contrast
+
+**Density.** The `--k-density` scalar multiplies control heights and padding. The default is `1`; lower it for compact
+dashboards or raise it for touch:
+
+```css
+[k="dashboard"] {
+  --k-density: 0.875; /* tighter controls in this subtree */
+}
+```
+
+`Button` is the reference implementation; the same `calc(... * var(--k-density))` pattern applies to any control.
+
+**RTL.** Components use CSS logical properties (`inset-inline`, `padding-inline`, `margin-inline-start`, …), so they mirror
+automatically under `dir="rtl"` — no separate stylesheet.
+
+**Forced colors.** Under Windows High Contrast (`forced-colors: active`), `box-shadow` focus rings are dropped, so the base
+stylesheet restores a system-color `outline` on focus for interactive components. Keep custom focus styles outline-based (or
+add a `forced-colors` fallback) so keyboard focus stays visible there.
