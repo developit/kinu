@@ -849,6 +849,17 @@
     ]
   },
   {
+    "name": "Indicator",
+    "slug": "indicator",
+    "category": "Data Display",
+    "description": "Corner overlay for notification counts or status dots.",
+    "usage": "<Indicator>\n  <Avatar alt=\"JM\" />\n  <Badge variant=\"destructive\">3</Badge>\n</Indicator>",
+    "notes": [
+      "Pure CSS: a `<span k=\"indicator\">` that positions a `Badge` child (or a `[dot]`) at a corner of whatever it wraps — an Avatar, Button, icon, etc.",
+      "Set `placement` (`top-end` default, `top-start`, `bottom-end`, `bottom-start`). Pass `dot` for a small status dot with no count."
+    ]
+  },
+  {
     "name": "Message",
     "slug": "message",
     "category": "Conversation",

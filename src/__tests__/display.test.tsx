@@ -1,5 +1,7 @@
 import {describe, expect, it} from 'vitest';
 import renderToString from 'preact-render-to-string';
+import {Badge} from '../components/badge';
+import {Indicator} from '../components/indicator';
 import {Stat} from '../components/stat';
 import {Stepper} from '../components/stepper';
 
@@ -24,6 +26,17 @@ describe('display components ssr', () => {
           <Stepper.Step state="current">Payment</Stepper.Step>
           <Stepper.Step>Review</Stepper.Step>
         </Stepper>,
+      ),
+    ).not.toThrow();
+  });
+
+  it('renders Indicator with a badge without a DOM', () => {
+    expect(() =>
+      renderToString(
+        <Indicator placement="top-end">
+          <span>Inbox</span>
+          <Badge variant="destructive">3</Badge>
+        </Indicator>,
       ),
     ).not.toThrow();
   });

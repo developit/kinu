@@ -287,6 +287,19 @@ Horizontal ordered steps with numbered markers and connectors.
 - `Stepper.Step` takes `state` (`upcoming` / `current` / `complete`): complete shows a check on a filled marker, current outlines it in the primary color.
 - Distinct from `Timeline` (vertical event feed) and `Progress` (continuous bar).
 
+#### Indicator
+Corner overlay for notification counts or status dots.
+
+```tsx
+<Indicator>
+  <Avatar alt="JM" />
+  <Badge variant="destructive">3</Badge>
+</Indicator>
+```
+
+- Pure CSS: a `<span k="indicator">` that positions a `Badge` child (or a `[dot]`) at a corner of whatever it wraps — an Avatar, Button, icon, etc.
+- Set `placement` (`top-end` default, `top-start`, `bottom-end`, `bottom-start`). Pass `dot` for a small status dot with no count.
+
 ### Feedback
 
 #### Alert

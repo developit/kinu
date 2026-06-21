@@ -729,6 +729,15 @@
     "description": "Command palette — a modal Dialog hosting a filterable Listbox."
   },
   {
+    "slug": "indicator",
+    "title": "Indicator",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 11,
+    "file": "components/indicator.md",
+    "description": "Corner overlay for notification counts or status dots."
+  },
+  {
     "slug": "toggle",
     "title": "Toggle",
     "section": "Components",
