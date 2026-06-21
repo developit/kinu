@@ -103,10 +103,18 @@
    * by overriding these three. Ordered low → high:
    *   1  resting   — cards
    *   2  floating  — popovers, dropdowns, menus, hover-cards, combobox
-   *   3  modal     — dialogs, sheets, drawers (most elevated) */
-  --k-shadow-1: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --k-shadow-2: 0 4px 12px rgb(0 0 0 / 0.15);
-  --k-shadow-3: 0 16px 40px rgb(0 0 0 / 0.18);
+   *   3  modal     — dialogs, sheets, drawers (most elevated)
+   *
+   * Tinted from one hue rather than pure black, so shadows sit in the theme's
+   * colour space; retune the whole scale by moving --k-shadow-hsl alone.
+   * --k-shadow-color completes the token tabs/style.css already references.
+   * base.css darkens the hue under prefers-contrast. */
+  --k-shadow-hsl: 222 47% 11%;
+  --k-shadow-color: hsl(var(--k-shadow-hsl) / 0.1);
+  --k-shadow-1: 0 1px 3px 0 hsl(var(--k-shadow-hsl) / 0.1),
+    0 1px 2px -1px hsl(var(--k-shadow-hsl) / 0.1);
+  --k-shadow-2: 0 4px 12px hsl(var(--k-shadow-hsl) / 0.15);
+  --k-shadow-3: 0 16px 40px hsl(var(--k-shadow-hsl) / 0.18);
 
   /* ── Typography ──────────────────────────────────────────────
    * Sans is intentionally left to inherit from the host page (kinu
@@ -165,6 +173,14 @@
   --k-control-font:   14px;
   --k-control-px:     14px;
   --k-icon:           16px;
+  /* Corner shape — flipped to `squircle` under @supports in base.css. Override
+   * on :root to revert (round) or restyle (bevel, superellipse(...)). */
+  --k-corner-shape: round;
+
+  /* Material / vibrancy for translucent overlay surfaces (applied only behind
+   * @supports + reduced-transparency/contrast guards). */
+  --k-material-blur: saturate(180%) blur(20px);
+  --k-material-opacity: 0.8;
 
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
@@ -245,6 +261,8 @@
 @media (prefers-color-scheme: dark) {
   :where(:root:not([data-color-scheme])) {
     color-scheme: dark;
+    /* Shadows read stronger on dark surfaces. */
+    --k-shadow-hsl: 0 0% 0%;
     /* Base colors */
     --k-background: 222.2 50% 7%;
     --k-foreground: 210 40% 98%;
@@ -286,6 +304,8 @@
 
 :where([data-color-scheme="dark"]) {
   color-scheme: dark;
+  /* Shadows read stronger on dark surfaces. */
+  --k-shadow-hsl: 0 0% 0%;
   /* Base colors */
   --k-background: 222.2 50% 7%;
   --k-foreground: 210 40% 98%;

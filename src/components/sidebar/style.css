@@ -91,7 +91,7 @@
     background-color: hsl(var(--k-background));
     transform: translateX(-20px) translateX(-100%);
     transition: transform 300ms var(--k-ease);
-    box-shadow: 0 0 15px rgb(0 0 0 / 0.15);
+    box-shadow: var(--k-shadow-2);
   }
   [k="sidebar"][open] {
     transform: none;
