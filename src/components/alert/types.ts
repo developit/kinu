@@ -12,6 +12,12 @@ export interface AlertOwnProps extends BaseProps {
    * @default 'default'
    */
   variant?: AlertVariant;
+
+  /**
+   * Render as a full-bleed, square-cornered, page-level banner. Composes with
+   * any tone `variant`.
+   */
+  banner?: boolean | null;
 }
 
 export type AlertProps = AlertOwnProps &
