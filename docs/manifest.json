@@ -781,5 +781,14 @@
     "order": 16,
     "file": "components/tags-input.md",
     "description": "Token / tags input that submits natively via a hidden field."
+  },
+  {
+    "slug": "password-input",
+    "title": "Password Input",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 17,
+    "file": "components/password-input.md",
+    "description": "Native password input with a Show/Hide reveal toggle."
   }
 ]

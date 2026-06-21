@@ -1,0 +1,59 @@
+@import "../../variables.css";
+
+/* Input chrome (InputGroup owns the radius + border joining with the toggle) */
+[k="password-input"] {
+  flex: 1;
+  min-width: 0;
+  height: 2.5rem;
+  border: 1px solid hsl(var(--k-input));
+  background: hsl(var(--k-background));
+  font: inherit;
+  font-size: 0.875rem;
+  padding-inline: 0.75rem;
+  transition:
+    border-color 150ms var(--k-ease),
+    box-shadow 150ms var(--k-ease);
+}
+
+[k="password-input"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+  position: relative;
+  z-index: 1;
+}
+
+[k="password-input"]:user-invalid,
+[k="password-input"][invalid] {
+  border-color: hsl(var(--k-destructive));
+}
+
+[k="password-toggle"] {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 0.75rem;
+  border: 1px solid hsl(var(--k-input));
+  background: hsl(var(--k-background));
+  color: hsl(var(--k-muted-foreground));
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+[k="password-toggle"]:hover {
+  color: hsl(var(--k-foreground));
+}
+
+[k="password-toggle"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+}
+
+/* Label reflects the input's reveal state via the adjacent-sibling combinator */
+[k="password-toggle"]::after {
+  content: "Show";
+}
+
+[k="password-input"][revealed] + [k="password-toggle"]::after {
+  content: "Hide";
+}

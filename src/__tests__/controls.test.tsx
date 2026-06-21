@@ -6,6 +6,7 @@ import {Dialog} from '../components/dialog';
 import {Form} from '../components/form';
 import {Item} from '../components/item';
 import {NumberField} from '../components/number-field';
+import {PasswordInput} from '../components/password-input';
 import {Rating} from '../components/rating';
 import {TagsInput} from '../components/tags-input';
 
@@ -69,6 +70,12 @@ describe('form controls ssr', () => {
       renderToString(
         <TagsInput name="tags" value={['a', 'b']} placeholder="Add…" />,
       ),
+    ).not.toThrow();
+  });
+
+  it('renders PasswordInput without a DOM', () => {
+    expect(() =>
+      renderToString(<PasswordInput name="password" placeholder="Password" />),
     ).not.toThrow();
   });
 });

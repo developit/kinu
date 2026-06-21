@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-17T06:43:29.109Z
+Generated at: 2026-06-21T02:07:12.440Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-17T06:43:29.109Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 5.99 | 1.51 | 1.85 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.9 | 3 | 3.62 |
-| Nearly all components (namespace import) | 17.91 | 5.41 | 72.23 | 12.7 | 18.11 |
+| Nearly all components (namespace import) | 18.39 | 5.5 | 73.18 | 12.89 | 18.39 |
 
 ## Per-component (isolated import)
 
@@ -24,6 +24,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | tags-input | 3.78 | 1.52 | 5.92 | 1.54 | 3.06 |
 | popover | 2.98 | 1.23 | 7.59 | 1.81 | 3.05 |
 | sidebar | 3.33 | 1.41 | 5.09 | 1.48 | 2.89 |
+| password-input | 3.13 | 1.29 | 5.92 | 1.44 | 2.73 |
 | listbox | 3.35 | 1.35 | 4.5 | 1.33 | 2.69 |
 | spinner | 0.63 | 0.34 | 10.79 | 2.25 | 2.59 |
 | carousel | 3.5 | 1.38 | 4.07 | 1.18 | 2.56 |
