@@ -64,13 +64,15 @@ presence of the attribute: `[k="button"][loading] { opacity: 0.6; }`.
 
 ## Dark Mode
 
-kinu ships with `data-theme="dark"` tokens ready to go. Toggle the attribute on `<html>` or any container:
+kinu ships light and dark palettes. Dark mode follows the OS by default
+(`@media (prefers-color-scheme: dark)`); to force a scheme, set
+`data-color-scheme` on `<html>` or any container:
 
 ```ts
-document.documentElement.dataset.theme = 'dark';
+document.documentElement.dataset.colorScheme = 'dark'; // or 'light'
 ```
 
-Because tokens cascade, you can theme individual subtrees simply by setting `data-theme` on a wrapping element.
+Because tokens cascade, you can theme individual subtrees simply by setting `data-color-scheme` on a wrapping element.
 
 ## Animations & Motion
 
@@ -88,3 +90,35 @@ Animation curves live in `--k-ease` and related tokens. Adjust them globally or 
 
 When you need reduced motion support, respect the `prefers-reduced-motion` media query and reduce durations or disable
 animations in your overrides.
+
+## Token Contract
+
+The `--k-*` custom properties are kinu's **public theming API** — a stable surface you can rely on. Restyle the whole library
+by overriding tokens; you rarely need to touch component selectors. The groups:
+
+| Group | Tokens |
+| --- | --- |
+| Surfaces | `--k-background`, `--k-foreground`, `--k-card`, `--k-popover`, `--k-sidebar`, `--k-muted`, `--k-accent` (+ `-foreground`) |
+| Brand | `--k-primary`, `--k-primary-foreground`, `--k-primary-hover`, `--k-primary-soft`, `--k-secondary` (+ states) |
+| Semantic | `--k-success`, `--k-warning`, `--k-info`, `--k-destructive` (+ `-foreground`) |
+| Lines & focus | `--k-border`, `--k-input`, `--k-ring` |
+| Shape & spacing | `--k-radius`, `--k-space-0…xl` |
+| Motion | `--k-ease`, `--k-ease-out`, `--k-ease-spring`, `--k-ease-elastic` |
+
+Colors are stored as space-separated `h s l` triplets (not finished colors) so components can apply alpha:
+`hsl(var(--k-primary) / 0.15)`. Keep that format when overriding, and derive related shades from a base where it helps —
+e.g. `--k-primary-soft: var(--k-primary) / 0.15`.
+
+## Preset Themes
+
+Two ready-made brand palettes ship as standalone stylesheets. Import one after the base styles to recolor the whole library
+(light and dark both covered):
+
+```ts
+import 'kinu/style.css';
+import 'kinu/themes/violet.css'; // or 'kinu/themes/emerald.css'
+```
+
+Each preset overrides only the brand tokens (`--k-primary*`, `--k-ring`), so everything else — surfaces, semantic colors,
+spacing — stays consistent. Copy one as a starting point for your own brand: it is just a handful of token declarations across
+the light, system-dark, and explicit-dark scopes.
