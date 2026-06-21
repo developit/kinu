@@ -216,6 +216,11 @@ export type {
   TagsInputProps,
   TagsInputOwnProps,
 } from './components/tags-input/types';
+export {PasswordInput} from './components/password-input';
+export type {
+  PasswordInputProps,
+  PasswordInputOwnProps,
+} from './components/password-input/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

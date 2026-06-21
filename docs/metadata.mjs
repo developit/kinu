@@ -1204,5 +1204,20 @@ export default [
       'A single per-instance ref manages the chips imperatively — no framework state store. SSR-safe: tags render on mount.',
       'The submitted value is the tags joined by `separator` (default `,`). API: `name`, `value` (string[]), `separator`, `max`, `duplicates`.'
     ]
+  },
+  {
+    slug: 'password-input',
+    title: 'Password Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 17,
+    folder: 'password-input',
+    description: 'Native password input with a Show/Hide reveal toggle.',
+    usage: '<PasswordInput name="password" placeholder="Enter password" />',
+    notes: [
+      'A native `<input type="password">` in an `InputGroup` with a reveal toggle. Forwards every native input attribute.',
+      'The toggle rides the command bus (`command="--toggle-password"`) like NumberField — it flips the input `type` and a `[revealed]` attribute that drives the label. No new global listeners.',
+      'Pass `defaultRevealed` to start with the password visible.'
+    ]
   }
 ];
