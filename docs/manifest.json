@@ -54,6 +54,15 @@
     "description": ""
   },
   {
+    "slug": "motion",
+    "title": "Motion & View Transitions",
+    "section": "Foundations",
+    "category": "Styling",
+    "order": 5,
+    "file": "pages/motion.md",
+    "description": ""
+  },
+  {
     "slug": "button",
     "title": "Button",
     "section": "Components",

@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-21T02:24:26.774Z
+Generated at: 2026-06-21T02:27:40.590Z
 
 ## Aggregate scenarios
 

@@ -40,6 +40,14 @@ export default [
     file: 'pages/forms.md'
   },
   {
+    slug: 'motion',
+    title: 'Motion & View Transitions',
+    section: 'Foundations',
+    category: 'Styling',
+    order: 5,
+    file: 'pages/motion.md'
+  },
+  {
     slug: 'accordion',
     title: 'Accordion',
     section: 'Components',
