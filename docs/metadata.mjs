@@ -1132,6 +1132,21 @@ export default [
     ]
   },
   {
+    slug: 'code',
+    title: 'Code',
+    section: 'Components',
+    category: 'Data Display',
+    order: 12,
+    folder: 'code',
+    description: 'Styled code block and inline code with an optional copy button.',
+    usage: `<Code language="tsx">\n  {snippet}\n  <Code.Copy />\n</Code>`,
+    notes: [
+      'Pure CSS chrome over `<pre>` (block) or `<code inline>` (inline) — mono font, surface, radius, horizontal scroll. Zero JavaScript for the base.',
+      '`Code.Copy` is a corner button (revealed on hover) that copies the enclosing block. Its label renders via CSS so it adds nothing to the copied text.',
+      'No highlighter in core. The seam is the advisory `language` attribute (an opt-in plugin can target `[k="code"][language]`) and/or passing pre-highlighted markup as children — `Prose` already styles nested `<pre><code>`.'
+    ]
+  },
+  {
     slug: 'message',
     title: 'Message',
     section: 'Components',

@@ -192,6 +192,13 @@ export type {
   IndicatorOwnProps,
   IndicatorPlacement,
 } from './components/indicator/types';
+export {Code} from './components/code';
+export type {
+  CodeProps,
+  CodeOwnProps,
+  CodeCopyProps,
+  CodeCopyOwnProps,
+} from './components/code/types';
 export {Message} from './components/message';
 export type {
   MessageProps,

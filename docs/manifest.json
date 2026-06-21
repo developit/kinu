@@ -747,6 +747,15 @@
     "description": "ARIA-pressed aware button for on/off interactions."
   },
   {
+    "slug": "code",
+    "title": "Code",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 12,
+    "file": "components/code.md",
+    "description": "Styled code block and inline code with an optional copy button."
+  },
+  {
     "slug": "toggle-group",
     "title": "Toggle Group",
     "section": "Components",
