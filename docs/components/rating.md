@@ -20,17 +20,17 @@ import {Rating} from 'kinu';
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| name | `string` | — | Radio-group name. Required so the rating is form-associated. |
-| value | `number` | — | Initially selected rating (1 through `count`). |
+| name | `string` | — | Form field name. The rating submits its value under this name. |
+| value | `number` | — | Initial rating (0 through `count`). |
 | count | `number` | 5 | Number of stars. |
-| readOnly | `boolean` | — | Render a non-interactive display of `value` (disables the inputs). |
+| readOnly | `boolean` | — | Render a non-interactive display of `value`. |
 | size | `RatingSize` | 'md' | Star size. |
 
 ## Notes
 
-- Pure CSS: renders N `<input type="radio">` + `<label>` pairs inside a `<span k="rating">`. Keyboard-accessible and form-submittable for free.
-- Set `name` (required) and an optional initial `value`; the chosen star submits with the form.
-- Pass `readOnly` to show an average as a non-interactive display, `count` to change the number of stars, and `size` (`sm`/`md`/`lg`) to scale.
+- Zero JavaScript: a styled native `<input type="range">`. The fill follows the live value entirely in CSS — a thumb `box-shadow` paints the filled stars on WebKit and `::-moz-range-progress` on Firefox, masked into a star row; the star count reads from `max` via typed `attr()`.
+- Keyboard-accessible and form-submittable natively: set `name` and an initial `value`, arrow keys adjust, and the value submits with the form.
+- Pass `count` to change the number of stars (Baseline-2025 typed `attr()`; older engines fall back to 5), `readOnly` for a non-interactive display, and `size` (`sm`/`md`/`lg`) to scale.
 
 ---
 

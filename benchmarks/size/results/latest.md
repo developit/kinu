@@ -1,6 +1,6 @@
 # Kinu size benchmarks
 
-Generated at: 2026-06-21T02:34:19.913Z
+Generated at: 2026-06-21T03:30:52.712Z
 
 ## Aggregate scenarios
 
@@ -8,7 +8,7 @@ Generated at: 2026-06-21T02:34:19.913Z
 | --- | ---: | ---: | ---: | ---: | ---: |
 | One component (Button) | 0.62 | 0.33 | 6.07 | 1.54 | 1.87 |
 | A few components (Button + Input + Dialog + Popover + Tabs) | 1.35 | 0.62 | 13.99 | 3.02 | 3.65 |
-| Nearly all components (namespace import) | 19.09 | 5.61 | 76.53 | 13.55 | 19.16 |
+| Nearly all components (namespace import) | 19.18 | 5.64 | 77.03 | 13.67 | 19.31 |
 
 ## Per-component (isolated import)
 
@@ -34,6 +34,7 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | hotkey | 3.43 | 1.48 | 3.43 | 0.89 | 2.37 |
 | sheet | 2.68 | 1.15 | 4.25 | 1.17 | 2.32 |
 | drawer | 2.7 | 1.15 | 4.22 | 1.15 | 2.3 |
+| rating | 1.45 | 0.71 | 4.73 | 1.37 | 2.08 |
 | copy-button | 1.95 | 0.89 | 4.16 | 1.17 | 2.05 |
 | code | 1.6 | 0.76 | 4.5 | 1.27 | 2.03 |
 | chip | 1.24 | 0.6 | 5.34 | 1.37 | 1.96 |
@@ -47,7 +48,6 @@ Each row is one component built in isolation — its JS plus the CSS its `style.
 | item | 1.25 | 0.6 | 4.05 | 1.19 | 1.8 |
 | slider | 1.32 | 0.64 | 4.39 | 1.15 | 1.79 |
 | input | 1.17 | 0.56 | 4.38 | 1.23 | 1.78 |
-| rating | 0.99 | 0.55 | 4.22 | 1.2 | 1.76 |
 | otp | 1.12 | 0.56 | 4.14 | 1.19 | 1.76 |
 | progress-ring | 0.65 | 0.35 | 5.08 | 1.36 | 1.7 |
 | stepper | 0.84 | 0.45 | 4.5 | 1.25 | 1.7 |

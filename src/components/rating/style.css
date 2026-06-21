@@ -1,62 +1,70 @@
 @import "../../variables.css";
 
+/* Star rating = a styled native <input type="range">, zero JavaScript.
+   - The unfilled stars are the muted base background.
+   - The filled portion (up to the live value) is painted gold by the thumb's
+     box-shadow on WebKit and ::-moz-range-progress on Firefox — both follow the
+     native thumb, so no script reflects the value.
+   - A repeating star image masks the whole thing into N stars; N comes from the
+     `max` attribute via typed attr(), like ProgressRing. */
 [k="rating"] {
-  display: inline-flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-}
-
-/* Visually-hidden radios — the labels are the interactive stars */
-[k="rating"] input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-}
-
-[k="rating"] label {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  --k-rating-star: 1.5rem;
+  width: calc(attr(max type(<number>), 5) * var(--k-rating-star));
+  height: var(--k-rating-star);
   cursor: pointer;
-  font-size: 1.25rem;
-  line-height: 1;
-  color: hsl(var(--k-muted-foreground) / 0.35);
-  transition: color 100ms var(--k-ease);
+  overflow: hidden; /* clip the thumb's fill box-shadow to the stars row */
+  background: hsl(var(--k-muted-foreground) / 0.35);
+  --k-rating-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7-5.4-4.7 7.1-.6z'/%3E%3C/svg%3E")
+    left center / var(--k-rating-star) var(--k-rating-star) repeat-x;
+  -webkit-mask: var(--k-rating-mask);
+  mask: var(--k-rating-mask);
 }
 
-[k="rating"] label::before {
-  content: "★";
+/* WebKit: a 1px full-height thumb whose huge leftward box-shadow paints every
+   star up to it gold. Clipped to the stars by the host's overflow:hidden. */
+[k="rating"]::-webkit-slider-runnable-track {
+  height: var(--k-rating-star);
+  background: transparent;
+}
+[k="rating"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 1px;
+  height: var(--k-rating-star);
+  background: hsl(var(--k-warning));
+  box-shadow: -100vw 0 0 100vw hsl(var(--k-warning));
 }
 
-/* Fill the checked star and every lower one (later in DOM), plus hover preview */
-[k="rating"] input:checked ~ label,
-[k="rating"] label:hover,
-[k="rating"] label:hover ~ label {
-  color: hsl(var(--k-warning));
+/* Firefox: native progress fill */
+[k="rating"]::-moz-range-track {
+  height: var(--k-rating-star);
+  background: transparent;
+}
+[k="rating"]::-moz-range-progress {
+  height: var(--k-rating-star);
+  background: hsl(var(--k-warning));
+}
+[k="rating"]::-moz-range-thumb {
+  width: 0;
+  height: var(--k-rating-star);
+  border: none;
+  background: transparent;
 }
 
-/* While previewing a hover, dim the previously-checked stars outside the hovered range */
-[k="rating"]:has(label:hover)
-  input:checked
-  ~ label:not(:hover):not(:hover ~ label) {
-  color: hsl(var(--k-muted-foreground) / 0.35);
-}
-
-/* Keyboard focus ring on the visible star */
-[k="rating"] input:focus-visible + label {
+[k="rating"]:focus-visible {
   outline: 2px solid hsl(var(--k-ring));
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
-/* Sizes */
-[k="rating"][size="sm"] label {
-  font-size: 1rem;
-}
-[k="rating"][size="lg"] label {
-  font-size: 1.75rem;
-}
-
-/* Read-only (all inputs disabled): no interaction, no hover preview */
-[k="rating"]:has(input:disabled) label {
-  cursor: default;
+[k="rating"][readonly] {
   pointer-events: none;
+}
+
+[k="rating"][data-size="sm"] {
+  --k-rating-star: 1.125rem;
+}
+[k="rating"][data-size="lg"] {
+  --k-rating-star: 2rem;
 }
