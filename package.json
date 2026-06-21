@@ -19,10 +19,13 @@
     },
     "./style.css": "./dist/index.css",
     "./llms.txt": "./llms.txt",
-    "./components.json": "./components.json"
+    "./components.json": "./components.json",
+    "./themes/violet.css": "./themes/violet.css",
+    "./themes/emerald.css": "./themes/emerald.css"
   },
   "files": [
     "dist",
+    "themes",
     "llms.txt",
     "components.json"
   ],

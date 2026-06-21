@@ -1,0 +1,30 @@
+/*
+ * kinu — Violet theme.
+ * Import after the base stylesheet:
+ *   import 'kinu/style.css';
+ *   import 'kinu/themes/violet.css';
+ * Overrides only the brand tokens; --k-primary-soft derives automatically.
+ */
+:where(:root),
+:where([data-color-scheme="light"]) {
+  --k-primary: 262 83% 58%;
+  --k-primary-foreground: 0 0% 100%;
+  --k-primary-hover: 262 83% 52%;
+  --k-ring: 262 83% 58%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(:root:not([data-color-scheme])) {
+    --k-primary: 263 70% 67%;
+    --k-primary-foreground: 263 45% 12%;
+    --k-primary-hover: 263 70% 72%;
+    --k-ring: 263 70% 67%;
+  }
+}
+
+:where([data-color-scheme="dark"]) {
+  --k-primary: 263 70% 67%;
+  --k-primary-foreground: 263 45% 12%;
+  --k-primary-hover: 263 70% 72%;
+  --k-ring: 263 70% 67%;
+}
