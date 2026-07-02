@@ -142,6 +142,12 @@
     width: 100%;
     max-width: 100vw;
     min-width: 0;
+    /* Drawer-mode enter/exit is a pure slide; keep the panel opaque in the
+     * closed state. Without this, the desktop fade's `opacity: 0` base leaks
+     * in — and since drawer-mode transitions don't include opacity, closing
+     * snaps the panel invisible on the first frame and the slide-out is
+     * never seen. */
+    opacity: 1;
     /* dvh — see above. */
     max-height: 70dvh;
     /* Drawer-mode is its own scroll container; overscroll-behavior
