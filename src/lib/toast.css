@@ -6,6 +6,15 @@
   pointer-events: none;
   --gap: 0.5rem;
   z-index: 1000;
+  /* The container is shown as a manual popover (top layer, above modals) —
+   * neutralize the UA [popover] styles; inert without popover support. */
+  inset: auto 1rem 1rem auto;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  overflow: visible;
+  color: inherit;
 }
 
 [k="toast"] {
