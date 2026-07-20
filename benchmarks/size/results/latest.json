@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T03:21:09.164Z",
+  "generatedAt": "2026-07-20T19:52:53.963Z",
   "results": [
     {
       "id": "one-component",
@@ -11,16 +11,16 @@
     {
       "id": "few-components",
       "label": "A few components (Button + Input + Dialog + Popover + Tabs)",
-      "raw": 16331,
-      "gzip": 3875,
-      "brotli": 3358
+      "raw": 16602,
+      "gzip": 3910,
+      "brotli": 3389
     },
     {
       "id": "nearly-all-components",
       "label": "Nearly all components (namespace import)",
-      "raw": 78524,
-      "gzip": 15791,
-      "brotli": 13796
+      "raw": 86124,
+      "gzip": 17712,
+      "brotli": 15457
     }
   ]
 }
