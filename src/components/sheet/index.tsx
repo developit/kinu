@@ -48,7 +48,7 @@ export const SheetContent = /*#__PURE__*/ forwardRef(function SheetContent({
   // The dialog is the swipe scroll container; the panel wrapper holds user
   // content in normal block flow (so nothing has to be neutralized for grid).
   return (
-    <dialog k="sheet-content" id={id || ctx} {...props}>
+    <dialog k="sheet-content" id={id || ctx} closedby="any" {...props}>
       <div k="sheet-panel">{children}</div>
     </dialog>
   );

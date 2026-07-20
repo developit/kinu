@@ -43,7 +43,7 @@ export const DrawerContent = /*#__PURE__*/ forwardRef(function DrawerContent({
   ...props
 }: DrawerContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog k="drawer-content" id={id ?? ctx} {...props} />;
+  return <dialog k="drawer-content" id={id ?? ctx} closedby="any" {...props} />;
 });
 
 export const DrawerClose = /*#__PURE__*/ forwardRef(function DrawerClose({
