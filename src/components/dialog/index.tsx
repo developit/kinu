@@ -44,7 +44,7 @@ export const DialogContent = /*#__PURE__*/ forwardRef(function DialogContent({
   ...props
 }: DialogContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog k="dialog-content" id={id ?? ctx} {...props} />;
+  return <dialog k="dialog-content" id={id ?? ctx} closedby="any" {...props} />;
 });
 
 export const DialogClose = /*#__PURE__*/ forwardRef(function DialogClose({

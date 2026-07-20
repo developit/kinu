@@ -18,6 +18,10 @@
   position: absolute;
   top: 100%;
   left: 50%;
+  /* Neutralize the UA [popover] inset:0 so right/bottom don't stretch the
+   * absolute-position fallback. */
+  right: auto;
+  bottom: auto;
   --tf-x: -50%;
   min-width: 100%;
   transform-origin: top center;
@@ -41,17 +45,19 @@
   outline: none;
 }
 
-[k="popover-content"]:not([open]),
-[k="dropdown-content"]:not([open]),
-[k="context-menu"]:not([open]),
-[k="combobox-list"]:not([open]) {
+/* Shown state is [open] when displayed as a <dialog>, :popover-open when
+ * displayed as a top-layer popover — both style identically. */
+[k="popover-content"]:not(:is([open], :popover-open)),
+[k="dropdown-content"]:not(:is([open], :popover-open)),
+[k="context-menu"]:not(:is([open], :popover-open)),
+[k="combobox-list"]:not(:is([open], :popover-open)) {
   display: none;
 }
 
-[k="popover-content"][open],
-[k="dropdown-content"][open],
-[k="context-menu"][open],
-[k="combobox-list"][open] {
+[k="popover-content"]:is([open], :popover-open),
+[k="dropdown-content"]:is([open], :popover-open),
+[k="context-menu"]:is([open], :popover-open),
+[k="combobox-list"]:is([open], :popover-open) {
   pointer-events: auto;
   opacity: 1;
   transform: translateX(var(--tf-x)) scale(1);
@@ -59,10 +65,10 @@
 }
 
 @starting-style {
-  [k="popover-content"][open],
-  [k="dropdown-content"][open],
-  [k="context-menu"][open],
-  [k="combobox-list"][open] {
+  [k="popover-content"]:is([open], :popover-open),
+  [k="dropdown-content"]:is([open], :popover-open),
+  [k="context-menu"]:is([open], :popover-open),
+  [k="combobox-list"]:is([open], :popover-open) {
     opacity: 0;
     transform: translateX(var(--tf-x)) scale(0.94);
   }

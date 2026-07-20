@@ -4,8 +4,28 @@ export function installCommands() {
   if (commandsInstalled) return;
   if (typeof document === 'undefined') return;
   commandsInstalled = true;
-  if ('commandFor' in HTMLButtonElement.prototype) return;
+  // Intentionally installed even where native Invoker Commands exist: kinu
+  // supports command sources beyond <button> (e.g. a menu closing itself on
+  // item click), and the preventDefault() in the handler suppresses native
+  // double-invocation for button triggers.
   addEventListener('click', commandClickHandler);
+}
+
+let topLayerOverlays: boolean | undefined;
+/**
+ * Overlays run in top-layer popover mode only when the Popover API AND CSS
+ * anchor positioning are both available — without anchors, a top-layer
+ * popover's absolute-position fallback would resolve against the viewport
+ * instead of near its trigger. Otherwise they fall back to `<dialog>.show()`.
+ */
+export function usePopoverOverlays() {
+  if (topLayerOverlays === undefined) {
+    topLayerOverlays =
+      'popover' in HTMLElement.prototype &&
+      typeof CSS !== 'undefined' &&
+      CSS.supports('position-anchor: --k-trigger');
+  }
+  return topLayerOverlays;
 }
 
 function elementTarget(node: EventTarget) {
@@ -37,7 +57,25 @@ function commandClickHandler(e: MouseEvent) {
     return;
   }
 
-  const method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  let method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  // `close` closes the target however it is currently shown (modal or popover).
+  if (
+    method === 'close' &&
+    'popover' in HTMLElement.prototype &&
+    target.matches(':popover-open')
+  ) {
+    method = 'hidePopover';
+  }
+  // Popover commands fall back to the equivalent <dialog> methods when
+  // top-layer popover mode is unavailable (kinu overlays are <dialog popover>).
+  if (/Popover$/.test(method) && (!usePopoverOverlays() || !(method in target))) {
+    const dialog = target as HTMLDialogElement;
+    if (method === 'hidePopover' || (method === 'togglePopover' && dialog.open)) {
+      dialog.close();
+      return;
+    }
+    method = 'show';
+  }
   if (method === 'show') {
     const event = Object.assign(
       new Event('beforetoggle', {cancelable: true, bubbles: true}),
@@ -46,6 +84,15 @@ function commandClickHandler(e: MouseEvent) {
     if (!target.dispatchEvent(event)) return;
   }
   (target as any)[method]?.();
+  // showPopover leaves focus on the invoker; mirror dialog.show()'s focus
+  // behavior so menu keyboard navigation lands inside the overlay.
+  if (
+    /Popover$/.test(method) &&
+    target.matches(':popover-open') &&
+    !target.contains(document.activeElement)
+  ) {
+    (target.querySelector<HTMLElement>('[autofocus]') || (target as HTMLElement)).focus();
+  }
 }
 
 let adaptiveInstalled: boolean;
@@ -54,16 +101,22 @@ export function installAdaptiveCommands() {
   if (typeof document === 'undefined') return;
   adaptiveInstalled = true;
   let allowToggle: boolean;
-  addEventListener('beforetoggle', (e: Event) => {
-    const te = e as ToggleEvent;
-    if (allowToggle || te.newState !== 'open') return;
-    const el = e.target as HTMLDialogElement;
-    if (!getComputedStyle(el).getPropertyValue('--modal')) return;
-    e.preventDefault();
-    allowToggle = true;
-    el.showModal();
-    allowToggle = false;
-  });
+  // Capture phase: native popover/dialog beforetoggle events don't bubble,
+  // but capture still visits the target from the window.
+  addEventListener(
+    'beforetoggle',
+    (e: Event) => {
+      const te = e as ToggleEvent;
+      if (allowToggle || te.newState !== 'open') return;
+      const el = e.target as HTMLDialogElement;
+      if (!getComputedStyle(el).getPropertyValue('--modal')) return;
+      e.preventDefault();
+      allowToggle = true;
+      el.showModal();
+      allowToggle = false;
+    },
+    true,
+  );
 }
 
 let dialogsDropdownsInstalled: boolean;
@@ -77,13 +130,14 @@ export function installDialogsDropdowns() {
 function dialogsDropdownsClickHandler(e: MouseEvent) {
   const target = e.target as Element;
 
-  // close on backdrop click
   if (target.localName === 'dialog' && target.getAttribute('k')) {
     const dialog = target as HTMLDialogElement;
 
     // Swipe overlays span the whole viewport, so backdrop clicks land on the
     // dialog itself. The rail occupies one full viewport-length of scroll; a
     // click whose scroll-relative coordinate falls within it is a dismiss tap.
+    // Tested before the native-closedby bail below, because a click inside the
+    // dialog's own box is never a native light dismiss.
     const swipe = getComputedStyle(dialog).getPropertyValue('--swipe').trim();
     if (swipe) {
       const inRail =
@@ -97,28 +151,40 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
       return;
     }
 
-    const {clientX, clientY} = e;
-    const {left, right, top, bottom} = dialog.getBoundingClientRect();
+    // close on backdrop click — fallback where native `closedby` light dismiss
+    // is unsupported, honoring the same attribute semantics either way
+    const closedby = dialog.getAttribute('closedby');
     if (
-      clientX < left ||
-      clientX > right ||
-      clientY < top ||
-      clientY > bottom
+      !('closedBy' in HTMLDialogElement.prototype) &&
+      closedby !== 'closerequest' &&
+      closedby !== 'none'
     ) {
-      dialog.close();
-      e.preventDefault();
-      return;
+      const {clientX, clientY} = e;
+      const {left, right, top, bottom} = dialog.getBoundingClientRect();
+      if (
+        clientX < left ||
+        clientX > right ||
+        clientY < top ||
+        clientY > bottom
+      ) {
+        dialog.close();
+        e.preventDefault();
+        return;
+      }
     }
   }
 
-  // close other dropdowns
-  for (const el of Array.from(
-    document.querySelectorAll<HTMLDialogElement>(
-      '[k="dropdown-content"],[k="popover-content"]',
-    ),
-  )) {
-    if (!el.contains(target)) {
-      el.close();
+  // close other dropdowns — fallback where top-layer popover mode (with its
+  // native light dismiss) is unavailable
+  if (!usePopoverOverlays()) {
+    for (const el of Array.from(
+      document.querySelectorAll<HTMLDialogElement>(
+        '[k="dropdown-content"],[k="popover-content"]',
+      ),
+    )) {
+      if (!el.contains(target)) {
+        el.close();
+      }
     }
   }
 }
@@ -136,7 +202,11 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   let container = el.closest('dialog[k]') || el.closest('[k="list"]');
   let useFocus = true;
   if (!container) {
-    container = el.parentNode!.querySelector('dialog[k][open]')
+    container = el.parentNode!.querySelector(
+      'popover' in HTMLElement.prototype
+        ? 'dialog[k][open], dialog[k]:popover-open'
+        : 'dialog[k][open]',
+    )
       || el.closest('[k="listbox"]')?.querySelector('[k="listbox-list"]')
       || null;
     useFocus = false;

@@ -43,7 +43,7 @@ export const DropdownMenuTrigger = /*#__PURE__*/ forwardRef(function DropdownMen
   return applyPropsToChildren(children, {
     ...props,
     commandFor: id,
-    command: 'show',
+    command: 'toggle-popover',
   });
 });
 
@@ -62,6 +62,9 @@ export const DropdownMenuContent = /*#__PURE__*/ forwardRef(function DropdownMen
       id={resolvedId}
       command={command}
       commandFor={commandFor ?? resolvedId}
+      popover="auto"
+      closedby="any"
+      tabindex={-1}
       {...props}
     />
   );

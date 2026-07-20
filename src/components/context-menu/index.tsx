@@ -68,6 +68,7 @@ export const ContextMenuContent = /*#__PURE__*/ forwardRef(function ContextMenuC
     <dialog
       k="context-menu"
       id={id ?? ctx}
+      closedby="any"
       onClickCapture={click}
       onContextMenuCapture={click}
       {...props}
