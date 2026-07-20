@@ -110,6 +110,8 @@
     max-block-size: min(24rem, calc(100dvh - 1rem));
     overflow: auto;
     position-try-fallbacks: --k-menu-right-top, --k-menu-left-bottom, --k-menu-right-bottom;
+    /* Hide the overlay when its trigger is scrolled out of view. */
+    position-visibility: anchors-visible;
   }
 
   [k="popover-content"] {
