@@ -38,6 +38,11 @@
     appearance: base-select;
   }
 
+  /* kinu draws its own chevron (background-image above) — hide the UA's. */
+  [k="select"]::picker-icon {
+    display: none;
+  }
+
   [k="select"]::picker(select) {
     border: 1px solid hsl(var(--k-border));
     border-radius: calc(var(--k-radius) + 0.25rem);
