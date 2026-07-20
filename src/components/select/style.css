@@ -27,3 +27,82 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* Fully themed option picker via the customizable-select API. Where supported,
+ * the open dropdown renders with kinu's overlay look (squircle, elevation,
+ * material) and themed options; other engines keep their native popup
+ * untouched. Zero JS. */
+@supports (appearance: base-select) {
+  [k="select"],
+  [k="select"]::picker(select) {
+    appearance: base-select;
+  }
+
+  [k="select"]::picker(select) {
+    border: 1px solid hsl(var(--k-border));
+    border-radius: calc(var(--k-radius) + 0.25rem);
+    corner-shape: var(--k-corner-shape);
+    background-color: hsl(var(--k-popover));
+    color: hsl(var(--k-popover-foreground));
+    box-shadow: var(--k-shadow-lg);
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    opacity: 0;
+    transform: scale(0.94);
+    transform-origin: top center;
+    transition:
+      opacity 200ms var(--k-ease),
+      transform 200ms var(--k-ease),
+      display 200ms allow-discrete,
+      overlay 200ms allow-discrete;
+  }
+
+  [k="select"]:open::picker(select) {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @starting-style {
+    [k="select"]:open::picker(select) {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+  }
+
+  [k="select"] option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.5rem;
+    border-radius: calc(var(--k-radius) - 0.125rem);
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  [k="select"] option:is(:hover, :focus-visible) {
+    outline: none;
+    background-color: hsl(var(--k-accent));
+    color: hsl(var(--k-accent-foreground));
+  }
+
+  [k="select"] option:checked {
+    font-weight: 500;
+  }
+
+  [k="select"] option::checkmark {
+    color: hsl(var(--k-primary));
+  }
+
+  /* Material surface, mirroring the floating-menu vibrancy (same a11y guards). */
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    @media not (prefers-reduced-transparency: reduce) {
+      @media not (prefers-contrast: more) {
+        [k="select"]::picker(select) {
+          background-color: hsl(var(--k-popover) / var(--k-material-opacity));
+          -webkit-backdrop-filter: var(--k-material-blur);
+          backdrop-filter: var(--k-material-blur);
+        }
+      }
+    }
+  }
+}
