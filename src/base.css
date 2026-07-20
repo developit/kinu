@@ -81,6 +81,17 @@ label[k] {
  * (e.g. popover-content's overflow-y:auto / overflow-x:hidden) still win. */
 :where([k][scrollable], [k="scroll-area"]) {
   overflow: auto;
+  /* Reserve the gutter so content doesn't shift when a scrollbar appears. */
+  scrollbar-gutter: stable;
+}
+
+/* Themed scrollbars for browsers without ::-webkit-scrollbar (Firefox).
+ * Gated so Chromium keeps the richer WebKit styling below — setting
+ * scrollbar-color there would disable it. */
+@supports not selector(::-webkit-scrollbar) {
+  :where([k][scrollable], [k="scroll-area"]) {
+    scrollbar-color: hsl(var(--k-foreground) / 0.15) transparent;
+  }
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
