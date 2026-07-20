@@ -30,6 +30,28 @@
   transform: translateX(-50%) scale(1);
 }
 
+/* Interest-invoker path: the content is popover="hint" (attribute only set
+ * where supported), shown in the top layer and anchored to its invoker via
+ * the implicit anchor. */
+[k="hover-card-content"]:popover-open {
+  position: fixed;
+  position-anchor: auto;
+  position-area: bottom;
+  position-try-fallbacks: flip-block;
+  top: auto;
+  left: auto;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  margin: 0.25rem 0 0;
+}
+
+@starting-style {
+  [k="hover-card-content"]:popover-open {
+    opacity: 0;
+  }
+}
+
 /* Translucent material surface, matching the floating-menu vibrancy. Falls back
  * to the solid background when unsupported or under reduced-transparency /
  * increased-contrast preferences. */

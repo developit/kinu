@@ -20,6 +20,12 @@ export interface ColorPickerOwnProps {
    * Input name used for form submissions.
    */
   name?: string;
+
+  /**
+   * Render an adjacent screen-sampling button (EyeDropper API). Only appears
+   * in browsers that implement EyeDropper.
+   */
+  eyedropper?: boolean;
 }
 
 export type ColorPickerProps = ColorPickerOwnProps &
