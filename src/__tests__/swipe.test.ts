@@ -1,4 +1,4 @@
-import {beforeAll, describe, expect, it, vi} from 'vitest';
+import {afterEach, beforeAll, describe, expect, it, vi} from 'vitest';
 import {installSwipe} from '../lib/commands';
 
 const handlers: Record<string, (e: unknown) => void> = {};
@@ -112,6 +112,26 @@ describe('installSwipe control plane', () => {
     expect(el.close).not.toHaveBeenCalled();
   });
 
+  // --- Rubber-band overscroll (Apple platforms report offsets past the
+  // boundary — negative at the start edge, beyond max at the end edge) ---
+  it('drawer: closes when a bounce overshoots past scrollTop 0', () => {
+    const el = makeDialog({swipe: 'y', scrollTop: -40});
+    handlers.scrollend({target: el});
+    expect(el.close).toHaveBeenCalled();
+  });
+
+  it('sheet: closes when a bounce overshoots past scrollLeft 0', () => {
+    const el = makeDialog({swipe: 'x', scrollLeft: -25});
+    handlers.scrollend({target: el});
+    expect(el.close).toHaveBeenCalled();
+  });
+
+  it('sidebar: closes when a bounce overshoots past max scrollLeft', () => {
+    const el = makeDialog({swipe: '-x', scrollLeft: 650, scrollWidth: 1000, clientWidth: 390});
+    handlers.scrollend({target: el});
+    expect(el.close).toHaveBeenCalled();
+  });
+
   // --- Shared ---
   it('clears the inline exit-suppression on reopen', () => {
     const el = makeDialog({swipe: 'y'});
@@ -126,5 +146,38 @@ describe('installSwipe control plane', () => {
     handlers.scrollend({target: el});
     expect(el.scrollTo).not.toHaveBeenCalled();
     expect(el.close).not.toHaveBeenCalled();
+  });
+});
+
+// Safari shipped scrollend in 26.2; older WebKit needs plain scroll to stand in
+// for it, since every dismiss position is a scroll boundary. These load the
+// module fresh because installSwipe self-guards against double installation.
+describe('scrollend fallback gate', () => {
+  async function installWith(hasScrollend: boolean) {
+    const seen: string[] = [];
+    vi.resetModules();
+    vi.stubGlobal('document', {});
+    vi.stubGlobal('addEventListener', (type: string) => void seen.push(type));
+    if (hasScrollend) vi.stubGlobal('onscrollend', null);
+    else Reflect.deleteProperty(globalThis, 'onscrollend');
+    const mod = await import('../lib/commands');
+    mod.installSwipe();
+    return seen;
+  }
+
+  afterEach(() => {
+    Reflect.deleteProperty(globalThis, 'onscrollend');
+  });
+
+  it('adds no scroll listener where scrollend is supported', async () => {
+    const seen = await installWith(true);
+    expect(seen).toContain('scrollend');
+    expect(seen).not.toContain('scroll');
+  });
+
+  it('falls back to scroll where scrollend is missing (Safari < 26.2)', async () => {
+    const seen = await installWith(false);
+    expect(seen).toContain('scrollend');
+    expect(seen).toContain('scroll');
   });
 });

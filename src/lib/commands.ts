@@ -197,6 +197,14 @@ export function installSwipe() {
   swipeInstalled = true;
   addEventListener('beforetoggle', swipeToggle as EventListener, true);
   addEventListener('scrollend', swipeSettle, true);
+  // Safari only shipped scrollend in 26.2, so older WebKit would never dismiss.
+  // Plain scroll is a sound substitute *here* because every dismiss position is
+  // a scroll boundary (offset 0, or max) and scroll-snap-stop leaves only one
+  // other resting position — the panel can't pass through the boundary en route
+  // to somewhere else, so arriving there is already proof of a dismiss. The
+  // difference is that a slow drag held at the boundary closes on arrival
+  // rather than on release, which is why this stays off where scrollend exists.
+  if (!('onscrollend' in globalThis)) addEventListener('scroll', swipeSettle, true);
 }
 
 function swipeAxis(target: EventTarget | null) {
@@ -219,14 +227,18 @@ function swipeToggle(e: ToggleEvent) {
   });
 }
 
+// Boundaries are compared with tolerance, not equality: Apple platforms keep
+// firing scroll events through a rubber-band overscroll with offsets that go
+// negative (or past max), and fractional device pixel ratios mean the resting
+// offset isn't reliably a whole number either.
 function swipeSettle(e: Event) {
   const s = swipeAxis(e.target);
   if (!s?.el.open) return;
   const {el, axis} = s;
   const dismissed =
     axis === '-x' ? el.scrollLeft >= el.scrollWidth - el.clientWidth - 1
-    : axis === 'x' ? el.scrollLeft === 0
-    : el.scrollTop === 0;
+    : axis === 'x' ? el.scrollLeft <= 0
+    : el.scrollTop <= 0;
   if (dismissed) {
     el.style.transitionDuration = '0s';
     el.close();
