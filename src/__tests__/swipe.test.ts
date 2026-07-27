@@ -1,4 +1,4 @@
-import {afterEach, beforeAll, describe, expect, it, vi} from 'vitest';
+import {beforeAll, describe, expect, it, vi} from 'vitest';
 import {installSwipe} from '../lib/commands';
 
 const handlers: Record<string, (e: unknown) => void> = {};
@@ -156,18 +156,12 @@ describe('scrollend fallback gate', () => {
   async function installWith(hasScrollend: boolean) {
     const seen: string[] = [];
     vi.resetModules();
-    vi.stubGlobal('document', {});
+    vi.stubGlobal('document', hasScrollend ? {onscrollend: null} : {});
     vi.stubGlobal('addEventListener', (type: string) => void seen.push(type));
-    if (hasScrollend) vi.stubGlobal('onscrollend', null);
-    else Reflect.deleteProperty(globalThis, 'onscrollend');
     const mod = await import('../lib/commands');
     mod.installSwipe();
     return seen;
   }
-
-  afterEach(() => {
-    Reflect.deleteProperty(globalThis, 'onscrollend');
-  });
 
   it('adds no scroll listener where scrollend is supported', async () => {
     const seen = await installWith(true);

@@ -204,7 +204,7 @@ export function installSwipe() {
   // to somewhere else, so arriving there is already proof of a dismiss. The
   // difference is that a slow drag held at the boundary closes on arrival
   // rather than on release, which is why this stays off where scrollend exists.
-  if (!('onscrollend' in globalThis)) addEventListener('scroll', swipeSettle, true);
+  if (!('onscrollend' in document)) addEventListener('scroll', swipeSettle, true);
 }
 
 function swipeAxis(target: EventTarget | null) {
