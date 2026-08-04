@@ -173,10 +173,10 @@
     scroll-snap-stop: always;
   }
   /* The closed state must be display:none so the exit animates grid→none with
-     allow-discrete (the panel holds its grid layout for the whole slide-out).
-     Without this the base `display:flex` (the persistent desktop sidebar) is the
-     closed value, and a discrete grid→flex flip at the midpoint reflows the panel
-     to full width for one frame. Specificity beats demo `.docs-sidebar`. */
+     allow-discrete (the panel holds its layout for the whole slide-out). The
+     base sets a display for the persistent desktop sidebar, which overrides the
+     UA's display:none for a closed <dialog> — so without this the panel would
+     still be laid out after closing. Specificity beats demo `.docs-sidebar`. */
   [k="sidebar"]:not([open]) {
     display: none;
   }
