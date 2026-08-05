@@ -38,6 +38,8 @@ import {Sidebar, SidebarTrigger} from 'kinu';
 
 - Renders a `<dialog>` so it can slide in as a modal on small screens.
 - SidebarTrigger toggles the hidden/open state with the command attribute.
+- In its mobile modal mode on touch devices the sidebar is swipeable — swipe left to dismiss. The gesture is native CSS scroll-snapping, so momentum and snap-back come from the browser.
+- Lays out as a grid, so direct children stack as rows. In the swipe mode the last child fills the remaining height and scrolls, which suits a fixed header followed by scrolling navigation.
 
 ---
 
