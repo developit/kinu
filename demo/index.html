@@ -15,9 +15,9 @@
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('kinu-theme');
+          let t = localStorage.getItem('kinu-theme');
           if (t) document.documentElement.setAttribute('data-theme', t);
-          var d = localStorage.getItem('kinu-density');
+          let d = localStorage.getItem('kinu-density');
           if (d) document.documentElement.setAttribute('data-kinu-density', d);
         } catch (e) {}
       })();
