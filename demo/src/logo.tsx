@@ -1,11 +1,8 @@
 /**
- * Modernist Block · Serif — kinu identity logo.
- *
- * Sage block with an italic serif "k" inside, paired with the "kinu"
- * wordmark in Newsreader italic. The block sits on the wordmark baseline
- * (the descender of the "u" dips below the box) via inline-flex
- * baseline alignment plus a small vertical offset to land on the alphabetic
- * baseline rather than the SVG's bottom edge.
+ * kinu identity logo. Font properties live in style.css under
+ * .kinu-logo-mark-k / .kinu-logo-wordmark so the theme customizer can
+ * swap between the sans-forward default and the serif (Newsreader
+ * italic) variant by toggling .theme-serif on :root.
  */
 export function KinuLogo({
   size = 22,
@@ -45,29 +42,16 @@ export function KinuLogo({
           stroke-width="0.8"
         />
         <text
+          class="kinu-logo-mark-k"
           x="32"
-          y="48"
+          y="47"
           text-anchor="middle"
           fill="hsl(var(--k-background))"
-          font-family="Newsreader, serif"
-          font-style="italic"
-          font-size="44"
-          font-weight="500"
-          letter-spacing="-0.02em"
         >
           k
         </text>
       </svg>
-      <span
-        style={{
-          fontFamily: 'Newsreader, serif',
-          fontSize: size,
-          fontStyle: 'italic',
-          fontWeight: 500,
-          letterSpacing: '-0.02em',
-          color,
-        }}
-      >
+      <span class="kinu-logo-wordmark" style={{fontSize: size, color}}>
         kinu
       </span>
     </span>

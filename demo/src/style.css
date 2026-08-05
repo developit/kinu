@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&display=swap");
 @import "../../src/variables.css";
 @import "../../src/base.css";
 
@@ -67,11 +67,19 @@
 
   --k-radius: 0.5rem;
 
-  /* Brand typography stack */
-  --kh-font-sans: 'Public Sans', system-ui, -apple-system, sans-serif;
-  --kh-font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --kh-font-label: 'Manrope', 'Public Sans', system-ui, sans-serif;
-  --kh-font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  /* Brand typography stack. System-font-first with a designed fallback:
+     each platform's UI font runs first (SF on macOS/iOS, Segoe Variable
+     on Windows 11, Segoe UI on Windows 10, Roboto on Android), then Inter
+     catches anything else (Linux, ChromeOS) before the generic sans-serif.
+     This keeps the page feeling native where the OS ships a nice UI face
+     and prevents fallback to gross legacy sans fonts (DejaVu, Liberation)
+     where it doesn't. --kh-font-serif keeps its name so heading selectors
+     and other demo routes inherit it unchanged; hierarchy is carried by
+     size and weight rather than a separate display face. */
+  --kh-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Display', 'Segoe UI', Roboto, 'Inter', sans-serif;
+  --kh-font-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Display', 'Segoe UI', Roboto, 'Inter', sans-serif;
+  --kh-font-label: -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Display', 'Segoe UI', Roboto, 'Inter', sans-serif;
+  --kh-font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
 
   /* Brand-only palette extensions used by dark sections + silk art */
   --kh-dark-band: #1f2c24;
@@ -291,6 +299,23 @@ body .home-nav + * {
   padding: 0 0.5rem;
 }
 
+/* Logo — sans defaults; serif overrides in the theme-serif block at the
+ * end of this file. Font properties live in CSS (not on the SVG/JSX) so
+ * the theme customizer can swap them by toggling .theme-serif on :root. */
+.kinu-logo-mark-k {
+  font-family: var(--kh-font-serif);
+  font-size: 42px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.02em;
+}
+.kinu-logo-wordmark {
+  font-family: var(--kh-font-serif);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.02em;
+}
+
 .home-nav [k="navigation-menu-link"] {
   height: 2.5rem;
   display: inline-flex;
@@ -388,18 +413,19 @@ body .home-nav--marketing + * {
 .kh-hero-title {
   margin: 0;
   font-family: var(--kh-font-serif);
-  font-size: 88px;
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
+  font-size: 58px;
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: hsl(var(--k-foreground));
 }
 .kh-hero-title em {
-  font-style: italic;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 400;
+  color: hsl(var(--k-primary));
 }
 
-/* Prose lede — narrow, centered, italic kinu intro */
+/* Prose lede — narrow, centered kinu intro */
 .kinu-home [k="prose"].kh-hero-lede {
   max-width: 480px;
   font-size: 14.5px;
@@ -407,8 +433,8 @@ body .home-nav--marketing + * {
   color: hsl(var(--k-muted-foreground));
 }
 .kinu-home [k="prose"].kh-hero-lede em {
-  font-family: var(--kh-font-serif);
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
   color: hsl(var(--k-foreground));
 }
 
@@ -696,15 +722,16 @@ body .home-nav--marketing + * {
 .kh-facade-title {
   margin: 0;
   font-family: var(--kh-font-serif);
-  font-size: 76px;
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.028em;
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.027em;
   color: var(--kh-cream);
 }
 .kh-facade-title em {
-  font-style: italic;
-  color: rgba(218, 209, 168, 0.92);
+  font-style: normal;
+  font-weight: 400;
+  color: rgb(224, 213, 165);
 }
 
 .kinu-home [k="prose"].kh-facade-prose {
@@ -880,11 +907,11 @@ body .home-nav--marketing + * {
 }
 .kh-race-col-name {
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 22px;
-  font-weight: 400;
+  font-style: normal;
+  font-size: 19px;
+  font-weight: 500;
   color: var(--kh-cream);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
 }
 
 /* track + rail */
@@ -1197,11 +1224,12 @@ body .home-nav--marketing + * {
 .kh-race-budget-num {
   margin: 0;
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 32px;
+  font-style: normal;
+  font-size: 29px;
+  font-weight: 500;
   line-height: 1;
   color: #f0d98c;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   font-feature-settings: "tnum";
   white-space: nowrap;
 }
@@ -1263,10 +1291,10 @@ body .home-nav--marketing + * {
   margin: 18px auto 0;
   max-width: 540px;
   text-align: center;
-  font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 17px;
-  line-height: 1.5;
+  font-family: var(--kh-font-sans);
+  font-size: 14.5px;
+  line-height: 1.55;
+  letter-spacing: -0.003em;
   color: var(--kh-cream-muted);
 }
 
@@ -1389,13 +1417,15 @@ body .home-nav--marketing + * {
 .kh-section-title {
   margin: 0;
   font-family: var(--kh-font-serif);
-  font-size: 44px;
-  font-weight: 400;
-  letter-spacing: -0.025em;
+  font-size: 38px;
+  font-weight: 300;
+  letter-spacing: -0.022em;
   color: hsl(var(--k-foreground));
 }
 .kh-section-title em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 400;
+  color: hsl(var(--k-primary));
 }
 
 .kinu-home [k="prose"].kh-section-lede {
@@ -1920,8 +1950,8 @@ body .home-nav--marketing + * {
   background: hsl(var(--k-primary-soft, var(--k-muted)));
   color: hsl(var(--k-primary));
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 12px;
   flex-shrink: 0;
 }
 .kinu-home .kh-composer-input[k="textarea"] {
@@ -2126,12 +2156,15 @@ body .home-nav--marketing + * {
 .kh-html-title {
   margin: 0;
   font-family: var(--kh-font-serif);
-  font-size: 36px;
-  font-weight: 400;
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: -0.022em;
   color: hsl(var(--k-foreground));
 }
 .kh-html-title em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 400;
+  color: hsl(var(--k-primary));
 }
 
 .kinu-home [k="prose"].kh-html-lede {
@@ -2215,11 +2248,11 @@ body .home-nav--marketing + * {
 .kh-ship-title {
   margin: 0;
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 76px;
-  font-weight: 400;
+  font-style: normal;
+  font-size: 62px;
+  font-weight: 300;
   color: var(--kh-cream);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 
@@ -2354,9 +2387,9 @@ body .home-nav--marketing + * {
 }
 .kh-trip-summary strong {
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 .kinu-home [k="toggle-group"].kh-trip-types {
   flex-wrap: wrap;
@@ -2409,10 +2442,10 @@ body .home-nav--marketing + * {
 }
 .kh-pricing-amount {
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 36px;
+  font-size: 31px;
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.022em;
+  font-feature-settings: "tnum";
   color: hsl(var(--k-foreground));
   line-height: 1;
 }
@@ -2996,10 +3029,10 @@ body .home-nav--marketing + * {
 }
 .kh-settings-amount {
   font-family: var(--kh-font-serif);
-  font-style: italic;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.022em;
+  font-feature-settings: "tnum";
   line-height: 1;
 }
 .kh-settings-period {
@@ -3154,7 +3187,7 @@ body .home-nav--marketing + * {
     min-height: auto;
   }
   .kh-hero-title {
-    font-size: 64px;
+    font-size: 44px;
   }
   .kh-facade {
     gap: 56px;
@@ -3162,7 +3195,7 @@ body .home-nav--marketing + * {
     padding-bottom: 88px;
   }
   .kh-facade-title {
-    font-size: 60px;
+    font-size: 52px;
   }
   .kh-race-grid {
     gap: 18px;
@@ -3172,7 +3205,7 @@ body .home-nav--marketing + * {
     gap: 18px;
   }
   .kh-race-col-name {
-    font-size: 19px;
+    font-size: 18px;
   }
   .kh-race-stage-label {
     font-size: 13.5px;
@@ -3181,13 +3214,13 @@ body .home-nav--marketing + * {
     font-size: 11.5px;
   }
   .kh-race-budget-num {
-    font-size: 28px;
+    font-size: 26px;
   }
   .kh-race-budget-label {
     max-width: 12ch;
   }
   .kh-ship-title {
-    font-size: 56px;
+    font-size: 50px;
   }
   .kh-code-grid {
     grid-template-columns: 1fr;
@@ -3215,8 +3248,8 @@ body .home-nav--marketing + * {
     padding: 100px 18px 40px;
   }
   .kh-hero-title {
-    font-size: 44px;
-    letter-spacing: -0.03em;
+    font-size: 36px;
+    letter-spacing: -0.015em;
   }
   .kh-hero-actions {
     flex-direction: column;
@@ -3226,15 +3259,17 @@ body .home-nav--marketing + * {
   .kh-hero-actions .kh-pill {
     width: 100%;
   }
-  .kh-facade-title,
+  .kh-facade-title {
+    font-size: 36px;
+  }
   .kh-ship-title {
-    font-size: 44px;
+    font-size: 40px;
   }
   .kh-section-title {
-    font-size: 32px;
+    font-size: 30px;
   }
   .kh-html-title {
-    font-size: 28px;
+    font-size: 26px;
   }
   .kh-preview-grid {
     grid-template-columns: 1fr;
@@ -3338,7 +3373,7 @@ body .home-nav--marketing + * {
     gap: 8px 0;
   }
   .kh-race-budget-num {
-    font-size: 22px;
+    font-size: 21px;
   }
   .kh-race-budget-label {
     font-size: 8.5px;
@@ -3354,7 +3389,7 @@ body .home-nav--marketing + * {
     letter-spacing: 0.15em;
   }
   .kh-race-caption {
-    font-size: 14px;
+    font-size: 13px;
     margin-top: 18px;
   }
   .kh-footer {
@@ -4122,14 +4157,16 @@ body .home-nav--marketing + * {
 .getting-started-header h1 {
   font-family: var(--kh-font-serif);
   font-size: 3.25rem;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.05;
   letter-spacing: -0.03em;
   margin: 0 0 1rem 0;
   color: hsl(var(--k-foreground));
 }
 .getting-started-header h1 em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 400;
+  color: hsl(var(--k-primary));
 }
 
 .getting-started-header .lead {
@@ -5175,7 +5212,7 @@ body .example-demo {
 
 .docs-content h1 {
   font-family: var(--kh-font-serif);
-  font-weight: 400;
+  font-weight: 300;
   font-size: 2.5rem;
   line-height: 1.1;
   letter-spacing: -0.025em;
@@ -5183,7 +5220,9 @@ body .example-demo {
   color: hsl(var(--k-foreground));
 }
 .docs-content h1 em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 400;
+  color: hsl(var(--k-primary));
 }
 .docs-content h2 {
   font-size: 1.45rem;
@@ -5286,4 +5325,189 @@ body .docs-content pre > code {
   body .hljs {
     color: #bbc9d7;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Serif theme variant — toggled by the customizer (.theme-serif on :root).
+ *
+ * The styles above paint the sans-forward homepage. When the user picks
+ * "serif" in the theme customizer, the class on :root flips and these
+ * rules restore the original Newsreader + italic-accent treatment across
+ * the homepage, demo-card internals, logo, and the non-homepage h1s.
+ *
+ * --kh-font-serif is swapped to the Newsreader stack, which auto-flips
+ * font-family for every selector that already references the variable.
+ * Per-selector overrides then restore the serif-tuned size, weight,
+ * letter-spacing, italic, and (for facade/race) the gold/cream color
+ * accents that the sans variant carried in a different brand color.
+ *
+ * Responsive sizes mirror the same 1024px / 640px breakpoints the default
+ * uses so the serif variant downsizes properly on mobile.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+:root.theme-serif {
+  --kh-font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+}
+
+/* Hero */
+:root.theme-serif .kh-hero-title {
+  font-size: 88px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+:root.theme-serif .kh-hero-title em {
+  font-style: italic;
+  font-weight: 500;
+  color: inherit;
+}
+:root.theme-serif .kinu-home [k="prose"].kh-hero-lede em {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Facade */
+:root.theme-serif .kh-facade-title {
+  font-size: 76px;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.028em;
+}
+:root.theme-serif .kh-facade-title em {
+  font-style: italic;
+  font-weight: inherit;
+  color: rgba(218, 209, 168, 0.92);
+}
+
+/* Pipeline race */
+:root.theme-serif .kh-race-col-name {
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+:root.theme-serif .kh-race-budget-num {
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+:root.theme-serif .kh-race-caption {
+  font-family: var(--kh-font-serif);
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.5;
+}
+
+/* Built with Kinu */
+:root.theme-serif .kh-section-title {
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+:root.theme-serif .kh-section-title em {
+  font-style: italic;
+  font-weight: inherit;
+  color: inherit;
+}
+
+/* Demo-card internals. .kh-preview-title is gone (the new AppFrame uses
+ * .kh-app-title — an uppercase label, not display type), and the inbox
+ * title / back / subject intentionally dropped serif on main, so they
+ * stay sans in this variant too. */
+:root.theme-serif .kinu-home [k="avatar"].kh-composer-msg-avatar {
+  font-style: italic;
+  font-weight: inherit;
+  font-size: 13px;
+}
+:root.theme-serif .kh-trip-summary strong {
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+:root.theme-serif .kh-pricing-amount {
+  font-style: italic;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  font-feature-settings: normal;
+}
+:root.theme-serif .kh-settings-amount {
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  font-feature-settings: normal;
+}
+
+/* JSX in / out */
+:root.theme-serif .kh-html-title {
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+:root.theme-serif .kh-html-title em {
+  font-style: italic;
+  font-weight: inherit;
+  color: inherit;
+}
+
+/* Ship */
+:root.theme-serif .kh-ship-title {
+  font-style: italic;
+  font-size: 76px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+/* Logo */
+:root.theme-serif .kinu-logo-mark-k {
+  font-style: italic;
+  font-weight: 500;
+  font-size: 44px;
+}
+:root.theme-serif .kinu-logo-wordmark {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Non-homepage h1s (docs + getting-started) */
+:root.theme-serif .getting-started-header h1 {
+  font-weight: 400;
+}
+:root.theme-serif .getting-started-header h1 em {
+  font-style: italic;
+  font-weight: inherit;
+  color: inherit;
+}
+:root.theme-serif .docs-content h1 {
+  font-weight: 400;
+}
+:root.theme-serif .docs-content h1 em {
+  font-style: italic;
+  font-weight: inherit;
+  color: inherit;
+}
+
+/* Responsive — mirror the 1024px / 640px breakpoints the default uses */
+@media (max-width: 1024px) {
+  :root.theme-serif .kh-hero-title { font-size: 64px; }
+  :root.theme-serif .kh-facade-title { font-size: 60px; }
+  :root.theme-serif .kh-race-col-name { font-size: 19px; }
+  :root.theme-serif .kh-race-budget-num { font-size: 28px; }
+  :root.theme-serif .kh-ship-title { font-size: 56px; }
+}
+@media (max-width: 640px) {
+  :root.theme-serif .kh-hero-title { font-size: 44px; letter-spacing: -0.03em; }
+  :root.theme-serif .kh-facade-title,
+  :root.theme-serif .kh-ship-title { font-size: 44px; }
+  :root.theme-serif .kh-section-title { font-size: 32px; }
+  :root.theme-serif .kh-html-title { font-size: 28px; }
+  :root.theme-serif .kh-race-col-name { font-size: 15px; letter-spacing: -0.01em; }
+  :root.theme-serif .kh-race-budget-num { font-size: 22px; }
+  :root.theme-serif .kh-race-caption { font-size: 14px; }
 }
