@@ -104,3 +104,29 @@ label[k] {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Forced-colors (Windows High Contrast): box-shadow focus rings are dropped, so
+   restore a system-color outline on focus for interactive components (FUN-6). */
+@media (forced-colors: active) {
+  [k="button"]:focus-visible,
+  [k="input"]:focus-visible,
+  [k="select"]:focus-visible,
+  [k="textarea"]:focus-visible,
+  [k="checkbox"]:focus-visible,
+  [k="switch"]:focus-visible,
+  [k="number-field"]:focus-visible,
+  [k="password-input"]:focus-visible,
+  [k="tags-input"]:focus-within {
+    outline: 2px solid;
+    outline-offset: 2px;
+  }
+}
+
+/* Virtualization-free long lists (FUN-7): add `virtual` to a scroll container
+   (List, Listbox list, Tree, any [k] wrapper) and the browser skips rendering
+   off-screen rows via content-visibility — thousands of rows stay smooth with
+   no JS virtualizer. Override the row-height estimate with --k-virtual-row. */
+[virtual] > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--k-virtual-row, 2.25rem);
+}

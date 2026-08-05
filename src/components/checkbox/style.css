@@ -38,3 +38,9 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* Invalid state — post-interaction via :user-invalid, or explicit [invalid] */
+[k="checkbox"]:user-invalid,
+[k="checkbox"][invalid] {
+  border-color: hsl(var(--k-destructive));
+}

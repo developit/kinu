@@ -1,0 +1,67 @@
+@import "../../variables.css";
+
+[k="grid"] {
+  display: grid;
+  gap: var(--k-gap, var(--k-space-md));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--k-grid-min, 16rem), 1fr)
+  );
+}
+
+/* Gap scale */
+[k="grid"][gap="0"] {
+  --k-gap: var(--k-space-0);
+}
+[k="grid"][gap="xs"] {
+  --k-gap: var(--k-space-xs);
+}
+[k="grid"][gap="sm"] {
+  --k-gap: var(--k-space-sm);
+}
+[k="grid"][gap="md"] {
+  --k-gap: var(--k-space-md);
+}
+[k="grid"][gap="lg"] {
+  --k-gap: var(--k-space-lg);
+}
+[k="grid"][gap="xl"] {
+  --k-gap: var(--k-space-xl);
+}
+
+/* Minimum column width for the responsive auto-fit grid */
+[k="grid"][min="xs"] {
+  --k-grid-min: 10rem;
+}
+[k="grid"][min="sm"] {
+  --k-grid-min: 12rem;
+}
+[k="grid"][min="md"] {
+  --k-grid-min: 16rem;
+}
+[k="grid"][min="lg"] {
+  --k-grid-min: 20rem;
+}
+[k="grid"][min="xl"] {
+  --k-grid-min: 24rem;
+}
+
+/* Fixed column counts (override auto-fit) */
+[k="grid"][cols="1"] {
+  grid-template-columns: repeat(1, 1fr);
+}
+[k="grid"][cols="2"] {
+  grid-template-columns: repeat(2, 1fr);
+}
+[k="grid"][cols="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+[k="grid"][cols="4"] {
+  grid-template-columns: repeat(4, 1fr);
+}
+[k="grid"][cols="5"] {
+  grid-template-columns: repeat(5, 1fr);
+}
+[k="grid"][cols="6"] {
+  grid-template-columns: repeat(6, 1fr);
+}

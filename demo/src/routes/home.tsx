@@ -717,7 +717,7 @@ function SunIcon() {
       width="14"
       height="14"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -736,7 +736,7 @@ function MoonIcon() {
       width="14"
       height="14"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -754,7 +754,7 @@ function MaximizeIcon() {
       width="13"
       height="13"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -772,7 +772,7 @@ function MinimizeIcon() {
       width="13"
       height="13"
       viewBox="0 0 24 24"
-      aria-hidden
+      aria-hidden="true"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
@@ -1453,9 +1453,9 @@ type RaceBudget = {num: string; label: string; tone?: 'zero'};
 function RaceBudgets({budgets}: {budgets: [RaceBudget, RaceBudget]}) {
   return (
     <dl class="kh-race-budgets">
-      {budgets.map((b, i) => (
+      {budgets.map((b) => (
         <div
-          key={i}
+          key={b.label}
           class={`kh-race-budget${b.tone ? ` kh-race-budget--${b.tone}` : ''}`}
         >
           <dt class="kh-race-budget-num">{b.num}</dt>
@@ -1514,7 +1514,7 @@ function PipelineRace() {
         class="kh-race-fork"
         viewBox="0 0 100 36"
         preserveAspectRatio="none"
-        aria-hidden
+        aria-hidden="true"
       >
         <path
           d="M 50 0 V 14 M 25 14 H 75 M 25 14 V 36 M 75 14 V 36"
@@ -1537,7 +1537,7 @@ function PipelineRace() {
             <ol class="kh-race-stages">
               {TYPICAL_STAGES.map((s, i) => (
                 <RaceStageItem
-                  key={i}
+                  key={s.note}
                   stage={s}
                   index={i}
                   variant="typical"
@@ -1567,7 +1567,7 @@ function PipelineRace() {
             <ol class="kh-race-stages">
               {KINU_STAGES.map((s, i) => (
                 <RaceStageItem
-                  key={i}
+                  key={s.note}
                   stage={s}
                   index={i}
                   variant="kinu"
@@ -1606,7 +1606,7 @@ function PipelineRace() {
             stroke-width="1.8"
             stroke-linecap="round"
             stroke-linejoin="round"
-            aria-hidden
+            aria-hidden="true"
           >
             <path d="M3 12a9 9 0 1 0 3.27-6.95L3 8" />
             <path d="M3 3v5h5" />

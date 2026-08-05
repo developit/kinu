@@ -32,6 +32,22 @@ export default [
     file: 'pages/base-styles.md'
   },
   {
+    slug: 'forms',
+    title: 'Forms & Validation',
+    section: 'Foundations',
+    category: 'Forms',
+    order: 4,
+    file: 'pages/forms.md'
+  },
+  {
+    slug: 'motion',
+    title: 'Motion & View Transitions',
+    section: 'Foundations',
+    category: 'Styling',
+    order: 5,
+    file: 'pages/motion.md'
+  },
+  {
     slug: 'accordion',
     title: 'Accordion',
     section: 'Components',
@@ -58,7 +74,8 @@ export default [
     usage: '<Alert variant="info">Heads up!</Alert>',
     notes: [
       'Renders a `<div>` so you can include any markup you need.',
-      'Supports `destructive`, `info`, `success`, and `warning` tone variants.'
+      'Supports `destructive`, `info`, `success`, and `warning` tone variants.',
+      'Pass `banner` for a full-bleed, square-cornered, page-level banner — it composes with any tone (e.g. `<Alert variant="info" banner>`).'
     ]
   },
   {
@@ -580,7 +597,8 @@ export default [
     usage: `<Select>\n  <option>One</option>\n</Select>`,
     notes: [
       'Leverages the platform picker on touch devices.',
-      'Supports native multiple and size attributes.'
+      'Supports native multiple and size attributes.',
+      'On Chromium (`@supports (appearance: base-select)`) it upgrades to a fully stylable dropdown — themed picker, hover/checked option states, rich option markup — and degrades to the native styled select everywhere else, with zero added JavaScript.'
     ]
   },
   {
@@ -933,6 +951,332 @@ export default [
       'Tune spacing, font, and heading weight via CSS variables: `--k-prose-spacing`, `--k-prose-font`, `--k-prose-heading-weight`.',
       'Only styles direct and nested standard elements; does not touch Kinu components used inside.',
       'First/last child margins are zeroed so the wrapper can drop into any layout without margin collapse.'
+    ]
+  },
+  {
+    slug: 'stack',
+    title: 'Stack',
+    section: 'Components',
+    category: 'Layout',
+    order: 0,
+    folder: 'stack',
+    description: 'Vertical flow layout — a flex column with a token-based gap.',
+    usage: `<Stack gap="md">\n  <div>One</div>\n  <div>Two</div>\n</Stack>`,
+    notes: [
+      'CSS-only: renders a `<div k="stack">` with `display:flex;flex-direction:column`. Zero JavaScript.',
+      'Set `gap` to a spacing-scale step (`0`, `xs`, `sm`, `md`, `lg`, `xl`); it maps to the `--k-space-*` tokens and defaults to `md`.',
+      'Use `align` (cross-axis) and `justify` (main-axis) to position children.'
+    ]
+  },
+  {
+    slug: 'cluster',
+    title: 'Cluster',
+    section: 'Components',
+    category: 'Layout',
+    order: 1,
+    folder: 'cluster',
+    description: 'Horizontal wrap row with a token-based gap — chip rows, button rows, toolbars.',
+    usage: `<Cluster gap="sm">\n  <Badge>One</Badge>\n  <Badge>Two</Badge>\n</Cluster>`,
+    notes: [
+      'CSS-only: renders a `<div k="cluster">` with `display:flex;flex-wrap:wrap`. Zero JavaScript.',
+      'Items wrap to new rows as needed; `align` defaults to `center` and `gap` defaults to `sm`.',
+      'Reach for it whenever you have a row of badges, chips, buttons, or filters that should wrap gracefully.'
+    ]
+  },
+  {
+    slug: 'grid',
+    title: 'Grid',
+    section: 'Components',
+    category: 'Layout',
+    order: 2,
+    folder: 'grid',
+    description: 'Responsive auto-fit grid with a token-based gap — dashboards, card galleries.',
+    usage: `<Grid gap="md" min="sm">\n  <Card>One</Card>\n  <Card>Two</Card>\n</Grid>`,
+    notes: [
+      'CSS-only: renders a `<div k="grid">` using `repeat(auto-fit, minmax(...))`. Zero JavaScript.',
+      'By default it fits as many columns as will hold the `min` width (presets `xs`–`xl`, default `md` = 16rem); override arbitrarily with the `--k-grid-min` custom property.',
+      'Pass `cols={3}` for a fixed equal-column grid instead of the responsive behaviour.'
+    ]
+  },
+  {
+    slug: 'app-shell',
+    title: 'App Shell',
+    section: 'Components',
+    category: 'Layout',
+    order: 3,
+    folder: 'app-shell',
+    description: 'Full-page application scaffold — header, sidebar, main, and footer in a CSS grid.',
+    usage: `<AppShell>\n  <AppShell.Header>Acme</AppShell.Header>\n  <AppShell.Sidebar>{/* nav */}</AppShell.Sidebar>\n  <AppShell.Main>{/* content */}</AppShell.Main>\n  <AppShell.Footer>© 2026</AppShell.Footer>\n</AppShell>`,
+    notes: [
+      'CSS-only: a `<div k="app-shell">` using named grid areas, `min-height:100dvh`, and semantic `<header>`/`<aside>`/`<main>`/`<footer>` parts. Zero JavaScript.',
+      'Collapses to a single column at ≤48rem; the inline sidebar rail hides so you can hand mobile navigation to the modal `Sidebar` dialog.',
+      'Compound parts: `AppShell.Header`, `AppShell.Sidebar`, `AppShell.Main`, `AppShell.Footer`. Style each region with normal CSS or inline styles.'
+    ]
+  },
+  {
+    slug: 'row',
+    title: 'Row',
+    section: 'Components',
+    category: 'Layout',
+    order: 4,
+    folder: 'row',
+    description: 'Horizontal flow layout — a flex row with a token-based gap.',
+    usage: `<Row gap="sm" justify="between">\n  <strong>Title</strong>\n  <Button>Save</Button>\n</Row>`,
+    notes: [
+      'CSS-only: renders a `<div k="row">` with `display:flex`. The horizontal sibling of `Stack`. Zero JavaScript.',
+      '`gap` (default `sm`), `align` (default `center`), and `justify` mirror the other layout primitives.',
+      'Does not wrap by default — pass `wrap`, or reach for `Cluster` when wrapping is the point.'
+    ]
+  },
+  {
+    slug: 'center',
+    title: 'Center',
+    section: 'Components',
+    category: 'Layout',
+    order: 5,
+    folder: 'center',
+    description: 'Centers its content horizontally and vertically with CSS grid.',
+    usage: `<Center style={{height: '10rem'}}>\n  <span>Centered</span>\n</Center>`,
+    notes: [
+      'CSS-only: `<div k="center">` using `display:grid;place-items:center`. Give it a size (or let it fill its parent) and the child centers on both axes.',
+      'Pass `inline` to shrink to the content and center inline instead of filling the box.'
+    ]
+  },
+  {
+    slug: 'spacer',
+    title: 'Spacer',
+    section: 'Components',
+    category: 'Layout',
+    order: 6,
+    folder: 'spacer',
+    description: 'Flexible spacer that pushes siblings apart, or a fixed gap block.',
+    usage: `<Row>\n  <Button>Back</Button>\n  <Spacer />\n  <Button>Next</Button>\n</Row>`,
+    notes: [
+      'CSS-only: `<div k="spacer">` with `flex:1` so it grows to push siblings to opposite ends of a Row, Cluster, or Stack.',
+      'Pass `size` (`xs`–`xl`) to render a fixed gap (via `flex-basis`) that works along either axis instead of growing.'
+    ]
+  },
+  {
+    slug: 'rating',
+    title: 'Rating',
+    section: 'Components',
+    category: 'Data Input',
+    order: 13,
+    folder: 'rating',
+    description: 'Star rating built from a native radio group — form-associated, zero JavaScript.',
+    usage: '<Rating name="score" value={3} />',
+    notes: [
+      'Zero JavaScript: a styled native `<input type="range">`. The fill follows the live value entirely in CSS — a thumb `box-shadow` paints the filled stars on WebKit and `::-moz-range-progress` on Firefox, masked into a star row; the star count reads from `max` via typed `attr()`.',
+      'Keyboard-accessible and form-submittable natively: set `name` and an initial `value`, arrow keys adjust, and the value submits with the form.',
+      'Pass `count` to change the number of stars (Baseline-2025 typed `attr()`; older engines fall back to 5), `readOnly` for a non-interactive display, and `size` (`sm`/`md`/`lg`) to scale.'
+    ]
+  },
+  {
+    slug: 'number-field',
+    title: 'Number Field',
+    section: 'Components',
+    category: 'Data Input',
+    order: 14,
+    folder: 'number-field',
+    description: 'Native number input with stepper buttons driven by the command bus.',
+    usage: '<NumberField defaultValue={3} min={0} max={10} />',
+    notes: [
+      'Wraps a native `<input type="number">` in an `InputGroup` with − / + buttons. Forwards every native input attribute (`min`, `max`, `step`, `value`, `name`, …).',
+      'The buttons use `command="--step-up"`/`"--step-down"` on the existing command bus — no new global listeners — and the input calls native `stepUp()`/`stepDown()`, firing `input`/`change` so forms stay in sync.',
+      'Native Invoker Commands are Baseline; the bundled `installCommands()` polyfill is the fallback for older Safari.'
+    ]
+  },
+  {
+    slug: 'copy-button',
+    title: 'Copy Button',
+    section: 'Components',
+    category: 'Actions',
+    order: 10,
+    folder: 'copy-button',
+    description: 'One-tap copy-to-clipboard button with a CSS-only copied state.',
+    usage: '<CopyButton value="npm install kinu" />',
+    notes: [
+      'Pass `value` to copy a string, or `for` (a CSS selector) to copy another element’s `textContent`.',
+      'The idle and copied labels render via CSS `attr()` (`label` / `copiedLabel`), so the success state needs no JS text swap — the handler just toggles a `[copied]` attribute for ~1.2s.',
+      'SSR-safe: `navigator.clipboard` is only touched inside the click handler, which runs client-side.'
+    ]
+  },
+  {
+    slug: 'stat',
+    title: 'Stat',
+    section: 'Components',
+    category: 'Data Display',
+    order: 9,
+    folder: 'stat',
+    description: 'Metric block with a label, large value, and a trend-colored delta.',
+    usage: `<Stat>\n  <Stat.Label>Revenue</Stat.Label>\n  <Stat.Value>$48,200</Stat.Value>\n  <Stat.Delta trend="up">+12.5%</Stat.Delta>\n</Stat>`,
+    notes: [
+      'Pure CSS presentation. Compound parts: `Stat.Label`, `Stat.Value`, `Stat.Delta`.',
+      '`Stat.Delta` takes `trend` (`up` / `down` / `flat`) which colors it via the semantic success/destructive tokens.',
+      'Drops naturally into a `Grid` for dashboard stat rows.'
+    ]
+  },
+  {
+    slug: 'stepper',
+    title: 'Stepper',
+    section: 'Components',
+    category: 'Data Display',
+    order: 10,
+    folder: 'stepper',
+    description: 'Horizontal ordered steps with numbered markers and connectors.',
+    usage: `<Stepper>\n  <Stepper.Step state="complete">Cart</Stepper.Step>\n  <Stepper.Step state="current">Payment</Stepper.Step>\n  <Stepper.Step>Review</Stepper.Step>\n</Stepper>`,
+    notes: [
+      'Pure CSS: renders `<ol k="steps">` + `<li k="step">`. Markers are auto-numbered with CSS counters and joined by line connectors. Zero JavaScript.',
+      '`Stepper.Step` takes `state` (`upcoming` / `current` / `complete`): complete shows a check on a filled marker, current outlines it in the primary color.',
+      'Distinct from `Timeline` (vertical event feed) and `Progress` (continuous bar).'
+    ]
+  },
+  {
+    slug: 'indicator',
+    title: 'Indicator',
+    section: 'Components',
+    category: 'Data Display',
+    order: 11,
+    folder: 'indicator',
+    description: 'Corner overlay for notification counts or status dots.',
+    usage: `<Indicator>\n  <Avatar alt="JM" />\n  <Badge variant="destructive">3</Badge>\n</Indicator>`,
+    notes: [
+      'Pure CSS: a `<span k="indicator">` that positions a `Badge` child (or a `[dot]`) at a corner of whatever it wraps — an Avatar, Button, icon, etc.',
+      'Set `placement` (`top-end` default, `top-start`, `bottom-end`, `bottom-start`). Pass `dot` for a small status dot with no count.'
+    ]
+  },
+  {
+    slug: 'code',
+    title: 'Code',
+    section: 'Components',
+    category: 'Data Display',
+    order: 12,
+    folder: 'code',
+    description: 'Styled code block and inline code with an optional copy button.',
+    usage: `<Code language="tsx">\n  {snippet}\n  <Code.Copy />\n</Code>`,
+    notes: [
+      'Pure CSS chrome over `<pre>` (block) or `<code inline>` (inline) — mono font, surface, radius, horizontal scroll. Zero JavaScript for the base.',
+      '`Code.Copy` is a corner button (revealed on hover) that copies the enclosing block. Its label renders via CSS so it adds nothing to the copied text.',
+      'No highlighter in core. The seam is the advisory `language` attribute (an opt-in plugin can target `[k="code"][language]`) and/or passing pre-highlighted markup as children — `Prose` already styles nested `<pre><code>`.'
+    ]
+  },
+  {
+    slug: 'message',
+    title: 'Message',
+    section: 'Components',
+    category: 'Conversation',
+    order: 0,
+    folder: 'message',
+    description: 'Chat message bubble with author-driven color and alignment.',
+    usage: `<Message from="user">\n  <Message.Avatar>JM</Message.Avatar>\n  <Message.Bubble>Hello</Message.Bubble>\n</Message>`,
+    notes: [
+      'Pure CSS: `<div k="message" from="user|assistant|system">`. `from` flips alignment and colors the bubble (user = primary, assistant = muted, system = quiet italic).',
+      'Compound parts: `Message.Avatar` (a small round badge) and `Message.Bubble` (the content). Drop a `<Prose>` inside the bubble to render markdown.'
+    ]
+  },
+  {
+    slug: 'thread',
+    title: 'Thread',
+    section: 'Components',
+    category: 'Conversation',
+    order: 1,
+    folder: 'thread',
+    description: 'Message list that sticks to the bottom as new messages arrive.',
+    usage: `<Thread scrollable style={{height: '20rem'}}>\n  <Message from="user"><Message.Bubble>Hi</Message.Bubble></Message>\n</Thread>`,
+    notes: [
+      'Pass `scrollable` to make it a scroll container. New messages pin the viewport to the bottom via native scroll anchoring (a 1px bottom anchor) — no `scrollTo` loop and no JavaScript.',
+      'Progressive enhancement: where scroll anchoring is unsupported it degrades to a normal scroll container.',
+      'Fill it with `Message` components; size it with a height (or let it fill a flex parent).'
+    ]
+  },
+  {
+    slug: 'composer',
+    title: 'Composer',
+    section: 'Components',
+    category: 'Conversation',
+    order: 2,
+    folder: 'composer',
+    description: 'Chat input form — autosizing textarea with Enter-to-send.',
+    usage: `<Composer onSubmit={send}>\n  <Textarea autosize rows={1} placeholder="Message…" />\n  <Composer.Actions>\n    <Composer.Send>Send</Composer.Send>\n  </Composer.Actions>\n</Composer>`,
+    notes: [
+      'Renders a `<form k="composer">` around a `Textarea` (use `autosize` so it grows with content). Enter submits, Shift+Enter inserts a newline — a single delegated keydown calls `form.requestSubmit()`, and it is IME-safe.',
+      'Compound parts: `Composer.Send` (a submit button, pushed to the trailing edge) and `Composer.Actions` (a row for attach / model controls — compose `FileUpload`, `Select`, etc.).',
+      'No engine: a typing indicator is just `<Spinner>`, and suggestions are a `Cluster` of `Chip`. Bring your own submit handler.'
+    ]
+  },
+  {
+    slug: 'form',
+    title: 'Form',
+    section: 'Components',
+    category: 'Data Input',
+    order: 15,
+    folder: 'form',
+    description: 'Form wrapper that runs native validation before your submit handler.',
+    usage: `<Form onValid={save}>\n  <Field>...</Field>\n  <Button type="submit">Save</Button>\n</Form>`,
+    notes: [
+      'No form-state engine. On submit it runs `checkValidity()`: if the form is invalid it blocks submission and focuses the first invalid control; otherwise it calls `onValid` with the event.',
+      'Pairs with the native-validation CSS layer (`:user-invalid`) and `Field` / `Field.Error` — see the Forms & Validation page. You never manage `touched` or `errors` state.',
+      'Bring your own submit in `onValid` (e.g. `e.preventDefault()` then POST).'
+    ]
+  },
+  {
+    slug: 'command',
+    title: 'Command',
+    section: 'Components',
+    category: 'Actions',
+    order: 11,
+    folder: 'command',
+    description: 'Command palette — a modal Dialog hosting a filterable Listbox.',
+    usage: `<Dialog id="cmdk">\n  <Dialog.Trigger><Button>⌘K</Button></Dialog.Trigger>\n  <Command>\n    <Command.Input placeholder="Search…" />\n    <Command.List>\n      <Item>Search docs</Item>\n    </Command.List>\n  </Command>\n</Dialog>`,
+    notes: [
+      'A pure composition of shipped parts: a modal `Dialog` hosting a `Listbox`. The Listbox supplies substring filtering (`Command.Input`) and keyboard navigation; the Dialog supplies the modal + focus trap. No fuzzy-search engine.',
+      'Place it inside a `Dialog` and open with a `Dialog.Trigger` or a hotkey (`commandfor` + `command="show-modal"`).',
+      'Items are regular `Item`s, so they support `shortcut`, `destructive`, and `href`.'
+    ]
+  },
+  {
+    slug: 'hotkey',
+    title: 'Hotkey',
+    section: 'Components',
+    category: 'Actions',
+    order: 12,
+    folder: 'hotkey',
+    description: 'Bind a keyboard shortcut to a command — declaratively, no handlers.',
+    usage: '<Hotkey keys="mod+k" command="show-modal" commandfor="cmdk" />',
+    notes: [
+      'Renders nothing visible. One global keydown listener matches the pressed chord against `[data-hotkey]` and fires the element’s `command` on its `commandfor` target — reusing the command bus, with no per-app key handlers.',
+      'Chord syntax: `mod` (⌘ on Apple, Ctrl elsewhere), `alt`, `shift`, plus a key, joined with `+` — e.g. `mod+k`, `mod+shift+p`, `/`. Bare-key chords are ignored while typing in a field.',
+      'Pairs with `Command` (open a palette on ⌘K) and `Kbd` (display the shortcut). SSR-safe.'
+    ]
+  },
+  {
+    slug: 'tags-input',
+    title: 'Tags Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 16,
+    folder: 'tags-input',
+    description: 'Token / tags input that submits natively via a hidden field.',
+    usage: `<TagsInput name="tags" value={['design', 'frontend']} placeholder="Add a tag…" />`,
+    notes: [
+      'Type and press Enter (or the `separator`) to add a tag; Backspace on an empty field removes the last; click a chip’s × to remove it. Each change rewrites a hidden `<input name>` and fires `input`/`change`, so it submits with a normal form.',
+      'A single per-instance ref manages the chips imperatively — no framework state store. SSR-safe: tags render on mount.',
+      'The submitted value is the tags joined by `separator` (default `,`). API: `name`, `value` (string[]), `separator`, `max`, `duplicates`.'
+    ]
+  },
+  {
+    slug: 'password-input',
+    title: 'Password Input',
+    section: 'Components',
+    category: 'Data Input',
+    order: 17,
+    folder: 'password-input',
+    description: 'Native password input with a Show/Hide reveal toggle.',
+    usage: '<PasswordInput name="password" placeholder="Enter password" />',
+    notes: [
+      'A native `<input type="password">` in an `InputGroup` with a reveal toggle. Forwards every native input attribute.',
+      'The toggle rides the command bus (`command="--toggle-password"`) like NumberField — it flips the input `type` and a `[revealed]` attribute that drives the label. No new global listeners.',
+      'Pass `defaultRevealed` to start with the password visible.'
     ]
   }
 ];

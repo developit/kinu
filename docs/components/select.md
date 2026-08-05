@@ -32,6 +32,7 @@ import {Select} from 'kinu';
 
 - Leverages the platform picker on touch devices.
 - Supports native multiple and size attributes.
+- On Chromium (`@supports (appearance: base-select)`) it upgrades to a fully stylable dropdown — themed picker, hover/checked option states, rich option markup — and degrades to the native styled select everywhere else, with zero added JavaScript.
 
 ---
 

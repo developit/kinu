@@ -5,7 +5,16 @@ import {build} from 'vite';
 
 const rootDir = process.cwd();
 const outputRoot = resolve(rootDir, 'benchmarks/size/.tmp');
+const casesDir = resolve(outputRoot, 'cases');
 const resultsDir = resolve(rootDir, 'benchmarks/size/results');
+const componentsRoot = resolve(rootDir, 'src/components');
+
+// Per-component builds write to isolated outDirs, so they don't collide;
+// concurrency just trims wall-clock time. `BENCH_QUICK=1 pnpm bench:size`
+// (or `--quick`) skips the 60+ per-component builds for fast local iteration —
+// CI runs the full matrix so per-component size regressions surface on PRs.
+const COMPONENT_CONCURRENCY = Number(process.env.BENCH_CONCURRENCY) || 4;
+const QUICK = process.env.BENCH_QUICK === '1' || process.argv.includes('--quick');
 
 const scenarios = [
   {
@@ -55,9 +64,15 @@ function bundleSizes(buffer) {
   };
 }
 
-async function runScenario(scenario) {
-  const outDir = resolve(outputRoot, scenario.id);
+const emptyGroup = () => ({raw: 0, gzip: 0, brotli: 0});
 
+function addInto(group, sizes) {
+  group.raw += sizes.raw;
+  group.gzip += sizes.gzip;
+  group.brotli += sizes.brotli;
+}
+
+async function buildEntry(entry, outDir) {
   await build({
     configFile: false,
     logLevel: 'silent',
@@ -68,7 +83,7 @@ async function runScenario(scenario) {
       cssMinify: true,
       target: 'es2019',
       lib: {
-        entry: scenario.entry,
+        entry,
         formats: ['es'],
         fileName: 'bundle',
       },
@@ -77,61 +92,135 @@ async function runScenario(scenario) {
       },
     },
   });
+}
 
+// Measure JS and CSS outputs separately so reports (and the CI size action)
+// can attribute the runtime cost and the style cost independently.
+async function measureOutput(outDir) {
   const files = (await listFiles(outDir)).filter((file) =>
     /\.(js|css)$/.test(file),
   );
 
-  const assetSizes = [];
+  const js = emptyGroup();
+  const css = emptyGroup();
 
   for (const file of files) {
-    const content = await readFile(file);
-    assetSizes.push({
-      file: relative(rootDir, file),
-      ...bundleSizes(content),
-    });
+    const sizes = bundleSizes(await readFile(file));
+    addInto(file.endsWith('.css') ? css : js, sizes);
   }
 
-  return assetSizes.reduce(
-    (total, asset) => ({
-      raw: total.raw + asset.raw,
-      gzip: total.gzip + asset.gzip,
-      brotli: total.brotli + asset.brotli,
-    }),
-    {raw: 0, gzip: 0, brotli: 0},
-  );
+  return {
+    js,
+    css,
+    total: {
+      raw: js.raw + css.raw,
+      gzip: js.gzip + css.gzip,
+      brotli: js.brotli + css.brotli,
+    },
+  };
 }
 
-function formatTable(results) {
-  const header = [
-    '| Scenario | Raw (KiB) | Gzip (KiB) | Brotli (KiB) |',
-    '| --- | ---: | ---: | ---: |',
-  ];
+async function runScenario(scenario) {
+  const outDir = resolve(outputRoot, scenario.id);
+  await buildEntry(scenario.entry, outDir);
+  return measureOutput(outDir);
+}
 
-  const rows = results.map((result) =>
-    `| ${result.label} | ${toKiB(result.raw)} | ${toKiB(result.gzip)} | ${toKiB(result.brotli)} |`,
+async function listComponentDirs() {
+  const entries = await readdir(componentsRoot, {withFileTypes: true});
+  const names = [];
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    // Skip folders without an importable entry (e.g. `toast`, whose
+    // implementation lives in src/lib and is only re-exported here).
+    const files = await readdir(resolve(componentsRoot, entry.name));
+    if (files.includes('index.ts') || files.includes('index.tsx')) {
+      names.push(entry.name);
+    }
+  }
+
+  return names.sort();
+}
+
+// Generate a tiny entry that re-exports a single component (and pulls in the
+// side-effect `style.css` its index imports). Re-exporting — rather than
+// `import * as C; void C;` — keeps the component's JS in the bundle so its real
+// cost-when-used is measured; a voided namespace tree-shakes the body away,
+// leaving only the CSS side effect and under-reporting JS for logic components.
+async function writeComponentCase(name) {
+  const entry = resolve(casesDir, `${name}.ts`);
+  let importPath = relative(casesDir, resolve(componentsRoot, name)).split('\\').join('/');
+  if (!importPath.startsWith('.')) importPath = `./${importPath}`;
+  await writeFile(entry, `export * from '${importPath}';\n`, 'utf8');
+  return entry;
+}
+
+async function runComponent(name) {
+  const entry = await writeComponentCase(name);
+  const outDir = resolve(outputRoot, 'components', name);
+  await buildEntry(entry, outDir);
+  const sizes = await measureOutput(outDir);
+  return {id: name, label: name, ...sizes};
+}
+
+async function mapWithConcurrency(items, limit, fn) {
+  const results = new Array(items.length);
+  let next = 0;
+
+  async function worker() {
+    while (next < items.length) {
+      const index = next++;
+      results[index] = await fn(items[index], index);
+    }
+  }
+
+  await Promise.all(
+    Array.from({length: Math.min(limit, items.length)}, worker),
   );
 
-  return [...header, ...rows].join('\n');
+  return results;
+}
+
+function splitTable(firstColumn, rows) {
+  const header = [
+    `| ${firstColumn} | JS raw (KiB) | JS gzip (KiB) | CSS raw (KiB) | CSS gzip (KiB) | Total gzip (KiB) |`,
+    '| --- | ---: | ---: | ---: | ---: | ---: |',
+  ];
+
+  const body = rows.map(
+    (row) =>
+      `| ${row.label} | ${toKiB(row.js.raw)} | ${toKiB(row.js.gzip)} | ${toKiB(row.css.raw)} | ${toKiB(row.css.gzip)} | ${toKiB(row.total.gzip)} |`,
+  );
+
+  return [...header, ...body].join('\n');
 }
 
 async function main() {
   await rm(outputRoot, {recursive: true, force: true});
   await mkdir(outputRoot, {recursive: true});
+  await mkdir(casesDir, {recursive: true});
   await mkdir(resultsDir, {recursive: true});
 
   const results = [];
   for (const scenario of scenarios) {
     const sizes = await runScenario(scenario);
-    results.push({
-      id: scenario.id,
-      label: scenario.label,
-      ...sizes,
-    });
+    results.push({id: scenario.id, label: scenario.label, ...sizes});
+  }
+
+  let components = [];
+  if (!QUICK) {
+    const names = await listComponentDirs();
+    components = await mapWithConcurrency(
+      names,
+      COMPONENT_CONCURRENCY,
+      runComponent,
+    );
+    components.sort((a, b) => b.total.gzip - a.total.gzip);
   }
 
   const generatedAt = new Date().toISOString();
-  const payload = {generatedAt, results};
+  const payload = {generatedAt, results, components};
 
   await writeFile(
     resolve(resultsDir, 'latest.json'),
@@ -139,9 +228,29 @@ async function main() {
     'utf8',
   );
 
-  const table = formatTable(results);
-  const report = [`# Kinu size benchmarks`, '', `Generated at: ${generatedAt}`, '', table, ''].join('\n');
+  const sections = [
+    '# Kinu size benchmarks',
+    '',
+    `Generated at: ${generatedAt}`,
+    '',
+    '## Aggregate scenarios',
+    '',
+    splitTable('Scenario', results),
+    '',
+  ];
 
+  if (!QUICK) {
+    sections.push(
+      '## Per-component (isolated import)',
+      '',
+      'Each row is one component built in isolation — its JS plus the CSS its `style.css` pulls in. Use it to attribute size regressions and to check a component against its budget in `ROADMAP.md`. Run with `BENCH_QUICK=1` to skip this matrix.',
+      '',
+      splitTable('Component', components),
+      '',
+    );
+  }
+
+  const report = sections.join('\n');
   await writeFile(resolve(resultsDir, 'latest.md'), report, 'utf8');
 
   console.log(report);

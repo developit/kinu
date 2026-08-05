@@ -38,9 +38,11 @@
 /* Default size (when no size attribute or size="md") */
 [k="button"]:not([size]),
 [k="button"][size="md"] {
-  height: 2.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  /* Reference implementation of the --k-density scalar (FUN-6). Default 1
+     leaves this at 2.5rem / 1rem; lower it for compact dashboards. */
+  height: calc(2.5rem * var(--k-density));
+  padding-left: calc(1rem * var(--k-density));
+  padding-right: calc(1rem * var(--k-density));
 }
 
 [k="button"]:disabled {

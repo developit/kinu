@@ -1,33 +1,39 @@
-import {Button, toast} from 'kinu';
-import {useState} from 'preact/hooks';
-
-function logText(e: MouseEvent | string) {
-  const text =
-    e instanceof Event ? (e.currentTarget as HTMLElement).textContent! : e;
-  const title = e instanceof Event ? 'Selected item:' : 'Value:';
-  toast.show(text, {title});
-}
+import {Button, Field, Form, Input, toast} from 'kinu';
 
 export function Demo() {
-  const [email, _setEmail] = useState('');
-  const [name, _setName] = useState('');
   return (
-    <div>
-      <p>
-        Current values: {email && `Email: ${email}`} {name && `Name: ${name}`}
-      </p>
-      <Button
-        onClick={() => {
-          console.log('Form data:', {email, name});
-          logText(`Email: ${email}\nName: ${name}`);
-        }}
-      >
-        Submit Form
-      </Button>
-    </div>
+    <Form
+      onValid={(e) => {
+        e.preventDefault();
+        toast.show('Subscribed!', {title: 'Success'});
+      }}
+    >
+      <Field>
+        <Field.Label>
+          Email
+          <Input
+            type="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+          />
+        </Field.Label>
+        <Field.Error>Please enter a valid email address.</Field.Error>
+      </Field>
+      <Button type="submit">Subscribe</Button>
+    </Form>
   );
 }
 
-export const code = `<Button onClick={submit}>Submit Form</Button>`;
+export const code = `<Form onValid={handleSubmit}>
+  <Field>
+    <Field.Label>
+      Email
+      <Input type="email" name="email" required />
+    </Field.Label>
+    <Field.Error>Please enter a valid email.</Field.Error>
+  </Field>
+  <Button type="submit">Subscribe</Button>
+</Form>`;
 
 export default {Demo, code};

@@ -34,3 +34,14 @@
   field-sizing: content;
   resize: none;
 }
+
+/* Invalid state — post-interaction via :user-invalid, or explicit [invalid] */
+[k="textarea"]:user-invalid,
+[k="textarea"][invalid] {
+  border-color: hsl(var(--k-destructive));
+}
+
+[k="textarea"]:user-invalid:focus-visible,
+[k="textarea"][invalid]:focus-visible {
+  box-shadow: 0 0 0 2px hsl(var(--k-destructive));
+}

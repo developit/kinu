@@ -1,0 +1,30 @@
+/*
+ * kinu — Emerald theme.
+ * Import after the base stylesheet:
+ *   import 'kinu/style.css';
+ *   import 'kinu/themes/emerald.css';
+ * Overrides only the brand tokens; --k-primary-soft derives automatically.
+ */
+:where(:root),
+:where([data-color-scheme="light"]) {
+  --k-primary: 160 84% 39%;
+  --k-primary-foreground: 0 0% 100%;
+  --k-primary-hover: 160 84% 33%;
+  --k-ring: 160 84% 39%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(:root:not([data-color-scheme])) {
+    --k-primary: 158 64% 52%;
+    --k-primary-foreground: 160 60% 10%;
+    --k-primary-hover: 158 64% 58%;
+    --k-ring: 158 64% 52%;
+  }
+}
+
+:where([data-color-scheme="dark"]) {
+  --k-primary: 158 64% 52%;
+  --k-primary-foreground: 160 60% 10%;
+  --k-primary-hover: 158 64% 58%;
+  --k-ring: 158 64% 52%;
+}

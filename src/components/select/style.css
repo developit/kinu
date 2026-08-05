@@ -28,3 +28,66 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* Invalid state — post-interaction via :user-invalid, or explicit [invalid] */
+[k="select"]:user-invalid,
+[k="select"][invalid] {
+  border-color: hsl(var(--k-destructive));
+}
+
+[k="select"]:user-invalid:focus-visible,
+[k="select"][invalid]:focus-visible {
+  box-shadow: 0 0 0 2px hsl(var(--k-destructive));
+}
+
+/* Customizable select (Chromium): opt into the base-select appearance so the
+   dropdown picker and options can be styled with kinu tokens and accept rich
+   option markup. Gated behind @supports — where unsupported it stays the
+   native styled <select> above, with no added JS and no risk. (CON-3) */
+@supports (appearance: base-select) {
+  [k="select"],
+  [k="select"]::picker(select) {
+    appearance: base-select;
+  }
+
+  [k="select"]::picker(select) {
+    border: 1px solid hsl(var(--k-border));
+    border-radius: var(--k-radius);
+    background: hsl(var(--k-popover));
+    color: hsl(var(--k-popover-foreground));
+    padding: 0.25rem;
+    margin-block: 0.25rem;
+    box-shadow: 0 4px 16px hsl(var(--k-foreground) / 0.12);
+  }
+
+  [k="select"] option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.5rem;
+    border-radius: calc(var(--k-radius) - 2px);
+    cursor: pointer;
+  }
+
+  [k="select"] option:hover,
+  [k="select"] option:focus {
+    background: hsl(var(--k-accent));
+    color: hsl(var(--k-accent-foreground));
+  }
+
+  [k="select"] option:checked {
+    font-weight: 500;
+  }
+
+  [k="select"] option::checkmark {
+    display: none;
+  }
+
+  [k="select"]::picker-icon {
+    transition: transform 150ms var(--k-ease);
+  }
+
+  [k="select"]:open::picker-icon {
+    transform: rotate(180deg);
+  }
+}

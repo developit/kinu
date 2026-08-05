@@ -18,3 +18,14 @@
   font-size: 0.8125rem;
   color: hsl(var(--k-destructive));
 }
+
+/* Reveal the error only after interaction (:user-invalid) or an explicit
+   [invalid] attribute (e.g. a server-side error) — no "touched" state in JS. */
+[k="field"] [k="field-error"] {
+  display: none;
+}
+
+[k="field"]:has(:user-invalid) [k="field-error"],
+[k="field"]:has([invalid]) [k="field-error"] {
+  display: block;
+}

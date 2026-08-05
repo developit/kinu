@@ -49,6 +49,17 @@
   /* Radius */
   --k-radius: 0.5rem;
 
+  /* Spacing scale (theme-independent — used by layout primitives and gap props) */
+  --k-space-0: 0;
+  --k-space-xs: 0.25rem; /*  4px */
+  --k-space-sm: 0.5rem; /*  8px */
+  --k-space-md: 1rem; /* 16px */
+  --k-space-lg: 1.5rem; /* 24px */
+  --k-space-xl: 2.5rem; /* 40px */
+
+  /* Density scalar — multiplies control heights/padding (1 = default, <1 = compact) */
+  --k-density: 1;
+
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
   --k-ease-elastic: var(--k-ease-fallback);

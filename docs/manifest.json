@@ -45,6 +45,24 @@
     "description": ""
   },
   {
+    "slug": "forms",
+    "title": "Forms & Validation",
+    "section": "Foundations",
+    "category": "Forms",
+    "order": 4,
+    "file": "pages/forms.md",
+    "description": ""
+  },
+  {
+    "slug": "motion",
+    "title": "Motion & View Transitions",
+    "section": "Foundations",
+    "category": "Styling",
+    "order": 5,
+    "file": "pages/motion.md",
+    "description": ""
+  },
+  {
     "slug": "button",
     "title": "Button",
     "section": "Components",
@@ -61,6 +79,15 @@
     "order": 0,
     "file": "components/item.md",
     "description": "Generic selectable item for lists, menus, comboboxes, and more."
+  },
+  {
+    "slug": "message",
+    "title": "Message",
+    "section": "Components",
+    "category": "Conversation",
+    "order": 0,
+    "file": "components/message.md",
+    "description": "Chat message bubble with author-driven color and alignment."
   },
   {
     "slug": "badge",
@@ -88,6 +115,24 @@
     "order": 0,
     "file": "components/field.md",
     "description": "Layout wrapper that groups a label, control, description, and error message."
+  },
+  {
+    "slug": "stack",
+    "title": "Stack",
+    "section": "Components",
+    "category": "Layout",
+    "order": 0,
+    "file": "components/stack.md",
+    "description": "Vertical flow layout — a flex column with a token-based gap."
+  },
+  {
+    "slug": "thread",
+    "title": "Thread",
+    "section": "Components",
+    "category": "Conversation",
+    "order": 1,
+    "file": "components/thread.md",
+    "description": "Message list that sticks to the bottom as new messages arrive."
   },
   {
     "slug": "accordion",
@@ -144,6 +189,15 @@
     "description": "Hover/focus tooltip with placement attributes and CSS timing."
   },
   {
+    "slug": "cluster",
+    "title": "Cluster",
+    "section": "Components",
+    "category": "Layout",
+    "order": 1,
+    "file": "components/cluster.md",
+    "description": "Horizontal wrap row with a token-based gap — chip rows, button rows, toolbars."
+  },
+  {
     "slug": "list",
     "title": "List",
     "section": "Components",
@@ -160,6 +214,15 @@
     "order": 1,
     "file": "components/tabs.md",
     "description": "TabList, Tab, and TabPanel wrappers using aria attributes."
+  },
+  {
+    "slug": "composer",
+    "title": "Composer",
+    "section": "Components",
+    "category": "Conversation",
+    "order": 2,
+    "file": "components/composer.md",
+    "description": "Chat input form — autosizing textarea with Enter-to-send."
   },
   {
     "slug": "collapsible",
@@ -223,6 +286,15 @@
     "order": 2,
     "file": "components/aspect-ratio.md",
     "description": "Maintains responsive boxes at a fixed ratio using pure CSS."
+  },
+  {
+    "slug": "grid",
+    "title": "Grid",
+    "section": "Components",
+    "category": "Layout",
+    "order": 2,
+    "file": "components/grid.md",
+    "description": "Responsive auto-fit grid with a token-based gap — dashboards, card galleries."
   },
   {
     "slug": "popover",
@@ -315,6 +387,15 @@
     "description": "Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask."
   },
   {
+    "slug": "app-shell",
+    "title": "App Shell",
+    "section": "Components",
+    "category": "Layout",
+    "order": 3,
+    "file": "components/app-shell.md",
+    "description": "Full-page application scaffold — header, sidebar, main, and footer in a CSS grid."
+  },
+  {
     "slug": "scroll-area",
     "title": "Scroll Area",
     "section": "Components",
@@ -387,6 +468,15 @@
     "description": "Resizable container that exposes native CSS handles."
   },
   {
+    "slug": "row",
+    "title": "Row",
+    "section": "Components",
+    "category": "Layout",
+    "order": 4,
+    "file": "components/row.md",
+    "description": "Horizontal flow layout — a flex row with a token-based gap."
+  },
+  {
     "slug": "menubar",
     "title": "Menubar",
     "section": "Components",
@@ -430,6 +520,15 @@
     "order": 5,
     "file": "pages/toast.md",
     "description": ""
+  },
+  {
+    "slug": "center",
+    "title": "Center",
+    "section": "Components",
+    "category": "Layout",
+    "order": 5,
+    "file": "components/center.md",
+    "description": "Centers its content horizontally and vertically with CSS grid."
   },
   {
     "slug": "separator",
@@ -493,6 +592,15 @@
     "order": 6,
     "file": "components/sidebar.md",
     "description": "Responsive sidebar dialog that collapses on mobile."
+  },
+  {
+    "slug": "spacer",
+    "title": "Spacer",
+    "section": "Components",
+    "category": "Layout",
+    "order": 6,
+    "file": "components/spacer.md",
+    "description": "Flexible spacer that pushes siblings apart, or a fixed gap block."
   },
   {
     "slug": "context-menu",
@@ -567,6 +675,15 @@
     "description": "Side or bottom sheet overlay with directional variants."
   },
   {
+    "slug": "stat",
+    "title": "Stat",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 9,
+    "file": "components/stat.md",
+    "description": "Metric block with a label, large value, and a trend-colored delta."
+  },
+  {
     "slug": "label",
     "title": "Label",
     "section": "Components",
@@ -585,6 +702,24 @@
     "description": "Styled time input that shares the same foundation as Date Picker."
   },
   {
+    "slug": "copy-button",
+    "title": "Copy Button",
+    "section": "Components",
+    "category": "Actions",
+    "order": 10,
+    "file": "components/copy-button.md",
+    "description": "One-tap copy-to-clipboard button with a CSS-only copied state."
+  },
+  {
+    "slug": "stepper",
+    "title": "Stepper",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 10,
+    "file": "components/stepper.md",
+    "description": "Horizontal ordered steps with numbered markers and connectors."
+  },
+  {
     "slug": "textarea",
     "title": "Textarea",
     "section": "Components",
@@ -592,6 +727,24 @@
     "order": 10,
     "file": "components/textarea.md",
     "description": "Text area with matching input styling, variants, and sizes."
+  },
+  {
+    "slug": "command",
+    "title": "Command",
+    "section": "Components",
+    "category": "Actions",
+    "order": 11,
+    "file": "components/command.md",
+    "description": "Command palette — a modal Dialog hosting a filterable Listbox."
+  },
+  {
+    "slug": "indicator",
+    "title": "Indicator",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 11,
+    "file": "components/indicator.md",
+    "description": "Corner overlay for notification counts or status dots."
   },
   {
     "slug": "toggle",
@@ -603,6 +756,24 @@
     "description": "ARIA-pressed aware button for on/off interactions."
   },
   {
+    "slug": "hotkey",
+    "title": "Hotkey",
+    "section": "Components",
+    "category": "Actions",
+    "order": 12,
+    "file": "components/hotkey.md",
+    "description": "Bind a keyboard shortcut to a command — declaratively, no handlers."
+  },
+  {
+    "slug": "code",
+    "title": "Code",
+    "section": "Components",
+    "category": "Data Display",
+    "order": 12,
+    "file": "components/code.md",
+    "description": "Styled code block and inline code with an optional copy button."
+  },
+  {
     "slug": "toggle-group",
     "title": "Toggle Group",
     "section": "Components",
@@ -610,5 +781,50 @@
     "order": 12,
     "file": "components/toggle-group.md",
     "description": "Container that lets Toggle buttons coordinate pressed state."
+  },
+  {
+    "slug": "rating",
+    "title": "Rating",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 13,
+    "file": "components/rating.md",
+    "description": "Star rating built from a native radio group — form-associated, zero JavaScript."
+  },
+  {
+    "slug": "number-field",
+    "title": "Number Field",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 14,
+    "file": "components/number-field.md",
+    "description": "Native number input with stepper buttons driven by the command bus."
+  },
+  {
+    "slug": "form",
+    "title": "Form",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 15,
+    "file": "components/form.md",
+    "description": "Form wrapper that runs native validation before your submit handler."
+  },
+  {
+    "slug": "tags-input",
+    "title": "Tags Input",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 16,
+    "file": "components/tags-input.md",
+    "description": "Token / tags input that submits natively via a hidden field."
+  },
+  {
+    "slug": "password-input",
+    "title": "Password Input",
+    "section": "Components",
+    "category": "Data Input",
+    "order": 17,
+    "file": "components/password-input.md",
+    "description": "Native password input with a Show/Hide reveal toggle."
   }
 ]

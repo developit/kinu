@@ -25,6 +25,8 @@ import {Textarea} from 'kinu';
 | value | `string | number | readonly string[] | undefined` | — | Textarea value. |
 | onInput | `(event: InputEvent) => void` | — | Change handler for controlled textareas. |
 | disabled | `boolean` | — | Disables interactions and applies disabled styling. |
+| autosize | `boolean` | — | Grow the textarea to fit its content via native `field-sizing: content`
+(Chromium + Firefox; falls back to the fixed height elsewhere). |
 
 ## Notes
 

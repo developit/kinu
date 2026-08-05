@@ -101,6 +101,143 @@ export {AspectRatio} from './components/aspect-ratio';
 export type {AspectRatioProps, AspectRatioOwnProps} from './components/aspect-ratio/types';
 export {ScrollArea} from './components/scroll-area';
 export type {ScrollAreaProps, ScrollAreaOwnProps} from './components/scroll-area/types';
+export {Stack} from './components/stack';
+export type {
+  StackProps,
+  StackOwnProps,
+  StackGap,
+  StackAlign,
+  StackJustify,
+} from './components/stack/types';
+export {Cluster} from './components/cluster';
+export type {
+  ClusterProps,
+  ClusterOwnProps,
+  ClusterGap,
+  ClusterAlign,
+  ClusterJustify,
+} from './components/cluster/types';
+export {Grid} from './components/grid';
+export type {
+  GridProps,
+  GridOwnProps,
+  GridGap,
+  GridMin,
+  GridCols,
+} from './components/grid/types';
+export {AppShell} from './components/app-shell';
+export type {
+  AppShellProps,
+  AppShellOwnProps,
+  AppShellHeaderProps,
+  AppShellHeaderOwnProps,
+  AppShellSidebarProps,
+  AppShellSidebarOwnProps,
+  AppShellMainProps,
+  AppShellMainOwnProps,
+  AppShellFooterProps,
+  AppShellFooterOwnProps,
+} from './components/app-shell/types';
+export {Row} from './components/row';
+export type {
+  RowProps,
+  RowOwnProps,
+  RowGap,
+  RowAlign,
+  RowJustify,
+} from './components/row/types';
+export {Center} from './components/center';
+export type {CenterProps, CenterOwnProps} from './components/center/types';
+export {Spacer} from './components/spacer';
+export type {SpacerProps, SpacerOwnProps, SpacerSize} from './components/spacer/types';
+export {Rating} from './components/rating';
+export type {
+  RatingProps,
+  RatingOwnProps,
+  RatingSize,
+} from './components/rating/types';
+export {NumberField} from './components/number-field';
+export type {
+  NumberFieldProps,
+  NumberFieldOwnProps,
+} from './components/number-field/types';
+export {CopyButton} from './components/copy-button';
+export type {
+  CopyButtonProps,
+  CopyButtonOwnProps,
+} from './components/copy-button/types';
+export {Stat} from './components/stat';
+export type {
+  StatProps,
+  StatOwnProps,
+  StatLabelProps,
+  StatLabelOwnProps,
+  StatValueProps,
+  StatValueOwnProps,
+  StatDeltaProps,
+  StatDeltaOwnProps,
+  StatTrend,
+} from './components/stat/types';
+export {Stepper} from './components/stepper';
+export type {
+  StepperProps,
+  StepperOwnProps,
+  StepProps,
+  StepOwnProps,
+  StepState,
+} from './components/stepper/types';
+export {Indicator} from './components/indicator';
+export type {
+  IndicatorProps,
+  IndicatorOwnProps,
+  IndicatorPlacement,
+} from './components/indicator/types';
+export {Code} from './components/code';
+export type {
+  CodeProps,
+  CodeOwnProps,
+  CodeCopyProps,
+  CodeCopyOwnProps,
+} from './components/code/types';
+export {Message} from './components/message';
+export type {
+  MessageProps,
+  MessageOwnProps,
+  MessageFrom,
+  MessageBubbleProps,
+  MessageBubbleOwnProps,
+  MessageAvatarProps,
+  MessageAvatarOwnProps,
+} from './components/message/types';
+export {Thread} from './components/thread';
+export type {ThreadProps, ThreadOwnProps} from './components/thread/types';
+export {Composer} from './components/composer';
+export type {
+  ComposerProps,
+  ComposerOwnProps,
+  ComposerSendProps,
+  ComposerSendOwnProps,
+  ComposerActionsProps,
+  ComposerActionsOwnProps,
+} from './components/composer/types';
+export {Form} from './components/form';
+export type {FormProps, FormOwnProps} from './components/form/types';
+export {Command} from './components/command';
+export type {CommandProps, CommandOwnProps} from './components/command/types';
+export {Hotkey} from './components/hotkey';
+export type {HotkeyProps, HotkeyOwnProps} from './components/hotkey/types';
+export {installHotkeys, normalizeChord} from './lib/hotkeys';
+export {transition} from './lib/motion';
+export {TagsInput} from './components/tags-input';
+export type {
+  TagsInputProps,
+  TagsInputOwnProps,
+} from './components/tags-input/types';
+export {PasswordInput} from './components/password-input';
+export type {
+  PasswordInputProps,
+  PasswordInputOwnProps,
+} from './components/password-input/types';
 export {Popover, PopoverTrigger, PopoverContent, PopoverClose} from './components/popover';
 export type {
   PopoverProps,

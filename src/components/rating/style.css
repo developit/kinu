@@ -1,0 +1,70 @@
+@import "../../variables.css";
+
+/* Star rating = a styled native <input type="range">, zero JavaScript.
+   - The unfilled stars are the muted base background.
+   - The filled portion (up to the live value) is painted gold by the thumb's
+     box-shadow on WebKit and ::-moz-range-progress on Firefox — both follow the
+     native thumb, so no script reflects the value.
+   - A repeating star image masks the whole thing into N stars; N comes from the
+     `max` attribute via typed attr(), like ProgressRing. */
+[k="rating"] {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  --k-rating-star: 1.5rem;
+  width: calc(attr(max type(<number>), 5) * var(--k-rating-star));
+  height: var(--k-rating-star);
+  cursor: pointer;
+  overflow: hidden; /* clip the thumb's fill box-shadow to the stars row */
+  background: hsl(var(--k-muted-foreground) / 0.35);
+  --k-rating-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7-5.4-4.7 7.1-.6z'/%3E%3C/svg%3E")
+    left center / var(--k-rating-star) var(--k-rating-star) repeat-x;
+  -webkit-mask: var(--k-rating-mask);
+  mask: var(--k-rating-mask);
+}
+
+/* WebKit: a 1px full-height thumb whose huge leftward box-shadow paints every
+   star up to it gold. Clipped to the stars by the host's overflow:hidden. */
+[k="rating"]::-webkit-slider-runnable-track {
+  height: var(--k-rating-star);
+  background: transparent;
+}
+[k="rating"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 1px;
+  height: var(--k-rating-star);
+  background: hsl(var(--k-warning));
+  box-shadow: -100vw 0 0 100vw hsl(var(--k-warning));
+}
+
+/* Firefox: native progress fill */
+[k="rating"]::-moz-range-track {
+  height: var(--k-rating-star);
+  background: transparent;
+}
+[k="rating"]::-moz-range-progress {
+  height: var(--k-rating-star);
+  background: hsl(var(--k-warning));
+}
+[k="rating"]::-moz-range-thumb {
+  width: 0;
+  height: var(--k-rating-star);
+  border: none;
+  background: transparent;
+}
+
+[k="rating"]:focus-visible {
+  outline: 2px solid hsl(var(--k-ring));
+  outline-offset: 2px;
+}
+
+[k="rating"][readonly] {
+  pointer-events: none;
+}
+
+[k="rating"][data-size="sm"] {
+  --k-rating-star: 1.125rem;
+}
+[k="rating"][data-size="lg"] {
+  --k-rating-star: 2rem;
+}
