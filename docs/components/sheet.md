@@ -47,6 +47,8 @@ import {Sheet, SheetClose, SheetContent, SheetTrigger} from 'kinu';
 
 - Control the slide direction with the side attribute on SheetContent.
 - SheetClose attaches the close command to any child element.
+- On touch devices the sheet is swipeable — swipe it back toward the edge it came from to dismiss. The gesture is native CSS scroll-snapping, so momentum and snap-back come from the browser.
+- SheetContent wraps your children in a `[k="sheet-panel"]` element: the dialog is the swipe scroller and the panel is the surface, which keeps content in normal block flow at every breakpoint. Style through the panel if you target direct children (`[k="sheet-content"] > …`); descendant selectors are unaffected.
 
 ---
 

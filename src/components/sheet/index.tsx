@@ -1,7 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
-import {installCommands, installDialogsDropdowns} from '../../lib/commands';
+import {installCommands, installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import type {
   SheetOwnProps,
   SheetTriggerOwnProps,
@@ -15,6 +15,7 @@ const IdCtx = createContext<string | undefined>(undefined);
 export function Sheet({id: idProp, children}: SheetOwnProps) {
   installCommands();
   installDialogsDropdowns();
+  installSwipe();
   const gen = useId();
   const id = idProp ?? gen;
   return (
@@ -39,10 +40,17 @@ export function SheetTrigger({
 
 export function SheetContent({
   id,
+  children,
   ...props
 }: SheetContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog k="sheet-content" id={id || ctx} {...props} />;
+  // The dialog is the swipe scroll container; the panel wrapper holds user
+  // content in normal block flow (so nothing has to be neutralized for grid).
+  return (
+    <dialog k="sheet-content" id={id || ctx} {...props}>
+      <div k="sheet-panel">{children}</div>
+    </dialog>
+  );
 }
 
 export function SheetClose({

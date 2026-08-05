@@ -1557,6 +1557,23 @@ body .home-nav--marketing + * {
   overflow: hidden;
 }
 
+/* On touch, kinu's drawer is a swipeable scroll-snap container — don't fight
+ * it: restore the scroller geometry the overrides above disable, and size the
+ * carousel wrapper to the viewport instead of a percentage of the (taller,
+ * rail-included) scroller. */
+@media (hover: none) and (pointer: coarse) {
+  .kinu-home [k="drawer-content"].kh-app-maximized {
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    overflow-y: auto;
+  }
+  .kinu-home [k="drawer-content"].kh-app-maximized > div {
+    height: 100dvh;
+    margin: 0;
+  }
+}
+
 /* Carousel content fills the dialog body. CarouselContent in kinu
  * doesn't forward `class` to its inner element, so we target by
  * descending from the drawer instead. */
@@ -5002,8 +5019,10 @@ body .example-demo {
   border-right: 1px solid hsl(var(--k-border));
   background: hsl(var(--k-background));
   box-shadow: none;
-  display: flex;
-  flex-direction: column;
+  /* Grid (matching the component) — fixed-height header row + filling,
+     scrollable content row. */
+  display: grid;
+  grid-template-rows: auto 1fr;
   padding: 0 !important;
   gap: 0 !important;
   overflow: hidden;
@@ -5031,7 +5050,9 @@ body .example-demo {
   flex: 1;
   min-height: 0;
   overflow: auto;
-  overscroll-behavior: contain;
+  /* auto (not contain) so a vertical fling past the edge chains out to the
+     swipeable sidebar dialog, which is the page-boundary containment. */
+  overscroll-behavior: auto;
   padding: 2rem 1rem;
 }
 

@@ -1,5 +1,5 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
-import {installCommands, installDialogsDropdowns} from '../../lib/commands';
+import {installCommands, installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import type {SidebarOwnProps, SidebarTriggerOwnProps} from './types';
 import './style.css';
 
@@ -46,11 +46,6 @@ export const Sidebar = createSimpleComponent<'dialog', SidebarOwnProps>(
   () => {
     installCommands();
     installDialogsDropdowns();
-    // function mousedown(e: MouseEvent) {
-    //   if (el.contains(e.target as Node)) return;
-    //   el.removeAttribute('open');
-    // }
-    // addEventListener('mousedown', mousedown);
-    // return () => removeEventListener('mousedown', mousedown);
+    installSwipe();
   },
 );

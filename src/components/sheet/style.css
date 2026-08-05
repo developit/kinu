@@ -2,7 +2,7 @@
 
 [k="sheet-content"] {
   border: none;
-  padding: 1rem;
+  padding: 0;
   margin: 0;
   width: 20rem;
   max-width: 90vw;
@@ -28,6 +28,15 @@
     transform 300ms var(--k-ease),
     display 300ms allow-discrete,
     overlay 300ms allow-discrete;
+}
+
+/* The panel wrapper holds user content in normal block flow — no per-child
+ * layout neutralization. On desktop it simply fills the dialog; on touch it
+ * becomes the swipeable panel beside the rail (below). */
+[k="sheet-content"] > [k="sheet-panel"] {
+  box-sizing: border-box;
+  padding: 1rem;
+  min-height: 100%;
 }
 
 [k="sheet-content"][open] {
@@ -60,5 +69,88 @@
 @starting-style {
   [k="sheet-content"][open]::backdrop {
     opacity: 0;
+  }
+}
+
+/* Touch: the dialog becomes a horizontal scroll-snap scroller laid out as a
+   flex row — a full-viewport ::before rail in front of the panel wrapper. You
+   fling the panel into the rail to dismiss; scrollLeft 0 is the rail (dismiss),
+   scrollLeft max is the panel (open). The panel is a real element with its own
+   background and block-flow content, so no grid or background tricks are
+   needed. The dialog scrolls only horizontally (the swipe); the panel scrolls
+   its own content vertically, keeping the two gesture axes independent. */
+@media (hover: none) and (pointer: coarse) {
+  [k="sheet-content"] {
+    --swipe: x;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+    transform: none;
+    translate: 100% 0;
+    /* 2-D scroller: X scroll-snaps for the swipe, Y scrolls content freely.
+       The panel must NOT be its own scroll container — a nested scroller would
+       capture the horizontal gesture (overflow on one axis coerces the other
+       off `visible`) instead of letting the swipe chain to this dialog. */
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    transition:
+      translate 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
+  }
+  [k="sheet-content"]::-webkit-scrollbar {
+    display: none;
+  }
+  [k="sheet-content"]::before {
+    content: "";
+    flex: 0 0 100vw;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  [k="sheet-content"] > [k="sheet-panel"] {
+    flex: 0 0 min(20rem, 90vw);
+    background-color: hsl(var(--k-background));
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
+  }
+  [k="sheet-content"][open] {
+    display: flex;
+    translate: none;
+    animation: k-sheet-in 300ms var(--k-ease);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    [k="sheet-content"] {
+      scroll-timeline: --k-swipe inline;
+    }
+    [k="sheet-content"][open]::backdrop {
+      animation:
+        k-swipe-fade linear both,
+        k-swipe-fade 300ms var(--k-ease);
+      animation-timeline: --k-swipe, auto;
+    }
+  }
+}
+
+@keyframes k-sheet-in {
+  from {
+    translate: 100% 0;
+  }
+}
+
+@keyframes k-swipe-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

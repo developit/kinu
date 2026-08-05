@@ -120,7 +120,7 @@ export const Button = createSimpleComponent('button', 'button');
 - **Listbox**: Non-modal filterable list (inline command palette)
 - **Chip**: Badge with icon button
 - **ContextMenu**: Right-click menu
-- **Drawer**: Bottom sliding panel
+- **Drawer**: Bottom sliding panel (swipe-to-dismiss on touch)
 - **DropdownMenu**: Triggered action list
 - **HoverCard**: Card shown on hover
 - **Calendar**: Date selection input

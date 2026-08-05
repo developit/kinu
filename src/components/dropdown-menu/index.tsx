@@ -6,6 +6,7 @@ import {
   installAdaptiveCommands,
   installDialogsDropdowns,
   installMenuShortcuts,
+  installSwipe,
 } from '../../lib/commands';
 import {Item} from '../item';
 import type {
@@ -22,6 +23,7 @@ export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   installAdaptiveCommands();
   installDialogsDropdowns();
   installMenuShortcuts();
+  installSwipe();
   const gen = useId();
   const id = idProp ?? gen;
   return (

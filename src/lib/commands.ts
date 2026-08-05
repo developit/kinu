@@ -79,15 +79,33 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
 
   // close on backdrop click
   if (target.localName === 'dialog' && target.getAttribute('k')) {
+    const dialog = target as HTMLDialogElement;
+
+    // Swipe overlays span the whole viewport, so backdrop clicks land on the
+    // dialog itself. The rail occupies one full viewport-length of scroll; a
+    // click whose scroll-relative coordinate falls within it is a dismiss tap.
+    const swipe = getComputedStyle(dialog).getPropertyValue('--swipe').trim();
+    if (swipe) {
+      const inRail =
+        swipe === 'x' ? dialog.scrollLeft + e.clientX < dialog.clientWidth
+        : swipe === '-x' ? dialog.scrollLeft + e.clientX >= dialog.scrollWidth - dialog.clientWidth
+        : dialog.scrollTop + e.clientY < dialog.clientHeight;
+      if (inRail) {
+        dialog.close();
+        e.preventDefault();
+      }
+      return;
+    }
+
     const {clientX, clientY} = e;
-    const {left, right, top, bottom} = target.getBoundingClientRect();
+    const {left, right, top, bottom} = dialog.getBoundingClientRect();
     if (
       clientX < left ||
       clientX > right ||
       clientY < top ||
       clientY > bottom
     ) {
-      (target as HTMLDialogElement).close();
+      dialog.close();
       e.preventDefault();
       return;
     }
@@ -159,5 +177,70 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
     }
     e.preventDefault();
     break;
+  }
+}
+
+// Swipe-to-dismiss for overlay panels.
+//
+// CSS opts a dialog in by setting --swipe to a value encoding the axis and
+// direction: "y" (drawer, dismiss at scrollTop 0), "x" (sheet, dismiss at
+// scrollLeft 0), or "-x" (sidebar, dismiss at scrollLeft max). The JS here
+// is the whole control plane: jump the scroller to its open position on open,
+// close the dialog once a dismiss-fling settles. The gesture, momentum and
+// snap-back are all the browser's.
+const SWIPE = '[k="drawer-content"],[k="popover-content"],[k="dropdown-content"],[k="context-menu"],[k="sheet-content"],[k="sidebar"]';
+
+let swipeInstalled: boolean;
+export function installSwipe() {
+  if (swipeInstalled) return;
+  if (typeof document === 'undefined') return;
+  swipeInstalled = true;
+  addEventListener('beforetoggle', swipeToggle as EventListener, true);
+  addEventListener('scrollend', swipeSettle, true);
+  // Safari only shipped scrollend in 26.2, so older WebKit would never dismiss.
+  // Plain scroll is a sound substitute *here* because every dismiss position is
+  // a scroll boundary (offset 0, or max) and scroll-snap-stop leaves only one
+  // other resting position — the panel can't pass through the boundary en route
+  // to somewhere else, so arriving there is already proof of a dismiss. The
+  // difference is that a slow drag held at the boundary closes on arrival
+  // rather than on release, which is why this stays off where scrollend exists.
+  if (!('onscrollend' in document)) addEventListener('scroll', swipeSettle, true);
+}
+
+function swipeAxis(target: EventTarget | null) {
+  const el = target as Element | null;
+  if (!el?.matches?.(SWIPE)) return null;
+  const v = getComputedStyle(el).getPropertyValue('--swipe').trim();
+  return v ? {el: el as HTMLDialogElement, axis: v} : null;
+}
+
+function swipeToggle(e: ToggleEvent) {
+  if (e.newState !== 'open') return;
+  const s = swipeAxis(e.target);
+  if (!s) return;
+  s.el.style.transitionDuration = '';
+  requestAnimationFrame(() => {
+    const {el, axis} = s;
+    if (axis === '-x') el.scrollLeft = 0;
+    else if (axis === 'x') el.scrollLeft = el.scrollWidth - el.clientWidth;
+    else el.scrollTop = el.scrollHeight - el.clientHeight;
+  });
+}
+
+// Boundaries are compared with tolerance, not equality: Apple platforms keep
+// firing scroll events through a rubber-band overscroll with offsets that go
+// negative (or past max), and fractional device pixel ratios mean the resting
+// offset isn't reliably a whole number either.
+function swipeSettle(e: Event) {
+  const s = swipeAxis(e.target);
+  if (!s?.el.open) return;
+  const {el, axis} = s;
+  const dismissed =
+    axis === '-x' ? el.scrollLeft >= el.scrollWidth - el.clientWidth - 1
+    : axis === 'x' ? el.scrollLeft <= 0
+    : el.scrollTop <= 0;
+  if (dismissed) {
+    el.style.transitionDuration = '0s';
+    el.close();
   }
 }

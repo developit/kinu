@@ -6,13 +6,16 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 jobs:
   changeset:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # `changeset status` diffs against the base branch, which isn't in the
+          # default shallow clone.
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -21,9 +24,9 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - name: Check for changeset and post guidance
-        uses: changesets/action@v1
-        with:
-          version: pnpm version-packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Only verifies a changeset is present — it exits non-zero when one is
+      # missing. Versioning belongs to release.yml on main: running
+      # changesets/action here consumed the changeset, then failed pushing a
+      # changeset-release branch, which a read-only PR check can't do.
+      - name: Verify a changeset is present
+        run: pnpm exec changeset status --since=origin/${{ github.base_ref }}

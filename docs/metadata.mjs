@@ -366,7 +366,8 @@ export default [
     usage: `<Drawer>\n  <DrawerTrigger><Button>Open</Button></DrawerTrigger>\n  <DrawerContent>Content</DrawerContent>\n  <DrawerClose><Button>Close</Button></DrawerClose>\n</Drawer>`,
     notes: [
       'Positions content with CSS variables so you can change direction.',
-      'Attach Drawer.Close to any element that should dismiss.'
+      'Attach Drawer.Close to any element that should dismiss.',
+      'On touch devices the drawer is swipeable — swipe down to dismiss. The gesture uses native CSS scroll-snapping with no wrapper elements.'
     ]
   },
   {
@@ -607,7 +608,9 @@ export default [
     usage: `<Sheet>\n  <SheetTrigger><Button>Open</Button></SheetTrigger>\n  <SheetContent side="right">Panel</SheetContent>\n  <SheetClose><Button>Close</Button></SheetClose>\n</Sheet>`,
     notes: [
       'Control the slide direction with the side attribute on SheetContent.',
-      'SheetClose attaches the close command to any child element.'
+      'SheetClose attaches the close command to any child element.',
+      'On touch devices the sheet is swipeable — swipe it back toward the edge it came from to dismiss. The gesture is native CSS scroll-snapping, so momentum and snap-back come from the browser.',
+      'SheetContent wraps your children in a `[k="sheet-panel"]` element: the dialog is the swipe scroller and the panel is the surface, which keeps content in normal block flow at every breakpoint. Style through the panel if you target direct children (`[k="sheet-content"] > …`); descendant selectors are unaffected.'
     ]
   },
   {
@@ -621,7 +624,9 @@ export default [
     usage: `<Sidebar id="app-sidebar">\n  <nav>...</nav>\n</Sidebar>\n<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>`,
     notes: [
       'Renders a `<dialog>` so it can slide in as a modal on small screens.',
-      'SidebarTrigger toggles the hidden/open state with the command attribute.'
+      'SidebarTrigger toggles the hidden/open state with the command attribute.',
+      'In its mobile modal mode on touch devices the sidebar is swipeable — swipe left to dismiss. The gesture is native CSS scroll-snapping, so momentum and snap-back come from the browser.',
+      'Lays out as a grid, so direct children stack as rows. In the swipe mode the last child fills the remaining height and scrolls, which suits a fixed header followed by scrolling navigation.'
     ]
   },
   {

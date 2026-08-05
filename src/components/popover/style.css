@@ -142,6 +142,12 @@
     width: 100%;
     max-width: 100vw;
     min-width: 0;
+    /* Drawer-mode enter/exit is a pure slide; keep the panel opaque in the
+     * closed state. Without this, the desktop fade's `opacity: 0` base leaks
+     * in — and since drawer-mode transitions don't include opacity, closing
+     * snaps the panel invisible on the first frame and the slide-out is
+     * never seen. */
+    opacity: 1;
     /* dvh — see above. */
     max-height: 70dvh;
     /* Drawer-mode is its own scroll container; overscroll-behavior
@@ -220,6 +226,134 @@
     [k="context-menu"][mobile="drawer"][open]::backdrop {
       opacity: 0;
     }
+  }
+}
+
+/* Touch: mobile-drawer overlays become swipeable scroll-snap containers.
+   See drawer/style.css for the full design rationale. */
+@media (max-width: 640px) and (hover: none) and (pointer: coarse) {
+  [k="popover-content"][mobile="drawer"],
+  [k="dropdown-content"][mobile="drawer"],
+  [k="context-menu"][mobile="drawer"] {
+    --swipe: y;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    min-width: 0;
+    padding: 0 1rem;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    background-image:
+      radial-gradient(closest-side, hsl(var(--k-muted-foreground) / 0.35) 99%, transparent),
+      radial-gradient(circle var(--k-radius) at 100% 100%, hsl(var(--k-background)) calc(var(--k-radius) - 0.5px), transparent var(--k-radius)),
+      radial-gradient(circle var(--k-radius) at 0 100%, hsl(var(--k-background)) calc(var(--k-radius) - 0.5px), transparent var(--k-radius)),
+      linear-gradient(hsl(var(--k-background)), hsl(var(--k-background))),
+      linear-gradient(hsl(var(--k-background)), hsl(var(--k-background)));
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-position:
+      50% calc(100dvh + 0.5rem),
+      0 100dvh,
+      100% 100dvh,
+      50% 100dvh,
+      0 calc(100dvh + var(--k-radius));
+    background-size:
+      2rem 0.25rem,
+      var(--k-radius) var(--k-radius),
+      var(--k-radius) var(--k-radius),
+      calc(100% - 2 * var(--k-radius)) var(--k-radius),
+      100% 10000px;
+    transform: none;
+    translate: 0 100%;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+    transition:
+      translate 300ms var(--k-ease),
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete;
+  }
+  [k="popover-content"][mobile="drawer"]::-webkit-scrollbar,
+  [k="dropdown-content"][mobile="drawer"]::-webkit-scrollbar,
+  [k="context-menu"][mobile="drawer"]::-webkit-scrollbar {
+    display: none;
+  }
+  [k="popover-content"][mobile="drawer"]::before,
+  [k="dropdown-content"][mobile="drawer"]::before,
+  [k="context-menu"][mobile="drawer"]::before {
+    content: "";
+    flex: 0 0 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  [k="popover-content"][mobile="drawer"]::after,
+  [k="dropdown-content"][mobile="drawer"]::after,
+  [k="context-menu"][mobile="drawer"]::after {
+    content: "";
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
+  }
+  /* Geometric invariant, hence !important — see drawer/style.css. */
+  [k="popover-content"][mobile="drawer"] > *,
+  [k="dropdown-content"][mobile="drawer"] > *,
+  [k="context-menu"][mobile="drawer"] > * {
+    flex: none !important;
+  }
+  [k="popover-content"][mobile="drawer"] > :first-child,
+  [k="dropdown-content"][mobile="drawer"] > :first-child,
+  [k="context-menu"][mobile="drawer"] > :first-child {
+    margin-top: 1rem;
+  }
+  [k="popover-content"][mobile="drawer"] > :last-child,
+  [k="dropdown-content"][mobile="drawer"] > :last-child,
+  [k="context-menu"][mobile="drawer"] > :last-child {
+    margin-bottom: 1rem;
+  }
+  [k="popover-content"][mobile="drawer"][open],
+  [k="dropdown-content"][mobile="drawer"][open],
+  [k="context-menu"][mobile="drawer"][open] {
+    display: flex;
+    translate: none;
+    animation: k-swipe-in 300ms var(--k-ease);
+  }
+
+  /* Scroll-driven backdrop dimming — see drawer/style.css for rationale. */
+  @supports (animation-timeline: scroll()) {
+    [k="popover-content"][mobile="drawer"],
+    [k="dropdown-content"][mobile="drawer"],
+    [k="context-menu"][mobile="drawer"] {
+      scroll-timeline: --k-swipe block;
+    }
+    [k="popover-content"][mobile="drawer"][open]::backdrop,
+    [k="dropdown-content"][mobile="drawer"][open]::backdrop,
+    [k="context-menu"][mobile="drawer"][open]::backdrop {
+      animation:
+        k-swipe-fade linear both,
+        k-swipe-fade 300ms var(--k-ease);
+      animation-timeline: --k-swipe, auto;
+    }
+  }
+}
+
+/* Duplicated from drawer/style.css — component stylesheets load
+   independently, so each swipe consumer carries its own copy. */
+@keyframes k-swipe-in {
+  from {
+    translate: 0 100%;
+  }
+}
+
+@keyframes k-swipe-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
