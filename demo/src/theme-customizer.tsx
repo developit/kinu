@@ -3,6 +3,13 @@ import {Dialog, Button, Label, toast, Collapsible, Tooltip} from 'kinu';
 
 const CUSTOM_THEME_STORAGE_KEY = 'kinu-custom-theme';
 const CUSTOM_THEME_STYLE_ID = 'kinu-custom-style';
+const STYLE_ENGINE_STORAGE_KEY = 'kinu-style-engine';
+const DAISY_THEME_STORAGE_KEY = 'kinu-daisy-theme';
+const DAISY_ADAPTER_STYLE_ID = 'kinu-daisyui-adapter';
+const DAISY_ADAPTER_HREF = new URL('./daisyui-adapter.css', import.meta.url).href;
+const DAISY_THEMES = ['night', 'cupcake', 'business', 'nord', 'retro'] as const;
+
+type StyleEngine = 'kinu' | 'daisyui';
 
 /* ── hex→HSL helper ───────────────────────────────────────── */
 function hexToHsl(hex: string): [number, number, number] {
@@ -232,6 +239,20 @@ function applyCustomTheme(css: string) {
   document.head.appendChild(style);
 }
 
+function setDaisyAdapterEnabled(enabled: boolean) {
+  const existing = document.getElementById(DAISY_ADAPTER_STYLE_ID);
+  if (!enabled) {
+    existing?.remove();
+    return;
+  }
+  if (existing) return;
+  const link = document.createElement('link');
+  link.id = DAISY_ADAPTER_STYLE_ID;
+  link.rel = 'stylesheet';
+  link.href = DAISY_ADAPTER_HREF;
+  document.head.appendChild(link);
+}
+
 try {
   const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
   if (saved) applyCustomTheme(saved);
@@ -266,6 +287,19 @@ function Swatch({color, selected, onClick, label}: {
 
 /* ── Main component ───────────────────────────────────────── */
 export function ThemeCustomizer() {
+  const [styleEngine, setStyleEngine] = useState<StyleEngine>(() => {
+    try {
+      const saved = localStorage.getItem(STYLE_ENGINE_STORAGE_KEY);
+      return saved === 'daisyui' ? 'daisyui' : 'kinu';
+    } catch {}
+    return 'kinu';
+  });
+  const [daisyTheme, setDaisyTheme] = useState<string>(() => {
+    try {
+      return localStorage.getItem(DAISY_THEME_STORAGE_KEY) || 'night';
+    } catch {}
+    return 'night';
+  });
   const [settings, setSettings] = useState<ThemeSettings>(() => {
     try {
       const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
@@ -273,6 +307,28 @@ export function ThemeCustomizer() {
     } catch {}
     return {accentColor: 'blue', grayColor: 'slate', radius: 'medium', scaling: '100%'};
   });
+
+  useEffect(() => {
+    const usingDaisy = styleEngine === 'daisyui';
+    setDaisyAdapterEnabled(usingDaisy);
+    if (usingDaisy) {
+      document.documentElement.setAttribute('data-theme', daisyTheme);
+      applyCustomTheme('');
+    }
+    if (!usingDaisy) {
+      document.documentElement.removeAttribute('data-theme');
+      try {
+        const saved = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY) || '';
+        applyCustomTheme(saved);
+      } catch {
+        applyCustomTheme('');
+      }
+    }
+    try {
+      localStorage.setItem(STYLE_ENGINE_STORAGE_KEY, styleEngine);
+      localStorage.setItem(DAISY_THEME_STORAGE_KEY, daisyTheme);
+    } catch {}
+  }, [styleEngine, daisyTheme]);
 
   // const handlePaste = () => {
   //   const val = pasteRef.current?.value ?? '';
@@ -287,6 +343,10 @@ export function ThemeCustomizer() {
   // };
 
   const handleApply = () => {
+    if (styleEngine === 'daisyui') {
+      toast.show(`daisyUI theme: ${daisyTheme}`);
+      return;
+    }
     const css = generateCSS(settings);
     try {
       localStorage.setItem(CUSTOM_THEME_STORAGE_KEY, css);
@@ -297,6 +357,11 @@ export function ThemeCustomizer() {
   };
 
   const handleClear = () => {
+    if (styleEngine === 'daisyui') {
+      setDaisyTheme('night');
+      toast.show('daisyUI theme reset to night');
+      return;
+    }
     try {
       localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY);
       localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY + '-settings');
@@ -330,6 +395,55 @@ export function ThemeCustomizer() {
             </Dialog.Close>
           </div>
 
+          {/* Accent color */}
+          <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+            <Label>Style Engine</Label>
+            <div style={{display: 'flex', gap: '0.375rem', flexWrap: 'wrap'}}>
+              <Button
+                size="sm"
+                variant={styleEngine === 'kinu' ? null : 'outline'}
+                onClick={() => setStyleEngine('kinu')}
+              >
+                Kinu defaults
+              </Button>
+              <Button
+                size="sm"
+                variant={styleEngine === 'daisyui' ? null : 'outline'}
+                onClick={() => setStyleEngine('daisyui')}
+              >
+                DaisyUI adapter
+              </Button>
+            </div>
+            {styleEngine === 'daisyui' && (
+              <div style={{display: 'flex', flexDirection: 'column', gap: '0.375rem'}}>
+                <Label>
+                  Daisy theme: <strong>{daisyTheme}</strong>
+                </Label>
+                <div style={{display: 'flex', gap: '0.375rem', flexWrap: 'wrap'}}>
+                  {DAISY_THEMES.map((themeName) => (
+                    <Button
+                      key={themeName}
+                      size="sm"
+                      variant={daisyTheme === themeName ? null : 'outline'}
+                      onClick={() => setDaisyTheme(themeName)}
+                    >
+                      {themeName}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              opacity: styleEngine === 'daisyui' ? 0.55 : 1,
+              pointerEvents: styleEngine === 'daisyui' ? 'none' : 'auto',
+            }}
+          >
           {/* Accent color */}
           <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
             <Label>
@@ -423,10 +537,19 @@ export function ThemeCustomizer() {
               {generateCSS(settings)}
             </pre>
           </Collapsible>
+          </div>
 
           {/* Actions */}
           <div style="display:flex; gap:0.5rem; justifyContent:flex-end;">
-            <Button variant="outline" command="--toggle" commandFor="theme-css" style="margin-right:auto;">Generated CSS</Button>
+            <Button
+              variant="outline"
+              command="--toggle"
+              commandFor="theme-css"
+              style="margin-right:auto;"
+              disabled={styleEngine === 'daisyui'}
+            >
+              Generated CSS
+            </Button>
             <Button variant="outline" onClick={handleClear}>
               Reset
             </Button>
