@@ -33,8 +33,9 @@
 }
 
 [k="drawer-content"]::backdrop {
-  background-color: rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(1px);
+  background-color: hsl(var(--k-veil-bg));
+  backdrop-filter: var(--k-veil-blur);
+  -webkit-backdrop-filter: var(--k-veil-blur);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;

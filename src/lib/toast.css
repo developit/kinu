@@ -15,14 +15,18 @@
   bottom: 0;
   --scale: 1;
   --offset: 0;
-  background: hsl(var(--k-popover));
+  background: hsl(var(--k-glass-bg));
+  backdrop-filter: var(--k-glass-blur);
+  -webkit-backdrop-filter: var(--k-glass-blur);
   font-size: .875rem;
   height: 4rem;
   color: hsl(var(--k-popover-foreground) / 0.7);
-  border: 1px solid hsl(var(--k-border));
+  border: 0.5px solid hsl(var(--k-glass-border));
   border-radius: var(--k-radius);
   padding: 0.5rem 0.75rem;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  box-shadow:
+    inset 0 1px 0 hsl(var(--k-glass-highlight)),
+    0 12px 40px hsl(var(--k-glass-shadow));
   opacity: 0;
   transform: translateY(calc(100% + var(--offset))) scale(var(--scale));
   pointer-events: auto;
