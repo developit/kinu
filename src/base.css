@@ -177,16 +177,33 @@ label[k] {
  * each component's existing border-radius, so unsupported browsers simply keep
  * today's rounded corners. Revert globally: :root { --k-corner-shape: round }. */
 @supports (corner-shape: squircle) {
-  :root {
+  /* Matches the scopes variables.css declares the defaults on — :root plus any
+   * [data-color-scheme] subtree — so a scoped subtree doesn't fall back to the
+   * layered `round` default and render circular corners inside a squircle page.
+   * :where() keeps this at zero specificity, so :root or a theme still wins. */
+  :where(:root, [data-color-scheme="light"]) {
     --k-corner-shape: squircle;
   }
 
   /* Squircle compensation. A squircle cuts its corner less deeply than a circle
    * of the same radius, so matching the corner depth needs r × (1 + 2^(-1/4)).
-   * Declared on kinu elements as well as :root so a --k-radius scoped to a
-   * subtree is compensated too. */
-  :where(:root, [k]) {
-    --k-corner-radius: calc(var(--k-radius) * 1.8408964);
+   * Declared on the same scopes as the shape above: the --k-radius-1..4 ramp
+   * resolves wherever variables.css declares it, so the anchor has to be
+   * compensated at each of those points or the ramp recomputes uncompensated.
+   *
+   * The modifier is the *fallback* of --k-corner-scale rather than a literal,
+   * so anything that restyles the corner turns the compensation off by setting
+   * `--k-corner-scale: 1` — no !important and no specificity contest, since
+   * that is then the only declaration of the variable. Any theme that changes
+   * --k-corner-shape must set it, or it would keep squircle-sized radii on a
+   * corner that is no longer a squircle. */
+  :where(:root, [data-color-scheme="light"]) {
+    /* A [data-color-scheme="light"] subtree resets to kinu's defaults, so the
+     * scale resets with them — otherwise a theme's `1` would inherit past the
+     * reset and leave that subtree drawing squircles at un-scaled radii.
+     * `initial` makes the var() above fall back to the modifier again. */
+    --k-corner-scale: initial;
+    --k-corner-radius: calc(var(--k-radius) * var(--k-corner-scale, 1.8408964));
   }
   :where(
     [k="button"],

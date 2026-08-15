@@ -53,6 +53,12 @@ behaviour:
   exactly the radii they do today. Components too small to hold the larger
   radius cap it, so checkboxes, kbd, badges, tabs, toggles, skeletons and the
   date/time inputs keep their shape instead of clamping to pills.
+- **Restyling corners turns the scaling off with `--k-corner-scale: 1`.** The
+  scaling is only correct while the corners really are squircles, so anything
+  that sets `--k-corner-shape` should set this alongside it. kinu reads it as
+  the fallback of the modifier, so setting it anywhere wins outright — no
+  `!important`, no specificity contest. The bundled claw theme sets both: its
+  radii come from Claude's design tokens, which were drawn as circular arcs.
 - Modal scrims (dialog, drawer, sheet, sidebar and the adaptive mobile drawers)
   animate their blur in step with the dimming instead of snapping to full
   strength on the first frame, and it tracks the gesture while swiping. The
