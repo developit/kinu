@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="menubar"] {
   display: flex;
   gap: 0.5rem;

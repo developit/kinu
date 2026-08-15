@@ -7,6 +7,16 @@
  *
  * A theme is just a stylesheet with `[data-theme="x"] { --k-* }` rules.
  * No `:root` prefix or `:where()` tricks needed.
+ *
+ * ── Import this file exactly once, from base.css ──
+ * Do NOT add `@import "../../variables.css"` to component stylesheets.
+ * The bundler de-duplicates a repeated plain @import, but it cannot do so
+ * once the file is wrapped in `@layer` — layer ordering is positional, so
+ * every import has to be preserved. With 60+ components importing it, the
+ * whole token block was being inlined 60+ times and dist/index.css grew
+ * from ~70kB to ~400kB. base.css is imported first by src/index.ts, so the
+ * tokens (and the `tokens` layer's position) are established before any
+ * component CSS regardless.
  */
 @layer tokens {
 :where(:root),

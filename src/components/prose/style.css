@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="prose"] {
   --k-prose-spacing: 1em;
   --k-prose-font: inherit;

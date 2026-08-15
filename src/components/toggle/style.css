@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="toggle"] {
   appearance: none;
   border: 1px solid hsl(var(--k-input));

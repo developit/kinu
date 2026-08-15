@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="dialog-content"] {
   --modal: 1;
   border: none;

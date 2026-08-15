@@ -1,3 +1,7 @@
+/* The one and only import of the design tokens — component stylesheets
+ * deliberately don't import them (see the note at the top of variables.css).
+ * src/index.ts imports this file first, so the tokens and the `tokens` layer
+ * are in place before any component CSS. */
 @import "./variables.css";
 
 /* Basic reset for components to ensure consistent behavior */

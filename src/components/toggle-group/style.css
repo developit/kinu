@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="toggle-group"] {
   display: inline-flex;
   gap: 0;

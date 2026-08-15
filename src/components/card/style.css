@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="card"] {
   border-radius: var(--k-radius);
   border: 1px solid hsl(var(--k-border));

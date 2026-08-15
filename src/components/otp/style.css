@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="otp"] {
   --k-otp-cell: 2.5rem;
   --k-otp-len: attr(maxlength type(<number>), 4);
