@@ -201,13 +201,15 @@
   [k="dropdown-content"][mobile="drawer"]::backdrop,
   [k="context-menu"][mobile="drawer"]::backdrop {
     background-color: rgb(0 0 0 / 0.8);
-    backdrop-filter: blur(1px);
+    /* Ramped with the scrim — see dialog/style.css for the rationale. */
+    backdrop-filter: blur(0);
     overscroll-behavior: contain;
     overflow: auto;
     scrollbar-width: none;
     opacity: 0;
     transition:
       opacity 300ms var(--k-ease),
+      backdrop-filter 300ms var(--k-ease),
       display 300ms allow-discrete,
       overlay 300ms allow-discrete;
   }
@@ -216,21 +218,25 @@
   [k="dropdown-content"][mobile="drawer"][open]::backdrop,
   [k="context-menu"][mobile="drawer"][open]::backdrop {
     opacity: 1;
+    backdrop-filter: var(--k-backdrop-blur);
   }
 
   @starting-style {
     [k="popover-content"][mobile="drawer"][open]::backdrop {
       opacity: 0;
+      backdrop-filter: blur(0);
     }
   }
   @starting-style {
     [k="dropdown-content"][mobile="drawer"][open]::backdrop {
       opacity: 0;
+      backdrop-filter: blur(0);
     }
   }
   @starting-style {
     [k="context-menu"][mobile="drawer"][open]::backdrop {
       opacity: 0;
+      backdrop-filter: blur(0);
     }
   }
 }
@@ -354,12 +360,15 @@
   }
 }
 
+/* See drawer/style.css — the blur tracks the swipe alongside the dimming. */
 @keyframes k-swipe-fade {
   from {
     opacity: 0;
+    backdrop-filter: blur(0);
   }
   to {
     opacity: 1;
+    backdrop-filter: var(--k-backdrop-blur);
   }
 }
 

@@ -44,23 +44,29 @@
 
 [k="dialog-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(1px);
+  /* Blur ramps with the scrim (see the [open] rule) so the two read as one
+   * effect. Left static, it reaches full strength on the first frame and holds
+   * until display:none — a hard pop in, and a snap back to sharp on close. */
+  backdrop-filter: blur(0);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;
   opacity: 0;
   transition:
     opacity 300ms var(--k-ease),
+    backdrop-filter 300ms var(--k-ease),
     display 300ms allow-discrete,
     overlay 300ms allow-discrete;
 }
 
 [k="dialog-content"][open]::backdrop {
   opacity: 1;
+  backdrop-filter: var(--k-backdrop-blur);
 }
 
 @starting-style {
   [k="dialog-content"][open]::backdrop {
     opacity: 0;
+    backdrop-filter: blur(0);
   }
 }

@@ -37,6 +37,11 @@ behaviour:
   elevation scale (`--k-shadow-sm/md/lg`), and translucent "material" surfaces
   on floating menus, hover cards and toasts — all respecting
   `prefers-reduced-transparency`, `prefers-contrast` and `forced-colors`.
+- Modal scrims (dialog, drawer, sheet, sidebar and the adaptive mobile drawers)
+  animate their blur in step with the dimming instead of snapping to full
+  strength on the first frame, and it tracks the gesture while swiping. The
+  radius is exposed as `--k-backdrop-blur`, and drops to `none` under
+  `prefers-reduced-transparency` and `forced-colors`.
 - Fully themed `<select>` drop-down where `appearance: base-select` is
   supported: kinu's overlay treatment, item-styled options and a tinted
   `::checkmark`, with no JavaScript. Other engines keep the native popup.

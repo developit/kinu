@@ -181,6 +181,10 @@
    * @supports + reduced-transparency/contrast guards). */
   --k-material-blur: saturate(180%) blur(20px);
   --k-material-opacity: 0.8;
+  /* Blur behind modal scrims (dialog, drawer, sheet, sidebar and the adaptive
+   * mobile drawers). Animated in step with the scrim's opacity, so it is
+   * proportional at every frame instead of snapping to full strength. */
+  --k-backdrop-blur: blur(1px);
 
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
