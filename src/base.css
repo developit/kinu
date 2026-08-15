@@ -240,6 +240,15 @@ label[k] {
   }
 }
 
+/* Modal scrims keep their dimming, but drop the blur when the user asks for
+ * reduced transparency — the scrim alone already separates the layers. */
+@media (prefers-reduced-transparency: reduce) {
+  :where([k])::backdrop {
+    --k-backdrop-blur: none;
+    backdrop-filter: none;
+  }
+}
+
 @media (forced-colors: active) {
   :where(
     [k="card"],
@@ -255,6 +264,11 @@ label[k] {
   ) {
     box-shadow: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  :where([k])::backdrop {
+    --k-backdrop-blur: none;
     backdrop-filter: none;
   }
 }

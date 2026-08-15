@@ -98,7 +98,7 @@
   }
   [k="sidebar"]::backdrop {
     background-color: rgb(0 0 0 / 0.8);
-    backdrop-filter: blur(1px);
+    backdrop-filter: var(--k-backdrop-blur);
     overscroll-behavior: contain;
     overflow: auto;
     scrollbar-width: none;
@@ -203,11 +203,14 @@
   }
 }
 
+/* See drawer/style.css — the blur tracks the swipe alongside the dimming. */
 @keyframes k-swipe-fade {
   from {
     opacity: 0;
+    backdrop-filter: blur(0);
   }
   to {
     opacity: 1;
+    backdrop-filter: var(--k-backdrop-blur);
   }
 }
