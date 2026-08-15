@@ -33,21 +33,26 @@ behaviour:
 
 **Styling and platform polish**
 
-- Squircle corners (`corner-shape`) on rounded-rectangle surfaces, a themeable
-  elevation scale (`--k-shadow-sm/md/lg`), and translucent "material" surfaces
-  on floating menus, hover cards and toasts — all respecting
-  `prefers-reduced-transparency`, `prefers-contrast` and `forced-colors`.
+- Squircle corners (`corner-shape`) on rounded-rectangle surfaces, and
+  translucent "material" surfaces on floating menus, hover cards and toasts —
+  all respecting `prefers-reduced-transparency`, `prefers-contrast` and
+  `forced-colors`.
+- The elevation scale (`--k-shadow-1/2/3`) is now tinted from a single hue
+  rather than pure black: retune every elevated surface by moving
+  `--k-shadow-hsl` alone, and it darkens automatically under
+  `prefers-contrast`. Values and role ordering are unchanged, so themes that
+  override the three tokens (like claw) are unaffected.
 - **Radii are compensated for squircles.** A squircle cuts its corner less
   deeply than a circle of the same radius, so corners read as under-rounded
-  once `corner-shape` applies. Components now use a derived
-  `--k-corner-radius`, which inside `@supports (corner-shape: squircle)`
+  once `corner-shape` applies. The `--k-radius-1..4` ramp now hangs off a
+  derived `--k-corner-radius`, which inside `@supports (corner-shape: squircle)`
   resolves to `calc(var(--k-radius) * 1.8408964)` — the ratio that matches
-  corner depth, `1 + 2^(-1/4)`. `--k-radius`
-  keeps its meaning and its `0.5rem` default, so you still theme in
-  round-corner terms and browsers without `corner-shape` render exactly the
-  radii they do today. Components too small to hold the larger radius cap it,
-  so checkboxes, kbd, badges, toggles, skeletons and the date/time inputs keep
-  their shape instead of clamping to pills.
+  corner depth, `1 + 2^(-1/4)` — so every step of the ramp is compensated at
+  once. `--k-radius` keeps its meaning and its `0.5rem` default, so you still
+  theme in round-corner terms and browsers without `corner-shape` render
+  exactly the radii they do today. Components too small to hold the larger
+  radius cap it, so checkboxes, kbd, badges, tabs, toggles, skeletons and the
+  date/time inputs keep their shape instead of clamping to pills.
 - Modal scrims (dialog, drawer, sheet, sidebar and the adaptive mobile drawers)
   animate their blur in step with the dimming instead of snapping to full
   strength on the first frame, and it tracks the gesture while swiping. The
