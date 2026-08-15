@@ -32,7 +32,17 @@ treatment — button, slider thumb, tab, chip, tree, listbox — keep their own
 rules. `--k-focus-border` defaults to the resting border colour, so the default
 focus appearance is unchanged.
 
-A reference theme built against these hooks lands at `src/themes/claw.css`. It
-is not part of the package exports and is not included in the published CSS
-bundle, so for now it is a worked example to copy from rather than a stylesheet
-you can import from `kinu`.
+**Bundled themes.** Themes now ship as their own stylesheets under a
+`kinu/themes/*.css` subpath, so you can pull one in next to the base CSS:
+
+```js
+import 'kinu/style.css';
+import 'kinu/themes/claw.css';
+```
+
+Then set `data-theme` on the root element — `<html data-theme="claw">` — to
+activate it. Importing a theme without setting the attribute costs you nothing
+but the bytes; the stylesheet only declares `[data-theme="…"]` rules.
+
+The first bundled theme is `claw`, a monochromatic Claude Code-style design
+system, which doubles as the worked example for what these hooks can do.
