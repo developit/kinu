@@ -99,8 +99,15 @@ label[k] {
 }
 
 /* Text selection — brand-tinted by default; themes retune via
- * --k-selection-bg. */
-::selection {
+ * --k-selection-bg. Scoped to kinu elements so the host page keeps its own
+ * selection colour, same as the scrollbar and reduced-motion rules.
+ *
+ * Both selectors are needed: the first covers text belonging to the kinu
+ * element itself, the second its descendants. ::selection does inherit from
+ * the originating element's parent, but only among elements that match a
+ * ::selection rule — nesting alone doesn't carry it down. */
+:where([k])::selection,
+:where([k]) ::selection {
   background: var(--k-selection-bg);
 }
 

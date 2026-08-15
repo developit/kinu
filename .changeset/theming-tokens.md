@@ -34,7 +34,7 @@ backs it, and avatar initials take a plain `font-size`: the em-multiplier the
 initials are built on stays internal, so a px value can no longer be fed through
 it and blow the glyph up.
 
-Text selection is now styled from `--k-selection-bg`. Unlike kinu's scrollbar
-styling, which is scoped to elements marked `scrollable`, this rule is a bare
-`::selection` and so applies to the whole document, not only kinu components.
-Set `--k-selection-bg` to `Highlight` to hand selection back to the browser.
+Text selection inside kinu components is now tinted from `--k-selection-bg`.
+Like the scrollbar styling, the rule is scoped to kinu elements and their
+contents, so selection elsewhere on your page keeps the browser's colour. Set
+`--k-selection-bg` to `Highlight` to opt kinu's own components back out.
