@@ -1,7 +1,7 @@
 [k="select"] {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-input));
   background-color: hsl(var(--k-background));
   height: var(--k-control-h, 2.5rem);
@@ -45,7 +45,7 @@
 
   [k="select"]::picker(select) {
     border: 1px solid hsl(var(--k-border));
-    border-radius: calc(var(--k-radius) + 0.25rem);
+    border-radius: calc(var(--k-radius-3) + 0.25rem);
     corner-shape: var(--k-corner-shape);
     background-color: hsl(var(--k-popover));
     color: hsl(var(--k-popover-foreground));
@@ -79,7 +79,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.375rem 0.5rem;
-    border-radius: calc(var(--k-radius) - 0.125rem);
+    border-radius: calc(var(--k-radius-3) - 0.125rem);
     font-size: 0.875rem;
     cursor: pointer;
   }

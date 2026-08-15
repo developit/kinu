@@ -4,7 +4,7 @@
   justify-content: center;
   gap: 0.5rem;
   white-space: nowrap;
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   font-size: 0.875rem;
   font-weight: 500;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;

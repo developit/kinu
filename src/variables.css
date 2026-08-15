@@ -68,21 +68,41 @@
   --k-ring: 222.2 84% 4.9%;
 
   /* Radius */
+  /* Corner radius, in round-corner terms — set this to whatever you'd pick for
+   * circular corners. Components don't read it directly; they read
+   * --k-corner-radius below, which compensates it when squircles are active. */
   --k-radius: 0.5rem;
+
+  /* The radius components actually apply.
+   *
+   * A squircle is the superellipse |x|^4 + |y|^4 = r^4; `round` is the circle
+   * |x|^2 + |y|^2 = r^2. At the same r the squircle bulges toward the corner,
+   * cutting it less deeply, so a squircle reads as under-rounded. base.css
+   * scales this up inside @supports (corner-shape: squircle) by the ratio that
+   * matches corner depth — the setback along the 45° diagonal, r(1 - 2^(-1/k)),
+   * which with a = 2^(-1/4) collapses to (1 - a²)/(1 - a) = 1 + 2^(-1/4).
+   *
+   * Where squircles aren't supported and corners really are circular, it stays
+   * equal to --k-radius, so those browsers keep the unscaled radii they were
+   * designed with. The ramp below hangs off this rather than --k-radius, so
+   * every step inherits the compensation. */
+  --k-corner-radius: var(--k-radius);
 
   /* Radius scale — a 4-step ramp expressed as offsets off --k-radius, so a
      single knob (--k-radius) shifts the whole set, while any individual step
      can be re-pinned for a bespoke ramp (e.g. `--k-radius-1: 0`). Step 3 is
      --k-radius itself; components use `var(--k-radius)` for the default and
      reach for a numbered step only when they want a tighter/looser corner.
+     Steps hang off --k-corner-radius (the squircle-compensated anchor), not
+     --k-radius directly, so the whole ramp is compensated.
        1  tightest (inner controls, swatches)
        2  tight    (buttons-in-groups, badges, items, tabs, kbd, tooltip)
        3  default  (== --k-radius)
        4  loose    (floating menus: dropdown, listbox) */
-  --k-radius-1: calc(var(--k-radius) - 4px);
-  --k-radius-2: calc(var(--k-radius) - 2px);
-  --k-radius-3: var(--k-radius);
-  --k-radius-4: calc(var(--k-radius) + 4px);
+  --k-radius-1: calc(var(--k-corner-radius) - 4px);
+  --k-radius-2: calc(var(--k-corner-radius) - 2px);
+  --k-radius-3: var(--k-corner-radius);
+  --k-radius-4: calc(var(--k-corner-radius) + 4px);
 
   /* Focus appearance — used by input, textarea, select, switch, radio,
      otp, toggle, color-picker (and the input-group wrapper):

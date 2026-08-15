@@ -1,5 +1,5 @@
 [k="card"] {
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-border));
   background-color: hsl(var(--k-card));
   color: hsl(var(--k-card-foreground));
