@@ -9,7 +9,7 @@
   background: hsl(var(--k-muted));
   color: hsl(var(--k-muted-foreground));
   padding: 3px;
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   gap: 2px;
 }
 

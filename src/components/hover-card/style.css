@@ -12,7 +12,7 @@
   transform-origin: top center;
   background-color: hsl(var(--k-popover));
   color: hsl(var(--k-popover-foreground));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-border));
   padding: 0.5rem;
   margin-top: 0.25rem;
