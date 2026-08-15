@@ -1,3 +1,14 @@
+/*
+ * kinu's default tokens live in a `@layer tokens` so that themes (and
+ * consumer overrides) can override them without specificity hacks.
+ *
+ * - kinu's defaults: layered (lowest priority)
+ * - themes / consumer overrides: unlayered (always win)
+ *
+ * A theme is just a stylesheet with `[data-theme="x"] { --k-* }` rules.
+ * No `:root` prefix or `:where()` tricks needed.
+ */
+@layer tokens {
 :where(:root),
 :where([data-color-scheme="light"]) {
   /* Base colors */
@@ -48,6 +59,53 @@
 
   /* Radius */
   --k-radius: 0.5rem;
+
+  /* Focus appearance — used by input, textarea, select, switch, radio,
+     otp, toggle, color-picker (and the input-group wrapper):
+       --k-focus-ring     box-shadow on :focus-visible
+       --k-focus-border   border-color on :focus-visible
+     Themes override these to restyle every input-like component at
+     once. Components with intentionally bespoke focus styles
+     (button, slider thumb, tab, chip, tree, listbox) keep their own
+     rules.
+     --k-focus-border defaults to the same colour as the resting
+     border (`--k-input`), so kinu base shows no border colour change
+     on focus — only themes that want it (like claw) opt in. */
+  --k-focus-ring: 0 0 0 2px hsl(var(--k-ring));
+  --k-focus-border: hsl(var(--k-input));
+
+  /* ── Density tokens ──────────────────────────────────────────
+   * Sized for desktop comfort by default. The values below are the
+   * `md` ramp; `sm` and `lg` ramps live further down.
+   *
+   *   --k-row-h          height of menu/list rows ([k="item"])
+   *   --k-row-font       row text size
+   *   --k-row-px         row horizontal padding
+   *   --k-row-gap        row internal icon-text gap
+   *   --k-control-h      buttons / inputs / select baseline (md size)
+   *   --k-control-h-sm   button[size="sm"], tabs
+   *   --k-control-h-lg   button[size="lg"]
+   *   --k-control-h-icon button[size="icon"] (square)
+   *   --k-control-font   form-control text size
+   *   --k-control-px     form-control horizontal padding
+   *   --k-icon           default icon glyph size
+   *
+   * Override globally with `<html data-kinu-density="sm|md|lg">`.
+   * On touch devices kinu auto-applies the `lg` ramp via a media
+   * query (see below) — set `data-kinu-density` to any value
+   * (including empty) to disable that.
+   */
+  --k-row-h:          32px;
+  --k-row-font:       14px;
+  --k-row-px:         10px;
+  --k-row-gap:        6px;
+  --k-control-h:      36px;
+  --k-control-h-sm:   32px;
+  --k-control-h-lg:   40px;
+  --k-control-h-icon: 32px;
+  --k-control-font:   14px;
+  --k-control-px:     14px;
+  --k-icon:           16px;
 
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
@@ -205,4 +263,73 @@
   --k-border: 217.2 32.6% 17.5%;
   --k-input: 217.2 32.6% 17.5%;
   --k-ring: 212.7 26.8% 83.9%;
+}
+
+/* ── Density ramps ─────────────────────────────────────────── */
+
+/* Compact / power-user dense (Linear-ish, claw-desktop). */
+:root[data-kinu-density="sm"] {
+  --k-row-h:          26px;
+  --k-row-font:       13px;
+  --k-row-px:         8px;
+  --k-row-gap:        4px;
+  --k-control-h:      32px;
+  --k-control-h-sm:   28px;
+  --k-control-h-lg:   36px;
+  --k-control-h-icon: 28px;
+  --k-control-font:   13px;
+  --k-control-px:     12px;
+  --k-icon:           14px;
+}
+
+/* Default desktop density — explicit, in case a consumer wants to
+   force md against the auto-coarse fallback. */
+:root[data-kinu-density="md"] {
+  --k-row-h:          32px;
+  --k-row-font:       14px;
+  --k-row-px:         10px;
+  --k-row-gap:        6px;
+  --k-control-h:      36px;
+  --k-control-h-sm:   32px;
+  --k-control-h-lg:   40px;
+  --k-control-h-icon: 32px;
+  --k-control-font:   14px;
+  --k-control-px:     14px;
+  --k-icon:           16px;
+}
+
+/* Touch / spacious (Apple HIG, Material). */
+:root[data-kinu-density="lg"] {
+  --k-row-h:          40px;
+  --k-row-font:       15px;
+  --k-row-px:         12px;
+  --k-row-gap:        8px;
+  --k-control-h:      40px;
+  --k-control-h-sm:   36px;
+  --k-control-h-lg:   44px;
+  --k-control-h-icon: 36px;
+  --k-control-font:   15px;
+  --k-control-px:     16px;
+  --k-icon:           18px;
+}
+
+/* Auto: when the consumer has NOT set `data-kinu-density` and the
+   primary pointer is coarse (or the viewport is phone-width), use
+   the lg ramp. Setting `data-kinu-density` to ANY value — including
+   empty (`<html data-kinu-density>`) — opts out of this auto-bump. */
+@media (pointer: coarse), (max-width: 640px) {
+  :root:not([data-kinu-density]) {
+    --k-row-h:          40px;
+    --k-row-font:       15px;
+    --k-row-px:         12px;
+    --k-row-gap:        8px;
+    --k-control-h:      40px;
+    --k-control-h-sm:   36px;
+    --k-control-h-lg:   44px;
+    --k-control-h-icon: 36px;
+    --k-control-font:   15px;
+    --k-control-px:     16px;
+    --k-icon:           18px;
+  }
+}
 }

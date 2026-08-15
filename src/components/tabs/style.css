@@ -6,7 +6,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.25rem;
+  height: var(--k-control-h-sm, 2.25rem);
   width: fit-content;
   background: hsl(var(--k-muted));
   color: hsl(var(--k-muted-foreground));
@@ -24,7 +24,7 @@
   border-radius: calc(var(--k-radius) - 2px);
   height: calc(100% - 1px);
   padding: 0 0.5rem;
-  font-size: 0.875rem;
+  font-size: var(--k-control-font, 0.875rem);
   font-weight: 500;
   cursor: pointer;
   color: hsl(var(--k-foreground));
