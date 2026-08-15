@@ -171,7 +171,7 @@ export function ThemePicker() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Tooltip title="Theme &amp; density" side="bottom">
+          <Tooltip title="Theme" side="bottom">
             <Button variant="secondary" size="icon" aria-label="Theme picker">
               <iconify-icon icon="lucide:palette" />
             </Button>
