@@ -1,0 +1,514 @@
+/*
+ * kinu theme: claw  (Claude Code-style design system)
+ *
+ * Tokens scraped via CSSOM from claude.ai/code (Anthropic CDS v2) and the
+ * published Claude Code desktop CSS, both light and dark, then verified
+ * against computed styles on real elements.
+ *
+ * Architecture
+ * ────────────
+ * kinu's default tokens live in `@layer tokens` (see src/variables.css).
+ * This theme is unlayered — every unlayered rule beats every layered rule
+ * regardless of selector specificity, so a bare `[data-theme="claw"]`
+ * cleanly overrides kinu's `:root { --k-* }` defaults.
+ *
+ * For per-component rules (button heights, menu-item rows, etc.) we still
+ * need higher specificity than kinu's component CSS, since component
+ * styles are unlayered too. The descendant pattern
+ * `[data-theme="claw"] [k="..."]` (specificity 0,2,0) is enough to beat
+ * kinu's `[k="..."]:not([size])` (0,2,0) via being later in source order
+ * once this stylesheet is loaded.
+ *
+ *  Anthropic CDS v2 tokens — verified against root computed values
+ *
+ *                       light                     dark
+ *  bg-100   body bg     60 14% 97%   #f8f8f6      60 2% 12%   #1f1f1e
+ *  bg-000   elevated    0 0% 100%    #ffffff      60 2% 17%   #2c2c2a
+ *  bg-200   recessed    60 11% 95%   #f4f3ee      60 2% 9%    #181816
+ *  bg-300   sidebar     45 12% 93%   #efece4      0 0% 7%     #121212
+ *  text-100 body text   0 0% 7%      #121212      60 14% 97%  #f8f8f6
+ *  text-400 muted       43 3% 47%    #7b7974      48 5% 57%   #97958c
+ *  brand-100 clay       15.1 54.2% 51.2%          14.8 63.1% 59.6%
+ *  accent-100 link/info 213 68% 50%               213 77% 56%
+ *  danger-100           0 61% 52%                 0 73% 59%
+ *  success-100          82 100% 27%               81 100% 30%
+ *  warning-100          38 100% 33%               39 100% 36%
+ *
+ *  df-bg-page   60 14% 99%  (sidebar/main, slightly lighter than bg-100)
+ *  df-shadow-card  inset 0 0 0 1px hsl(0 0% 4% / .06), 0 4px 24px hsl(0 0% 4% / .04)
+ *  df-shadow-pop   0 0 0 .5px rgba(0 0 0 / .06), 0 4px 12px rgba(0 0 0 / .06), 0 16px 40px rgba(0 0 0 / .08)
+ *  df-radius-card  8px      df-radius-pill  6px      cds-radius  4px
+ *  df-row-h        26px     df-row-font     13px     df-row-px   2px
+ *
+ * Apply by setting `data-theme="claw"` on <html>.
+ */
+
+/* ────────────────────────────────────────────────────────────
+ *  Light (default)
+ * ──────────────────────────────────────────────────────────── */
+[data-theme="claw"] {
+  color-scheme: light;
+
+  --k-background: 60 14% 97%;
+  --k-foreground: 0 0% 7%;
+  --k-card: 60 14% 99%;
+  --k-card-foreground: 0 0% 7%;
+  --k-popover: 60 14% 99%;
+  --k-popover-foreground: 0 0% 7%;
+  --k-sidebar: 60 14% 99%;
+
+  /* Monochromatic primary — Claude reserves brand orange for the logo
+     and never uses it as a button/active color. Primary action surfaces
+     are the foreground tone inverted (near-black on cream in light). */
+  --k-primary: 0 0% 7%;
+  --k-primary-foreground: 60 14% 97%;
+  --k-primary-hover: 0 0% 0%;
+
+  --k-secondary: 60 11% 95%;
+  --k-secondary-foreground: 0 0% 7%;
+  --k-secondary-hover: 45 12% 93%;
+
+  --k-muted: 60 11% 95%;
+  --k-muted-foreground: 43 3% 47%;
+
+  --k-accent: 60 11% 95%;
+  --k-accent-foreground: 0 0% 7%;
+
+  --k-destructive: 0 61% 52%;
+  --k-destructive-foreground: 0 0% 100%;
+  --k-destructive-hover: 0 64% 44%;
+
+  --k-success: 82 100% 27%;
+  --k-success-foreground: 0 0% 100%;
+  --k-warning: 38 100% 33%;
+  --k-warning-foreground: 0 0% 100%;
+  --k-info: 213 68% 50%;
+  --k-info-foreground: 0 0% 100%;
+
+  --k-border: 60 11% 90%;
+  --k-input: 60 11% 90%;
+  --k-ring: 0 0% 7%;
+  /* Anthropic's clay still available as --k-brand for opt-in use,
+     but not wired to any default kinu surface. */
+  --k-brand: 15.1 54.2% 51.2%;
+
+  --k-radius: 0.375rem; /* df-radius-pill */
+  --k-shadow-color: hsl(0 0% 4% / 0.08); /* used by kinu tab indicator */
+  /* Soft monochromatic focus appearance — replaces kinu's solid 2px
+     ring across every input-like component (input, textarea, select,
+     switch, radio, otp, toggle, color-picker, input-group). The
+     border-colour darken pairs with the soft halo for a polished
+     active-control feel. Button, slider, tab, etc. keep their
+     bespoke focus styles. */
+  --k-focus-ring: 0 0 0 3px hsl(var(--k-foreground) / 0.06);
+  --k-focus-border: hsl(var(--k-foreground) / 0.2);
+
+  /* Elevation — Claude's df-shadow-card (resting) and df-shadow-pop.
+     Claude uses df-shadow-pop for every transient surface, so claw keeps
+     floating == modal (shadow-2 == shadow-3) rather than adopting kinu's
+     extra modal step. */
+  --k-shadow-1:
+    inset 0 0 0 1px hsl(0 0% 4% / 0.06),
+    0 4px 24px hsl(0 0% 4% / 0.04);
+  --k-shadow-2:
+    0 0 0 0.5px hsl(0 0% 4% / 0.06),
+    0 4px 12px hsl(0 0% 4% / 0.06),
+    0 16px 40px hsl(0 0% 4% / 0.08);
+  --k-shadow-3: var(--k-shadow-2);
+
+  /* Segmented-pill indicator bg — Claude uses bg-000 (pure white) in
+     light and df-z4 in dark, regardless of theme card colour. */
+  --k-tab-indicator-bg: hsl(0 0% 100%);
+
+  /* Avatar initials — an absolute size; the base ::after em-trick means a
+     px value renders correctly (no 100× blow-up). */
+  --k-avatar-font-size: 11px;
+
+  /* Scrollbars + text selection — warm-grey monochromatic. */
+  --k-scrollbar-size: 8px;
+  --k-scrollbar-thumb: hsl(var(--k-foreground) / 0.16);
+  --k-scrollbar-thumb-hover: hsl(var(--k-foreground) / 0.3);
+  --k-selection-bg: hsl(var(--k-foreground) / 0.15);
+
+  /* Anthropic's monospace stack (shared by kbd + prose code). */
+  --k-font-mono:
+    "Anthropic Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+
+  --claw-hover: hsl(0 0% 4% / 0.04);
+}
+
+/* ────────────────────────────────────────────────────────────
+ *  Dark — OS preference, plus explicit `data-color-scheme="dark"`
+ *  (page-level or on a subtree), matching the model variables.css uses.
+ * ──────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  [data-theme="claw"]:not([data-color-scheme]) {
+    color-scheme: dark;
+
+    --k-background: 60 2% 12%;
+    --k-foreground: 60 14% 97%;
+    --k-card: 60 2% 17%;
+    --k-card-foreground: 60 14% 97%;
+    --k-popover: 60 2% 17%;
+    --k-popover-foreground: 60 14% 97%;
+    --k-sidebar: 0 0% 7%;
+
+    --k-primary: 60 14% 97%;
+    --k-primary-foreground: 60 2% 12%;
+    --k-primary-hover: 0 0% 100%;
+
+    --k-secondary: 60 2% 17%;
+    --k-secondary-foreground: 60 14% 97%;
+    --k-secondary-hover: 60 2% 22%;
+
+    --k-muted: 60 2% 17%;
+    --k-muted-foreground: 48 5% 57%;
+
+    --k-accent: 60 2% 22%;
+    --k-accent-foreground: 60 14% 97%;
+
+    --k-destructive: 0 73% 59%;
+    --k-destructive-hover: 0 67% 51%;
+
+    --k-success: 81 100% 30%;
+    --k-warning: 39 100% 36%;
+    --k-info: 213 77% 56%;
+
+    --k-border: 60 3% 22%;
+    --k-input: 60 3% 22%;
+    --k-ring: 60 14% 97%;
+    --k-brand: 14.8 63.1% 59.6%;
+
+    --k-shadow-color: hsl(0 0% 0% / 0.4);
+    --k-shadow-1:
+      inset 0 0 0 1px hsl(0 0% 100% / 0.06),
+      0 4px 24px hsl(0 0% 0% / 0.4);
+    --k-shadow-2:
+      0 0 0 0.5px hsl(0 0% 100% / 0.06),
+      0 4px 12px hsl(0 0% 0% / 0.4),
+      0 16px 40px hsl(0 0% 0% / 0.5);
+    --k-shadow-3: var(--k-shadow-2);
+    --k-tab-indicator-bg: hsl(0 0% 23.9%);
+    --claw-hover: hsl(0 0% 100% / 0.06);
+  }
+}
+[data-theme="claw"][data-color-scheme="dark"],
+[data-theme="claw"] [data-color-scheme="dark"] {
+  color-scheme: dark;
+
+  --k-background: 60 2% 12%;
+  --k-foreground: 60 14% 97%;
+  --k-card: 60 2% 17%;
+  --k-card-foreground: 60 14% 97%;
+  --k-popover: 60 2% 17%;
+  --k-popover-foreground: 60 14% 97%;
+  --k-sidebar: 0 0% 7%;
+
+  --k-primary: 60 14% 97%;
+  --k-primary-foreground: 60 2% 12%;
+  --k-primary-hover: 0 0% 100%;
+
+  --k-secondary: 60 2% 17%;
+  --k-secondary-foreground: 60 14% 97%;
+  --k-secondary-hover: 60 2% 22%;
+
+  --k-muted: 60 2% 17%;
+  --k-muted-foreground: 48 5% 57%;
+
+  --k-accent: 60 2% 22%;
+  --k-accent-foreground: 60 14% 97%;
+
+  --k-destructive: 0 73% 59%;
+  --k-destructive-hover: 0 67% 51%;
+
+  --k-success: 81 100% 30%;
+  --k-warning: 39 100% 36%;
+  --k-info: 213 77% 56%;
+
+  --k-border: 60 3% 22%;
+  --k-input: 60 3% 22%;
+  --k-ring: 60 14% 97%;
+  --k-brand: 14.8 63.1% 59.6%;
+
+  --k-shadow-color: hsl(0 0% 0% / 0.4);
+  --k-shadow-1:
+    inset 0 0 0 1px hsl(0 0% 100% / 0.06),
+    0 4px 24px hsl(0 0% 0% / 0.4);
+  --k-shadow-2:
+    0 0 0 0.5px hsl(0 0% 100% / 0.06),
+    0 4px 12px hsl(0 0% 0% / 0.4),
+    0 16px 40px hsl(0 0% 0% / 0.5);
+  --k-shadow-3: var(--k-shadow-2);
+  --k-tab-indicator-bg: hsl(0 0% 23.9%);
+  --claw-hover: hsl(0 0% 100% / 0.06);
+}
+
+/* ────────────────────────────────────────────────────────────
+ *  Typography
+ * ──────────────────────────────────────────────────────────── */
+[data-theme="claw"] body,
+[data-theme="claw"] {
+  font-family:
+    "Anthropic Sans", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mono stack flows through --k-font-mono (set in the token block); kbd and
+   prose code pick it up from kinu base. This rule extends it to raw
+   <code>/<pre>/<samp> that base doesn't otherwise style. */
+[data-theme="claw"] :is(code, pre, samp) {
+  font-family: var(--k-font-mono);
+}
+
+/* ────────────────────────────────────────────────────────────
+ *  Surfaces — borderless, 8px corners (--df-radius-card). The shadows
+ *  themselves now flow through kinu's elevation tokens (--k-shadow-1
+ *  for cards, --k-shadow-2/3 for overlays, set in the token block);
+ *  these rules only carry claw's borderless + rounded treatment.
+ *
+ *  IMPORTANT: nothing here styles a trigger-wrapping element (kinu's
+ *  [k="tooltip"] is `position: relative` around the trigger; styling
+ *  it would chip the trigger).
+ * ──────────────────────────────────────────────────────────── */
+
+/* sidebar isn't auto-elevated by base, so it carries the resting shadow
+   here; card already gets --k-shadow-1 from kinu base (same value). */
+[data-theme="claw"] :is([k="card"], [k="sidebar"]) {
+  border: 0;
+  box-shadow: var(--k-shadow-1);
+  border-radius: 8px; /* --df-radius-card */
+}
+
+[data-theme="claw"] :is(
+  [k="dialog-content"],
+  [k="sheet-content"],
+  [k="drawer-content"],
+  [k="popover-content"],
+  [k="dropdown-content"],
+  [k="context-menu"],
+  [k="hover-card-content"],
+  [k="combobox-list"]
+) {
+  border: 0;
+  border-radius: 8px;
+}
+
+/* claw deliberately does not declare density tokens — it's a pure
+   visual theme. Density is a separate axis controlled by kinu's
+   `data-kinu-density` attribute (auto by default). To pin claw to
+   the original Claude Code-style desktop density, add
+   `data-kinu-density="sm"` alongside `data-theme="claw"`. */
+
+/* ────────────────────────────────────────────────────────────
+ *  Per-component visual overrides (non-density)
+ *
+ *  Kept: monochromatic hover washes, hairline borders, tab indicator
+ *  treatment, distinctive badge/kbd sizing, input focus glow.
+ *  Removed: all height/padding/font-size overrides — those flow
+ *  through the density tokens above.
+ * ──────────────────────────────────────────────────────────── */
+
+[data-theme="claw"] [k="button"] {
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  /* No explicit border-radius — kinu uses var(--k-radius) which this
+     theme sets to 0.375rem (6px). Setting a winning shorthand here
+     would defeat input-group's corner-flattening rules. */
+}
+[data-theme="claw"] [k="button"][variant="outline"] {
+  border-color: hsl(var(--k-border));
+}
+[data-theme="claw"] [k="button"][variant="ghost"]:hover,
+[data-theme="claw"] [k="button"][variant="secondary"]:hover {
+  background-color: var(--claw-hover);
+}
+
+/* Bordered form controls — themed hairline border. The focus
+   appearance (both the box-shadow halo and the border-colour darken)
+   is handled centrally via --k-focus-ring + --k-focus-border tokens
+   declared at the top of this theme. */
+[data-theme="claw"] [k="input"],
+[data-theme="claw"] [k="textarea"],
+[data-theme="claw"] [k="select"] {
+  border-color: hsl(var(--k-border));
+}
+
+/* Tabs — match Claude's `.df-pills[data-segmented]` look:
+     track     bg --df-hover, padding 2px, gap 2px, 10px radius
+     indicator bg-000 / df-z4, 8px radius, 0.5px hairline at border-300/30%
+     pill      8px radius, 0 8px padding, font-weight 470
+   Density (height, font-size) flows through tokens.
+   Kinu's anchor-positioned `::before` indicator pattern is preserved. */
+[data-theme="claw"] [k="tablist"] {
+  padding: 2px;
+  gap: 2px;
+  border-radius: 10px;
+  background: var(--claw-hover);
+  box-shadow: none;
+}
+[data-theme="claw"] [k="tab"] {
+  font-weight: 470;
+  padding: 0 8px;
+  border-radius: 8px;
+  gap: 6px;
+  color: hsl(var(--k-muted-foreground));
+  cursor: default;
+}
+[data-theme="claw"] [k="tab"][aria-selected="true"] {
+  color: hsl(var(--k-foreground));
+}
+
+/* Indicator (kinu's animated `::before`). Colour flows through
+   --k-tab-indicator-bg (token block); here we only add the 8px radius and
+   the 0.5px hairline. */
+[data-theme="claw"] [k="tablist"]::before {
+  border-radius: 8px;
+  box-shadow: 0 0 0 0.5px hsl(var(--k-foreground) / 0.3);
+}
+@supports not (anchor-name: --k) {
+  [data-theme="claw"] [k="tab"][aria-selected="true"] {
+    box-shadow: 0 0 0 0.5px hsl(var(--k-foreground) / 0.3);
+  }
+}
+
+/* Badge / chip — small, monochromatic, 12px. */
+[data-theme="claw"] :is([k="badge"], [k="chip"]) {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  padding: 0.0625rem 0.4375rem;
+  border-radius: 6px;
+}
+
+/* Menu / list rows — kinu's `[k="item"]` reads density tokens (height,
+   font, padding, gap) from kinu base. claw only supplies the
+   monochromatic hover wash + tight inter-row spacing here.
+   Note: deliberately no `line-height` override — rows are fixed-height
+   from the density tokens, and a taller line-height pushes two-line rows
+   (e.g. the Inbox demo) past the row box, turning the list into a
+   subregion scroll container. */
+[data-theme="claw"] [k="item"] {
+  border-radius: 6px;
+}
+[data-theme="claw"] [k="item"]:hover,
+[data-theme="claw"] [k="item"]:focus-visible {
+  background: var(--claw-hover);
+}
+/* Stack rows tight, no inter-item gap (Claude rows pack flush). */
+[data-theme="claw"] [k="list"] {
+  gap: 0;
+}
+
+/* Menu/popover containers — slightly tighter padding + 8px radius
+   (matching `--df-radius-card`). */
+[data-theme="claw"] :is(
+  [k="dropdown-content"],
+  [k="context-menu"],
+  [k="combobox-list"],
+  [k="listbox-list"]
+) {
+  padding: 6px;
+  border-radius: 8px;
+}
+
+/* Input-group legend — visually align with sibling inputs. Density
+   tokens already cover font-size; just make the horizontal padding
+   visually match an input's left-padding. */
+[data-theme="claw"] [k="input-group"] > legend {
+  font-size: var(--k-control-font);
+  padding: 0 var(--k-control-px);
+}
+
+/* Separator — extra-subtle hairline. */
+[data-theme="claw"] [k="separator"] {
+  background: hsl(var(--k-foreground) / 0.06);
+}
+
+/* Table — tighter cells + hairline rows. */
+[data-theme="claw"] [k="table"] :where(th, td) {
+  padding: 0.375rem 0.5rem;
+  font-size: 13px;
+  border-color: hsl(var(--k-foreground) / 0.06);
+}
+[data-theme="claw"] [k="table"] th {
+  background: transparent;
+  color: hsl(var(--k-muted-foreground));
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* Card content padding — Claude's card padding is tighter than
+   kinu's default. */
+[data-theme="claw"] [k="card"] {
+  padding: 1rem;
+}
+
+[data-theme="claw"] [k="sidebar"] {
+  background: hsl(var(--k-sidebar));
+}
+
+/* Switch — slightly more compact + monochromatic off-state. */
+[data-theme="claw"] [k="switch"] {
+  width: 2rem;
+  height: 1.125rem;
+}
+[data-theme="claw"] [k="switch"]::before {
+  width: 0.875rem;
+  height: 0.875rem;
+  top: 0.0625rem;
+  left: 0.125rem;
+}
+[data-theme="claw"] [k="switch"]:checked::before {
+  transform: translateX(0.875rem);
+}
+[data-theme="claw"] [k="switch"]:not(:checked) {
+  background: hsl(var(--k-foreground) / 0.12);
+  border-color: transparent;
+}
+
+/* Checkbox / radio — hairline border, slightly smaller. */
+[data-theme="claw"] :is([k="checkbox"], [k="radio"]) {
+  border-color: hsl(var(--k-foreground) / 0.2);
+  border-radius: 4px;
+}
+[data-theme="claw"] [k="radio"] {
+  border-radius: 50%;
+}
+
+/* Avatar default surface — soft monochromatic. Initials size flows
+   through --k-avatar-font-size (token block). */
+[data-theme="claw"] [k="avatar"] {
+  background: hsl(var(--k-foreground) / 0.08);
+  color: hsl(var(--k-foreground));
+  font-weight: 500;
+}
+
+/* Inline code — subtle pill against surrounding prose. */
+[data-theme="claw"] :where(p, li, span) > code {
+  background: hsl(var(--k-foreground) / 0.06);
+  padding: 0.0625rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+
+/* Kbd — same compact look as inline code. */
+[data-theme="claw"] [k="kbd"] {
+  font-size: 11px;
+  padding: 0.0625rem 0.3125rem;
+  border-radius: 3px;
+  background: hsl(var(--k-foreground) / 0.06);
+  color: hsl(var(--k-foreground));
+  border: 0;
+  box-shadow: inset 0 -1px 0 hsl(var(--k-foreground) / 0.1);
+}
+
+/* Scrollbars and text selection now flow through kinu base, retuned via
+   --k-scrollbar-* and --k-selection-bg in the token block above. */
+
+/* That's the entire theme — visual token overrides plus a handful of
+   component-specific tweaks. Sizing/density is left to kinu base's
+   `data-kinu-density` system (defaults to md on desktop, lg auto on
+   touch). */

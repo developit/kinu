@@ -1,3 +1,7 @@
+/* The one and only import of the design tokens — component stylesheets
+ * deliberately don't import them (see the note at the top of variables.css).
+ * src/index.ts imports this file first, so the tokens and the `tokens` layer
+ * are in place before any component CSS. */
 @import "./variables.css";
 
 /* Basic reset for components to ensure consistent behavior */
@@ -80,18 +84,31 @@ label[k] {
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: var(--k-scrollbar-size);
+  height: var(--k-scrollbar-size);
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb {
-  background: content-box hsl(var(--k-foreground) / 0.15);
+  background: content-box var(--k-scrollbar-thumb);
   border: 3px solid transparent;
   border-radius: 999px;
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar-thumb:hover {
-  background: content-box hsl(var(--k-foreground) / 0.25);
+  background: content-box var(--k-scrollbar-thumb-hover);
+}
+
+/* Text selection — brand-tinted by default; themes retune via
+ * --k-selection-bg. Scoped to kinu elements so the host page keeps its own
+ * selection colour, same as the scrollbar and reduced-motion rules.
+ *
+ * Both selectors are needed: the first covers text belonging to the kinu
+ * element itself, the second its descendants. ::selection does inherit from
+ * the originating element's parent, but only among elements that match a
+ * ::selection rule — nesting alone doesn't carry it down. */
+:where([k])::selection,
+:where([k]) ::selection {
+  background: var(--k-selection-bg);
 }
 
 /* Honor the user's "Reduce motion" OS preference, scoped to kinu elements

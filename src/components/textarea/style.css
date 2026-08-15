@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="textarea"] {
   display: block;
   width: 100%;
@@ -7,9 +5,9 @@
   border: 1px solid hsl(var(--k-input));
   background-color: hsl(var(--k-background));
   font: inherit;
-  font-size: 0.875rem;
-  min-height: 2.5rem;
-  padding: 0.5rem 0.75rem;
+  font-size: var(--k-control-font, 0.875rem);
+  min-height: var(--k-control-h, 2.5rem);
+  padding: 0.5rem var(--k-control-px, 0.75rem);
   resize: vertical;
   transition-property: color, background-color, border-color, box-shadow;
   transition-duration: 150ms;
@@ -18,7 +16,8 @@
 
 [k="textarea"]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+  border-color: var(--k-focus-border);
+  box-shadow: var(--k-focus-ring);
 }
 
 [k="textarea"]:disabled {

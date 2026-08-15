@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="button"] {
   display: inline-flex;
   align-items: center;
@@ -38,9 +36,10 @@
 /* Default size (when no size attribute or size="md") */
 [k="button"]:not([size]),
 [k="button"][size="md"] {
-  height: 2.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  height: var(--k-control-h, 2.5rem);
+  padding-left: var(--k-control-px, 1rem);
+  padding-right: var(--k-control-px, 1rem);
+  font-size: var(--k-control-font, 0.875rem);
 }
 
 [k="button"]:disabled {
@@ -127,8 +126,8 @@
 
 /* Size: sm */
 [k="button"][size="sm"] {
-  height: 2.25rem;
-  border-radius: calc(var(--k-radius) - 2px);
+  height: var(--k-control-h-sm, 2.25rem);
+  border-radius: var(--k-radius-2);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   font-size: 0.8125rem;
@@ -136,15 +135,15 @@
 
 /* Size: lg */
 [k="button"][size="lg"] {
-  height: 2.75rem;
-  border-radius: calc(var(--k-radius) - 2px);
+  height: var(--k-control-h-lg, 2.75rem);
+  border-radius: var(--k-radius-2);
   padding-left: 2rem;
   padding-right: 2rem;
 }
 
 /* Size: icon */
 [k="button"][size="icon"] {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: var(--k-control-h-icon, 2.5rem);
+  width: var(--k-control-h-icon, 2.5rem);
   padding: 0;
 }

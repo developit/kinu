@@ -1,12 +1,10 @@
-@import "../../variables.css";
-
 [k="tablist"] {
   position: relative;
   isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.25rem;
+  height: var(--k-control-h-sm, 2.25rem);
   width: fit-content;
   background: hsl(var(--k-muted));
   color: hsl(var(--k-muted-foreground));
@@ -21,10 +19,10 @@
   appearance: none;
   background: none;
   border: 1px solid transparent;
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   height: calc(100% - 1px);
   padding: 0 0.5rem;
-  font-size: 0.875rem;
+  font-size: var(--k-control-font, 0.875rem);
   font-weight: 500;
   cursor: pointer;
   color: hsl(var(--k-foreground));
@@ -36,7 +34,7 @@
 }
 
 [k="tab"][aria-selected="true"] {
-  background: hsl(var(--k-background));
+  background: var(--k-tab-indicator-bg);
   color: hsl(var(--k-foreground));
   border-color: transparent;
   box-shadow:
@@ -54,8 +52,8 @@
     block-size: calc(100% - 6px);
     inline-size: 0;
     border: 1px solid transparent;
-    border-radius: calc(var(--k-radius) - 2px);
-    background: hsl(var(--k-background));
+    border-radius: var(--k-radius-2);
+    background: var(--k-tab-indicator-bg);
     box-shadow:
       0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),
       0 1px 2px -1px var(--k-shadow-color, rgba(0, 0, 0, 0.1));

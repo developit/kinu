@@ -77,7 +77,7 @@
 
 [k="toast"] [k="button"] {
   height: auto;
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   padding: 0.2rem 0.4rem;
   font-size: 0.8125rem;
 }

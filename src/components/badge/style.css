@@ -1,9 +1,7 @@
-@import "../../variables.css";
-
 [k="badge"] {
   display: inline-flex;
   align-items: center;
-  border-radius: calc(var(--k-radius) - 2px);
+  border-radius: var(--k-radius-2);
   padding: 0.125rem 0.625rem;
   font-size: 0.75rem;
   line-height: 1rem;

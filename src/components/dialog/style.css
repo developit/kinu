@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="dialog-content"] {
   --modal: 1;
   border: none;
@@ -17,7 +15,7 @@
    * overscroll-behavior:contain would be a no-op since the dialog
    * wouldn't be a scroll container. */
   overflow: auto;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  box-shadow: var(--k-shadow-3);
   flex-direction: column;
   padding: 1.5rem;
   gap: 1rem;

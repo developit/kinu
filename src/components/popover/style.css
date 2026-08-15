@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="popover"],
 [k="dropdown"],
 [k="combobox"] {
@@ -30,7 +28,7 @@
   padding: 0;
   /* padding: 0.5rem; */
   margin: 0.25rem 0 0;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  box-shadow: var(--k-shadow-2);
   pointer-events: none;
   opacity: 0;
   transform: translateX(var(--tf-x)) scale(0.94);

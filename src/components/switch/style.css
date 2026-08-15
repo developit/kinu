@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="switch"] {
   appearance: none;
   position: relative;
@@ -37,7 +35,8 @@
 
 [k="switch"]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--k-ring));
+  border-color: var(--k-focus-border);
+  box-shadow: var(--k-focus-ring);
 }
 
 [k="switch"]:disabled {

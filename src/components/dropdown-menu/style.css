@@ -1,4 +1,3 @@
-@import "../../variables.css";
 @import "../popover/style.css";
 @import "../item/style.css";
 
@@ -17,10 +16,10 @@
 [k="dropdown-content"],
 [k="context-menu"],
 [k="combobox-list"] {
-  border-radius: calc(var(--k-radius) + 0.25rem);
+  border-radius: var(--k-radius-4);
   border-color: hsl(var(--k-border));
   padding: 0.5rem;
-  box-shadow: 0 14px 30px rgb(0 0 0 / 0.14);
+  box-shadow: var(--k-shadow-2);
   overflow: hidden auto;
 }
 
