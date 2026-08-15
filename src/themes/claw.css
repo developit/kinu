@@ -118,10 +118,11 @@
 }
 
 /* ────────────────────────────────────────────────────────────
- *  Dark — both `prefers-color-scheme: dark` and `.dark` class
+ *  Dark — OS preference, plus explicit `data-color-scheme="dark"`
+ *  (page-level or on a subtree), matching the model variables.css uses.
  * ──────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
-  [data-theme="claw"]:not(.light) {
+  [data-theme="claw"]:not([data-color-scheme]) {
     color-scheme: dark;
 
     --k-background: 60 2% 12%;
@@ -170,7 +171,8 @@
     --claw-pill-indicator: hsl(0 0% 23.9%);
   }
 }
-[data-theme="claw"].dark {
+[data-theme="claw"][data-color-scheme="dark"],
+[data-theme="claw"] [data-color-scheme="dark"] {
   color-scheme: dark;
 
   --k-background: 60 2% 12%;
