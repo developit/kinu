@@ -165,6 +165,14 @@
     bottom: 0;
     left: 0;
     background-color: hsl(var(--k-background));
+    /* Drop the floating-menu material. It is meant for a small panel sitting
+     * over content; a drawer is an opaque sheet, and in swipe mode (below) the
+     * element becomes a transparent box the size of the whole viewport with the
+     * surface painted in background-image — so a backdrop-filter here blurs the
+     * entire screen rather than anything behind a menu. The scrim does the
+     * separating instead. */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     overscroll-behavior: contain;
     transform: translateY(100%);
     transform-origin: bottom center;
