@@ -29,7 +29,7 @@
   height: 4rem;
   color: hsl(var(--k-popover-foreground) / 0.7);
   border: 1px solid hsl(var(--k-border));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   padding: 0.5rem 0.75rem;
   box-shadow: var(--k-shadow-2);
   opacity: 0;

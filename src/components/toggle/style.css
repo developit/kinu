@@ -3,7 +3,9 @@
   border: 1px solid hsl(var(--k-input));
   background-color: hsl(var(--k-background));
   color: hsl(var(--k-foreground));
-  border-radius: var(--k-radius);
+  /* Capped — the default toggle is ~26px tall (the sm/lg sizes set explicit
+   * heights and clear the cap on their own). */
+  border-radius: min(var(--k-radius-3), 0.625rem);
   padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
   cursor: pointer;

@@ -90,7 +90,7 @@ label[k] {
  * scrollbar-color there would disable it. */
 @supports not selector(::-webkit-scrollbar) {
   :where([k][scrollable], [k="scroll-area"]) {
-    scrollbar-color: hsl(var(--k-foreground) / 0.15) transparent;
+    scrollbar-color: var(--k-scrollbar-thumb) transparent;
   }
 }
 
@@ -154,12 +154,6 @@ label[k] {
   caret-color: hsl(var(--k-primary));
 }
 
-/* Brand text selection inside kinu surfaces, scoped so the host app's own
- * selection styling stays untouched. */
-:where([k])::selection,
-:where([k]) ::selection {
-  background-color: hsl(var(--k-primary) / 0.25);
-}
 
 /* Optical text wrapping — balance short headings, avoid orphans in body copy. */
 :where(
@@ -185,6 +179,14 @@ label[k] {
 @supports (corner-shape: squircle) {
   :root {
     --k-corner-shape: squircle;
+  }
+
+  /* Squircle compensation. A squircle cuts its corner less deeply than a circle
+   * of the same radius, so matching the corner depth needs r × (1 + 2^(-1/4)).
+   * Declared on kinu elements as well as :root so a --k-radius scoped to a
+   * subtree is compensated too. */
+  :where(:root, [k]) {
+    --k-corner-radius: calc(var(--k-radius) * 1.8408964);
   }
   :where(
     [k="button"],

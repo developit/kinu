@@ -1,5 +1,6 @@
 [k="date-picker"] {
   padding: 0.25rem 0.5rem;
   border: 1px solid hsl(var(--k-input));
-  border-radius: var(--k-radius);
+  /* Capped — the native date input is ~27px tall. */
+  border-radius: min(var(--k-radius-3), 0.625rem);
 }

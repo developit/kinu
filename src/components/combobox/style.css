@@ -11,7 +11,7 @@
   width: 100%;
   padding: 0.5rem 0.75rem;
   border: 1px solid hsl(var(--k-input));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   background-color: hsl(var(--k-background));
   font: inherit;
   font-size: 0.875rem;

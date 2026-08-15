@@ -27,7 +27,7 @@
   transform-origin: top center;
   background-color: hsl(var(--k-popover));
   color: hsl(var(--k-popover-foreground));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-border));
   padding: 0;
   /* padding: 0.5rem; */
@@ -159,7 +159,7 @@
     /* Drawer-mode is its own scroll container; overscroll-behavior
      * below pairs with this. */
     overflow: auto;
-    border-radius: var(--k-radius) var(--k-radius) 0 0;
+    border-radius: var(--k-radius-3) var(--k-radius-3) 0 0;
     position: fixed;
     top: auto;
     bottom: 0;
