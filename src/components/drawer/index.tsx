@@ -1,6 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {forwardRef} from '../../lib/forwardref';
 import {installCommands, installDialogsDropdowns} from '../../lib/commands';
 import type {
   DrawerOwnProps,
@@ -24,7 +25,7 @@ export function Drawer({id: idProp, children}: DrawerOwnProps) {
   );
 }
 
-export function DrawerTrigger({
+export const DrawerTrigger = /*#__PURE__*/ forwardRef(function DrawerTrigger({
   children,
   ...props
 }: DrawerTriggerOwnProps &
@@ -35,17 +36,17 @@ export function DrawerTrigger({
     commandfor: id,
     command: 'show-modal',
   });
-}
+});
 
-export function DrawerContent({
+export const DrawerContent = /*#__PURE__*/ forwardRef(function DrawerContent({
   id,
   ...props
 }: DrawerContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
   return <dialog k="drawer-content" id={id ?? ctx} {...props} />;
-}
+});
 
-export function DrawerClose({
+export const DrawerClose = /*#__PURE__*/ forwardRef(function DrawerClose({
   children,
   ...props
 }: DrawerCloseOwnProps &
@@ -56,7 +57,7 @@ export function DrawerClose({
     commandfor: id,
     command: 'close',
   });
-}
+});
 
 Drawer.Trigger = DrawerTrigger;
 Drawer.Content = DrawerContent;

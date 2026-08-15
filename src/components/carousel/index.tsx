@@ -1,6 +1,7 @@
-import {createContext} from 'preact';
+import {createContext, type ComponentProps} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
+import {forwardRef} from '../../lib/forwardref';
 import {installCommands} from '../../lib/commands';
 import type {
   CarouselOwnProps,
@@ -42,17 +43,19 @@ const CarouselContentRoot = createSimpleComponent<'div', CarouselContentOwnProps
   },
 );
 
-export function CarouselContent({children}: CarouselContentOwnProps) {
+export const CarouselContent = /*#__PURE__*/ forwardRef(function CarouselContent(
+  props: ComponentProps<typeof CarouselContentRoot>,
+) {
   const id = useContext(IdCtx);
-  return <CarouselContentRoot id={id}>{children}</CarouselContentRoot>;
-}
+  return <CarouselContentRoot {...props} id={id} />;
+});
 
 export const CarouselItem = createSimpleComponent<'div', CarouselItemOwnProps>(
   'carousel-item',
   'div',
 );
 
-export function CarouselPrevious({
+export const CarouselPrevious = /*#__PURE__*/ forwardRef(function CarouselPrevious({
   children,
   commandFor: _commandFor,
   command: _command,
@@ -64,9 +67,9 @@ export function CarouselPrevious({
       {children}
     </button>
   );
-}
+});
 
-export function CarouselNext({
+export const CarouselNext = /*#__PURE__*/ forwardRef(function CarouselNext({
   children,
   commandFor: _commandFor,
   command: _command,
@@ -78,4 +81,4 @@ export function CarouselNext({
       {children}
     </button>
   );
-}
+});

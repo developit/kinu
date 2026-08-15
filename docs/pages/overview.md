@@ -59,6 +59,32 @@ That means:
 More complex components like Dialog install a small command polyfill that attaches to the native `<dialog>` element. Even then,
 the markup stays as close to HTML as possible, and styling still keys off attributes.
 
+## Refs
+
+`ref` is forwarded to the DOM element a component renders, not to anything of kinu's own. Object refs, callback refs, and
+callback refs that return a cleanup all behave exactly as they would on the bare element:
+
+```tsx
+const input = useRef<HTMLInputElement>(null);
+
+<Input ref={input} />;          // input.current is the <input>
+<Dialog.Content ref={dialog} />; // dialog.current is the <dialog>
+```
+
+Refs detach on unmount (`ref.current` returns to `null`, callback refs are called with `null`), and swapping a ref between
+renders detaches the old one before attaching the new one.
+
+Trigger components — `Dialog.Trigger`, `Popover.Trigger`, `Sheet.Trigger`, and friends — decorate the child you give them
+rather than rendering an element, so a `ref` on a trigger lands on that child:
+
+```tsx
+<Dialog.Trigger ref={button}>
+  <Button>Open</Button>
+</Dialog.Trigger>
+```
+
+Components that only supply context and render nothing of their own — `Dialog`, `ContextMenu` — do not accept a `ref`.
+
 ## When to Reach for kinu
 
 - You want sensible defaults and polished styling while keeping semantic markup.

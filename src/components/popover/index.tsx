@@ -1,6 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {forwardRef} from '../../lib/forwardref';
 import {installCommands, installAdaptiveCommands, installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import type {
   PopoverOwnProps,
@@ -26,7 +27,7 @@ export function Popover({id: idProp, children}: PopoverOwnProps) {
   );
 }
 
-export function PopoverTrigger({
+export const PopoverTrigger = /*#__PURE__*/ forwardRef(function PopoverTrigger({
   children,
   ...props
 }: PopoverTriggerOwnProps &
@@ -37,7 +38,7 @@ export function PopoverTrigger({
     commandfor: id,
     command: 'show',
   });
-}
+});
 
 // addEventListener(
 //   'click',
@@ -55,15 +56,15 @@ export function PopoverTrigger({
 //   true,
 // );
 
-export function PopoverContent({
+export const PopoverContent = /*#__PURE__*/ forwardRef(function PopoverContent({
   id,
   ...props
 }: PopoverContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
   return <dialog k="popover-content" id={id ?? ctx} {...props} />;
-}
+});
 
-export function PopoverClose({
+export const PopoverClose = /*#__PURE__*/ forwardRef(function PopoverClose({
   children,
   ...props
 }: PopoverCloseOwnProps &
@@ -74,4 +75,4 @@ export function PopoverClose({
     commandfor: id,
     command: 'close',
   });
-}
+});

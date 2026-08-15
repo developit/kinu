@@ -1,6 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {forwardRef} from '../../lib/forwardref';
 import {
   installAdaptiveCommands,
   installCommands,
@@ -22,7 +23,7 @@ export function Dialog({id: idProp, children}: DialogOwnProps) {
   return <IdCtx.Provider value={id}>{children}</IdCtx.Provider>;
 }
 
-export function DialogTrigger({
+export const DialogTrigger = /*#__PURE__*/ forwardRef(function DialogTrigger({
   children,
   ...props
 }: DialogTriggerOwnProps &
@@ -36,17 +37,17 @@ export function DialogTrigger({
     commandfor: id,
     command: 'show-modal',
   });
-}
+});
 
-export function DialogContent({
+export const DialogContent = /*#__PURE__*/ forwardRef(function DialogContent({
   id,
   ...props
 }: DialogContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
   return <dialog k="dialog-content" id={id ?? ctx} {...props} />;
-}
+});
 
-export function DialogClose({
+export const DialogClose = /*#__PURE__*/ forwardRef(function DialogClose({
   children,
   ...props
 }: DialogCloseOwnProps &
@@ -57,7 +58,7 @@ export function DialogClose({
     commandfor: id,
     command: 'close',
   });
-}
+});
 
 Dialog.Trigger = DialogTrigger;
 Dialog.Content = DialogContent;
