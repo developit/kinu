@@ -1,6 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {forwardRef} from '../../lib/forwardref';
 import {
   installCommands,
   installAdaptiveCommands,
@@ -33,7 +34,7 @@ export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
   );
 }
 
-export function DropdownMenuTrigger({
+export const DropdownMenuTrigger = /*#__PURE__*/ forwardRef(function DropdownMenuTrigger({
   children,
   ...props
 }: DropdownMenuTriggerOwnProps &
@@ -44,9 +45,9 @@ export function DropdownMenuTrigger({
     commandFor: id,
     command: 'show',
   });
-}
+});
 
-export function DropdownMenuContent({
+export const DropdownMenuContent = /*#__PURE__*/ forwardRef(function DropdownMenuContent({
   id,
   command = 'close',
   commandFor,
@@ -64,7 +65,7 @@ export function DropdownMenuContent({
       {...props}
     />
   );
-}
+});
 
 /** @deprecated Use `Item` instead. */
 export const DropdownMenuItem = Item;

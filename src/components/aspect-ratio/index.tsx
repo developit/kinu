@@ -1,7 +1,12 @@
+import {forwardRef} from '../../lib/forwardref';
 import type {AspectRatioProps} from './types';
 import './style.css';
 
-export function AspectRatio({ratio, style, ...props}: AspectRatioProps) {
+export const AspectRatio = /*#__PURE__*/ forwardRef(function AspectRatio({
+  ratio,
+  style,
+  ...props
+}: AspectRatioProps) {
   const mergedStyle = ratio
     ? {
         ...(typeof style === 'object' && style ? style : {}),
@@ -15,4 +20,4 @@ export function AspectRatio({ratio, style, ...props}: AspectRatioProps) {
       style={mergedStyle}
     />
   );
-}
+});

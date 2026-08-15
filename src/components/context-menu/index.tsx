@@ -1,6 +1,7 @@
 import {type JSX, createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {forwardRef} from '../../lib/forwardref';
 import {installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import {Item} from '../item';
 import type {
@@ -58,7 +59,7 @@ function click(e: MouseEvent) {
   (e.currentTarget as HTMLDialogElement).close();
 }
 
-export function ContextMenuContent({
+export const ContextMenuContent = /*#__PURE__*/ forwardRef(function ContextMenuContent({
   id,
   ...props
 }: ContextMenuContentOwnProps & JSX.IntrinsicElements['dialog']) {
@@ -72,7 +73,7 @@ export function ContextMenuContent({
       {...props}
     />
   );
-}
+});
 
 /** @deprecated Use `Item` instead. */
 export const ContextMenuItem = Item;

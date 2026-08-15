@@ -23,6 +23,23 @@ Example definition:
 export const Button = createSimpleComponent('button', 'button');
 ```
 
+### Ref Forwarding
+
+Every component that renders a DOM element forwards `ref` to it. The mechanism lives in `src/lib/forwardref.ts`: a component
+function is tagged with `_pf`, and an `options._diff` hook moves `vnode.ref` back into `vnode.props` for tagged components. So
+`ref` arrives as an ordinary prop and reaches the element via the same `{...props}` spread as everything else — there is no
+second `ref` argument, and no wrapper component.
+
+Two rules keep this from regressing:
+
+- Hand-written components wrap their function in `forwardRef()`, prefixed with `/*#__PURE__*/`. `forwardRef` tags the function
+  it is given, which bundlers read as a side effect; without the annotation the component can no longer be tree-shaken.
+- `createSimpleComponent` tags its own local (`Wrap._pf = Wrap`) rather than calling `forwardRef`, for the same reason — a call
+  there would make every component the factory builds unshakeable.
+
+`createSimpleComponent`'s fourth argument is a component-internal ref callback. It is only ever handed an element, never `null`;
+whatever it returns is run as its cleanup on detach.
+
 ### Custom Logic
 
 More complex elements (for example `Dialog`) wrap native platform APIs and add minimal behaviour while still forwarding attributes directly:

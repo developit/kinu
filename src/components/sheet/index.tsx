@@ -1,6 +1,7 @@
 import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
+import {forwardRef} from '../../lib/forwardref';
 import {installCommands, installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import type {
   SheetOwnProps,
@@ -25,7 +26,7 @@ export function Sheet({id: idProp, children}: SheetOwnProps) {
   );
 }
 
-export function SheetTrigger({
+export const SheetTrigger = /*#__PURE__*/ forwardRef(function SheetTrigger({
   children,
   ...props
 }: SheetTriggerOwnProps &
@@ -36,9 +37,9 @@ export function SheetTrigger({
     commandfor: id,
     command: 'show-modal',
   });
-}
+});
 
-export function SheetContent({
+export const SheetContent = /*#__PURE__*/ forwardRef(function SheetContent({
   id,
   children,
   ...props
@@ -51,9 +52,9 @@ export function SheetContent({
       <div k="sheet-panel">{children}</div>
     </dialog>
   );
-}
+});
 
-export function SheetClose({
+export const SheetClose = /*#__PURE__*/ forwardRef(function SheetClose({
   children,
   ...props
 }: SheetCloseOwnProps &
@@ -64,7 +65,7 @@ export function SheetClose({
     commandfor: id,
     command: 'close',
   });
-}
+});
 
 Sheet.Trigger = SheetTrigger;
 Sheet.Content = SheetContent;
