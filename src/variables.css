@@ -194,7 +194,23 @@
   --k-control-px:     14px;
   --k-icon:           16px;
   /* Corner shape — flipped to `squircle` under @supports in base.css. Override
-   * on :root to revert (round) or restyle (bevel, superellipse(...)). */
+   * on :root (or in a theme) to revert (round) or restyle (bevel,
+   * superellipse(...)).
+   *
+   * Changing it goes with `--k-corner-scale: 1`:
+   *
+   *   [data-theme="mine"] {
+   *     --k-corner-shape: round;
+   *     --k-corner-scale: 1;
+   *   }
+   *
+   * kinu scales radii up under squircles, because a squircle cuts its corner
+   * less deeply than a circle of the same radius (see base.css). That scaling
+   * is only correct while the corners actually are squircles — --k-corner-scale
+   * is the escape hatch, and setting it to 1 restores plain --k-radius values.
+   * It is intentionally left undeclared here: base.css reads it as
+   * `var(--k-corner-scale, <modifier>)`, so setting it anywhere wins outright
+   * without competing on specificity or source order. */
   --k-corner-shape: round;
 
   /* Material / vibrancy for translucent overlay surfaces (applied only behind

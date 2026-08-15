@@ -93,6 +93,13 @@
   --k-brand: 15.1 54.2% 51.2%;
 
   --k-radius: 0.375rem; /* df-radius-pill */
+  /* Circular corners, not kinu's default squircles: this theme's radii come
+     from Claude's design tokens (8px card / 6px pill / 4px), which were drawn
+     as circular arcs. --k-corner-scale: 1 switches off the radius scaling kinu
+     applies for squircles — without it the corners would keep squircle-sized
+     radii while rendering as circles. */
+  --k-corner-shape: round;
+  --k-corner-scale: 1;
   --k-shadow-color: hsl(0 0% 4% / 0.08); /* used by kinu tab indicator */
   /* Soft monochromatic focus appearance — replaces kinu's solid 2px
      ring across every input-like component (input, textarea, select,
