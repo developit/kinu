@@ -5,7 +5,11 @@
   width: 100%;
   max-width: 100vw;
   max-height: 100dvh;
-  overflow: auto;
+  /* Clip horizontally, scroll vertically. A drawer is full-bleed, so anything
+   * wider than the viewport should be cut rather than open a sideways scroll
+   * nobody asked for. Safe here because the swipe axis is vertical — Sheet and
+   * Sidebar swipe along X and must keep overflow-x scrollable. */
+  overflow: hidden auto;
   border-radius: 0;
   position: fixed;
   top: auto;
