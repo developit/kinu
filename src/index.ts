@@ -2,6 +2,7 @@ import './base.css';
 import './lib/commands';
 export {Item} from './components/item';
 export type {
+  ItemElement,
   ItemProps,
   ItemOwnProps,
   ItemFieldProps,
@@ -25,6 +26,7 @@ export type {
 } from './components/badge/types';
 export {Button} from './components/button';
 export type {
+  ButtonElement,
   ButtonProps,
   ButtonOwnProps,
   ButtonVariant,

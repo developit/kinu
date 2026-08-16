@@ -1,5 +1,8 @@
 import type {JSX} from 'preact';
-import type {BaseProps} from '../../types/component-props';
+import type {BaseProps, SimpleComponentProps} from '../../types/component-props';
+
+/** The element an {@link ItemProps | Item} renders — an `<a>` when it has an `href`. */
+export type ItemElement = HTMLButtonElement | HTMLAnchorElement;
 
 export interface ItemOwnProps extends BaseProps {
   /**
@@ -23,9 +26,7 @@ export interface ItemOwnProps extends BaseProps {
   destructive?: boolean;
 }
 
-export type ItemProps = ItemOwnProps &
-  Omit<JSX.IntrinsicElements['button'], keyof ItemOwnProps> &
-  Omit<JSX.IntrinsicElements['a'], keyof ItemOwnProps>;
+export type ItemProps = SimpleComponentProps<'button' | 'a', ItemOwnProps>;
 
 export interface ItemFieldOwnProps extends BaseProps {
   /**
