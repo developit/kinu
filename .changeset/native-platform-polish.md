@@ -60,10 +60,12 @@ behaviour:
   `!important`, no specificity contest. The bundled claw theme sets both: its
   radii come from Claude's design tokens, which were drawn as circular arcs.
 - Modal scrims (dialog, drawer, sheet, sidebar and the adaptive mobile drawers)
-  animate their blur in step with the dimming instead of snapping to full
-  strength on the first frame, and it tracks the gesture while swiping. The
-  radius is exposed as `--k-backdrop-blur`, and drops to `none` under
-  `prefers-reduced-transparency` and `forced-colors`.
+  fade their blur in step with the dimming instead of snapping to full strength
+  on the first frame. Swipe-driven dimming stays opacity-only — a scroll-driven
+  animation re-evaluates every frame of the drag, and re-blurring the viewport
+  at a new radius each frame is the most expensive place to pay for a change
+  no one can see mid-gesture. The radius is exposed as `--k-backdrop-blur`, and
+  drops to `none` under `prefers-reduced-transparency` and `forced-colors`.
 - Fully themed `<select>` drop-down where `appearance: base-select` is
   supported: kinu's overlay treatment, item-styled options and a tinted
   `::checkmark`, with no JavaScript. Other engines keep the native popup.

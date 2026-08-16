@@ -203,14 +203,12 @@
   }
 }
 
-/* See drawer/style.css — the blur tracks the swipe alongside the dimming. */
+/* Opacity-only by design — see drawer/style.css. */
 @keyframes k-swipe-fade {
   from {
     opacity: 0;
-    backdrop-filter: blur(0);
   }
   to {
     opacity: 1;
-    backdrop-filter: var(--k-backdrop-blur);
   }
 }
