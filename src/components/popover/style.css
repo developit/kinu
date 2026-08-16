@@ -157,8 +157,9 @@
     /* dvh — see above. */
     max-height: 70dvh;
     /* Drawer-mode is its own scroll container; overscroll-behavior
-     * below pairs with this. */
-    overflow: auto;
+     * below pairs with this. Horizontal is clipped, matching Drawer: the panel
+     * is full-bleed and its swipe axis is vertical. */
+    overflow: hidden auto;
     border-radius: var(--k-radius-3) var(--k-radius-3) 0 0;
     position: fixed;
     top: auto;
