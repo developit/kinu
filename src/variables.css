@@ -218,9 +218,12 @@
   --k-material-blur: saturate(180%) blur(20px);
   --k-material-opacity: 0.8;
   /* Blur behind modal scrims (dialog, drawer, sheet, sidebar and the adaptive
-   * mobile drawers). Animated in step with the scrim's opacity, so it is
-   * proportional at every frame instead of snapping to full strength. */
-  --k-backdrop-blur: blur(1px);
+   * mobile drawers). Applied at a constant radius: the scrim's own opacity
+   * composites the filtered backdrop, so the blur already arrives and leaves in
+   * step with the dimming — including when that opacity is scroll-driven by a
+   * swipe. Nothing animates the radius, which is why it can afford to be a real
+   * blur rather than a hairline. */
+  --k-backdrop-blur: blur(4px);
 
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
