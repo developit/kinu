@@ -167,15 +167,18 @@
 }
 
 
-/* Drives the scrim during a swipe, so the blur tracks the finger in step with
-   the dimming rather than sitting at full strength for the whole drag. */
+/* Drives the scrim's opacity during a swipe. Deliberately opacity-only: a
+   scroll-driven animation re-evaluates on every frame of the drag, and
+   animating backdrop-filter here would re-blur the whole viewport with a new
+   radius each of those frames — the most expensive place to pay it (mid-
+   gesture, on mobile) for a 1px delta nobody can see while the panel is
+   moving. Opacity composites for free. The blur still fades in with the scrim
+   on open, via the transition on ::backdrop. */
 @keyframes k-swipe-fade {
   from {
     opacity: 0;
-    backdrop-filter: blur(0);
   }
   to {
     opacity: 1;
-    backdrop-filter: var(--k-backdrop-blur);
   }
 }
