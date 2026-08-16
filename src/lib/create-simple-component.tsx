@@ -1,11 +1,10 @@
-import {h, type JSX, type RefObject, type Component} from 'preact';
+import {h, type JSX, type Component} from 'preact';
 import type {RefForwardingComponent} from './forwardref';
+import type {Ref, SimpleComponentProps} from '../types/component-props';
 
 /** Whatever a ref callback returned — only honored when it's a function. */
 type RefCleanup = unknown;
 type RefCallbackWithCleanup<T> = (el: T) => (() => void) | void;
-type RefCallback<T> = ((el: T | null) => void) | ((el: T) => () => void);
-type Ref<T> = RefObject<T> | RefCallback<T>;
 /** Any ref callback, normalized to the widest attach/detach signature. */
 type AnyRefCallback<T> = (el: T | null) => RefCleanup;
 
@@ -74,14 +73,7 @@ export function createSimpleComponent<
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
   ref?: RefCallbackWithCleanup<HTMLElementTagNameMap[T]>,
 ) {
-  // `ref` is omitted from the intrinsic props and redeclared, not merged with
-  // them: preact's own `RefCallback` type has no cleanup-function return, and
-  // intersecting the two would mean satisfying both.
-  type Props = Omit<JSX.IntrinsicElements[T], keyof P | 'ref'> &
-    P & {
-      k?: never; // Don't allow overriding the k attribute
-      ref?: Ref<HTMLElementTagNameMap[T]>;
-    };
+  type Props = SimpleComponentProps<T, P>;
 
   const defaultDescriptors = Object.getOwnPropertyDescriptors(defaultProps || {});
 
