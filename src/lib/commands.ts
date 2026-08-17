@@ -23,7 +23,12 @@ export function usePopoverOverlays() {
     topLayerOverlays =
       'popover' in HTMLElement.prototype &&
       typeof CSS !== 'undefined' &&
-      CSS.supports('position-anchor: --k-trigger');
+      // Both halves, matching popover/style.css's @supports exactly: an engine
+      // with position-anchor but no position-try-fallbacks doesn't get the
+      // anchored rules, so a top-layer popover there would fall back to
+      // `position: absolute; top: 100%` and land at the bottom of the viewport.
+      CSS.supports('position-anchor: --k-trigger') &&
+      CSS.supports('position-try-fallbacks: --k-menu-right-top');
   }
   return topLayerOverlays;
 }

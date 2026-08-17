@@ -3,6 +3,15 @@ import './filter.css';
 const HIGHLIGHT_NAME = 'k-filter-match';
 
 /**
+ * Drop the match highlight. One registration is shared by every filtered list —
+ * only one is open at a time — so a closing list clears it rather than leaving
+ * Ranges pointing into a hidden (or unmounted) list.
+ */
+export function clearFilterHighlight() {
+  if (typeof CSS !== 'undefined') CSS.highlights?.delete(HIGHLIGHT_NAME);
+}
+
+/**
  * Filter a list of items by text match, hiding non-matches.
  * When autoSelect is true (default), clears selection and selects the first match.
  * Where the Custom Highlight API exists, the matched substring in each visible

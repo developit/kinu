@@ -38,8 +38,12 @@
   position-anchor: auto;
   position-area: bottom;
   position-try-fallbacks: flip-block;
+  /* Neutralize the UA [popover] inset:0 — a non-auto bottom/right would pin the
+   * card to the viewport edge instead of letting position-area place it. */
   top: auto;
   left: auto;
+  right: auto;
+  bottom: auto;
   opacity: 1;
   pointer-events: auto;
   transform: none;

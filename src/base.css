@@ -254,7 +254,10 @@ label[k] {
  * inline at each material rule; here we strengthen shadows under increased
  * contrast and hand off to the OS theme under forced-colors. */
 @media (prefers-contrast: more) {
-  :where([k]) {
+  /* Same scopes variables.css builds the shadows on. --k-shadow-1/2/3 are
+   * substituted where they're declared, so re-tinting the hue on descendants
+   * would never reach them. */
+  :where(:root, [data-color-scheme="light"]) {
     --k-shadow-hsl: 0 0% 0%;
   }
 }

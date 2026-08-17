@@ -28,14 +28,25 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 
 ## Props
 
+### CarouselProps
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | id | `string` | — | Optional ID for the carousel content. If not provided, one will be auto-generated. |
+
+### CarouselContentProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| dots | `boolean` | — | Render native CSS pagination dots beneath the carousel. Progressive
+enhancement — the prev/next buttons remain the baseline control, and dots
+only appear where `::scroll-marker` is supported. |
 
 ## Notes
 
 - Leverages CSS scroll snap for buttery momentum.
 - Content remains fully declarative.
+- Add `dots` to CarouselContent for native `::scroll-marker` pagination — CSS-only, and it degrades to no dots where the pseudo-element is unsupported.
 
 ---
 

@@ -71,7 +71,8 @@ export default [
     description: 'Alias of Dialog with alert-focused styling defaults.',
     usage: `<AlertDialog>\n  <AlertDialog.Trigger>Delete</AlertDialog.Trigger>\n  <AlertDialog.Content>Confirm action</AlertDialog.Content>\n</AlertDialog>`,
     notes: [
-      'Re-exports Dialog so you get Trigger, Content, Close, and other helpers.',
+      'Builds on Dialog, so Trigger, Content and Close work the same way.',
+      'Unlike Dialog, an alert does not close on an outside click — dismissing it takes an explicit choice. Escape still closes it. Set `closedby="any"` on AlertDialog.Content to opt back into light dismiss.',
       'Use when you want dialog markup that communicates a destructive decision.'
     ]
   },
@@ -207,7 +208,8 @@ export default [
     usage: `<Carousel>\n  <CarouselContent>\n    <CarouselItem>Slide</CarouselItem>\n  </CarouselContent>\n  <CarouselPrevious />\n  <CarouselNext />\n</Carousel>`,
     notes: [
       'Leverages CSS scroll snap for buttery momentum.',
-      'Content remains fully declarative.'
+      'Content remains fully declarative.',
+      'Add `dots` to CarouselContent for native `::scroll-marker` pagination — CSS-only, and it degrades to no dots where the pseudo-element is unsupported.'
     ]
   },
   {
@@ -310,6 +312,7 @@ export default [
     notes: [
       'Sets type="color" for you and forwards all native input props.',
       'Pairs naturally with `Input` inside an `InputGroup` to show an editable hex value alongside the swatch.',
+      'Add `eyedropper` to render a screen-sampling button beside the swatch. It only appears in browsers with the EyeDropper API, and sets the input value plus fires input/change when a colour is picked.',
     ]
   },
   {
@@ -725,7 +728,8 @@ export default [
     notes: [
       'Items render as `<button>` by default, or `<a>` when href is provided.',
       'Use variant="nav" for sidebar-style navigation with softer accent colors.',
-      'Shares the same item styles as DropdownMenuItem and ComboboxOption.'
+      'Shares the same item styles as DropdownMenuItem and ComboboxOption.',
+      'Add `virtual` for very long lists: rows render on demand via CSS `content-visibility`, with no virtualization library. Unlike JS virtualization the rows stay in the DOM, so find-in-page and assistive tech still reach them.'
     ]
   },
   {
@@ -887,7 +891,8 @@ export default [
     usage: `<Tree>\n  <Tree.Group open>\n    <Tree.GroupLabel>src</Tree.GroupLabel>\n    <Tree.GroupItems>\n      <Tree.Item>index.ts</Tree.Item>\n    </Tree.GroupItems>\n  </Tree.Group>\n</Tree>`,
     notes: [
       'State is native via the `open` attribute on `Tree.Group`.',
-      'Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.'
+      'Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.',
+      'Add `virtual` to render nodes on demand via CSS `content-visibility` — same trade as List, and nodes remain findable in the DOM.'
     ]
   },
   {
