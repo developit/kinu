@@ -1,6 +1,6 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts, usePopoverOverlays} from '../../lib/commands';
-import {filterItems} from '../../lib/filter';
+import {filterItems, clearFilterHighlight} from '../../lib/filter';
 import {Item} from '../item';
 import type {
   ComboboxOwnProps,
@@ -29,6 +29,7 @@ function showList(list: HTMLDialogElement) {
 }
 
 function closeList(list: HTMLDialogElement) {
+  clearFilterHighlight();
   if (usePopoverOverlays() && list.matches(':popover-open')) {
     list.hidePopover();
   } else {
