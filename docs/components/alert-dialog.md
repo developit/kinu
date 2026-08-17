@@ -18,6 +18,7 @@ import {AlertDialog} from 'kinu';
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
 | AlertDialog | Alert modal | — |
+| AlertDialog.Content | Component | — |
 
 ## Props
 
@@ -25,9 +26,15 @@ import {AlertDialog} from 'kinu';
 | --- | --- | --- | --- |
 | id | `string` | — | Optional ID for the dialog. If not provided, one will be auto-generated. |
 
+### Static Shortcuts
+
+- `AlertDialog.Trigger = DialogTrigger`
+- `AlertDialog.Close = DialogClose`
+
 ## Notes
 
-- Re-exports Dialog so you get Trigger, Content, Close, and other helpers.
+- Builds on Dialog, so Trigger, Content and Close work the same way.
+- Unlike Dialog, an alert does not close on an outside click — dismissing it takes an explicit choice. Escape still closes it. Set `closedby="any"` on AlertDialog.Content to opt back into light dismiss.
 - Use when you want dialog markup that communicates a destructive decision.
 
 ---
