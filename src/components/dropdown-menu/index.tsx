@@ -61,7 +61,7 @@ export const DropdownMenuContent = /*#__PURE__*/ forwardRef(function DropdownMen
       k="dropdown-content"
       id={resolvedId}
       command={command}
-      commandFor={commandFor ?? resolvedId}
+      commandfor={commandFor ?? resolvedId}
       {...props}
     />
   );

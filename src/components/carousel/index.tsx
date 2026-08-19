@@ -7,8 +7,8 @@ import type {
   CarouselOwnProps,
   CarouselContentOwnProps,
   CarouselItemOwnProps,
-  CarouselPreviousOwnProps,
-  CarouselNextOwnProps,
+  CarouselPreviousProps,
+  CarouselNextProps,
 } from './types';
 import './style.css';
 
@@ -57,10 +57,10 @@ export const CarouselItem = createSimpleComponent<'div', CarouselItemOwnProps>(
 
 export const CarouselPrevious = /*#__PURE__*/ forwardRef(function CarouselPrevious({
   children,
-  commandFor: _commandFor,
-  command: _command,
+  command: _c,
+  commandFor: _cf,
   ...props
-}: CarouselPreviousOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
+}: CarouselPreviousProps) {
   const id = useContext(IdCtx);
   return (
     <button {...props} k="carousel-previous" command="--prev" commandfor={id ?? undefined}>
@@ -71,10 +71,10 @@ export const CarouselPrevious = /*#__PURE__*/ forwardRef(function CarouselPrevio
 
 export const CarouselNext = /*#__PURE__*/ forwardRef(function CarouselNext({
   children,
-  commandFor: _commandFor,
-  command: _command,
+  command: _c,
+  commandFor: _cf,
   ...props
-}: CarouselNextOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
+}: CarouselNextProps) {
   const id = useContext(IdCtx);
   return (
     <button {...props} k="carousel-next" command="--next" commandfor={id ?? undefined}>
