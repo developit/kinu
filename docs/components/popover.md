@@ -42,7 +42,7 @@ while keeping popover behavior on larger screens. |
 ## Notes
 
 - Control placement with the placement attribute on PopoverContent.
-- Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).
+- Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px). It takes `--k-drawer-height` for a detent, same as Drawer.
 - Stays declarative thanks to the commands polyfill.
 
 ---

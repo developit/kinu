@@ -4,6 +4,17 @@
  * are in place before any component CSS. */
 @import "./variables.css";
 
+/* The height a swipe drawer opens to, and the middle detent it rests at when
+ * dragged. Registered so it resolves to absolute pixels: the drawer CSS needs
+ * a <length> to do arithmetic with, and installSwipe reads the used value back
+ * to know where to open. 0 means "no detent" — the sheet opens fully, which is
+ * what every drawer did before the token existed. See drawer/style.css. */
+@property --k-drawer-height {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 /* Basic reset for components to ensure consistent behavior */
 [k] {
   box-sizing: border-box;

@@ -274,9 +274,10 @@ export function installSwipe() {
   addEventListener('scrollend', swipeSettle, true);
   // Safari only shipped scrollend in 26.2, so older WebKit would never dismiss.
   // Plain scroll is a sound substitute *here* because every dismiss position is
-  // a scroll boundary (offset 0, or max) and scroll-snap-stop leaves only one
-  // other resting position — the panel can't pass through the boundary en route
-  // to somewhere else, so arriving there is already proof of a dismiss. The
+  // a scroll boundary (offset 0, or max) and scroll-snap-stop stops the panel
+  // at every resting position in between — it can't pass through the boundary
+  // en route to somewhere else, so arriving there is already proof of a
+  // dismiss. That holds however many detents sit in between. The
   // difference is that a slow drag held at the boundary closes on arrival
   // rather than on release, which is why this stays off where scrollend exists.
   if (!('onscrollend' in document)) addEventListener('scroll', swipeSettle, true);
@@ -298,7 +299,13 @@ function swipeToggle(e: ToggleEvent) {
     const {el, axis} = s;
     if (axis === '-x') el.scrollLeft = 0;
     else if (axis === 'x') el.scrollLeft = el.scrollWidth - el.clientWidth;
-    else el.scrollTop = el.scrollHeight - el.clientHeight;
+    // Bottom sheets open to their detent when one is set, otherwise all the
+    // way. --k-drawer-height is a registered <length>, so the computed value is
+    // already resolved to pixels and 0 (no detent) falls through to fully open.
+    else
+      el.scrollTop =
+        parseFloat(getComputedStyle(el).getPropertyValue('--k-drawer-height')) ||
+        el.scrollHeight - el.clientHeight;
   });
 }
 

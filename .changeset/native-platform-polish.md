@@ -67,7 +67,27 @@ behaviour:
   to `none` under `prefers-reduced-transparency` and `forced-colors`.
 - Fully themed `<select>` drop-down where `appearance: base-select` is
   supported: kinu's overlay treatment, item-styled options and a tinted
-  `::checkmark`, with no JavaScript. Other engines keep the native popup.
+  `::checkmark`, with no JavaScript. Other engines keep the native popup. On
+  screens 640px and under the picker opens as a bottom sheet with thumb-sized
+  rows, which is what the native mobile picker was doing before
+  `appearance: base-select` opted out of it.
+- **Tooltips answer a long press on touch.** `:hover` is emulated and sticky
+  there, so a tap used to pin a tooltip open until you tapped elsewhere. On
+  coarse pointers the tooltip is driven by `:active` instead and gated behind a
+  500ms `transition-delay` — Android's long-press threshold — so it appears
+  under a held finger and leaves the moment it lifts. Pure CSS; desktop hover
+  and focus are untouched.
+- **Drawers can open to a detent.** Set `--k-drawer-height` on a `Drawer.Content`
+  (or a `mobile="drawer"` overlay) and the sheet opens to that height, expands
+  to its full height when flicked up, and steps back down through the same
+  height on the way to being dismissed — three resting heights instead of two.
+  While the sheet still has room to grow, scrollable subregions inside it stand
+  down so the drag grows the sheet rather than scrolling a list, the hand-off
+  native sheets do; once it is fully expanded they scroll normally and hand
+  their overscroll back to the sheet. Unset, drawers behave exactly as before.
+- **Drawer installs the swipe handlers it needs.** Every other swipe surface did;
+  Drawer relied on one of them sharing the page, and on touch a Drawer by itself
+  opened to a blank screen.
 - Scroll-driven edge fades on ScrollArea, `::scroll-marker` carousel dots,
   tabular figures, accent/caret theming, and optical text wrapping and trimming.
 - Sticky table headers cast a shadow only while stuck, via `scroll-state()`
