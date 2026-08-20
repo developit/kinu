@@ -289,6 +289,7 @@
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
+    container-type: scroll-state;
     transition:
       translate 300ms var(--k-ease),
       display 300ms allow-discrete,
@@ -307,10 +308,17 @@
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
+  /* Detent marker — the geometry, and why it is ::after rather than a third
+     pseudo-element, is documented in drawer/style.css. */
   [k="popover-content"][mobile="drawer"]::after,
   [k="dropdown-content"][mobile="drawer"]::after,
   [k="context-menu"][mobile="drawer"]::after {
     content: "";
+    position: absolute;
+    left: 0;
+    width: 1px;
+    height: 0;
+    top: calc(100dvh + var(--k-drawer-height));
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
@@ -329,6 +337,31 @@
   [k="dropdown-content"][mobile="drawer"] > :last-child,
   [k="context-menu"][mobile="drawer"] > :last-child {
     margin-bottom: 1rem;
+    scroll-snap-align: end;
+    scroll-margin-block-end: 1rem;
+  }
+  /* Fallback when the last child is [hidden] — see drawer/style.css. */
+  [k="popover-content"][mobile="drawer"] > :nth-last-child(1 of :not([hidden])),
+  [k="dropdown-content"][mobile="drawer"] > :nth-last-child(1 of :not([hidden])),
+  [k="context-menu"][mobile="drawer"] > :nth-last-child(1 of :not([hidden])) {
+    scroll-snap-align: end;
+    scroll-margin-block-end: 1rem;
+  }
+
+  /* Chain a subregion's overscroll out to the sheet, and stand the subregion
+     down while the sheet still has room to grow — see drawer/style.css. */
+  [k="popover-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+  [k="dropdown-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+  [k="context-menu"][mobile="drawer"] :is([k="scroll-area"], [scrollable]) {
+    overscroll-behavior-y: auto;
+  }
+
+  @container scroll-state(scrollable: block-end) {
+    [k="popover-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+    [k="dropdown-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+    [k="context-menu"][mobile="drawer"] :is([k="scroll-area"], [scrollable]) {
+      overflow-y: hidden;
+    }
   }
   [k="popover-content"][mobile="drawer"][open],
   [k="dropdown-content"][mobile="drawer"][open],
