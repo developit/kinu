@@ -2,7 +2,7 @@ import {createContext} from 'preact';
 import {useId, useContext} from 'preact/hooks';
 import {applyPropsToChildren} from '../../lib/children';
 import {forwardRef} from '../../lib/forwardref';
-import {installCommands, installDialogsDropdowns} from '../../lib/commands';
+import {installCommands, installDialogsDropdowns, installSwipe} from '../../lib/commands';
 import type {
   DrawerOwnProps,
   DrawerTriggerOwnProps,
@@ -16,6 +16,13 @@ const IdCtx = createContext<string | undefined>(undefined);
 export function Drawer({id: idProp, children}: DrawerOwnProps) {
   installCommands();
   installDialogsDropdowns();
+  /* Every other swipe surface (Popover, DropdownMenu, ContextMenu, Sheet,
+   * Sidebar) installs this; Drawer never did. The listeners are global
+   * singletons, so a Drawer sharing a page with any of those worked by
+   * accident — alone it opened to a blank screen, because the touch layout
+   * puts the panel one viewport down the scroller and it is swipeToggle that
+   * scrolls it into view. */
+  installSwipe();
   const gen = useId();
   const id = idProp ?? gen;
   return (

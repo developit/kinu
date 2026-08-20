@@ -27,6 +27,7 @@ import {Tooltip} from 'kinu';
 
 - Uses data attributes for fade transitions.
 - Position via the placement attribute without extra JS.
+- On touch (coarse pointers) the tooltip answers a long press: hold for 500ms to show it, lift to dismiss. Hover is ignored there, since it is emulated and would otherwise pin the tooltip open after a tap.
 
 ---
 

@@ -370,7 +370,8 @@ export default [
     notes: [
       'Positions content with CSS variables so you can change direction.',
       'Attach Drawer.Close to any element that should dismiss.',
-      'On touch devices the drawer is swipeable — swipe down to dismiss. The gesture uses native CSS scroll-snapping with no wrapper elements.'
+      'On touch devices the drawer is swipeable — swipe down to dismiss. The gesture uses native CSS scroll-snapping with no wrapper elements.',
+      'Set `--k-drawer-height` on `DrawerContent` to open to a detent instead of full height: the sheet opens at that height, expands to fit its content when flicked up, and stops there again on the way down. Scrollable subregions inside stay put while the sheet still has room to grow, so a drag grows the sheet before it scrolls a list — the same hand-off native sheets do. Leave it unset for a single fully-open height.'
     ]
   },
   {
@@ -497,7 +498,7 @@ export default [
     usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n  <PopoverClose><Button>Close</Button></PopoverClose>\n</Popover>`,
     notes: [
       'Control placement with the placement attribute on PopoverContent.',
-      'Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).',
+      'Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px). It takes `--k-drawer-height` for a detent, same as Drawer.',
       'Stays declarative thanks to the commands polyfill.'
     ]
   },
@@ -582,7 +583,7 @@ export default [
     description: 'Styled native `<select>` element with size variants.',
     usage: `<Select>\n  <option>One</option>\n</Select>`,
     notes: [
-      'Leverages the platform picker on touch devices.',
+      'Leverages the platform picker on touch devices; where `appearance: base-select` is supported, kinu themes the picker itself and renders it as a bottom sheet on screens ≤640px.',
       'Supports native multiple and size attributes.'
     ]
   },
@@ -786,7 +787,8 @@ export default [
     usage: '<Tooltip text="Info"><Button>Hover</Button></Tooltip>',
     notes: [
       'Uses data attributes for fade transitions.',
-      'Position via the placement attribute without extra JS.'
+      'Position via the placement attribute without extra JS.',
+      'On touch (coarse pointers) the tooltip answers a long press: hold for 500ms to show it, lift to dismiss. Hover is ignored there, since it is emulated and would otherwise pin the tooltip open after a tap.'
     ]
   },
   {
