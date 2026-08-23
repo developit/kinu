@@ -116,7 +116,14 @@
    * this the styled dropdown lands as a small anchored menu — a regression on
    * touch. Default-on rather than opt-in: this is what a <select> already did
    * on every phone, and there is no attribute to thread through since the
-   * picker isn't a kinu component. Zero JS; the UA still light-dismisses. */
+   * picker isn't a kinu component. Zero JS; the UA still light-dismisses.
+   *
+   * Surface, radius, padding, scrim and slide are Drawer's, so the picker
+   * reads as the same object as every other kinu sheet. The one thing it can't
+   * borrow is swipe-to-dismiss: ::picker(select) is a UA pseudo-element, so
+   * there is no box to hold a reference to, its scroll offset can't be read or
+   * set, and it emits no scroll events — installSwipe has nothing to grab.
+   * Tap-outside and Escape dismiss it natively. */
   @media (max-width: 640px) {
     [k="select"]::picker(select) {
       /* Detach from the trigger: a sheet is viewport-positioned. */
@@ -129,16 +136,20 @@
       overflow: auto;
       overscroll-behavior: contain;
       margin: 0;
-      padding: 0.5rem 0.5rem 1rem;
-      border-width: 1px 0 0;
-      border-radius: var(--k-radius-4) var(--k-radius-4) 0 0;
-      background-color: hsl(var(--k-popover));
+      padding: 1rem 0.5rem;
+      border: 0;
+      border-radius: var(--k-radius-3) var(--k-radius-3) 0 0;
+      background-color: hsl(var(--k-background));
       /* Same reason as the mobile drawer in popover/style.css: the material is
        * for a small panel floating over content, not a full-width sheet with a
        * scrim already separating it. */
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
-      /* Slide, don't scale — matches Drawer and mobile="drawer". */
+      /* Slide, don't scale — matches Drawer and mobile="drawer". Opaque in the
+       * closed state too: the desktop fade's `opacity: 0` base would otherwise
+       * snap the sheet invisible on the first frame of the exit, and the
+       * slide-out would never be seen. */
+      opacity: 1;
       transform: none;
       translate: 0 100%;
       transition:
@@ -158,14 +169,15 @@
       }
     }
 
-    /* Comfortable thumb targets — ~44px at the default font size. */
+    /* Comfortable thumb targets — ~48px at the sheet's font size. */
     [k="select"] option {
-      padding: 0.75rem 0.5rem;
+      padding: 0.75rem;
       font-size: 1rem;
     }
 
     [k="select"]::picker(select)::backdrop {
-      background-color: rgb(0 0 0 / 0.4);
+      background-color: rgb(0 0 0 / 0.8);
+      /* Constant — opacity composites it; see dialog/style.css. */
       backdrop-filter: var(--k-backdrop-blur);
       opacity: 0;
       transition:
@@ -181,6 +193,25 @@
     @starting-style {
       [k="select"]:open::picker(select)::backdrop {
         opacity: 0;
+      }
+    }
+
+    /* Touch gets the drawer's own surface: the tighter 8px top radius and the
+     * grab pill, painted from the same gradient at the same size and colour.
+     * `local` so it scrolls away with the options, exactly as it does on a
+     * drawer, whose whole sheet is the scroller. */
+    @media (hover: none) and (pointer: coarse) {
+      [k="select"]::picker(select) {
+        border-radius: var(--k-radius) var(--k-radius) 0 0;
+        background-image: radial-gradient(
+          closest-side,
+          hsl(var(--k-muted-foreground) / 0.35) 99%,
+          transparent
+        );
+        background-repeat: no-repeat;
+        background-attachment: local;
+        background-position: 50% 0.5rem;
+        background-size: 2rem 0.25rem;
       }
     }
   }

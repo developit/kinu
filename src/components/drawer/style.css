@@ -125,6 +125,11 @@
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    /* Clearance for the grab pill painted just below the rail. It lives here
+       rather than on the first child so content can't take it away: a heading
+       with `margin: 0` — the usual way to start a sheet — would otherwise land
+       on top of the pill. */
+    margin-block-end: 1rem;
   }
   /* Detents. The rail above is exactly one viewport tall, which makes the
      scroll offset *equal* the exposed height of the sheet: at 0 the panel sits
@@ -161,9 +166,6 @@
      Children size intrinsically (height/max-height still apply). */
   [k="drawer-content"] > * {
     flex: none !important;
-  }
-  [k="drawer-content"] > :first-child {
-    margin-top: 1rem;
   }
   [k="drawer-content"] > :last-child {
     margin-bottom: 1rem;

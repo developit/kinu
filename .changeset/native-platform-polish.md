@@ -70,7 +70,12 @@ behaviour:
   `::checkmark`, with no JavaScript. Other engines keep the native popup. On
   screens 640px and under the picker opens as a bottom sheet with thumb-sized
   rows, which is what the native mobile picker was doing before
-  `appearance: base-select` opted out of it.
+  `appearance: base-select` opted out of it — surface, radius, scrim, padding
+  and slide are Drawer's, down to the grab pill on touch, so it reads as the
+  same kind of object as every other kinu sheet. Swipe-to-dismiss is the one
+  thing it can't borrow: `::picker(select)` is a UA pseudo-element with no box
+  to script, and its scroll offset can neither be read nor set. Tap-outside and
+  Escape dismiss it natively.
 - **Tooltips answer a long press on touch.** `:hover` is emulated and sticky
   there, so a tap used to pin a tooltip open until you tapped elsewhere. On
   coarse pointers the tooltip is driven by `:active` instead and gated behind a
@@ -88,6 +93,9 @@ behaviour:
 - **Drawer installs the swipe handlers it needs.** Every other swipe surface did;
   Drawer relied on one of them sharing the page, and on touch a Drawer by itself
   opened to a blank screen.
+- **The grab pill keeps its clearance.** The 1rem above the first child moved
+  off that child and onto the rail above it, so a heading that zeroes its own
+  top margin — the usual way to start a sheet — no longer lands on the pill.
 - Scroll-driven edge fades on ScrollArea, `::scroll-marker` carousel dots,
   tabular figures, accent/caret theming, and optical text wrapping and trimming.
 - Sticky table headers cast a shadow only while stuck, via `scroll-state()`
