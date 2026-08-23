@@ -307,6 +307,8 @@
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    /* Grab-pill clearance — see drawer/style.css. */
+    margin-block-end: 1rem;
   }
   /* Detent marker — the geometry, and why it is ::after rather than a third
      pseudo-element, is documented in drawer/style.css. */
@@ -327,11 +329,6 @@
   [k="dropdown-content"][mobile="drawer"] > *,
   [k="context-menu"][mobile="drawer"] > * {
     flex: none !important;
-  }
-  [k="popover-content"][mobile="drawer"] > :first-child,
-  [k="dropdown-content"][mobile="drawer"] > :first-child,
-  [k="context-menu"][mobile="drawer"] > :first-child {
-    margin-top: 1rem;
   }
   [k="popover-content"][mobile="drawer"] > :last-child,
   [k="dropdown-content"][mobile="drawer"] > :last-child,
