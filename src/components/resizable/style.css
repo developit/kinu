@@ -2,7 +2,7 @@
   resize: both;
   overflow: auto;
   border: 1px solid hsl(var(--k-border));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   padding: 1rem;
   min-width: 2rem;
   min-height: 2rem;

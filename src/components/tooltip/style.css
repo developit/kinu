@@ -70,3 +70,55 @@
     transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to)));
   }
 }
+
+/* Touch: press and hold, the way Android surfaces a tooltip.
+ *
+ * :hover is emulated on touch and sticky — a tap would pin the tooltip open
+ * until you tapped somewhere else — so it is switched off here and :active
+ * drives the tooltip instead. :active tracks the finger exactly: set while it
+ * is down, dropped the instant it lifts, and dropped by the browser when a
+ * scroll starts, so swiping past a trigger stays silent. It also propagates to
+ * ancestors, so pressing the button a Tooltip wraps activates the wrapper.
+ *
+ * The hold is transition-delay, not a timer: the tooltip is laid out the
+ * moment the press lands but spends the next 500ms — Android's long-press
+ * threshold — at opacity 0 (and pointer-events: none), so a tap that ends
+ * sooner never shows anything. The delay is declared only on the pressed rule,
+ * so releasing falls back to the base rule's 0s and the tooltip leaves at
+ * once. The @starting-style below is load-bearing, not decoration: an element
+ * arriving from display:none has no start value to interpolate from without
+ * it, so no transition runs — and with no transition there is no delay either,
+ * and the tooltip snaps up on contact. Zero JS, nothing added on desktop. */
+@media (hover: none) and (pointer: coarse) {
+  [k="tooltip"][title]:hover::after,
+  [k="status"][aria-label]:empty:hover::after {
+    display: none;
+    opacity: 0;
+  }
+
+  /* iOS only applies :active to elements it treats as clickable; cursor is
+   * inert on a touch screen and is the cheapest way to say so. The callout
+   * menu would otherwise hijack the same gesture (base.css already covers
+   * button[k], not a Tooltip wrapping a link or plain text). */
+  [k="tooltip"][title],
+  [k="status"][aria-label]:empty {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+  }
+
+  [k="tooltip"][title]:active::after,
+  [k="status"][aria-label]:empty:active::after {
+    display: block;
+    opacity: 1;
+    transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to) * 2));
+    transition-delay: 500ms;
+  }
+
+  @starting-style {
+    [k="tooltip"][title]:active::after,
+    [k="status"][aria-label]:empty:active::after {
+      opacity: 0;
+      transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to)));
+    }
+  }
+}

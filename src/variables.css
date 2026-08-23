@@ -68,21 +68,41 @@
   --k-ring: 222.2 84% 4.9%;
 
   /* Radius */
+  /* Corner radius, in round-corner terms — set this to whatever you'd pick for
+   * circular corners. Components don't read it directly; they read
+   * --k-corner-radius below, which compensates it when squircles are active. */
   --k-radius: 0.5rem;
+
+  /* The radius components actually apply.
+   *
+   * A squircle is the superellipse |x|^4 + |y|^4 = r^4; `round` is the circle
+   * |x|^2 + |y|^2 = r^2. At the same r the squircle bulges toward the corner,
+   * cutting it less deeply, so a squircle reads as under-rounded. base.css
+   * scales this up inside @supports (corner-shape: squircle) by the ratio that
+   * matches corner depth — the setback along the 45° diagonal, r(1 - 2^(-1/k)),
+   * which with a = 2^(-1/4) collapses to (1 - a²)/(1 - a) = 1 + 2^(-1/4).
+   *
+   * Where squircles aren't supported and corners really are circular, it stays
+   * equal to --k-radius, so those browsers keep the unscaled radii they were
+   * designed with. The ramp below hangs off this rather than --k-radius, so
+   * every step inherits the compensation. */
+  --k-corner-radius: var(--k-radius);
 
   /* Radius scale — a 4-step ramp expressed as offsets off --k-radius, so a
      single knob (--k-radius) shifts the whole set, while any individual step
      can be re-pinned for a bespoke ramp (e.g. `--k-radius-1: 0`). Step 3 is
      --k-radius itself; components use `var(--k-radius)` for the default and
      reach for a numbered step only when they want a tighter/looser corner.
+     Steps hang off --k-corner-radius (the squircle-compensated anchor), not
+     --k-radius directly, so the whole ramp is compensated.
        1  tightest (inner controls, swatches)
        2  tight    (buttons-in-groups, badges, items, tabs, kbd, tooltip)
        3  default  (== --k-radius)
        4  loose    (floating menus: dropdown, listbox) */
-  --k-radius-1: calc(var(--k-radius) - 4px);
-  --k-radius-2: calc(var(--k-radius) - 2px);
-  --k-radius-3: var(--k-radius);
-  --k-radius-4: calc(var(--k-radius) + 4px);
+  --k-radius-1: calc(var(--k-corner-radius) - 4px);
+  --k-radius-2: calc(var(--k-corner-radius) - 2px);
+  --k-radius-3: var(--k-corner-radius);
+  --k-radius-4: calc(var(--k-corner-radius) + 4px);
 
   /* Focus appearance — used by input, textarea, select, switch, radio,
      otp, toggle, color-picker (and the input-group wrapper):
@@ -103,10 +123,18 @@
    * by overriding these three. Ordered low → high:
    *   1  resting   — cards
    *   2  floating  — popovers, dropdowns, menus, hover-cards, combobox
-   *   3  modal     — dialogs, sheets, drawers (most elevated) */
-  --k-shadow-1: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --k-shadow-2: 0 4px 12px rgb(0 0 0 / 0.15);
-  --k-shadow-3: 0 16px 40px rgb(0 0 0 / 0.18);
+   *   3  modal     — dialogs, sheets, drawers (most elevated)
+   *
+   * Tinted from one hue rather than pure black, so shadows sit in the theme's
+   * colour space; retune the whole scale by moving --k-shadow-hsl alone.
+   * --k-shadow-color completes the token tabs/style.css already references.
+   * base.css darkens the hue under prefers-contrast. */
+  --k-shadow-hsl: 222 47% 11%;
+  --k-shadow-color: hsl(var(--k-shadow-hsl) / 0.1);
+  --k-shadow-1: 0 1px 3px 0 hsl(var(--k-shadow-hsl) / 0.1),
+    0 1px 2px -1px hsl(var(--k-shadow-hsl) / 0.1);
+  --k-shadow-2: 0 4px 12px hsl(var(--k-shadow-hsl) / 0.15);
+  --k-shadow-3: 0 16px 40px hsl(var(--k-shadow-hsl) / 0.18);
 
   /* ── Typography ──────────────────────────────────────────────
    * Sans is intentionally left to inherit from the host page (kinu
@@ -165,6 +193,37 @@
   --k-control-font:   14px;
   --k-control-px:     14px;
   --k-icon:           16px;
+  /* Corner shape — flipped to `squircle` under @supports in base.css. Override
+   * on :root (or in a theme) to revert (round) or restyle (bevel,
+   * superellipse(...)).
+   *
+   * Changing it goes with `--k-corner-scale: 1`:
+   *
+   *   [data-theme="mine"] {
+   *     --k-corner-shape: round;
+   *     --k-corner-scale: 1;
+   *   }
+   *
+   * kinu scales radii up under squircles, because a squircle cuts its corner
+   * less deeply than a circle of the same radius (see base.css). That scaling
+   * is only correct while the corners actually are squircles — --k-corner-scale
+   * is the escape hatch, and setting it to 1 restores plain --k-radius values.
+   * It is intentionally left undeclared here: base.css reads it as
+   * `var(--k-corner-scale, <modifier>)`, so setting it anywhere wins outright
+   * without competing on specificity or source order. */
+  --k-corner-shape: round;
+
+  /* Material / vibrancy for translucent overlay surfaces (applied only behind
+   * @supports + reduced-transparency/contrast guards). */
+  --k-material-blur: saturate(180%) blur(20px);
+  --k-material-opacity: 0.8;
+  /* Blur behind modal scrims (dialog, drawer, sheet, sidebar and the adaptive
+   * mobile drawers). Applied at a constant radius: the scrim's own opacity
+   * composites the filtered backdrop, so the blur already arrives and leaves in
+   * step with the dimming — including when that opacity is scroll-driven by a
+   * swipe. Nothing animates the radius, which is why it can afford to be a real
+   * blur rather than a hairline. */
+  --k-backdrop-blur: blur(4px);
 
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
@@ -245,6 +304,8 @@
 @media (prefers-color-scheme: dark) {
   :where(:root:not([data-color-scheme])) {
     color-scheme: dark;
+    /* Shadows read stronger on dark surfaces. */
+    --k-shadow-hsl: 0 0% 0%;
     /* Base colors */
     --k-background: 222.2 50% 7%;
     --k-foreground: 210 40% 98%;
@@ -286,6 +347,8 @@
 
 :where([data-color-scheme="dark"]) {
   color-scheme: dark;
+  /* Shadows read stronger on dark surfaces. */
+  --k-shadow-hsl: 0 0% 0%;
   /* Base colors */
   --k-background: 222.2 50% 7%;
   --k-foreground: 210 40% 98%;

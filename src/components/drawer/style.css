@@ -5,7 +5,11 @@
   width: 100%;
   max-width: 100vw;
   max-height: 100dvh;
-  overflow: auto;
+  /* Clip horizontally, scroll vertically. A drawer is full-bleed, so anything
+   * wider than the viewport should be cut rather than open a sideways scroll
+   * nobody asked for. Safe here because the swipe axis is vertical — Sheet and
+   * Sidebar swipe along X and must keep overflow-x scrollable. */
+  overflow: hidden auto;
   border-radius: 0;
   position: fixed;
   top: auto;
@@ -33,7 +37,8 @@
 
 [k="drawer-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(1px);
+  /* Constant — opacity composites it; see dialog/style.css. */
+  backdrop-filter: var(--k-backdrop-blur);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;
@@ -106,6 +111,7 @@
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
+    container-type: scroll-state;
     transition:
       translate 300ms var(--k-ease),
       display 300ms allow-discrete,
@@ -119,10 +125,40 @@
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    /* Clearance for the grab pill painted just below the rail. It lives here
+       rather than on the first child so content can't take it away: a heading
+       with `margin: 0` — the usual way to start a sheet — would otherwise land
+       on top of the pill. */
+    margin-block-end: 1rem;
   }
+  /* Detents. The rail above is exactly one viewport tall, which makes the
+     scroll offset *equal* the exposed height of the sheet: at 0 the panel sits
+     entirely below the fold, at N exactly N pixels of it are on screen. Every
+     height the sheet can rest at is therefore just a snap position, and
+     --k-drawer-height picks the one it opens to.
+
+     Mandatory snapping will not rest anywhere that has no snap area — not even
+     at a scroll boundary (measured) — so three resting heights need three
+     areas, and a <dialog> has two pseudo-elements. The third comes from the
+     last child: its bottom edge plus the 1rem below it is the end of the
+     scrollable area, so end-aligning it snaps to "fully expanded" and frees
+     ::after for the detent. Out of flow, ::after changes no geometry, and
+     absolutely positioned boxes still scroll with the content — so parking it
+     one viewport plus --k-drawer-height down the scroller drops a snap
+     position at exactly that exposed height.
+
+     At the default 0 the marker lands on the dismissed position, so the two
+     coincide and a drawer that hasn't opted in behaves exactly as before. */
   [k="drawer-content"]::after {
     content: "";
+    position: absolute;
+    left: 0;
+    width: 1px;
+    height: 0;
+    top: calc(100dvh + var(--k-drawer-height));
     scroll-snap-align: end;
+    /* A flick down stops at the detent before dismissing, the way a native
+       sheet steps through its heights instead of leaping to the bottom. */
     scroll-snap-stop: always;
   }
   /* Geometric invariant, hence !important: the rail consumes the scroller's
@@ -131,11 +167,41 @@
   [k="drawer-content"] > * {
     flex: none !important;
   }
-  [k="drawer-content"] > :first-child {
-    margin-top: 1rem;
-  }
   [k="drawer-content"] > :last-child {
     margin-bottom: 1rem;
+    scroll-snap-align: end;
+    scroll-margin-block-end: 1rem;
+  }
+  /* Re-homes the fully-expanded snap when the last child is [hidden] and so
+     generates no box — without a snap area there the sheet has nowhere to rest
+     open and closes the instant it is opened. Its own rule, not merged with
+     the one above, so engines that don't parse `of S` drop only this. A last
+     child hidden with `display: none` from CSS is the one case neither
+     selector can see; give a drawer with a detent a rendered last child. */
+  [k="drawer-content"] > :nth-last-child(1 of :not([hidden])) {
+    scroll-snap-align: end;
+    scroll-margin-block-end: 1rem;
+  }
+
+  /* Scrollable subregions hand their overscroll to the sheet rather than
+     dead-ending, so a list that has reached its top lets the next drag carry
+     the drawer away. (Chaining is the default; stated here because it is load
+     bearing.) */
+  [k="drawer-content"] :is([k="scroll-area"], [scrollable]) {
+    overscroll-behavior-y: auto;
+  }
+
+  /* While the sheet still has somewhere to grow, its scrollable subregions
+     stand down so the drag grows the sheet first — the hand-off native sheets
+     do, and the only way to get it here. A touch gesture latches onto whichever
+     scroller it starts on and is never re-targeted mid-drag, so the list has to
+     already not be a scroller when the finger lands. Self-disabling: a drawer
+     with no detent is fully expanded whenever it is open, so the query is false
+     and nothing is ever frozen. */
+  @container scroll-state(scrollable: block-end) {
+    [k="drawer-content"] :is([k="scroll-area"], [scrollable]) {
+      overflow-y: hidden;
+    }
   }
   [k="drawer-content"][open] {
     display: flex;
@@ -163,6 +229,11 @@
 }
 
 
+/* Drives the scrim's opacity during a swipe — and only its opacity. That is
+   enough to carry the blur with it: the ::backdrop's opacity composites its
+   filtered backdrop, so dragging fades the blur in and out along with the
+   dimming. Animating backdrop-filter here as well would ramp it twice and
+   re-blur the whole viewport at a new radius on every frame of the drag. */
 @keyframes k-swipe-fade {
   from {
     opacity: 0;

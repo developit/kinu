@@ -6,6 +6,15 @@
   pointer-events: none;
   --gap: 0.5rem;
   z-index: 1000;
+  /* The container is shown as a manual popover (top layer, above modals) —
+   * neutralize the UA [popover] styles; inert without popover support. */
+  inset: auto 1rem 1rem auto;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  overflow: visible;
+  color: inherit;
 }
 
 [k="toast"] {
@@ -20,9 +29,9 @@
   height: 4rem;
   color: hsl(var(--k-popover-foreground) / 0.7);
   border: 1px solid hsl(var(--k-border));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   padding: 0.5rem 0.75rem;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  box-shadow: var(--k-shadow-2);
   opacity: 0;
   transform: translateY(calc(100% + var(--offset))) scale(var(--scale));
   pointer-events: auto;
@@ -118,4 +127,19 @@
 [k="toast"][data-closing] {
   opacity: 0;
   transform: translateY(calc(110% + var(--offset))) scale(var(--scale));
+}
+
+/* Translucent material surface, matching the floating-menu vibrancy. Falls back
+ * to the solid background when unsupported or under reduced-transparency /
+ * increased-contrast preferences. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @media not (prefers-reduced-transparency: reduce) {
+    @media not (prefers-contrast: more) {
+      [k="toast"] {
+        background: hsl(var(--k-popover) / var(--k-material-opacity));
+        -webkit-backdrop-filter: var(--k-material-blur);
+        backdrop-filter: var(--k-material-blur);
+      }
+    }
+  }
 }

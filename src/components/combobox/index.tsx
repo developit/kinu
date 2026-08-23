@@ -1,6 +1,6 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
-import {installMenuShortcuts} from '../../lib/commands';
-import {filterItems} from '../../lib/filter';
+import {installMenuShortcuts, usePopoverOverlays} from '../../lib/commands';
+import {filterItems, clearFilterHighlight} from '../../lib/filter';
 import {Item} from '../item';
 import type {
   ComboboxOwnProps,
@@ -18,6 +18,25 @@ const ComboboxBase = createSimpleComponent<'span', ComboboxOwnProps>(
   },
 );
 
+/* The list opens in the top layer (popover="manual" — dismissal stays driven
+ * by input blur) where supported, falling back to <dialog>.show(). */
+function showList(list: HTMLDialogElement) {
+  if (usePopoverOverlays()) {
+    if (!list.matches(':popover-open')) list.showPopover();
+  } else {
+    list.show();
+  }
+}
+
+function closeList(list: HTMLDialogElement) {
+  clearFilterHighlight();
+  if (usePopoverOverlays() && list.matches(':popover-open')) {
+    list.hidePopover();
+  } else {
+    list.close();
+  }
+}
+
 export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProps>(
   'combobox-input',
   'input',
@@ -30,7 +49,7 @@ export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProp
 
     function onInputFocusClick(e: Event) {
       filter(e.type !== 'input');
-      getList().show();
+      showList(getList());
       el.focus();
     }
 
@@ -38,7 +57,7 @@ export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProp
       const rel = e.relatedTarget as Node | null;
       const list = getList();
       if (rel && list?.contains(rel)) return;
-      list.close();
+      closeList(list);
     }
 
     function filter(select?: boolean) {
@@ -66,6 +85,7 @@ export const ComboboxList = createSimpleComponent<'dialog', ComboboxListOwnProps
   'combobox-list',
   'dialog',
   {
+    popover: 'manual',
     onMouseDown: (e) => e.preventDefault(),
     onClick: (e) => {
       const item = (e.target as Element).closest?.('[k="item"]');
@@ -79,7 +99,7 @@ export const ComboboxList = createSimpleComponent<'dialog', ComboboxListOwnProps
           input.focus();
         }
       }
-      e.currentTarget.close();
+      closeList(e.currentTarget as HTMLDialogElement);
     },
   },
 );

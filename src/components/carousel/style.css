@@ -17,9 +17,47 @@
 [k="carousel-item"] {
   flex: 0 0 100%;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Opt-in native CSS pagination dots: <CarouselContent dots>. Renders a marker
+ * group of themed dots with zero JS, with the current slide's dot highlighted
+ * via :target-current. Purely additive — off unless `dots` is set, and absent
+ * when ::scroll-marker is unsupported (the JS prev/next buttons still work). */
+@supports (selector(::scroll-marker)) {
+  [k="carousel"][dots] {
+    scroll-marker-group: after;
+  }
+
+  [k="carousel"][dots]::scroll-marker-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+  }
+
+  [k="carousel"][dots] [k="carousel-item"]::scroll-marker {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    border: none;
+    background: hsl(var(--k-muted-foreground) / 0.4);
+    cursor: pointer;
+    transition: background 150ms var(--k-ease);
+  }
+
+  [k="carousel"][dots] [k="carousel-item"]::scroll-marker:hover {
+    background: hsl(var(--k-muted-foreground) / 0.7);
+  }
+
+  [k="carousel"][dots] [k="carousel-item"]::scroll-marker:target-current {
+    background: hsl(var(--k-primary));
+  }
 }
 
 [k="carousel-previous"],

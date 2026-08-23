@@ -18,12 +18,16 @@
   position: absolute;
   top: 100%;
   left: 50%;
+  /* Neutralize the UA [popover] inset:0 so right/bottom don't stretch the
+   * absolute-position fallback. */
+  right: auto;
+  bottom: auto;
   --tf-x: -50%;
   min-width: 100%;
   transform-origin: top center;
   background-color: hsl(var(--k-popover));
   color: hsl(var(--k-popover-foreground));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-border));
   padding: 0;
   /* padding: 0.5rem; */
@@ -41,17 +45,19 @@
   outline: none;
 }
 
-[k="popover-content"]:not([open]),
-[k="dropdown-content"]:not([open]),
-[k="context-menu"]:not([open]),
-[k="combobox-list"]:not([open]) {
+/* Shown state is [open] when displayed as a <dialog>, :popover-open when
+ * displayed as a top-layer popover — both style identically. */
+[k="popover-content"]:not(:is([open], :popover-open)),
+[k="dropdown-content"]:not(:is([open], :popover-open)),
+[k="context-menu"]:not(:is([open], :popover-open)),
+[k="combobox-list"]:not(:is([open], :popover-open)) {
   display: none;
 }
 
-[k="popover-content"][open],
-[k="dropdown-content"][open],
-[k="context-menu"][open],
-[k="combobox-list"][open] {
+[k="popover-content"]:is([open], :popover-open),
+[k="dropdown-content"]:is([open], :popover-open),
+[k="context-menu"]:is([open], :popover-open),
+[k="combobox-list"]:is([open], :popover-open) {
   pointer-events: auto;
   opacity: 1;
   transform: translateX(var(--tf-x)) scale(1);
@@ -59,10 +65,10 @@
 }
 
 @starting-style {
-  [k="popover-content"][open],
-  [k="dropdown-content"][open],
-  [k="context-menu"][open],
-  [k="combobox-list"][open] {
+  [k="popover-content"]:is([open], :popover-open),
+  [k="dropdown-content"]:is([open], :popover-open),
+  [k="context-menu"]:is([open], :popover-open),
+  [k="combobox-list"]:is([open], :popover-open) {
     opacity: 0;
     transform: translateX(var(--tf-x)) scale(0.94);
   }
@@ -110,6 +116,8 @@
     max-block-size: min(24rem, calc(100dvh - 1rem));
     overflow: auto;
     position-try-fallbacks: --k-menu-right-top, --k-menu-left-bottom, --k-menu-right-bottom;
+    /* Hide the overlay when its trigger is scrolled out of view. */
+    position-visibility: anchors-visible;
   }
 
   [k="popover-content"] {
@@ -149,14 +157,23 @@
     /* dvh — see above. */
     max-height: 70dvh;
     /* Drawer-mode is its own scroll container; overscroll-behavior
-     * below pairs with this. */
-    overflow: auto;
-    border-radius: var(--k-radius) var(--k-radius) 0 0;
+     * below pairs with this. Horizontal is clipped, matching Drawer: the panel
+     * is full-bleed and its swipe axis is vertical. */
+    overflow: hidden auto;
+    border-radius: var(--k-radius-3) var(--k-radius-3) 0 0;
     position: fixed;
     top: auto;
     bottom: 0;
     left: 0;
     background-color: hsl(var(--k-background));
+    /* Drop the floating-menu material. It is meant for a small panel sitting
+     * over content; a drawer is an opaque sheet, and in swipe mode (below) the
+     * element becomes a transparent box the size of the whole viewport with the
+     * surface painted in background-image — so a backdrop-filter here blurs the
+     * entire screen rather than anything behind a menu. The scrim does the
+     * separating instead. */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     overscroll-behavior: contain;
     transform: translateY(100%);
     transform-origin: bottom center;
@@ -193,7 +210,8 @@
   [k="dropdown-content"][mobile="drawer"]::backdrop,
   [k="context-menu"][mobile="drawer"]::backdrop {
     background-color: rgb(0 0 0 / 0.8);
-    backdrop-filter: blur(1px);
+    /* Constant — opacity composites it; see dialog/style.css. */
+    backdrop-filter: var(--k-backdrop-blur);
     overscroll-behavior: contain;
     overflow: auto;
     scrollbar-width: none;
@@ -271,6 +289,7 @@
     overscroll-behavior: contain;
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
+    container-type: scroll-state;
     transition:
       translate 300ms var(--k-ease),
       display 300ms allow-discrete,
@@ -288,11 +307,20 @@
     flex: 0 0 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    /* Grab-pill clearance — see drawer/style.css. */
+    margin-block-end: 1rem;
   }
+  /* Detent marker — the geometry, and why it is ::after rather than a third
+     pseudo-element, is documented in drawer/style.css. */
   [k="popover-content"][mobile="drawer"]::after,
   [k="dropdown-content"][mobile="drawer"]::after,
   [k="context-menu"][mobile="drawer"]::after {
     content: "";
+    position: absolute;
+    left: 0;
+    width: 1px;
+    height: 0;
+    top: calc(100dvh + var(--k-drawer-height));
     scroll-snap-align: end;
     scroll-snap-stop: always;
   }
@@ -302,15 +330,35 @@
   [k="context-menu"][mobile="drawer"] > * {
     flex: none !important;
   }
-  [k="popover-content"][mobile="drawer"] > :first-child,
-  [k="dropdown-content"][mobile="drawer"] > :first-child,
-  [k="context-menu"][mobile="drawer"] > :first-child {
-    margin-top: 1rem;
-  }
   [k="popover-content"][mobile="drawer"] > :last-child,
   [k="dropdown-content"][mobile="drawer"] > :last-child,
   [k="context-menu"][mobile="drawer"] > :last-child {
     margin-bottom: 1rem;
+    scroll-snap-align: end;
+    scroll-margin-block-end: 1rem;
+  }
+  /* Fallback when the last child is [hidden] — see drawer/style.css. */
+  [k="popover-content"][mobile="drawer"] > :nth-last-child(1 of :not([hidden])),
+  [k="dropdown-content"][mobile="drawer"] > :nth-last-child(1 of :not([hidden])),
+  [k="context-menu"][mobile="drawer"] > :nth-last-child(1 of :not([hidden])) {
+    scroll-snap-align: end;
+    scroll-margin-block-end: 1rem;
+  }
+
+  /* Chain a subregion's overscroll out to the sheet, and stand the subregion
+     down while the sheet still has room to grow — see drawer/style.css. */
+  [k="popover-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+  [k="dropdown-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+  [k="context-menu"][mobile="drawer"] :is([k="scroll-area"], [scrollable]) {
+    overscroll-behavior-y: auto;
+  }
+
+  @container scroll-state(scrollable: block-end) {
+    [k="popover-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+    [k="dropdown-content"][mobile="drawer"] :is([k="scroll-area"], [scrollable]),
+    [k="context-menu"][mobile="drawer"] :is([k="scroll-area"], [scrollable]) {
+      overflow-y: hidden;
+    }
   }
   [k="popover-content"][mobile="drawer"][open],
   [k="dropdown-content"][mobile="drawer"][open],
@@ -346,6 +394,7 @@
   }
 }
 
+/* Opacity-only by design — see drawer/style.css. */
 @keyframes k-swipe-fade {
   from {
     opacity: 0;
@@ -368,6 +417,26 @@
       right: 0;
       top: auto;
       bottom: 0;
+    }
+  }
+}
+
+/* Translucent "material" surface (macOS/iOS vibrancy) for floating menus. Plain
+ * selectors match the base rule's specificity so this overrides the solid
+ * background, while the higher-specificity mobile-drawer rule above keeps its
+ * opaque sheet. Falls back to the solid background when backdrop-filter is
+ * unsupported or the user prefers reduced transparency / more contrast. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @media not (prefers-reduced-transparency: reduce) {
+    @media not (prefers-contrast: more) {
+      [k="popover-content"],
+      [k="dropdown-content"],
+      [k="context-menu"],
+      [k="combobox-list"] {
+        background-color: hsl(var(--k-popover) / var(--k-material-opacity));
+        -webkit-backdrop-filter: var(--k-material-blur);
+        backdrop-filter: var(--k-material-blur);
+      }
     }
   }
 }

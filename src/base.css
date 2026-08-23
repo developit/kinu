@@ -4,6 +4,17 @@
  * are in place before any component CSS. */
 @import "./variables.css";
 
+/* The height a swipe drawer opens to, and the middle detent it rests at when
+ * dragged. Registered so it resolves to absolute pixels: the drawer CSS needs
+ * a <length> to do arithmetic with, and installSwipe reads the used value back
+ * to know where to open. 0 means "no detent" — the sheet opens fully, which is
+ * what every drawer did before the token existed. See drawer/style.css. */
+@property --k-drawer-height {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 /* Basic reset for components to ensure consistent behavior */
 [k] {
   box-sizing: border-box;
@@ -81,6 +92,17 @@ label[k] {
  * (e.g. popover-content's overflow-y:auto / overflow-x:hidden) still win. */
 :where([k][scrollable], [k="scroll-area"]) {
   overflow: auto;
+  /* Reserve the gutter so content doesn't shift when a scrollbar appears. */
+  scrollbar-gutter: stable;
+}
+
+/* Themed scrollbars for browsers without ::-webkit-scrollbar (Firefox).
+ * Gated so Chromium keeps the richer WebKit styling below — setting
+ * scrollbar-color there would disable it. */
+@supports not selector(::-webkit-scrollbar) {
+  :where([k][scrollable], [k="scroll-area"]) {
+    scrollbar-color: var(--k-scrollbar-thumb) transparent;
+  }
 }
 
 :where([k][scrollable], [k="scroll-area"])::-webkit-scrollbar {
@@ -119,5 +141,167 @@ label[k] {
   [k]::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+}
+
+/* Native-style numeric alignment for components that render figures. */
+:where(
+  [k="table"] td,
+  [k="table"] th,
+  [k="pagination-item"],
+  [k="otp"],
+  [k="time-picker"],
+  [k="calendar"],
+  [k="meter"],
+  [k="kbd"]
+) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tint native form controls and the text caret with the theme accent. Inherited,
+ * so it reaches any raw <input>/<progress>/range a consumer nests under kinu. */
+:where([k]) {
+  accent-color: hsl(var(--k-primary));
+  caret-color: hsl(var(--k-primary));
+}
+
+
+/* Optical text wrapping — balance short headings, avoid orphans in body copy. */
+:where(
+  [k="alert"],
+  [k="empty"],
+  [k="toast-title"],
+  [k="card"] :is(h1, h2, h3),
+  [k="dialog-content"] :is(h1, h2, h3)
+) {
+  text-wrap: balance;
+}
+
+:where([k="prose"] p, [k="toast-content"]) {
+  text-wrap: pretty;
+}
+
+/* Squircle corners (superellipse) on rounded-rectangle surfaces for the
+ * iOS/macOS look. Curated allow-list so pill/circle components (avatar, switch,
+ * radio, chip, spinner, status, timeline) and thin bars (progress, meter,
+ * slider) keep their true shape — a squircle of a stadium reads wrong. Reuses
+ * each component's existing border-radius, so unsupported browsers simply keep
+ * today's rounded corners. Revert globally: :root { --k-corner-shape: round }. */
+@supports (corner-shape: squircle) {
+  /* Matches the scopes variables.css declares the defaults on — :root plus any
+   * [data-color-scheme] subtree — so a scoped subtree doesn't fall back to the
+   * layered `round` default and render circular corners inside a squircle page.
+   * :where() keeps this at zero specificity, so :root or a theme still wins. */
+  :where(:root, [data-color-scheme="light"]) {
+    --k-corner-shape: squircle;
+  }
+
+  /* Squircle compensation. A squircle cuts its corner less deeply than a circle
+   * of the same radius, so matching the corner depth needs r × (1 + 2^(-1/4)).
+   * Declared on the same scopes as the shape above: the --k-radius-1..4 ramp
+   * resolves wherever variables.css declares it, so the anchor has to be
+   * compensated at each of those points or the ramp recomputes uncompensated.
+   *
+   * The modifier is the *fallback* of --k-corner-scale rather than a literal,
+   * so anything that restyles the corner turns the compensation off by setting
+   * `--k-corner-scale: 1` — no !important and no specificity contest, since
+   * that is then the only declaration of the variable. Any theme that changes
+   * --k-corner-shape must set it, or it would keep squircle-sized radii on a
+   * corner that is no longer a squircle. */
+  :where(:root, [data-color-scheme="light"]) {
+    /* A [data-color-scheme="light"] subtree resets to kinu's defaults, so the
+     * scale resets with them — otherwise a theme's `1` would inherit past the
+     * reset and leave that subtree drawing squircles at un-scaled radii.
+     * `initial` makes the var() above fall back to the modifier again. */
+    --k-corner-scale: initial;
+    --k-corner-radius: calc(var(--k-radius) * var(--k-corner-scale, 1.8408964));
+  }
+  :where(
+    [k="button"],
+    [k="card"],
+    [k="input"],
+    [k="textarea"],
+    [k="select"],
+    [k="badge"],
+    [k="alert"],
+    [k="kbd"],
+    [k="dialog-content"],
+    [k="popover-content"],
+    [k="dropdown-content"],
+    [k="context-menu"],
+    [k="combobox-list"],
+    [k="listbox-list"],
+    [k="hover-card-content"],
+    [k="tablist"],
+    [k="tab"],
+    [k="toast"],
+    [k="checkbox"],
+    [k="toggle"],
+    [k="item"],
+    [k="calendar"],
+    [k="date-picker"],
+    [k="time-picker"],
+    [k="file-upload"],
+    [k="navigation-menu"],
+    [k="skeleton"],
+    [k="pagination-item"]
+  ) {
+    corner-shape: var(--k-corner-shape);
+  }
+  [k="tooltip"][title]::after {
+    corner-shape: var(--k-corner-shape);
+  }
+}
+
+/* Optically center text in label-like controls by trimming the font's
+ * half-leading. Excludes text inputs (would clip descenders/caret). */
+@supports (text-box: trim-both cap alphabetic) {
+  :where([k="button"], [k="badge"], [k="chip"], [k="tab"], [k="kbd"]) {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+/* Accessibility backstops native apps respect. Reduced-transparency is handled
+ * inline at each material rule; here we strengthen shadows under increased
+ * contrast and hand off to the OS theme under forced-colors. */
+@media (prefers-contrast: more) {
+  /* Same scopes variables.css builds the shadows on. --k-shadow-1/2/3 are
+   * substituted where they're declared, so re-tinting the hue on descendants
+   * would never reach them. */
+  :where(:root, [data-color-scheme="light"]) {
+    --k-shadow-hsl: 0 0% 0%;
+  }
+}
+
+/* Modal scrims keep their dimming, but drop the blur when the user asks for
+ * reduced transparency — the scrim alone already separates the layers. */
+@media (prefers-reduced-transparency: reduce) {
+  :where([k])::backdrop {
+    --k-backdrop-blur: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(
+    [k="card"],
+    [k="dialog-content"],
+    [k="popover-content"],
+    [k="dropdown-content"],
+    [k="context-menu"],
+    [k="combobox-list"],
+    [k="listbox-list"],
+    [k="hover-card-content"],
+    [k="sheet-content"],
+    [k="toast"]
+  ) {
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  :where([k])::backdrop {
+    --k-backdrop-blur: none;
+    backdrop-filter: none;
   }
 }

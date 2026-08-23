@@ -9,7 +9,10 @@
   background: hsl(var(--k-muted));
   color: hsl(var(--k-muted-foreground));
   padding: 3px;
-  border-radius: var(--k-radius);
+  /* Capped — the strip is --k-control-h-sm tall (32px), so the compensated
+   * radius would push it to a pill. The tab cap below is this minus the 3px
+   * padding, keeping the inner corners concentric with the outer ones. */
+  border-radius: min(var(--k-radius-3), 0.75rem);
   gap: 2px;
 }
 
@@ -19,7 +22,8 @@
   appearance: none;
   background: none;
   border: 1px solid transparent;
-  border-radius: var(--k-radius-2);
+  /* Capped — a tab is only ~25px tall inside the strip; see tablist above. */
+  border-radius: min(var(--k-radius-2), 0.5625rem);
   height: calc(100% - 1px);
   padding: 0 0.5rem;
   font-size: var(--k-control-font, 0.875rem);
@@ -52,7 +56,9 @@
     block-size: calc(100% - 6px);
     inline-size: 0;
     border: 1px solid transparent;
-    border-radius: var(--k-radius-2);
+    /* Same cap as [k="tab"] so the sliding indicator matches the tab it sits
+     * behind. */
+    border-radius: min(var(--k-radius-2), 0.5625rem);
     background: var(--k-tab-indicator-bg);
     box-shadow:
       0 1px 3px 0 var(--k-shadow-color, rgba(0, 0, 0, 0.1)),

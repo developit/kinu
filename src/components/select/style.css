@@ -1,7 +1,7 @@
 [k="select"] {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-input));
   background-color: hsl(var(--k-background));
   height: var(--k-control-h, 2.5rem);
@@ -26,4 +26,193 @@
 [k="select"]:disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+/* Fully themed option picker via the customizable-select API. Where supported,
+ * the open dropdown renders with kinu's overlay look (squircle, elevation,
+ * material) and themed options; other engines keep their native popup
+ * untouched. Zero JS. */
+@supports (appearance: base-select) {
+  [k="select"],
+  [k="select"]::picker(select) {
+    appearance: base-select;
+  }
+
+  /* kinu draws its own chevron (background-image above) — hide the UA's. */
+  [k="select"]::picker-icon {
+    display: none;
+  }
+
+  [k="select"]::picker(select) {
+    border: 1px solid hsl(var(--k-border));
+    border-radius: calc(var(--k-radius-3) + 0.25rem);
+    corner-shape: var(--k-corner-shape);
+    background-color: hsl(var(--k-popover));
+    color: hsl(var(--k-popover-foreground));
+    box-shadow: var(--k-shadow-2);
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    opacity: 0;
+    transform: scale(0.94);
+    transform-origin: top center;
+    transition:
+      opacity 200ms var(--k-ease),
+      transform 200ms var(--k-ease),
+      display 200ms allow-discrete,
+      overlay 200ms allow-discrete;
+  }
+
+  [k="select"]:open::picker(select) {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @starting-style {
+    [k="select"]:open::picker(select) {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+  }
+
+  [k="select"] option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.5rem;
+    border-radius: calc(var(--k-radius-3) - 0.125rem);
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  [k="select"] option:is(:hover, :focus-visible) {
+    outline: none;
+    background-color: hsl(var(--k-accent));
+    color: hsl(var(--k-accent-foreground));
+  }
+
+  [k="select"] option:checked {
+    font-weight: 500;
+  }
+
+  [k="select"] option::checkmark {
+    color: hsl(var(--k-primary));
+  }
+
+  /* Material surface, mirroring the floating-menu vibrancy (same a11y guards). */
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    @media not (prefers-reduced-transparency: reduce) {
+      @media not (prefers-contrast: more) {
+        [k="select"]::picker(select) {
+          background-color: hsl(var(--k-popover) / var(--k-material-opacity));
+          -webkit-backdrop-filter: var(--k-material-blur);
+          backdrop-filter: var(--k-material-blur);
+        }
+      }
+    }
+  }
+
+  /* Small screens get the sheet the OS picker used to give us for free.
+   * `appearance: base-select` opts out of the native mobile picker, so without
+   * this the styled dropdown lands as a small anchored menu — a regression on
+   * touch. Default-on rather than opt-in: this is what a <select> already did
+   * on every phone, and there is no attribute to thread through since the
+   * picker isn't a kinu component. Zero JS; the UA still light-dismisses.
+   *
+   * Surface, radius, padding, scrim and slide are Drawer's, so the picker
+   * reads as the same object as every other kinu sheet. The one thing it can't
+   * borrow is swipe-to-dismiss: ::picker(select) is a UA pseudo-element, so
+   * there is no box to hold a reference to, its scroll offset can't be read or
+   * set, and it emits no scroll events — installSwipe has nothing to grab.
+   * Tap-outside and Escape dismiss it natively. */
+  @media (max-width: 640px) {
+    [k="select"]::picker(select) {
+      /* Detach from the trigger: a sheet is viewport-positioned. */
+      position: fixed;
+      position-anchor: none;
+      position-try-fallbacks: none;
+      inset: auto 0 0 0;
+      width: 100%;
+      max-height: 70dvh;
+      overflow: auto;
+      overscroll-behavior: contain;
+      margin: 0;
+      padding: 1rem 0.5rem;
+      border: 0;
+      border-radius: var(--k-radius-3) var(--k-radius-3) 0 0;
+      background-color: hsl(var(--k-background));
+      /* Same reason as the mobile drawer in popover/style.css: the material is
+       * for a small panel floating over content, not a full-width sheet with a
+       * scrim already separating it. */
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      /* Slide, don't scale — matches Drawer and mobile="drawer". Opaque in the
+       * closed state too: the desktop fade's `opacity: 0` base would otherwise
+       * snap the sheet invisible on the first frame of the exit, and the
+       * slide-out would never be seen. */
+      opacity: 1;
+      transform: none;
+      translate: 0 100%;
+      transition:
+        translate 300ms var(--k-ease),
+        display 300ms allow-discrete,
+        overlay 300ms allow-discrete;
+    }
+
+    [k="select"]:open::picker(select) {
+      transform: none;
+      translate: none;
+    }
+
+    @starting-style {
+      [k="select"]:open::picker(select) {
+        translate: 0 100%;
+      }
+    }
+
+    /* Comfortable thumb targets — ~48px at the sheet's font size. */
+    [k="select"] option {
+      padding: 0.75rem;
+      font-size: 1rem;
+    }
+
+    [k="select"]::picker(select)::backdrop {
+      background-color: rgb(0 0 0 / 0.8);
+      /* Constant — opacity composites it; see dialog/style.css. */
+      backdrop-filter: var(--k-backdrop-blur);
+      opacity: 0;
+      transition:
+        opacity 300ms var(--k-ease),
+        display 300ms allow-discrete,
+        overlay 300ms allow-discrete;
+    }
+
+    [k="select"]:open::picker(select)::backdrop {
+      opacity: 1;
+    }
+
+    @starting-style {
+      [k="select"]:open::picker(select)::backdrop {
+        opacity: 0;
+      }
+    }
+
+    /* Touch gets the drawer's own surface: the tighter 8px top radius and the
+     * grab pill, painted from the same gradient at the same size and colour.
+     * `local` so it scrolls away with the options, exactly as it does on a
+     * drawer, whose whole sheet is the scroller. */
+    @media (hover: none) and (pointer: coarse) {
+      [k="select"]::picker(select) {
+        border-radius: var(--k-radius) var(--k-radius) 0 0;
+        background-image: radial-gradient(
+          closest-side,
+          hsl(var(--k-muted-foreground) / 0.35) 99%,
+          transparent
+        );
+        background-repeat: no-repeat;
+        background-attachment: local;
+        background-position: 50% 0.5rem;
+        background-size: 2rem 0.25rem;
+      }
+    }
+  }
 }
