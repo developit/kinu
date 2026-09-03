@@ -20,6 +20,9 @@
   left: 50%;
   --tf-x: -50%;
   min-width: 100%;
+  max-width: calc(100vw - 1rem);
+  max-height: calc(100vh - 1rem);
+  overflow: auto;
   transform-origin: top center;
   background-color: hsl(var(--k-popover));
   color: hsl(var(--k-popover-foreground));
@@ -369,5 +372,42 @@
       top: auto;
       bottom: 0;
     }
+  }
+}
+
+@supports (anchor-name: --p-anchor) {
+  [p="popover"],
+  [p="dropdown"] {
+    anchor-name: --p-anchor;
+  }
+
+  [p="popover-content"],
+  [p="dropdown-content"],
+  [p="context-menu"],
+  [p="combobox-list"] {
+    position: fixed;
+    position-anchor: --p-anchor;
+    top: anchor(bottom);
+    left: anchor(start);
+    --tf-x: 0;
+    margin: 0;
+    position-try: --flip-y, --flip-x, --flip-yx;
+  }
+
+  @position-try --flip-y {
+    top: anchor(top);
+    transform-origin: bottom center;
+    translate: 0 -100%;
+  }
+
+  @position-try --flip-x {
+    left: anchor(end);
+  }
+
+  @position-try --flip-yx {
+    top: anchor(top);
+    left: anchor(end);
+    transform-origin: bottom right;
+    translate: 0 -100%;
   }
 }
