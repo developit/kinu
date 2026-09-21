@@ -44,6 +44,10 @@
   }
 
   [k="select"]::picker(select) {
+    /* No scrollbar on the drop-down — see popover/style.css. No
+     * ::-webkit-scrollbar companion here: a pseudo-element can't nest one, and
+     * every engine with base-select is well past Chrome 121 anyway. */
+    scrollbar-width: none;
     border: 1px solid hsl(var(--k-border));
     border-radius: calc(var(--k-radius-3) + 0.25rem);
     corner-shape: var(--k-corner-shape);
