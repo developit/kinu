@@ -248,6 +248,11 @@ label[k] {
   ) {
     corner-shape: var(--k-corner-shape);
   }
+  /* Pseudo-elements can't live in the :where() list above. The tab strip's
+   * sliding indicator is the box actually painted behind the selected tab —
+   * the tab itself goes transparent once anchor positioning takes over — so
+   * without this it drew a circular pill inside a squircle strip. */
+  [k="tablist"]::before,
   [k="tooltip"][title]::after {
     corner-shape: var(--k-corner-shape);
   }
