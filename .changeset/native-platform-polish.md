@@ -36,6 +36,15 @@ behaviour:
   of the box tree and back, cancelling a transition that hasn't had a frame to
   start. It now joins once and rejoins only when another top-layer element
   opens, which is the only thing that actually changes the stacking order.
+- **A context menu no longer closes on the press that opened it.** Native light
+  dismiss is keyed to a pointerdown/pointerup pair, and `contextmenu` fires
+  between the two — so the release that ended the press read as a click outside
+  the menu that had just appeared. It only bit when the pointer wasn't inside
+  the new menu's box, which made it look intermittent, and it only bit for
+  *primary* pointer gestures: a two-button mouse right-click is safe, a macOS
+  trackpad secondary-click, Ctrl+click and a touch tap-and-hold are not. Light
+  dismiss is now held off for the opening gesture and restored once the press
+  ends. Escape is unaffected throughout.
 - **The tab strip's sliding indicator is a squircle again.** It is the box
   painted behind the selected tab once anchor positioning takes over, and it was
   the one element missing `corner-shape`, so it drew a circular pill inside a
