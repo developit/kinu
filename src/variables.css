@@ -21,6 +21,14 @@
 @layer tokens {
 :where(:root),
 :where([data-color-scheme="light"]) {
+  /* Tell the UA which scheme to paint its own widgets in. Without it a
+   * [data-color-scheme="light"] subtree inherits `dark` from whatever encloses
+   * it — the root under a dark OS, or an outer dark subtree — and every part
+   * kinu doesn't paint itself stays dark on a light surface: date and time
+   * field internals and their pickers, spin buttons, the caret, scrollbars.
+   * The dark blocks below have always declared theirs; this is the other half. */
+  color-scheme: light;
+
   /* Base colors */
   --k-background: 0 0% 100%;
   --k-foreground: 222.2 84% 4.9%;
