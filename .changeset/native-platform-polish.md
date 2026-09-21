@@ -101,6 +101,15 @@ behaviour:
   500ms `transition-delay` — Android's long-press threshold — so it appears
   under a held finger and leaves the moment it lifts. Pure CSS; desktop hover
   and focus are untouched.
+- **A full-height drawer lends its colour to the browser chrome.** On touch, once
+  a sheet is dragged tall enough to cover the top of the screen, the status bar
+  takes its surface colour instead of the page it buried, and hands it back on
+  the way down or on close — the bit of native polish a web sheet usually
+  misses. CSS says what colour (`--k-theme-color`, defaulting to the sheet's own
+  background; `transparent` opts out) and the swipe control plane says when, off
+  the `scrollend` it already listens for, so nothing new watches anything. kinu
+  adds its own `theme-color` meta and removes it again, so one declared by the
+  page is left exactly as it was.
 - **Drawers can open to a detent.** Set `--k-drawer-height` on a `Drawer.Content`
   (or a `mobile="drawer"` overlay) and the sheet opens to that height, expands
   to its full height when flicked up, and steps back down through the same

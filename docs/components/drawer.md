@@ -48,6 +48,7 @@ import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from 'kinu';
 - Positions content with CSS variables so you can change direction.
 - Attach Drawer.Close to any element that should dismiss.
 - On touch devices the drawer is swipeable — swipe down to dismiss. The gesture uses native CSS scroll-snapping with no wrapper elements.
+- On touch, a sheet dragged tall enough to cover the top of the screen lends its colour to the browser's own chrome (the `theme-color` meta), so the status bar reads as part of the sheet instead of the page underneath. It hands it straight back on the way down or on close, and never touches a `theme-color` the page declared itself. Tune it with `--k-theme-color` on `DrawerContent`, or set that to `transparent` to opt out.
 - Set `--k-drawer-height` on `DrawerContent` to open to a detent instead of full height: the sheet opens at that height, expands to fit its content when flicked up, and stops there again on the way down. Scrollable subregions inside stay put while the sheet still has room to grow, so a drag grows the sheet before it scrolls a list — the same hand-off native sheets do. Leave it unset for a single fully-open height.
 
 ---

@@ -75,6 +75,11 @@
 @media (hover: none) and (pointer: coarse) {
   [k="drawer-content"] {
     --swipe: y;
+    /* The colour the browser's own chrome takes while this sheet is tall
+       enough to cover the top of the screen — its own surface, so the status
+       bar reads as part of the sheet. Set it to `transparent` to opt out, or
+       to anything else to tune it. See lib/commands.ts for when it applies. */
+    --k-theme-color: hsl(var(--k-background));
     inset: 0;
     width: 100%;
     height: 100dvh;

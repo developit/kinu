@@ -286,14 +286,45 @@ export function installSwipe() {
 function swipeAxis(target: EventTarget | null) {
   const el = target as Element | null;
   if (!el?.matches?.(SWIPE)) return null;
-  const v = getComputedStyle(el).getPropertyValue('--swipe').trim();
-  return v ? {el: el as HTMLDialogElement, axis: v} : null;
+  const cs = getComputedStyle(el);
+  const v = cs.getPropertyValue('--swipe').trim();
+  return v ? {el: el as HTMLDialogElement, axis: v, cs} : null;
+}
+
+/* A bottom sheet dragged past the top of the screen is the screen, so the
+ * browser's own chrome should match it rather than the page it buried — the
+ * bit of native polish a web sheet usually misses.
+ *
+ * CSS says what colour (--k-theme-color on the sheet, defaulting to its own
+ * surface); this says when. `theme-color` lives in a <meta>, which CSS can't
+ * write, so something has to copy it — but nothing new has to watch for it:
+ * the swipe control plane is already awake at exactly the two moments that
+ * matter, a settled scroll and a close.
+ *
+ * kinu brings its own <meta> and takes it away again rather than editing the
+ * page's, so whatever the page declared is still there, untouched, underneath.
+ * It goes in front because the first matching element in tree order is the one
+ * the browser uses. */
+let themeMeta: HTMLMetaElement | undefined;
+function themeColor(color: string) {
+  if (color && color !== 'transparent') {
+    if (!themeMeta) {
+      themeMeta = document.createElement('meta');
+      themeMeta.name = 'theme-color';
+      document.head.prepend(themeMeta);
+    }
+    themeMeta.content = color;
+  } else if (themeMeta) {
+    themeMeta.remove();
+    themeMeta = undefined;
+  }
 }
 
 function swipeToggle(e: ToggleEvent) {
-  if (e.newState !== 'open') return;
   const s = swipeAxis(e.target);
   if (!s) return;
+  // Hand the chrome back as the sheet starts leaving, not after it has gone.
+  if (e.newState !== 'open') return themeColor('');
   s.el.style.transitionDuration = '';
   requestAnimationFrame(() => {
     const {el, axis} = s;
@@ -324,5 +355,15 @@ function swipeSettle(e: Event) {
   if (dismissed) {
     el.style.transitionDuration = '0s';
     el.close();
+    return;
   }
+  // The scroll offset *is* the exposed height of the sheet (see the rail in
+  // drawer/style.css), so this reads as "the sheet is at least a viewport
+  // tall" — i.e. it now covers the top of the screen. Sideways panels never
+  // satisfy it, since their scrollTop stays 0.
+  themeColor(
+    el.scrollTop >= el.clientHeight
+      ? s.cs.getPropertyValue('--k-theme-color').trim()
+      : '',
+  );
 }
