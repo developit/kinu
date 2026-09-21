@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T01:21:19.400Z",
+  "generatedAt": "2026-09-21T01:29:43.964Z",
   "results": [
     {
       "id": "one-component",
@@ -18,9 +18,9 @@
     {
       "id": "nearly-all-components",
       "label": "Nearly all components (namespace import)",
-      "raw": 102119,
-      "gzip": 20180,
-      "brotli": 17406
+      "raw": 102096,
+      "gzip": 20174,
+      "brotli": 17400
     }
   ]
 }

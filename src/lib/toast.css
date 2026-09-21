@@ -1,7 +1,5 @@
 [k="toast-container"] {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
   width: 20rem;
   pointer-events: none;
   --gap: 0.5rem;
