@@ -30,6 +30,16 @@ behaviour:
   which no `z-index` could fix.
 - **The adaptive `mobile="drawer"` conversion fires again.** Its `beforetoggle`
   interception listened on the bubble phase, and toggle events don't bubble.
+- **Toasts keep their enter and exit animations.** Moving the container into the
+  top layer had it rejoin (hide + show) on every toast change, including the
+  frame where a toast flips to its mounted state — which takes the container out
+  of the box tree and back, cancelling a transition that hasn't had a frame to
+  start. It now joins once and rejoins only when another top-layer element
+  opens, which is the only thing that actually changes the stacking order.
+- **The tab strip's sliding indicator is a squircle again.** It is the box
+  painted behind the selected tab once anchor positioning takes over, and it was
+  the one element missing `corner-shape`, so it drew a circular pill inside a
+  squircle strip.
 
 **Styling and platform polish**
 
@@ -107,6 +117,13 @@ behaviour:
   time field internals and their pickers, spin buttons, the caret, scrollbars.
   A plain text input came out white on white. Pages that set `color-scheme`
   themselves are unaffected; kinu's sits in `@layer tokens` behind `:where()`.
+- **Menus no longer show a scrollbar.** Popover, DropdownMenu, ContextMenu,
+  Combobox, Listbox and the themed `<select>` picker hide theirs — a long menu
+  is a list you arrow through, not a document, and no native menu runs a trough
+  down its edge. Where the classic bar is drawn (Windows, Linux, macOS set to
+  "Show scroll bars: Always") it also ate a strip of the padding and cut across
+  the rounded corner. Scrolling is unchanged, and `scrollable` remains the
+  opt-in for a visible themed scrollbar.
 - Themed scrollbars in browsers without `::-webkit-scrollbar` (Firefox), plus
   `scrollbar-gutter: stable` on scrollables.
 - Anchored overlays hide when their trigger scrolls out of view

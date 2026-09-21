@@ -45,6 +45,33 @@
   outline: none;
 }
 
+/* Menus don't show a scrollbar. A long menu is a list you arrow through or
+ * flick, not a document, and no native menu on any platform runs a trough down
+ * its edge — where the classic bar is drawn (Windows, Linux, and macOS with
+ * "Show scroll bars: Always") it also eats a strip of the padding and cuts
+ * across the rounded corner. Scrolling itself is untouched.
+ *
+ * `scrollable` stays the escape hatch: it is already kinu's opt-in for a
+ * visible themed scrollbar, so a surface that asks for one still gets it, and
+ * a <ScrollArea> nested inside keeps its own.
+ *
+ * Both properties, as everywhere else in kinu: scrollbar-width is the
+ * standards one (Firefox 64+, Chrome 121+, Safari 18.2+), ::-webkit-scrollbar
+ * covers the WebKit and Blink versions that predate it. */
+[k="popover-content"]:not([scrollable]),
+[k="dropdown-content"]:not([scrollable]),
+[k="context-menu"]:not([scrollable]),
+[k="combobox-list"]:not([scrollable]) {
+  scrollbar-width: none;
+}
+
+[k="popover-content"]:not([scrollable])::-webkit-scrollbar,
+[k="dropdown-content"]:not([scrollable])::-webkit-scrollbar,
+[k="context-menu"]:not([scrollable])::-webkit-scrollbar,
+[k="combobox-list"]:not([scrollable])::-webkit-scrollbar {
+  display: none;
+}
+
 /* Shown state is [open] when displayed as a <dialog>, :popover-open when
  * displayed as a top-layer popover — both style identically. */
 [k="popover-content"]:not(:is([open], :popover-open)),
