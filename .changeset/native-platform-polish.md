@@ -100,6 +100,13 @@ behaviour:
   tabular figures, accent/caret theming, and optical text wrapping and trimming.
 - Sticky table headers cast a shadow only while stuck, via `scroll-state()`
   container queries.
+- **`data-color-scheme="light"` now declares `color-scheme: light`.** Only the
+  dark blocks declared theirs, so a light subtree inherited `dark` from whatever
+  enclosed it — the root under a dark OS, or an outer dark subtree — and every
+  part the UA paints rather than kinu stayed dark on a light surface: date and
+  time field internals and their pickers, spin buttons, the caret, scrollbars.
+  A plain text input came out white on white. Pages that set `color-scheme`
+  themselves are unaffected; kinu's sits in `@layer tokens` behind `:where()`.
 - Themed scrollbars in browsers without `::-webkit-scrollbar` (Firefox), plus
   `scrollbar-gutter: stable` on scrollables.
 - Anchored overlays hide when their trigger scrolls out of view
