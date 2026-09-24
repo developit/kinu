@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
     <title>UI Toolkit Demo</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!--
+      The mobile top bar is `hsl(var(--k-background))`, and this site overrides
+      that token (style.css: 47 53% 96.7% light, 132 10% 7% dark) — these are
+      those two, not kinu's defaults, so the first paint matches what actually
+      renders. They cover the pre-JavaScript paint and the no-JavaScript case;
+      the script below then tracks whatever the active theme computes.
+    -->
+    <meta name="theme-color" content="#fbf9f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#101411" media="(prefers-color-scheme: dark)" />
     <!--
       Theme bootstrap — must run synchronously before any CSS is applied so
       we don't paint kinu defaults first and then flash to the chosen theme.
@@ -20,6 +30,49 @@
           let d = localStorage.getItem('kinu-density');
           if (d) document.documentElement.setAttribute('data-kinu-density', d);
         } catch (e) {}
+
+        /*
+          Keep the browser's chrome on the top bar's colour through every theme
+          change. The two metas above are the static baseline; this publishes
+          one of its own carrying the live value, read straight off the top bar
+          (or <body>, which index.html paints the same) rather than from a
+          table of per-theme colours — so a new theme, a density change or a
+          customizer tweak needs nothing here.
+
+          It goes in FRONT of the pair above, because the browser uses the
+          first theme-color in tree order whose media matches. kinu prepends
+          one of its own while a full-height sheet covers the screen, which is
+          how that one takes precedence over this — and why this one is found
+          by id, never by name.
+        */
+        function syncThemeColor() {
+          let bar = document.querySelector('.docs-sidebar-mobile-header') || document.body;
+          if (!bar) return;
+          let color = getComputedStyle(bar).backgroundColor;
+          // Before the stylesheet lands there is nothing to mirror; the static
+          // metas stay in charge until one of the triggers below fires again.
+          if (!color || color === 'rgba(0, 0, 0, 0)') return;
+          let meta = document.getElementById('live-theme-color');
+          if (!meta) {
+            meta = document.createElement('meta');
+            meta.id = 'live-theme-color';
+            meta.name = 'theme-color';
+            document.head.prepend(meta);
+          }
+          meta.content = color;
+        }
+
+        // The picker and the customizer are the two things that repaint the
+        // palette: one swaps attributes on <html>, the other swaps a <style>
+        // in <head>. Watching both leaves neither needing to call in.
+        new MutationObserver(syncThemeColor).observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ['data-theme', 'data-kinu-density', 'data-color-scheme'],
+        });
+        new MutationObserver(syncThemeColor).observe(document.head, {childList: true});
+        matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncThemeColor);
+        addEventListener('DOMContentLoaded', syncThemeColor);
+        addEventListener('load', syncThemeColor);
       })();
     </script>
     <style>
