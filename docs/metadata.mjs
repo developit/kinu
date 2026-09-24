@@ -499,7 +499,7 @@ export default [
     usage: `<Popover>\n  <PopoverTrigger><Button>Open</Button></PopoverTrigger>\n  <PopoverContent>Content</PopoverContent>\n  <PopoverClose><Button>Close</Button></PopoverClose>\n</Popover>`,
     notes: [
       'Control placement with the placement attribute on PopoverContent.',
-      'Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px). It takes `--k-drawer-height` for a detent, same as Drawer.',
+      'Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px). It takes `--k-drawer-height` for a detent and `--k-theme-color` for the browser chrome at full height, same as Drawer.',
       'Stays declarative thanks to the commands polyfill.'
     ]
   },

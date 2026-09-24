@@ -109,7 +109,8 @@ behaviour:
   background; `transparent` opts out) and the swipe control plane says when, off
   the `scrollend` it already listens for, so nothing new watches anything. kinu
   adds its own `theme-color` meta and removes it again, so one declared by the
-  page is left exactly as it was.
+  page is left exactly as it was. `mobile="drawer"` overlays get it too — same
+  sheet, same rule.
 - **Drawers can open to a detent.** Set `--k-drawer-height` on a `Drawer.Content`
   (or a `mobile="drawer"` overlay) and the sheet opens to that height, expands
   to its full height when flicked up, and steps back down through the same
