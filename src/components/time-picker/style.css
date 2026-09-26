@@ -1,5 +1,6 @@
 [k="time-picker"] {
   padding: 0.25rem 0.5rem;
   border: 1px solid hsl(var(--k-input));
-  border-radius: var(--k-radius);
+  /* Capped — the native time input is ~30px tall. */
+  border-radius: min(var(--k-radius-3), 0.6875rem);
 }

@@ -4,7 +4,7 @@
   height: 2.5rem;
   padding: 0.25rem;
   border: 1px solid hsl(var(--k-input));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   background-color: hsl(var(--k-background));
   cursor: pointer;
 }
@@ -33,4 +33,32 @@
 [k="color-picker"]:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+/* Screen-sampling button injected by <ColorPicker eyedropper> (EyeDropper API
+ * browsers only). */
+[k="color-picker-eyedropper"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 0.25rem;
+  border: 1px solid hsl(var(--k-input));
+  border-radius: var(--k-radius-3);
+  corner-shape: var(--k-corner-shape);
+  background-color: hsl(var(--k-background));
+  color: hsl(var(--k-foreground));
+  cursor: pointer;
+}
+
+[k="color-picker-eyedropper"]:hover {
+  background-color: hsl(var(--k-accent));
+  color: hsl(var(--k-accent-foreground));
+}
+
+[k="color-picker-eyedropper"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--k-ring));
 }

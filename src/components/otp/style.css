@@ -5,7 +5,7 @@
   width: calc(var(--k-otp-len) * var(--k-otp-cell));
   letter-spacing: calc(var(--k-otp-cell) - 1ch);
   border: 1px solid hsl(var(--k-input));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   background:
     repeating-linear-gradient(
       to right,

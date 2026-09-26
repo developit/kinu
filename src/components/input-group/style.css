@@ -19,13 +19,13 @@
 }
 
 [k="input-group"] > :is([k="input"], [k="textarea"], [k="select"], [k="button"], input, textarea, select, button):first-child {
-  border-start-start-radius: var(--k-radius);
-  border-end-start-radius: var(--k-radius);
+  border-start-start-radius: var(--k-radius-3);
+  border-end-start-radius: var(--k-radius-3);
 }
 
 [k="input-group"] > :is([k="input"], [k="textarea"], [k="select"], [k="button"], input, textarea, select, button):last-child {
-  border-start-end-radius: var(--k-radius);
-  border-end-end-radius: var(--k-radius);
+  border-start-end-radius: var(--k-radius-3);
+  border-end-end-radius: var(--k-radius-3);
 }
 
 [k="input-group"] > legend {
@@ -39,13 +39,13 @@
   background-color: hsl(var(--k-muted));
   border: 1px solid hsl(var(--k-input));
   border-inline-end: none;
-  border-start-start-radius: var(--k-radius);
-  border-end-start-radius: var(--k-radius);
+  border-start-start-radius: var(--k-radius-3);
+  border-end-start-radius: var(--k-radius-3);
 }
 
 [k="input-group"]:has(> :is([k="input"], [k="textarea"], [k="select"]):focus-visible):not(:has(> :is([k="input"], [k="textarea"], [k="select"]) ~ :is([k="input"], [k="textarea"], [k="select"]))) {
   box-shadow: var(--k-focus-ring);
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
 }
 
 [k="input-group"]:has(> :is([k="input"], [k="textarea"], [k="select"]):focus-visible):not(:has(> :is([k="input"], [k="textarea"], [k="select"]) ~ :is([k="input"], [k="textarea"], [k="select"]))) > :is([k="input"], [k="textarea"], [k="select"]):focus-visible {
