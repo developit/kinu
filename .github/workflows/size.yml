@@ -10,14 +10,24 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # base-branch install runs before `packageManager` exists on main
+  COREPACK_DEFAULT_TO_LATEST: '0'
+
 jobs:
   size:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup
+      # Inline rather than ./.github/actions/setup: compressed-size-action checks out the
+      # base branch, which may not have the local action (its post step then errors).
+      - uses: actions/setup-node@v7
         with:
-          filter: kinu
+          node-version-file: .node-version
+      - run: corepack enable
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+      - run: pnpm install --frozen-lockfile --filter kinu
       - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
