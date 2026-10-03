@@ -10,10 +10,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  # base-branch install runs before `packageManager` exists on main
-  COREPACK_DEFAULT_TO_LATEST: '0'
-
 jobs:
   size:
     runs-on: ubuntu-24.04
@@ -31,6 +27,8 @@ jobs:
       - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          install-script: pnpm install --frozen-lockfile --filter kinu
+          # --ignore-scripts: until `packageManager` is on main, the base-branch install gets
+          # corepack's newest pnpm, which errors on unapproved build scripts (esbuild, biome).
+          install-script: pnpm install --frozen-lockfile --filter kinu --ignore-scripts
           build-script: 'build:size'
           pattern: '{dist,benchmarks/size/.tmp}/**/*.{js,css}'
