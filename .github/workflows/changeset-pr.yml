@@ -7,23 +7,22 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   changeset:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # `changeset status` diffs against the base branch, which isn't in the
           # default shallow clone.
           fetch-depth: 0
-      - uses: pnpm/action-setup@v4
+      - uses: ./.github/actions/setup
         with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
+          filter: kinu
       # Only verifies a changeset is present — it exits non-zero when one is
       # missing. Versioning belongs to release.yml on main: running
       # changesets/action here consumed the changeset, then failed pushing a

@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/developit/kinu.git"
   },
+  "packageManager": "pnpm@10.33.0",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

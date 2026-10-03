@@ -1,0 +1,25 @@
+name: Setup
+description: Node (from .node-version), pnpm (from packageManager via corepack) and install
+inputs:
+  filter:
+    description: pnpm --filter selector for the install
+    default: ''
+  registry-url:
+    description: npm registry for publishing
+    default: ''
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version-file: .node-version
+        registry-url: ${{ inputs.registry-url }}
+    # Node 25+ no longer bundles corepack: `npm i -g corepack` first on those.
+    - run: corepack enable
+      shell: bash
+      env:
+        COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+    - run: pnpm install --frozen-lockfile ${{ inputs.filter && format('--filter "{0}"', inputs.filter) }}
+      shell: bash
+      env:
+        COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'

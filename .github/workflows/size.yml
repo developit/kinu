@@ -6,20 +6,29 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   size:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      # Inline rather than ./.github/actions/setup: compressed-size-action checks out the
+      # base branch, which may not have the local action (its post step then errors).
+      - uses: actions/setup-node@v7
         with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version-file: .node-version
+      - run: corepack enable
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+      - run: pnpm install --frozen-lockfile --filter kinu
       - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # --ignore-scripts: until `packageManager` is on main, the base-branch install gets
+          # corepack's newest pnpm, which errors on unapproved build scripts (esbuild, biome).
+          install-script: pnpm install --frozen-lockfile --filter kinu --ignore-scripts
           build-script: 'build:size'
           pattern: '{dist,benchmarks/size/.tmp}/**/*.{js,css}'
