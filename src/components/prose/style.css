@@ -38,7 +38,7 @@
   overflow-x: auto;
   background: hsl(var(--k-muted));
   padding: 0.75em 1em;
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
 }
 
 [k="prose"] pre code {

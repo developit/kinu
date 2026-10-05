@@ -42,6 +42,10 @@ export const Sidebar = createSimpleComponent<'dialog', SidebarOwnProps>(
   'dialog',
   {
     tabIndex: -1,
+    // Sidebar opens modally at ≤640px, and a modal dialog's default closedby is
+    // `closerequest` (Escape only) — without this, scrim clicks stop dismissing
+    // it on engines where native closedby supersedes the JS backdrop hit-test.
+    closedby: 'any',
   },
   () => {
     installCommands();

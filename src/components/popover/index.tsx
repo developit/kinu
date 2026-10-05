@@ -36,7 +36,7 @@ export const PopoverTrigger = /*#__PURE__*/ forwardRef(function PopoverTrigger({
   return applyPropsToChildren(children, {
     ...props,
     commandfor: id,
-    command: 'show',
+    command: 'toggle-popover',
   });
 });
 
@@ -61,7 +61,16 @@ export const PopoverContent = /*#__PURE__*/ forwardRef(function PopoverContent({
   ...props
 }: PopoverContentOwnProps & JSX.IntrinsicElements['dialog']) {
   const ctx = useContext(IdCtx);
-  return <dialog k="popover-content" id={id ?? ctx} {...props} />;
+  return (
+    <dialog
+      k="popover-content"
+      id={id ?? ctx}
+      popover="auto"
+      closedby="any"
+      tabindex={-1}
+      {...props}
+    />
+  );
 });
 
 export const PopoverClose = /*#__PURE__*/ forwardRef(function PopoverClose({

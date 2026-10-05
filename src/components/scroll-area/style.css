@@ -1,3 +1,59 @@
+
 [k="scroll-area"] {
   overflow-y: scroll;
+}
+
+/* Scroll-driven edge fades. The top edge fades in once you scroll away from the
+ * top, and the bottom edge fades out as you reach the end — the affordance
+ * native apps use to signal "more content". The fade sizes are registered
+ * <length> custom properties so the mask interpolates smoothly as you scroll.
+ *
+ * When the content doesn't overflow, the scroll timeline is inactive and the
+ * base (no-fade) values win, so a short list never looks clipped. Browsers
+ * without scroll-driven animations get no mask at all. */
+@property --k-fade-top {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --k-fade-bottom {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@supports (animation-timeline: scroll()) {
+  [k="scroll-area"] {
+    --k-fade-size: 1.5rem;
+    --k-fade-top: 0px;
+    --k-fade-bottom: 0px;
+    mask: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--k-fade-top),
+      #000 calc(100% - var(--k-fade-bottom)),
+      transparent
+    );
+    animation:
+      k-scroll-fade-top linear both,
+      k-scroll-fade-bottom linear both;
+    animation-timeline: scroll(self), scroll(self);
+    animation-range: 0 var(--k-fade-size), calc(100% - var(--k-fade-size)) 100%;
+  }
+
+  @keyframes k-scroll-fade-top {
+    to {
+      --k-fade-top: var(--k-fade-size);
+    }
+  }
+
+  @keyframes k-scroll-fade-bottom {
+    from {
+      --k-fade-bottom: var(--k-fade-size);
+    }
+    to {
+      --k-fade-bottom: 0px;
+    }
+  }
 }

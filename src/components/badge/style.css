@@ -1,7 +1,9 @@
 [k="badge"] {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--k-radius-2);
+  /* Capped — badges are ~22px tall; past this they clamp to a pill, which is
+   * Chip's shape, not Badge's. */
+  border-radius: min(var(--k-radius-2), 0.5rem);
   padding: 0.125rem 0.625rem;
   font-size: 0.75rem;
   line-height: 1rem;

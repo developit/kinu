@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'preact/hooks';
+import {useEffect, useRef, useState} from 'preact/hooks';
 import type {ComponentChild} from 'preact';
 import type {ToastOptions, ToastInternal, ToastApi} from '../components/toast/types';
 import './toast.css';
@@ -15,6 +15,33 @@ export const toast: ToastApi = {show: dispatchToast};
 
 export function ToastContainer() {
   const [toasts, setToasts] = useState<ToastInternal[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // The container is a manual popover so toasts join the top layer and render
+  // above open modal dialogs/sheets/drawers (z-index can't beat the top
+  // layer). The top layer stacks in insertion order, so being last in is being
+  // on top: join once here, and rejoin only when something else opens after
+  // us. Adding a toast doesn't change that order, so it must NOT re-promote —
+  // hide+show takes the container out of the box tree and back, which cancels
+  // any transition that hasn't had a frame to start yet. A new toast is
+  // painted transparent at rest and then flipped to [data-mounted] on the next
+  // frame, so a re-promote there lands in exactly that gap and eats the
+  // enter animation (and the [data-closing] exit the same way).
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el?.showPopover) return;
+    const promote = () => {
+      if (el.matches(':popover-open')) el.hidePopover();
+      el.showPopover();
+    };
+    promote();
+    const onToggle = (e: Event) => {
+      if (e.target !== el && (e as ToggleEvent).newState === 'open') promote();
+    };
+    // capture: toggle events don't bubble
+    addEventListener('toggle', onToggle, true);
+    return () => removeEventListener('toggle', onToggle, true);
+  }, []);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -49,7 +76,7 @@ export function ToastContainer() {
   }
 
   return (
-    <div k="toast-container">
+    <div k="toast-container" popover="manual" ref={containerRef}>
       {toasts.map((t) => (
         <div
           key={t.id}

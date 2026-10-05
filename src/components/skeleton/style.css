@@ -2,7 +2,8 @@
   position: relative;
   overflow: hidden;
   background-color: hsl(var(--k-muted));
-  border-radius: var(--k-radius);
+  /* Capped so a single-line skeleton stays a rounded bar rather than a pill. */
+  border-radius: min(var(--k-radius-3), 0.5625rem);
 }
 
 [k="skeleton"]::after {

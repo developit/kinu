@@ -25,4 +25,10 @@
 [k="listbox-list"] {
   padding: 0.5rem;
   overflow-y: auto;
+  /* No scrollbar on the list — see popover/style.css. */
+  scrollbar-width: none;
+}
+
+[k="listbox-list"]::-webkit-scrollbar {
+  display: none;
 }

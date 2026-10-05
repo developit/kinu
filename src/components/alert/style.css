@@ -1,5 +1,5 @@
 [k="alert"] {
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-border));
   padding: 1rem;
   background-color: hsl(var(--k-muted));

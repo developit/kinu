@@ -7,6 +7,13 @@ export interface ListOwnProps extends BaseProps {
    * - `nav`: Uses accent colors for hover/focus/selected (sidebar-style).
    */
   variant?: 'nav';
+
+  /**
+   * Render rows on demand via CSS content-visibility — keeps very long lists
+   * fast without a virtualization library, while rows stay in the DOM for
+   * find-in-page and assistive tech.
+   */
+  virtual?: boolean;
 }
 
 export type ListProps = ListOwnProps &

@@ -1,7 +1,14 @@
 import type {JSX} from 'preact';
 import type {BaseProps} from '../../types/component-props';
 
-export interface TreeRootOwnProps extends BaseProps {}
+export interface TreeRootOwnProps extends BaseProps {
+  /**
+   * Render nodes on demand via CSS content-visibility — keeps very large trees
+   * fast without a virtualization library, while nodes stay in the DOM for
+   * find-in-page and assistive tech.
+   */
+  virtual?: boolean;
+}
 
 export interface TreeGroupOwnProps extends BaseProps {
   /**

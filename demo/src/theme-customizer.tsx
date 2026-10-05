@@ -112,6 +112,7 @@ const GRAY_COLORS: Record<string, {light: {step1: string; step3: string; step6: 
 
 const GRAY_NAMES = Object.keys(GRAY_COLORS);
 
+// Round-corner values: kinu scales these itself when squircles are supported.
 const RADIUS_MAP: Record<string, string> = {
   none: '0',
   small: '0.25rem',

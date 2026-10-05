@@ -1,0 +1,5 @@
+/* Typeahead match highlighting for filtered lists (Combobox/Listbox), painted
+ * via the Custom Highlight API — no wrapper elements, zero DOM mutation. */
+::highlight(k-filter-match) {
+  background-color: hsl(var(--k-primary) / 0.2);
+}

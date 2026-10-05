@@ -1,7 +1,7 @@
 [k="dialog-content"] {
   --modal: 1;
   border: none;
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   background-color: hsl(var(--k-background));
   padding: 0;
   max-width: 32rem;
@@ -44,7 +44,12 @@
 
 [k="dialog-content"]::backdrop {
   background-color: rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(1px);
+  /* Constant, not animated: the element's own opacity composites the filtered
+   * backdrop, so the blur already fades in and out with the scrim — including
+   * when the scrim's opacity is scroll-driven by a swipe. Transitioning the
+   * radius on top of that ramps it twice and re-blurs the viewport every
+   * frame. */
+  backdrop-filter: var(--k-backdrop-blur);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;

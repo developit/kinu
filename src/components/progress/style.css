@@ -4,7 +4,7 @@
   appearance: none;
   -webkit-appearance: none;
   overflow: hidden;
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   background-color: hsl(var(--k-secondary));
 }
 

@@ -30,7 +30,7 @@ import {Select} from 'kinu';
 
 ## Notes
 
-- Leverages the platform picker on touch devices.
+- Leverages the platform picker on touch devices; where `appearance: base-select` is supported, kinu themes the picker itself and renders it as a bottom sheet on screens ≤640px.
 - Supports native multiple and size attributes.
 
 ---

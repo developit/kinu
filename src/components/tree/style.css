@@ -5,6 +5,12 @@
   font-size: 0.875rem;
 }
 
+/* Opt-in render-on-demand for huge trees (see list/style.css). */
+[k="tree"][virtual] :is([k="tree-item"], [k="tree-leaf"]) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1.875rem;
+}
+
 [k="tree-item"] {
   margin: 0;
 }
