@@ -1,0 +1,1127 @@
+{
+  "generatedAt": "2026-06-16T11:56:05.044Z",
+  "base": {
+    "raw": 4615,
+    "gzip": 1327,
+    "brotli": 1107,
+    "rawKiB": 4.51,
+    "gzipKiB": 1.3,
+    "brotliKiB": 1.08
+  },
+  "sharedAnalysis": {
+    "candidateCount": 16,
+    "pairCount": 120,
+    "topPairs": [
+      {
+        "a": "combobox",
+        "b": "dropdown-menu",
+        "rawShared": 8478,
+        "gzipShared": 2429,
+        "combinedRawDelta": 12945,
+        "combinedGzipDelta": 3809
+      },
+      {
+        "a": "context-menu",
+        "b": "dropdown-menu",
+        "rawShared": 7895,
+        "gzipShared": 2340,
+        "combinedRawDelta": 11939,
+        "combinedGzipDelta": 3375
+      },
+      {
+        "a": "combobox",
+        "b": "context-menu",
+        "rawShared": 7211,
+        "gzipShared": 2008,
+        "combinedRawDelta": 12542,
+        "combinedGzipDelta": 3509
+      },
+      {
+        "a": "dropdown-menu",
+        "b": "popover",
+        "rawShared": 6360,
+        "gzipShared": 1950,
+        "combinedRawDelta": 10994,
+        "combinedGzipDelta": 3244
+      },
+      {
+        "a": "combobox",
+        "b": "listbox",
+        "rawShared": 3466,
+        "gzipShared": 1576,
+        "combinedRawDelta": 11638,
+        "combinedGzipDelta": 3190
+      },
+      {
+        "a": "alert-dialog",
+        "b": "dialog",
+        "rawShared": 3823,
+        "gzipShared": 1505,
+        "combinedRawDelta": 3842,
+        "combinedGzipDelta": 1513
+      },
+      {
+        "a": "context-menu",
+        "b": "popover",
+        "rawShared": 4987,
+        "gzipShared": 1448,
+        "combinedRawDelta": 10697,
+        "combinedGzipDelta": 3025
+      },
+      {
+        "a": "dropdown-menu",
+        "b": "sidebar",
+        "rawShared": 2630,
+        "gzipShared": 1408,
+        "combinedRawDelta": 13188,
+        "combinedGzipDelta": 3783
+      },
+      {
+        "a": "dropdown-menu",
+        "b": "listbox",
+        "rawShared": 3146,
+        "gzipShared": 1399,
+        "combinedRawDelta": 12039,
+        "combinedGzipDelta": 3565
+      },
+      {
+        "a": "drawer",
+        "b": "sheet",
+        "rawShared": 1976,
+        "gzipShared": 1226,
+        "combinedRawDelta": 4980,
+        "combinedGzipDelta": 1544
+      },
+      {
+        "a": "combobox",
+        "b": "popover",
+        "rawShared": 4365,
+        "gzipShared": 1203,
+        "combinedRawDelta": 12908,
+        "combinedGzipDelta": 3793
+      },
+      {
+        "a": "alert-dialog",
+        "b": "sheet",
+        "rawShared": 1982,
+        "gzipShared": 1187,
+        "combinedRawDelta": 5351,
+        "combinedGzipDelta": 1719
+      },
+      {
+        "a": "dialog",
+        "b": "sheet",
+        "rawShared": 1976,
+        "gzipShared": 1186,
+        "combinedRawDelta": 5344,
+        "combinedGzipDelta": 1714
+      },
+      {
+        "a": "alert-dialog",
+        "b": "drawer",
+        "rawShared": 1982,
+        "gzipShared": 1179,
+        "combinedRawDelta": 5319,
+        "combinedGzipDelta": 1709
+      },
+      {
+        "a": "alert-dialog",
+        "b": "dropdown-menu",
+        "rawShared": 2086,
+        "gzipShared": 1178,
+        "combinedRawDelta": 12505,
+        "combinedGzipDelta": 3552
+      },
+      {
+        "a": "dialog",
+        "b": "drawer",
+        "rawShared": 1976,
+        "gzipShared": 1178,
+        "combinedRawDelta": 5312,
+        "combinedGzipDelta": 1704
+      },
+      {
+        "a": "dialog",
+        "b": "dropdown-menu",
+        "rawShared": 2080,
+        "gzipShared": 1177,
+        "combinedRawDelta": 12498,
+        "combinedGzipDelta": 3547
+      },
+      {
+        "a": "alert-dialog",
+        "b": "popover",
+        "rawShared": 2086,
+        "gzipShared": 1176,
+        "combinedRawDelta": 8355,
+        "combinedGzipDelta": 2312
+      },
+      {
+        "a": "dialog",
+        "b": "popover",
+        "rawShared": 2080,
+        "gzipShared": 1175,
+        "combinedRawDelta": 8348,
+        "combinedGzipDelta": 2307
+      },
+      {
+        "a": "drawer",
+        "b": "popover",
+        "rawShared": 1760,
+        "gzipShared": 1086,
+        "combinedRawDelta": 8304,
+        "combinedGzipDelta": 2266
+      },
+      {
+        "a": "popover",
+        "b": "sheet",
+        "rawShared": 1760,
+        "gzipShared": 1085,
+        "combinedRawDelta": 8336,
+        "combinedGzipDelta": 2285
+      },
+      {
+        "a": "drawer",
+        "b": "dropdown-menu",
+        "rawShared": 1760,
+        "gzipShared": 1080,
+        "combinedRawDelta": 12454,
+        "combinedGzipDelta": 3514
+      },
+      {
+        "a": "dropdown-menu",
+        "b": "sheet",
+        "rawShared": 1760,
+        "gzipShared": 1080,
+        "combinedRawDelta": 12486,
+        "combinedGzipDelta": 3532
+      },
+      {
+        "a": "context-menu",
+        "b": "listbox",
+        "rawShared": 1879,
+        "gzipShared": 993,
+        "combinedRawDelta": 11636,
+        "combinedGzipDelta": 3250
+      },
+      {
+        "a": "context-menu",
+        "b": "sidebar",
+        "rawShared": 1577,
+        "gzipShared": 989,
+        "combinedRawDelta": 12571,
+        "combinedGzipDelta": 3481
+      }
+    ]
+  },
+  "shapley": {
+    "samples": 24,
+    "seed": 42,
+    "values": [
+      {
+        "id": "dialog",
+        "shapleyGzip": 231,
+        "shapleyRaw": 936
+      },
+      {
+        "id": "sheet",
+        "shapleyGzip": 347,
+        "shapleyRaw": 1831
+      },
+      {
+        "id": "popover",
+        "shapleyGzip": 365,
+        "shapleyRaw": 1586
+      },
+      {
+        "id": "alert-dialog",
+        "shapleyGzip": 389,
+        "shapleyRaw": 1455
+      },
+      {
+        "id": "context-menu",
+        "shapleyGzip": 410,
+        "shapleyRaw": 2088
+      },
+      {
+        "id": "listbox",
+        "shapleyGzip": 625,
+        "shapleyRaw": 2039
+      },
+      {
+        "id": "combobox",
+        "shapleyGzip": 971,
+        "shapleyRaw": 3967
+      },
+      {
+        "id": "dropdown-menu",
+        "shapleyGzip": 1303,
+        "shapleyRaw": 4737
+      }
+    ],
+    "cachedCoalitions": 109
+  },
+  "results": [
+    {
+      "id": "aspect-ratio",
+      "modulePath": "components/aspect-ratio",
+      "exports": [
+        "AspectRatio"
+      ],
+      "raw": 5052,
+      "gzip": 1588,
+      "brotli": 1313,
+      "rawDelta": 437,
+      "gzipDelta": 261,
+      "brotliDelta": 206
+    },
+    {
+      "id": "scroll-area",
+      "modulePath": "components/scroll-area",
+      "exports": [
+        "ScrollArea"
+      ],
+      "raw": 5250,
+      "gzip": 1635,
+      "brotli": 1405,
+      "rawDelta": 635,
+      "gzipDelta": 308,
+      "brotliDelta": 298
+    },
+    {
+      "id": "separator",
+      "modulePath": "components/separator",
+      "exports": [
+        "Separator"
+      ],
+      "raw": 5288,
+      "gzip": 1659,
+      "brotli": 1415,
+      "rawDelta": 673,
+      "gzipDelta": 332,
+      "brotliDelta": 308
+    },
+    {
+      "id": "label",
+      "modulePath": "components/label",
+      "exports": [
+        "Label"
+      ],
+      "raw": 5340,
+      "gzip": 1692,
+      "brotli": 1415,
+      "rawDelta": 725,
+      "gzipDelta": 365,
+      "brotliDelta": 308
+    },
+    {
+      "id": "resizable",
+      "modulePath": "components/resizable",
+      "exports": [
+        "Resizable"
+      ],
+      "raw": 5366,
+      "gzip": 1696,
+      "brotli": 1430,
+      "rawDelta": 751,
+      "gzipDelta": 369,
+      "brotliDelta": 323
+    },
+    {
+      "id": "progress",
+      "modulePath": "components/progress",
+      "exports": [
+        "Progress"
+      ],
+      "raw": 5659,
+      "gzip": 1735,
+      "brotli": 1471,
+      "rawDelta": 1044,
+      "gzipDelta": 408,
+      "brotliDelta": 364
+    },
+    {
+      "id": "card",
+      "modulePath": "components/card",
+      "exports": [
+        "Card"
+      ],
+      "raw": 5524,
+      "gzip": 1739,
+      "brotli": 1491,
+      "rawDelta": 909,
+      "gzipDelta": 412,
+      "brotliDelta": 384
+    },
+    {
+      "id": "alert",
+      "modulePath": "components/alert",
+      "exports": [
+        "Alert"
+      ],
+      "raw": 5786,
+      "gzip": 1745,
+      "brotli": 1478,
+      "rawDelta": 1171,
+      "gzipDelta": 418,
+      "brotliDelta": 371
+    },
+    {
+      "id": "empty",
+      "modulePath": "components/empty",
+      "exports": [
+        "Empty"
+      ],
+      "raw": 5454,
+      "gzip": 1754,
+      "brotli": 1489,
+      "rawDelta": 839,
+      "gzipDelta": 427,
+      "brotliDelta": 382
+    },
+    {
+      "id": "table",
+      "modulePath": "components/table",
+      "exports": [
+        "Table"
+      ],
+      "raw": 5521,
+      "gzip": 1754,
+      "brotli": 1483,
+      "rawDelta": 906,
+      "gzipDelta": 427,
+      "brotliDelta": 376
+    },
+    {
+      "id": "navigation-menu",
+      "modulePath": "components/navigation-menu",
+      "exports": [
+        "NavigationMenu",
+        "NavigationMenuList",
+        "NavigationMenuItem",
+        "NavigationMenuLink"
+      ],
+      "raw": 5574,
+      "gzip": 1756,
+      "brotli": 1478,
+      "rawDelta": 959,
+      "gzipDelta": 429,
+      "brotliDelta": 371
+    },
+    {
+      "id": "breadcrumb",
+      "modulePath": "components/breadcrumb",
+      "exports": [
+        "Breadcrumb",
+        "BreadcrumbList",
+        "BreadcrumbItem",
+        "BreadcrumbLink"
+      ],
+      "raw": 5589,
+      "gzip": 1775,
+      "brotli": 1512,
+      "rawDelta": 974,
+      "gzipDelta": 448,
+      "brotliDelta": 405
+    },
+    {
+      "id": "toggle-group",
+      "modulePath": "components/toggle-group",
+      "exports": [
+        "ToggleGroup"
+      ],
+      "raw": 5632,
+      "gzip": 1778,
+      "brotli": 1495,
+      "rawDelta": 1017,
+      "gzipDelta": 451,
+      "brotliDelta": 388
+    },
+    {
+      "id": "kbd",
+      "modulePath": "components/kbd",
+      "exports": [
+        "Kbd"
+      ],
+      "raw": 5527,
+      "gzip": 1786,
+      "brotli": 1513,
+      "rawDelta": 912,
+      "gzipDelta": 459,
+      "brotliDelta": 406
+    },
+    {
+      "id": "skeleton",
+      "modulePath": "components/skeleton",
+      "exports": [
+        "Skeleton"
+      ],
+      "raw": 5606,
+      "gzip": 1792,
+      "brotli": 1529,
+      "rawDelta": 991,
+      "gzipDelta": 465,
+      "brotliDelta": 422
+    },
+    {
+      "id": "meter",
+      "modulePath": "components/meter",
+      "exports": [
+        "Meter"
+      ],
+      "raw": 5985,
+      "gzip": 1796,
+      "brotli": 1526,
+      "rawDelta": 1370,
+      "gzipDelta": 469,
+      "brotliDelta": 419
+    },
+    {
+      "id": "pagination",
+      "modulePath": "components/pagination",
+      "exports": [
+        "Pagination",
+        "PaginationList",
+        "PaginationItem",
+        "PaginationLink"
+      ],
+      "raw": 5749,
+      "gzip": 1802,
+      "brotli": 1531,
+      "rawDelta": 1134,
+      "gzipDelta": 475,
+      "brotliDelta": 424
+    },
+    {
+      "id": "time-picker",
+      "modulePath": "components/time-picker",
+      "exports": [
+        "TimePicker"
+      ],
+      "raw": 5727,
+      "gzip": 1846,
+      "brotli": 1583,
+      "rawDelta": 1112,
+      "gzipDelta": 519,
+      "brotliDelta": 476
+    },
+    {
+      "id": "calendar",
+      "modulePath": "components/calendar",
+      "exports": [
+        "Calendar"
+      ],
+      "raw": 5721,
+      "gzip": 1848,
+      "brotli": 1577,
+      "rawDelta": 1106,
+      "gzipDelta": 521,
+      "brotliDelta": 470
+    },
+    {
+      "id": "date-picker",
+      "modulePath": "components/date-picker",
+      "exports": [
+        "DatePicker"
+      ],
+      "raw": 5727,
+      "gzip": 1848,
+      "brotli": 1584,
+      "rawDelta": 1112,
+      "gzipDelta": 521,
+      "brotliDelta": 477
+    },
+    {
+      "id": "badge",
+      "modulePath": "components/badge",
+      "exports": [
+        "Badge"
+      ],
+      "raw": 6218,
+      "gzip": 1880,
+      "brotli": 1592,
+      "rawDelta": 1603,
+      "gzipDelta": 553,
+      "brotliDelta": 485
+    },
+    {
+      "id": "textarea",
+      "modulePath": "components/textarea",
+      "exports": [
+        "Textarea"
+      ],
+      "raw": 5845,
+      "gzip": 1886,
+      "brotli": 1598,
+      "rawDelta": 1230,
+      "gzipDelta": 559,
+      "brotliDelta": 491
+    },
+    {
+      "id": "hover-card",
+      "modulePath": "components/hover-card",
+      "exports": [
+        "HoverCard",
+        "HoverCardTrigger",
+        "HoverCardContent"
+      ],
+      "raw": 5923,
+      "gzip": 1914,
+      "brotli": 1620,
+      "rawDelta": 1308,
+      "gzipDelta": 587,
+      "brotliDelta": 513
+    },
+    {
+      "id": "input-group",
+      "modulePath": "components/input-group",
+      "exports": [
+        "InputGroup"
+      ],
+      "raw": 6833,
+      "gzip": 1961,
+      "brotli": 1665,
+      "rawDelta": 2218,
+      "gzipDelta": 634,
+      "brotliDelta": 558
+    },
+    {
+      "id": "timeline",
+      "modulePath": "components/timeline",
+      "exports": [
+        "Timeline"
+      ],
+      "raw": 6122,
+      "gzip": 1961,
+      "brotli": 1648,
+      "rawDelta": 1507,
+      "gzipDelta": 634,
+      "brotliDelta": 541
+    },
+    {
+      "id": "file-upload",
+      "modulePath": "components/file-upload",
+      "exports": [
+        "FileUpload"
+      ],
+      "raw": 6040,
+      "gzip": 1963,
+      "brotli": 1674,
+      "rawDelta": 1425,
+      "gzipDelta": 636,
+      "brotliDelta": 567
+    },
+    {
+      "id": "avatar",
+      "modulePath": "components/avatar",
+      "exports": [
+        "Avatar"
+      ],
+      "raw": 6039,
+      "gzip": 1990,
+      "brotli": 1666,
+      "rawDelta": 1424,
+      "gzipDelta": 663,
+      "brotliDelta": 559
+    },
+    {
+      "id": "color-picker",
+      "modulePath": "components/color-picker",
+      "exports": [
+        "ColorPicker"
+      ],
+      "raw": 6246,
+      "gzip": 2000,
+      "brotli": 1706,
+      "rawDelta": 1631,
+      "gzipDelta": 673,
+      "brotliDelta": 599
+    },
+    {
+      "id": "menubar",
+      "modulePath": "components/menubar",
+      "exports": [
+        "Menubar",
+        "MenubarItem"
+      ],
+      "raw": 6042,
+      "gzip": 2002,
+      "brotli": 1695,
+      "rawDelta": 1427,
+      "gzipDelta": 675,
+      "brotliDelta": 588
+    },
+    {
+      "id": "field",
+      "modulePath": "components/field",
+      "exports": [
+        "Field"
+      ],
+      "raw": 6164,
+      "gzip": 2005,
+      "brotli": 1726,
+      "rawDelta": 1549,
+      "gzipDelta": 678,
+      "brotliDelta": 619
+    },
+    {
+      "id": "prose",
+      "modulePath": "components/prose",
+      "exports": [
+        "Prose"
+      ],
+      "raw": 6272,
+      "gzip": 2005,
+      "brotli": 1727,
+      "rawDelta": 1657,
+      "gzipDelta": 678,
+      "brotliDelta": 620
+    },
+    {
+      "id": "select",
+      "modulePath": "components/select",
+      "exports": [
+        "Select"
+      ],
+      "raw": 5983,
+      "gzip": 2020,
+      "brotli": 1692,
+      "rawDelta": 1368,
+      "gzipDelta": 693,
+      "brotliDelta": 585
+    },
+    {
+      "id": "tooltip",
+      "modulePath": "components/tooltip",
+      "exports": [
+        "Tooltip"
+      ],
+      "raw": 6669,
+      "gzip": 2046,
+      "brotli": 1716,
+      "rawDelta": 2054,
+      "gzipDelta": 719,
+      "brotliDelta": 609
+    },
+    {
+      "id": "collapsible",
+      "modulePath": "components/collapsible",
+      "exports": [
+        "Collapsible"
+      ],
+      "raw": 6277,
+      "gzip": 2049,
+      "brotli": 1729,
+      "rawDelta": 1662,
+      "gzipDelta": 722,
+      "brotliDelta": 622
+    },
+    {
+      "id": "accordion",
+      "modulePath": "components/accordion",
+      "exports": [
+        "Accordion"
+      ],
+      "raw": 6417,
+      "gzip": 2071,
+      "brotli": 1736,
+      "rawDelta": 1802,
+      "gzipDelta": 744,
+      "brotliDelta": 629
+    },
+    {
+      "id": "radio-group",
+      "modulePath": "components/radio-group",
+      "exports": [
+        "RadioGroup",
+        "Radio"
+      ],
+      "raw": 6327,
+      "gzip": 2074,
+      "brotli": 1769,
+      "rawDelta": 1712,
+      "gzipDelta": 747,
+      "brotliDelta": 662
+    },
+    {
+      "id": "checkbox",
+      "modulePath": "components/checkbox",
+      "exports": [
+        "Checkbox"
+      ],
+      "raw": 6430,
+      "gzip": 2075,
+      "brotli": 1769,
+      "rawDelta": 1815,
+      "gzipDelta": 748,
+      "brotliDelta": 662
+    },
+    {
+      "id": "switch",
+      "modulePath": "components/switch",
+      "exports": [
+        "Switch"
+      ],
+      "raw": 6401,
+      "gzip": 2087,
+      "brotli": 1758,
+      "rawDelta": 1786,
+      "gzipDelta": 760,
+      "brotliDelta": 651
+    },
+    {
+      "id": "progress-ring",
+      "modulePath": "components/progress-ring",
+      "exports": [
+        "ProgressRing"
+      ],
+      "raw": 6929,
+      "gzip": 2096,
+      "brotli": 1790,
+      "rawDelta": 2314,
+      "gzipDelta": 769,
+      "brotliDelta": 683
+    },
+    {
+      "id": "otp",
+      "modulePath": "components/otp",
+      "exports": [
+        "OTPInput"
+      ],
+      "raw": 6458,
+      "gzip": 2149,
+      "brotli": 1856,
+      "rawDelta": 1843,
+      "gzipDelta": 822,
+      "brotliDelta": 749
+    },
+    {
+      "id": "input",
+      "modulePath": "components/input",
+      "exports": [
+        "Input"
+      ],
+      "raw": 6755,
+      "gzip": 2185,
+      "brotli": 1869,
+      "rawDelta": 2140,
+      "gzipDelta": 858,
+      "brotliDelta": 762
+    },
+    {
+      "id": "slider",
+      "modulePath": "components/slider",
+      "exports": [
+        "Slider"
+      ],
+      "raw": 6909,
+      "gzip": 2186,
+      "brotli": 1872,
+      "rawDelta": 2294,
+      "gzipDelta": 859,
+      "brotliDelta": 765
+    },
+    {
+      "id": "item",
+      "modulePath": "components/item",
+      "exports": [
+        "Item"
+      ],
+      "raw": 6497,
+      "gzip": 2199,
+      "brotli": 1856,
+      "rawDelta": 1882,
+      "gzipDelta": 872,
+      "brotliDelta": 749
+    },
+    {
+      "id": "tabs",
+      "modulePath": "components/tabs",
+      "exports": [
+        "TabList",
+        "Tab",
+        "TabPanel"
+      ],
+      "raw": 7141,
+      "gzip": 2210,
+      "brotli": 1877,
+      "rawDelta": 2526,
+      "gzipDelta": 883,
+      "brotliDelta": 770
+    },
+    {
+      "id": "toggle",
+      "modulePath": "components/toggle",
+      "exports": [
+        "Toggle"
+      ],
+      "raw": 6855,
+      "gzip": 2219,
+      "brotli": 1887,
+      "rawDelta": 2240,
+      "gzipDelta": 892,
+      "brotliDelta": 780
+    },
+    {
+      "id": "tree",
+      "modulePath": "components/tree",
+      "exports": [
+        "Tree"
+      ],
+      "raw": 7066,
+      "gzip": 2232,
+      "brotli": 1914,
+      "rawDelta": 2451,
+      "gzipDelta": 905,
+      "brotliDelta": 807
+    },
+    {
+      "id": "status",
+      "modulePath": "components/status",
+      "exports": [
+        "Status"
+      ],
+      "raw": 7373,
+      "gzip": 2235,
+      "brotli": 1883,
+      "rawDelta": 2758,
+      "gzipDelta": 908,
+      "brotliDelta": 776
+    },
+    {
+      "id": "button",
+      "modulePath": "components/button",
+      "exports": [
+        "Button"
+      ],
+      "raw": 7887,
+      "gzip": 2262,
+      "brotli": 1918,
+      "rawDelta": 3272,
+      "gzipDelta": 935,
+      "brotliDelta": 811
+    },
+    {
+      "id": "chip",
+      "modulePath": "components/chip",
+      "exports": [
+        "Chip"
+      ],
+      "raw": 7639,
+      "gzip": 2344,
+      "brotli": 1983,
+      "rawDelta": 3024,
+      "gzipDelta": 1017,
+      "brotliDelta": 876
+    },
+    {
+      "id": "lib-toast",
+      "modulePath": "lib/toast",
+      "exports": [
+        "ToastContainer",
+        "toast"
+      ],
+      "raw": 8188,
+      "gzip": 2572,
+      "brotli": 2200,
+      "rawDelta": 3573,
+      "gzipDelta": 1245,
+      "brotliDelta": 1093
+    },
+    {
+      "id": "drawer",
+      "modulePath": "components/drawer",
+      "exports": [
+        "Drawer",
+        "DrawerTrigger",
+        "DrawerContent",
+        "DrawerClose"
+      ],
+      "raw": 8077,
+      "gzip": 2703,
+      "brotli": 2261,
+      "rawDelta": 3462,
+      "gzipDelta": 1376,
+      "brotliDelta": 1154
+    },
+    {
+      "id": "sheet",
+      "modulePath": "components/sheet",
+      "exports": [
+        "Sheet",
+        "SheetTrigger",
+        "SheetContent",
+        "SheetClose"
+      ],
+      "raw": 8109,
+      "gzip": 2721,
+      "brotli": 2290,
+      "rawDelta": 3494,
+      "gzipDelta": 1394,
+      "brotliDelta": 1183
+    },
+    {
+      "id": "list",
+      "modulePath": "components/list",
+      "exports": [
+        "List"
+      ],
+      "raw": 8274,
+      "gzip": 2789,
+      "brotli": 2364,
+      "rawDelta": 3659,
+      "gzipDelta": 1462,
+      "brotliDelta": 1257
+    },
+    {
+      "id": "carousel",
+      "modulePath": "components/carousel",
+      "exports": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselPrevious",
+        "CarouselNext"
+      ],
+      "raw": 8143,
+      "gzip": 2829,
+      "brotli": 2360,
+      "rawDelta": 3528,
+      "gzipDelta": 1502,
+      "brotliDelta": 1253
+    },
+    {
+      "id": "dialog",
+      "modulePath": "components/dialog",
+      "exports": [
+        "Dialog"
+      ],
+      "raw": 8441,
+      "gzip": 2833,
+      "brotli": 2382,
+      "rawDelta": 3826,
+      "gzipDelta": 1506,
+      "brotliDelta": 1275
+    },
+    {
+      "id": "alert-dialog",
+      "modulePath": "components/alert-dialog",
+      "exports": [
+        "AlertDialog"
+      ],
+      "raw": 8454,
+      "gzip": 2839,
+      "brotli": 2387,
+      "rawDelta": 3839,
+      "gzipDelta": 1512,
+      "brotliDelta": 1280
+    },
+    {
+      "id": "spinner",
+      "modulePath": "components/spinner",
+      "exports": [
+        "Spinner"
+      ],
+      "raw": 12782,
+      "gzip": 2998,
+      "brotli": 2633,
+      "rawDelta": 8167,
+      "gzipDelta": 1671,
+      "brotliDelta": 1526
+    },
+    {
+      "id": "listbox",
+      "modulePath": "components/listbox",
+      "exports": [
+        "Listbox",
+        "ListboxInput",
+        "ListboxList",
+        "ListboxOption"
+      ],
+      "raw": 9048,
+      "gzip": 3073,
+      "brotli": 2600,
+      "rawDelta": 4433,
+      "gzipDelta": 1746,
+      "brotliDelta": 1493
+    },
+    {
+      "id": "sidebar",
+      "modulePath": "components/sidebar",
+      "exports": [
+        "Sidebar",
+        "SidebarTrigger"
+      ],
+      "raw": 9681,
+      "gzip": 3300,
+      "brotli": 2804,
+      "rawDelta": 5066,
+      "gzipDelta": 1973,
+      "brotliDelta": 1697
+    },
+    {
+      "id": "popover",
+      "modulePath": "components/popover",
+      "exports": [
+        "Popover",
+        "PopoverTrigger",
+        "PopoverContent",
+        "PopoverClose"
+      ],
+      "raw": 11217,
+      "gzip": 3303,
+      "brotli": 2804,
+      "rawDelta": 6602,
+      "gzipDelta": 1976,
+      "brotliDelta": 1697
+    },
+    {
+      "id": "context-menu",
+      "modulePath": "components/context-menu",
+      "exports": [
+        "ContextMenu",
+        "ContextMenuTrigger",
+        "ContextMenuContent",
+        "ContextMenuItem"
+      ],
+      "raw": 13697,
+      "gzip": 3824,
+      "brotli": 3255,
+      "rawDelta": 9082,
+      "gzipDelta": 2497,
+      "brotliDelta": 2148
+    },
+    {
+      "id": "combobox",
+      "modulePath": "components/combobox",
+      "exports": [
+        "Combobox",
+        "ComboboxInput",
+        "ComboboxList",
+        "ComboboxOption"
+      ],
+      "raw": 15286,
+      "gzip": 4347,
+      "brotli": 3734,
+      "rawDelta": 10671,
+      "gzipDelta": 3020,
+      "brotliDelta": 2627
+    },
+    {
+      "id": "dropdown-menu",
+      "modulePath": "components/dropdown-menu",
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuTrigger",
+        "DropdownMenuContent",
+        "DropdownMenuItem"
+      ],
+      "raw": 15367,
+      "gzip": 4545,
+      "brotli": 3894,
+      "rawDelta": 10752,
+      "gzipDelta": 3218,
+      "brotliDelta": 2787
+    }
+  ]
+}

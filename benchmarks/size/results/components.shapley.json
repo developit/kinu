@@ -1,0 +1,47 @@
+{
+  "samples": 24,
+  "seed": 42,
+  "values": [
+    {
+      "id": "dialog",
+      "shapleyGzip": 231,
+      "shapleyRaw": 936
+    },
+    {
+      "id": "sheet",
+      "shapleyGzip": 347,
+      "shapleyRaw": 1831
+    },
+    {
+      "id": "popover",
+      "shapleyGzip": 365,
+      "shapleyRaw": 1586
+    },
+    {
+      "id": "alert-dialog",
+      "shapleyGzip": 389,
+      "shapleyRaw": 1455
+    },
+    {
+      "id": "context-menu",
+      "shapleyGzip": 410,
+      "shapleyRaw": 2088
+    },
+    {
+      "id": "listbox",
+      "shapleyGzip": 625,
+      "shapleyRaw": 2039
+    },
+    {
+      "id": "combobox",
+      "shapleyGzip": 971,
+      "shapleyRaw": 3967
+    },
+    {
+      "id": "dropdown-menu",
+      "shapleyGzip": 1303,
+      "shapleyRaw": 4737
+    }
+  ],
+  "cachedCoalitions": 109
+}

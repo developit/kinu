@@ -1,0 +1,2953 @@
+{
+  "nodes": [
+    {
+      "id": "base",
+      "label": "base.css + commands",
+      "type": "base"
+    },
+    {
+      "id": "group:aspect-ratio",
+      "label": "aspect-ratio",
+      "type": "group"
+    },
+    {
+      "id": "group:scroll-area",
+      "label": "scroll-area",
+      "type": "group"
+    },
+    {
+      "id": "group:separator",
+      "label": "separator",
+      "type": "group"
+    },
+    {
+      "id": "group:label",
+      "label": "label",
+      "type": "group"
+    },
+    {
+      "id": "group:resizable",
+      "label": "resizable",
+      "type": "group"
+    },
+    {
+      "id": "group:progress",
+      "label": "progress",
+      "type": "group"
+    },
+    {
+      "id": "group:card",
+      "label": "card",
+      "type": "group"
+    },
+    {
+      "id": "group:alert",
+      "label": "alert",
+      "type": "group"
+    },
+    {
+      "id": "group:empty",
+      "label": "empty",
+      "type": "group"
+    },
+    {
+      "id": "group:table",
+      "label": "table",
+      "type": "group"
+    },
+    {
+      "id": "group:navigation-menu",
+      "label": "navigation-menu",
+      "type": "group"
+    },
+    {
+      "id": "group:breadcrumb",
+      "label": "breadcrumb",
+      "type": "group"
+    },
+    {
+      "id": "group:toggle-group",
+      "label": "toggle-group",
+      "type": "group"
+    },
+    {
+      "id": "group:kbd",
+      "label": "kbd",
+      "type": "group"
+    },
+    {
+      "id": "group:skeleton",
+      "label": "skeleton",
+      "type": "group"
+    },
+    {
+      "id": "group:meter",
+      "label": "meter",
+      "type": "group"
+    },
+    {
+      "id": "group:pagination",
+      "label": "pagination",
+      "type": "group"
+    },
+    {
+      "id": "group:time-picker",
+      "label": "time-picker",
+      "type": "group"
+    },
+    {
+      "id": "group:calendar",
+      "label": "calendar",
+      "type": "group"
+    },
+    {
+      "id": "group:date-picker",
+      "label": "date-picker",
+      "type": "group"
+    },
+    {
+      "id": "group:badge",
+      "label": "badge",
+      "type": "group"
+    },
+    {
+      "id": "group:textarea",
+      "label": "textarea",
+      "type": "group"
+    },
+    {
+      "id": "group:hover-card",
+      "label": "hover-card",
+      "type": "group"
+    },
+    {
+      "id": "group:input-group",
+      "label": "input-group",
+      "type": "group"
+    },
+    {
+      "id": "group:timeline",
+      "label": "timeline",
+      "type": "group"
+    },
+    {
+      "id": "group:file-upload",
+      "label": "file-upload",
+      "type": "group"
+    },
+    {
+      "id": "group:avatar",
+      "label": "avatar",
+      "type": "group"
+    },
+    {
+      "id": "group:color-picker",
+      "label": "color-picker",
+      "type": "group"
+    },
+    {
+      "id": "group:menubar",
+      "label": "menubar",
+      "type": "group"
+    },
+    {
+      "id": "group:field",
+      "label": "field",
+      "type": "group"
+    },
+    {
+      "id": "group:prose",
+      "label": "prose",
+      "type": "group"
+    },
+    {
+      "id": "group:select",
+      "label": "select",
+      "type": "group"
+    },
+    {
+      "id": "group:tooltip",
+      "label": "tooltip",
+      "type": "group"
+    },
+    {
+      "id": "group:collapsible",
+      "label": "collapsible",
+      "type": "group"
+    },
+    {
+      "id": "group:accordion",
+      "label": "accordion",
+      "type": "group"
+    },
+    {
+      "id": "group:radio-group",
+      "label": "radio-group",
+      "type": "group"
+    },
+    {
+      "id": "group:checkbox",
+      "label": "checkbox",
+      "type": "group"
+    },
+    {
+      "id": "group:switch",
+      "label": "switch",
+      "type": "group"
+    },
+    {
+      "id": "group:progress-ring",
+      "label": "progress-ring",
+      "type": "group"
+    },
+    {
+      "id": "group:otp",
+      "label": "otp",
+      "type": "group"
+    },
+    {
+      "id": "group:input",
+      "label": "input",
+      "type": "group"
+    },
+    {
+      "id": "group:slider",
+      "label": "slider",
+      "type": "group"
+    },
+    {
+      "id": "group:item",
+      "label": "item",
+      "type": "group"
+    },
+    {
+      "id": "group:tabs",
+      "label": "tabs",
+      "type": "group"
+    },
+    {
+      "id": "group:toggle",
+      "label": "toggle",
+      "type": "group"
+    },
+    {
+      "id": "group:tree",
+      "label": "tree",
+      "type": "group"
+    },
+    {
+      "id": "group:status",
+      "label": "status",
+      "type": "group"
+    },
+    {
+      "id": "group:button",
+      "label": "button",
+      "type": "group"
+    },
+    {
+      "id": "group:chip",
+      "label": "chip",
+      "type": "group"
+    },
+    {
+      "id": "group:lib-toast",
+      "label": "lib-toast",
+      "type": "group"
+    },
+    {
+      "id": "group:drawer",
+      "label": "drawer",
+      "type": "group"
+    },
+    {
+      "id": "group:sheet",
+      "label": "sheet",
+      "type": "group"
+    },
+    {
+      "id": "group:list",
+      "label": "list",
+      "type": "group"
+    },
+    {
+      "id": "group:carousel",
+      "label": "carousel",
+      "type": "group"
+    },
+    {
+      "id": "group:dialog",
+      "label": "dialog",
+      "type": "group"
+    },
+    {
+      "id": "group:alert-dialog",
+      "label": "alert-dialog",
+      "type": "group"
+    },
+    {
+      "id": "group:spinner",
+      "label": "spinner",
+      "type": "group"
+    },
+    {
+      "id": "group:listbox",
+      "label": "listbox",
+      "type": "group"
+    },
+    {
+      "id": "group:sidebar",
+      "label": "sidebar",
+      "type": "group"
+    },
+    {
+      "id": "group:popover",
+      "label": "popover",
+      "type": "group"
+    },
+    {
+      "id": "group:context-menu",
+      "label": "context-menu",
+      "type": "group"
+    },
+    {
+      "id": "group:combobox",
+      "label": "combobox",
+      "type": "group"
+    },
+    {
+      "id": "group:dropdown-menu",
+      "label": "dropdown-menu",
+      "type": "group"
+    },
+    {
+      "id": "module:src/lib/forwardref.ts",
+      "label": "src/lib/forwardref.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/lib/create-simple-component.tsx",
+      "label": "src/lib/create-simple-component.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/accordion/index.tsx",
+      "label": "src/components/accordion/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/accordion.ts",
+      "label": "benchmarks/size/.entries/accordion.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/alert/index.tsx",
+      "label": "src/components/alert/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/alert.ts",
+      "label": "benchmarks/size/.entries/alert.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/lib/commands.ts",
+      "label": "src/lib/commands.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/lib/children.tsx",
+      "label": "src/lib/children.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/dialog/index.tsx",
+      "label": "src/components/dialog/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/alert-dialog/index.tsx",
+      "label": "src/components/alert-dialog/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/alert-dialog.ts",
+      "label": "benchmarks/size/.entries/alert-dialog.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/aspect-ratio/index.tsx",
+      "label": "src/components/aspect-ratio/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/aspect-ratio.ts",
+      "label": "benchmarks/size/.entries/aspect-ratio.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/avatar/index.tsx",
+      "label": "src/components/avatar/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/avatar.ts",
+      "label": "benchmarks/size/.entries/avatar.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/badge/index.tsx",
+      "label": "src/components/badge/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/badge.ts",
+      "label": "benchmarks/size/.entries/badge.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/breadcrumb/index.tsx",
+      "label": "src/components/breadcrumb/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/breadcrumb.ts",
+      "label": "benchmarks/size/.entries/breadcrumb.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/button/index.tsx",
+      "label": "src/components/button/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/button.ts",
+      "label": "benchmarks/size/.entries/button.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/calendar/index.tsx",
+      "label": "src/components/calendar/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/calendar.ts",
+      "label": "benchmarks/size/.entries/calendar.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/card/index.tsx",
+      "label": "src/components/card/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/card.ts",
+      "label": "benchmarks/size/.entries/card.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/carousel/index.tsx",
+      "label": "src/components/carousel/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/carousel.ts",
+      "label": "benchmarks/size/.entries/carousel.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/checkbox/index.tsx",
+      "label": "src/components/checkbox/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/checkbox.ts",
+      "label": "benchmarks/size/.entries/checkbox.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/chip/index.tsx",
+      "label": "src/components/chip/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/chip.ts",
+      "label": "benchmarks/size/.entries/chip.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/collapsible/index.tsx",
+      "label": "src/components/collapsible/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/collapsible.ts",
+      "label": "benchmarks/size/.entries/collapsible.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/color-picker/index.tsx",
+      "label": "src/components/color-picker/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/color-picker.ts",
+      "label": "benchmarks/size/.entries/color-picker.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/lib/filter.ts",
+      "label": "src/lib/filter.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/item/index.tsx",
+      "label": "src/components/item/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/combobox/index.tsx",
+      "label": "src/components/combobox/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/combobox.ts",
+      "label": "benchmarks/size/.entries/combobox.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/context-menu/index.tsx",
+      "label": "src/components/context-menu/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/context-menu.ts",
+      "label": "benchmarks/size/.entries/context-menu.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/date-picker/index.tsx",
+      "label": "src/components/date-picker/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/date-picker.ts",
+      "label": "benchmarks/size/.entries/date-picker.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/dialog.ts",
+      "label": "benchmarks/size/.entries/dialog.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/drawer/index.tsx",
+      "label": "src/components/drawer/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/drawer.ts",
+      "label": "benchmarks/size/.entries/drawer.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/dropdown-menu/index.tsx",
+      "label": "src/components/dropdown-menu/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/dropdown-menu.ts",
+      "label": "benchmarks/size/.entries/dropdown-menu.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/empty/index.tsx",
+      "label": "src/components/empty/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/empty.ts",
+      "label": "benchmarks/size/.entries/empty.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/label/index.tsx",
+      "label": "src/components/label/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/field/index.tsx",
+      "label": "src/components/field/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/field.ts",
+      "label": "benchmarks/size/.entries/field.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/file-upload/index.tsx",
+      "label": "src/components/file-upload/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/file-upload.ts",
+      "label": "benchmarks/size/.entries/file-upload.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/hover-card/index.tsx",
+      "label": "src/components/hover-card/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/hover-card.ts",
+      "label": "benchmarks/size/.entries/hover-card.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/input/index.tsx",
+      "label": "src/components/input/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/input.ts",
+      "label": "benchmarks/size/.entries/input.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/input-group/index.tsx",
+      "label": "src/components/input-group/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/input-group.ts",
+      "label": "benchmarks/size/.entries/input-group.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/item.ts",
+      "label": "benchmarks/size/.entries/item.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/kbd/index.tsx",
+      "label": "src/components/kbd/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/kbd.ts",
+      "label": "benchmarks/size/.entries/kbd.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/label.ts",
+      "label": "benchmarks/size/.entries/label.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/lib/toast.tsx",
+      "label": "src/lib/toast.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/lib-toast.ts",
+      "label": "benchmarks/size/.entries/lib-toast.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/list/index.tsx",
+      "label": "src/components/list/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/list.ts",
+      "label": "benchmarks/size/.entries/list.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/listbox/index.tsx",
+      "label": "src/components/listbox/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/listbox.ts",
+      "label": "benchmarks/size/.entries/listbox.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/menubar/index.tsx",
+      "label": "src/components/menubar/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/menubar.ts",
+      "label": "benchmarks/size/.entries/menubar.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/meter/index.tsx",
+      "label": "src/components/meter/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/meter.ts",
+      "label": "benchmarks/size/.entries/meter.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/navigation-menu/index.tsx",
+      "label": "src/components/navigation-menu/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/navigation-menu.ts",
+      "label": "benchmarks/size/.entries/navigation-menu.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/otp/index.tsx",
+      "label": "src/components/otp/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/otp.ts",
+      "label": "benchmarks/size/.entries/otp.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/pagination/index.tsx",
+      "label": "src/components/pagination/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/pagination.ts",
+      "label": "benchmarks/size/.entries/pagination.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/popover/index.tsx",
+      "label": "src/components/popover/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/popover.ts",
+      "label": "benchmarks/size/.entries/popover.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/progress/index.tsx",
+      "label": "src/components/progress/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/progress.ts",
+      "label": "benchmarks/size/.entries/progress.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/progress-ring/index.tsx",
+      "label": "src/components/progress-ring/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/progress-ring.ts",
+      "label": "benchmarks/size/.entries/progress-ring.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/prose/index.tsx",
+      "label": "src/components/prose/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/prose.ts",
+      "label": "benchmarks/size/.entries/prose.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/radio-group/index.tsx",
+      "label": "src/components/radio-group/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/radio-group.ts",
+      "label": "benchmarks/size/.entries/radio-group.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/resizable/index.tsx",
+      "label": "src/components/resizable/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/resizable.ts",
+      "label": "benchmarks/size/.entries/resizable.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/scroll-area/index.tsx",
+      "label": "src/components/scroll-area/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/scroll-area.ts",
+      "label": "benchmarks/size/.entries/scroll-area.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/select/index.tsx",
+      "label": "src/components/select/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/select.ts",
+      "label": "benchmarks/size/.entries/select.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/separator/index.tsx",
+      "label": "src/components/separator/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/separator.ts",
+      "label": "benchmarks/size/.entries/separator.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/sheet/index.tsx",
+      "label": "src/components/sheet/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/sheet.ts",
+      "label": "benchmarks/size/.entries/sheet.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/sidebar/index.tsx",
+      "label": "src/components/sidebar/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/sidebar.ts",
+      "label": "benchmarks/size/.entries/sidebar.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/skeleton/index.tsx",
+      "label": "src/components/skeleton/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/skeleton.ts",
+      "label": "benchmarks/size/.entries/skeleton.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/slider/index.tsx",
+      "label": "src/components/slider/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/slider.ts",
+      "label": "benchmarks/size/.entries/slider.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/spinner/index.tsx",
+      "label": "src/components/spinner/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/spinner.ts",
+      "label": "benchmarks/size/.entries/spinner.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/status/index.tsx",
+      "label": "src/components/status/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/status.ts",
+      "label": "benchmarks/size/.entries/status.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/switch/index.tsx",
+      "label": "src/components/switch/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/switch.ts",
+      "label": "benchmarks/size/.entries/switch.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/table/index.tsx",
+      "label": "src/components/table/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/table.ts",
+      "label": "benchmarks/size/.entries/table.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/tabs/index.tsx",
+      "label": "src/components/tabs/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/tabs.ts",
+      "label": "benchmarks/size/.entries/tabs.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/textarea/index.tsx",
+      "label": "src/components/textarea/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/textarea.ts",
+      "label": "benchmarks/size/.entries/textarea.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/time-picker/index.tsx",
+      "label": "src/components/time-picker/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/time-picker.ts",
+      "label": "benchmarks/size/.entries/time-picker.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/timeline/index.tsx",
+      "label": "src/components/timeline/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/timeline.ts",
+      "label": "benchmarks/size/.entries/timeline.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/toggle/index.tsx",
+      "label": "src/components/toggle/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/toggle.ts",
+      "label": "benchmarks/size/.entries/toggle.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/toggle-group/index.tsx",
+      "label": "src/components/toggle-group/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/toggle-group.ts",
+      "label": "benchmarks/size/.entries/toggle-group.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/tooltip/index.tsx",
+      "label": "src/components/tooltip/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/tooltip.ts",
+      "label": "benchmarks/size/.entries/tooltip.ts",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:src/components/tree/index.tsx",
+      "label": "src/components/tree/index.tsx",
+      "type": "module",
+      "baseRendered": 0
+    },
+    {
+      "id": "module:benchmarks/size/.entries/tree.ts",
+      "label": "benchmarks/size/.entries/tree.ts",
+      "type": "module",
+      "baseRendered": 0
+    }
+  ],
+  "links": [
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:accordion",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 13,
+      "estimatedRawDeltaBytes": 32
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:alert",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 21
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:avatar",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 12,
+      "estimatedRawDeltaBytes": 25
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:badge",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 10,
+      "estimatedRawDeltaBytes": 29
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:breadcrumb",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 17
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:button",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 17,
+      "estimatedRawDeltaBytes": 58
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:calendar",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 9,
+      "estimatedRawDeltaBytes": 20
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:card",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 16
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:carousel",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 27,
+      "estimatedRawDeltaBytes": 63
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:checkbox",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 13,
+      "estimatedRawDeltaBytes": 32
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:chip",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 18,
+      "estimatedRawDeltaBytes": 54
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:collapsible",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 13,
+      "estimatedRawDeltaBytes": 30
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:color-picker",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 12,
+      "estimatedRawDeltaBytes": 29
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:combobox",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 54,
+      "estimatedRawDeltaBytes": 191
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:context-menu",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 45,
+      "estimatedRawDeltaBytes": 162
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:date-picker",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 9,
+      "estimatedRawDeltaBytes": 20
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:dropdown-menu",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 57,
+      "estimatedRawDeltaBytes": 192
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:empty",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 15
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:field",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 12,
+      "estimatedRawDeltaBytes": 28
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:file-upload",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 11,
+      "estimatedRawDeltaBytes": 25
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:hover-card",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 10,
+      "estimatedRawDeltaBytes": 23
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:input",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 15,
+      "estimatedRawDeltaBytes": 38
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:input-group",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 11,
+      "estimatedRawDeltaBytes": 40
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:item",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 16,
+      "estimatedRawDeltaBytes": 34
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:kbd",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 16
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:label",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 13
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:list",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 26,
+      "estimatedRawDeltaBytes": 65
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:listbox",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 31,
+      "estimatedRawDeltaBytes": 79
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:menubar",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 12,
+      "estimatedRawDeltaBytes": 25
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:meter",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 24
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:navigation-menu",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 17
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:otp",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 15,
+      "estimatedRawDeltaBytes": 33
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:pagination",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 20
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:progress",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 19
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:progress-ring",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 14,
+      "estimatedRawDeltaBytes": 41
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:prose",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 12,
+      "estimatedRawDeltaBytes": 30
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:radio-group",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 13,
+      "estimatedRawDeltaBytes": 31
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:resizable",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 13
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:scroll-area",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 6,
+      "estimatedRawDeltaBytes": 11
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:select",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 12,
+      "estimatedRawDeltaBytes": 24
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:separator",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 6,
+      "estimatedRawDeltaBytes": 12
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:sidebar",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 35,
+      "estimatedRawDeltaBytes": 90
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:skeleton",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 18
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:slider",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 15,
+      "estimatedRawDeltaBytes": 41
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:spinner",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 30,
+      "estimatedRawDeltaBytes": 146
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:status",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 16,
+      "estimatedRawDeltaBytes": 49
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:switch",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 14,
+      "estimatedRawDeltaBytes": 32
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:table",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 16
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:tabs",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 16,
+      "estimatedRawDeltaBytes": 45
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:textarea",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 10,
+      "estimatedRawDeltaBytes": 22
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:time-picker",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 9,
+      "estimatedRawDeltaBytes": 20
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:timeline",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 11,
+      "estimatedRawDeltaBytes": 27
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:toggle",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 16,
+      "estimatedRawDeltaBytes": 40
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:toggle-group",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 18
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:tooltip",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 13,
+      "estimatedRawDeltaBytes": 37
+    },
+    {
+      "source": "module:src/lib/forwardref.ts",
+      "target": "group:tree",
+      "renderedBytes": 446,
+      "estimatedGzipBytes": 16,
+      "estimatedRawDeltaBytes": 44
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:accordion",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 18
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:alert",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 12
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:avatar",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 15
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:badge",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 6,
+      "estimatedRawDeltaBytes": 16
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:breadcrumb",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 5,
+      "estimatedRawDeltaBytes": 10
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:button",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 10,
+      "estimatedRawDeltaBytes": 33
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:calendar",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 14,
+      "estimatedRawDeltaBytes": 30
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:card",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 9
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:carousel",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 44,
+      "estimatedRawDeltaBytes": 103
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:checkbox",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 20,
+      "estimatedRawDeltaBytes": 49
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:chip",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 30,
+      "estimatedRawDeltaBytes": 88
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:collapsible",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 21,
+      "estimatedRawDeltaBytes": 48
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:color-picker",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 18,
+      "estimatedRawDeltaBytes": 44
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:combobox",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 88,
+      "estimatedRawDeltaBytes": 311
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:context-menu",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 73,
+      "estimatedRawDeltaBytes": 265
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:date-picker",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 14,
+      "estimatedRawDeltaBytes": 30
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:dropdown-menu",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 94,
+      "estimatedRawDeltaBytes": 314
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:empty",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 9
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:field",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 18,
+      "estimatedRawDeltaBytes": 42
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:file-upload",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 17,
+      "estimatedRawDeltaBytes": 39
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:hover-card",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 6,
+      "estimatedRawDeltaBytes": 13
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:input",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 23,
+      "estimatedRawDeltaBytes": 58
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:input-group",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 6,
+      "estimatedRawDeltaBytes": 23
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:item",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 25,
+      "estimatedRawDeltaBytes": 55
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:kbd",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 5,
+      "estimatedRawDeltaBytes": 9
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:label",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 7
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:list",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 43,
+      "estimatedRawDeltaBytes": 107
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:listbox",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 51,
+      "estimatedRawDeltaBytes": 129
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:menubar",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 18,
+      "estimatedRawDeltaBytes": 39
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:meter",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 5,
+      "estimatedRawDeltaBytes": 14
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:navigation-menu",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 10
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:otp",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 22,
+      "estimatedRawDeltaBytes": 50
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:pagination",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 5,
+      "estimatedRawDeltaBytes": 12
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:progress",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 11
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:progress-ring",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 8,
+      "estimatedRawDeltaBytes": 24
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:prose",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 17
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:radio-group",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 20,
+      "estimatedRawDeltaBytes": 46
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:resizable",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 8
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:scroll-area",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 3,
+      "estimatedRawDeltaBytes": 6
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:select",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 14
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:separator",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 3,
+      "estimatedRawDeltaBytes": 7
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:sidebar",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 58,
+      "estimatedRawDeltaBytes": 148
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:skeleton",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 5,
+      "estimatedRawDeltaBytes": 10
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:slider",
+      "renderedBytes": 1013,
+      "estimatedGzipBytes": 25,
+      "estimatedRawDeltaBytes": 67
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:spinner",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 17,
+      "estimatedRawDeltaBytes": 83
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:status",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 9,
+      "estimatedRawDeltaBytes": 28
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:switch",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 21,
+      "estimatedRawDeltaBytes": 48
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:table",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 4,
+      "estimatedRawDeltaBytes": 9
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:tabs",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 9,
+      "estimatedRawDeltaBytes": 26
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:textarea",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 6,
+      "estimatedRawDeltaBytes": 13
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:time-picker",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 14,
+      "estimatedRawDeltaBytes": 30
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:timeline",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 6,
+      "estimatedRawDeltaBytes": 15
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:toggle",
+      "renderedBytes": 940,
+      "estimatedGzipBytes": 24,
+      "estimatedRawDeltaBytes": 61
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:toggle-group",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 5,
+      "estimatedRawDeltaBytes": 10
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:tooltip",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 7,
+      "estimatedRawDeltaBytes": 21
+    },
+    {
+      "source": "module:src/lib/create-simple-component.tsx",
+      "target": "group:tree",
+      "renderedBytes": 355,
+      "estimatedGzipBytes": 9,
+      "estimatedRawDeltaBytes": 25
+    },
+    {
+      "source": "module:src/components/accordion/index.tsx",
+      "target": "group:accordion",
+      "renderedBytes": 70,
+      "estimatedGzipBytes": 744,
+      "estimatedRawDeltaBytes": 1802
+    },
+    {
+      "source": "module:benchmarks/size/.entries/accordion.ts",
+      "target": "group:accordion",
+      "renderedBytes": 23,
+      "estimatedGzipBytes": 744,
+      "estimatedRawDeltaBytes": 1802
+    },
+    {
+      "source": "module:src/components/alert/index.tsx",
+      "target": "group:alert",
+      "renderedBytes": 52,
+      "estimatedGzipBytes": 418,
+      "estimatedRawDeltaBytes": 1171
+    },
+    {
+      "source": "module:benchmarks/size/.entries/alert.ts",
+      "target": "group:alert",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 418,
+      "estimatedRawDeltaBytes": 1171
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:alert-dialog",
+      "renderedBytes": 2700,
+      "estimatedGzipBytes": 155,
+      "estimatedRawDeltaBytes": 395
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:carousel",
+      "renderedBytes": 1354,
+      "estimatedGzipBytes": 77,
+      "estimatedRawDeltaBytes": 182
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:combobox",
+      "renderedBytes": 1682,
+      "estimatedGzipBytes": 193,
+      "estimatedRawDeltaBytes": 684
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:context-menu",
+      "renderedBytes": 848,
+      "estimatedGzipBytes": 81,
+      "estimatedRawDeltaBytes": 293
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:dialog",
+      "renderedBytes": 2700,
+      "estimatedGzipBytes": 155,
+      "estimatedRawDeltaBytes": 393
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:drawer",
+      "renderedBytes": 2203,
+      "estimatedGzipBytes": 115,
+      "estimatedRawDeltaBytes": 290
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:dropdown-menu",
+      "renderedBytes": 4297,
+      "estimatedGzipBytes": 527,
+      "estimatedRawDeltaBytes": 1760
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:list",
+      "renderedBytes": 1682,
+      "estimatedGzipBytes": 94,
+      "estimatedRawDeltaBytes": 234
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:listbox",
+      "renderedBytes": 1682,
+      "estimatedGzipBytes": 112,
+      "estimatedRawDeltaBytes": 284
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:popover",
+      "renderedBytes": 2700,
+      "estimatedGzipBytes": 203,
+      "estimatedRawDeltaBytes": 679
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:sheet",
+      "renderedBytes": 2203,
+      "estimatedGzipBytes": 117,
+      "estimatedRawDeltaBytes": 293
+    },
+    {
+      "source": "module:src/lib/commands.ts",
+      "target": "group:sidebar",
+      "renderedBytes": 2203,
+      "estimatedGzipBytes": 166,
+      "estimatedRawDeltaBytes": 425
+    },
+    {
+      "source": "module:src/lib/children.tsx",
+      "target": "group:alert-dialog",
+      "renderedBytes": 316,
+      "estimatedGzipBytes": 378,
+      "estimatedRawDeltaBytes": 960
+    },
+    {
+      "source": "module:src/lib/children.tsx",
+      "target": "group:dialog",
+      "renderedBytes": 316,
+      "estimatedGzipBytes": 377,
+      "estimatedRawDeltaBytes": 957
+    },
+    {
+      "source": "module:src/lib/children.tsx",
+      "target": "group:drawer",
+      "renderedBytes": 316,
+      "estimatedGzipBytes": 344,
+      "estimatedRawDeltaBytes": 866
+    },
+    {
+      "source": "module:src/lib/children.tsx",
+      "target": "group:sheet",
+      "renderedBytes": 316,
+      "estimatedGzipBytes": 349,
+      "estimatedRawDeltaBytes": 874
+    },
+    {
+      "source": "module:src/components/dialog/index.tsx",
+      "target": "group:alert-dialog",
+      "renderedBytes": 930,
+      "estimatedGzipBytes": 756,
+      "estimatedRawDeltaBytes": 1920
+    },
+    {
+      "source": "module:src/components/dialog/index.tsx",
+      "target": "group:dialog",
+      "renderedBytes": 930,
+      "estimatedGzipBytes": 753,
+      "estimatedRawDeltaBytes": 1913
+    },
+    {
+      "source": "module:src/components/alert-dialog/index.tsx",
+      "target": "group:alert-dialog",
+      "renderedBytes": 27,
+      "estimatedGzipBytes": 1512,
+      "estimatedRawDeltaBytes": 3839
+    },
+    {
+      "source": "module:benchmarks/size/.entries/alert-dialog.ts",
+      "target": "group:alert-dialog",
+      "renderedBytes": 25,
+      "estimatedGzipBytes": 1512,
+      "estimatedRawDeltaBytes": 3839
+    },
+    {
+      "source": "module:src/components/aspect-ratio/index.tsx",
+      "target": "group:aspect-ratio",
+      "renderedBytes": 298,
+      "estimatedGzipBytes": 261,
+      "estimatedRawDeltaBytes": 437
+    },
+    {
+      "source": "module:benchmarks/size/.entries/aspect-ratio.ts",
+      "target": "group:aspect-ratio",
+      "renderedBytes": 25,
+      "estimatedGzipBytes": 261,
+      "estimatedRawDeltaBytes": 437
+    },
+    {
+      "source": "module:src/components/avatar/index.tsx",
+      "target": "group:avatar",
+      "renderedBytes": 308,
+      "estimatedGzipBytes": 663,
+      "estimatedRawDeltaBytes": 1424
+    },
+    {
+      "source": "module:benchmarks/size/.entries/avatar.ts",
+      "target": "group:avatar",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 663,
+      "estimatedRawDeltaBytes": 1424
+    },
+    {
+      "source": "module:src/components/badge/index.tsx",
+      "target": "group:badge",
+      "renderedBytes": 53,
+      "estimatedGzipBytes": 553,
+      "estimatedRawDeltaBytes": 1603
+    },
+    {
+      "source": "module:benchmarks/size/.entries/badge.ts",
+      "target": "group:badge",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 553,
+      "estimatedRawDeltaBytes": 1603
+    },
+    {
+      "source": "module:src/components/breadcrumb/index.tsx",
+      "target": "group:breadcrumb",
+      "renderedBytes": 211,
+      "estimatedGzipBytes": 448,
+      "estimatedRawDeltaBytes": 974
+    },
+    {
+      "source": "module:benchmarks/size/.entries/breadcrumb.ts",
+      "target": "group:breadcrumb",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 448,
+      "estimatedRawDeltaBytes": 974
+    },
+    {
+      "source": "module:src/components/button/index.tsx",
+      "target": "group:button",
+      "renderedBytes": 93,
+      "estimatedGzipBytes": 935,
+      "estimatedRawDeltaBytes": 3272
+    },
+    {
+      "source": "module:benchmarks/size/.entries/button.ts",
+      "target": "group:button",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 935,
+      "estimatedRawDeltaBytes": 3272
+    },
+    {
+      "source": "module:src/components/calendar/index.tsx",
+      "target": "group:calendar",
+      "renderedBytes": 86,
+      "estimatedGzipBytes": 521,
+      "estimatedRawDeltaBytes": 1106
+    },
+    {
+      "source": "module:benchmarks/size/.entries/calendar.ts",
+      "target": "group:calendar",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 521,
+      "estimatedRawDeltaBytes": 1106
+    },
+    {
+      "source": "module:src/components/card/index.tsx",
+      "target": "group:card",
+      "renderedBytes": 50,
+      "estimatedGzipBytes": 412,
+      "estimatedRawDeltaBytes": 909
+    },
+    {
+      "source": "module:benchmarks/size/.entries/card.ts",
+      "target": "group:card",
+      "renderedBytes": 18,
+      "estimatedGzipBytes": 412,
+      "estimatedRawDeltaBytes": 909
+    },
+    {
+      "source": "module:src/components/carousel/index.tsx",
+      "target": "group:carousel",
+      "renderedBytes": 854,
+      "estimatedGzipBytes": 1502,
+      "estimatedRawDeltaBytes": 3528
+    },
+    {
+      "source": "module:benchmarks/size/.entries/carousel.ts",
+      "target": "group:carousel",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 1502,
+      "estimatedRawDeltaBytes": 3528
+    },
+    {
+      "source": "module:src/components/checkbox/index.tsx",
+      "target": "group:checkbox",
+      "renderedBytes": 90,
+      "estimatedGzipBytes": 748,
+      "estimatedRawDeltaBytes": 1815
+    },
+    {
+      "source": "module:benchmarks/size/.entries/checkbox.ts",
+      "target": "group:checkbox",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 748,
+      "estimatedRawDeltaBytes": 1815
+    },
+    {
+      "source": "module:src/components/chip/index.tsx",
+      "target": "group:chip",
+      "renderedBytes": 306,
+      "estimatedGzipBytes": 1017,
+      "estimatedRawDeltaBytes": 3024
+    },
+    {
+      "source": "module:benchmarks/size/.entries/chip.ts",
+      "target": "group:chip",
+      "renderedBytes": 18,
+      "estimatedGzipBytes": 1017,
+      "estimatedRawDeltaBytes": 3024
+    },
+    {
+      "source": "module:src/components/collapsible/index.tsx",
+      "target": "group:collapsible",
+      "renderedBytes": 245,
+      "estimatedGzipBytes": 722,
+      "estimatedRawDeltaBytes": 1662
+    },
+    {
+      "source": "module:benchmarks/size/.entries/collapsible.ts",
+      "target": "group:collapsible",
+      "renderedBytes": 25,
+      "estimatedGzipBytes": 722,
+      "estimatedRawDeltaBytes": 1662
+    },
+    {
+      "source": "module:src/components/color-picker/index.tsx",
+      "target": "group:color-picker",
+      "renderedBytes": 94,
+      "estimatedGzipBytes": 673,
+      "estimatedRawDeltaBytes": 1631
+    },
+    {
+      "source": "module:benchmarks/size/.entries/color-picker.ts",
+      "target": "group:color-picker",
+      "renderedBytes": 25,
+      "estimatedGzipBytes": 673,
+      "estimatedRawDeltaBytes": 1631
+    },
+    {
+      "source": "module:src/lib/filter.ts",
+      "target": "group:combobox",
+      "renderedBytes": 493,
+      "estimatedGzipBytes": 1556,
+      "estimatedRawDeltaBytes": 5497
+    },
+    {
+      "source": "module:src/lib/filter.ts",
+      "target": "group:listbox",
+      "renderedBytes": 464,
+      "estimatedGzipBytes": 847,
+      "estimatedRawDeltaBytes": 2149
+    },
+    {
+      "source": "module:src/components/item/index.tsx",
+      "target": "group:combobox",
+      "renderedBytes": 328,
+      "estimatedGzipBytes": 503,
+      "estimatedRawDeltaBytes": 1779
+    },
+    {
+      "source": "module:src/components/item/index.tsx",
+      "target": "group:context-menu",
+      "renderedBytes": 328,
+      "estimatedGzipBytes": 416,
+      "estimatedRawDeltaBytes": 1514
+    },
+    {
+      "source": "module:src/components/item/index.tsx",
+      "target": "group:dropdown-menu",
+      "renderedBytes": 328,
+      "estimatedGzipBytes": 536,
+      "estimatedRawDeltaBytes": 1792
+    },
+    {
+      "source": "module:src/components/item/index.tsx",
+      "target": "group:item",
+      "renderedBytes": 328,
+      "estimatedGzipBytes": 145,
+      "estimatedRawDeltaBytes": 314
+    },
+    {
+      "source": "module:src/components/item/index.tsx",
+      "target": "group:list",
+      "renderedBytes": 328,
+      "estimatedGzipBytes": 244,
+      "estimatedRawDeltaBytes": 610
+    },
+    {
+      "source": "module:src/components/item/index.tsx",
+      "target": "group:listbox",
+      "renderedBytes": 328,
+      "estimatedGzipBytes": 291,
+      "estimatedRawDeltaBytes": 739
+    },
+    {
+      "source": "module:src/components/combobox/index.tsx",
+      "target": "group:combobox",
+      "renderedBytes": 1940,
+      "estimatedGzipBytes": 3020,
+      "estimatedRawDeltaBytes": 10671
+    },
+    {
+      "source": "module:benchmarks/size/.entries/combobox.ts",
+      "target": "group:combobox",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 3020,
+      "estimatedRawDeltaBytes": 10671
+    },
+    {
+      "source": "module:src/components/context-menu/index.tsx",
+      "target": "group:context-menu",
+      "renderedBytes": 276,
+      "estimatedGzipBytes": 2497,
+      "estimatedRawDeltaBytes": 9082
+    },
+    {
+      "source": "module:benchmarks/size/.entries/context-menu.ts",
+      "target": "group:context-menu",
+      "renderedBytes": 25,
+      "estimatedGzipBytes": 2497,
+      "estimatedRawDeltaBytes": 9082
+    },
+    {
+      "source": "module:src/components/date-picker/index.tsx",
+      "target": "group:date-picker",
+      "renderedBytes": 91,
+      "estimatedGzipBytes": 521,
+      "estimatedRawDeltaBytes": 1112
+    },
+    {
+      "source": "module:benchmarks/size/.entries/date-picker.ts",
+      "target": "group:date-picker",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 521,
+      "estimatedRawDeltaBytes": 1112
+    },
+    {
+      "source": "module:benchmarks/size/.entries/dialog.ts",
+      "target": "group:dialog",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 1506,
+      "estimatedRawDeltaBytes": 3826
+    },
+    {
+      "source": "module:src/components/drawer/index.tsx",
+      "target": "group:drawer",
+      "renderedBytes": 956,
+      "estimatedGzipBytes": 1376,
+      "estimatedRawDeltaBytes": 3462
+    },
+    {
+      "source": "module:benchmarks/size/.entries/drawer.ts",
+      "target": "group:drawer",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 1376,
+      "estimatedRawDeltaBytes": 3462
+    },
+    {
+      "source": "module:src/components/dropdown-menu/index.tsx",
+      "target": "group:dropdown-menu",
+      "renderedBytes": 412,
+      "estimatedGzipBytes": 3218,
+      "estimatedRawDeltaBytes": 10752
+    },
+    {
+      "source": "module:benchmarks/size/.entries/dropdown-menu.ts",
+      "target": "group:dropdown-menu",
+      "renderedBytes": 26,
+      "estimatedGzipBytes": 3218,
+      "estimatedRawDeltaBytes": 10752
+    },
+    {
+      "source": "module:src/components/empty/index.tsx",
+      "target": "group:empty",
+      "renderedBytes": 52,
+      "estimatedGzipBytes": 427,
+      "estimatedRawDeltaBytes": 839
+    },
+    {
+      "source": "module:benchmarks/size/.entries/empty.ts",
+      "target": "group:empty",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 427,
+      "estimatedRawDeltaBytes": 839
+    },
+    {
+      "source": "module:src/components/label/index.tsx",
+      "target": "group:field",
+      "renderedBytes": 60,
+      "estimatedGzipBytes": 339,
+      "estimatedRawDeltaBytes": 775
+    },
+    {
+      "source": "module:src/components/label/index.tsx",
+      "target": "group:label",
+      "renderedBytes": 60,
+      "estimatedGzipBytes": 183,
+      "estimatedRawDeltaBytes": 363
+    },
+    {
+      "source": "module:src/components/field/index.tsx",
+      "target": "group:field",
+      "renderedBytes": 336,
+      "estimatedGzipBytes": 678,
+      "estimatedRawDeltaBytes": 1549
+    },
+    {
+      "source": "module:benchmarks/size/.entries/field.ts",
+      "target": "group:field",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 678,
+      "estimatedRawDeltaBytes": 1549
+    },
+    {
+      "source": "module:src/components/file-upload/index.tsx",
+      "target": "group:file-upload",
+      "renderedBytes": 91,
+      "estimatedGzipBytes": 636,
+      "estimatedRawDeltaBytes": 1425
+    },
+    {
+      "source": "module:benchmarks/size/.entries/file-upload.ts",
+      "target": "group:file-upload",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 636,
+      "estimatedRawDeltaBytes": 1425
+    },
+    {
+      "source": "module:src/components/hover-card/index.tsx",
+      "target": "group:hover-card",
+      "renderedBytes": 172,
+      "estimatedGzipBytes": 587,
+      "estimatedRawDeltaBytes": 1308
+    },
+    {
+      "source": "module:benchmarks/size/.entries/hover-card.ts",
+      "target": "group:hover-card",
+      "renderedBytes": 23,
+      "estimatedGzipBytes": 587,
+      "estimatedRawDeltaBytes": 1308
+    },
+    {
+      "source": "module:src/components/input/index.tsx",
+      "target": "group:input",
+      "renderedBytes": 223,
+      "estimatedGzipBytes": 858,
+      "estimatedRawDeltaBytes": 2140
+    },
+    {
+      "source": "module:benchmarks/size/.entries/input.ts",
+      "target": "group:input",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 858,
+      "estimatedRawDeltaBytes": 2140
+    },
+    {
+      "source": "module:src/components/input-group/index.tsx",
+      "target": "group:input-group",
+      "renderedBytes": 74,
+      "estimatedGzipBytes": 634,
+      "estimatedRawDeltaBytes": 2218
+    },
+    {
+      "source": "module:benchmarks/size/.entries/input-group.ts",
+      "target": "group:input-group",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 634,
+      "estimatedRawDeltaBytes": 2218
+    },
+    {
+      "source": "module:benchmarks/size/.entries/item.ts",
+      "target": "group:item",
+      "renderedBytes": 18,
+      "estimatedGzipBytes": 872,
+      "estimatedRawDeltaBytes": 1882
+    },
+    {
+      "source": "module:src/components/kbd/index.tsx",
+      "target": "group:kbd",
+      "renderedBytes": 48,
+      "estimatedGzipBytes": 459,
+      "estimatedRawDeltaBytes": 912
+    },
+    {
+      "source": "module:benchmarks/size/.entries/kbd.ts",
+      "target": "group:kbd",
+      "renderedBytes": 17,
+      "estimatedGzipBytes": 459,
+      "estimatedRawDeltaBytes": 912
+    },
+    {
+      "source": "module:benchmarks/size/.entries/label.ts",
+      "target": "group:label",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 365,
+      "estimatedRawDeltaBytes": 725
+    },
+    {
+      "source": "module:src/lib/toast.tsx",
+      "target": "group:lib-toast",
+      "renderedBytes": 1659,
+      "estimatedGzipBytes": 1245,
+      "estimatedRawDeltaBytes": 3573
+    },
+    {
+      "source": "module:benchmarks/size/.entries/lib-toast.ts",
+      "target": "group:lib-toast",
+      "renderedBytes": 28,
+      "estimatedGzipBytes": 1245,
+      "estimatedRawDeltaBytes": 3573
+    },
+    {
+      "source": "module:src/components/list/index.tsx",
+      "target": "group:list",
+      "renderedBytes": 150,
+      "estimatedGzipBytes": 1462,
+      "estimatedRawDeltaBytes": 3659
+    },
+    {
+      "source": "module:benchmarks/size/.entries/list.ts",
+      "target": "group:list",
+      "renderedBytes": 18,
+      "estimatedGzipBytes": 1462,
+      "estimatedRawDeltaBytes": 3659
+    },
+    {
+      "source": "module:src/components/listbox/index.tsx",
+      "target": "group:listbox",
+      "renderedBytes": 677,
+      "estimatedGzipBytes": 1746,
+      "estimatedRawDeltaBytes": 4433
+    },
+    {
+      "source": "module:benchmarks/size/.entries/listbox.ts",
+      "target": "group:listbox",
+      "renderedBytes": 21,
+      "estimatedGzipBytes": 1746,
+      "estimatedRawDeltaBytes": 4433
+    },
+    {
+      "source": "module:src/components/menubar/index.tsx",
+      "target": "group:menubar",
+      "renderedBytes": 306,
+      "estimatedGzipBytes": 675,
+      "estimatedRawDeltaBytes": 1427
+    },
+    {
+      "source": "module:benchmarks/size/.entries/menubar.ts",
+      "target": "group:menubar",
+      "renderedBytes": 21,
+      "estimatedGzipBytes": 675,
+      "estimatedRawDeltaBytes": 1427
+    },
+    {
+      "source": "module:src/components/meter/index.tsx",
+      "target": "group:meter",
+      "renderedBytes": 60,
+      "estimatedGzipBytes": 469,
+      "estimatedRawDeltaBytes": 1370
+    },
+    {
+      "source": "module:benchmarks/size/.entries/meter.ts",
+      "target": "group:meter",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 469,
+      "estimatedRawDeltaBytes": 1370
+    },
+    {
+      "source": "module:src/components/navigation-menu/index.tsx",
+      "target": "group:navigation-menu",
+      "renderedBytes": 229,
+      "estimatedGzipBytes": 429,
+      "estimatedRawDeltaBytes": 959
+    },
+    {
+      "source": "module:benchmarks/size/.entries/navigation-menu.ts",
+      "target": "group:navigation-menu",
+      "renderedBytes": 28,
+      "estimatedGzipBytes": 429,
+      "estimatedRawDeltaBytes": 959
+    },
+    {
+      "source": "module:src/components/otp/index.tsx",
+      "target": "group:otp",
+      "renderedBytes": 173,
+      "estimatedGzipBytes": 822,
+      "estimatedRawDeltaBytes": 1843
+    },
+    {
+      "source": "module:benchmarks/size/.entries/otp.ts",
+      "target": "group:otp",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 822,
+      "estimatedRawDeltaBytes": 1843
+    },
+    {
+      "source": "module:src/components/pagination/index.tsx",
+      "target": "group:pagination",
+      "renderedBytes": 228,
+      "estimatedGzipBytes": 475,
+      "estimatedRawDeltaBytes": 1134
+    },
+    {
+      "source": "module:benchmarks/size/.entries/pagination.ts",
+      "target": "group:pagination",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 475,
+      "estimatedRawDeltaBytes": 1134
+    },
+    {
+      "source": "module:src/components/popover/index.tsx",
+      "target": "group:popover",
+      "renderedBytes": 341,
+      "estimatedGzipBytes": 1976,
+      "estimatedRawDeltaBytes": 6602
+    },
+    {
+      "source": "module:benchmarks/size/.entries/popover.ts",
+      "target": "group:popover",
+      "renderedBytes": 21,
+      "estimatedGzipBytes": 1976,
+      "estimatedRawDeltaBytes": 6602
+    },
+    {
+      "source": "module:src/components/progress/index.tsx",
+      "target": "group:progress",
+      "renderedBytes": 69,
+      "estimatedGzipBytes": 408,
+      "estimatedRawDeltaBytes": 1044
+    },
+    {
+      "source": "module:benchmarks/size/.entries/progress.ts",
+      "target": "group:progress",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 408,
+      "estimatedRawDeltaBytes": 1044
+    },
+    {
+      "source": "module:src/components/progress-ring/index.tsx",
+      "target": "group:progress-ring",
+      "renderedBytes": 78,
+      "estimatedGzipBytes": 769,
+      "estimatedRawDeltaBytes": 2314
+    },
+    {
+      "source": "module:benchmarks/size/.entries/progress-ring.ts",
+      "target": "group:progress-ring",
+      "renderedBytes": 26,
+      "estimatedGzipBytes": 769,
+      "estimatedRawDeltaBytes": 2314
+    },
+    {
+      "source": "module:src/components/prose/index.tsx",
+      "target": "group:prose",
+      "renderedBytes": 52,
+      "estimatedGzipBytes": 678,
+      "estimatedRawDeltaBytes": 1657
+    },
+    {
+      "source": "module:benchmarks/size/.entries/prose.ts",
+      "target": "group:prose",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 678,
+      "estimatedRawDeltaBytes": 1657
+    },
+    {
+      "source": "module:src/components/radio-group/index.tsx",
+      "target": "group:radio-group",
+      "renderedBytes": 137,
+      "estimatedGzipBytes": 747,
+      "estimatedRawDeltaBytes": 1712
+    },
+    {
+      "source": "module:benchmarks/size/.entries/radio-group.ts",
+      "target": "group:radio-group",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 747,
+      "estimatedRawDeltaBytes": 1712
+    },
+    {
+      "source": "module:src/components/resizable/index.tsx",
+      "target": "group:resizable",
+      "renderedBytes": 66,
+      "estimatedGzipBytes": 369,
+      "estimatedRawDeltaBytes": 751
+    },
+    {
+      "source": "module:benchmarks/size/.entries/resizable.ts",
+      "target": "group:resizable",
+      "renderedBytes": 23,
+      "estimatedGzipBytes": 369,
+      "estimatedRawDeltaBytes": 751
+    },
+    {
+      "source": "module:src/components/scroll-area/index.tsx",
+      "target": "group:scroll-area",
+      "renderedBytes": 69,
+      "estimatedGzipBytes": 308,
+      "estimatedRawDeltaBytes": 635
+    },
+    {
+      "source": "module:benchmarks/size/.entries/scroll-area.ts",
+      "target": "group:scroll-area",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 308,
+      "estimatedRawDeltaBytes": 635
+    },
+    {
+      "source": "module:src/components/select/index.tsx",
+      "target": "group:select",
+      "renderedBytes": 63,
+      "estimatedGzipBytes": 693,
+      "estimatedRawDeltaBytes": 1368
+    },
+    {
+      "source": "module:benchmarks/size/.entries/select.ts",
+      "target": "group:select",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 693,
+      "estimatedRawDeltaBytes": 1368
+    },
+    {
+      "source": "module:src/components/separator/index.tsx",
+      "target": "group:separator",
+      "renderedBytes": 66,
+      "estimatedGzipBytes": 332,
+      "estimatedRawDeltaBytes": 673
+    },
+    {
+      "source": "module:benchmarks/size/.entries/separator.ts",
+      "target": "group:separator",
+      "renderedBytes": 23,
+      "estimatedGzipBytes": 332,
+      "estimatedRawDeltaBytes": 673
+    },
+    {
+      "source": "module:src/components/sheet/index.tsx",
+      "target": "group:sheet",
+      "renderedBytes": 944,
+      "estimatedGzipBytes": 1394,
+      "estimatedRawDeltaBytes": 3494
+    },
+    {
+      "source": "module:benchmarks/size/.entries/sheet.ts",
+      "target": "group:sheet",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 1394,
+      "estimatedRawDeltaBytes": 3494
+    },
+    {
+      "source": "module:src/components/sidebar/index.tsx",
+      "target": "group:sidebar",
+      "renderedBytes": 912,
+      "estimatedGzipBytes": 1973,
+      "estimatedRawDeltaBytes": 5066
+    },
+    {
+      "source": "module:benchmarks/size/.entries/sidebar.ts",
+      "target": "group:sidebar",
+      "renderedBytes": 21,
+      "estimatedGzipBytes": 1973,
+      "estimatedRawDeltaBytes": 5066
+    },
+    {
+      "source": "module:src/components/skeleton/index.tsx",
+      "target": "group:skeleton",
+      "renderedBytes": 64,
+      "estimatedGzipBytes": 465,
+      "estimatedRawDeltaBytes": 991
+    },
+    {
+      "source": "module:benchmarks/size/.entries/skeleton.ts",
+      "target": "group:skeleton",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 465,
+      "estimatedRawDeltaBytes": 991
+    },
+    {
+      "source": "module:src/components/slider/index.tsx",
+      "target": "group:slider",
+      "renderedBytes": 403,
+      "estimatedGzipBytes": 859,
+      "estimatedRawDeltaBytes": 2294
+    },
+    {
+      "source": "module:benchmarks/size/.entries/slider.ts",
+      "target": "group:slider",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 859,
+      "estimatedRawDeltaBytes": 2294
+    },
+    {
+      "source": "module:src/components/spinner/index.tsx",
+      "target": "group:spinner",
+      "renderedBytes": 63,
+      "estimatedGzipBytes": 1671,
+      "estimatedRawDeltaBytes": 8167
+    },
+    {
+      "source": "module:benchmarks/size/.entries/spinner.ts",
+      "target": "group:spinner",
+      "renderedBytes": 21,
+      "estimatedGzipBytes": 1671,
+      "estimatedRawDeltaBytes": 8167
+    },
+    {
+      "source": "module:src/components/status/index.tsx",
+      "target": "group:status",
+      "renderedBytes": 61,
+      "estimatedGzipBytes": 908,
+      "estimatedRawDeltaBytes": 2758
+    },
+    {
+      "source": "module:benchmarks/size/.entries/status.ts",
+      "target": "group:status",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 908,
+      "estimatedRawDeltaBytes": 2758
+    },
+    {
+      "source": "module:src/components/switch/index.tsx",
+      "target": "group:switch",
+      "renderedBytes": 112,
+      "estimatedGzipBytes": 760,
+      "estimatedRawDeltaBytes": 1786
+    },
+    {
+      "source": "module:benchmarks/size/.entries/switch.ts",
+      "target": "group:switch",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 760,
+      "estimatedRawDeltaBytes": 1786
+    },
+    {
+      "source": "module:src/components/table/index.tsx",
+      "target": "group:table",
+      "renderedBytes": 60,
+      "estimatedGzipBytes": 427,
+      "estimatedRawDeltaBytes": 906
+    },
+    {
+      "source": "module:benchmarks/size/.entries/table.ts",
+      "target": "group:table",
+      "renderedBytes": 19,
+      "estimatedGzipBytes": 427,
+      "estimatedRawDeltaBytes": 906
+    },
+    {
+      "source": "module:src/components/tabs/index.tsx",
+      "target": "group:tabs",
+      "renderedBytes": 151,
+      "estimatedGzipBytes": 883,
+      "estimatedRawDeltaBytes": 2526
+    },
+    {
+      "source": "module:benchmarks/size/.entries/tabs.ts",
+      "target": "group:tabs",
+      "renderedBytes": 21,
+      "estimatedGzipBytes": 883,
+      "estimatedRawDeltaBytes": 2526
+    },
+    {
+      "source": "module:src/components/textarea/index.tsx",
+      "target": "group:textarea",
+      "renderedBytes": 69,
+      "estimatedGzipBytes": 559,
+      "estimatedRawDeltaBytes": 1230
+    },
+    {
+      "source": "module:benchmarks/size/.entries/textarea.ts",
+      "target": "group:textarea",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 559,
+      "estimatedRawDeltaBytes": 1230
+    },
+    {
+      "source": "module:src/components/time-picker/index.tsx",
+      "target": "group:time-picker",
+      "renderedBytes": 91,
+      "estimatedGzipBytes": 519,
+      "estimatedRawDeltaBytes": 1112
+    },
+    {
+      "source": "module:benchmarks/size/.entries/time-picker.ts",
+      "target": "group:time-picker",
+      "renderedBytes": 24,
+      "estimatedGzipBytes": 519,
+      "estimatedRawDeltaBytes": 1112
+    },
+    {
+      "source": "module:src/components/timeline/index.tsx",
+      "target": "group:timeline",
+      "renderedBytes": 205,
+      "estimatedGzipBytes": 634,
+      "estimatedRawDeltaBytes": 1507
+    },
+    {
+      "source": "module:benchmarks/size/.entries/timeline.ts",
+      "target": "group:timeline",
+      "renderedBytes": 22,
+      "estimatedGzipBytes": 634,
+      "estimatedRawDeltaBytes": 1507
+    },
+    {
+      "source": "module:src/components/toggle/index.tsx",
+      "target": "group:toggle",
+      "renderedBytes": 421,
+      "estimatedGzipBytes": 892,
+      "estimatedRawDeltaBytes": 2240
+    },
+    {
+      "source": "module:benchmarks/size/.entries/toggle.ts",
+      "target": "group:toggle",
+      "renderedBytes": 20,
+      "estimatedGzipBytes": 892,
+      "estimatedRawDeltaBytes": 2240
+    },
+    {
+      "source": "module:src/components/toggle-group/index.tsx",
+      "target": "group:toggle-group",
+      "renderedBytes": 71,
+      "estimatedGzipBytes": 451,
+      "estimatedRawDeltaBytes": 1017
+    },
+    {
+      "source": "module:benchmarks/size/.entries/toggle-group.ts",
+      "target": "group:toggle-group",
+      "renderedBytes": 25,
+      "estimatedGzipBytes": 451,
+      "estimatedRawDeltaBytes": 1017
+    },
+    {
+      "source": "module:src/components/tooltip/index.tsx",
+      "target": "group:tooltip",
+      "renderedBytes": 63,
+      "estimatedGzipBytes": 719,
+      "estimatedRawDeltaBytes": 2054
+    },
+    {
+      "source": "module:benchmarks/size/.entries/tooltip.ts",
+      "target": "group:tooltip",
+      "renderedBytes": 21,
+      "estimatedGzipBytes": 719,
+      "estimatedRawDeltaBytes": 2054
+    },
+    {
+      "source": "module:src/components/tree/index.tsx",
+      "target": "group:tree",
+      "renderedBytes": 484,
+      "estimatedGzipBytes": 905,
+      "estimatedRawDeltaBytes": 2451
+    },
+    {
+      "source": "module:benchmarks/size/.entries/tree.ts",
+      "target": "group:tree",
+      "renderedBytes": 18,
+      "estimatedGzipBytes": 905,
+      "estimatedRawDeltaBytes": 2451
+    }
+  ]
+}
