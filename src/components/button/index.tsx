@@ -5,4 +5,5 @@ import './style.css';
 export const Button = createSimpleComponent<'button' | 'a', ButtonOwnProps>(
   'button',
   (props) => (props.href ? 'a' : 'button'),
+  {type: 'button'},
 );

@@ -2,7 +2,7 @@ import {createSimpleComponent} from '../../lib/create-simple-component';
 import type {ChipOwnProps, ChipButtonOwnProps} from './types';
 import './style.css';
 
-const ChipBase = createSimpleComponent<'button', ChipOwnProps>('chip', 'button');
+const ChipBase = createSimpleComponent<'button', ChipOwnProps>('chip', 'button', {type: 'button'});
 
 function stop(e: MouseEvent) {
   e.stopPropagation();

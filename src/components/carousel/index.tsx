@@ -63,7 +63,7 @@ export const CarouselPrevious = /*#__PURE__*/ forwardRef(function CarouselPrevio
 }: CarouselPreviousOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
   const id = useContext(IdCtx);
   return (
-    <button {...props} k="carousel-previous" command="--prev" commandfor={id ?? undefined}>
+    <button type="button" {...props} k="carousel-previous" command="--prev" commandfor={id ?? undefined}>
       {children}
     </button>
   );
@@ -77,7 +77,7 @@ export const CarouselNext = /*#__PURE__*/ forwardRef(function CarouselNext({
 }: CarouselNextOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
   const id = useContext(IdCtx);
   return (
-    <button {...props} k="carousel-next" command="--next" commandfor={id ?? undefined}>
+    <button type="button" {...props} k="carousel-next" command="--next" commandfor={id ?? undefined}>
       {children}
     </button>
   );

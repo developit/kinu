@@ -22,4 +22,4 @@ export const PaginationItem = createSimpleComponent<'li', PaginationItemOwnProps
 export const PaginationLink = createSimpleComponent<
   'button',
   PaginationLinkOwnProps
->('pagination-link', 'button');
+>('pagination-link', 'button', {type: 'button'});
