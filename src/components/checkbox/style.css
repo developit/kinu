@@ -3,7 +3,9 @@
   width: 1rem;
   height: 1rem;
   border: 1px solid hsl(var(--k-input));
-  border-radius: var(--k-radius-2);
+  /* Capped: on a 16px box the compensated radius would pass 50% and clamp to a
+   * circle, making the checkbox read as a radio. */
+  border-radius: min(var(--k-radius-2), 0.375rem);
   background-color: hsl(var(--k-background));
   display: inline-grid;
   place-content: center;

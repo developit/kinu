@@ -12,7 +12,7 @@
   transform-origin: top center;
   background-color: hsl(var(--k-popover));
   color: hsl(var(--k-popover-foreground));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   border: 1px solid hsl(var(--k-border));
   padding: 0.5rem;
   margin-top: 0.25rem;
@@ -28,4 +28,45 @@
   opacity: 1;
   pointer-events: auto;
   transform: translateX(-50%) scale(1);
+}
+
+/* Interest-invoker path: the content is popover="hint" (attribute only set
+ * where supported), shown in the top layer and anchored to its invoker via
+ * the implicit anchor. */
+[k="hover-card-content"]:popover-open {
+  position: fixed;
+  position-anchor: auto;
+  position-area: bottom;
+  position-try-fallbacks: flip-block;
+  /* Neutralize the UA [popover] inset:0 — a non-auto bottom/right would pin the
+   * card to the viewport edge instead of letting position-area place it. */
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  margin: 0.25rem 0 0;
+}
+
+@starting-style {
+  [k="hover-card-content"]:popover-open {
+    opacity: 0;
+  }
+}
+
+/* Translucent material surface, matching the floating-menu vibrancy. Falls back
+ * to the solid background when unsupported or under reduced-transparency /
+ * increased-contrast preferences. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @media not (prefers-reduced-transparency: reduce) {
+    @media not (prefers-contrast: more) {
+      [k="hover-card-content"] {
+        background-color: hsl(var(--k-popover) / var(--k-material-opacity));
+        -webkit-backdrop-filter: var(--k-material-blur);
+        backdrop-filter: var(--k-material-blur);
+      }
+    }
+  }
 }

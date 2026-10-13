@@ -20,7 +20,8 @@
         "useJsxKeyInIterable": "off",
         "noChildrenProp": "off",
         "useExhaustiveDependencies": "off",
-        "noUnknownProperty": "off"
+        "noUnknownProperty": "off",
+        "noUnknownMediaFeatureName": "off"
       },
       "complexity": {
         "noForEach": "warn",

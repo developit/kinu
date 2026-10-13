@@ -9,7 +9,7 @@
 [k="pagination-link"] {
   background: none;
   border: 1px solid hsl(var(--k-border));
-  border-radius: var(--k-radius);
+  border-radius: var(--k-radius-3);
   padding: 0.25rem 0.5rem;
   cursor: pointer;
 }

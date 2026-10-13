@@ -1989,6 +1989,18 @@ body .home-nav--marketing + * {
   flex-direction: column;
   gap: 2px;
 }
+/* As a drawer the picker gets a detent: it opens at 45dvh, expands to fit the
+ * list when flicked up, and stops at 45dvh again on the way down. Until it is
+ * expanded the list holds still so the drag moves the sheet — the same
+ * hand-off a native bottom sheet does. */
+@media (max-width: 640px) {
+  .kinu-home [k="popover-content"].kh-composer-popover[open] {
+    --k-drawer-height: 45dvh;
+  }
+  .kinu-home [k="scroll-area"].kh-composer-list {
+    max-height: 60dvh;
+  }
+}
 .kh-composer-empty {
   margin: 0;
   padding: 16px;

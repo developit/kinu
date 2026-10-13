@@ -11,7 +11,14 @@ export interface CarouselOwnProps extends RequiredChildrenProps {
 
 export type CarouselProps = CarouselOwnProps;
 
-export interface CarouselContentOwnProps extends BaseProps {}
+export interface CarouselContentOwnProps extends BaseProps {
+  /**
+   * Render native CSS pagination dots beneath the carousel. Progressive
+   * enhancement — the prev/next buttons remain the baseline control, and dots
+   * only appear where `::scroll-marker` is supported.
+   */
+  dots?: boolean;
+}
 
 export interface CarouselItemOwnProps extends BaseProps {}
 

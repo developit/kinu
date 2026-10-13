@@ -21,3 +21,23 @@
   background-color: hsl(var(--k-background));
   z-index: 1;
 }
+
+/* Elevate the sticky header only while it is actually stuck — the cue native
+ * apps use to signal content scrolling beneath. The shadow is painted on
+ * ::after and clipped to only bleed downward. */
+@supports (container-type: scroll-state) {
+  [k="table"][sticky] thead th {
+    container-type: scroll-state;
+  }
+
+  @container scroll-state(stuck: top) {
+    [k="table"][sticky] thead th::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: 0 4px 8px -4px hsl(var(--k-shadow-hsl) / 0.3);
+      clip-path: inset(0 0 -12px 0);
+    }
+  }
+}
