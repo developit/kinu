@@ -1,5 +1,12 @@
 # kinu
 
+## 0.3.1
+
+### Patch Changes
+
+- c1970da: Default button elements to `type="button"` to prevent unintended form submissions
+- 38bf225: Fix `pnpm lint` failures: add biome overrides for CSS files with unsupported syntax, fix demo SVG a11y and style issues, add lint check to WORKFLOW.md.
+
 ## 0.3.0
 
 ### Minor Changes
