@@ -130,7 +130,7 @@ interface ThemeSettings {
   scaling: string;
 }
 
-function generateCSS(settings: ThemeSettings, theme: string = ''): string {
+function generateCSS(settings: ThemeSettings, theme = ''): string {
   const accent = ACCENT_COLORS[settings.accentColor];
   const gray = GRAY_COLORS[settings.grayColor];
   if (!accent || !gray) return '';
