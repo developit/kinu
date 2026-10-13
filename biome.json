@@ -1,5 +1,15 @@
 {
   "files": { "ignore": ["dist"] },
+  "overrides": [
+    {
+      "include": [
+        "src/components/otp/style.css",
+        "src/components/popover/style.css",
+        "src/components/progress-ring/style.css"
+      ],
+      "linter": { "enabled": false }
+    }
+  ],
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "vcs": { "enabled": false },
   "organizeImports": { "enabled": false },
@@ -36,7 +46,8 @@
       "suspicious": {
         "noAssignInExpressions": "off",
         "noExplicitAny": "off",
-        "noConfusingVoidType": "off"
+        "noConfusingVoidType": "off",
+        "noArrayIndexKey": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"

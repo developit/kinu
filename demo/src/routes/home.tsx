@@ -724,6 +724,7 @@ function SunIcon() {
       stroke-linecap="round"
       stroke-linejoin="round"
     >
+      <title>Sun</title>
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
     </svg>
@@ -743,6 +744,7 @@ function MoonIcon() {
       stroke-linecap="round"
       stroke-linejoin="round"
     >
+      <title>Moon</title>
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
@@ -761,6 +763,7 @@ function MaximizeIcon() {
       stroke-linecap="round"
       stroke-linejoin="round"
     >
+      <title>Maximize</title>
       <path d="M3 9V3h6 M21 9V3h-6 M3 15v6h6 M21 15v6h-6" />
     </svg>
   );
@@ -779,6 +782,7 @@ function MinimizeIcon() {
       stroke-linecap="round"
       stroke-linejoin="round"
     >
+      <title>Minimize</title>
       <path d="M9 3v6H3 M15 3v6h6 M9 21v-6H3 M15 21v-6h6" />
     </svg>
   );
@@ -1453,9 +1457,9 @@ type RaceBudget = {num: string; label: string; tone?: 'zero'};
 function RaceBudgets({budgets}: {budgets: [RaceBudget, RaceBudget]}) {
   return (
     <dl class="kh-race-budgets">
-      {budgets.map((b, i) => (
+      {budgets.map((b) => (
         <div
-          key={i}
+          key={b.label}
           class={`kh-race-budget${b.tone ? ` kh-race-budget--${b.tone}` : ''}`}
         >
           <dt class="kh-race-budget-num">{b.num}</dt>
@@ -1516,6 +1520,7 @@ function PipelineRace() {
         preserveAspectRatio="none"
         aria-hidden
       >
+        <title>Fork</title>
         <path
           d="M 50 0 V 14 M 25 14 H 75 M 25 14 V 36 M 75 14 V 36"
           stroke="currentColor"
@@ -1608,6 +1613,7 @@ function PipelineRace() {
             stroke-linejoin="round"
             aria-hidden
           >
+            <title>Replay</title>
             <path d="M3 12a9 9 0 1 0 3.27-6.95L3 8" />
             <path d="M3 3v5h5" />
           </svg>
