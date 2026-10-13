@@ -1,5 +1,7 @@
 ---
 checks:
+  - label: Lint
+    command: pnpm lint
   - label: Typecheck
     command: pnpm exec tsc
   - label: Build
