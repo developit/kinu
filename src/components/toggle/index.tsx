@@ -6,6 +6,7 @@ export const Toggle = createSimpleComponent<'button', ToggleOwnProps>(
   'toggle',
   'button',
   {
+    type: 'button',
     get 'aria-pressed'() {
       return this.pressed;
     },
