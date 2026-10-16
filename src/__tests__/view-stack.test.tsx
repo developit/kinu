@@ -11,6 +11,13 @@ const scrollTo = vi.fn();
 let entries: (entries: Partial<IntersectionObserverEntry>[]) => void;
 const disconnect = vi.fn();
 const observe = vi.fn();
+let frames: Map<number, FrameRequestCallback>;
+let nextFrame: number;
+function flushFrames() {
+  const pending = Array.from(frames.values());
+  frames.clear();
+  act(() => { for (const callback of pending) callback(0); });
+}
 beforeEach(() => {
   host = document.createElement('div');
   document.body.append(host);
@@ -20,8 +27,13 @@ beforeEach(() => {
     observe = observe;
     disconnect = disconnect;
   });
-  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { callback(0); return 1; });
-  vi.stubGlobal('cancelAnimationFrame', vi.fn());
+  frames = new Map();
+  nextFrame = 0;
+  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+    frames.set(++nextFrame, callback);
+    return nextFrame;
+  });
+  vi.stubGlobal('cancelAnimationFrame', (id: number) => { frames.delete(id); });
   vi.clearAllMocks();
 });
 afterEach(() => {
@@ -47,6 +59,7 @@ function mount() {
       <ViewStack.View id="detail">{() => <Counter />}</ViewStack.View>
       <ViewStack.View id="last"><p>Last</p></ViewStack.View>
     </ViewStack>, host));
+  Object.defineProperty(host.firstElementChild!, 'clientWidth', {value: 320});
   return host.firstElementChild!;
 }
 
@@ -69,14 +82,19 @@ describe('ViewStack', () => {
     trigger.focus();
     command('--next');
     expect(root.children[1].textContent).toBe('0');
-    expect(scrollTo).toHaveBeenCalledWith({left: 0, behavior: 'auto'});
+    expect(scrollTo).not.toHaveBeenCalled();
+    scrollTo.mockImplementationOnce(() => { expect(root.children[1].textContent).toBe('0'); });
+    flushFrames();
+    expect(scrollTo).toHaveBeenCalledWith({left: 320, behavior: 'auto'});
     snap(1);
+    flushFrames();
     expect(root.children[0].hasAttribute('inert')).toBe(true);
     expect(root.children[1].hasAttribute('inert')).toBe(false);
     expect(document.activeElement).toBe(root.children[1]);
     act(() => (root.children[1].querySelector('button')!).click());
     command('--prev');
     snap(0);
+    flushFrames();
     expect(document.activeElement).toBe(trigger);
     command('--view-detail');
     snap(1);
@@ -101,8 +119,11 @@ describe('ViewStack', () => {
     const replace = vi.spyOn(history, 'replaceState');
     command('--prev');
     command('--view-missing');
+    root.children[0].removeAttribute('id');
+    command('--view-');
     command('--other');
     command('--next', root.children[0]);
+    flushFrames();
     expect(scrollTo).not.toHaveBeenCalled();
     window.dispatchEvent(new PopStateEvent('popstate', {state: {depth: 2}}));
     expect(root.children[2].textContent).toBe('');
@@ -126,6 +147,46 @@ describe('ViewStack', () => {
     } finally {
       Reflect.deleteProperty(HTMLElement.prototype, 'onscrollsnapchange');
     }
+  });
+
+  it('recovers when the active tail is removed and keeps replacement content lazy', () => {
+    const replacement = vi.fn(() => <p>Replacement</p>);
+    const update = (tail: 'old' | 'new' | null) => act(() => render(
+      <ViewStack>
+        <ViewStack.View key="home">Home</ViewStack.View>
+        {tail && <ViewStack.View key={tail}>{tail === 'new' ? replacement : <p>Old</p>}</ViewStack.View>}
+      </ViewStack>, host));
+    update('old');
+    snap(1);
+    expect(host.textContent).toBe('HomeOld');
+    update(null);
+    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
+    update('new');
+    expect(replacement).not.toHaveBeenCalled();
+    expect(host.firstElementChild!.children[1].textContent).toBe('');
+    snap(1);
+    expect(host.textContent).toBe('HomeReplacement');
+  });
+
+  it('cancels deferred scrolling on unmount', () => {
+    mount();
+    command('--next');
+    expect(frames.size).toBeGreaterThan(0);
+    act(() => render(null, host));
+    flushFrames();
+    expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('falls back to the view when the saved focus target is disabled', () => {
+    const root = mount();
+    const trigger = root.querySelector('button')!;
+    trigger.focus();
+    snap(1);
+    flushFrames();
+    trigger.disabled = true;
+    snap(0);
+    flushFrames();
+    expect(document.activeElement).toBe(root.children[0]);
   });
 
   it('honors caller ref cleanup on detach', () => {

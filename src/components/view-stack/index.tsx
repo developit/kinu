@@ -12,10 +12,12 @@ const ViewElement = createSimpleComponent<'div', object>('view-stack-view', 'div
 
 const View = /*#__PURE__*/ forwardRef(function View({children, ...props}: ViewStackViewProps) {
   const state = useContext(ViewContext);
+  const visited = useRef(false);
+  if (state.render) visited.current = true;
   return (
     <ViewElement {...props} inert={!state.active}>
       <div k="view-stack-content">
-        {state.render && (typeof children === 'function' ? children() : children)}
+        {visited.current && (typeof children === 'function' ? children() : children)}
       </div>
     </ViewElement>
   );
@@ -27,7 +29,6 @@ const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref
   const current = useRef(0);
   const [active, setActive] = useState(0);
   const [requested, request] = useState<number | null>(null);
-  const [visited, setVisited] = useState(() => new Set([0]));
   const initialFocus = useRef(true);
   const returnFocus = useRef(new WeakMap<Element, HTMLElement>());
   const mergedRef = useMemo(() => (el: HTMLDivElement | null) => {
@@ -45,6 +46,13 @@ const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref
   useLayoutEffect(() => {
     const el = element.current!;
     const views = Array.from(el.children) as HTMLElement[];
+    // Removing the active tail (or emptying the stack) must not leave every
+    // remaining view inert. Visited state belongs to each View, not its index.
+    if (current.current >= views.length) {
+      current.current = Math.max(0, views.length - 1);
+      setActive(current.current);
+      request(null);
+    }
     const commit = (view: Element | null) => {
       const index = views.indexOf(view as HTMLElement);
       if (index < 0 || index === current.current) return;
@@ -52,7 +60,6 @@ const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref
       const focused = document.activeElement as HTMLElement | null;
       if (focused && previous?.contains(focused)) returnFocus.current.set(previous, focused);
       current.current = index;
-      setVisited((old) => new Set(old).add(index));
       setActive(index);
     };
     const snap = (event: Event) => {
@@ -63,10 +70,9 @@ const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref
       const cmd = (event as Event & {command: string}).command;
       const index = cmd === '--next' ? current.current + 1
         : cmd === '--prev' ? current.current - 1
-        : cmd?.startsWith('--view-') ? views.findIndex((view) => view.id === cmd.slice(7)) : -1;
+        : cmd?.startsWith('--view-') && cmd.length > 7 ? views.findIndex((view) => view.id === cmd.slice(7)) : -1;
       if (index < 0 || index >= views.length) return;
       event.preventDefault();
-      setVisited((old) => new Set(old).add(index));
       request(index);
     };
     el.addEventListener('scrollsnapchange', snap);
@@ -90,10 +96,17 @@ const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref
   // Render the destination before scrolling. CSS decides smooth vs reduced motion.
   useLayoutEffect(() => {
     if (requested === null) return;
-    const el = element.current!;
-    const direction = getComputedStyle(el).direction === 'rtl' ? -1 : 1;
-    el.scrollTo({left: direction * requested * el.clientWidth, behavior: 'auto'});
-    request(null);
+    // Like focus, scrolling must wait for context consumers to commit. Otherwise
+    // reduced-motion navigation can jump to a still-empty destination.
+    const frame = requestAnimationFrame(() => {
+      const el = element.current!;
+      if (requested < el.children.length) {
+        const direction = getComputedStyle(el).direction === 'rtl' ? -1 : 1;
+        el.scrollTo({left: direction * requested * el.clientWidth, behavior: 'auto'});
+      }
+      request(null);
+    });
+    return () => cancelAnimationFrame(frame);
   }, [requested]);
 
   useLayoutEffect(() => {
@@ -107,7 +120,8 @@ const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref
       const view = element.current?.children[active] as HTMLElement | undefined;
       if (!view) return;
       const stored = returnFocus.current.get(view);
-      (stored?.isConnected ? stored : view).focus({preventScroll: true});
+      if (stored?.isConnected && view.contains(stored)) stored.focus({preventScroll: true});
+      if (!view.contains(document.activeElement)) view.focus({preventScroll: true});
     });
     return () => cancelAnimationFrame(frame);
   }, [active]);
@@ -116,7 +130,7 @@ const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref
     <StackElement {...props} ref={mergedRef}>
       {toChildArray(children).map((child, index) => (
         <ViewContext.Provider key={typeof child === 'object' ? child.key ?? index : index}
-          value={{active: active === index, render: visited.has(index)}}>
+          value={{active: active === index, render: active === index || requested === index}}>
           {child}
         </ViewContext.Provider>
       ))}

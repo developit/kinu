@@ -29,7 +29,7 @@ import {Button, ViewStack} from 'kinu';
 | ViewStack | `<div k="view-stack">` | Horizontal scroll-snap viewport; defaults to `100dvh` tall |
 | ViewStack.View | `<div k="view-stack-view">` | Snap target with an internal, vertically scrolling content wrapper |
 
-Both forward native div attributes and DOM refs. Supply direct `ViewStack.View` children in stable drill-down order (not fragments or wrapper components). The first view is initially active. Give each view an accessible name using `aria-label` or `aria-labelledby`.
+Both forward native div attributes and DOM refs. Supply direct `ViewStack.View` children in stable drill-down order (not fragments or wrapper components). Use stable keys when adding, removing, or replacing views. The first view is initially active. Give each view an accessible name using `aria-label` or `aria-labelledby`.
 
 ## Navigation
 
