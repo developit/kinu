@@ -20,6 +20,8 @@
   min-width: 0;
   min-height: 0;
   scroll-snap-align: start;
+  /* Trap momentum flicks at the adjacent view instead of skipping snap stops.
+     Keep this on the untransformed snap target, not its content wrapper. */
   scroll-snap-stop: always;
   view-timeline-name: --kinu-stack-view;
   view-timeline-axis: inline;

@@ -41,6 +41,12 @@ Use native buttons (or kinu `Button`) with `commandFor` pointing to the stack's 
 
 Unknown commands and out-of-bounds moves are ignored. Supply explicit back buttons for keyboard and pointer users; touch and trackpad users can also swipe. Normal links retain their normal behavior. Routing/history integration, if desired, belongs to the application.
 
+### Can a hard flick skip the next screen?
+
+For native momentum flicks, no: each view sets `scroll-snap-stop: always`, so the browser must stop at the next snap point in that direction rather than coast through multiple screens. `scroll-snap-type: x mandatory` alone would only guarantee landing on *some* screen, not the adjacent one. `overscroll-behavior-x: none` also prevents chaining at the ends of the stack.
+
+This is a native scroll-snap guarantee, not a JavaScript gesture lock. A continuous drag, repeated gestures, or wheel/trackpad input that the browser treats as a position-based scroll can still traverse multiple screens. Explicit `--view-ID` navigation can also jump to a non-adjacent view. Enforcing exactly one screen for every possible input sequence would require intercepting native scrolling; ViewStack intentionally does not do that.
+
 ## Lazy rendering and accessibility
 
 Only the first view's content is rendered initially, including on the server. Other view shells stay in the layout as snap targets. Navigation renders the destination before programmatic scrolling; swipes render it when it becomes the active snap target. JSX children are supported; a function child additionally defers constructing the content until the first visit. It is a render function, not a one-time initializer: it can run again on subsequent renders. Put hooks in child components, not in this function.
