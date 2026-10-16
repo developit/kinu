@@ -197,6 +197,22 @@ export default [
     notes: ['Wraps a `<div>` and exposes padding/variant control via attributes.']
   },
   {
+    slug: 'view-stack',
+    title: 'ViewStack',
+    section: 'Components',
+    category: 'Navigation',
+    order: 7,
+    folder: 'view-stack',
+    description: 'Lazy screens with CSS scroll snap, native swipes, and no browser history coupling.',
+    usage: `<ViewStack id="screens"><ViewStack.View><Button command="--next" commandFor="screens">Next</Button></ViewStack.View><ViewStack.View>{() => <p>Lazy screen</p>}</ViewStack.View></ViewStack>`,
+    notes: [
+      'Supply direct ViewStack.View children in stable drill-down order.',
+      'Commands --next, --prev, and --view-ID navigate without browser history integration.',
+      'Inactive views are inert; visited views stay mounted to preserve state.',
+      'CSS controls snapping, parallax and reduced-motion behavior.'
+    ]
+  },
+  {
     slug: 'carousel',
     title: 'Carousel',
     section: 'Components',

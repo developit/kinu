@@ -1,0 +1,71 @@
+[k="view-stack"] {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  grid-template-rows: 100%;
+  height: 100dvh;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: none;
+  scrollbar-width: none;
+}
+
+[k="view-stack"]::-webkit-scrollbar {
+  display: none;
+}
+
+[k="view-stack-view"] {
+  min-width: 0;
+  min-height: 0;
+  scroll-snap-align: start;
+  /* Trap momentum flicks at the adjacent view instead of skipping snap stops.
+     Keep this on the untransformed snap target, not its content wrapper. */
+  scroll-snap-stop: always;
+  view-timeline-name: --kinu-stack-view;
+  view-timeline-axis: inline;
+}
+
+[k="view-stack-content"] {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: hsl(var(--k-background));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [k="view-stack"] {
+    scroll-behavior: smooth;
+  }
+
+  @supports (animation-timeline: view()) {
+    [k="view-stack-content"] {
+      animation: kinu-stack-parallax linear both;
+      animation-timeline: --kinu-stack-view;
+      animation-range: exit 0% exit 100%;
+    }
+
+    [k="view-stack-view"]:not(:first-child) > [k="view-stack-content"] {
+      animation: kinu-stack-parallax linear both, kinu-stack-shadow linear both;
+      animation-timeline: --kinu-stack-view, --kinu-stack-view;
+      animation-range: exit 0% exit 100%, entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes kinu-stack-parallax {
+  to {
+    transform: translateX(calc(75% * var(--kinu-stack-direction, 1)));
+    filter: brightness(0.8);
+  }
+}
+
+@keyframes kinu-stack-shadow {
+  0%, 100% { box-shadow: 0 0 1.5rem #0000; }
+  25%, 75% { box-shadow: 0 0 1.5rem #0004; }
+}
+
+[k="view-stack-content"]:dir(rtl) {
+  --kinu-stack-direction: -1;
+}
