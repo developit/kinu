@@ -29,7 +29,7 @@ import {Button, ViewStack} from 'kinu';
 | ViewStack | `<div k="view-stack">` | Horizontal scroll-snap viewport; defaults to `100dvh` tall |
 | ViewStack.View | `<div k="view-stack-view">` | Snap target with an internal, vertically scrolling content wrapper |
 
-Both forward native div attributes and DOM refs. Supply direct `ViewStack.View` children in stable drill-down order (not fragments or wrapper components). Use stable keys when adding, removing, or replacing views. The first view is initially active. Give each view an accessible name using `aria-label` or `aria-labelledby`.
+Both forward native div attributes and DOM refs. Supply direct `ViewStack.View` children in stable drill-down order (not fragments or wrapper components). Use stable keys when adding, removing, or replacing views: active and pending destinations follow their keys when preceding screens are removed. Removing the destination of a pending command cancels that command. The first view is initially active. Give each view an accessible name using `aria-label` or `aria-labelledby`.
 
 ## Navigation
 
@@ -51,7 +51,7 @@ This is a native scroll-snap guarantee, not a JavaScript gesture lock. A continu
 
 Only the first view's content is rendered initially, including on the server. Other view shells stay in the layout as snap targets. Navigation renders the destination before programmatic scrolling; swipes render it when it becomes the active snap target. JSX children are supported; a function child additionally defers constructing the content until the first visit. It is a render function, not a one-time initializer: it can run again on subsequent renders. Put hooks in child components, not in this function.
 
-Visited content stays mounted, retaining form values, scroll position and component state. It is **not** pruned on back navigation. Remove a view from the application tree to dispose of it. Every inactive view is `inert`, preventing off-screen interaction and accessibility-tree leakage. On a snap change, focus returns to the previously focused element in the destination, or the destination view itself, using `preventScroll`.
+Visited content stays mounted, retaining form values, scroll position and component state. It is **not** pruned on back navigation. Unchanged off-screen views are not rerendered for unrelated navigation; application prop/state updates still work normally. Remove a view from the application tree to dispose of it. Every inactive view is `inert`, preventing off-screen interaction and accessibility-tree leakage. On a snap change, focus returns to the previously focused element in the destination, or the destination view itself, using `preventScroll`.
 
 ## Styling and browser support
 
