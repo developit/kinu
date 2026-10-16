@@ -610,5 +610,14 @@
     "order": 12,
     "file": "components/toggle-group.md",
     "description": "Container that lets Toggle buttons coordinate pressed state."
+  },
+  {
+    "slug": "view-stack",
+    "title": "ViewStack",
+    "section": "Components",
+    "category": "Navigation",
+    "order": 7,
+    "file": "components/view-stack.md",
+    "description": "Lazy screens with CSS scroll snap, native swipes, and no browser history coupling."
   }
 ]
