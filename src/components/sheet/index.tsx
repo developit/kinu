@@ -1,49 +1,24 @@
 import {createContext} from 'preact';
-import {useId, useContext} from 'preact/hooks';
-import {applyPropsToChildren} from '../../lib/children';
+import {useContext} from 'preact/hooks';
 import {forwardRef} from '../../lib/forwardref';
-import {installCommands, installDialogsDropdowns, installSwipe} from '../../lib/commands';
+import {commandChild, overlayRoot} from '../../lib/overlay';
 import type {
   SheetOwnProps,
-  SheetTriggerOwnProps,
-  SheetContentOwnProps,
-  SheetCloseOwnProps,
+  SheetTriggerProps,
+  SheetContentProps,
+  SheetCloseProps,
 } from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function Sheet({id: idProp, children}: SheetOwnProps) {
-  installCommands();
-  installDialogsDropdowns();
-  installSwipe();
-  const gen = useId();
-  const id = idProp ?? gen;
-  return (
-    <IdCtx.Provider value={id}>
-      <div k="sheet">{children}</div>
-    </IdCtx.Provider>
-  );
-}
-
-export const SheetTrigger = /*#__PURE__*/ forwardRef(function SheetTrigger({
-  children,
-  ...props
-}: SheetTriggerOwnProps &
-  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
-  const id = useContext(IdCtx);
-  return applyPropsToChildren(children, {
-    ...props,
-    commandfor: id,
-    command: 'show-modal',
-  });
-});
+export const SheetTrigger = /*#__PURE__*/ commandChild<SheetTriggerProps>(IdCtx, 'show-modal');
 
 export const SheetContent = /*#__PURE__*/ forwardRef(function SheetContent({
   id,
   children,
   ...props
-}: SheetContentOwnProps & JSX.IntrinsicElements['dialog']) {
+}: SheetContentProps) {
   const ctx = useContext(IdCtx);
   // The dialog is the swipe scroll container; the panel wrapper holds user
   // content in normal block flow (so nothing has to be neutralized for grid).
@@ -54,19 +29,9 @@ export const SheetContent = /*#__PURE__*/ forwardRef(function SheetContent({
   );
 });
 
-export const SheetClose = /*#__PURE__*/ forwardRef(function SheetClose({
-  children,
-  ...props
-}: SheetCloseOwnProps &
-  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
-  const id = useContext(IdCtx);
-  return applyPropsToChildren(children, {
-    ...props,
-    commandfor: id,
-    command: 'close',
-  });
-});
+export const SheetClose = /*#__PURE__*/ commandChild<SheetCloseProps>(IdCtx, 'close');
 
-Sheet.Trigger = SheetTrigger;
-Sheet.Content = SheetContent;
-Sheet.Close = SheetClose;
+export const Sheet = /*#__PURE__*/ Object.assign(
+  overlayRoot<SheetOwnProps>(IdCtx, 'sheet', 'div'),
+  {Trigger: SheetTrigger, Content: SheetContent, Close: SheetClose},
+);

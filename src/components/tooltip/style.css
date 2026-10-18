@@ -61,11 +61,15 @@
   transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to) * 2));
 }
 
+/* :active is the touch press-and-hold below. Harmless here on desktop: a
+ * pressed tooltip is already showing from :hover, so it has no start. */
 @starting-style {
   [k="tooltip"][title]:hover::after,
   [k="tooltip"][title]:focus::after,
+  [k="tooltip"][title]:active::after,
   [k="status"][aria-label]:empty:hover::after,
-  [k="status"][aria-label]:empty:focus-visible::after {
+  [k="status"][aria-label]:empty:focus-visible::after,
+  [k="status"][aria-label]:empty:active::after {
     opacity: 0;
     transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to)));
   }
@@ -85,7 +89,7 @@
  * threshold — at opacity 0 (and pointer-events: none), so a tap that ends
  * sooner never shows anything. The delay is declared only on the pressed rule,
  * so releasing falls back to the base rule's 0s and the tooltip leaves at
- * once. The @starting-style below is load-bearing, not decoration: an element
+ * once. The @starting-style above is load-bearing, not decoration: an element
  * arriving from display:none has no start value to interpolate from without
  * it, so no transition runs — and with no transition there is no delay either,
  * and the tooltip snaps up on contact. Zero JS, nothing added on desktop. */
@@ -112,13 +116,5 @@
     opacity: 1;
     transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to) * 2));
     transition-delay: 500ms;
-  }
-
-  @starting-style {
-    [k="tooltip"][title]:active::after,
-    [k="status"][aria-label]:empty:active::after {
-      opacity: 0;
-      transform: translate(var(--k-tl), calc(var(--k-tt) + var(--k-to)));
-    }
   }
 }

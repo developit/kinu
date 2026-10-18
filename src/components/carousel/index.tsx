@@ -1,47 +1,33 @@
 import {createContext, type ComponentProps} from 'preact';
-import {useId, useContext} from 'preact/hooks';
+import {useContext} from 'preact/hooks';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {forwardRef} from '../../lib/forwardref';
-import {installCommands} from '../../lib/commands';
+import {overlayRoot} from '../../lib/overlay';
 import type {
   CarouselOwnProps,
   CarouselContentOwnProps,
   CarouselItemOwnProps,
-  CarouselPreviousOwnProps,
-  CarouselNextOwnProps,
+  CarouselPreviousProps,
+  CarouselNextProps,
 } from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function Carousel({id: idProp, children}: CarouselOwnProps) {
-  installCommands();
-  const id = idProp ?? useId();
+export const Carousel = /*#__PURE__*/ overlayRoot<CarouselOwnProps>(IdCtx, 'carousel-root', 'div');
 
-  return (
-    <IdCtx.Provider value={id}>
-      <div style={{position: 'relative'}}>{children}</div>
-    </IdCtx.Provider>
-  );
-}
-
-const CarouselContentRoot = createSimpleComponent<'div', CarouselContentOwnProps>(
-  'carousel',
-  'div',
-  {},
-  (el: HTMLElement) => {
-    const handleCommand = (e: any) => {
-      const w = el.clientWidth;
-      const cmd = e.command;
-      if (cmd === '--prev') el.scrollBy({left: -w, behavior: 'smooth'});
-      else if (cmd === '--next') el.scrollBy({left: w, behavior: 'smooth'});
-      else el.scrollTo({left: cmd.slice(7) * w, behavior: 'smooth'});
-    };
-
-    el.addEventListener('command', handleCommand);
-    return () => el.removeEventListener('command', handleCommand);
+/* `oncommand`, lowercase: Preact then always listens for `command`, where the
+ * camel-case prop is only mapped when the engine has an `oncommand` property. */
+const CarouselContentRoot = createSimpleComponent<'div', CarouselContentOwnProps>('carousel', 'div', {
+  oncommand(e: Event & {command: string}) {
+    const el = e.currentTarget as HTMLElement;
+    const w = el.clientWidth;
+    const cmd = e.command;
+    if (cmd === '--prev') el.scrollBy({left: -w, behavior: 'smooth'});
+    else if (cmd === '--next') el.scrollBy({left: w, behavior: 'smooth'});
+    else el.scrollTo({left: +cmd.slice(7) * w, behavior: 'smooth'});
   },
-);
+} as object);
 
 export const CarouselContent = /*#__PURE__*/ forwardRef(function CarouselContent(
   props: ComponentProps<typeof CarouselContentRoot>,
@@ -55,30 +41,12 @@ export const CarouselItem = createSimpleComponent<'div', CarouselItemOwnProps>(
   'div',
 );
 
-export const CarouselPrevious = /*#__PURE__*/ forwardRef(function CarouselPrevious({
-  children,
-  commandFor: _commandFor,
-  command: _command,
-  ...props
-}: CarouselPreviousOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
-  const id = useContext(IdCtx);
-  return (
-    <button type="button" {...props} k="carousel-previous" command="--prev" commandfor={id ?? undefined}>
-      {children}
-    </button>
-  );
-});
+/* kinu's `command`/`commandfor` come after the caller's props, so they win. */
+function carouselButton<P extends CarouselPreviousProps>(k: string, command: string) {
+  return forwardRef((props: P) => (
+    <button type="button" {...(props as object)} k={k} command={command} commandfor={useContext(IdCtx)} />
+  ));
+}
 
-export const CarouselNext = /*#__PURE__*/ forwardRef(function CarouselNext({
-  children,
-  commandFor: _commandFor,
-  command: _command,
-  ...props
-}: CarouselNextOwnProps & JSX.HTMLAttributes<HTMLButtonElement>) {
-  const id = useContext(IdCtx);
-  return (
-    <button type="button" {...props} k="carousel-next" command="--next" commandfor={id ?? undefined}>
-      {children}
-    </button>
-  );
-});
+export const CarouselPrevious = /*#__PURE__*/ carouselButton<CarouselPreviousProps>('carousel-previous', '--prev');
+export const CarouselNext = /*#__PURE__*/ carouselButton<CarouselNextProps>('carousel-next', '--next');

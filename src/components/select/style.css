@@ -71,13 +71,6 @@
     transform: scale(1);
   }
 
-  @starting-style {
-    [k="select"]:open::picker(select) {
-      opacity: 0;
-      transform: scale(0.94);
-    }
-  }
-
   [k="select"] option {
     display: flex;
     align-items: center;
@@ -167,12 +160,6 @@
       translate: none;
     }
 
-    @starting-style {
-      [k="select"]:open::picker(select) {
-        translate: 0 100%;
-      }
-    }
-
     /* Comfortable thumb targets — ~48px at the sheet's font size. */
     [k="select"] option {
       padding: 0.75rem;
@@ -194,12 +181,6 @@
       opacity: 1;
     }
 
-    @starting-style {
-      [k="select"]:open::picker(select)::backdrop {
-        opacity: 0;
-      }
-    }
-
     /* Touch gets the drawer's own surface: the tighter 8px top radius and the
      * grab pill, painted from the same gradient at the same size and colour.
      * `local` so it scrolls away with the options, exactly as it does on a
@@ -218,5 +199,22 @@
         background-size: 2rem 0.25rem;
       }
     }
+  }
+}
+
+/* Entry start values for both layouts in one place: each layout transitions
+ * only its own properties — the dropdown fades and scales, the sheet slides —
+ * so the other's start values are never interpolated from. Top level because
+ * Biome can't parse @starting-style inside a group rule; engines without
+ * base-select drop the ::picker selectors regardless. */
+@starting-style {
+  [k="select"]:open::picker(select) {
+    opacity: 0;
+    transform: scale(0.94);
+    translate: 0 100%;
+  }
+
+  [k="select"]:open::picker(select)::backdrop {
+    opacity: 0;
   }
 }

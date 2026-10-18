@@ -1,4 +1,4 @@
-import type {JSX} from 'preact';
+import {h} from 'preact';
 import {Dialog, DialogTrigger, DialogContent, DialogClose} from '../dialog';
 import {forwardRef} from '../../lib/forwardref';
 import type {DialogContentProps} from '../dialog/types';
@@ -10,19 +10,12 @@ import type {AlertDialogProps} from './types';
  *
  * forwardRef-tagged like every other content component: without it a ref on
  * AlertDialog.Content would attach to this wrapper rather than the <dialog>. */
-const AlertDialogContent = /*#__PURE__*/ forwardRef(function AlertDialogContent(
-  props: DialogContentProps,
-) {
-  return <DialogContent closedby="closerequest" {...props} />;
-});
-
-export const AlertDialog = Object.assign(
-  function AlertDialog(props: AlertDialogProps): JSX.Element {
-    return <Dialog {...props} />;
-  },
-  {
-    Trigger: DialogTrigger,
-    Content: AlertDialogContent,
-    Close: DialogClose,
-  },
+const AlertDialogContent = /*#__PURE__*/ forwardRef((props: DialogContentProps) =>
+  h(DialogContent, {closedby: 'closerequest', ...props}),
 );
+
+export const AlertDialog = /*#__PURE__*/ Object.assign((props: AlertDialogProps) => Dialog(props), {
+  Trigger: DialogTrigger,
+  Content: AlertDialogContent,
+  Close: DialogClose,
+});

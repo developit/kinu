@@ -14,12 +14,11 @@ position against the viewport — so other engines keep the previous
 `<dialog>.show()` path. Triggers now issue `command="toggle-popover"`, and the
 command polyfill maps popover commands onto dialog methods on the fallback path.
 
-**Modals use `closedby`.** Dialog, Sheet, Drawer and ContextMenu default to
+**Modals use `closedby`.** Dialog, Sheet, Drawer, Sidebar and ContextMenu default to
 `closedby="any"` for native light dismiss, with the JavaScript backdrop
 hit-test kept as a fallback that honours the same attribute.
 
-Three behaviour fixes come with this, worth knowing if you relied on the old
-behaviour:
+Behaviour changes worth knowing if you relied on the old behaviour:
 
 - **AlertDialog no longer closes on an outside click.** It was a verbatim
   re-export of Dialog, so it light-dismissed like one; it is now a wrapper
@@ -30,25 +29,10 @@ behaviour:
   which no `z-index` could fix.
 - **The adaptive `mobile="drawer"` conversion fires again.** Its `beforetoggle`
   interception listened on the bubble phase, and toggle events don't bubble.
-- **Toasts keep their enter and exit animations.** Moving the container into the
-  top layer had it rejoin (hide + show) on every toast change, including the
-  frame where a toast flips to its mounted state — which takes the container out
-  of the box tree and back, cancelling a transition that hasn't had a frame to
-  start. It now joins once and rejoins only when another top-layer element
-  opens, which is the only thing that actually changes the stacking order.
-- **A context menu no longer closes on the press that opened it.** Native light
-  dismiss is keyed to a pointerdown/pointerup pair, and `contextmenu` fires
-  between the two — so the release that ended the press read as a click outside
-  the menu that had just appeared. It only bit when the pointer wasn't inside
-  the new menu's box, which made it look intermittent, and it only bit for
-  *primary* pointer gestures: a two-button mouse right-click is safe, a macOS
-  trackpad secondary-click, Ctrl+click and a touch tap-and-hold are not. Light
-  dismiss is now held off for the opening gesture and restored once the press
-  ends. Escape is unaffected throughout.
-- **The tab strip's sliding indicator is a squircle again.** It is the box
-  painted behind the selected tab once anchor positioning takes over, and it was
-  the one element missing `corner-shape`, so it drew a circular pill inside a
-  squircle strip.
+- **Drawer works on its own.** Every other swipe surface installed the swipe
+  handlers; Drawer relied on one of them sharing the page, and on touch a
+  Drawer by itself opened to a blank screen. Every overlay family now installs
+  the same set of document listeners.
 
 **Styling and platform polish**
 
@@ -106,7 +90,7 @@ behaviour:
   takes its surface colour instead of the page it buried, and hands it back on
   the way down or on close — the bit of native polish a web sheet usually
   misses. CSS says what colour (`--k-theme-color`, defaulting to the sheet's own
-  background; `transparent` opts out) and the swipe control plane says when, off
+  background; `initial` opts out) and the swipe control plane says when, off
   the `scrollend` it already listens for, so nothing new watches anything. kinu
   adds its own `theme-color` meta and removes it again, so one declared by the
   page is left exactly as it was. `mobile="drawer"` overlays get it too — same
@@ -119,9 +103,6 @@ behaviour:
   down so the drag grows the sheet rather than scrolling a list, the hand-off
   native sheets do; once it is fully expanded they scroll normally and hand
   their overscroll back to the sheet. Unset, drawers behave exactly as before.
-- **Drawer installs the swipe handlers it needs.** Every other swipe surface did;
-  Drawer relied on one of them sharing the page, and on touch a Drawer by itself
-  opened to a blank screen.
 - **The grab pill keeps its clearance.** The 1rem above the first child moved
   off that child and onto the rail above it, so a heading that zeroes its own
   top margin — the usual way to start a sheet — no longer lands on the pill.
@@ -157,3 +138,9 @@ behaviour:
   unchanged elsewhere.
 - New opt-in `<ColorPicker eyedropper>` renders a screen-sampling button in
   browsers with the EyeDropper API.
+
+**Smaller, too.** The overlay families now share one implementation of their
+Root/Trigger/Close/Content parts, the eyedropper icon is a CSS mask, and a pass
+over the command, swipe, menu-keyboard and toast code trimmed what was left, so
+everything above costs the whole library about 570 bytes of minified+gzipped
+JS.

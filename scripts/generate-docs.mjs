@@ -143,6 +143,12 @@ function analyzeExports(sourceFile, sourceText) {
     }
   });
 
+  // A root built with Object.assign has to be declared after the parts it
+  // attaches, but it is still the component the page is about: list owners
+  // first (the sort is stable, so everything else keeps source order).
+  const owners = new Set(attachments.map((a) => a.owner));
+  exports.sort((a, b) => owners.has(b.name) - owners.has(a.name));
+
   return {exports, attachments};
 }
 

@@ -1,36 +1,58 @@
-let commandsInstalled: boolean;
-
-export function installCommands() {
-  if (commandsInstalled) return;
-  if (typeof document === 'undefined') return;
-  commandsInstalled = true;
-  // Intentionally installed even where native Invoker Commands exist: kinu
-  // supports command sources beyond <button> (e.g. a menu closing itself on
-  // item click), and the preventDefault() in the handler suppresses native
-  // double-invocation for button triggers.
-  addEventListener('click', commandClickHandler);
+/** Wraps an installer so it runs once, on the client only. */
+function once(install: () => void) {
+  let done: boolean;
+  return () => {
+    if (!done && typeof document !== 'undefined') {
+      done = true;
+      install();
+    }
+  };
 }
+
+/**
+ * Every overlay family's document listeners, installed together: they are a
+ * handful of capture listeners that each bail on the first check for anything
+ * that isn't theirs, so one install is cheaper than tracking which family
+ * needs which.
+ *
+ * The command polyfill is intentionally installed even where native Invoker
+ * Commands exist: kinu supports command sources beyond <button> (e.g. a menu
+ * closing itself on item click), and the preventDefault() in the handler
+ * suppresses native double-invocation for button triggers.
+ */
+export const installOverlays = /*#__PURE__*/ once(() => {
+  addEventListener('click', commandClickHandler);
+  addEventListener('click', dialogsDropdownsClickHandler, true);
+  // Capture phase: native popover/dialog beforetoggle events don't bubble,
+  // but capture still visits the target from the window.
+  addEventListener('beforetoggle', adaptiveToggle, true);
+  addEventListener('beforetoggle', swipeToggle as EventListener, true);
+  addEventListener('scrollend', swipeSettle, true);
+  // Safari only shipped scrollend in 26.2, so older WebKit would never dismiss.
+  // Plain scroll is a sound substitute *here* because every dismiss position is
+  // a scroll boundary (offset 0, or max) and scroll-snap-stop stops the panel
+  // at every resting position in between — it can't pass through the boundary
+  // en route to somewhere else, so arriving there is already proof of a
+  // dismiss. That holds however many detents sit in between. The difference is
+  // that a slow drag held at the boundary closes on arrival rather than on
+  // release, which is why this stays off where scrollend exists.
+  if (!('onscrollend' in document)) addEventListener('scroll', swipeSettle, true);
+});
 
 let topLayerOverlays: boolean | undefined;
 /**
- * Overlays run in top-layer popover mode only when the Popover API AND CSS
- * anchor positioning are both available — without anchors, a top-layer
- * popover's absolute-position fallback would resolve against the viewport
- * instead of near its trigger. Otherwise they fall back to `<dialog>.show()`.
+ * Overlays run in top-layer popover mode only where CSS anchor positioning is
+ * available — without anchors, a top-layer popover's absolute-position
+ * fallback would resolve against the viewport instead of near its trigger.
+ * Otherwise they fall back to `<dialog>.show()`. The condition is
+ * popover/style.css's @supports verbatim, so JS and CSS always agree (every
+ * engine that passes it has the Popover API too). Only ever called from event
+ * handlers, so `CSS` is always there.
  */
 export function usePopoverOverlays() {
-  if (topLayerOverlays === undefined) {
-    topLayerOverlays =
-      'popover' in HTMLElement.prototype &&
-      typeof CSS !== 'undefined' &&
-      // Both halves, matching popover/style.css's @supports exactly: an engine
-      // with position-anchor but no position-try-fallbacks doesn't get the
-      // anchored rules, so a top-layer popover there would fall back to
-      // `position: absolute; top: 100%` and land at the bottom of the viewport.
-      CSS.supports('position-anchor: --k-trigger') &&
-      CSS.supports('position-try-fallbacks: --k-menu-right-top');
-  }
-  return topLayerOverlays;
+  return (topLayerOverlays ??= CSS.supports(
+    '(position-anchor: --k-trigger) and (position-try-fallbacks: --k-menu-right-top)',
+  ));
 }
 
 function elementTarget(node: EventTarget) {
@@ -51,42 +73,31 @@ function commandClickHandler(e: MouseEvent) {
 
   const command = trigger.getAttribute('command') || 'toggle-popover';
   if (command[0] === '-') {
-    const event = Object.defineProperties(
-      new Event('command', {bubbles: true, cancelable: true}),
-      {
-        source: {value: trigger},
-        command: {value: command},
-      },
+    target.dispatchEvent(
+      Object.assign(new Event('command', {bubbles: true, cancelable: true}), {source: trigger, command}),
     );
-    target.dispatchEvent(event);
     return;
   }
 
   let method = command.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-  // `close` closes the target however it is currently shown (modal or popover).
+  if (usePopoverOverlays()) {
+    // `close` closes the target however it is currently shown (modal or popover).
+    if (method === 'close' && target.matches(':popover-open')) method = 'hidePopover';
+  } else if (/Popover$/.test(method)) {
+    // Popover commands fall back to the equivalent <dialog> methods when
+    // top-layer popover mode is unavailable (kinu overlays are <dialog popover>).
+    method =
+      method === 'hidePopover' || (method === 'togglePopover' && (target as HTMLDialogElement).open)
+        ? 'close'
+        : 'show';
+  }
   if (
-    method === 'close' &&
-    'popover' in HTMLElement.prototype &&
-    target.matches(':popover-open')
+    method === 'show' &&
+    !target.dispatchEvent(
+      Object.assign(new Event('beforetoggle', {cancelable: true, bubbles: true}), {newState: 'open'}),
+    )
   ) {
-    method = 'hidePopover';
-  }
-  // Popover commands fall back to the equivalent <dialog> methods when
-  // top-layer popover mode is unavailable (kinu overlays are <dialog popover>).
-  if (/Popover$/.test(method) && (!usePopoverOverlays() || !(method in target))) {
-    const dialog = target as HTMLDialogElement;
-    if (method === 'hidePopover' || (method === 'togglePopover' && dialog.open)) {
-      dialog.close();
-      return;
-    }
-    method = 'show';
-  }
-  if (method === 'show') {
-    const event = Object.assign(
-      new Event('beforetoggle', {cancelable: true, bubbles: true}),
-      {newState: 'open'},
-    );
-    if (!target.dispatchEvent(event)) return;
+    return;
   }
   (target as any)[method]?.();
   // showPopover leaves focus on the invoker; mirror dialog.show()'s focus
@@ -100,92 +111,58 @@ function commandClickHandler(e: MouseEvent) {
   }
 }
 
-let adaptiveInstalled: boolean;
-export function installAdaptiveCommands() {
-  if (adaptiveInstalled) return;
-  if (typeof document === 'undefined') return;
-  adaptiveInstalled = true;
-  let allowToggle: boolean;
-  // Capture phase: native popover/dialog beforetoggle events don't bubble,
-  // but capture still visits the target from the window.
-  addEventListener(
-    'beforetoggle',
-    (e: Event) => {
-      const te = e as ToggleEvent;
-      if (allowToggle || te.newState !== 'open') return;
-      const el = e.target as HTMLDialogElement;
-      if (!getComputedStyle(el).getPropertyValue('--modal')) return;
-      e.preventDefault();
-      allowToggle = true;
-      el.showModal();
-      allowToggle = false;
-    },
-    true,
-  );
-}
-
-let dialogsDropdownsInstalled: boolean;
-export function installDialogsDropdowns() {
-  if (dialogsDropdownsInstalled) return;
-  if (typeof document === 'undefined') return;
-  dialogsDropdownsInstalled = true;
-  addEventListener('click', dialogsDropdownsClickHandler, true);
+let allowToggle: boolean;
+/* Opens a popover modally instead when CSS says so (--modal), e.g. a
+ * mobile="drawer" sheet. */
+function adaptiveToggle(e: Event) {
+  const el = e.target as HTMLDialogElement;
+  if (allowToggle || (e as ToggleEvent).newState !== 'open') return;
+  if (!cssVar(el, '--modal')) return;
+  e.preventDefault();
+  allowToggle = true;
+  el.showModal();
+  allowToggle = false;
 }
 
 function dialogsDropdownsClickHandler(e: MouseEvent) {
   const target = e.target as Element;
 
-  if (target.localName === 'dialog' && target.getAttribute('k')) {
+  if (target.matches('dialog[k]')) {
     const dialog = target as HTMLDialogElement;
 
     // Swipe overlays span the whole viewport, so backdrop clicks land on the
     // dialog itself. The rail occupies one full viewport-length of scroll; a
     // click whose scroll-relative coordinate falls within it is a dismiss tap.
-    // Tested before the native-closedby bail below, because a click inside the
+    // Tested before the native-closedby bail, because a click inside the
     // dialog's own box is never a native light dismiss.
-    const swipe = getComputedStyle(dialog).getPropertyValue('--swipe').trim();
-    if (swipe) {
-      const inRail =
-        swipe === 'x' ? dialog.scrollLeft + e.clientX < dialog.clientWidth
-        : swipe === '-x' ? dialog.scrollLeft + e.clientX >= dialog.scrollWidth - dialog.clientWidth
-        : dialog.scrollTop + e.clientY < dialog.clientHeight;
-      if (inRail) {
-        dialog.close();
-        e.preventDefault();
-      }
+    //
+    // Otherwise: close on backdrop click — a fallback where native `closedby`
+    // light dismiss is unsupported, honoring the same attribute semantics.
+    const swipe = swipeAxis(dialog);
+    const closedby = dialog.getAttribute('closedby');
+    const r = dialog.getBoundingClientRect();
+    if (
+      swipe
+        ? swipe === 'x' ? dialog.scrollLeft + e.clientX < dialog.clientWidth
+          : swipe === '-x' ? dialog.scrollLeft + e.clientX >= dialog.scrollWidth - dialog.clientWidth
+          : dialog.scrollTop + e.clientY < dialog.clientHeight
+        : !('closedBy' in HTMLDialogElement.prototype) &&
+          closedby !== 'closerequest' &&
+          closedby !== 'none' &&
+          (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)
+    ) {
+      dialog.close();
+      e.preventDefault();
       return;
     }
-
-    // close on backdrop click — fallback where native `closedby` light dismiss
-    // is unsupported, honoring the same attribute semantics either way
-    const closedby = dialog.getAttribute('closedby');
-    if (
-      !('closedBy' in HTMLDialogElement.prototype) &&
-      closedby !== 'closerequest' &&
-      closedby !== 'none'
-    ) {
-      const {clientX, clientY} = e;
-      const {left, right, top, bottom} = dialog.getBoundingClientRect();
-      if (
-        clientX < left ||
-        clientX > right ||
-        clientY < top ||
-        clientY > bottom
-      ) {
-        dialog.close();
-        e.preventDefault();
-        return;
-      }
-    }
+    if (swipe) return;
   }
 
   // close other dropdowns — fallback where top-layer popover mode (with its
   // native light dismiss) is unavailable
   if (!usePopoverOverlays()) {
-    for (const el of Array.from(
-      document.querySelectorAll<HTMLDialogElement>(
-        '[k="dropdown-content"],[k="popover-content"]',
-      ),
+    for (const el of document.querySelectorAll<HTMLDialogElement>(
+      '[k="dropdown-content"],[k="popover-content"]',
     )) {
       if (!el.contains(target)) {
         el.close();
@@ -194,28 +171,20 @@ function dialogsDropdownsClickHandler(e: MouseEvent) {
   }
 }
 
-let menuShortcutsInstalled: boolean;
-export function installMenuShortcuts() {
-  if (menuShortcutsInstalled) return;
-  if (typeof document === 'undefined') return;
-  menuShortcutsInstalled = true;
-  addEventListener('keydown', handleMenuShortcutsKeydown);
-}
+export const installMenuShortcuts = /*#__PURE__*/ once(() =>
+  addEventListener('keydown', handleMenuShortcutsKeydown),
+);
 
 function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   const el = elementTarget(e.target!);
-  let container = el.closest('dialog[k]') || el.closest('[k="list"]');
-  let useFocus = true;
-  if (!container) {
-    container = el.parentNode!.querySelector(
-      'popover' in HTMLElement.prototype
-        ? 'dialog[k][open], dialog[k]:popover-open'
-        : 'dialog[k][open]',
-    )
-      || el.closest('[k="listbox"]')?.querySelector('[k="listbox-list"]')
-      || null;
-    useFocus = false;
-  }
+  // Inside a menu or list, items take real focus; from outside (a combobox or
+  // listbox input) the open list's [selected] item is a pseudo-focus.
+  let container: Element | null | undefined = el.closest('dialog[k]') || el.closest('[k="list"]');
+  const useFocus = !!container;
+  container ||=
+    el.parentNode!.querySelector(
+      usePopoverOverlays() ? 'dialog[k][open], dialog[k]:popover-open' : 'dialog[k][open]',
+    ) || el.closest('[k="listbox"]')?.querySelector('[k="listbox-list"]');
   if (!container) return;
   const selected = container.querySelector<HTMLElement>(
     useFocus ? '[k="item"]:focus' : '[k="item"][selected]',
@@ -229,29 +198,19 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
   const dir = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
   if (!dir) return;
   e.preventDefault();
-  if (!selected) {
-    const items = container.querySelectorAll<HTMLElement>('[k="item"]');
-    const item = items[dir > 0 ? 0 : items.length - 1];
-    if (useFocus) item?.focus();
-    else item?.toggleAttribute('selected', true);
-    return;
-  }
-  const type = selected.getAttribute('k');
-  if (!selected) return;
   let next = selected;
-  while (
-    (next = next[
-      dir > 0 ? 'nextElementSibling' : 'previousElementSibling'
-    ] as HTMLElement)
-  ) {
-    if (next.getAttribute('k') !== type) continue;
-    if (useFocus) next.focus();
-    else {
-      selected.toggleAttribute('selected', false);
-      next!.toggleAttribute('selected', true);
-    }
-    e.preventDefault();
-    break;
+  if (next) {
+    do next = next[dir > 0 ? 'nextElementSibling' : 'previousElementSibling'] as HTMLElement | null;
+    while (next && next.getAttribute('k') !== 'item');
+  } else {
+    const items = container.querySelectorAll<HTMLElement>('[k="item"]');
+    next = items[dir > 0 ? 0 : items.length - 1];
+  }
+  if (!next) return;
+  if (useFocus) next.focus();
+  else {
+    selected?.toggleAttribute('selected', false);
+    next.toggleAttribute('selected', true);
   }
 }
 
@@ -263,32 +222,12 @@ function handleMenuShortcutsKeydown(e: KeyboardEvent) {
 // is the whole control plane: jump the scroller to its open position on open,
 // close the dialog once a dismiss-fling settles. The gesture, momentum and
 // snap-back are all the browser's.
-const SWIPE = '[k="drawer-content"],[k="popover-content"],[k="dropdown-content"],[k="context-menu"],[k="sheet-content"],[k="sidebar"]';
 
-let swipeInstalled: boolean;
-export function installSwipe() {
-  if (swipeInstalled) return;
-  if (typeof document === 'undefined') return;
-  swipeInstalled = true;
-  addEventListener('beforetoggle', swipeToggle as EventListener, true);
-  addEventListener('scrollend', swipeSettle, true);
-  // Safari only shipped scrollend in 26.2, so older WebKit would never dismiss.
-  // Plain scroll is a sound substitute *here* because every dismiss position is
-  // a scroll boundary (offset 0, or max) and scroll-snap-stop stops the panel
-  // at every resting position in between — it can't pass through the boundary
-  // en route to somewhere else, so arriving there is already proof of a
-  // dismiss. That holds however many detents sit in between. The
-  // difference is that a slow drag held at the boundary closes on arrival
-  // rather than on release, which is why this stays off where scrollend exists.
-  if (!('onscrollend' in document)) addEventListener('scroll', swipeSettle, true);
-}
+const cssVar = (el: Element, name: string) => getComputedStyle(el).getPropertyValue(name).trim();
 
-function swipeAxis(target: EventTarget | null) {
-  const el = target as Element | null;
-  if (!el?.matches?.(SWIPE)) return null;
-  const cs = getComputedStyle(el);
-  const v = cs.getPropertyValue('--swipe').trim();
-  return v ? {el: el as HTMLDialogElement, axis: v, cs} : null;
+/** The dialog's --swipe axis, or '' when it isn't a swipe overlay right now. */
+function swipeAxis(el: Element) {
+  return el.matches?.('dialog[k]') ? cssVar(el, '--swipe') : '';
 }
 
 /* A bottom sheet dragged past the top of the screen is the screen, so the
@@ -307,36 +246,28 @@ function swipeAxis(target: EventTarget | null) {
  * the browser uses. */
 let themeMeta: HTMLMetaElement | undefined;
 function themeColor(color: string) {
-  if (color && color !== 'transparent') {
-    if (!themeMeta) {
-      themeMeta = document.createElement('meta');
-      themeMeta.name = 'theme-color';
-      document.head.prepend(themeMeta);
-    }
-    themeMeta.content = color;
-  } else if (themeMeta) {
-    themeMeta.remove();
-    themeMeta = undefined;
+  themeMeta?.remove();
+  if (color) {
+    document.head.prepend(
+      (themeMeta = Object.assign(document.createElement('meta'), {name: 'theme-color', content: color})),
+    );
   }
 }
 
 function swipeToggle(e: ToggleEvent) {
-  const s = swipeAxis(e.target);
-  if (!s) return;
+  const el = e.target as HTMLDialogElement;
+  const axis = swipeAxis(el);
+  if (!axis) return;
   // Hand the chrome back as the sheet starts leaving, not after it has gone.
   if (e.newState !== 'open') return themeColor('');
-  s.el.style.transitionDuration = '';
+  el.style.transitionDuration = '';
   requestAnimationFrame(() => {
-    const {el, axis} = s;
     if (axis === '-x') el.scrollLeft = 0;
     else if (axis === 'x') el.scrollLeft = el.scrollWidth - el.clientWidth;
     // Bottom sheets open to their detent when one is set, otherwise all the
     // way. --k-drawer-height is a registered <length>, so the computed value is
     // already resolved to pixels and 0 (no detent) falls through to fully open.
-    else
-      el.scrollTop =
-        parseFloat(getComputedStyle(el).getPropertyValue('--k-drawer-height')) ||
-        el.scrollHeight - el.clientHeight;
+    else el.scrollTop = parseFloat(cssVar(el, '--k-drawer-height')) || el.scrollHeight - el.clientHeight;
   });
 }
 
@@ -345,9 +276,9 @@ function swipeToggle(e: ToggleEvent) {
 // negative (or past max), and fractional device pixel ratios mean the resting
 // offset isn't reliably a whole number either.
 function swipeSettle(e: Event) {
-  const s = swipeAxis(e.target);
-  if (!s?.el.open) return;
-  const {el, axis} = s;
+  const el = e.target as HTMLDialogElement;
+  const axis = el.open && swipeAxis(el);
+  if (!axis) return;
   const dismissed =
     axis === '-x' ? el.scrollLeft >= el.scrollWidth - el.clientWidth - 1
     : axis === 'x' ? el.scrollLeft <= 0
@@ -361,9 +292,5 @@ function swipeSettle(e: Event) {
   // drawer/style.css), so this reads as "the sheet is at least a viewport
   // tall" — i.e. it now covers the top of the screen. Sideways panels never
   // satisfy it, since their scrollTop stays 0.
-  themeColor(
-    el.scrollTop >= el.clientHeight
-      ? s.cs.getPropertyValue('--k-theme-color').trim()
-      : '',
-  );
+  themeColor(el.scrollTop >= el.clientHeight ? cssVar(el, '--k-theme-color') : '');
 }

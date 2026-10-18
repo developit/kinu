@@ -19,10 +19,10 @@ import {Combobox, ComboboxInput, ComboboxList, ComboboxOption} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
+| Combobox | Autocomplete input | — |
 | ComboboxInput | Search input | `<input k="combobox-input">` |
 | ComboboxList | Results list | `<dialog k="combobox-list">` |
 | ComboboxOption | Result option | Alias of Item |
-| Combobox | Autocomplete input | — |
 
 ## Props
 

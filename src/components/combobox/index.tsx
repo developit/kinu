@@ -1,6 +1,6 @@
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installMenuShortcuts, usePopoverOverlays} from '../../lib/commands';
-import {filterItems, clearFilterHighlight} from '../../lib/filter';
+import {filterItems} from '../../lib/filter';
 import {Item} from '../item';
 import type {
   ComboboxOwnProps,
@@ -13,71 +13,41 @@ const ComboboxBase = createSimpleComponent<'span', ComboboxOwnProps>(
   'combobox',
   'span',
   {},
-  () => {
-    installMenuShortcuts();
-  },
+  installMenuShortcuts,
 );
+
+const getList = (el: Element) =>
+  el.closest('[k="combobox"]')!.querySelector<HTMLDialogElement>('[k="combobox-list"]')!;
 
 /* The list opens in the top layer (popover="manual" — dismissal stays driven
  * by input blur) where supported, falling back to <dialog>.show(). */
-function showList(list: HTMLDialogElement) {
-  if (usePopoverOverlays()) {
-    if (!list.matches(':popover-open')) list.showPopover();
-  } else {
-    list.show();
-  }
+function openList(e: Event) {
+  const el = e.currentTarget as HTMLInputElement;
+  const list = getList(el);
+  filterItems(el.value, list.querySelectorAll<HTMLElement>('[k="item"]'), e.type !== 'input');
+  if (usePopoverOverlays()) list.togglePopover(true);
+  else list.show();
+  el.focus();
 }
 
 function closeList(list: HTMLDialogElement) {
-  clearFilterHighlight();
-  if (usePopoverOverlays() && list.matches(':popover-open')) {
-    list.hidePopover();
-  } else {
-    list.close();
-  }
+  if (usePopoverOverlays()) list.togglePopover(false);
+  else list.close();
 }
 
+/* Capture-phase handlers, so a consumer's own onInput/onClick/onFocus/onBlur
+ * don't replace them. */
 export const ComboboxInput = createSimpleComponent<'input', ComboboxInputOwnProps>(
   'combobox-input',
   'input',
-  {},
-  (el: HTMLInputElement) => {
-    const getList = () =>
-      el
-        .closest('[k="combobox"]')
-        ?.querySelector<HTMLDialogElement>('[k="combobox-list"]')!;
-
-    function onInputFocusClick(e: Event) {
-      filter(e.type !== 'input');
-      showList(getList());
-      el.focus();
-    }
-
-    function onBlur(e: FocusEvent) {
-      const rel = e.relatedTarget as Node | null;
-      const list = getList();
-      if (rel && list?.contains(rel)) return;
-      closeList(list);
-    }
-
-    function filter(select?: boolean) {
-      const items = getList().querySelectorAll<HTMLElement>(
-        '[k="item"]',
-      );
-      filterItems(el.value, items, select);
-    }
-
-    el.addEventListener('input', onInputFocusClick);
-    el.addEventListener('click', onInputFocusClick);
-    el.addEventListener('focus', onInputFocusClick);
-    el.addEventListener('blur', onBlur);
-
-    return () => {
-      el.removeEventListener('input', onInputFocusClick);
-      el.removeEventListener('click', onInputFocusClick);
-      el.removeEventListener('focus', onInputFocusClick);
-      el.removeEventListener('blur', onBlur);
-    };
+  {
+    onInputCapture: openList,
+    onClickCapture: openList,
+    onFocusCapture: openList,
+    onBlurCapture: (e) => {
+      const list = getList(e.currentTarget);
+      if (!list.contains(e.relatedTarget as Node | null)) closeList(list);
+    },
   },
 );
 

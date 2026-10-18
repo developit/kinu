@@ -1,9 +1,9 @@
 # Kinu size benchmarks
 
-Generated at: 2026-09-24T11:49:26.064Z
+Generated at: 2026-10-18T15:47:39.264Z
 
 | Scenario | Raw (KiB) | Gzip (KiB) | Brotli (KiB) |
 | --- | ---: | ---: | ---: |
-| One component (Button) | 3.05 | 0.96 | 0.78 |
-| A few components (Button + Input + Dialog + Popover + Tabs) | 16.78 | 3.6 | 3.18 |
-| Nearly all components (namespace import) | 100.64 | 19.89 | 17.18 |
+| One component (Button) | 3.29 | 1.08 | 0.9 |
+| A few components (Button + Input + Dialog + Popover + Tabs) | 21.39 | 5.35 | 4.69 |
+| Nearly all components (namespace import) | 105.59 | 21.83 | 18.9 |

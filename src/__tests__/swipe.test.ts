@@ -1,5 +1,5 @@
 import {beforeAll, describe, expect, it, vi} from 'vitest';
-import {installSwipe} from '../lib/commands';
+import {installOverlays} from '../lib/commands';
 
 const handlers: Record<string, (e: unknown) => void> = {};
 
@@ -45,10 +45,10 @@ beforeAll(() => {
     cb(0);
     return 0;
   });
-  installSwipe();
+  installOverlays();
 });
 
-describe('installSwipe control plane', () => {
+describe('swipe control plane', () => {
   it('registers the two edge listeners', () => {
     expect(typeof handlers.beforetoggle).toBe('function');
     expect(typeof handlers.scrollend).toBe('function');
@@ -151,7 +151,7 @@ describe('installSwipe control plane', () => {
 
 // Safari shipped scrollend in 26.2; older WebKit needs plain scroll to stand in
 // for it, since every dismiss position is a scroll boundary. These load the
-// module fresh because installSwipe self-guards against double installation.
+// module fresh because installOverlays self-guards against double installation.
 describe('scrollend fallback gate', () => {
   async function installWith(hasScrollend: boolean) {
     const seen: string[] = [];
@@ -159,7 +159,7 @@ describe('scrollend fallback gate', () => {
     vi.stubGlobal('document', hasScrollend ? {onscrollend: null} : {});
     vi.stubGlobal('addEventListener', (type: string) => void seen.push(type));
     const mod = await import('../lib/commands');
-    mod.installSwipe();
+    mod.installOverlays();
     return seen;
   }
 

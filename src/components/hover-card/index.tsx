@@ -12,26 +12,20 @@ let hoverCardId = 0;
  * via `interestfor` + popover="hint": keyboard focus and touch long-press gain
  * access (the CSS :hover path alone has neither), and the card renders in the
  * top layer instead of clipping under ancestor overflow. Elsewhere the
- * attributes are never set and the CSS :hover behavior stands unchanged. */
+ * attributes are never set and the CSS :hover behavior stands unchanged. Both
+ * elements unmount with the card, so there is nothing to undo. */
 export const HoverCard = createSimpleComponent<'div', HoverCardOwnProps>(
   'hover-card',
   'div',
   {},
   (el: HTMLElement) => {
     if (!('interestForElement' in HTMLButtonElement.prototype)) return;
-    const trigger = el.querySelector<HTMLElement>('[k="hover-card-trigger"]');
-    const content = el.querySelector<HTMLElement>('[k="hover-card-content"]');
-    const invoker = trigger?.matches('a[href], button')
-      ? trigger
-      : trigger?.querySelector<HTMLElement>('a[href], button');
+    const invoker = el.querySelector('[k="hover-card-trigger"] :is(a[href],button)');
+    const content = el.querySelector('[k="hover-card-content"]');
     if (!invoker || !content) return;
-    if (!content.id) content.id = `k-hover-card-${++hoverCardId}`;
+    content.id ||= `k-hover-card-${++hoverCardId}`;
     content.setAttribute('popover', 'hint');
     invoker.setAttribute('interestfor', content.id);
-    return () => {
-      content.removeAttribute('popover');
-      invoker.removeAttribute('interestfor');
-    };
   },
 );
 export const HoverCardTrigger = createSimpleComponent<

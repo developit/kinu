@@ -15,7 +15,7 @@ body [k="context-menu"] {
 
 @position-try --k-context-menu-right-top {
   left: auto;
-  right: var(--k-context-menu-client-right, 0px);
+  right: calc(100% - var(--k-context-menu-client-x, 0px));
   top: var(--k-context-menu-client-y, 0px);
   bottom: auto;
 }
@@ -24,14 +24,14 @@ body [k="context-menu"] {
   left: var(--k-context-menu-client-x, 0px);
   right: auto;
   top: auto;
-  bottom: var(--k-context-menu-client-bottom, 0px);
+  bottom: calc(100% - var(--k-context-menu-client-y, 0px));
 }
 
 @position-try --k-context-menu-right-bottom {
   left: auto;
-  right: var(--k-context-menu-client-right, 0px);
+  right: calc(100% - var(--k-context-menu-client-x, 0px));
   top: auto;
-  bottom: var(--k-context-menu-client-bottom, 0px);
+  bottom: calc(100% - var(--k-context-menu-client-y, 0px));
 }
 
 @supports (position-try-fallbacks: --k-context-menu-right-top) {

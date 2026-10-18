@@ -1,3 +1,7 @@
+[k="carousel-root"] {
+  position: relative;
+}
+
 [k="carousel"] {
   position: relative;
   display: flex;
