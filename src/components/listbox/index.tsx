@@ -13,26 +13,17 @@ const ListboxBase = createSimpleComponent<'div', ListboxOwnProps>(
   'listbox',
   'div',
   {},
-  () => {
-    installMenuShortcuts();
-  },
+  installMenuShortcuts,
 );
 
-export const ListboxInput = createSimpleComponent<'input', ListboxInputOwnProps>(
-  'listbox-input',
-  'input',
-  {},
-  (el: HTMLInputElement) => {
-    function onInput() {
-      const items = el
-        .closest('[k="listbox"]')
-        ?.querySelectorAll<HTMLElement>('[k="item"]');
-      if (items) filterItems(el.value, items, false, false);
-    }
-    el.addEventListener('input', onInput);
-    return () => el.removeEventListener('input', onInput);
+export const ListboxInput = createSimpleComponent<'input', ListboxInputOwnProps>('listbox-input', 'input', {
+  // Capture phase, so a consumer's own onInput doesn't replace it.
+  onInputCapture(e) {
+    const el = e.currentTarget;
+    const items = el.closest('[k="listbox"]')?.querySelectorAll<HTMLElement>('[k="item"]');
+    if (items) filterItems(el.value, items, false, false);
   },
-);
+});
 
 export const ListboxList = createSimpleComponent<'div', ListboxListOwnProps>(
   'listbox-list',

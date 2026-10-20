@@ -19,10 +19,10 @@ import {Listbox, ListboxInput, ListboxList, ListboxOption} from 'kinu';
 
 | Name | Description | Rendered HTML |
 | --- | --- | --- |
+| Listbox | Component | — |
 | ListboxInput | Component | `<input k="listbox-input">` |
 | ListboxList | Component | `<div k="listbox-list">` |
 | ListboxOption | Component | Alias of Item |
-| Listbox | Component | — |
 
 ## Props
 

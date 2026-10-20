@@ -6,6 +6,14 @@
   gap: 0.125rem;
 }
 
+/* Opt-in render-on-demand: off-screen rows skip layout/paint entirely, so
+ * thousand-row lists stay fast with no virtualization library — and unlike JS
+ * virtualization the content remains in the DOM for find-in-page and a11y. */
+[k="list"][virtual] > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 2.25rem;
+}
+
 /* Default list: selected uses foreground as background, auto-contrast text */
 [k="list"] > [k="item"][selected] {
   background-color: hsl(var(--k-foreground));

@@ -1,67 +1,43 @@
 import {createContext} from 'preact';
-import {useId, useContext} from 'preact/hooks';
-import {applyPropsToChildren} from '../../lib/children';
+import {useContext} from 'preact/hooks';
 import {forwardRef} from '../../lib/forwardref';
-import {
-  installCommands,
-  installAdaptiveCommands,
-  installDialogsDropdowns,
-  installMenuShortcuts,
-  installSwipe,
-} from '../../lib/commands';
+import {installMenuShortcuts} from '../../lib/commands';
+import {commandChild, overlayRoot} from '../../lib/overlay';
 import {Item} from '../item';
 import type {
   DropdownMenuOwnProps,
-  DropdownMenuTriggerOwnProps,
-  DropdownMenuContentOwnProps,
+  DropdownMenuTriggerProps,
+  DropdownMenuContentProps,
 } from './types';
 import './style.css';
 
 const IdCtx = createContext<string | undefined>(undefined);
 
-export function DropdownMenu({id: idProp, children}: DropdownMenuOwnProps) {
-  installCommands();
-  installAdaptiveCommands();
-  installDialogsDropdowns();
-  installMenuShortcuts();
-  installSwipe();
-  const gen = useId();
-  const id = idProp ?? gen;
-  return (
-    <IdCtx.Provider value={id}>
-      <span k="dropdown">{children}</span>
-    </IdCtx.Provider>
-  );
-}
+export const DropdownMenu = /*#__PURE__*/ Object.assign(
+  overlayRoot<DropdownMenuOwnProps>(IdCtx, 'dropdown'),
+  {Item},
+);
 
-export const DropdownMenuTrigger = /*#__PURE__*/ forwardRef(function DropdownMenuTrigger({
-  children,
-  ...props
-}: DropdownMenuTriggerOwnProps &
-  JSX.ElementChildrenAttribute & JSX.HTMLAttributes<HTMLElement>) {
-  const id = useContext(IdCtx);
-  return applyPropsToChildren(children, {
-    ...props,
-    commandFor: id,
-    command: 'show',
-  });
-});
+export const DropdownMenuTrigger = /*#__PURE__*/ commandChild<DropdownMenuTriggerProps>(IdCtx, 'toggle-popover');
 
+/* The menu targets itself with `command="close"`, so an item click closes it
+ * (overridable through `command` / `commandFor`). */
 export const DropdownMenuContent = /*#__PURE__*/ forwardRef(function DropdownMenuContent({
   id,
-  command = 'close',
-  commandFor,
   ...props
-}: DropdownMenuContentOwnProps &
-  Omit<JSX.IntrinsicElements['dialog'], 'command' | 'commandfor' | 'commandFor'>) {
+}: DropdownMenuContentProps) {
+  installMenuShortcuts();
   const ctx = useContext(IdCtx);
-  const resolvedId = id ?? ctx;
+  id = id || ctx;
   return (
     <dialog
       k="dropdown-content"
-      id={resolvedId}
-      command={command}
-      commandFor={commandFor ?? resolvedId}
+      id={id}
+      command="close"
+      commandfor={id}
+      popover="auto"
+      closedby="any"
+      tabindex={-1}
       {...props}
     />
   );
@@ -69,5 +45,3 @@ export const DropdownMenuContent = /*#__PURE__*/ forwardRef(function DropdownMen
 
 /** @deprecated Use `Item` instead. */
 export const DropdownMenuItem = Item;
-
-Object.assign(DropdownMenu, {Item});

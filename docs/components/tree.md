@@ -45,6 +45,7 @@ import {Tree} from 'kinu';
 
 - State is native via the `open` attribute on `Tree.Group`.
 - Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.
+- Add `virtual` to render nodes on demand via CSS `content-visibility` — same trade as List, and nodes remain findable in the DOM.
 
 ---
 

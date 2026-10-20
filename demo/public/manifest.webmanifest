@@ -1,0 +1,30 @@
+{
+  "name": "kinu — Preact UI toolkit",
+  "short_name": "kinu",
+  "description": "Preact UI toolkit. 10x smaller than you think. Intuitive for humans+LLMs.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fbf9f2",
+  "theme_color": "#fbf9f2",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

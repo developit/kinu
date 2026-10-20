@@ -8,9 +8,7 @@ const ListBase = createSimpleComponent<'div', ListOwnProps>(
   'list',
   'div',
   {},
-  () => {
-    installMenuShortcuts();
-  },
+  installMenuShortcuts,
 );
 
 type ListComponent = typeof ListBase & {
