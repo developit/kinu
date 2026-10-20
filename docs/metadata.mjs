@@ -312,7 +312,6 @@ export default [
     notes: [
       'Sets type="color" for you and forwards all native input props.',
       'Pairs naturally with `Input` inside an `InputGroup` to show an editable hex value alongside the swatch.',
-      'Add `eyedropper` to render a screen-sampling button beside the swatch. It only appears in browsers with the EyeDropper API, and sets the input value plus fires input/change when a colour is picked.',
     ]
   },
   {

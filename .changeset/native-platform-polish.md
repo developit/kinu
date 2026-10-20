@@ -136,11 +136,9 @@ Behaviour changes worth knowing if you relied on the old behaviour:
 - HoverCard wires up `interestfor` where Interest Invokers exist, so keyboard
   focus and touch long-press can open it; the CSS `:hover` fallback is
   unchanged elsewhere.
-- New opt-in `<ColorPicker eyedropper>` renders a screen-sampling button in
-  browsers with the EyeDropper API.
 
 **Smaller, too.** The overlay families now share one implementation of their
-Root/Trigger/Close/Content parts, the eyedropper icon is a CSS mask, and a pass
+Root/Trigger/Close/Content parts, and a pass
 over the command, swipe, menu-keyboard and toast code trimmed what was left, so
-everything above costs the whole library about 570 bytes of minified+gzipped
+everything above costs the whole library about 390 bytes of minified+gzipped
 JS.
