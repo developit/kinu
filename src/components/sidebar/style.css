@@ -97,8 +97,8 @@
     transform: none;
   }
   [k="sidebar"]::backdrop {
-    background-color: rgb(0 0 0 / 0.8);
-    backdrop-filter: blur(1px);
+    background-color: hsl(var(--k-background) / 0.96);
+    backdrop-filter: blur(3px);
     overscroll-behavior: contain;
     overflow: auto;
     scrollbar-width: none;
