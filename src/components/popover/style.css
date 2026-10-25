@@ -192,7 +192,7 @@
   [k="popover-content"][mobile="drawer"]::backdrop,
   [k="dropdown-content"][mobile="drawer"]::backdrop,
   [k="context-menu"][mobile="drawer"]::backdrop {
-    background-color: rgb(0 0 0 / 0.8);
+    background-color: hsl(var(--k-background) / 0.95);
     backdrop-filter: blur(1px);
     overscroll-behavior: contain;
     overflow: auto;
