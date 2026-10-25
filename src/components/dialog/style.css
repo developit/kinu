@@ -43,8 +43,8 @@
 }
 
 [k="dialog-content"]::backdrop {
-  background-color: hsl(var(--k-background) / 0.95);
-  backdrop-filter: blur(1px);
+  background-color: hsl(var(--k-background) / 0.96);
+  backdrop-filter: blur(3px);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;
