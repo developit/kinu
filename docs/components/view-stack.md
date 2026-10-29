@@ -45,7 +45,7 @@ Unknown commands and out-of-bounds moves are ignored. Supply explicit back butto
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| swipe | `'back' | 'both'` | `'back'` (CSS) | Controls the initial direction of native touch panning |
+| swipe | `'back' \| 'both'` | `'back'` (CSS) | Controls the initial direction of native touch panning |
 
 ```tsx
 <ViewStack swipe="both">{/* Allow forward and backward touch swipes */}</ViewStack>
