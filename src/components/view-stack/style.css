@@ -69,3 +69,21 @@
 [k="view-stack-content"]:dir(rtl) {
   --kinu-stack-direction: -1;
 }
+
+/* Directional touch-action gates native panning, not pointer events or scroll
+   coordinates. pan-left permits the finger to move right (back in LTR).
+   Keep vertical scrolling and pinch zoom available inside each screen. */
+[k="view-stack"]:not([swipe="both"]) {
+  touch-action: pan-left pan-y pinch-zoom;
+}
+
+[k="view-stack"]:not([swipe="both"]):dir(rtl) {
+  touch-action: pan-right pan-y pinch-zoom;
+}
+
+/* Each content wrapper is independently scrollable. It must share the stack's
+   policy, since touch-action is resolved only up to the nearest scroller. */
+[k="view-stack-view"],
+[k="view-stack-content"] {
+  touch-action: inherit;
+}

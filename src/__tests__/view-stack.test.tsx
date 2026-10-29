@@ -399,3 +399,64 @@ describe('ViewStack', () => {
     expect(viewRef.current).toBeNull();
   });
 });
+
+describe('ViewStack swipe policy', () => {
+  let style: HTMLStyleElement;
+  beforeEach(() => {
+    style = document.createElement('style');
+    // Vitest stubs CSS imports; use Node's builtin to test the real stylesheet.
+    style.textContent = process.getBuiltinModule('fs').readFileSync(
+      'src/components/view-stack/style.css', 'utf8',
+    );
+    document.head.append(style);
+  });
+  afterEach(() => style.remove());
+
+  it('defaults to native back-only touch panning in CSS, without a JS default attribute', () => {
+    const root = mount();
+    expect(root.hasAttribute('swipe')).toBe(false);
+    expect(getComputedStyle(root).getPropertyValue('touch-action')).toBe('pan-left pan-y pinch-zoom');
+  });
+
+  it('propagates the policy to each independently scrolling content wrapper', () => {
+    const root = mount();
+    for (const view of Array.from(root.children)) {
+      for (const element of [view, view.firstElementChild!]) {
+        // jsdom can leave inherit unresolved; real Chromium also verifies the
+        // effective policy, including gestures started inside this scroller.
+        expect(getComputedStyle(element).getPropertyValue('touch-action')).toMatch(/^(inherit|pan-left pan-y pinch-zoom)$/);
+      }
+    }
+  });
+
+  it('reverses the native touch policy in RTL', () => {
+    const root = mount();
+    root.setAttribute('dir', 'rtl');
+    expect(getComputedStyle(root).getPropertyValue('touch-action')).toBe('pan-right pan-y pinch-zoom');
+  });
+
+  it('forwards the both-directions opt-in without eagerly rendering content', () => {
+    const lazy = vi.fn(() => <p>Lazy</p>);
+    act(() => render(<ViewStack swipe="both">
+      <ViewStack.View>Home</ViewStack.View>
+      <ViewStack.View>{lazy}</ViewStack.View>
+    </ViewStack>, host));
+    const root = host.firstElementChild!;
+    expect(root.getAttribute('swipe')).toBe('both');
+    expect(getComputedStyle(root).getPropertyValue('touch-action')).not.toContain('pan-left');
+    expect(lazy).not.toHaveBeenCalled();
+  });
+
+  it('supports changing the forwarded policy attribute without new JS behavior', () => {
+    const root = mount();
+    root.setAttribute('swipe', 'both');
+    expect(getComputedStyle(root).getPropertyValue('touch-action')).not.toContain('pan-left');
+    root.setAttribute('swipe', 'back');
+    expect(getComputedStyle(root).getPropertyValue('touch-action')).toBe('pan-left pan-y pinch-zoom');
+    command('--next');
+    flushFrames();
+    expect(scrollTo).toHaveBeenCalledWith({left: 320, behavior: 'auto'});
+    snap(1);
+    expect(root.children[1].hasAttribute('inert')).toBe(false);
+  });
+});

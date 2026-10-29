@@ -209,7 +209,8 @@ export default [
       'Supply direct ViewStack.View children in stable drill-down order.',
       'Commands --next, --prev, and --view-ID navigate without browser history integration.',
       'Inactive views are inert; visited views stay mounted to preserve state.',
-      'CSS controls snapping, parallax and reduced-motion behavior.'
+      'CSS controls snapping, parallax and reduced-motion behavior.',
+      'Touch swipes default to back-only; swipe="both" permits forward touch swipes too.'
     ]
   },
   {

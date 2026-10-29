@@ -39,7 +39,21 @@ Use native buttons (or kinu `Button`) with `commandFor` pointing to the stack's 
 - `--prev`: move back one view.
 - `--view-ID`: navigate to the direct view whose `id` is `ID`.
 
-Unknown commands and out-of-bounds moves are ignored. Supply explicit back buttons for keyboard and pointer users; touch and trackpad users can also swipe. Normal links retain their normal behavior. Routing/history integration, if desired, belongs to the application.
+Unknown commands and out-of-bounds moves are ignored. Supply explicit back buttons for keyboard and pointer users. By default, touch users can swipe back; use commands to drill forward. Normal links retain their normal behavior. Routing/history integration, if desired, belongs to the application.
+
+### Touch swipe direction
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| swipe | `'back' | 'both'` | `'back'` (CSS) | Controls the initial direction of native touch panning |
+
+```tsx
+<ViewStack swipe="both">{/* Allow forward and backward touch swipes */}</ViewStack>
+```
+
+`swipe` is forwarded unchanged to the stack element. CSS attribute selectors implement the default and opt-in via directional `touch-action`, automatically reversing the allowed direction in RTL. There are no JavaScript gesture handlers or prop defaults. Vertical scrolling and pinch zoom remain available, and explicit `--next` / `--view-ID` commands work in either mode. The live demo lets you switch policies.
+
+This is a touch-input policy, not a navigation guard: wheel/trackpad scrolling, keyboard scrolling, and programmatic scrolling are unaffected. Browsers evaluate directional `touch-action` at the start of a gesture and may allow reversing direction once an allowed pan has begun. Application-level restrictions should determine which screens exist, rather than rely on gesture policy.
 
 ### Can a hard flick skip the next screen?
 
