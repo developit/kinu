@@ -21,13 +21,10 @@
     "./style.css": "./dist/index.css",
     "./themes/*.css": "./dist/themes/*.css",
     "./llms.txt": "./llms.txt",
-    "./components.json": "./components.json",
-    "./themes/violet.css": "./themes/violet.css",
-    "./themes/emerald.css": "./themes/emerald.css"
+    "./components.json": "./components.json"
   },
   "files": [
     "dist",
-    "themes",
     "llms.txt",
     "components.json"
   ],

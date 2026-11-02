@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="grid"] {
   display: grid;
   gap: var(--k-gap, var(--k-space-md));

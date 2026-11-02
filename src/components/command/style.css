@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="dialog-content"][data-command] {
   width: min(92vw, 34rem);
   padding: 0;

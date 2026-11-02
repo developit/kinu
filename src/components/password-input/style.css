@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 /* Input chrome (InputGroup owns the radius + border joining with the toggle) */
 [k="password-input"] {
   flex: 1;

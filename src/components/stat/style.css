@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="stat"] {
   display: flex;
   flex-direction: column;

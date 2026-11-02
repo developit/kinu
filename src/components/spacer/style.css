@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 /* By default, grow to push siblings apart inside a Row/Cluster/Stack */
 [k="spacer"] {
   flex: 1 1 0;

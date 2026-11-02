@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="steps"] {
   counter-reset: k-step;
   display: flex;

@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="tags-input"] {
   display: flex;
   flex-wrap: wrap;

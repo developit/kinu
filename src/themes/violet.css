@@ -1,12 +1,12 @@
 /*
- * kinu — Violet theme.
- * Import after the base stylesheet:
+ * kinu theme: violet — a brand-color preset.
  *   import 'kinu/style.css';
  *   import 'kinu/themes/violet.css';
+ *   <html data-theme="violet">
  * Overrides only the brand tokens; --k-primary-soft derives automatically.
+ * Unlayered, so it beats kinu's `@layer tokens` defaults (see variables.css).
  */
-:where(:root),
-:where([data-color-scheme="light"]) {
+[data-theme="violet"] {
   --k-primary: 262 83% 58%;
   --k-primary-foreground: 0 0% 100%;
   --k-primary-hover: 262 83% 52%;
@@ -14,7 +14,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :where(:root:not([data-color-scheme])) {
+  [data-theme="violet"]:not([data-color-scheme]) {
     --k-primary: 263 70% 67%;
     --k-primary-foreground: 263 45% 12%;
     --k-primary-hover: 263 70% 72%;
@@ -22,7 +22,8 @@
   }
 }
 
-:where([data-color-scheme="dark"]) {
+[data-theme="violet"][data-color-scheme="dark"],
+[data-theme="violet"] [data-color-scheme="dark"] {
   --k-primary: 263 70% 67%;
   --k-primary-foreground: 263 45% 12%;
   --k-primary-hover: 263 70% 72%;

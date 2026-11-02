@@ -119,6 +119,8 @@ import 'kinu/style.css';
 import 'kinu/themes/violet.css'; // or 'kinu/themes/emerald.css'
 ```
 
+Then opt in with `<html data-theme="violet">` (or on any subtree).
+
 Each preset overrides only the brand tokens (`--k-primary*`, `--k-ring`), so everything else — surfaces, semantic colors,
 spacing — stays consistent. Copy one as a starting point for your own brand: it is just a handful of token declarations across
 the light, system-dark, and explicit-dark scopes.

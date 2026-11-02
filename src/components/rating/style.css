@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 /* Star rating = a styled native <input type="range">, zero JavaScript.
    - The unfilled stars are the muted base background.
    - The filled portion (up to the live value) is painted gold by the thumb's

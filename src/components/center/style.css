@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 [k="center"] {
   display: grid;
   place-items: center;
