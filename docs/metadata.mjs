@@ -204,11 +204,12 @@ export default [
     order: 7,
     folder: 'view-stack',
     description: 'Lazy screens with CSS scroll snap, native swipes, and no browser history coupling.',
-    usage: `<ViewStack id="screens"><ViewStack.View><Button command="--next" commandFor="screens">Next</Button></ViewStack.View><ViewStack.View>{() => <p>Lazy screen</p>}</ViewStack.View></ViewStack>`,
+    usage: `<ViewStack><ViewStack.View id="home"><Button command="--show" commandFor="next">Next</Button></ViewStack.View><ViewStack.View id="next">{() => <p>Lazy screen</p>}</ViewStack.View></ViewStack>`,
     notes: [
       'Supply direct ViewStack.View children in stable drill-down order.',
-      'Commands --next, --prev, and --view-ID navigate without browser history integration.',
-      'Inactive views are inert; visited views stay mounted to preserve state.',
+      'Navigation is focus: focusing a view (or any command targeting it) scrolls to it natively, without browser history.',
+      'Function children render on first visit and then stay mounted; plain children render eagerly.',
+      'Content of inactive views is inert; the view shells stay focusable.',
       'CSS controls snapping, parallax and reduced-motion behavior.',
       'Touch swipes default to back-only; swipe="both" permits forward touch swipes too.'
     ]

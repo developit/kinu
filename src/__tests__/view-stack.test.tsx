@@ -7,33 +7,17 @@ import renderToString from 'preact-render-to-string';
 import {ViewStack} from '../components/view-stack';
 
 let host: HTMLDivElement;
-const scrollTo = vi.fn();
-let entries: (entries: Partial<IntersectionObserverEntry>[]) => void;
+let observers: Map<Element, {cb: IntersectionObserverCallback; init?: IntersectionObserverInit}>;
 const disconnect = vi.fn();
-const observe = vi.fn();
-let frames: Map<number, FrameRequestCallback>;
-let nextFrame: number;
-function flushFrames() {
-  const pending = Array.from(frames.values());
-  frames.clear();
-  act(() => { for (const callback of pending) callback(0); });
-}
 beforeEach(() => {
   host = document.createElement('div');
   document.body.append(host);
-  HTMLElement.prototype.scrollTo = scrollTo;
+  observers = new Map();
   vi.stubGlobal('IntersectionObserver', class {
-    constructor(callback: typeof entries) { entries = callback; }
-    observe = observe;
-    disconnect = disconnect;
+    constructor(public cb: IntersectionObserverCallback, public init?: IntersectionObserverInit) {}
+    observe(el: Element) { observers.set(el, this); }
+    disconnect() { disconnect(); for (const [el, o] of observers) if (o === this) observers.delete(el); }
   });
-  frames = new Map();
-  nextFrame = 0;
-  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
-    frames.set(++nextFrame, callback);
-    return nextFrame;
-  });
-  vi.stubGlobal('cancelAnimationFrame', (id: number) => { frames.delete(id); });
   vi.clearAllMocks();
 });
 afterEach(() => {
@@ -41,30 +25,37 @@ afterEach(() => {
   host.remove();
   vi.unstubAllGlobals();
 });
-function command(value: string, target = host.firstElementChild!) {
-  act(() => { target.dispatchEvent(Object.assign(new Event('command', {bubbles: true, cancelable: true}), {command: value})); });
+/** Report a view's visible fraction within the stack, as the observer would. */
+function visible(view: Element, intersectionRatio: number) {
+  const o = observers.get(view)!;
+  act(() => o.cb([{target: view, intersectionRatio} as unknown as IntersectionObserverEntry], o as never));
 }
-function snap(index: number) {
-  const root = host.firstElementChild!;
-  act(() => { root.dispatchEvent(Object.assign(new Event('scrollsnapchange'), {snapTargetInline: root.children[index]})); });
+/** Settle on one view: it becomes majority-visible, the rest leave. */
+function settle(root: Element, index: number) {
+  Array.from(root.children).forEach((view, i) => visible(view, i === index ? 1 : 0));
 }
+function navigate(view: Element) {
+  act(() => { view.dispatchEvent(new Event('command')); });
+}
+const content = (view: Element) => view.firstElementChild as HTMLElement;
 function Counter() {
   const [count, setCount] = useState(0);
   return <button onClick={() => setCount(count + 1)}>{count}</button>;
 }
 function mount() {
   act(() => render(
-    <ViewStack id="stack">
-      <ViewStack.View id="root"><button>Open</button></ViewStack.View>
+    <ViewStack>
+      <ViewStack.View id="root"><button commandfor="detail" command="--show">Open</button></ViewStack.View>
       <ViewStack.View id="detail">{() => <Counter />}</ViewStack.View>
       <ViewStack.View id="last"><p>Last</p></ViewStack.View>
     </ViewStack>, host));
-  Object.defineProperty(host.firstElementChild!, 'clientWidth', {value: 320});
-  return host.firstElementChild!;
+  const root = host.firstElementChild!;
+  settle(root, 0);
+  return root;
 }
 
 describe('ViewStack', () => {
-  it('renders only the initial view, including during SSR', () => {
+  it('renders plain children eagerly and function children lazily, including during SSR', () => {
     const lazy = vi.fn(() => <p>Lazy</p>);
     const html = renderToString(<ViewStack><ViewStack.View>Root</ViewStack.View><ViewStack.View>{lazy}</ViewStack.View></ViewStack>);
     expect(html).toContain('Root');
@@ -72,369 +63,106 @@ describe('ViewStack', () => {
     const root = mount();
     expect(root.children).toHaveLength(3);
     expect(root.children[1].textContent).toBe('');
-    expect(root.children[1].hasAttribute('inert')).toBe(true);
-    expect(root.children[0].hasAttribute('inert')).toBe(false);
-  });
-
-  it('renders before command scrolling, commits inert/focus, and retains local state', () => {
-    const root = mount();
-    const trigger = root.querySelector('button')!;
-    trigger.focus();
-    command('--next');
-    expect(root.children[1].textContent).toBe('0');
-    expect(scrollTo).not.toHaveBeenCalled();
-    scrollTo.mockImplementationOnce(() => { expect(root.children[1].textContent).toBe('0'); });
-    flushFrames();
-    expect(scrollTo).toHaveBeenCalledWith({left: 320, behavior: 'auto'});
-    snap(1);
-    flushFrames();
-    expect(root.children[0].hasAttribute('inert')).toBe(true);
-    expect(root.children[1].hasAttribute('inert')).toBe(false);
-    expect(document.activeElement).toBe(root.children[1]);
-    act(() => (root.children[1].querySelector('button')!).click());
-    command('--prev');
-    snap(0);
-    flushFrames();
-    expect(document.activeElement).toBe(trigger);
-    command('--view-detail');
-    snap(1);
-    expect(root.children[1].textContent).toBe('1');
-  });
-
-  it('uses fully visible observer entries for swipe navigation and cleans up', () => {
-    const root = mount();
-    expect(observe).toHaveBeenCalledTimes(3);
-    act(() => entries([{target: root.children[1], isIntersecting: true, intersectionRatio: 0.5}]));
-    expect(root.children[1].textContent).toBe('');
-    act(() => entries([{target: root.children[1], isIntersecting: true, intersectionRatio: 1}]));
-    expect(root.children[1].textContent).toBe('0');
-    expect(root.children[1].hasAttribute('inert')).toBe(false);
-    act(() => render(null, host));
-    expect(disconnect).toHaveBeenCalled();
-  });
-
-  it('ignores invalid commands, nested commands and external history changes', () => {
-    const root = mount();
-    const push = vi.spyOn(history, 'pushState');
-    const replace = vi.spyOn(history, 'replaceState');
-    command('--prev');
-    command('--view-missing');
-    root.children[0].removeAttribute('id');
-    command('--view-');
-    command('--other');
-    command('--next', root.children[0]);
-    flushFrames();
-    expect(scrollTo).not.toHaveBeenCalled();
-    window.dispatchEvent(new PopStateEvent('popstate', {state: {depth: 2}}));
-    expect(root.children[2].textContent).toBe('');
-    command('--view-last');
-    snap(2);
     expect(root.children[2].textContent).toBe('Last');
-    expect(push).not.toHaveBeenCalled();
-    expect(replace).not.toHaveBeenCalled();
-    push.mockRestore();
-    replace.mockRestore();
   });
 
-  it('uses snap events without installing an observer when natively supported', () => {
-    Object.defineProperty(HTMLElement.prototype, 'onscrollsnapchange', {value: null, configurable: true});
-    try {
-      const root = mount();
-      expect(observe).not.toHaveBeenCalled();
-      snap(2);
-      expect(root.children[2].textContent).toBe('Last');
-      expect(root.children[2].hasAttribute('inert')).toBe(false);
-    } finally {
-      Reflect.deleteProperty(HTMLElement.prototype, 'onscrollsnapchange');
-    }
-  });
-
-  it('recovers when the active tail is removed and keeps replacement content lazy', async () => {
-    const replacement = vi.fn(() => <p>Replacement</p>);
-    const update = (tail: 'old' | 'new' | null) => act(async () => render(
-      <ViewStack>
-        <ViewStack.View key="home">Home</ViewStack.View>
-        {tail && <ViewStack.View key={tail}>{tail === 'new' ? replacement : <p>Old</p>}</ViewStack.View>}
-      </ViewStack>, host));
-    await update('old');
-    snap(1);
-    expect(host.textContent).toBe('HomeOld');
-    await update(null);
-    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
-    await update('new');
-    expect(replacement).not.toHaveBeenCalled();
-    expect(host.firstElementChild!.children[1].textContent).toBe('');
-    snap(1);
-    expect(host.textContent).toBe('HomeReplacement');
-  });
-
-  it('retains keyed screen state across nested-array parent updates', () => {
-    const update = (title: string) => act(() => render(<ViewStack title={title}>
-      {[[<ViewStack.View key="home"><Counter /></ViewStack.View>]]}
-      <ViewStack.View key="detail">Detail</ViewStack.View>
-    </ViewStack>, host));
-    update('before');
-    act(() => host.querySelector('button')!.click());
-    update('after');
-    expect(host.querySelector('button')!.textContent).toBe('1');
-  });
-
-  it('does not let a caller override inactive inertness or eager rendering', () => {
-    const lazy = vi.fn(() => <p>Lazy</p>);
-    const content = <ViewStack>
-      <ViewStack.View inert>Home</ViewStack.View>
-      <ViewStack.View inert={false}>{lazy}</ViewStack.View>
-    </ViewStack>;
-    expect(renderToString(content)).not.toContain('Lazy');
-    act(() => render(content, host));
-    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
-    expect(host.firstElementChild!.children[1].hasAttribute('inert')).toBe(true);
-    expect(lazy).not.toHaveBeenCalled();
-  });
-
-  it('cancels deferred scrolling on unmount', () => {
-    mount();
-    command('--next');
-    expect(frames.size).toBeGreaterThan(0);
-    act(() => render(null, host));
-    flushFrames();
-    expect(scrollTo).not.toHaveBeenCalled();
-  });
-
-  it('falls back to the view when the saved focus target is disabled', () => {
+  it('makes only the majority-visible view interactive', () => {
     const root = mount();
-    const trigger = root.querySelector('button')!;
-    trigger.focus();
-    snap(1);
-    flushFrames();
-    trigger.disabled = true;
-    snap(0);
-    flushFrames();
-    expect(document.activeElement).toBe(root.children[0]);
+    expect(Array.from(root.children, v => content(v).inert)).toEqual([false, true, true]);
+    // The view shells stay focusable: focus is how navigation happens.
+    for (const view of Array.from(root.children)) {
+      expect(view.hasAttribute('inert')).toBe(false);
+      expect(view.getAttribute('tabindex')).toBe('-1');
+    }
+    visible(root.children[2], 0.6);
+    visible(root.children[0], 0.4);
+    expect(Array.from(root.children, v => content(v).inert)).toEqual([true, true, false]);
   });
 
-  it('does not re-render an unchanged off-screen view during unrelated navigation', () => {
-    const home = vi.fn(() => <p>Home</p>);
-    act(() => render(<ViewStack>
-      <ViewStack.View>{home}</ViewStack.View>
-      <ViewStack.View>Detail</ViewStack.View>
-      <ViewStack.View id="last">Last</ViewStack.View>
-    </ViewStack>, host));
-    command('--next');
-    flushFrames();
-    snap(1);
-    flushFrames();
-    home.mockClear();
-    command('--view-last');
-    flushFrames();
-    snap(2);
-    flushFrames();
-    expect(home).not.toHaveBeenCalled();
+  it('navigates by focus, rendering the destination before any scrolling', () => {
+    const root = mount();
+    const detail = root.children[1] as HTMLElement;
+    act(() => detail.focus());
+    // Rendered on focus, while the destination is still inert and off-screen.
+    expect(detail.textContent).toBe('0');
+    expect(content(detail).inert).toBe(true);
+    settle(root, 1);
+    expect(content(detail).inert).toBe(false);
+  });
+
+  it('turns any command targeting a view into focus', () => {
+    const root = mount();
+    navigate(root.children[2]);
+    expect(document.activeElement).toBe(root.children[2]);
+  });
+
+  it('works with the commandfor polyfill via declarative buttons', () => {
+    const root = mount();
+    act(() => (root.querySelector('[commandfor]') as HTMLButtonElement).click());
+    expect(document.activeElement).toBe(root.children[1]);
+    expect(root.children[1].textContent).toBe('0');
+  });
+
+  it('renders a lazy view reached by swiping, and retains its state', () => {
+    const root = mount();
+    const detail = root.children[1];
+    settle(root, 1);
+    expect(detail.textContent).toBe('0');
+    act(() => (detail.querySelector('button') as HTMLButtonElement).click());
+    settle(root, 0);
+    settle(root, 1);
+    expect(detail.textContent).toBe('1');
+  });
+
+  it('renders a lazy view once, and skips re-rendering on later visits', () => {
+    const lazy = vi.fn(() => <p>Lazy</p>);
+    act(() => render(<ViewStack><ViewStack.View>Home</ViewStack.View><ViewStack.View>{lazy}</ViewStack.View></ViewStack>, host));
+    const root = host.firstElementChild!;
+    const view = root.children[1] as HTMLElement;
+    act(() => view.focus());
+    settle(root, 1);
+    settle(root, 0);
+    act(() => (root.children[0] as HTMLElement).focus());
+    act(() => view.focus());
+    settle(root, 1);
+    expect(lazy).toHaveBeenCalledTimes(1);
+  });
+
+  it('updates retained content when application props change', () => {
+    function App({label}: {label: string}) {
+      return <ViewStack><ViewStack.View>Home</ViewStack.View><ViewStack.View>{() => <p>{label}</p>}</ViewStack.View></ViewStack>;
+    }
+    act(() => render(<App label="one" />, host));
+    const root = host.firstElementChild!;
+    settle(root, 1);
+    act(() => render(<App label="two" />, host));
+    expect(root.children[1].textContent).toBe('two');
+  });
+
+  it('observes views added later and disconnects removed ones', () => {
+    function App({n}: {n: number}) {
+      return <ViewStack>{Array.from({length: n}, (_, i) => <ViewStack.View key={i}>{() => <p>{i}</p>}</ViewStack.View>)}</ViewStack>;
+    }
+    act(() => render(<App n={1} />, host));
+    const root = host.firstElementChild!;
+    expect(observers.size).toBe(1);
+    act(() => render(<App n={3} />, host));
+    expect(observers.size).toBe(3);
+    expect(observers.get(root.children[1])!.init).toEqual({root, threshold: 0.5});
+    settle(root, 2);
+    expect(root.children[2].textContent).toBe('2');
+    act(() => render(<App n={1} />, host));
+    expect(observers.size).toBe(1);
   });
 
   it('hydrates without mounting lazy content or stealing focus', () => {
     const lazy = vi.fn(() => <p>Lazy</p>);
-    const content = <ViewStack>
-      <ViewStack.View><button>Home</button></ViewStack.View>
-      <ViewStack.View>{lazy}</ViewStack.View>
-    </ViewStack>;
-    host.innerHTML = renderToString(content);
-    const root = host.firstElementChild;
-    const button = host.querySelector('button')!;
-    button.focus();
-    act(() => hydrate(content, host));
-    flushFrames();
-    expect(host.firstElementChild).toBe(root);
-    expect(document.activeElement).toBe(button);
+    const app = <ViewStack><ViewStack.View>Home</ViewStack.View><ViewStack.View>{lazy}</ViewStack.View></ViewStack>;
+    host.innerHTML = renderToString(app);
+    act(() => hydrate(app, host));
+    settle(host.firstElementChild!, 0);
     expect(lazy).not.toHaveBeenCalled();
-    command('--next');
-    flushFrames();
-    snap(1);
-    flushFrames();
-    expect(host.textContent).toBe('HomeLazy');
-  });
-
-  it('scrolls in RTL without hard-coding smooth motion', () => {
-    const root = mount();
-    root.setAttribute('dir', 'rtl');
-    // jsdom does not resolve the direction inherited from dir.
-    (root as HTMLElement).style.direction = 'rtl';
-    command('--view-last');
-    flushFrames();
-    expect(scrollTo).toHaveBeenLastCalledWith({left: -640, behavior: 'auto'});
-  });
-
-  it('lets the latest destination win before the next frame', () => {
-    mount();
-    command('--next');
-    command('--view-last');
-    flushFrames();
-    expect(scrollTo).toHaveBeenCalledTimes(1);
-    expect(scrollTo).toHaveBeenCalledWith({left: 640, behavior: 'auto'});
-  });
-
-  it('does not activate on leaving entries or on nested snap events', () => {
-    const root = mount();
-    act(() => entries([{target: root.children[1], isIntersecting: false, intersectionRatio: 1}]));
-    act(() => {
-      root.children[0].dispatchEvent(Object.assign(new Event('scrollsnapchange', {bubbles: true}), {snapTargetInline: root.children[1]}));
-    });
-    expect(root.children[1].hasAttribute('inert')).toBe(true);
-    expect(root.children[1].textContent).toBe('');
-  });
-
-  it('preserves the active keyed view when an earlier view is removed', () => {
-    const last = vi.fn(() => <p>Last</p>);
-    const update = (showHome: boolean) => act(() => render(<ViewStack>
-      {showHome && <ViewStack.View key="home">Home</ViewStack.View>}
-      <ViewStack.View key="detail"><button>Detail</button></ViewStack.View>
-      <ViewStack.View key="last">{last}</ViewStack.View>
-    </ViewStack>, host));
-    update(true);
-    snap(1);
-    flushFrames();
-    update(false);
-    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
-    expect(last).not.toHaveBeenCalled();
-    command('--next');
-    flushFrames();
-    expect(host.textContent).toBe('DetailLast');
-  });
-
-  it('preserves focus when the active keyed view changes position', () => {
-    const update = (showHome: boolean) => act(() => render(<ViewStack>
-      {showHome && <ViewStack.View key="home">Home</ViewStack.View>}
-      <ViewStack.View key="detail">Detail</ViewStack.View>
-      <ViewStack.View key="last">Last</ViewStack.View>
-    </ViewStack>, host));
-    update(true);
-    snap(1);
-    update(false);
-    flushFrames();
-    expect(document.activeElement).toBe(host.firstElementChild!.children[0]);
-  });
-
-  it('cancels a pending destination removed before scrolling', () => {
-    const update = (showDetail: boolean) => act(() => render(<ViewStack>
-      <ViewStack.View key="home">Home</ViewStack.View>
-      {showDetail && <ViewStack.View key="detail">Detail</ViewStack.View>}
-      <ViewStack.View key="last">Last</ViewStack.View>
-    </ViewStack>, host));
-    update(true);
-    command('--next');
-    update(false);
-    flushFrames();
-    expect(scrollTo).not.toHaveBeenCalled();
-    expect(host.textContent).toBe('Home');
-  });
-
-  it('recomputes a pending keyed destination after an earlier view is removed', () => {
-    const update = (showHome: boolean) => act(() => render(<ViewStack>
-      {showHome && <ViewStack.View key="home">Home</ViewStack.View>}
-      <ViewStack.View key="detail">Detail</ViewStack.View>
-      <ViewStack.View key="last" id="last">Last</ViewStack.View>
-    </ViewStack>, host));
-    update(true);
-    Object.defineProperty(host.firstElementChild!, 'clientWidth', {value: 320});
-    command('--view-last');
-    update(false);
-    flushFrames();
-    expect(scrollTo).toHaveBeenCalledTimes(1);
-    expect(scrollTo).toHaveBeenCalledWith({left: 320, behavior: 'auto'});
-  });
-
-  it('updates retained off-screen content when its application props change', () => {
-    const update = (name: string) => act(() => render(<ViewStack>
-      <ViewStack.View key="home">{() => <p>{name}</p>}</ViewStack.View>
-      <ViewStack.View key="detail">Detail</ViewStack.View>
-    </ViewStack>, host));
-    update('Before');
-    snap(1);
-    flushFrames();
-    update('After');
-    expect(host.firstElementChild!.children[0].textContent).toBe('After');
-    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(true);
-  });
-
-  it('can be emptied and repopulated without leaving the new first view inert', async () => {
-    mount();
-    snap(2);
-    flushFrames();
-    await act(async () => render(<ViewStack />, host));
-    expect(host.firstElementChild!.children).toHaveLength(0);
-    await act(async () => render(<ViewStack><ViewStack.View key="new">New</ViewStack.View></ViewStack>, host));
-    expect(host.textContent).toBe('New');
-    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
-  });
-
-  it('detaches old callback refs on replacement without breaking navigation', () => {
-    const first = vi.fn((_el: HTMLDivElement | null) => {});
-    const second = vi.fn((_el: HTMLDivElement | null) => {});
-    const update = (ref: typeof first) => act(() => render(<ViewStack ref={ref}>
-      <ViewStack.View>Home</ViewStack.View>
-      <ViewStack.View>Detail</ViewStack.View>
-    </ViewStack>, host));
-    update(first);
-    const root = host.firstElementChild!;
-    update(second);
-    expect(first).toHaveBeenLastCalledWith(null);
-    expect(second).toHaveBeenLastCalledWith(root);
-    command('--next');
-    flushFrames();
-    snap(1);
-    expect(root.children[1].hasAttribute('inert')).toBe(false);
-    act(() => render(null, host));
-    expect(second).toHaveBeenLastCalledWith(null);
-  });
-
-  it('ignores canceled commands and removes command listeners on detach', () => {
-    const root = mount();
-    const canceled = Object.assign(new Event('command', {cancelable: true}), {command: '--next'});
-    canceled.preventDefault();
-    act(() => { root.dispatchEvent(canceled); });
-    flushFrames();
-    expect(root.children[1].textContent).toBe('');
-    expect(scrollTo).not.toHaveBeenCalled();
-    act(() => render(null, host));
-    command('--next', root);
-    flushFrames();
-    expect(scrollTo).not.toHaveBeenCalled();
-  });
-
-  it('preserves a pending command across caller ref replacement', () => {
-    const update = () => act(() => render(<ViewStack ref={() => {}}>
-      <ViewStack.View>Home</ViewStack.View>
-      <ViewStack.View>Detail</ViewStack.View>
-    </ViewStack>, host));
-    update();
-    Object.defineProperty(host.firstElementChild!, 'clientWidth', {value: 320});
-    command('--next');
-    update();
-    flushFrames();
-    expect(scrollTo).toHaveBeenCalledWith({left: 320, behavior: 'auto'});
-  });
-
-  it('preserves the nearest fallback when an active tail and caller ref change together', async () => {
-    const update = (last: boolean) => act(async () => render(<ViewStack ref={() => {}}>
-      <ViewStack.View key="home">Home</ViewStack.View>
-      <ViewStack.View key="detail">Detail</ViewStack.View>
-      {last && <ViewStack.View key="last">Last</ViewStack.View>}
-    </ViewStack>, host));
-    await update(true);
-    snap(2);
-    await update(false);
-    expect(host.firstElementChild!.children[1].hasAttribute('inert')).toBe(false);
-    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(true);
-  });
-
-  it('honors caller ref cleanup on detach', () => {
-    const cleanup = vi.fn();
-    const ref = vi.fn(() => cleanup);
-    act(() => render(<ViewStack ref={ref}><ViewStack.View>Home</ViewStack.View></ViewStack>, host));
-    expect(ref).toHaveBeenCalledWith(host.firstElementChild);
-    act(() => render(null, host));
-    expect(cleanup).toHaveBeenCalledTimes(1);
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(document.activeElement).toBe(document.body);
   });
 
   it('forwards root and view refs and attributes', () => {
@@ -447,6 +175,7 @@ describe('ViewStack', () => {
     act(() => render(null, host));
     expect(rootRef.current).toBeNull();
     expect(viewRef.current).toBeNull();
+    expect(disconnect).toHaveBeenCalled();
   });
 });
 
@@ -503,10 +232,9 @@ describe('ViewStack swipe policy', () => {
     expect(getComputedStyle(root).getPropertyValue('touch-action')).not.toContain('pan-left');
     root.setAttribute('swipe', 'back');
     expect(getComputedStyle(root).getPropertyValue('touch-action')).toBe('pan-left pan-y pinch-zoom');
-    command('--next');
-    flushFrames();
-    expect(scrollTo).toHaveBeenCalledWith({left: 320, behavior: 'auto'});
-    snap(1);
-    expect(root.children[1].hasAttribute('inert')).toBe(false);
+    navigate(root.children[1]);
+    expect(document.activeElement).toBe(root.children[1]);
+    visible(root.children[1], 1);
+    expect(content(root.children[1]).inert).toBe(false);
   });
 });

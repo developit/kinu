@@ -10,7 +10,7 @@ export interface ViewStackOwnProps {
 export type ViewStackProps = SimpleComponentProps<'div', ViewStackOwnProps>;
 
 export interface ViewStackViewOwnProps {
-  /** Mounted on first navigation, then retained until the view is removed. */
+  /** Plain children render eagerly. A function child renders on the view's first visit, then stays mounted. */
   children?: ComponentChildren | (() => ComponentChildren);
 }
 export type ViewStackViewProps = SimpleComponentProps<'div', ViewStackViewOwnProps>;
