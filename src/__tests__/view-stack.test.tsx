@@ -149,23 +149,47 @@ describe('ViewStack', () => {
     }
   });
 
-  it('recovers when the active tail is removed and keeps replacement content lazy', () => {
+  it('recovers when the active tail is removed and keeps replacement content lazy', async () => {
     const replacement = vi.fn(() => <p>Replacement</p>);
-    const update = (tail: 'old' | 'new' | null) => act(() => render(
+    const update = (tail: 'old' | 'new' | null) => act(async () => render(
       <ViewStack>
         <ViewStack.View key="home">Home</ViewStack.View>
         {tail && <ViewStack.View key={tail}>{tail === 'new' ? replacement : <p>Old</p>}</ViewStack.View>}
       </ViewStack>, host));
-    update('old');
+    await update('old');
     snap(1);
     expect(host.textContent).toBe('HomeOld');
-    update(null);
+    await update(null);
     expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
-    update('new');
+    await update('new');
     expect(replacement).not.toHaveBeenCalled();
     expect(host.firstElementChild!.children[1].textContent).toBe('');
     snap(1);
     expect(host.textContent).toBe('HomeReplacement');
+  });
+
+  it('retains keyed screen state across nested-array parent updates', () => {
+    const update = (title: string) => act(() => render(<ViewStack title={title}>
+      {[[<ViewStack.View key="home"><Counter /></ViewStack.View>]]}
+      <ViewStack.View key="detail">Detail</ViewStack.View>
+    </ViewStack>, host));
+    update('before');
+    act(() => host.querySelector('button')!.click());
+    update('after');
+    expect(host.querySelector('button')!.textContent).toBe('1');
+  });
+
+  it('does not let a caller override inactive inertness or eager rendering', () => {
+    const lazy = vi.fn(() => <p>Lazy</p>);
+    const content = <ViewStack>
+      <ViewStack.View inert>Home</ViewStack.View>
+      <ViewStack.View inert={false}>{lazy}</ViewStack.View>
+    </ViewStack>;
+    expect(renderToString(content)).not.toContain('Lazy');
+    act(() => render(content, host));
+    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
+    expect(host.firstElementChild!.children[1].hasAttribute('inert')).toBe(true);
+    expect(lazy).not.toHaveBeenCalled();
   });
 
   it('cancels deferred scrolling on unmount', () => {
@@ -277,7 +301,7 @@ describe('ViewStack', () => {
     expect(host.textContent).toBe('DetailLast');
   });
 
-  it('resolves deferred focus against the latest keyed view position', () => {
+  it('preserves focus when the active keyed view changes position', () => {
     const update = (showHome: boolean) => act(() => render(<ViewStack>
       {showHome && <ViewStack.View key="home">Home</ViewStack.View>}
       <ViewStack.View key="detail">Detail</ViewStack.View>
@@ -332,13 +356,13 @@ describe('ViewStack', () => {
     expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(true);
   });
 
-  it('can be emptied and repopulated without leaving the new first view inert', () => {
+  it('can be emptied and repopulated without leaving the new first view inert', async () => {
     mount();
     snap(2);
     flushFrames();
-    act(() => render(<ViewStack />, host));
+    await act(async () => render(<ViewStack />, host));
     expect(host.firstElementChild!.children).toHaveLength(0);
-    act(() => render(<ViewStack><ViewStack.View key="new">New</ViewStack.View></ViewStack>, host));
+    await act(async () => render(<ViewStack><ViewStack.View key="new">New</ViewStack.View></ViewStack>, host));
     expect(host.textContent).toBe('New');
     expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(false);
   });

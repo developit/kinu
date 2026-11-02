@@ -1,1 +1,2 @@
 {"type":"config","name":"Factory ViewStack size reduction","metricName":"js_gzip_bytes","metricUnit":"","bestDirection":"lower"}
+{"run":1,"commit":"524503c","metric":2225,"metrics":{"bundled_js_gzip":8092,"css_gzip":612,"js_min":5578,"factory_gzip":215},"status":"keep","description":"Baseline hooks/context ViewStack; focused Vite minify+gzip (Preact external).","timestamp":1793582633216,"segment":0,"confidence":null}

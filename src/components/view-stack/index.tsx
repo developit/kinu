@@ -1,152 +1,121 @@
-import {createContext, toChildArray} from 'preact';
-import {useContext, useLayoutEffect, useMemo, useRef, useState} from 'preact/hooks';
+import {h, type VNode} from 'preact';
+import '../../lib/forwardref';
 import {createSimpleComponent} from '../../lib/create-simple-component';
-import {forwardRef} from '../../lib/forwardref';
 import {installCommands} from '../../lib/commands';
-import type {ViewStackProps, ViewStackViewProps} from './types';
+import type {ViewStackOwnProps, ViewStackViewOwnProps} from './types';
 import './style.css';
 
-// Stable values keep unrelated, retained screens out of navigation updates.
-const ACTIVE = {active: true, render: true};
-const REQUESTED = {active: false, render: true};
-const INACTIVE = {active: false, render: false};
-const ViewContext = createContext(ACTIVE);
-const StackElement = createSimpleComponent<'div', object>('view-stack', 'div');
-const ViewElement = createSimpleComponent<'div', object>('view-stack-view', 'div', {tabIndex: -1});
+declare global {
+  interface ComponentInstance {
+    /** Retained render state; lives with the keyed factory instance. */
+    $_visited?: boolean;
+  }
+}
+type Screen = HTMLDivElement & {$_render?: () => void; $_focus?: HTMLElement};
 
-const View = /*#__PURE__*/ forwardRef(function View({children, ...props}: ViewStackViewProps) {
-  const state = useContext(ViewContext);
-  const visited = useRef(false);
-  if (state.render) visited.current = true;
-  return (
-    <ViewElement {...props} inert={!state.active}>
-      <div k="view-stack-content">
-        {visited.current && (typeof children === 'function' ? children() : children)}
-      </div>
-    </ViewElement>
-  );
-});
-
-const ViewStackRoot = /*#__PURE__*/ forwardRef(function ViewStack({children, ref, ...props}: ViewStackProps) {
-  installCommands();
-  const element = useRef<HTMLDivElement | null>(null);
-  const current = useRef(0);
-  const items = toChildArray(children);
-  const keys: (string | number)[] = items.map((child, index) =>
-    typeof child === 'object' ? child.key ?? index : index,
-  );
-  const [activeKey, setActive] = useState<string | number | undefined>(() => keys[0]);
-  const [requestedKey, request] = useState<string | number | null>(null);
-  // Identity survives insertions/removals ahead of the active or pending view.
-  const retained = activeKey === undefined ? -1 : keys.indexOf(activeKey);
-  const active = retained < 0 ? Math.max(0, Math.min(current.current, keys.length - 1)) : retained;
-  const requested = requestedKey === null ? -1 : keys.indexOf(requestedKey);
-  const initialFocus = useRef(true);
-  const returnFocus = useRef(new WeakMap<Element, HTMLElement>());
-  const mergedRef = useMemo(() => (el: HTMLDivElement | null) => {
-    element.current = el;
-    const cleanup: unknown = typeof ref === 'function' ? ref(el) : undefined;
-    if (ref && typeof ref !== 'function') ref.current = el;
-    return () => {
-      element.current = null;
-      if (typeof cleanup === 'function') cleanup();
-      else if (typeof ref === 'function') ref(null);
-      else if (ref) ref.current = null;
+const View = createSimpleComponent<'div', ViewStackViewOwnProps>(
+  'view-stack-view',
+  function (props) {
+    // The stack seeds SSR only. All subsequent activity belongs to the DOM.
+    const initial = props as typeof props & {$_first?: boolean};
+    const children = props.children;
+    this.$_visited ||= initial.$_first;
+    initial.$_first = undefined;
+    props.inert = (this.base as Element | undefined)?.hasAttribute('inert') ?? !this.$_visited;
+    props.children = h('div', {k: 'view-stack-content'}, this.$_visited
+      ? typeof children === 'function' ? children() : children : null);
+    return 'div';
+  },
+  {inert: true, tabIndex: -1},
+  function (el: Screen) {
+    el.$_render = () => {
+      if (!this.$_visited) {
+        this.$_visited = true;
+        this.forceUpdate();
+      }
     };
-  }, [ref]);
+    return () => { el.$_render = undefined; };
+  },
+);
 
-  useLayoutEffect(() => {
-    const el = element.current!;
-    const views = Array.from(el.children) as HTMLElement[];
-    current.current = active;
-    if (activeKey !== keys[active]) setActive(keys[active]);
-    const commit = (view: Element | null) => {
-      const index = views.indexOf(view as HTMLElement);
-      if (index < 0 || index === current.current) return;
-      const previous = views[current.current];
-      const focused = document.activeElement as HTMLElement | null;
-      if (focused && previous?.contains(focused)) returnFocus.current.set(previous, focused);
-      current.current = index;
-      setActive(keys[index]);
+const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
+  'view-stack',
+  function (props) {
+    // Seed the first screen during SSR/hydration, but never reseed on updates.
+    const children = [props.children as unknown].flat(Infinity).filter(child => child && typeof child === 'object') as VNode[];
+    const first = children[0];
+    if (!this.base && first) children[0] = h<any>(first.type, {...first.props, key: first.key, ref: first.ref, $_first: true});
+    props.children = children;
+    return 'div';
+  },
+  {},
+  (el) => {
+    installCommands();
+    let current: Screen | undefined;
+    let index = 0;
+    let scrollFrame = 0;
+    const views = () => Array.from(el.children) as Screen[];
+    const activate = (view: Screen | undefined, restore = true) => {
+      if (view && view.parentElement !== el) return;
+      const focused = document.activeElement as HTMLElement;
+      if (current?.contains(focused)) current.$_focus = focused;
+      const changed = current !== view;
+      current = view;
+      index = Math.max(0, views().indexOf(view!));
+      for (const child of views()) child.toggleAttribute('inert', child !== view);
+      view?.$_render?.();
+      // Inert changes synchronously now; no render/effect/focus scheduling.
+      if (changed && restore) {
+        const target = view?.$_focus;
+        if (target?.isConnected && view?.contains(target)) target.focus({preventScroll: true});
+        if (view && !view.contains(document.activeElement)) view.focus({preventScroll: true});
+      }
     };
     const snap = (event: Event) => {
-      if (event.target === el) commit((event as Event & {snapTargetInline: Element | null}).snapTargetInline);
+      const view = (event as Event & {snapTargetInline: Screen | null}).snapTargetInline;
+      if (event.target === el && view) activate(view);
     };
     const command = (event: Event) => {
       if (event.target !== el || event.defaultPrevented) return;
+      if (current?.parentElement !== el) sync();
       const cmd = (event as Event & {command: string}).command;
-      const index = cmd === '--next' ? current.current + 1
-        : cmd === '--prev' ? current.current - 1
-        : cmd?.startsWith('--view-') && cmd.length > 7 ? views.findIndex((view) => view.id === cmd.slice(7)) : -1;
-      if (index < 0 || index >= views.length) return;
+      const target = (cmd === '--next' ? current?.nextElementSibling : cmd === '--prev' ? current?.previousElementSibling
+        : cmd?.startsWith('--view-') ? document.getElementById(cmd.slice(7)) : null) as Screen | null;
+      if (!target || target.parentElement !== el) return;
       event.preventDefault();
-      request(keys[index]);
+      target.$_render?.();
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => {
+        if (target.parentElement === el) el.scrollTo({
+          left: (getComputedStyle(el).direction === 'rtl' ? -1 : 1) * views().indexOf(target) * el.clientWidth,
+          behavior: 'auto',
+        });
+      });
     };
-    el.addEventListener('scrollsnapchange', snap);
-    el.addEventListener('command', command);
-    let observer: IntersectionObserver | undefined;
-    if (!('onscrollsnapchange' in HTMLElement.prototype) && typeof IntersectionObserver !== 'undefined') {
-      observer = new IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.999) commit(entry.target);
-        }
-      }, {root: el, threshold: [0.999]});
-      for (const view of views) observer.observe(view);
-    }
-    return () => {
-      el.removeEventListener('scrollsnapchange', snap);
-      el.removeEventListener('command', command);
+    const observer = !('onscrollsnapchange' in HTMLElement.prototype) && typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver(entries => {
+        for (const entry of entries) if (entry.isIntersecting && entry.intersectionRatio >= 0.999) activate(entry.target as Screen);
+      }, {root: el, threshold: [0.999]}) : undefined;
+    const sync = () => {
+      const children = views();
+      activate(current?.parentElement === el ? current : children[Math.min(index, children.length - 1)], !!current);
       observer?.disconnect();
+      for (const child of children) observer?.observe(child);
     };
-  }, [children]);
+    current = views().find(view => !view.hasAttribute('inert'));
+    sync();
+    const mutations = new MutationObserver(sync);
+    mutations.observe(el, {childList: true});
+    el.addEventListener('command', command);
+    el.addEventListener('scrollsnapchange', snap);
+    return () => {
+      cancelAnimationFrame(scrollFrame);
+      observer?.disconnect();
+      mutations.disconnect();
+      el.removeEventListener('command', command);
+      el.removeEventListener('scrollsnapchange', snap);
+    };
+  },
+);
 
-  // Render the destination before scrolling. CSS decides smooth vs reduced motion.
-  useLayoutEffect(() => {
-    if (requestedKey === null) return;
-    if (requested < 0) {
-      request(null);
-      return;
-    }
-    // Like focus, scrolling must wait for context consumers to commit. Otherwise
-    // reduced-motion navigation can jump to a still-empty destination.
-    const frame = requestAnimationFrame(() => {
-      const el = element.current!;
-      if (requested < el.children.length) {
-        const direction = getComputedStyle(el).direction === 'rtl' ? -1 : 1;
-        el.scrollTo({left: direction * requested * el.clientWidth, behavior: 'auto'});
-      }
-      request(null);
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [requestedKey, children]);
-
-  useLayoutEffect(() => {
-    if (initialFocus.current) {
-      initialFocus.current = false;
-      return;
-    }
-    // Context consumers may commit after the provider's layout effects. Wait
-    // until the destination's inert attribute has been removed before focusing.
-    const frame = requestAnimationFrame(() => {
-      const view = element.current?.children[current.current] as HTMLElement | undefined;
-      if (!view) return;
-      const stored = returnFocus.current.get(view);
-      if (stored?.isConnected && view.contains(stored)) stored.focus({preventScroll: true});
-      if (!view.contains(document.activeElement)) view.focus({preventScroll: true});
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [activeKey]);
-
-  return (
-    <StackElement {...props} ref={mergedRef}>
-      {items.map((child, index) => (
-        <ViewContext.Provider key={keys[index]}
-          value={active === index ? ACTIVE : requested === index ? REQUESTED : INACTIVE}>
-          {child}
-        </ViewContext.Provider>
-      ))}
-    </StackElement>
-  );
-});
-
-export const ViewStack = /*#__PURE__*/ Object.assign(ViewStackRoot, {View});
+export const ViewStack = /*#__PURE__*/ Object.assign(Stack, {View});

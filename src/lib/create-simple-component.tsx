@@ -4,7 +4,8 @@ import type {Ref, SimpleComponentProps} from '../types/component-props';
 
 /** Whatever a ref callback returned — only honored when it's a function. */
 type RefCleanup = unknown;
-type RefCallbackWithCleanup<T> = (el: T) => (() => void) | void;
+/** Internal callbacks share the factory instance; no wrapper/hooks required. */
+type RefCallbackWithCleanup<T> = (this: ComponentInstance, el: T) => (() => void) | void;
 /** Any ref callback, normalized to the widest attach/detach signature. */
 type AnyRefCallback<T> = (el: T | null) => RefCleanup;
 
@@ -58,7 +59,7 @@ function proxyRef(
   // it returned on attach is its detach.
   const cleanup = this.$_ic;
   if (typeof cleanup === 'function') cleanup();
-  this.$_ic = el && own(el);
+  this.$_ic = el && own.call(this, el);
   // Returning nothing keeps this out of Preact's ref-cleanup protocol, so
   // Preact calls it again with `null` on unmount — which is what detaches
   // object refs and plain callback refs.
@@ -69,7 +70,7 @@ export function createSimpleComponent<
   P extends object = Record<string, never>,
 >(
   name: string,
-  tag: T | ((props: P & JSX.IntrinsicElements[T]) => T) = 'div' as T,
+  tag: T | ((this: ComponentInstance, props: SimpleComponentProps<T, P>) => T) = 'div' as T,
   defaultProps?: Partial<JSX.IntrinsicElements[T]>,
   ref?: RefCallbackWithCleanup<HTMLElementTagNameMap[T]>,
 ) {
@@ -103,7 +104,9 @@ export function createSimpleComponent<
     // caller's props bag; `ref` is already on it (forwardRef put it back), so
     // it reaches the DOM element the same way `k` does. Cheaper than cloning.
     (normalizedProps as {k?: string}).k = name;
-    const resolvedTag = typeof tag === 'function' ? tag(props) : tag;
+    // A dynamic tag may also normalize these final props (including children).
+    // It shares the instance with the internal ref, not an extra component.
+    const resolvedTag = typeof tag === 'function' ? tag.call(this, normalizedProps) : tag;
     return h(resolvedTag, normalizedProps);
   };
 
