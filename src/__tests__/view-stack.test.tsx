@@ -401,6 +401,32 @@ describe('ViewStack', () => {
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
+  it('preserves a pending command across caller ref replacement', () => {
+    const update = () => act(() => render(<ViewStack ref={() => {}}>
+      <ViewStack.View>Home</ViewStack.View>
+      <ViewStack.View>Detail</ViewStack.View>
+    </ViewStack>, host));
+    update();
+    Object.defineProperty(host.firstElementChild!, 'clientWidth', {value: 320});
+    command('--next');
+    update();
+    flushFrames();
+    expect(scrollTo).toHaveBeenCalledWith({left: 320, behavior: 'auto'});
+  });
+
+  it('preserves the nearest fallback when an active tail and caller ref change together', async () => {
+    const update = (last: boolean) => act(async () => render(<ViewStack ref={() => {}}>
+      <ViewStack.View key="home">Home</ViewStack.View>
+      <ViewStack.View key="detail">Detail</ViewStack.View>
+      {last && <ViewStack.View key="last">Last</ViewStack.View>}
+    </ViewStack>, host));
+    await update(true);
+    snap(2);
+    await update(false);
+    expect(host.firstElementChild!.children[1].hasAttribute('inert')).toBe(false);
+    expect(host.firstElementChild!.children[0].hasAttribute('inert')).toBe(true);
+  });
+
   it('honors caller ref cleanup on detach', () => {
     const cleanup = vi.fn();
     const ref = vi.fn(() => cleanup);

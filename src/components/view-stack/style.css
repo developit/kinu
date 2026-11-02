@@ -25,6 +25,8 @@
   scroll-snap-stop: always;
   view-timeline-name: --kinu-stack-view;
   view-timeline-axis: inline;
+  /* Touch-action stops at the nearest scroller; share the root's policy. */
+  touch-action: inherit;
 }
 
 [k="view-stack-content"] {
@@ -32,6 +34,7 @@
   height: 100%;
   overflow-y: auto;
   background: hsl(var(--k-background));
+  touch-action: inherit;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -81,9 +84,3 @@
   touch-action: pan-right pan-y pinch-zoom;
 }
 
-/* Each content wrapper is independently scrollable. It must share the stack's
-   policy, since touch-action is resolved only up to the nearest scroller. */
-[k="view-stack-view"],
-[k="view-stack-content"] {
-  touch-action: inherit;
-}

@@ -26,7 +26,9 @@ it('shares the factory instance between the normalizer and internal ref', () => 
   const host = document.createElement('div');
   const ref = {current: null as HTMLDivElement | null};
   const props = {children: 'original', ref};
-  act(() => render(h(Box, props), host));
+  const vnode = h(Box, props);
+  act(() => render(vnode, host));
+  expect(vnode.props.children).toBe('original');
   expect(props.children).toBe('original');
   expect(ref.current).toBe(host.firstElementChild);
   expect(host.textContent).toBe('original');

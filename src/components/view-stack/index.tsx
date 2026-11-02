@@ -12,8 +12,9 @@ declare global {
   }
 }
 type Screen = HTMLDivElement & {$_render?: () => void; $_focus?: HTMLElement};
+type Stage = HTMLDivElement & {$_pending?: Screen; $_index?: number};
 
-const View = createSimpleComponent<'div', ViewStackViewOwnProps>(
+const View = /*#__PURE__*/ createSimpleComponent<'div', ViewStackViewOwnProps>(
   'view-stack-view',
   function (props) {
     // The stack seeds SSR only. All subsequent activity belongs to the DOM.
@@ -38,7 +39,7 @@ const View = createSimpleComponent<'div', ViewStackViewOwnProps>(
   },
 );
 
-const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
+const Stack = /*#__PURE__*/ createSimpleComponent<'div', ViewStackOwnProps>(
   'view-stack',
   function (props) {
     // Seed the first screen during SSR/hydration, but never reseed on updates.
@@ -49,10 +50,9 @@ const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
     return 'div';
   },
   {},
-  (el) => {
+  (el: Stage) => {
     installCommands();
     let current: Screen | undefined;
-    let index = 0;
     let scrollFrame = 0;
     const views = () => Array.from(el.children) as Screen[];
     const activate = (view: Screen | undefined, restore = true) => {
@@ -61,7 +61,7 @@ const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
       if (current?.contains(focused)) current.$_focus = focused;
       const changed = current !== view;
       current = view;
-      index = Math.max(0, views().indexOf(view!));
+      el.$_index = Math.max(0, views().indexOf(view!));
       for (const child of views()) child.toggleAttribute('inert', child !== view);
       view?.$_render?.();
       // Inert changes synchronously now; no render/effect/focus scheduling.
@@ -75,6 +75,18 @@ const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
       const view = (event as Event & {snapTargetInline: Screen | null}).snapTargetInline;
       if (event.target === el && view) activate(view);
     };
+    const schedule = (target: Screen) => {
+      target.$_render?.();
+      el.$_pending = target;
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => {
+        el.$_pending = undefined;
+        if (target.parentElement === el) el.scrollTo({
+          left: (getComputedStyle(el).direction === 'rtl' ? -1 : 1) * views().indexOf(target) * el.clientWidth,
+          behavior: 'auto',
+        });
+      });
+    };
     const command = (event: Event) => {
       if (event.target !== el || event.defaultPrevented) return;
       if (current?.parentElement !== el) sync();
@@ -83,14 +95,7 @@ const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
         : cmd?.startsWith('--view-') ? document.getElementById(cmd.slice(7)) : null) as Screen | null;
       if (!target || target.parentElement !== el) return;
       event.preventDefault();
-      target.$_render?.();
-      cancelAnimationFrame(scrollFrame);
-      scrollFrame = requestAnimationFrame(() => {
-        if (target.parentElement === el) el.scrollTo({
-          left: (getComputedStyle(el).direction === 'rtl' ? -1 : 1) * views().indexOf(target) * el.clientWidth,
-          behavior: 'auto',
-        });
-      });
+      schedule(target);
     };
     const observer = !('onscrollsnapchange' in HTMLElement.prototype) && typeof IntersectionObserver !== 'undefined'
       ? new IntersectionObserver(entries => {
@@ -98,7 +103,8 @@ const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
       }, {root: el, threshold: [0.999]}) : undefined;
     const sync = () => {
       const children = views();
-      activate(current?.parentElement === el ? current : children[Math.min(index, children.length - 1)], !!current);
+      const restore = el.$_index !== undefined;
+      activate(current?.parentElement === el ? current : children[Math.min(el.$_index || 0, children.length - 1)], restore);
       observer?.disconnect();
       for (const child of children) observer?.observe(child);
     };
@@ -108,6 +114,8 @@ const Stack = createSimpleComponent<'div', ViewStackOwnProps>(
     mutations.observe(el, {childList: true});
     el.addEventListener('command', command);
     el.addEventListener('scrollsnapchange', snap);
+    // A caller ref can change without detaching the DOM or canceling a command.
+    if (el.$_pending) schedule(el.$_pending);
     return () => {
       cancelAnimationFrame(scrollFrame);
       observer?.disconnect();
