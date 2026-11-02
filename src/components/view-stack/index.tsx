@@ -1,5 +1,4 @@
-import {h, type VNode} from 'preact';
-import '../../lib/forwardref';
+import {h} from 'preact';
 import {createSimpleComponent} from '../../lib/create-simple-component';
 import {installCommands} from '../../lib/commands';
 import type {ViewStackOwnProps, ViewStackViewOwnProps} from './types';
@@ -7,123 +6,57 @@ import './style.css';
 
 declare global {
   interface ComponentInstance {
-    /** Retained render state; lives with the keyed factory instance. */
-    $_visited?: boolean;
+    /** Set once the view has been scrolled into the viewport. */
+    $_v?: 1;
   }
 }
-type Screen = HTMLDivElement & {$_render?: () => void; $_focus?: HTMLElement};
-type Stage = HTMLDivElement & {$_pending?: Screen; $_index?: number};
+type Cmd = Event & {command: string};
 
 const View = /*#__PURE__*/ createSimpleComponent<'div', ViewStackViewOwnProps>(
   'view-stack-view',
   function (props) {
-    // The stack seeds SSR only. All subsequent activity belongs to the DOM.
-    const initial = props as typeof props & {$_first?: boolean};
-    const children = props.children;
-    this.$_visited ||= initial.$_first;
-    initial.$_first = undefined;
-    props.inert = (this.base as Element | undefined)?.hasAttribute('inert') ?? !this.$_visited;
-    props.children = h('div', {k: 'view-stack-content'}, this.$_visited
-      ? typeof children === 'function' ? children() : children : null);
+    const c = props.children;
+    // Function children are deferred until the view first becomes visible.
+    props.children = h('div', {k: 'view-stack-content'}, typeof c == 'function' ? this.$_v && c() : c);
     return 'div';
   },
-  {inert: true, tabIndex: -1},
-  function (el: Screen) {
-    el.$_render = () => {
-      if (!this.$_visited) {
-        this.$_visited = true;
+  {tabIndex: -1},
+  function (el) {
+    installCommands();
+    const stack = el.parentNode as HTMLElement;
+    // One observer per view: views added later register themselves, removed
+    // views clean up after themselves, and the stack needs no JS at all.
+    const io = new IntersectionObserver(([e]) => {
+      const r = e.intersectionRatio;
+      // The majority-visible view is active; the rest are inert. Moving focus
+      // in only on later activations (the initial one has not rendered yet).
+      if (!(el.inert = r < .5) && this.$_v) el.focus({preventScroll: true});
+      if (r && !this.$_v) {
+        this.$_v = 1;
         this.forceUpdate();
       }
+    }, {root: stack, threshold: [.01, .5]});
+    const command = (e: Event) => {
+      const c = (e as Cmd).command;
+      if (e.target == stack && (
+        c == '--view-' + el.id
+        // The active view is the only non-inert one. With no neighbour, fall
+        // back to `el` itself: active means a zero-length scroll, else no-op.
+        || c == '--next' && !(el.previousElementSibling as HTMLElement || el).inert
+        || c == '--prev' && !(el.nextElementSibling as HTMLElement || el).inert
+      // An absolute scroll: scrollBy() is directional, and scroll-snap-stop
+      // would halt a multi-view jump at the adjacent view.
+      )) stack.scrollTo(stack.scrollLeft + el.getBoundingClientRect().left - stack.getBoundingClientRect().left, 0);
     };
-    return () => { el.$_render = undefined; };
+    io.observe(el);
+    stack.addEventListener('command', command);
+    return () => {
+      io.disconnect();
+      stack.removeEventListener('command', command);
+    };
   },
 );
 
-const Stack = /*#__PURE__*/ createSimpleComponent<'div', ViewStackOwnProps>(
-  'view-stack',
-  function (props) {
-    // Seed the first screen during SSR/hydration, but never reseed on updates.
-    const children = [props.children as unknown].flat(Infinity).filter(child => child && typeof child === 'object') as VNode[];
-    const first = children[0];
-    if (!this.base && first) children[0] = h<any>(first.type, {...first.props, key: first.key, ref: first.ref, $_first: true});
-    props.children = children;
-    return 'div';
-  },
-  {},
-  (el: Stage) => {
-    installCommands();
-    let current: Screen | undefined;
-    let scrollFrame = 0;
-    const views = () => Array.from(el.children) as Screen[];
-    const activate = (view: Screen | undefined, restore = true) => {
-      if (view && view.parentElement !== el) return;
-      const focused = document.activeElement as HTMLElement;
-      if (current?.contains(focused)) current.$_focus = focused;
-      const changed = current !== view;
-      current = view;
-      el.$_index = Math.max(0, views().indexOf(view!));
-      for (const child of views()) child.toggleAttribute('inert', child !== view);
-      view?.$_render?.();
-      // Inert changes synchronously now; no render/effect/focus scheduling.
-      if (changed && restore) {
-        const target = view?.$_focus;
-        if (target?.isConnected && view?.contains(target)) target.focus({preventScroll: true});
-        if (view && !view.contains(document.activeElement)) view.focus({preventScroll: true});
-      }
-    };
-    const snap = (event: Event) => {
-      const view = (event as Event & {snapTargetInline: Screen | null}).snapTargetInline;
-      if (event.target === el && view) activate(view);
-    };
-    const schedule = (target: Screen) => {
-      target.$_render?.();
-      el.$_pending = target;
-      cancelAnimationFrame(scrollFrame);
-      scrollFrame = requestAnimationFrame(() => {
-        el.$_pending = undefined;
-        if (target.parentElement === el) el.scrollTo({
-          left: (getComputedStyle(el).direction === 'rtl' ? -1 : 1) * views().indexOf(target) * el.clientWidth,
-          behavior: 'auto',
-        });
-      });
-    };
-    const command = (event: Event) => {
-      if (event.target !== el || event.defaultPrevented) return;
-      if (current?.parentElement !== el) sync();
-      const cmd = (event as Event & {command: string}).command;
-      const target = (cmd === '--next' ? current?.nextElementSibling : cmd === '--prev' ? current?.previousElementSibling
-        : cmd?.startsWith('--view-') ? document.getElementById(cmd.slice(7)) : null) as Screen | null;
-      if (!target || target.parentElement !== el) return;
-      event.preventDefault();
-      schedule(target);
-    };
-    const observer = !('onscrollsnapchange' in HTMLElement.prototype) && typeof IntersectionObserver !== 'undefined'
-      ? new IntersectionObserver(entries => {
-        for (const entry of entries) if (entry.isIntersecting && entry.intersectionRatio >= 0.999) activate(entry.target as Screen);
-      }, {root: el, threshold: [0.999]}) : undefined;
-    const sync = () => {
-      const children = views();
-      const restore = el.$_index !== undefined;
-      activate(current?.parentElement === el ? current : children[Math.min(el.$_index || 0, children.length - 1)], restore);
-      observer?.disconnect();
-      for (const child of children) observer?.observe(child);
-    };
-    current = views().find(view => !view.hasAttribute('inert'));
-    sync();
-    const mutations = new MutationObserver(sync);
-    mutations.observe(el, {childList: true});
-    el.addEventListener('command', command);
-    el.addEventListener('scrollsnapchange', snap);
-    // A caller ref can change without detaching the DOM or canceling a command.
-    if (el.$_pending) schedule(el.$_pending);
-    return () => {
-      cancelAnimationFrame(scrollFrame);
-      observer?.disconnect();
-      mutations.disconnect();
-      el.removeEventListener('command', command);
-      el.removeEventListener('scrollsnapchange', snap);
-    };
-  },
-);
+const Stack = /*#__PURE__*/ createSimpleComponent<'div', ViewStackOwnProps>('view-stack');
 
 export const ViewStack = /*#__PURE__*/ Object.assign(Stack, {View});
