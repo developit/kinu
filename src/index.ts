@@ -383,3 +383,10 @@ export type {MeterProps, MeterOwnProps} from './components/meter/types';
 export {Prose} from './components/prose';
 export type {ProseProps, ProseOwnProps} from './components/prose/types';
 export * from './components/typography';
+export {ViewStack} from './components/view-stack';
+export type {
+  ViewStackProps,
+  ViewStackOwnProps,
+  ViewStackViewProps,
+  ViewStackViewOwnProps,
+} from './components/view-stack/types';
