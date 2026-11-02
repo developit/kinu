@@ -17,3 +17,29 @@ import 'kinu/style.css';
 ```
 
 If you already have a global reset, audit it against the defaults in `style.css`. Keep the root-level tokens and dialog/backdrop rules so overlay components remain functional.
+
+## Virtualization-free long lists
+
+You rarely need a virtualization library. Add the `virtual` attribute to a scroll container — a `List`, a `Listbox` list, a
+`Tree`, or any `[k]` wrapper — and the browser applies `content-visibility: auto` to its rows, skipping the layout and paint
+of everything off-screen. Thousands of rows stay smooth with zero JavaScript:
+
+```tsx
+<List virtual style={{maxHeight: '20rem', overflow: 'auto'}}>
+  {items.map((item) => (
+    <List.Item key={item.id}>{item.label}</List.Item>
+  ))}
+</List>
+```
+
+Each row's `contain-intrinsic-size` defaults to an estimated `2.25rem` tall so the scrollbar is sized correctly before rows
+render; override it for taller rows:
+
+```css
+[virtual] {
+  --k-virtual-row: 3rem;
+}
+```
+
+Because it is pure CSS, it composes with everything and degrades to normal rendering where `content-visibility` is
+unsupported.

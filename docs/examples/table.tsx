@@ -35,11 +35,11 @@ export function Demo() {
             </tr>
           </thead>
           <tbody>
-            {Array.from({length: 12}, (_, i) => (
-              <tr key={i}>
-                <td>User {i + 1}</td>
-                <td>user{i + 1}@example.com</td>
-                <td>{i % 3 === 0 ? 'Admin' : 'User'}</td>
+            {Array.from({length: 12}, (_, i) => i + 1).map((n) => (
+              <tr key={n}>
+                <td>User {n}</td>
+                <td>user{n}@example.com</td>
+                <td>{n % 3 === 1 ? 'Admin' : 'User'}</td>
               </tr>
             ))}
           </tbody>

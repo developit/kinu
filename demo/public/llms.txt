@@ -1,735 +1,1133 @@
-# kinu (Preact UI) Component Library Documentation
+# kinu — Preact UI toolkit (LLM authoring guide)
 
-kinu is a lightweight, modern UI component library built for Preact that provides a comprehensive set of accessible, customizable components with minimal JavaScript and a CSS-based styling system.
+kinu is a performance-first Preact UI toolkit. Components are thin pass-throughs from JSX to semantic
+HTML: each attaches a `k="<component-name>"` attribute to a native element, and **all styling and most
+behavior is driven by CSS attribute selectors** — not JavaScript.
 
-## Architecture Overview
+> This file is generated from the component metadata on every build, so it never drifts. Do not edit
+> it by hand.
 
-kinu is primarily a pass-through from JSX to semantic HTML that attaches `[k="component-name"]` attributes to elements for styling and behavior. The `p` stands for `kinu` and contains the kinu component name. CSS uses these attributes to style components without JavaScript, and delegated event handlers use them for features like keyboard navigation.
+## How to author kinu UI
 
-### Core Philosophy
-- **Minimal JavaScript**: Components use native HTML elements with minimal JavaScript for enhanced functionality
-- **CSS-based Styling**: All styling handled through CSS using `p` attribute selectors
-- **Semantic HTML**: Components render as appropriate semantic HTML elements
-- **Accessibility First**: Built with accessibility and keyboard navigation in mind
+- Prefer kinu components over hand-rolled markup. If you are about to write a `<div>` with utility
+  classes to build something kinu already ships (a stack, a grid, a metric block, a star rating, a
+  copy button, a number stepper…), use the component instead.
+- Components forward every native attribute to the underlying element. Pass `min`, `max`, `disabled`,
+  `name`, `required`, `aria-*`, `onInput`, `style`, etc. straight through.
+- Variants and states are **attributes**, styled in CSS — there is no per-instance JS state for them:
+  `<Button variant="outline" size="sm">`, `<Badge variant="secondary">`, `<Stat.Delta trend="up">`,
+  `<Stack gap="lg" align="center">`.
+- The styling hook is the `k` attribute. CSS targets `[k="button"]`, `[k="button"][variant="outline"]`,
+  `[k="input"]:user-invalid`, and so on. (Earlier revisions of this file called the attribute `p` —
+  that was a documentation bug. The emitted attribute is, and always has been, `k`.)
 
-## Component Categories & Interfaces
+## Interaction model: commands, not handlers
 
-### Form Controls
+Disclosure components (Dialog, Popover, DropdownMenu, ContextMenu, Drawer, Sheet, Sidebar) are driven
+by the native `command` / `commandfor` attributes rather than click handlers:
 
-#### Button
-Renders as: `<button>` or `<a>` (when href provided)
 ```tsx
-<Button>Default</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="outline">Outline</Button>
-<Button variant="destructive">Destructive</Button>
-<Button variant="ghost">Ghost</Button>
-<Button variant="link">Link</Button>
-<Button size="sm|md|lg|icon">Sized</Button>
-<Button href="/path">Link Button</Button>
-```
-
-#### Input
-Renders as: `<input>`
-```tsx
-<Input placeholder="Enter text" />
-<Input type="email" value={email} onInput={handler} />
-<Input size="sm|lg" />
-<Input disabled />
-```
-
-#### Checkbox
-Renders as: `<input type="checkbox">`
-```tsx
-<Checkbox id="check" checked={checked} onInput={handler} />
-<Label htmlFor="check">Label text</Label>
-```
-
-#### Radio & RadioGroup
-Renders as: `<div>` (RadioGroup), `<input type="radio">` (Radio)
-```tsx
-<RadioGroup>
-  <Radio id="opt1" name="options" value="1" checked={selected === '1'} onInput={handler} />
-  <Label htmlFor="opt1">Option 1</Label>
-  <Radio id="opt2" name="options" value="2" checked={selected === '2'} onInput={handler} />
-  <Label htmlFor="opt2">Option 2</Label>
-</RadioGroup>
-```
-
-#### Select
-Renders as: `<select>`
-```tsx
-<Select value={value} onInput={handler}>
-  <option value="1">Option 1</option>
-  <option value="2">Option 2</option>
-</Select>
-<Select disabled>
-  <option>Disabled</option>
-</Select>
-```
-
-#### Switch
-Renders as: `<input type="checkbox" role="switch">`
-```tsx
-<Switch checked={enabled} onInput={handler} />
-```
-
-#### Slider
-Renders as: `<input type="range">`
-```tsx
-<Slider min={0} max={100} value={value} onInput={handler} />
-<Slider disabled />
-```
-
-#### Textarea
-Renders as: `<textarea>`
-```tsx
-<Textarea placeholder="Enter message..." value={message} onInput={handler} />
-<Textarea disabled />
-```
-
-#### Label
-Renders as: `<label>`
-```tsx
-<Label htmlFor="input-id">Label Text</Label>
-```
-
-### Layout Components
-
-#### Card
-Renders as: `<div>`
-```tsx
-<Card>
-  <h2>Card Title</h2>
-  <p>Card content</p>
-</Card>
-```
-
-#### Separator
-Renders as: `<hr>`
-```tsx
-<div>
-  <p>Content above</p>
-  <Separator />
-  <p>Content below</p>
-</div>
-```
-
-#### AspectRatio
-Renders as: `<div>`
-```tsx
-<AspectRatio ratio={16/9}>
-  <span>16:9 content</span>
-</AspectRatio>
-```
-
-#### ScrollArea
-Renders as: `<div>`
-```tsx
-<ScrollArea style={{height: '100px'}}>
-  <p>Scrollable content</p>
-  <p>More content...</p>
-</ScrollArea>
-```
-
-### Navigation Components
-
-#### Tabs
-Renders as: `<div>` (TabList), `<button>` (Tab), `<div>` (TabPanel)
-```tsx
-<TabList>
-  <Tab aria-selected={tab === 'first'} onClick={() => setTab('first')}>First</Tab>
-  <Tab aria-selected={tab === 'second'} onClick={() => setTab('second')}>Second</Tab>
-</TabList>
-{tab === 'first' && <TabPanel>First tab content</TabPanel>}
-{tab === 'second' && <TabPanel>Second tab content</TabPanel>}
-```
-
-#### Breadcrumb
-Renders as: `<nav>` (Breadcrumb), `<ol>` (BreadcrumbList), `<li>` (BreadcrumbItem), `<a>` (BreadcrumbLink)
-```tsx
-<Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="#">Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="#">Docs</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbItem>Current</BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>
-```
-
-#### NavigationMenu
-Renders as: `<nav>` (NavigationMenu), `<ul>` (NavigationMenuList), `<li>` (NavigationMenuItem), `<a>` (NavigationMenuLink)
-```tsx
-<NavigationMenu>
-  <NavigationMenuList>
-    <NavigationMenuItem>
-      <NavigationMenuLink href="#">Home</NavigationMenuLink>
-    </NavigationMenuItem>
-    <NavigationMenuItem>
-      <NavigationMenuLink href="#">Docs</NavigationMenuLink>
-    </NavigationMenuItem>
-  </NavigationMenuList>
-</NavigationMenu>
-```
-
-#### Pagination
-Renders as: `<nav>` (Pagination), `<ul>` (PaginationList), `<li>` (PaginationItem), `<a>` (PaginationLink)
-```tsx
-<Pagination>
-  <PaginationList>
-    <PaginationItem>
-      <PaginationLink aria-current="page">1</PaginationLink>
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationLink>2</PaginationLink>
-    </PaginationItem>
-  </PaginationList>
-</Pagination>
-```
-
-#### Menubar
-Renders as: `<div>` (Menubar), `<button>` (MenubarItem)
-```tsx
-<Menubar>
-  <DropdownMenu>
-    <DropdownMenuTrigger>
-      <MenubarItem>File</MenubarItem>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent>
-      <DropdownMenuItem onClick={handler}>Open</DropdownMenuItem>
-      <DropdownMenuItem onClick={handler}>Save</DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-</Menubar>
-```
-
-### Overlay Components
-
-#### Dialog
-Renders as: `<dialog>` (Dialog.Content)
-```tsx
-<Dialog id="unique-id">  // Optional ID
-  <Dialog.Trigger>
-    <Button>Open Dialog</Button>
-  </Dialog.Trigger>
-  <Dialog.Content>
-    <h3>Dialog Title</h3>
-    <p>Dialog content</p>
-    <Dialog.Close>
-      <Button>Close</Button>
-    </Dialog.Close>
-  </Dialog.Content>
+<Button commandfor="settings" command="show-modal">Open</Button>
+<Dialog>
+  <Dialog.Content id="settings">…</Dialog.Content>
 </Dialog>
 ```
 
+Custom commands (`--prev`, `--next`, `--step-up`, `--step-down`) ride the same bus, so new interactive
+components add no new global event listeners.
+
+## Forms
+
+Validation is native. Use `required`, `type="email"`, `min` / `max`, `pattern`, etc., and let the
+`:user-invalid` CSS layer surface errors only after interaction. Wrap a control in `Field` with
+`Field.Label`, `Field.Description`, and `Field.Error` (which reveals only when the field is invalid).
+No validation library and no "touched" state to manage.
+
+## Toast
+
+```tsx
+import {toast, ToastContainer} from 'kinu';
+
+toast.show('Saved', {title: 'Success'});
+// Mount <ToastContainer /> once near the app root.
+```
+
+## Component reference
+
+Every component below is a named export from `kinu`. The usage snippet shows its JSX shape; notes call
+out behavior and attributes. Compound parts (e.g. `Dialog.Trigger`, `Stat.Value`) are accessed as
+properties of the root export.
+
+### Data Display
+
+#### Badge
+Tiny inline status indicator with multiple tone variants.
+
+```tsx
+<Badge variant="secondary">New</Badge>
+```
+
+#### Chip
+Badge-like label with an optional inline action button.
+
+```tsx
+<Chip>Tag<Chip.Button onClick={remove}>×</Chip.Button></Chip>
+```
+
+- Chip.Button fires standard click events with no custom event wiring.
+- Use the selected attribute to mark a chip as active.
+- Chip.Button automatically spans the full height and hugs the rounded edge.
+
+#### Accordion
+Disclosure built on the native `<details>` element with smooth open and close animation.
+
+```tsx
+<Accordion open>
+  <summary>Details</summary>
+  <p>Hidden content</p>
+</Accordion>
+```
+
+- Forwards every native `<details>` attribute so you can control open state.
+- Provide your own `<summary>` element to define the trigger.
+- Pass the same `name` to multiple accordions to make them mutually exclusive — only one can be open at a time in a group (HTML 2024 `<details name>`).
+
+#### Avatar
+Styled `<img>` avatar that falls back to initials from the alt text.
+
+```tsx
+<Avatar alt="JM" src="/user.jpg" />
+```
+
+- Uses the alt attribute content as a CSS-rendered fallback when the image fails.
+- Override dimensions in CSS if you need sizes other than the 2rem default.
+- Wrap several avatars in `<Avatar.Group>` to get the overlapping stacked layout.
+
+#### Card
+Surface container with padding, border, and typography defaults.
+
+```tsx
+<Card>
+  <h3>Title</h3>
+  <p>Content</p>
+</Card>
+```
+
+- Wraps a `<div>` and exposes padding/variant control via attributes.
+
+#### Collapsible
+Minimal hide/show container built on `<details>` without default markers.
+
+```tsx
+<Collapsible open summary="Trigger">Hidden content</Collapsible>
+```
+
+- Expose the open attribute for controlled usage.
+- Great for FAQs when you want custom trigger markup.
+
+#### Table
+Table wrapper with zebra striping and compact density.
+
+```tsx
+<Table>
+  <thead>...</thead>
+  <tbody>...</tbody>
+</Table>
+```
+
+- Uses native `<table>` markup so semantics stay intact.
+- Pass `sticky` to make `<thead>` cells stick to the top of the nearest scroll container. Wrap the table in a scrollable element (e.g. `<div style={{maxHeight: '12rem', overflow: 'auto'}}>`) so the header has somewhere to stick relative to.
+
+#### Kbd
+Styled `<kbd>` wrapper for keyboard shortcut glyphs.
+
+```tsx
+<Kbd>⌘K</Kbd>
+```
+
+- Wraps the native `<kbd>` element so semantics stay intact.
+- Combine multiple keys in a single `<Kbd>` (e.g. `⌘S`) to render them as one keycap.
+- Pairs naturally with `Item` rows — drop a `<Kbd style={{marginLeft: 'auto'}}>` inside an item to show the shortcut on the trailing edge.
+
+#### Empty
+Centered placeholder for no-data / no-results states.
+
+```tsx
+<Empty>
+  <h3>No results</h3>
+  <p>Try a different search.</p>
+</Empty>
+```
+
+- Centers heading, body text, and optional actions in a flex column.
+- Headings inherit the foreground color; body text defaults to muted foreground.
+
+#### Tree
+Composable tree view built from native `<details>` and `<summary>` primitives.
+
+```tsx
+<Tree>
+  <Tree.Group open>
+    <Tree.GroupLabel>src</Tree.GroupLabel>
+    <Tree.GroupItems>
+      <Tree.Item>index.ts</Tree.Item>
+    </Tree.GroupItems>
+  </Tree.Group>
+</Tree>
+```
+
+- State is native via the `open` attribute on `Tree.Group`.
+- Nest `Tree.Group` inside `Tree.GroupItems` for deeper hierarchies.
+
+#### Skeleton
+Animated shimmer placeholder for loading states.
+
+```tsx
+<Skeleton style={{height: "1.5rem"}} />
+```
+
+- Wraps a `<div>` so you can size it however you want.
+- Use data-rounded to switch to pill skeletons.
+
+#### Timeline
+Vertical sequence of events with connecting line + dot markers.
+
+```tsx
+<Timeline>
+  <Timeline.Entry>
+    Jason pushed 3 commits
+    <time>2h ago</time>
+  </Timeline.Entry>
+</Timeline>
+```
+
+- Renders as `<ol>` + `<li>` so activity feeds and audit logs stay semantic.
+- Dot and connector line are both drawn on each entry from one `--k-timeline-x` variable (the dot radius), so they can't drift out of alignment.
+- Drop a native `<time>` element inside an entry for the trailing timestamp — add `dateTime="..."` for machine-readable semantics.
+
+#### Status
+Inline status indicator with a colored dot prefix, usable with or without a label.
+
+```tsx
+<Status variant="success">Online</Status>
+```
+
+- Dual-purpose: render with children for a dot + label, or without children for a bare dot. When used as a bare dot, supply `aria-label` so screen readers have something to announce — the same text is revealed as a tooltip on hover/focus so sighted users get it too.
+- Variants mirror the semantic color tokens and match `Alert`: `success`, `warning`, `info`, `destructive`. Omit the variant for a neutral muted dot.
+- The dot and gap are sized in `em`, so everything scales with the surrounding font-size — drop a Status inside a heading or a small footer and it follows.
+- Pass `pulse` to animate a "ping" ring for live/loading states. Honors `prefers-reduced-motion` via the base stylesheet.
+
+#### Prose
+Typography wrapper that styles nested HTML (markdown output, CMS content, article bodies).
+
+```tsx
+<Prose><h1>Title</h1><p>Body...</p></Prose>
+```
+
+- Tune spacing, font, and heading weight via CSS variables: `--k-prose-spacing`, `--k-prose-font`, `--k-prose-heading-weight`.
+- Only styles direct and nested standard elements; does not touch Kinu components used inside.
+- First/last child margins are zeroed so the wrapper can drop into any layout without margin collapse.
+
+#### Carousel
+Scroll snapping carousel with previous/next helpers.
+
+```tsx
+<Carousel>
+  <CarouselContent>
+    <CarouselItem>Slide</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+```
+
+- Leverages CSS scroll snap for buttery momentum.
+- Content remains fully declarative.
+
+#### HoverCard
+Delayed hover preview card with trigger/content primitives.
+
+```tsx
+<HoverCard>
+  <HoverCardTrigger>Hover me</HoverCardTrigger>
+  <HoverCardContent>Details</HoverCardContent>
+</HoverCard>
+```
+
+- Uses CSS-only timers for opening and closing.
+- Content positioning is handled via data attributes.
+
+#### Stat
+Metric block with a label, large value, and a trend-colored delta.
+
+```tsx
+<Stat>
+  <Stat.Label>Revenue</Stat.Label>
+  <Stat.Value>$48,200</Stat.Value>
+  <Stat.Delta trend="up">+12.5%</Stat.Delta>
+</Stat>
+```
+
+- Pure CSS presentation. Compound parts: `Stat.Label`, `Stat.Value`, `Stat.Delta`.
+- `Stat.Delta` takes `trend` (`up` / `down` / `flat`) which colors it via the semantic success/destructive tokens.
+- Drops naturally into a `Grid` for dashboard stat rows.
+
+#### Stepper
+Horizontal ordered steps with numbered markers and connectors.
+
+```tsx
+<Stepper>
+  <Stepper.Step state="complete">Cart</Stepper.Step>
+  <Stepper.Step state="current">Payment</Stepper.Step>
+  <Stepper.Step>Review</Stepper.Step>
+</Stepper>
+```
+
+- Pure CSS: renders `<ol k="steps">` + `<li k="step">`. Markers are auto-numbered with CSS counters and joined by line connectors. Zero JavaScript.
+- `Stepper.Step` takes `state` (`upcoming` / `current` / `complete`): complete shows a check on a filled marker, current outlines it in the primary color.
+- Distinct from `Timeline` (vertical event feed) and `Progress` (continuous bar).
+
+#### Indicator
+Corner overlay for notification counts or status dots.
+
+```tsx
+<Indicator>
+  <Avatar alt="JM" />
+  <Badge variant="destructive">3</Badge>
+</Indicator>
+```
+
+- Pure CSS: a `<span k="indicator">` that positions a `Badge` child (or a `[dot]`) at a corner of whatever it wraps — an Avatar, Button, icon, etc.
+- Set `placement` (`top-end` default, `top-start`, `bottom-end`, `bottom-start`). Pass `dot` for a small status dot with no count.
+
+#### Code
+Styled code block and inline code with an optional copy button.
+
+```tsx
+<Code language="tsx">
+  {snippet}
+  <Code.Copy />
+</Code>
+```
+
+- Pure CSS chrome over `<pre>` (block) or `<code inline>` (inline) — mono font, surface, radius, horizontal scroll. Zero JavaScript for the base.
+- `Code.Copy` is a corner button (revealed on hover) that copies the enclosing block. Its label renders via CSS so it adds nothing to the copied text.
+- No highlighter in core. The seam is the advisory `language` attribute (an opt-in plugin can target `[k="code"][language]`) and/or passing pre-highlighted markup as children — `Prose` already styles nested `<pre><code>`.
+
+### Feedback
+
+#### Alert
+Inline status message with tone variants.
+
+```tsx
+<Alert variant="info">Heads up!</Alert>
+```
+
+- Renders a `<div>` so you can include any markup you need.
+- Supports `destructive`, `info`, `success`, and `warning` tone variants.
+- Pass `banner` for a full-bleed, square-cornered, page-level banner — it composes with any tone (e.g. `<Alert variant="info" banner>`).
+
+#### Tooltip
+Hover/focus tooltip with placement attributes and CSS timing.
+
+```tsx
+<Tooltip text="Info"><Button>Hover</Button></Tooltip>
+```
+
+- Uses data attributes for fade transitions.
+- Position via the placement attribute without extra JS.
+
+#### Spinner
+Inline loading indicator for compact pending states.
+
+```tsx
+<Spinner aria-label="Loading" />
+```
+
+- Wraps a <span> and animates purely in CSS.
+- Supports size="sm" and size="lg" attributes for dense or prominent loading states.
+
+#### Progress
+Styled progress meter with determinate and indeterminate states.
+
+```tsx
+<Progress value={60} max={100} />
+```
+
+- Wraps the native `<progress>` element for semantics.
+- Use the data-state attribute for indeterminate styling.
+
+#### ProgressRing
+Circular progress indicator rendered entirely in CSS via conic-gradient and a radial mask.
+
+```tsx
+<ProgressRing value={60} max={100} />
+```
+
+- Pure CSS: uses typed `attr()` to read `value`/`max` directly from the DOM (Chrome 133+, Safari 18.4+, Firefox 140+).
+- Omit `value` (or pass `undefined`) to render an indeterminate spinning ring, matching native `<progress>` semantics.
+- Override `--k-progress-ring-size` and `--k-progress-ring-thickness` to customise dimensions.
+
+#### Meter
+Native `<meter>` wrapper for measurement values (disk quota, password strength, rating summary).
+
+```tsx
+<Meter value={0.7} min={0} max={1} low={0.3} high={0.8} optimum={0.9} />
+```
+
+- Forwards every native `<meter>` attribute.
+- Fill color reflects the value range: primary when in the optimum band, warning in the suboptimum band, destructive outside.
+
+#### Toast
+
+### Actions
+
+#### Item
+Generic selectable item for lists, menus, comboboxes, and more.
+
+```tsx
+<Item selected>Inbox</Item>
+```
+
+- Renders as `<button>` by default, or `<a>` when href is provided.
+- The same component works in every list-like context: List, Listbox, DropdownMenu, ContextMenu, Combobox.
+- Also available as `.Item` on parent components (e.g. `DropdownMenu.Item`).
+- `<Item.Field>` renders as `<label>` so the whole row acts as the click target for a nested form control — drop a `<Checkbox>`, `<Switch>`, `<Radio>`, `<Input>`, `<Slider>`, etc. inside it.
+
+#### Button
+Button component that forwards props to `<button>` or `<a>` when href is provided.
+
+```tsx
+<Button variant="outline">Action</Button>
+```
+
+- Use the loading attribute to reflect pending state without extra handlers.
+- Supports size attributes (sm, md, lg, icon) controlled purely with CSS.
+
+#### Dialog
+Composable modal built on the native `<dialog>` element.
+
+```tsx
+<Dialog>
+  <DialogTrigger><Button>Open</Button></DialogTrigger>
+  <DialogContent>Modal body</DialogContent>
+  <DialogClose><Button>Close</Button></DialogClose>
+</Dialog>
+```
+
+- Relies on command attributes instead of portal gymnastics.
+- Dialog.Content forwards all native `<dialog>` props.
+- For controlled state, pass `open` to `Dialog.Content` and wire `onClose` — the native `open` attribute is promoted to a modal by a small internal hook, and the browser's `close` event drives the state-sync callback.
+
 #### AlertDialog
-Renders as: `<dialog>` (AlertDialog.Content)
+Alias of Dialog with alert-focused styling defaults.
+
 ```tsx
 <AlertDialog>
-  <AlertDialog.Trigger>
-    <Button>Open Alert</Button>
-  </AlertDialog.Trigger>
-  <AlertDialog.Content>
-    <p>Are you sure?</p>
-    <AlertDialog.Close>
-      <Button>Cancel</Button>
-    </AlertDialog.Close>
-    <AlertDialog.Close>
-      <Button>Confirm</Button>
-    </AlertDialog.Close>
-  </AlertDialog.Content>
+  <AlertDialog.Trigger>Delete</AlertDialog.Trigger>
+  <AlertDialog.Content>Confirm action</AlertDialog.Content>
 </AlertDialog>
 ```
 
-#### DropdownMenu
-Renders as: `<span>` (DropdownMenu), `<dialog>` (DropdownMenuContent), `<button>` (DropdownMenuItem)
+- Re-exports Dialog so you get Trigger, Content, Close, and other helpers.
+- Use when you want dialog markup that communicates a destructive decision.
+
+#### Drawer
+Bottom sheet style overlay with trigger and close helpers.
+
 ```tsx
-<DropdownMenu id="unique-id">  // Optional ID
-  <DropdownMenuTrigger>
-    <Button>Actions ▼</Button>
-  </DropdownMenuTrigger>
+<Drawer>
+  <DrawerTrigger><Button>Open</Button></DrawerTrigger>
+  <DrawerContent>Content</DrawerContent>
+  <DrawerClose><Button>Close</Button></DrawerClose>
+</Drawer>
+```
+
+- Positions content with CSS variables so you can change direction.
+- Attach Drawer.Close to any element that should dismiss.
+- On touch devices the drawer is swipeable — swipe down to dismiss. The gesture uses native CSS scroll-snapping with no wrapper elements.
+
+#### DropdownMenu
+Command-driven dropdown built on top of `<dialog>`.
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger>
   <DropdownMenuContent>
-    <DropdownMenuItem onClick={handler}>Edit</DropdownMenuItem>
-    <DropdownMenuItem onClick={handler}>Delete</DropdownMenuItem>
+    <DropdownMenuItem>Item</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 ```
 
+- Menu items render as `<button>` elements by default.
+- Automatically closes when an item dispatches the close command.
+- Set `mobile="drawer"` on `DropdownMenuContent` to adapt to a bottom-sheet on narrow viewports (≤640px).
+
 #### ContextMenu
-Renders as: `<dialog>` (ContextMenuContent), `<button>` (ContextMenuItem)
+Right-click context menu powered by the native dialog element.
+
 ```tsx
 <ContextMenu>
-  <ContextMenuTrigger>
-    <div>Right-click me</div>
-  </ContextMenuTrigger>
+  <ContextMenuTrigger>Right click this area</ContextMenuTrigger>
   <ContextMenuContent>
-    <ContextMenuItem onClick={handler}>Cut</ContextMenuItem>
-    <ContextMenuItem onClick={handler}>Copy</ContextMenuItem>
+    <ContextMenuItem>Copy</ContextMenuItem>
   </ContextMenuContent>
 </ContextMenu>
 ```
 
-#### Popover
-Renders as: `<dialog>` (PopoverContent)
-```tsx
-<Popover>
-  <PopoverTrigger>
-    <Button>Open Popover</Button>
-  </PopoverTrigger>
-  <PopoverContent>
-    <div>Popover content</div>
-  </PopoverContent>
-</Popover>
-```
-
-#### HoverCard
-Renders as: `<dialog>` (HoverCardContent)
-```tsx
-<HoverCard>
-  <HoverCardTrigger>
-    <Button>Hover me</Button>
-  </HoverCardTrigger>
-  <HoverCardContent>Hover content</HoverCardContent>
-</HoverCard>
-```
-
-#### Tooltip
-Renders as: `<span>`
-```tsx
-<Tooltip title="Tooltip text">
-  <Button>Hover for tooltip</Button>
-</Tooltip>
-```
+- Installs the commands polyfill when rendered.
+- Menu content is focus-trapped via `<dialog>`.
+- Set `mobile="drawer"` on `ContextMenuContent` to render as a bottom-sheet on narrow viewports (≤640px).
 
 #### Sheet
-Renders as: `<dialog>` (SheetContent)
+Side or bottom sheet overlay with directional variants.
+
 ```tsx
 <Sheet>
-  <SheetTrigger>
-    <Button>Open Sheet</Button>
-  </SheetTrigger>
-  <SheetContent>
-    <p>Sheet content</p>
-    <SheetClose>
-      <Button>Close</Button>
-    </SheetClose>
-  </SheetContent>
+  <SheetTrigger><Button>Open</Button></SheetTrigger>
+  <SheetContent side="right">Panel</SheetContent>
+  <SheetClose><Button>Close</Button></SheetClose>
 </Sheet>
 ```
 
-#### Drawer
-Renders as: `<dialog>` (DrawerContent)
+- Control the slide direction with the side attribute on SheetContent.
+- SheetClose attaches the close command to any child element.
+- On touch devices the sheet is swipeable — swipe it back toward the edge it came from to dismiss. The gesture is native CSS scroll-snapping, so momentum and snap-back come from the browser.
+- SheetContent wraps your children in a `[k="sheet-panel"]` element: the dialog is the swipe scroller and the panel is the surface, which keeps content in normal block flow at every breakpoint. Style through the panel if you target direct children (`[k="sheet-content"] > …`); descendant selectors are unaffected.
+
+#### CopyButton
+One-tap copy-to-clipboard button with a CSS-only copied state.
+
 ```tsx
-<Drawer>
-  <DrawerTrigger>
-    <Button>Open Drawer</Button>
-  </DrawerTrigger>
-  <DrawerContent>
-    <p>Drawer content</p>
-    <DrawerClose>
-      <Button>Close</Button>
-    </DrawerClose>
-  </DrawerContent>
-</Drawer>
+<CopyButton value="npm install kinu" />
 ```
 
-### Data Display Components
+- Pass `value` to copy a string, or `for` (a CSS selector) to copy another element’s `textContent`.
+- The idle and copied labels render via CSS `attr()` (`label` / `copiedLabel`), so the success state needs no JS text swap — the handler just toggles a `[copied]` attribute for ~1.2s.
+- SSR-safe: `navigator.clipboard` is only touched inside the click handler, which runs client-side.
 
-#### Table
-Renders as: `<table>`
+#### Command
+Command palette — a modal Dialog hosting a filterable Listbox.
+
 ```tsx
-<Table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>John Doe</td>
-      <td>john@example.com</td>
-    </tr>
-  </tbody>
-</Table>
+<Dialog id="cmdk">
+  <Dialog.Trigger><Button>⌘K</Button></Dialog.Trigger>
+  <Command>
+    <Command.Input placeholder="Search…" />
+    <Command.List>
+      <Item>Search docs</Item>
+    </Command.List>
+  </Command>
+</Dialog>
 ```
 
-#### Badge
-Renders as: `<span>`
+- A pure composition of shipped parts: a modal `Dialog` hosting a `Listbox`. The Listbox supplies substring filtering (`Command.Input`) and keyboard navigation; the Dialog supplies the modal + focus trap. No fuzzy-search engine.
+- Place it inside a `Dialog` and open with a `Dialog.Trigger` or a hotkey (`commandfor` + `command="show-modal"`).
+- Items are regular `Item`s, so they support `shortcut`, `destructive`, and `href`.
+
+#### Hotkey
+Bind a keyboard shortcut to a command — declaratively, no handlers.
+
 ```tsx
-<Badge>Default</Badge>
-<Badge variant="secondary">Secondary</Badge>
-<Badge variant="destructive">Destructive</Badge>
-<Badge variant="outline">Outline</Badge>
+<Hotkey keys="mod+k" command="show-modal" commandfor="cmdk" />
 ```
 
-#### Avatar
-Renders as: `<div>`
+- Renders nothing visible. One global keydown listener matches the pressed chord against `[data-hotkey]` and fires the element’s `command` on its `commandfor` target — reusing the command bus, with no per-app key handlers.
+- Chord syntax: `mod` (⌘ on Apple, Ctrl elsewhere), `alt`, `shift`, plus a key, joined with `+` — e.g. `mod+k`, `mod+shift+p`, `/`. Bare-key chords are ignored while typing in a field.
+- Pairs with `Command` (open a palette on ⌘K) and `Kbd` (display the shortcut). SSR-safe.
+
+### Layout
+
+#### Stack
+Vertical flow layout — a flex column with a token-based gap.
+
 ```tsx
-<Avatar src="https://example.com/avatar.png" alt="Profile" />
-<Avatar>JD</Avatar>  // Fallback initials
-<Avatar size="sm|lg">SM</Avatar>  // Different sizes
+<Stack gap="md">
+  <div>One</div>
+  <div>Two</div>
+</Stack>
 ```
 
-#### Alert
-Renders as: `<div>`
+- CSS-only: renders a `<div k="stack">` with `display:flex;flex-direction:column`. Zero JavaScript.
+- Set `gap` to a spacing-scale step (`0`, `xs`, `sm`, `md`, `lg`, `xl`); it maps to the `--k-space-*` tokens and defaults to `md`.
+- Use `align` (cross-axis) and `justify` (main-axis) to position children.
+
+#### Cluster
+Horizontal wrap row with a token-based gap — chip rows, button rows, toolbars.
+
 ```tsx
-<Alert>
-  <strong>Info:</strong> Informational message
-</Alert>
-<Alert variant="destructive">
-  <strong>Error:</strong> Error message
-</Alert>
+<Cluster gap="sm">
+  <Badge>One</Badge>
+  <Badge>Two</Badge>
+</Cluster>
 ```
 
-#### Progress
-Renders as: `<progress>`
+- CSS-only: renders a `<div k="cluster">` with `display:flex;flex-wrap:wrap`. Zero JavaScript.
+- Items wrap to new rows as needed; `align` defaults to `center` and `gap` defaults to `sm`.
+- Reach for it whenever you have a row of badges, chips, buttons, or filters that should wrap gracefully.
+
+#### AspectRatio
+Maintains responsive boxes at a fixed ratio using pure CSS.
+
 ```tsx
-<Progress value={50} max={100} />
+<AspectRatio ratio="16 / 9">
+  <img src="..." alt="Video thumbnail" />
+</AspectRatio>
 ```
 
-#### Skeleton
-Renders as: `<div>`
+- Wraps a `<div>` that defines the ratio using a CSS custom property.
+
+#### Popover
+Lightweight popover using native dialog with trigger/content primitives.
+
 ```tsx
-<Skeleton style={{height: '1.5rem'}} />
-<Skeleton style={{height: '1.5rem', width: '60%'}} />
+<Popover>
+  <PopoverTrigger><Button>Open</Button></PopoverTrigger>
+  <PopoverContent>Content</PopoverContent>
+  <PopoverClose><Button>Close</Button></PopoverClose>
+</Popover>
 ```
 
-### Interactive Components
+- Control placement with the placement attribute on PopoverContent.
+- Set `mobile="drawer"` on PopoverContent to render as a bottom-sheet drawer on small screens (≤640px).
+- Stays declarative thanks to the commands polyfill.
 
-#### Accordion
-Renders as: `<details>`
+#### Grid
+Responsive auto-fit grid with a token-based gap — dashboards, card galleries.
+
 ```tsx
-<Accordion name="accordion-group">  // Radio-style grouping
-  <summary>More Info</summary>
-  <p>Hidden content</p>
-</Accordion>
-<Accordion name="accordion-group">
-  <summary>Another Item</summary>
-  <p>More hidden content</p>
-</Accordion>
+<Grid gap="md" min="sm">
+  <Card>One</Card>
+  <Card>Two</Card>
+</Grid>
 ```
 
-#### Collapsible
-Renders as: `<div>`
+- CSS-only: renders a `<div k="grid">` using `repeat(auto-fit, minmax(...))`. Zero JavaScript.
+- By default it fits as many columns as will hold the `min` width (presets `xs`–`xl`, default `md` = 16rem); override arbitrarily with the `--k-grid-min` custom property.
+- Pass `cols={3}` for a fixed equal-column grid instead of the responsive behaviour.
+
+#### ScrollArea
+Overflow wrapper with custom scrollbars and shadow indicators.
+
 ```tsx
-<Button onClick={() => setOpen(!open)}>Toggle</Button>
-<Collapsible open={open}>
-  <div>Collapsible content</div>
-</Collapsible>
+<ScrollArea style={{height: '200px'}}><div>Long content</div></ScrollArea>
 ```
 
-#### Toggle & ToggleGroup
-Renders as: `<button>` (Toggle), `<div>` (ToggleGroup)
-```tsx
-<Toggle pressed={pressed} onClick={() => setPressed((v) => !v)}>Bold</Toggle>
-<Toggle disabled>Disabled</Toggle>
+- Applies scroll shadows using CSS masks.
+- Forwards native overflow attributes for flexibility.
 
-<ToggleGroup type="multiple" value={values} onValueChange={setValues}>
-  <Toggle value="bold">Bold</Toggle>
-  <Toggle value="italic">Italic</Toggle>
-  <Toggle value="underline">Underline</Toggle>
-</ToggleGroup>
+#### AppShell
+Full-page application scaffold — header, sidebar, main, and footer in a CSS grid.
+
+```tsx
+<AppShell>
+  <AppShell.Header>Acme</AppShell.Header>
+  <AppShell.Sidebar>{/* nav */}</AppShell.Sidebar>
+  <AppShell.Main>{/* content */}</AppShell.Main>
+  <AppShell.Footer>© 2026</AppShell.Footer>
+</AppShell>
 ```
 
-#### Carousel
-Renders as: `<div>`
-```tsx
-<Carousel id="unique-id">  // Optional ID
-  <CarouselContent>
-    <CarouselItem>Slide 1</CarouselItem>
-    <CarouselItem>Slide 2</CarouselItem>
-    <CarouselItem>Slide 3</CarouselItem>
-  </CarouselContent>
-  <CarouselPrevious>‹</CarouselPrevious>
-  <CarouselNext>›</CarouselNext>
-</Carousel>
-```
-
-#### Calendar
-Renders as: `<div>`
-```tsx
-<Calendar />
-```
-
-#### DatePicker
-Renders as: `<div>`
-```tsx
-<DatePicker />
-```
-
-#### Combobox
-Renders as: Various elements
-```tsx
-<Combobox>
-  <ComboboxInput />
-  <ComboboxList>
-    <ComboboxOption>Option 1</ComboboxOption>
-    <ComboboxOption>Option 2</ComboboxOption>
-  </ComboboxList>
-</Combobox>
-```
+- CSS-only: a `<div k="app-shell">` using named grid areas, `min-height:100dvh`, and semantic `<header>`/`<aside>`/`<main>`/`<footer>` parts. Zero JavaScript.
+- Collapses to a single column at ≤48rem; the inline sidebar rail hides so you can hand mobile navigation to the modal `Sidebar` dialog.
+- Compound parts: `AppShell.Header`, `AppShell.Sidebar`, `AppShell.Main`, `AppShell.Footer`. Style each region with normal CSS or inline styles.
 
 #### Resizable
-Renders as: `<div>`
+Resizable container that exposes native CSS handles.
+
 ```tsx
-<Resizable style={{width: '150px', height: '80px'}}>
-  Resize me
-</Resizable>
+<Resizable style={{width: "20rem", height: "12rem"}} />
 ```
 
-### Layout & Container Components
+- Wraps a `<div>` with resize: both so the browser handles drag gestures.
+- Perfect for scratchpads, preview panes, or demos where users adjust size.
+
+#### Row
+Horizontal flow layout — a flex row with a token-based gap.
+
+```tsx
+<Row gap="sm" justify="between">
+  <strong>Title</strong>
+  <Button>Save</Button>
+</Row>
+```
+
+- CSS-only: renders a `<div k="row">` with `display:flex`. The horizontal sibling of `Stack`. Zero JavaScript.
+- `gap` (default `sm`), `align` (default `center`), and `justify` mirror the other layout primitives.
+- Does not wrap by default — pass `wrap`, or reach for `Cluster` when wrapping is the point.
+
+#### Separator
+Semantic horizontal or vertical divider.
+
+```tsx
+<Separator />
+```
+
+- Rendered as a `<div>` so you can set orientation via attribute.
+- Use decorative when the separator is purely visual.
+
+#### Center
+Centers its content horizontally and vertically with CSS grid.
+
+```tsx
+<Center style={{height: '10rem'}}>
+  <span>Centered</span>
+</Center>
+```
+
+- CSS-only: `<div k="center">` using `display:grid;place-items:center`. Give it a size (or let it fill its parent) and the child centers on both axes.
+- Pass `inline` to shrink to the content and center inline instead of filling the box.
 
 #### Sidebar
-Renders as: `<dialog>` (Sidebar), `<button>` (SidebarTrigger)
+Responsive sidebar dialog that collapses on mobile.
+
 ```tsx
-<Sidebar id="sidebar-id" style={{width: '16rem'}}>
-  <h3>Navigation</h3>
-  <nav>
-    <a href="/dashboard" aria-current="page">Dashboard</a>
-    <a href="/settings">Settings</a>
-  </nav>
+<Sidebar id="app-sidebar">
+  <nav>...</nav>
 </Sidebar>
-
-<SidebarTrigger commandFor="sidebar-id">
-  ☰
-</SidebarTrigger>
+<SidebarTrigger commandFor="app-sidebar">Toggle</SidebarTrigger>
 ```
 
-### Toast System
+- Renders a `<dialog>` so it can slide in as a modal on small screens.
+- SidebarTrigger toggles the hidden/open state with the command attribute.
+- In its mobile modal mode on touch devices the sidebar is swipeable — swipe left to dismiss. The gesture is native CSS scroll-snapping, so momentum and snap-back come from the browser.
+- Lays out as a grid, so direct children stack as rows. In the swipe mode the last child fills the remaining height and scrolls, which suits a fixed header followed by scrolling navigation.
 
-#### Toast API
-```tsx
-// Import toast and ToastContainer
-import { toast, ToastContainer } from 'kinu';
-
-// Basic toast
-toast.show('Hello world!');
-
-// Toast with options
-toast.show('Event created successfully!', {
-  title: 'Success',
-  icon: '✓',
-  action: <Button>Undo</Button>,
-  duration: 5000  // Default: 3000ms
-});
-
-// Add container to your app
-<ToastContainer />
-```
-
-Interface for toast options:
-```tsx
-interface ToastOptions {
-  title?: ComponentChild;      // Optional title
-  icon?: ComponentChild;       // Optional icon
-  action?: ComponentChild;     // Optional action button
-  duration?: number;          // Duration in milliseconds
-}
-```
-
-## Styling System
-
-### CSS Attribute Selectors
-All components use a `p` attribute for CSS targeting:
-```css
-[k="button"] { /* Button styles */ }
-[k="button"][variant="secondary"] { /* Secondary button */ }
-[k="input"][disabled] { /* Disabled input */ }
-```
-
-### Variants & States
-Most components support variants through attributes:
-- `variant`: Style variants (e.g., "secondary", "destructive", "outline")
-- `size`: Size variants (e.g., "sm", "md", "lg", "icon")
-- `disabled`: Disabled state
-- `aria-*`: Accessibility states (e.g., `aria-selected`, `aria-pressed`)
-
-### Custom Styling
-Components accept custom attributes and styles:
-```tsx
-<Button className="custom-class" data-testid="btn">Custom Button</Button>
-<Card style={{backgroundColor: 'red'}}>Styled Card</Card>
-```
-
-## HTML Commands Integration
-
-kinu leverages HTML's built-in [commands feature](https://developer.chrome.com/blog/command-and-commandfor) with a lightweight polyfill. Commands enable declarative interactions between elements using `command` and `commandfor` attributes:
+#### Spacer
+Flexible spacer that pushes siblings apart, or a fixed gap block.
 
 ```tsx
-// Command triggers
-<Button commandfor="dialog-id" command="show-modal">Open Dialog</Button>
-<SidebarTrigger commandFor="sidebar-id">Toggle Sidebar</SidebarTrigger>
-
-// Command targets  
-<Dialog.Content id="dialog-id" command="close">Dialog content</Dialog.Content>
+<Row>
+  <Button>Back</Button>
+  <Spacer />
+  <Button>Next</Button>
+</Row>
 ```
 
-Standard HTML commands supported:
-- `show`: Show element
-- `show-modal`: Show as modal dialog  
-- `close`: Close element
-- Custom commands: `--prev`, `--next` (Carousel navigation)
+- CSS-only: `<div k="spacer">` with `flex:1` so it grows to push siblings to opposite ends of a Row, Cluster, or Stack.
+- Pass `size` (`xs`–`xl`) to render a fixed gap (via `flex-basis`) that works along either axis instead of growing.
 
-## Accessibility Features
+### Navigation
 
-### Keyboard Navigation
-- All interactive components support keyboard navigation
-- Focus management for overlays and modals
-- Escape key support for closing overlays
+#### Tabs
+TabList, Tab, and TabPanel wrappers using aria attributes.
 
-### ARIA Attributes
-- Proper ARIA roles and states
-- Screen reader friendly labels
-- Semantic HTML structure
-
-### Form Integration
 ```tsx
-<form>
-  <Label htmlFor="email">Email</Label>
-  <Input id="email" type="email" required />
-  
-  <Label htmlFor="password">Password</Label>
-  <Input id="password" type="password" required />
-  
-  <Button type="submit">Submit</Button>
-</form>
+<TabList role="tablist">
+  <Tab role="tab" aria-selected="true">Account</Tab>
+  <Tab role="tab" aria-selected="false">Password</Tab>
+</TabList>
+<TabPanel role="tabpanel">Account settings</TabPanel>
 ```
 
-## Usage Patterns
+- Control selection state by toggling aria-selected.
+- TabPanel toggles the hidden attribute so CSS handles transitions.
 
-### Event Handling
+#### List
+Interactive selectable list with shared item styling.
+
 ```tsx
-// Input events
-<Input onInput={(e) => setValue(e.target.value)} />
-
-// Button clicks
-<Button onClick={(e) => handleClick(e)}>Click me</Button>
-
-// Form submission
-<form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+<List>
+  <List.Item selected>Inbox</List.Item>
+  <List.Item>Drafts</List.Item>
+</List>
 ```
 
-### State Management
+- Items render as `<button>` by default, or `<a>` when href is provided.
+- Use variant="nav" for sidebar-style navigation with softer accent colors.
+- Shares the same item styles as DropdownMenuItem and ComboboxOption.
+
+#### Breadcrumb
+Composable breadcrumb trail built from list primitives.
+
 ```tsx
-const [isOpen, setIsOpen] = useState(false);
-const [selectedTab, setSelectedTab] = useState('first');
-const [formData, setFormData] = useState({});
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
 ```
 
-### Compound Components
-Many components use compound patterns for flexibility:
-```tsx
-// Dialog compound
-<Dialog>
-  <Dialog.Trigger>Trigger</Dialog.Trigger>
-  <Dialog.Content>Content</Dialog.Content>
-  <Dialog.Close>Close</Dialog.Close>
-</Dialog>
+- Ships structural wrappers so you can supply router-aware links.
+- Uses semantic list markup for accessibility.
 
-// Navigation compound
+#### NavigationMenu
+Composable navigation with list, item, and link helpers.
+
+```tsx
 <NavigationMenu>
   <NavigationMenuList>
     <NavigationMenuItem>
-      <NavigationMenuLink>Link</NavigationMenuLink>
+      <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>
 ```
 
-## Best Practices
+- Zero runtime state; rely on CSS for active styling.
+- Ideal for top-level navigation bars.
 
-- Always provide proper labels for form controls
-- Use semantic HTML structure with proper ARIA attributes
-- Handle loading and error states appropriately
-- Use the toast system for user feedback
-- Style with CSS attribute selectors: `[k="component-name"]`
-- Leverage variant attributes and CSS custom properties for theming
+#### Menubar
+Horizontal command bar composed of styled buttons.
 
-## Integration Examples
-
-### Form with Validation
 ```tsx
-function MyForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Validation logic
-    toast.show('Form submitted!', { title: 'Success', icon: '✓' });
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <Card>
-        <Label htmlFor="email">Email</Label>
-        <Input 
-          id="email"
-          type="email" 
-          value={email}
-          onInput={(e) => setEmail(e.target.value)}
-          required 
-        />
-        
-        <Label htmlFor="password">Password</Label>
-        <Input 
-          id="password"
-          type="password" 
-          value={password}
-          onInput={(e) => setPassword(e.target.value)}
-          required 
-        />
-        
-        <Button type="submit">Sign In</Button>
-      </Card>
-    </form>
-  );
-}
+<Menubar>
+  <MenubarItem>File</MenubarItem>
+</Menubar>
 ```
 
-### Dashboard Layout
+- Pairs nicely with dropdowns for nested menus.
+
+#### Pagination
+Semantic pagination list with previous/next helpers.
+
 ```tsx
-function Dashboard() {
-  return (
-    <div className="dashboard">
-      <Sidebar id="main-sidebar">
-        <nav>
-          <a href="/dashboard" aria-current="page">Dashboard</a>
-          <a href="/users">Users</a>
-          <a href="/settings">Settings</a>
-        </nav>
-      </Sidebar>
-      
-      <main>
-        <header>
-          <SidebarTrigger commandFor="main-sidebar">☰</SidebarTrigger>
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="/">Home</NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </header>
-        
-        <div className="content">
-          <Card>
-            <h1>Dashboard</h1>
-            <Progress value={75} max={100} />
-          </Card>
-        </div>
-      </main>
-      
-      <ToastContainer />
-    </div>
-  );
-}
+<Pagination>
+  <PaginationList>
+    <PaginationItem><PaginationLink aria-current="page">1</PaginationLink></PaginationItem>
+  </PaginationList>
+</Pagination>
 ```
 
-This documentation provides a comprehensive overview of the kinu component library, including all component interfaces, usage patterns, and best practices for building modern web applications with Preact.
+- Renders `<nav>` and list markup for accessibility.
+- Use aria-current on the active page link.
+
+### Data Input
+
+#### Field
+Layout wrapper that groups a label, control, description, and error message.
+
+```tsx
+<Field>
+  <Field.Label>
+    Email
+    <Input type="email" required />
+  </Field.Label>
+  <Field.Description>We'll never share it</Field.Description>
+  <Field.Error>Please enter a valid email</Field.Error>
+</Field>
+```
+
+- Nests the control inside `Field.Label` so native `<label>` implicit association handles pairing — no `id`/`htmlFor` plumbing needed.
+- `Field.Label` is an alias of `Label`, so the regular label styles and props apply.
+- `:has(:invalid)` turns the label destructive when any descendant control fails validation.
+- `Field.Error` renders with `role="alert"` so assistive tech announces it when shown.
+
+#### Input
+Text input with size, tone, and invalid states handled in CSS.
+
+```tsx
+<Input placeholder="Email" type="email" />
+```
+
+- Wraps the native `<input>` element so forms behave as expected.
+- Supports size="sm" and size="lg" for compact or spacious layouts.
+
+#### Checkbox
+Accessible checkbox input with custom visuals.
+
+```tsx
+<Checkbox checked aria-label="Accept" />
+```
+
+- Wraps `<input type="checkbox">` so forms just work.
+- Supports data-state="indeterminate" styling for tri-state usage.
+
+#### InputGroup
+Compact fieldset wrapper for joined controls like input and button rows.
+
+```tsx
+<InputGroup>
+  <Input placeholder="Search" />
+  <Button variant="outline">Go</Button>
+</InputGroup>
+```
+
+- Uses CSS-only border and radius joining for grouped controls.
+- Works with both kinu primitives and native form elements.
+
+#### OTPInput
+Single `<input>` styled as N segmented one-time-code cells.
+
+```tsx
+<OTPInput maxLength={6} />
+```
+
+- Defaults to `type="password"`, `inputMode="numeric"`, `autoComplete="one-time-code"`, and `pattern="\\d*"` — iOS SMS autofill, paste, and password managers just work.
+- The visual cell count reads directly from the `maxlength` HTML attribute via CSS `attr()`, so just set `maxLength` and the cells follow.
+- Each cell is `--k-otp-cell` wide (defaults to `2.5rem`); total input width is `maxLength × --k-otp-cell`. Override the variable to resize.
+
+#### RadioGroup
+Container that styles a set of native radio inputs.
+
+```tsx
+<RadioGroup>
+  <Radio name="plan" value="basic" />
+  <Radio name="plan" value="pro" />
+</RadioGroup>
+```
+
+- Radio renders an `<input type="radio">` so browser form behavior stays intact.
+- Use the native name/value model or controlled props to manage selection.
+
+#### Select
+Styled native `<select>` element with size variants.
+
+```tsx
+<Select>
+  <option>One</option>
+</Select>
+```
+
+- Leverages the platform picker on touch devices.
+- Supports native multiple and size attributes.
+- On Chromium (`@supports (appearance: base-select)`) it upgrades to a fully stylable dropdown — themed picker, hover/checked option states, rich option markup — and degrades to the native styled select everywhere else, with zero added JavaScript.
+
+#### Slider
+Range input with CSS-driven track and thumb styling.
+
+```tsx
+<Slider min={0} max={100} value={50} />
+```
+
+- Wraps `<input type="range">` for seamless form integration.
+- Supports data-orientation for vertical sliders.
+
+#### Calendar
+Styled wrapper around the native `<input type="date">` element.
+
+```tsx
+<Calendar />
+```
+
+- Forwards every standard input attribute, defaulting type to "date".
+- Uses the browser's native date picker UI for accessibility and localisation.
+
+#### Switch
+Accessible toggle switch built from a checkbox input.
+
+```tsx
+<Switch checked />
+```
+
+- It is just a checkbox under the hood so forms stay in sync.
+- Use aria-label or pair with `<Label>` for accessible naming.
+
+#### Combobox
+Autocomplete input with trigger, list, and option primitives.
+
+```tsx
+<Combobox>
+  <ComboboxInput placeholder="Search" />
+  <ComboboxList>
+    <ComboboxOption>One</ComboboxOption>
+  </ComboboxList>
+</Combobox>
+```
+
+- Uses command/commandFor attributes for disclosure logic.
+- Keep option counts manageable for usability.
+
+#### Listbox
+Non-modal filterable list for inline search and selection.
+
+```tsx
+<Listbox>
+  <ListboxInput placeholder="Filter..." />
+  <ListboxList>
+    <ListboxOption>Apple</ListboxOption>
+  </ListboxList>
+</Listbox>
+```
+
+- Selection is developer-controlled via the selected attribute on options.
+- Shares filtering logic with Combobox via the filterItems utility.
+- Unlike Combobox, the list is always visible with no dialog or popover.
+- Compose with Dialog to build a command palette.
+
+#### ColorPicker
+Styled color swatch input that opens the native OS color picker.
+
+```tsx
+<ColorPicker />
+```
+
+- Sets type="color" for you and forwards all native input props.
+- Pairs naturally with `Input` inside an `InputGroup` to show an editable hex value alongside the swatch.
+
+#### FileUpload
+Native file input with a styled button for selecting local files.
+
+```tsx
+<FileUpload accept="image/*" />
+```
+
+- Sets type="file" for you and forwards all native input props.
+- Use the accept prop to restrict selectable file types.
+- Use capture="user" or capture="environment" to invoke the camera on mobile.
+
+#### DatePicker
+Styled date input that shares the same foundation as Calendar.
+
+```tsx
+<DatePicker />
+```
+
+- Sets type="date" for you and forwards all native input props.
+- Pairs nicely with popovers if you need a custom calendar shell.
+
+#### TimePicker
+Styled time input that shares the same foundation as Date Picker.
+
+```tsx
+<TimePicker />
+```
+
+- Sets type="time" for you and forwards all native input props.
+- Use the step prop to constrain selectable intervals, e.g. step={1800} for 30-minute increments.
+
+#### Label
+Typography-aligned label component for form controls.
+
+```tsx
+<Label htmlFor="name">Name</Label>
+```
+
+- Wraps the native `<label>` element and forwards htmlFor.
+- Pair with controls to provide accessible names.
+
+#### Textarea
+Text area with matching input styling, variants, and sizes.
+
+```tsx
+<Textarea rows={4} placeholder="Write here" />
+```
+
+- Wraps the native `<textarea>` for full form support.
+- Use the resize attribute to control user resizing.
+- Pass `autosize` to let the textarea grow with its content via native `field-sizing: content`. Supported in Chromium and Firefox; gracefully falls back to the fixed-height default elsewhere.
+
+#### Toggle
+ARIA-pressed aware button for on/off interactions.
+
+```tsx
+<Toggle pressed={value}>Bold</Toggle>
+```
+
+- Wraps `<button>` so keyboard support comes for free.
+- Use the `pressed` prop for state; it maps to `aria-pressed` on the DOM.
+
+#### ToggleGroup
+Container that lets Toggle buttons coordinate pressed state.
+
+```tsx
+<ToggleGroup>
+  <Toggle>Bold</Toggle>
+  <Toggle>Italic</Toggle>
+</ToggleGroup>
+```
+
+- Each Toggle toggles aria-pressed and clears other toggles in the same group.
+- Pass props like disabled or value straight to the underlying `<button>`.
+
+#### Rating
+Star rating built from a native radio group — form-associated, zero JavaScript.
+
+```tsx
+<Rating name="score" value={3} />
+```
+
+- Zero JavaScript: a styled native `<input type="range">`. The fill follows the live value entirely in CSS — a thumb `box-shadow` paints the filled stars on WebKit and `::-moz-range-progress` on Firefox, masked into a star row; the star count reads from `max` via typed `attr()`.
+- Keyboard-accessible and form-submittable natively: set `name` and an initial `value`, arrow keys adjust, and the value submits with the form.
+- Pass `count` to change the number of stars (Baseline-2025 typed `attr()`; older engines fall back to 5), `readOnly` for a non-interactive display, and `size` (`sm`/`md`/`lg`) to scale.
+
+#### NumberField
+Native number input with stepper buttons driven by the command bus.
+
+```tsx
+<NumberField defaultValue={3} min={0} max={10} />
+```
+
+- Wraps a native `<input type="number">` in an `InputGroup` with − / + buttons. Forwards every native input attribute (`min`, `max`, `step`, `value`, `name`, …).
+- The buttons use `command="--step-up"`/`"--step-down"` on the existing command bus — no new global listeners — and the input calls native `stepUp()`/`stepDown()`, firing `input`/`change` so forms stay in sync.
+- Native Invoker Commands are Baseline; the bundled `installCommands()` polyfill is the fallback for older Safari.
+
+#### Form
+Form wrapper that runs native validation before your submit handler.
+
+```tsx
+<Form onValid={save}>
+  <Field>...</Field>
+  <Button type="submit">Save</Button>
+</Form>
+```
+
+- No form-state engine. On submit it runs `checkValidity()`: if the form is invalid it blocks submission and focuses the first invalid control; otherwise it calls `onValid` with the event.
+- Pairs with the native-validation CSS layer (`:user-invalid`) and `Field` / `Field.Error` — see the Forms & Validation page. You never manage `touched` or `errors` state.
+- Bring your own submit in `onValid` (e.g. `e.preventDefault()` then POST).
+
+#### TagsInput
+Token / tags input that submits natively via a hidden field.
+
+```tsx
+<TagsInput name="tags" value={['design', 'frontend']} placeholder="Add a tag…" />
+```
+
+- Type and press Enter (or the `separator`) to add a tag; Backspace on an empty field removes the last; click a chip’s × to remove it. Each change rewrites a hidden `<input name>` and fires `input`/`change`, so it submits with a normal form.
+- A single per-instance ref manages the chips imperatively — no framework state store. SSR-safe: tags render on mount.
+- The submitted value is the tags joined by `separator` (default `,`). API: `name`, `value` (string[]), `separator`, `max`, `duplicates`.
+
+#### PasswordInput
+Native password input with a Show/Hide reveal toggle.
+
+```tsx
+<PasswordInput name="password" placeholder="Enter password" />
+```
+
+- A native `<input type="password">` in an `InputGroup` with a reveal toggle. Forwards every native input attribute.
+- The toggle rides the command bus (`command="--toggle-password"`) like NumberField — it flips the input `type` and a `[revealed]` attribute that drives the label. No new global listeners.
+- Pass `defaultRevealed` to start with the password visible.
+
+### Conversation
+
+#### Message
+Chat message bubble with author-driven color and alignment.
+
+```tsx
+<Message from="user">
+  <Message.Avatar>JM</Message.Avatar>
+  <Message.Bubble>Hello</Message.Bubble>
+</Message>
+```
+
+- Pure CSS: `<div k="message" from="user|assistant|system">`. `from` flips alignment and colors the bubble (user = primary, assistant = muted, system = quiet italic).
+- Compound parts: `Message.Avatar` (a small round badge) and `Message.Bubble` (the content). Drop a `<Prose>` inside the bubble to render markdown.
+
+#### Thread
+Message list that sticks to the bottom as new messages arrive.
+
+```tsx
+<Thread scrollable style={{height: '20rem'}}>
+  <Message from="user"><Message.Bubble>Hi</Message.Bubble></Message>
+</Thread>
+```
+
+- Pass `scrollable` to make it a scroll container. New messages pin the viewport to the bottom via native scroll anchoring (a 1px bottom anchor) — no `scrollTo` loop and no JavaScript.
+- Progressive enhancement: where scroll anchoring is unsupported it degrades to a normal scroll container.
+- Fill it with `Message` components; size it with a height (or let it fill a flex parent).
+
+#### Composer
+Chat input form — autosizing textarea with Enter-to-send.
+
+```tsx
+<Composer onSubmit={send}>
+  <Textarea autosize rows={1} placeholder="Message…" />
+  <Composer.Actions>
+    <Composer.Send>Send</Composer.Send>
+  </Composer.Actions>
+</Composer>
+```
+
+- Renders a `<form k="composer">` around a `Textarea` (use `autosize` so it grows with content). Enter submits, Shift+Enter inserts a newline — a single delegated keydown calls `form.requestSubmit()`, and it is IME-safe.
+- Compound parts: `Composer.Send` (a submit button, pushed to the trailing edge) and `Composer.Actions` (a row for attach / model controls — compose `FileUpload`, `Select`, etc.).
+- No engine: a typing indicator is just `<Spinner>`, and suggestions are a `Cluster` of `Chip`. Bring your own submit handler.

@@ -1,0 +1,31 @@
+/*
+ * kinu theme: emerald — a brand-color preset.
+ *   import 'kinu/style.css';
+ *   import 'kinu/themes/emerald.css';
+ *   <html data-theme="emerald">
+ * Overrides only the brand tokens; --k-primary-soft derives automatically.
+ * Unlayered, so it beats kinu's `@layer tokens` defaults (see variables.css).
+ */
+[data-theme="emerald"] {
+  --k-primary: 160 84% 39%;
+  --k-primary-foreground: 0 0% 100%;
+  --k-primary-hover: 160 84% 33%;
+  --k-ring: 160 84% 39%;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="emerald"]:not([data-color-scheme]) {
+    --k-primary: 158 64% 52%;
+    --k-primary-foreground: 160 60% 10%;
+    --k-primary-hover: 158 64% 58%;
+    --k-ring: 158 64% 52%;
+  }
+}
+
+[data-theme="emerald"][data-color-scheme="dark"],
+[data-theme="emerald"] [data-color-scheme="dark"] {
+  --k-primary: 158 64% 52%;
+  --k-primary-foreground: 160 60% 10%;
+  --k-primary-hover: 158 64% 58%;
+  --k-ring: 158 64% 52%;
+}

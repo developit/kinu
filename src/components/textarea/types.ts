@@ -27,6 +27,11 @@ export interface TextareaOwnProps extends BaseProps {
    */
   disabled?: boolean;
 
+  /**
+   * Grow the textarea to fit its content via native `field-sizing: content`
+   * (Chromium + Firefox; falls back to the fixed height elsewhere).
+   */
+  autosize?: boolean | null;
 }
 
 export type TextareaProps = TextareaOwnProps &

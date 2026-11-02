@@ -1,0 +1,5 @@
+/* Renders nothing visible — the hidden attribute does the work; this is a
+   belt-and-suspenders guard in case a reset re-displays [hidden] elements. */
+[k="hotkey"] {
+  display: none;
+}
