@@ -2,6 +2,8 @@
 
 Command-driven dropdown built on top of `<dialog>`.
 
+Menus stay anchored on mobile by default; use `mobile="drawer"` for a bottom sheet instead.
+
 ## Usage
 
 ```tsx
@@ -44,6 +46,9 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 while keeping menu behavior on larger screens. |
 
 ## Notes
+
+- On mobile (≤640px), menus default to larger, rounded floating panels with touch-friendly action rows. Colors and elevation follow the active theme, including claw.
+- An explicit `data-kinu-density` setting continues to control row density.
 
 - Menu items render as `<button>` elements by default.
 - Automatically closes when an item dispatches the close command.

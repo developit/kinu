@@ -32,9 +32,14 @@ export function Demo() {
           <Button variant="outline">Actions ▼</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <Item onClick={() => logText('Edit clicked')}>Edit</Item>
+          <Item shortcut="⌘E" onClick={() => logText('Edit clicked')}>
+            Edit
+          </Item>
           <Item onClick={() => logText('Copy clicked')}>Copy</Item>
-          <Item onClick={() => logText('Delete clicked')}>Delete</Item>
+          <Separator />
+          <Item destructive onClick={() => logText('Delete clicked')}>
+            Delete
+          </Item>
         </DropdownMenuContent>
       </DropdownMenu>
 

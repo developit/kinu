@@ -1,5 +1,6 @@
 import {
   Item,
+  Separator,
   ContextMenu,
   ContextMenuContent,
   ContextMenuTrigger,
@@ -30,12 +31,20 @@ export function Demo() {
     <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
       <ContextMenu>
         <ContextMenuTrigger>
-          <div style={zoneStyle}>Right-click me</div>
+          <div style={zoneStyle}>Right-click / long-press</div>
         </ContextMenuTrigger>
         <ContextMenuContent>
-          <Item onClick={() => logText('Cut')}>Cut</Item>
-          <Item onClick={() => logText('Copy')}>Copy</Item>
+          <Item shortcut="⌘X" onClick={() => logText('Cut')}>
+            Cut
+          </Item>
+          <Item shortcut="⌘C" onClick={() => logText('Copy')}>
+            Copy
+          </Item>
           <Item onClick={() => logText('Paste')}>Paste</Item>
+          <Separator />
+          <Item destructive onClick={() => logText('Delete')}>
+            Delete
+          </Item>
         </ContextMenuContent>
       </ContextMenu>
 
@@ -56,7 +65,7 @@ export function Demo() {
   );
 }
 
-export const code = `{/* Standard context menu */}
+export const code = `{/* Floating menu: touch-friendly on mobile */}
 <ContextMenu>
   <ContextMenuTrigger>...</ContextMenuTrigger>
   <ContextMenuContent>...</ContextMenuContent>

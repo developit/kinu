@@ -410,8 +410,8 @@
   [k="combobox-list"],
   [k="listbox-list"]
 ) {
-  padding: 6px;
-  border-radius: 8px;
+  padding: var(--k-menu-padding, 6px);
+  border-radius: var(--k-menu-radius, 8px);
 }
 
 /* Input-group legend — visually align with sibling inputs. Density
