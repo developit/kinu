@@ -35,6 +35,7 @@ export interface DropdownMenuContentOwnProps {
   to?: 'left';
 
   /**
+   * By default, mobile uses a larger floating menu.
    * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
    * while keeping menu behavior on larger screens.
    */

@@ -16,9 +16,9 @@
 [k="dropdown-content"],
 [k="context-menu"],
 [k="combobox-list"] {
-  border-radius: var(--k-radius-4);
+  border-radius: var(--k-menu-radius, var(--k-radius-4));
   border-color: hsl(var(--k-border));
-  padding: 0.5rem;
+  padding: var(--k-menu-padding, 0.5rem);
   box-shadow: var(--k-shadow-2);
   overflow: hidden auto;
 }
@@ -55,5 +55,45 @@
     right: anchor(right);
     --tf-x: 0;
     min-width: max(13.5rem, anchor-size(width));
+  }
+}
+
+/* Mobile menus remain floating/anchored. Drawer geometry and gestures are
+ * deliberately separate, and other Item consumers keep their own density. */
+@media (max-width: 640px) {
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]) {
+    --k-menu-radius: calc(var(--k-radius) + 0.5rem);
+    --k-menu-padding: 0.375rem;
+    min-inline-size: min(18rem, calc(100vw - 1rem));
+    max-inline-size: calc(100vw - 1rem);
+    max-block-size: min(32rem, calc(100dvh - 1rem));
+  }
+
+  /* Honor the density opt-out used by variables.css. These tokens are local
+   * to menus: lists, comboboxes and form controls do not get enlarged. */
+  :root:not([data-kinu-density]) :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]) {
+    --k-row-h: 44px;
+    --k-row-font: 17px;
+    --k-row-px: 12px;
+    --k-row-gap: 10px;
+  }
+
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]) [k="item"] {
+    padding-block: 0.25rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]) [k="item"][shortcut]::after {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.8em;
+  }
+
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]) :is(hr, [role="separator"], [k="separator"]) {
+    width: auto;
+    height: 0.375rem;
+    margin: 0.375rem calc(-1 * var(--k-menu-padding));
+    background-color: hsl(var(--k-muted) / 0.5);
   }
 }

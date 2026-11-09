@@ -2,6 +2,8 @@
 
 Right-click context menu powered by the native dialog element.
 
+Menus stay anchored on mobile by default; use `mobile="drawer"` for a bottom sheet instead.
+
 ## Usage
 
 ```tsx
@@ -41,6 +43,9 @@ import {ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger} fr
 while keeping context-menu behavior on larger screens. |
 
 ## Notes
+
+- On mobile (≤640px), menus default to larger, rounded floating panels with touch-friendly action rows. Colors and elevation follow the active theme, including claw.
+- An explicit `data-kinu-density` setting continues to control row density.
 
 - Installs the commands polyfill when rendered.
 - Menu content is focus-trapped via `<dialog>`.
