@@ -67,31 +67,109 @@
     min-inline-size: min(18rem, calc(100vw - 1rem));
     max-inline-size: calc(100vw - 1rem);
     max-block-size: min(32rem, calc(100dvh - 1rem));
-    transform-origin: top left;
+    /* "Bloom" open: the panel grows out of a small rounded seed at its
+     * origin (clip-path), scaling up on an underdamped spring while a blur
+     * resolves to sharp — reading as motion blur on the way in. Rows then
+     * settle in a quick cascade. All composited-friendly properties; no
+     * layout is touched during the animation.
+     * --k-menu-ox/oy locate the origin within the panel's own box. */
+    --k-menu-ox: 0px;
+    --k-menu-oy: 0px;
+    --k-menu-seed: 2.75rem;
+    --k-menu-spring: linear(0, 0.075 4.2%, 0.244 8.3%, 0.441 12.5%, 0.626 16.7%, 0.779 20.8%, 0.894 25%, 0.972 29.2%, 1.018 33.3%, 1.042 37.5%, 1.049 41.7%, 1.046 45.8%, 1.038 50%, 1.029 54.2%, 1.019 58.3%, 1.012 62.5%, 1.006 66.7%, 1.002 70.8%, 0.999 75%, 0.998 83.3%, 0.999 95.8%, 1);
+    transform-origin: var(--k-menu-ox) var(--k-menu-oy);
     opacity: 0;
-    transform: translateX(var(--tf-x)) scale(0.88);
-    /* Close promptly; keep display/top-layer membership until the fade and
-     * shrink finish. Entry uses a softer, longer settling curve below. */
+    transform: translateX(var(--tf-x)) scale(0.6);
+    filter: blur(10px);
+    clip-path: inset(
+      var(--k-menu-oy)
+      calc(100% - var(--k-menu-ox) - var(--k-menu-seed))
+      calc(100% - var(--k-menu-oy) - var(--k-menu-seed))
+      var(--k-menu-ox)
+      round calc(var(--k-menu-seed) / 2)
+    );
+    /* Close: fast and decisive, collapsing back into the seed. Keep
+     * display/top-layer membership until it finishes. */
     transition:
-      opacity 180ms ease-in,
-      transform 180ms ease-in,
-      display 180ms allow-discrete,
-      overlay 180ms allow-discrete;
+      opacity 200ms ease-in,
+      transform 220ms cubic-bezier(0.4, 0, 1, 1),
+      filter 220ms ease-in,
+      clip-path 220ms cubic-bezier(0.4, 0, 1, 1),
+      display 220ms allow-discrete,
+      overlay 220ms allow-discrete;
   }
 
   [k="dropdown-content"][to="left"]:not([mobile="drawer"]) {
-    transform-origin: top right;
+    --k-menu-ox: calc(100% - var(--k-menu-seed));
   }
 
   :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open] {
     opacity: 1;
     transform: translateX(var(--tf-x)) scale(1);
-    transition-duration: 180ms, 320ms, 320ms, 320ms;
-    transition-timing-function: ease-out, var(--k-ease-elastic), linear, linear;
+    filter: none;
+    /* Negative inset leaves room for the drop shadow; concentric radius
+     * keeps the corners from visibly clipping it. */
+    clip-path: inset(-3rem round calc(var(--k-menu-radius) + 3rem));
+    transition-duration: 140ms, 600ms, 280ms, 480ms, 600ms, 600ms;
+    transition-timing-function: ease-out, var(--k-menu-spring), ease-out, cubic-bezier(0.2, 0.9, 0.1, 1), linear, linear;
 
     @starting-style {
       opacity: 0;
-      transform: translateX(var(--tf-x)) scale(0.88);
+      transform: translateX(var(--tf-x)) scale(0.6);
+      filter: blur(10px);
+      clip-path: inset(
+        var(--k-menu-oy)
+        calc(100% - var(--k-menu-ox) - var(--k-menu-seed))
+        calc(100% - var(--k-menu-oy) - var(--k-menu-seed))
+        var(--k-menu-ox)
+        round calc(var(--k-menu-seed) / 2)
+      );
+    }
+  }
+
+  /* Rows trail the panel slightly, sliding out from the origin edge and
+   * de-blurring. sibling-index() staggers where supported; elsewhere the
+   * delay is invalid and rows simply arrive together. */
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open] > * {
+    animation: k-menu-row-in 420ms cubic-bezier(0.2, 0.9, 0.1, 1) backwards;
+    animation-delay: 40ms;
+    /* biome-ignore lint/correctness/noUnknownFunction: progressive enhancement */
+    animation-delay: calc(40ms + min(sibling-index() - 1, 8) * 22ms);
+  }
+
+  /* iOS-style focus: the page behind softens while the menu is up. */
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])::backdrop {
+    background-color: hsl(0 0% 0% / 0);
+    backdrop-filter: blur(0);
+    transition:
+      background-color 220ms ease-in,
+      backdrop-filter 220ms ease-in,
+      display 220ms allow-discrete,
+      overlay 220ms allow-discrete;
+  }
+
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open]::backdrop {
+    opacity: 1;
+    background-color: hsl(0 0% 0% / 0.12);
+    backdrop-filter: blur(6px) saturate(1.1);
+    transition-duration: 360ms;
+    transition-timing-function: ease-out;
+
+    @starting-style {
+      background-color: hsl(0 0% 0% / 0);
+      backdrop-filter: blur(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]),
+    :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open] {
+      transform: translateX(var(--tf-x));
+      filter: none;
+      clip-path: none;
+    }
+    :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open] > * {
+      animation: none;
     }
   }
 
@@ -135,5 +213,13 @@
   [k="dropdown-content"][mobile="drawer"]::backdrop,
   [k="context-menu"][mobile="drawer"]::backdrop {
     background-color: hsl(0 0% 0% / 0.32);
+  }
+}
+
+@keyframes k-menu-row-in {
+  from {
+    opacity: 0;
+    translate: 0 -0.5rem;
+    filter: blur(3px);
   }
 }

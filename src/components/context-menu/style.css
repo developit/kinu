@@ -60,8 +60,7 @@ body [k="context-menu"] {
     --k-context-menu-shift-y: min(0px, calc(100dvh - max(0.5rem, var(--k-context-menu-client-y, 0px)) - 100% - 0.5rem));
     translate: var(--k-context-menu-shift-x) var(--k-context-menu-shift-y);
     /* Scale from the invocation point, including when clamped at an edge. */
-    transform-origin:
-      calc(-1 * var(--k-context-menu-shift-x))
-      calc(-1 * var(--k-context-menu-shift-y));
+    --k-menu-ox: min(calc(-1 * var(--k-context-menu-shift-x)), calc(100% - var(--k-menu-seed)));
+    --k-menu-oy: min(calc(-1 * var(--k-context-menu-shift-y)), calc(100% - var(--k-menu-seed)));
   }
 }

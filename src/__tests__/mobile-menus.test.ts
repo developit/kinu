@@ -113,7 +113,7 @@ describe('mobile menu stylesheet policy', () => {
     expect(
       declarations(rules, floating, '--k-context-menu-shift-y')[0],
     ).toContain('100dvh');
-    expect(declarations(rules, floating, 'transform-origin')[0]).toContain(
+    expect(declarations(rules, floating, '--k-menu-ox')[0]).toContain(
       '--k-context-menu-shift-x',
     );
     expect(declarations(rules, drawer, 'translate')).toEqual([]);
@@ -140,27 +140,33 @@ describe('mobile menu stylesheet policy', () => {
   it('provides distinct entry/exit transitions only for floating menus', () => {
     const rules = mobileRules('../components/dropdown-menu/style.css');
     document.body.innerHTML =
-      '<dialog k="dropdown-content"></dialog><dialog k="dropdown-content" mobile="drawer"></dialog>';
+      '<dialog k="dropdown-content"><button k="item"></button></dialog><dialog k="dropdown-content" mobile="drawer"><button k="item"></button></dialog>';
     const [floating, drawer] = document.querySelectorAll('dialog');
-    expect(declarations(rules, floating, 'transform')).toEqual([
-      'translateX(var(--tf-x)) scale(0.88)',
-    ]);
+    for (const prop of ['clip-path', 'filter', 'transform']) {
+      expect(declarations(rules, floating, prop)).toHaveLength(1);
+      expect(declarations(rules, drawer, prop)).toEqual([]);
+    }
     expect(declarations(rules, floating, 'transition')[0]).toContain(
       'allow-discrete',
     );
     floating.setAttribute('open', '');
-    expect(declarations(rules, floating, 'transform')).toContain(
-      'translateX(var(--tf-x)) scale(1)',
-    );
-    expect(declarations(rules, floating, 'transition-duration')).toContain(
-      '180ms, 320ms, 320ms, 320ms',
-    );
+    drawer.setAttribute('open', '');
+    expect(declarations(rules, floating, 'filter')).toContain('none');
+    expect(declarations(rules, floating, 'transition-duration')).toHaveLength(1);
     expect(declarations(rules, drawer, 'transition')).toEqual([]);
+    expect(
+      declarations(rules, floating.firstElementChild!, 'animation'),
+    ).toHaveLength(1);
+    expect(declarations(rules, drawer.firstElementChild!, 'animation')).toEqual(
+      [],
+    );
   });
 
   it('gives menu drawers a translucent scrim without recoloring other overlays', () => {
     const rules = mobileRules('../components/dropdown-menu/style.css').filter(
-      (rule) => rule.selectorText?.includes('::backdrop'),
+      (rule) =>
+        rule.selectorText?.includes('::backdrop') &&
+        rule.selectorText.includes('[mobile="drawer"]::backdrop'),
     );
     expect(rules).toHaveLength(1);
     expect(rules[0].style.getPropertyValue('background-color')).toBe(
