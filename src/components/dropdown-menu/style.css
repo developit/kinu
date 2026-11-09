@@ -67,6 +67,32 @@
     min-inline-size: min(18rem, calc(100vw - 1rem));
     max-inline-size: calc(100vw - 1rem);
     max-block-size: min(32rem, calc(100dvh - 1rem));
+    transform-origin: top left;
+    opacity: 0;
+    transform: translateX(var(--tf-x)) scale(0.88);
+    /* Close promptly; keep display/top-layer membership until the fade and
+     * shrink finish. Entry uses a softer, longer settling curve below. */
+    transition:
+      opacity 180ms ease-in,
+      transform 180ms ease-in,
+      display 180ms allow-discrete,
+      overlay 180ms allow-discrete;
+  }
+
+  [k="dropdown-content"][to="left"]:not([mobile="drawer"]) {
+    transform-origin: top right;
+  }
+
+  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open] {
+    opacity: 1;
+    transform: translateX(var(--tf-x)) scale(1);
+    transition-duration: 180ms, 320ms, 320ms, 320ms;
+    transition-timing-function: ease-out, var(--k-ease-elastic), linear, linear;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateX(var(--tf-x)) scale(0.88);
+    }
   }
 
   /* Honor the density opt-out used by variables.css. These tokens are local
@@ -91,9 +117,23 @@
   }
 
   :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]) :is(hr, [role="separator"], [k="separator"]) {
+    display: block;
     width: auto;
-    height: 0.375rem;
+    height: 1px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    line-height: 0;
     margin: 0.375rem calc(-1 * var(--k-menu-padding));
-    background-color: hsl(var(--k-muted) / 0.5);
+    background-color: hsl(var(--k-border));
+  }
+}
+
+/* A menu drawer needs a scrim, not an almost-opaque copy of its surface.
+ * Keep the shared drawer slide/swipe and backdrop fade/blur unchanged. */
+@media (max-width: 640px) {
+  [k="dropdown-content"][mobile="drawer"]::backdrop,
+  [k="context-menu"][mobile="drawer"]::backdrop {
+    background-color: hsl(0 0% 0% / 0.32);
   }
 }

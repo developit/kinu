@@ -50,14 +50,18 @@ body [k="context-menu"] {
   /* Coordinate-positioned dialogs have no positioning anchor, so do not
    * depend on anchor position-try support to keep a large menu on-screen.
    * Translate percentages resolve against the menu's own width/height. */
-  [k="context-menu"]:not([mobile="drawer"]) {
+  body [k="context-menu"]:not([mobile="drawer"]) {
     left: max(0.5rem, var(--k-context-menu-client-x, 0px));
     top: max(0.5rem, var(--k-context-menu-client-y, 0px));
     right: auto;
     bottom: auto;
     position-try-fallbacks: none;
-    translate:
-      min(0px, calc(100vw - max(0.5rem, var(--k-context-menu-client-x, 0px)) - 100% - 0.5rem))
-      min(0px, calc(100dvh - max(0.5rem, var(--k-context-menu-client-y, 0px)) - 100% - 0.5rem));
+    --k-context-menu-shift-x: min(0px, calc(100vw - max(0.5rem, var(--k-context-menu-client-x, 0px)) - 100% - 0.5rem));
+    --k-context-menu-shift-y: min(0px, calc(100dvh - max(0.5rem, var(--k-context-menu-client-y, 0px)) - 100% - 0.5rem));
+    translate: var(--k-context-menu-shift-x) var(--k-context-menu-shift-y);
+    /* Scale from the invocation point, including when clamped at an edge. */
+    transform-origin:
+      calc(-1 * var(--k-context-menu-shift-x))
+      calc(-1 * var(--k-context-menu-shift-y));
   }
 }

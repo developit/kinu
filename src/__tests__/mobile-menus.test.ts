@@ -107,12 +107,80 @@ describe('mobile menu stylesheet policy', () => {
     document.body.innerHTML =
       '<dialog k="context-menu"></dialog><dialog k="context-menu" mobile="drawer"></dialog>';
     const [floating, drawer] = document.querySelectorAll('dialog');
-    expect(declarations(rules, floating, 'translate')[0]).toContain('100vw');
-    expect(declarations(rules, floating, 'translate')[0]).toContain('100dvh');
+    expect(
+      declarations(rules, floating, '--k-context-menu-shift-x')[0],
+    ).toContain('100vw');
+    expect(
+      declarations(rules, floating, '--k-context-menu-shift-y')[0],
+    ).toContain('100dvh');
+    expect(declarations(rules, floating, 'transform-origin')[0]).toContain(
+      '--k-context-menu-shift-x',
+    );
     expect(declarations(rules, drawer, 'translate')).toEqual([]);
     expect(declarations(rules, floating, 'position-try-fallbacks')).toEqual([
       'none',
     ]);
+  });
+
+  it('uses one-pixel dividers for all separator representations, without a filled band', () => {
+    const rules = mobileRules('../components/dropdown-menu/style.css');
+    for (const kind of ['dropdown-content', 'context-menu']) {
+      document.body.innerHTML = `<dialog k="${kind}"><hr><div role="separator"></div><div k="separator"></div></dialog>`;
+      for (const separator of document.querySelector('dialog')!.children) {
+        expect(declarations(rules, separator, 'height')).toEqual(['1px']);
+        expect(parseFloat(declarations(rules, separator, 'border')[0])).toBe(0);
+        expect(parseFloat(declarations(rules, separator, 'padding')[0])).toBe(
+          0,
+        );
+        expect(declarations(rules, separator, 'line-height')).toEqual(['0']);
+      }
+    }
+  });
+
+  it('provides distinct entry/exit transitions only for floating menus', () => {
+    const rules = mobileRules('../components/dropdown-menu/style.css');
+    document.body.innerHTML =
+      '<dialog k="dropdown-content"></dialog><dialog k="dropdown-content" mobile="drawer"></dialog>';
+    const [floating, drawer] = document.querySelectorAll('dialog');
+    expect(declarations(rules, floating, 'transform')).toEqual([
+      'translateX(var(--tf-x)) scale(0.88)',
+    ]);
+    expect(declarations(rules, floating, 'transition')[0]).toContain(
+      'allow-discrete',
+    );
+    floating.setAttribute('open', '');
+    expect(declarations(rules, floating, 'transform')).toContain(
+      'translateX(var(--tf-x)) scale(1)',
+    );
+    expect(declarations(rules, floating, 'transition-duration')).toContain(
+      '180ms, 320ms, 320ms, 320ms',
+    );
+    expect(declarations(rules, drawer, 'transition')).toEqual([]);
+  });
+
+  it('gives menu drawers a translucent scrim without recoloring other overlays', () => {
+    const rules = mobileRules('../components/dropdown-menu/style.css').filter(
+      (rule) => rule.selectorText?.includes('::backdrop'),
+    );
+    expect(rules).toHaveLength(1);
+    expect(rules[0].style.getPropertyValue('background-color')).toBe(
+      'rgba(0, 0, 0, 0.32)',
+    );
+    const selector = rules[0].selectorText.replace(/::backdrop/g, '');
+    for (const kind of [
+      'dropdown-content',
+      'context-menu',
+      'popover-content',
+      'drawer-content',
+    ]) {
+      const panel = document.createElement('dialog');
+      panel.setAttribute('k', kind);
+      expect(panel.matches(selector)).toBe(false);
+      panel.setAttribute('mobile', 'drawer');
+      expect(panel.matches(selector)).toBe(
+        ['dropdown-content', 'context-menu'].includes(kind),
+      );
+    }
   });
 
   it('allows claw to use mobile panel geometry while retaining desktop fallbacks', () => {
