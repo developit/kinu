@@ -19,6 +19,7 @@ export interface ContextMenuContentOwnProps {
   id?: string;
 
   /**
+   * By default, mobile uses a larger floating menu.
    * When set to `"drawer"`, renders as a bottom-sheet drawer on mobile (≤640px)
    * while keeping context-menu behavior on larger screens.
    */

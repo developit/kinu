@@ -166,6 +166,12 @@
   --k-control-px:     14px;
   --k-icon:           16px;
 
+  /* Modal scrim: let the page recede rather than hide it. A partial theme
+   * tint over a blurred, desaturated, lower-contrast view keeps context
+   * visible while the crisp surface in front reads clearly. */
+  --k-scrim-alpha: 0.45;
+  --k-scrim-filter: blur(3px) saturate(0.4) contrast(0.7);
+
   --k-ease-fallback: cubic-bezier(0.4, 0, 0.2, 1);
   --k-ease-out: var(--k-ease-fallback);
   --k-ease-elastic: var(--k-ease-fallback);
