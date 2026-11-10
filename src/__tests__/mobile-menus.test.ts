@@ -162,31 +162,9 @@ describe('mobile menu stylesheet policy', () => {
     );
   });
 
-  it('gives menu drawers a translucent scrim without recoloring other overlays', () => {
-    const rules = mobileRules('../components/dropdown-menu/style.css').filter(
-      (rule) =>
-        rule.selectorText?.includes('::backdrop') &&
-        rule.selectorText.includes('[mobile="drawer"]::backdrop'),
-    );
-    expect(rules).toHaveLength(1);
-    expect(rules[0].style.getPropertyValue('background-color')).toBe(
-      'rgba(0, 0, 0, 0.32)',
-    );
-    const selector = rules[0].selectorText.replace(/::backdrop/g, '');
-    for (const kind of [
-      'dropdown-content',
-      'context-menu',
-      'popover-content',
-      'drawer-content',
-    ]) {
-      const panel = document.createElement('dialog');
-      panel.setAttribute('k', kind);
-      expect(panel.matches(selector)).toBe(false);
-      panel.setAttribute('mobile', 'drawer');
-      expect(panel.matches(selector)).toBe(
-        ['dropdown-content', 'context-menu'].includes(kind),
-      );
-    }
+  it('adds no mobile backdrop styling for menus; drawers share the global scrim', () => {
+    const rules = mobileRules('../components/dropdown-menu/style.css');
+    expect(rules.filter((rule) => rule.selectorText?.includes('::backdrop'))).toEqual([]);
   });
 
   it('allows claw to use mobile panel geometry while retaining desktop fallbacks', () => {

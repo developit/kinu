@@ -137,30 +137,6 @@
     animation-delay: calc(40ms + min(sibling-index() - 1, 8) * 22ms);
   }
 
-  /* iOS-style focus: the page behind softens while the menu is up. */
-  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])::backdrop {
-    background-color: hsl(0 0% 0% / 0);
-    backdrop-filter: blur(0);
-    transition:
-      background-color 220ms ease-in,
-      backdrop-filter 220ms ease-in,
-      display 220ms allow-discrete,
-      overlay 220ms allow-discrete;
-  }
-
-  :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open]::backdrop {
-    opacity: 1;
-    background-color: hsl(0 0% 0% / 0.12);
-    backdrop-filter: blur(6px) saturate(1.1);
-    transition-duration: 360ms;
-    transition-timing-function: ease-out;
-
-    @starting-style {
-      background-color: hsl(0 0% 0% / 0);
-      backdrop-filter: blur(0);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"]),
     :is([k="dropdown-content"], [k="context-menu"]):not([mobile="drawer"])[open] {
@@ -204,15 +180,6 @@
     line-height: 0;
     margin: 0.375rem calc(-1 * var(--k-menu-padding));
     background-color: hsl(var(--k-border));
-  }
-}
-
-/* A menu drawer needs a scrim, not an almost-opaque copy of its surface.
- * Keep the shared drawer slide/swipe and backdrop fade/blur unchanged. */
-@media (max-width: 640px) {
-  [k="dropdown-content"][mobile="drawer"]::backdrop,
-  [k="context-menu"][mobile="drawer"]::backdrop {
-    background-color: hsl(0 0% 0% / 0.32);
   }
 }
 

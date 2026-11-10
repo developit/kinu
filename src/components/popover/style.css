@@ -192,8 +192,11 @@
   [k="popover-content"][mobile="drawer"]::backdrop,
   [k="dropdown-content"][mobile="drawer"]::backdrop,
   [k="context-menu"][mobile="drawer"]::backdrop {
-    background-color: hsl(var(--k-background) / 0.96);
-    backdrop-filter: blur(3px);
+    /* Recede the page rather than hide it: a partial theme wash plus a
+     * blurred, desaturated, lower-contrast view keeps context visible while
+     * the crisp sheet reads clearly in front. */
+    background-color: hsl(var(--k-background) / 0.45);
+    backdrop-filter: blur(3px) saturate(0.4) contrast(0.7);
     overscroll-behavior: contain;
     overflow: auto;
     scrollbar-width: none;
