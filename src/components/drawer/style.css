@@ -32,11 +32,8 @@
 }
 
 [k="drawer-content"]::backdrop {
-  /* Recede the page rather than hide it: a partial theme wash plus a
-   * blurred, desaturated, lower-contrast view keeps context visible while
-   * the crisp sheet reads clearly in front. */
-  background-color: hsl(var(--k-background) / 0.45);
-  backdrop-filter: blur(3px) saturate(0.4) contrast(0.7);
+  background-color: hsl(var(--k-background) / var(--k-scrim-alpha));
+  backdrop-filter: var(--k-scrim-filter);
   overscroll-behavior: contain;
   overflow: auto;
   scrollbar-width: none;
